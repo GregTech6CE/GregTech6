@@ -79,7 +79,7 @@
 - `screen(...)` 返回空时保留宿主默认界面；返回自定义 Screen 时，宿主将它嵌入可工作的菜单外层，槽位仍然有效。
 - `renderer(...)` 为具体机器类型注册附加方块实体渲染器；没有渲染器时保留默认绘制。
 - 渲染器读取 `BehaviorMachineClientView`，只能看到 `BehaviorMachine.Builder.clientState(...)` 声明的键；未声明的键读取失败。
-- `BehaviorMachineMenuView` 是只读视图。它提供能源、进度、开关、罐量和 `containerId()`；默认屏幕已经处理的按钮路径用于开关切换，不应把它当作任意服务端命令通道。
+- `BehaviorMachineMenuView` 是只读视图，提供储能、进度、开关、罐量和 `containerId()`。用 `storedEnergy()` 读取完整的 `long` 储能值，`energy()` 自 API 1.10.0 起已弃用。默认屏幕使用菜单按钮路径切换开关，该路径仅支持菜单定义的按钮操作。
 
 功能部件客户端入口是 `LayoutPartClient`，它只返回附加渲染器；部件本身仍由宿主同步 `PartClientView`。客户端 provider 不负责服务端行为，也不要在客户端 provider 中扫描世界作出权威判断。
 

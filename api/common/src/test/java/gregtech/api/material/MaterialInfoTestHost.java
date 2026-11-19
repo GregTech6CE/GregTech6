@@ -41,9 +41,8 @@ public final class MaterialInfoTestHost implements MaterialInfoTool.Host {
                 new MaterialKey(material.resolve().getName()), process, Optional.of(MaterialProcessRule.anyForm(value)));
     }
 
-    @Override
-    public MaterialInfoTool.Registrar registrar(String addonId) {
-        throw new UnsupportedOperationException("The API test host has no addon registrar");
+    static void setTool(MaterialKey material, MaterialToolProfile profile) {
+        TOOLS.put(material.name(), profile);
     }
 
     @Override
@@ -68,11 +67,6 @@ public final class MaterialInfoTestHost implements MaterialInfoTool.Host {
         MaterialProcessRule<T> rule = (MaterialProcessRule<T>)
                 PROCESSES.getOrDefault(material.name(), Map.of()).get(process);
         return Optional.ofNullable(rule);
-    }
-
-    @Override
-    public void updateTool(MaterialKey material, MaterialToolProfile profile) {
-        TOOLS.put(material.name(), profile);
     }
 
     @Override

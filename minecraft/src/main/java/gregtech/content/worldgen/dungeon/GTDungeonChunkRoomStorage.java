@@ -225,8 +225,12 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
                 int x = baseX + i, z = baseZ + j;
                 if (data.next1in2()) {                                 // - a column of tanks
                     for (int k = 0; k < 4; k++) {
-                        data.tank(x, 1 + k, z, GTDungeonData.container(CONTAINERS[type]),
-                                GTFluids.stack(data.select(FLUIDS[type], x, 1 + k, z), AMOUNTS[type]));
+                        String field = data.select(FLUIDS[type], x, 1 + k, z);
+                        var fluid = switch (field) {
+                            case "Holywater", "Purple_Drink" -> DungeonDrinks.fluid(field, "Water", AMOUNTS[type]);
+                            default -> GTFluids.stack(field, AMOUNTS[type]);
+                        };
+                        data.tank(x, 1 + k, z, GTDungeonData.container(CONTAINERS[type]), fluid);
                         if (data.next2in3()) break;
                     }
                 } else if (data.next1in2()) {                          // - one gas cylinder
@@ -258,9 +262,9 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
     private static final int[] AMOUNTS = {16000, 32000, 64000};
     private static final String[][] FLUIDS = {
             // - Wooden Barrel 32714, 16000 mB (GT6's FL.lube is the port's Lubricant).
-            {"Oil_Creosote", "Oil_Seed", "Lubricant", "Glue", "Latex", "Water", "Water"},
-            // - Ironwood Barrel 32734, 32000 mB; both special waters are gone.
-            {"Oil_Creosote", "Oil_Seed", "Lubricant", "Glue", "Latex", "Water", "Water"},
+            {"Oil_Creosote", "Oil_Seed", "Lubricant", "Glue", "Latex", "Water", "Purple_Drink"},
+            // - Ironwood Barrel 32734, 32000 mB; the last two slots fall back to water.
+            {"Oil_Creosote", "Oil_Seed", "Lubricant", "Glue", "Latex", "Holywater", "Purple_Drink"},
             // - Bronze Drum 32102, 64000 mB; normal oil twice, then the five special oils.
             {"Oil_Normal", "Oil_Normal", "Oil_Soulsand", "Oil_Light", "Oil_Medium", "Oil_Heavy",
                     "Oil_ExtraHeavy"}};

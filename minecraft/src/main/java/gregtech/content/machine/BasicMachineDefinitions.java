@@ -1,8 +1,8 @@
 package gregtech.content.machine;
 
-import gregtech.api.machine.BasicMachineParameters;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.engine.addon.MachineTuningRules;
+import gregtech.engine.machine.BasicMachineParameters;
 import gregtech.engine.machine.BasicMachineSpec;
 import java.util.List;
 

@@ -1,14 +1,14 @@
 /* SPDX-License-Identifier: LGPL-3.0-or-later */
 
-package gregtech.api.machine;
+package gregtech.engine.machine;
 
 /**
- * Which block entity a basic-machine block creates. Addon recipe machines may only use
- * {@link #BASIC} and {@link #LARGE_RECIPE}. {@link #BEHAVIOR} is the addon shell and is
- * created by {@code BehaviorMachineBlock}, not by a recipe controller.
+ * Host selection of the block entity created for a machine. Addon recipe machines resolve to
+ * {@link #BASIC} or {@link #LARGE_RECIPE}. {@link #BEHAVIOR} identifies the addon shell
+ * created by {@code BehaviorMachineBlock}.
  *
  * <p>{@link #DISTILLATION}, {@link #COMPACT_MATTER} and {@link #MATTER} are host-internal
- * kinds for built-in machines; addons must not use them.
+ * kinds for built-in machines.</p>
  */
 public enum MachineControllerKind {
     BASIC,

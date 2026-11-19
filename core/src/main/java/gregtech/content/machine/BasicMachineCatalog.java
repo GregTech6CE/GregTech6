@@ -7,7 +7,6 @@ import static gregtech.content.data.MachineRecipeMapDefinitions.*;
 import static gregtech.content.machine.BasicMachineFaces.*;
 
 import gregtech.api.energy.EnergyType;
-import gregtech.api.machine.BasicMachineParameters;
 import gregtech.api.machine.MachineFaceMasks;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.data.BasicMachineCraftingRecipes;
@@ -18,6 +17,7 @@ import gregtech.content.multiblock.OriginalAdvancedControllerData;
 import gregtech.content.multiblock.OriginalLargeRecipeMachineData;
 import gregtech.content.recipe.RecipeMapSpec;
 import gregtech.engine.definition.DefinitionCatalog;
+import gregtech.engine.machine.BasicMachineParameters;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;

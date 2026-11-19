@@ -43,6 +43,7 @@ public final class MaterialViews {
                     .property(MaterialProperties.MELTING_POINT, material.getMeltingPoint())
                     .property(MaterialProperties.BOILING_POINT, material.getBoilingPoint())
                     .property(MaterialProperties.DENSITY, material.getDensity())
+                    .property(MaterialProperties.MASS, material.getMass())
                     .property(MaterialProperties.FORMULA, material.getTooltipChemical());
             for (var flag : material.getProperties())
                 builder.flag(new DataKey("gt6ce", flag.name().toLowerCase(java.util.Locale.ROOT)));

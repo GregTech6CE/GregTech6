@@ -3,6 +3,8 @@
 package gregtech.api.addon.recipe;
 
 import gregtech.api.addon.AddonNames;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -355,10 +357,18 @@ public final class MachineRecipeDocuments {
     private static long requiredLong(Map<String, Object> json, String key) {
         var value = json.get(key);
         if (!(value instanceof Number number)) throw new IllegalArgumentException(key + " must be a number");
-        double wide = number.doubleValue();
-        if (!Double.isFinite(wide) || wide != Math.rint(wide))
-            throw new IllegalArgumentException(key + " must be an integer");
-        return number.longValue();
+        if (number instanceof Byte || number instanceof Short || number instanceof Integer || number instanceof Long)
+            return number.longValue();
+        try {
+            if (number instanceof BigInteger integer) return integer.longValueExact();
+            if (number instanceof BigDecimal decimal) return decimal.longValueExact();
+            if (number instanceof Float || number instanceof Double)
+                return new BigDecimal(number.doubleValue()).longValueExact();
+            // Some JSON readers preserve the original number token in a custom Number.
+            return new BigDecimal(number.toString()).longValueExact();
+        } catch (ArithmeticException | NumberFormatException invalid) {
+            throw new IllegalArgumentException(key + " must be a signed 64-bit integer", invalid);
+        }
     }
 
     static void checkName(String name, String field) {

@@ -44,28 +44,6 @@ class MaterialViewTest {
     }
 
     @Test
-    void oldCatalogImplementersExplicitlyRejectUnsupportedViewService() {
-        GregTechMaterials.Catalog legacy = new GregTechMaterials.Catalog() {
-            public GregTechMaterials.Material find(String name) {
-                return null;
-            }
-
-            public GregTechMaterials.Material find(int id) {
-                return null;
-            }
-
-            public GregTechMaterials.Material invalid() {
-                return null;
-            }
-
-            public Iterable<GregTechMaterials.Material> all() {
-                return java.util.List.of();
-            }
-        };
-        assertThrows(UnsupportedOperationException.class, legacy::catalog);
-    }
-
-    @Test
     void tagAndGroupDeclarationsCopyMutableInputs() {
         var leaf = new DataKey("test_addon", "leaf");
         var parent = new DataKey("test_addon", "parent");

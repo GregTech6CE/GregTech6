@@ -2,12 +2,12 @@ package gregtech.content.multiblock;
 
 import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
-import gregtech.api.machine.MachineControllerKind;
 import gregtech.content.block.machine.BasicMachineBlock;
 import gregtech.content.block.machine.MultiblockControllerBlock;
 import gregtech.content.blockentity.machine.*;
 import gregtech.engine.addon.AddonMachines;
 import gregtech.engine.machine.BasicMachineSpec;
+import gregtech.engine.machine.MachineControllerKind;
 import gregtech.engine.multiblock.ControllerBinding;
 import gregtech.engine.multiblock.ControllerDeclaration;
 import gregtech.engine.multiblock.tracking.*;

@@ -31,28 +31,24 @@ class MaterialProcessHelperTest {
                 new FuelRule(100, java.util.Optional.of(new MaterialTarget(ashKey, GTValues.U9))));
         MaterialInfoTestHost.setProcess(iron, MaterialProcessKeys.ORE_PROCESSING,
                 new OreProcessingRule(java.util.List.of(ashKey), 2, 3));
-        MaterialInfoTool.updateTool(ironKey, new MaterialToolProfile(3, 8F, 128, 2));
+        MaterialInfoTestHost.setTool(ironKey, new MaterialToolProfile(3, 8F, 128, 2));
 
         assertEquals(
                 new MaterialTarget(new MaterialKey("Iron"), GTValues.U),
                 SmeltingMaterialHelper.target(iron).orElseThrow());
         assertEquals(
-                new MaterialTarget(new MaterialKey("Iron"), GTValues.U2),
-                CrushingMaterialHelper.target(iron).orElseThrow());
-        assertEquals(
-                new MaterialTarget(new MaterialKey("Iron"), GTValues.U),
-                PulverizationMaterialHelper.target(iron).orElseThrow());
-        assertEquals(
                 new FuelRule(100, java.util.Optional.of(new MaterialTarget(new MaterialKey("Ashes"), GTValues.U9))),
                 FuelMaterialHelper.rule(iron).orElseThrow());
-        assertEquals(
-                new OreProcessingRule(java.util.List.of(new MaterialKey("Ashes")), 2, 3),
-                OreProcessingMaterialHelper.rule(iron));
         assertEquals(new MaterialToolProfile(3, 8F, 128, 2), MaterialToolHelper.profile(iron));
         assertSame(iron, iron.getTargetSmeltingMaterial());
         assertEquals(GTValues.U, iron.getTargetSmeltingAmount());
+        assertSame(iron, iron.getTargetCrushingMaterial());
         assertEquals(GTValues.U2, iron.getTargetCrushingAmount());
+        assertSame(iron, iron.getTargetPulverMaterial());
         assertEquals(GTValues.U, iron.getTargetPulverAmount());
+        assertEquals(java.util.List.of(ash), iron.getByProducts());
+        assertEquals(2, iron.getOreMultiplier());
+        assertEquals(3, iron.getOreProcessingMultiplier());
         assertEquals(3, iron.getToolTypes());
         assertEquals(8F, iron.getToolSpeed());
         assertEquals(128, iron.getToolDurability());

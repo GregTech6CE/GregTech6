@@ -2,29 +2,33 @@
 
 package gregtech.api.addon;
 
-import gregtech.api.addon.recipe.MachineRecipeDocumentTypes;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Isolated;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Isolated
 class GregTechAddonsTest {
     private static final GregTechAddon.Context CONTEXT = new GregTechAddon.Context("forge", "1.20.1");
 
     @AfterEach
-    void reset() {
-        GregTechAddons.resetForTesting();
+    void reset() throws ReflectiveOperationException {
+        ((Map<?, ?>) accessibleField(GregTechAddons.class, "ADDONS").get(null)).clear();
+        accessibleField(GregTechAddons.class, "phase").set(null, GregTechAddons.Phase.COLLECTING);
     }
 
     @Test
     void apiVersionCodeMatchesTheMajorAndMinorParts() {
         assertEquals(GregTechAddons.apiMajor() * 1000 + GregTechAddons.apiMinor(), GregTechAddons.apiVersion());
         assertEquals(1, GregTechAddons.apiMajor());
-        assertEquals(9, GregTechAddons.apiMinor());
-        assertEquals(1009, GregTechAddons.apiVersion());
+        assertEquals(10, GregTechAddons.apiMinor());
+        assertEquals(1010, GregTechAddons.apiVersion());
     }
 
     @Test
@@ -57,23 +61,10 @@ class GregTechAddonsTest {
         assertEquals(GregTechAddons.Phase.FAILED, GregTechAddons.phase());
     }
 
-    @Test
-    void documentTypeRegistrationClosesWithTheLifecycle() {
-        MachineRecipeDocumentTypes.register(() -> "test:custom");
-        assertEquals(List.of("test:custom"), MachineRecipeDocumentTypes.registeredIds());
-        GregTechAddons.dispatchRecipesReady(CONTEXT);
-        assertThrows(IllegalStateException.class, () -> MachineRecipeDocumentTypes.register(() -> "test:late"));
-    }
-
-    @Test
-    void resetReturnsAFreshLifecycle() {
-        GregTechAddons.register(addon("test_addon", context -> {}));
-        GregTechAddons.dispatchRecipesReady(CONTEXT);
-        GregTechAddons.resetForTesting();
-        assertEquals(List.of(), GregTechAddons.registeredIds());
-        assertEquals(GregTechAddons.Phase.COLLECTING, GregTechAddons.phase());
-        GregTechAddons.register(addon("test_addon", context -> {}));
-        assertEquals(List.of("test_addon"), GregTechAddons.registeredIds());
+    private static Field accessibleField(Class<?> owner, String name) throws ReflectiveOperationException {
+        Field field = owner.getDeclaredField(name);
+        field.setAccessible(true);
+        return field;
     }
 
     private static GregTechAddon addon(String id, Consumer<GregTechAddon.Context> callback) {

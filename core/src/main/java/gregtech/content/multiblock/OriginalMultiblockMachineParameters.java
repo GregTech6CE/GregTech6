@@ -1,7 +1,7 @@
 package gregtech.content.multiblock;
 
-import gregtech.api.machine.BasicMachineParameters;
 import gregtech.content.machine.BasicMachineCatalog;
+import gregtech.engine.machine.BasicMachineParameters;
 
 /** Original dedicated-controller parameters omitted from the general basic-machine catalog. */
 public final class OriginalMultiblockMachineParameters {

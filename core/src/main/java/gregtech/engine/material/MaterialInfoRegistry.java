@@ -35,7 +35,7 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
     }
 
     public static MaterialInfoTool.Registrar addonRegistrar(String addonId) {
-        return HOST.registrar(addonId);
+        return new Registrar(AddonNames.requireAddonId(addonId));
     }
 
     public record FormSubmission(String addonId, MaterialKey material, FormKey form) {}
@@ -292,12 +292,6 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
         registrationsClosed = true;
     }
 
-    @Override
-    public MaterialInfoTool.Registrar registrar(String addonId) {
-        AddonNames.requireAddonId(addonId);
-        return new Registrar(addonId);
-    }
-
     /** Applies addon facts after material identities are known. */
     static void resolveAddonRegistrations() {
         for (ToolSubmission submission : ADDON_TOOLS) {
@@ -521,13 +515,6 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
                 ? Optional.of(
                         new MaterialProcessRule<>(rule.forms(), process.type().cast(rule.value())))
                 : Optional.empty();
-    }
-
-    @Override
-    public void updateTool(MaterialKey material, MaterialToolProfile profile) {
-        requireMutable(material);
-        var info = MATERIALS.get(material);
-        info.tooling = new MaterialInfoDefinition.Tooling(profile, info.tooling.correctedToolStats());
     }
 
     @Override

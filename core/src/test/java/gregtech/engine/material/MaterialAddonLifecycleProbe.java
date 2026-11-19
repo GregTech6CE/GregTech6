@@ -32,6 +32,23 @@ public final class MaterialAddonLifecycleProbe {
                     .build());
         }
 
+        @Override
+        public void link() {
+            if (!GregTechMaterials.resolve("Fe").orElseThrow().equals(new MaterialKey("Iron")))
+                throw new AssertionError("Built-in aliases must resolve during addon linking");
+            if (!GregTechMaterials.resolve("SharedMaterial").orElseThrow().equals(new MaterialKey("SharedMaterial")))
+                throw new AssertionError("Addon materials must resolve during addon linking");
+            if (GregTechMaterials.resolve("AnyIron").isPresent()
+                    || GregTechMaterials.resolve("UnknownProbeMaterial").isPresent())
+                throw new AssertionError("Link lookup must filter groups and unknown names");
+            try {
+                GregTechMaterials.catalog();
+                throw new AssertionError("The catalog must stay unavailable during addon linking");
+            } catch (IllegalStateException expected) {
+                if (!expected.getMessage().contains("LINKS")) throw expected;
+            }
+        }
+
         public void materialInfo(MaterialInfoTool.Registrar registrar) {
             registrar.registerProcess(
                     new MaterialKey("SharedMaterial"), PROCESS, MaterialProcessRule.anyForm("published"));
@@ -129,6 +146,8 @@ public final class MaterialAddonLifecycleProbe {
             return;
         }
         GTMaterialRegistry.init();
+        if (!GregTechMaterials.resolve("Fe").equals(GregTechMaterials.catalog().resolve("Fe")))
+            throw new AssertionError("The ready lookup must agree with the published catalog");
         var material = GTMaterialRegistry.get("SharedMaterial");
         if (!AddonMaterials.owners(material).equals(List.of("alpha_addon", "beta_addon")))
             throw new AssertionError("shared material owners were not merged");

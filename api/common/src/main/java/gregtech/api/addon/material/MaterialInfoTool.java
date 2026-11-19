@@ -2,7 +2,6 @@
 
 package gregtech.api.addon.material;
 
-import gregtech.api.addon.AddonNames;
 import gregtech.api.addon.InstalledService;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialToolProfile;
@@ -26,17 +25,6 @@ public final class MaterialInfoTool {
     @ApiStatus.Internal
     public static void bindHost(Host host) {
         HOST.bind(host, "Material info host is missing", "Material info host is already installed");
-    }
-
-    /**
-     * Compatibility entry for opening a typed registration session by ID.
-     *
-     * @deprecated Override {@link AddonMaterialContributor#materialInfo(Registrar)} and use the
-     *     lifecycle-bound registrar supplied by the host.
-     */
-    @Deprecated(since = "1.7.0", forRemoval = false)
-    public static Registrar forAddon(String addonId) {
-        return host().registrar(AddonNames.requireAddonId(addonId));
     }
 
     /**
@@ -87,11 +75,6 @@ public final class MaterialInfoTool {
     }
 
     @ApiStatus.Internal
-    public static void updateTool(MaterialKey material, MaterialToolProfile profile) {
-        host().updateTool(Objects.requireNonNull(material, "material"), Objects.requireNonNull(profile, "profile"));
-    }
-
-    @ApiStatus.Internal
     public static void updateComposition(MaterialKey material, Optional<MaterialComposition> composition) {
         host().updateComposition(
                 Objects.requireNonNull(material, "material"), Objects.requireNonNull(composition, "composition"));
@@ -106,20 +89,12 @@ public final class MaterialInfoTool {
                 Objects.requireNonNull(rule, "rule"));
     }
 
-    /** Empty before the host installs or before the definition snapshot is frozen. */
-    @Deprecated(since = "1.7.0", forRemoval = false)
-    public static Optional<MaterialToolProfile> frozenTool(MaterialKey material) {
-        return tool(material);
-    }
-
     private static Host host() {
         return HOST.get("GregTech material info API is not installed");
     }
 
     @ApiStatus.Internal
     public interface Host {
-        Registrar registrar(String addonId);
-
         Optional<MaterialToolProfile> tool(MaterialKey material);
 
         Optional<MaterialComposition> composition(MaterialKey material);
@@ -139,10 +114,6 @@ public final class MaterialInfoTool {
         default <T> Optional<MaterialProcessRule<T>> currentProcess(
                 MaterialKey material, MaterialProcessKey<T> process) {
             return Optional.empty();
-        }
-
-        default void updateTool(MaterialKey material, MaterialToolProfile profile) {
-            throw new UnsupportedOperationException("This material info host is read-only");
         }
 
         default void updateComposition(MaterialKey material, Optional<MaterialComposition> composition) {
@@ -192,34 +163,8 @@ public final class MaterialInfoTool {
             return registerTool(new MaterialKey(material), profile);
         }
 
-        @Deprecated(since = "1.7.0", forRemoval = false)
-        default Registrar registerTool(GregTechMaterials.Material material, MaterialToolProfile profile) {
-            return registerTool(material.key(), profile);
-        }
-
         default Registrar registerForm(String material, String form) {
             return registerForm(new MaterialKey(material), new FormKey(form));
-        }
-
-        @Deprecated(since = "1.7.0", forRemoval = false)
-        default Registrar registerForm(GregTechMaterials.Material material, FormKey form) {
-            return registerForm(material.key(), form);
-        }
-
-        @Deprecated(since = "1.7.0", forRemoval = false)
-        default Registrar registerComposition(GregTechMaterials.Material material, MaterialComposition composition) {
-            return registerComposition(material.key(), composition);
-        }
-
-        @Deprecated(since = "1.7.0", forRemoval = false)
-        default Registrar registerTag(GregTechMaterials.Material material, DataKey tag) {
-            return registerTag(material.key(), tag);
-        }
-
-        @Deprecated(since = "1.7.0", forRemoval = false)
-        default <T> Registrar registerProcess(
-                GregTechMaterials.Material material, MaterialProcessKey<T> process, MaterialProcessRule<T> rule) {
-            return registerProcess(material.key(), process, rule);
         }
     }
 }

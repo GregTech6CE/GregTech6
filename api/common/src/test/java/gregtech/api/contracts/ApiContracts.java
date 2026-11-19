@@ -3,7 +3,7 @@
 package gregtech.api.contracts;
 
 import gregtech.api.addon.AddonLimits;
-import gregtech.api.addon.AddonRuntime;
+import gregtech.api.addon.GregTechAddon;
 import gregtech.api.addon.GregTechAddons;
 import gregtech.api.addon.InstalledService;
 import gregtech.api.addon.machine.BehaviorMachine;
@@ -23,6 +23,7 @@ import gregtech.api.addon.material.SmeltingTargetDeclaration;
 import gregtech.api.addon.pipe.FluidPipeDeclaration;
 import gregtech.api.addon.pipe.ItemPipeDeclaration;
 import gregtech.api.addon.recipe.CrucibleContent;
+import gregtech.api.addon.recipe.MachineRecipeDocumentType;
 import gregtech.api.addon.recipe.MachineRecipeDocumentTypes;
 import gregtech.api.addon.recipe.MachineRecipeDocuments;
 import gregtech.api.addon.recipe.MachineRecipeType;
@@ -33,7 +34,6 @@ import gregtech.api.addon.worldgen.SmallOreDeclaration;
 import gregtech.api.energy.EnergyInput;
 import gregtech.api.energy.EnergyType;
 import gregtech.api.energy.GTVoltageTiers;
-import gregtech.api.machine.BasicMachineParameters;
 import gregtech.api.machine.BlockFace;
 import gregtech.api.machine.MachineCasing;
 import gregtech.api.machine.MachineFace;
@@ -49,6 +49,7 @@ import gregtech.api.multiblock.LayoutRepeat;
 import gregtech.api.multiblock.StructureLayout;
 import gregtech.api.multiblock.StructureRole;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -83,7 +84,7 @@ public final class ApiContracts {
         checkMachineRecipeContracts();
         checkLocaleContracts();
         try {
-            AddonRuntime.services();
+            GregTechMaterials.resolve("Iron");
             throw new AssertionError("Host queries must fail before the runtime is bound");
         } catch (IllegalStateException expected) {
             check(expected.getMessage().contains("not installed"), "Missing host diagnostic");
@@ -119,12 +120,32 @@ public final class ApiContracts {
         check(MachineRecipeDocuments.canonical(removal).contains("\"tag\":\"forge:gravel\""),
                 "Removal tag written");
 
-        MachineRecipeDocumentTypes.register(() -> "test:contract");
-        check(MachineRecipeDocumentTypes.find("test:contract") != null, "Registered document type");
+        MachineRecipeDocumentType documentType = () -> "test:contract";
+        MachineRecipeDocumentTypes.register(documentType);
+        check(MachineRecipeDocumentTypes.find("test:contract") == documentType, "Registered document type");
         check(MachineRecipeDocumentTypes.find("test:missing") == null, "Unknown document type");
-        MachineRecipeDocumentTypes.close();
+        GregTechAddons.register(new GregTechAddon() {
+            @Override
+            public String id() {
+                return "test_addon";
+            }
+
+            @Override
+            public void onRecipesReady(Context context) {
+                checkLateDocumentTypeRejected("test:during_dispatch");
+            }
+        });
+        GregTechAddons.dispatchRecipesReady(new GregTechAddon.Context("forge", "1.20.1"));
+        checkLateDocumentTypeRejected("test:after_dispatch");
+        check(MachineRecipeDocumentTypes.find("test:contract") == documentType, "Dispatch preserves document types");
+        check(Arrays.stream(MachineRecipeDocumentTypes.class.getMethods())
+                        .noneMatch(method -> method.getName().equals("close") || method.getName().equals("resetForTesting")),
+                "Registration is controlled by the host lifecycle");
+    }
+
+    private static void checkLateDocumentTypeRejected(String id) {
         try {
-            MachineRecipeDocumentTypes.register(() -> "test:late");
+            MachineRecipeDocumentTypes.register(() -> id);
             throw new AssertionError("Late document type registration must fail");
         } catch (IllegalStateException expected) {
             // expected
@@ -165,34 +186,8 @@ public final class ApiContracts {
         check(EnergyType.of("*").equals(EnergyType.ANY), "Dynamic behavior energy must remain supported");
         check(EnergyType.known("steam") == EnergyType.STEAM, "Known names canonicalize");
         check(EnergyType.of("ordo") == EnergyType.ORDO, "Aspect names are known constants");
-        for (String type : new String[] {null, "", "*", "Custom", " EU", "SU"}) {
+        for (String type : new String[] {null, "", "*", "Custom", " EU", "SU"})
             reject(() -> EnergyType.known(type));
-            reject(() -> BasicMachineParameters.defaultEnergyInMin(EnergyType.of(type), 32));
-            reject(() -> BasicMachineParameters.defaultEnergyInMax(EnergyType.of(type), 32));
-        }
-        reject(() -> machine(EnergyType.of("Custom"), 32).build());
-        reject(() -> machine(EnergyType.ANY, 32).build());
-
-        var eu = machine(EnergyType.of("eu"), 32).build();
-        check(eu.energy().type().equals(EnergyType.EU), "Builder must store the canonical energy name");
-        range(eu, false, 16, 64);
-        range(eu, true, 512, 4096);
-        var hu = machine(EnergyType.HU, 32).build();
-        range(hu, false, 16, 64);
-        range(hu, true, 1, 4096);
-        var tu = machine(EnergyType.TU, 32).build();
-        range(tu, false, 1, 16);
-        range(tu, true, 1, 16);
-        var explicit = machine(EnergyType.EU, 32).energyRange(3, 9).build();
-        range(explicit, false, 3, 9);
-        range(explicit, true, 3, 9);
-        var omitted = machine(EnergyType.HU, 32).omitEnergyRange().build();
-        check(
-                omitted.energy().energyInMin() == 0 && omitted.energy().energyInMax() == 0,
-                "Omitted bounds stay undeclared");
-        range(omitted, false, 16, 64);
-        range(omitted, true, 1, 4096);
-        reject(() -> machine(EnergyType.EU, 32).energyRange(10, 5).build());
         check(GTVoltageTiers.tierCount() == 16, "Sixteen voltage tiers");
         check(GTVoltageTiers.tierVoltage(1) == 32 && GTVoltageTiers.tierName(1).equals("LV"), "Tier 1 is LV at 32 V");
     }
@@ -373,19 +368,10 @@ public final class ApiContracts {
         check(
                 material.tool().equals(new gregtech.api.material.MaterialToolProfile(0, 1F, 0, 0)),
                 "A material exposes a read-only default tool profile");
-        check(
-                MaterialInfoTool.frozenTool(new MaterialKey("Test")).isEmpty(),
-                "A tool index must not pretend to be frozen before the host installs");
         check(MaterialInfoTool.tool(new MaterialKey("Test")).isEmpty(), "An unavailable tool index must be empty");
         check(
                 MaterialToolHelper.profile(new MaterialKey("Test")).isEmpty(),
                 "Unknown or unavailable material tool queries must be empty");
-        try {
-            MaterialInfoTool.forAddon("test_addon");
-            throw new AssertionError("Material info registration must fail before the host installs");
-        } catch (IllegalStateException expected) {
-            check(expected.getMessage().contains("not installed"), "Missing material info host diagnostic");
-        }
         var ore = new OreProcessingRule(List.of(), 1, Byte.MAX_VALUE);
         check(ore.oreMultiplier() == 1 && ore.processingMultiplier() == Byte.MAX_VALUE,
                 "Ore processing supports both bounds");
@@ -614,20 +600,6 @@ public final class ApiContracts {
         } finally {
             Locale.setDefault(previous);
         }
-    }
-
-    private static BasicMachineParameters.Builder machine(EnergyType energy, long amount) {
-        return BasicMachineParameters.builder("test_machine", new GTMaterial(1, "Test", "Test", 0xFFFFFF))
-                .energy(energy, amount);
-    }
-
-    private static void range(BasicMachineParameters parameters, boolean large, long min, long max) {
-        check(
-                parameters.energy().acceptedEnergyInMin(large) == min,
-                "Unexpected minimum for " + parameters.energy().type());
-        check(
-                parameters.energy().acceptedEnergyInMax(large) == max,
-                "Unexpected maximum for " + parameters.energy().type());
     }
 
     private static void reject(Runnable action) {

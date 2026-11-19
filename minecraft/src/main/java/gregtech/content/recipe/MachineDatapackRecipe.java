@@ -240,7 +240,10 @@ public final class MachineDatapackRecipe implements Recipe<CraftingContainer> {
         var map = new LinkedHashMap<String, Object>();
         input.entries().forEach(pair -> {
             String key = ops.getStringValue(pair.getFirst()).result().orElseThrow();
-            map.put(key, value(ops.convertTo(JsonOps.INSTANCE, pair.getSecond())));
+            T encoded = pair.getSecond();
+            // JsonOps conversion can round JSON decimals before recipe fields are validated.
+            JsonElement json = encoded instanceof JsonElement element ? element : ops.convertTo(JsonOps.INSTANCE, encoded);
+            map.put(key, value(json));
         });
         return map;
     }

@@ -2,11 +2,11 @@
 
 package gregtech.api.addon.recipe;
 
-import gregtech.api.addon.material.GregTechMaterials;
+import gregtech.api.addon.material.MaterialCatalogView;
 
 /**
  * A read-only snapshot of the molten material a crucible controller exposes.
- * The material is a name; resolve it with {@link GregTechMaterials#find(String)}.
+ * Resolve the material name to a key with {@link MaterialCatalogView#resolve(String)}.
  * {@code amount} is in GregTech units and {@code temperature} is in Kelvin.
  * Nothing is removed by reading this, and no block entity is kept.
  * A negative amount or temperature is stored as zero.
