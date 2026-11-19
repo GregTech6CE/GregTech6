@@ -424,7 +424,7 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
     private static void drinkBarrel(GTDungeonData data, int x, int y, int z,
                                     boolean ironwood, String drink, int amount) {
         data.tank(x, y, z, container(ironwood ? "wood_barrel_ironwood" : "wood_barrel_treated"),
-                GTFluids.stack(drink, amount));
+                DungeonDrinks.fluid(drink, amount));
     }
 
     /**

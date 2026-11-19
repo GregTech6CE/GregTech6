@@ -4,11 +4,9 @@ import gregtech.content.block.inventory.BottleCrateBlock;
 import gregtech.content.blockentity.inventory.BottleCrateBlockEntity;
 import gregtech.content.item.BottleItem;
 import gregtech.content.registry.GTStorageContainers;
-import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 
 /** GT6 DungeonChunkRoomWorkshop–160 and 183–195, including conditional random-call order. */
 public final class DungeonBottleSupplies {
@@ -21,7 +19,8 @@ public final class DungeonBottleSupplies {
         "lubricant_bottle",
         "ink_bottle",
         "purple_drink",
-        "holy_water"
+        "holy_water",
+        "bottled_indigo_dye"
     };
 
     private DungeonBottleSupplies() {}
@@ -31,18 +30,8 @@ public final class DungeonBottleSupplies {
     }
 
     public static void drinks(GTDungeonData data, int x, int y, int z, String fluidField) {
-        String id = switch (fluidField) {
-            case "Purple_Drink" -> "purple_drink";
-            case "Vodka" -> "vodka";
-            case "Mead" -> "mead";
-            case "Rum_Dark" -> "pirate_brew";
-            case "Wine_Grape_Purple" -> "ricardo_sanchez";
-            case "Rum_White" -> "rum";
-            case "Wine_Lemon" -> "limoncello";
-            case "Soda" -> "soda";
-            case "Lemonade" -> "lemonade";
-            default -> throw new IllegalArgumentException("Unmapped workshop drink: " + fluidField);
-        };
+        String id = DungeonDrinks.drinkPath(fluidField);
+        if (id == null) throw new IllegalArgumentException("Unmapped workshop drink: " + fluidField);
         place(data, x, y, z, id);
     }
 
@@ -56,18 +45,13 @@ public final class DungeonBottleSupplies {
         if (!(entity instanceof BottleCrateBlockEntity crate)) return;
         for (int slot = 0; slot < 9; slot++) {
             boolean filled = drink != null ? data.next1in3() : slot < 6 ? data.next3in4() : data.next1in2();
+            String path = drink == null ? CHEMICALS[slot] : drink;
             ItemStack stack = filled
-                    ? bottle(drink == null ? CHEMICALS[slot] : drink)
+                    ? DungeonDrinks.bottle(
+                            path, drink != null || path.equals("purple_drink") || path.equals("holy_water"))
                     : data.next1in2() ? BottleItem.emptyBottle() : ItemStack.EMPTY;
             if (!stack.isEmpty()) stack.setCount(1 + data.next(drink == null ? 8 : 4));
             crate.items().setStackInSlot(slot, stack);
         }
-    }
-
-    private static ItemStack bottle(String id) {
-        var item = Mc.item(Mc.gregtechId(id));
-        if (item == null || item == Items.AIR)
-            throw new IllegalStateException("Missing registered GT6 dungeon bottle: " + id);
-        return new ItemStack(item);
     }
 }

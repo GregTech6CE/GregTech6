@@ -13,7 +13,6 @@ import gregtech.content.blockentity.machine.TankBlockEntity;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTDungeonBlocks;
-import gregtech.content.registry.GTFluids;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.SharedDecorBlocks;
 
@@ -744,7 +743,7 @@ public final class GTDungeonData {
 
     /** GT6 {@code DungeonData.cup}: multi-tile 32739 with a 250 mB {@code NBT_TANK}. */
     public boolean cup(int ax, int ay, int az, @Nullable String fluidField) {
-        FluidStack fluid = fluidField == null ? null : GTFluids.stack(fluidField, 250);
+        FluidStack fluid = fluidField == null ? null : DungeonDrinks.fluid(fluidField, 250);
         if (fluidField != null && fluid == null) return false;
         Block cup = Mc.block(Mc.gregtechId("fluid_cup"));
         return cup != null && tank(ax, ay, az, cup, fluid);
