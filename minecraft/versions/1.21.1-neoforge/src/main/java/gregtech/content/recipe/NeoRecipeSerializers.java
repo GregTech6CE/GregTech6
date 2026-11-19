@@ -1,11 +1,11 @@
 package gregtech.content.recipe;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
-
-import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
 public final class NeoRecipeSerializers {
     private NeoRecipeSerializers() {}
