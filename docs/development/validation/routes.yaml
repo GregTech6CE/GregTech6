@@ -14,6 +14,20 @@ routes:
   - paths: ["api/minecraft/src/**"]
     packages: [api]
     checks: [junit, compile, format]
+  - paths: ["api/common/build.gradle", "api/minecraft/build.gradle"]
+    packages: [api]
+    checks: [junit, api-contracts]
+
+  # 根构建与 CI
+  - paths: ["build.gradle"]
+    packages: [api, platforms]
+    checks: [junit, format]
+  - paths: [".github/workflows/build.yml"]
+    packages: [api, platforms]
+    checks: [junit, assemble, format]
+
+  # 文档及路由表使用验证与验收说明中的文档校验流程
+  - paths: ["docs/**/*.md", "docs/development/validation/routes.yaml"]
 
   # core：内容、执行与启动
   - paths:
