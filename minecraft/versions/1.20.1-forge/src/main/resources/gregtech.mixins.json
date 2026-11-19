@@ -76,6 +76,7 @@
     "JadeOreHarvestToolMixin",
     "OreTerrainParticleMixin",
     "PacketFrameDecoderMixin",
+    "RecipeBookSearchMixin",
     "ReliableEmiNamespaceMixin",
     "SpectatorBlockOutlineMixin",
     "SpectatorCrosshairMixin",
