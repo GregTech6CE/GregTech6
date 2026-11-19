@@ -26,11 +26,6 @@ public final class SmeltingMaterialHelper {
                 .filter(target -> target.amount() > 0);
     }
 
-    @Deprecated(since = "1.7.0", forRemoval = false)
-    public static boolean isMaterialSmeltable(GTMaterial material) {
-        return target(material).isPresent();
-    }
-
     public static boolean isMaterialSmeltable(MaterialKey material) {
         return target(material).isPresent();
     }

@@ -1,6 +1,6 @@
 package gregtech.content.multiblock;
 
-import gregtech.api.machine.MachineControllerKind;
+import gregtech.engine.machine.MachineControllerKind;
 import java.util.Map;
 
 /** Built-in recipe controller kinds are explicit; a missing layout must never turn one into a single block. */

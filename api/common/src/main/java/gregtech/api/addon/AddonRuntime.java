@@ -4,6 +4,7 @@ package gregtech.api.addon;
 
 import gregtech.api.addon.material.GregTechMaterials;
 import gregtech.api.addon.material.GregTechPrefixes;
+import gregtech.api.addon.material.MaterialCatalogView;
 
 /**
  * The one core entry GregTech installs before material initialization.
@@ -28,7 +29,7 @@ public final class AddonRuntime {
      * Addons query {@link GregTechMaterials} and {@link GregTechPrefixes} instead.
      */
     public interface Services {
-        GregTechMaterials.Catalog materials();
+        MaterialCatalogView materialCatalog();
 
         /** True when {@code name} is a prefix GregTech already generates, including known aliases. */
         boolean prefixExists(String name);

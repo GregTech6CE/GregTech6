@@ -204,8 +204,8 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
 
     private static CrucibleMold moldTarget(ITileEntityMold mold) {
         return (material, amount, temperature, side) -> {
-            if (material == null || !material.valid() || material.resolve() == null) return 0;
-            var resolved = GTMaterialRegistry.get(material.resolve().name());
+            if (material == null) return 0;
+            var resolved = GTMaterialRegistry.get(material.name());
             return resolved.isValid() ? mold.fillMold(resolved, amount, temperature, side.index()) : 0;
         };
     }

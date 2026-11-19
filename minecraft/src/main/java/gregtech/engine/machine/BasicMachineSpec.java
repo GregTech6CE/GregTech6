@@ -1,8 +1,6 @@
 package gregtech.engine.machine;
 
-import gregtech.api.machine.BasicMachineParameters;
 import gregtech.api.machine.IoTarget;
-import gregtech.api.machine.MachineControllerKind;
 import gregtech.api.machine.MachineFace;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialComponent;

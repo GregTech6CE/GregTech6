@@ -10,15 +10,6 @@ import java.util.List;
 public final class OreProcessingMaterialHelper {
     private OreProcessingMaterialHelper() {}
 
-    @Deprecated(since = "1.7.0", forRemoval = false)
-    public static OreProcessingRule rule(GTMaterial material) {
-        if (material == null || !material.isValid()) return new OreProcessingRule(List.of(), 1, 1);
-        return MaterialInfoTool.currentProcess(
-                        new MaterialKey(material.resolve().getName()), MaterialProcessKeys.ORE_PROCESSING)
-                .map(MaterialProcessRule::value)
-                .orElseGet(() -> new OreProcessingRule(List.of(), 1, 1));
-    }
-
     public static OreProcessingRule rule(MaterialKey material) {
         return GregTechMaterials.processes()
                 .findSingle(material, MaterialProcessKeys.ORE_PROCESSING)

@@ -4,13 +4,34 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import gregtech.api.addon.material.GregTechMaterials;
 import gregtech.api.addon.material.MaterialKey;
+import gregtech.api.addon.material.MaterialTarget;
+import gregtech.api.addon.material.OreProcessingRule;
+import gregtech.api.material.CrushingMaterialHelper;
+import gregtech.api.material.GTValues;
+import gregtech.api.material.OreProcessingMaterialHelper;
+import gregtech.api.material.PulverizationMaterialHelper;
 import gregtech.content.fluid.FluidDefinitions;
 import gregtech.content.storage.ItemBarrelCatalog;
 import gregtech.content.tool.AnvilVariantCatalog;
 import gregtech.engine.material.GTMaterialRegistry;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class MaterialCatalogTest {
+    @Test
+    void materialHelpersReadPublishedRulesByCanonicalKey() {
+        MaterialTestFixture.ensureInitialized();
+        var iron = GregTechMaterials.catalog().resolve("Fe").orElseThrow();
+        assertEquals(new MaterialKey("Iron"), iron);
+        assertEquals(
+                new MaterialTarget(new MaterialKey("Hematite"), GTValues.U),
+                CrushingMaterialHelper.target(iron).orElseThrow());
+        assertEquals(
+                new MaterialTarget(iron, GTValues.U),
+                PulverizationMaterialHelper.target(iron).orElseThrow());
+        assertEquals(new OreProcessingRule(List.of(), 3, 1), OreProcessingMaterialHelper.rule(iron));
+    }
+
     @Test
     void reviewedRecipeFactsAreFullyProjectedIntoMaterialDeclarations() {
         var declarations = MaterialDefinitions.declarations();

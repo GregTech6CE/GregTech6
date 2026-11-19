@@ -9,17 +9,16 @@ import java.util.TreeMap;
 
 /**
  * Shared, deterministic addon lifecycle for both loaders. Registration closes when
- * {@link #dispatchRecipesReady} starts. Production code has no reset entry; the package-private
- * {@code resetForTesting()} hook serves the API test suite.
+ * {@link #dispatchRecipesReady} starts, closing machine recipe document type registration as well.
  */
 public final class GregTechAddons {
     private static final int API_MAJOR = 1;
-    private static final int API_MINOR = 9;
+    private static final int API_MINOR = 10;
 
     /**
      * Monotonic version code of the independent API artifact: {@code major * 1000 + minor}.
-     * The current 1.9 release reports 1009. Development builds still need a matching SDK and host
-     * runtime; this number alone does not check the installed mod or Minecraft version.
+     * Development builds still need a matching SDK and host runtime; this number alone does not
+     * check the installed mod or Minecraft version.
      *
      * <p>Not a compile-time constant. A {@code static final} primitive set to a literal is copied into
      * addon bytecode, so that addon would keep the value it was compiled against. This field is
@@ -56,11 +55,13 @@ public final class GregTechAddons {
     private GregTechAddons() {}
 
     /** Register from a mod constructor, before common setup; duplicate and late IDs fail explicitly. */
-    public static synchronized void register(GregTechAddon addon) {
+    public static void register(GregTechAddon addon) {
         Objects.requireNonNull(addon, "addon");
         String id = AddonNames.requireAddonId(Objects.requireNonNull(addon.id(), "addon ID"));
-        if (phase != Phase.COLLECTING) throw new IllegalStateException("GT addon registration closed: " + id);
-        if (ADDONS.putIfAbsent(id, addon) != null) throw new IllegalStateException("Duplicate GT addon ID: " + id);
+        synchronized (GregTechAddons.class) {
+            if (phase != Phase.COLLECTING) throw new IllegalStateException("GT addon registration closed: " + id);
+            if (ADDONS.putIfAbsent(id, addon) != null) throw new IllegalStateException("Duplicate GT addon ID: " + id);
+        }
     }
 
     public static synchronized List<String> registeredIds() {
@@ -73,13 +74,6 @@ public final class GregTechAddons {
 
     public static synchronized Phase phase() {
         return phase;
-    }
-
-    /** Clears registered addons and returns the lifecycle to {@link Phase#COLLECTING}. */
-    static synchronized void resetForTesting() {
-        ADDONS.clear();
-        gregtech.api.addon.recipe.MachineRecipeDocumentTypes.resetForTesting();
-        phase = Phase.COLLECTING;
     }
 
     /**
@@ -95,7 +89,6 @@ public final class GregTechAddons {
         synchronized (GregTechAddons.class) {
             if (phase != Phase.COLLECTING)
                 throw new IllegalStateException("GT addon recipe lifecycle dispatched twice");
-            gregtech.api.addon.recipe.MachineRecipeDocumentTypes.close();
             phase = Phase.DISPATCHING;
             providers = ADDONS.entrySet().stream()
                     .map(entry -> Map.entry(entry.getKey(), entry.getValue()))
