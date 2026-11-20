@@ -2,10 +2,10 @@ package gregtech.content.plant;
 /** Every registered GT wood plank has a six-direction half block. */
 public final class WoodSlabCatalog {
     private WoodSlabCatalog() {}
-    /** LoaderWoodDictionary/PlankEntry identities, including the two retained mahoe spellings. */
+    /** LoaderWoodDictionary/PlankEntry identities. */
     public static String material(String wood) {
         return switch (wood) {
-            case "blue_mahoe", "bluemahoe" -> "BlueMahoe";
+            case "blue_mahoe" -> "BlueMahoe";
             case "bluespruce" -> "BlueSpruce";
             case "cinnamon" -> "Cinnamonwood";
             case "coconut" -> "Coconutwood";
@@ -26,7 +26,6 @@ public final class WoodSlabCatalog {
     }
 
     public static final java.util.List<String> WOODS = java.util.List.of(
-            "bluemahoe",
             "blue_mahoe",
             "bluespruce",
             "cinnamon",

@@ -2,7 +2,7 @@
   "type": "remi:group",
   "name": "emi.group.gt6ce.functional_wood_slabs",
   "contents": [
-    "item:gt6ce:slab_bluemahoe",
+    "item:gt6ce:slab_blue_mahoe",
     "item:gt6ce:slab_bluespruce",
     "item:gt6ce:slab_cinnamon",
     "item:gt6ce:slab_coconut",

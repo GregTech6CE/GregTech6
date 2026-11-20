@@ -9,7 +9,6 @@ public final class IconColumnCatalog {
     public static String[][] all() {
         List<String[]> list = new ArrayList<>();
         for (String wood : new String[] {
-            "bluemahoe",
             "bluespruce",
             "cinnamon",
             "coconut",

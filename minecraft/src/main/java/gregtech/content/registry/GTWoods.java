@@ -75,15 +75,14 @@ public final class GTWoods {
             if (wood.equals("bluespruce")) SLAB_BLUE_SPRUCE = slab;
         }
 //? if >=1.21.1 {
-        /*registerLegacyBeamAliases();
+        /*registerLegacyWoodAliases();
 *///?}
     }
 
 //? if >=1.21.1 {
-    /*// Old beam ids resolve to the stripped-log blocks that replaced them.
-    private static void registerLegacyBeamAliases() {
+    /*private static void registerLegacyWoodAliases() {
+        LegacyWoodIds.BLUE_MAHOE.forEach(GTWoods::alias);
         for (WoodSpecies sp : WoodSpecies.values()) alias("beam_" + sp.id(), "stripped_log_" + sp.id());
-        alias("beam_bluemahoe", "stripped_log_blue_mahoe");
         alias("beam_oak", "minecraft:stripped_oak_log");
         alias("beam_spruce", "minecraft:stripped_spruce_log");
         alias("beam_birch", "minecraft:stripped_birch_log");
@@ -93,8 +92,8 @@ public final class GTWoods {
     }
 
     private static void alias(String from, String to) {
-        var fromId = net.minecraft.resources.ResourceLocation.parse(from.indexOf(':') >= 0 ? from : "gt6ce:" + from);
-        var toId = net.minecraft.resources.ResourceLocation.parse(to.indexOf(':') >= 0 ? to : "gt6ce:" + to);
+        var fromId = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE, from);
+        var toId = net.minecraft.resources.ResourceLocation.parse(to.indexOf(':') >= 0 ? to : REGISTRY_NAMESPACE + ":" + to);
         GTBlocks.BLOCKS.addAlias(fromId, toId);
         GTBlocks.BLOCK_ITEMS.addAlias(fromId, toId);
     }

@@ -2,7 +2,7 @@
   "type": "remi:group",
   "name": "emi.group.gt6ce.functional_planks",
   "contents": [
-    "item:gt6ce:planks_bluemahoe",
+    "item:gt6ce:planks_blue_mahoe",
     "item:gt6ce:planks_bluespruce",
     "item:gt6ce:planks_cinnamon",
     "item:gt6ce:planks_coconut",

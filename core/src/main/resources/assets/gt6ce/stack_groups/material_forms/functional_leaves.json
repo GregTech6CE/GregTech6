@@ -2,7 +2,7 @@
   "type": "remi:group",
   "name": "emi.group.gt6ce.functional_leaves",
   "contents": [
-    "item:gt6ce:leaves_bluemahoe",
+    "item:gt6ce:leaves_blue_mahoe",
     "item:gt6ce:leaves_bluespruce",
     "item:gt6ce:leaves_bluespruce_xmas",
     "item:gt6ce:leaves_cinnamon",
@@ -13,7 +13,6 @@
     "item:gt6ce:leaves_maple_orange",
     "item:gt6ce:leaves_maple_red",
     "item:gt6ce:leaves_maple_yellow",
-    "item:gt6ce:leaves_opaque_bluemahoe",
     "item:gt6ce:leaves_opaque_bluespruce",
     "item:gt6ce:leaves_opaque_bluespruce_xmas",
     "item:gt6ce:leaves_opaque_cinnamon",

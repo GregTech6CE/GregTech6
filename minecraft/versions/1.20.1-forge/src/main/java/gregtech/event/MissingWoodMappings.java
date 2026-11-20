@@ -1,5 +1,8 @@
 package gregtech.event;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
+import gregtech.content.block.wood.LegacyWoodIds;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -9,7 +12,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.MissingMappingsEvent;
 
-/** Forge-side migration from the removed {@code gt6ce:beam_*} ids to stripped logs. */
+/** Resolve retired wood block and item IDs when loading old Forge worlds. */
 @Mod.EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
 public final class MissingWoodMappings {
     private MissingWoodMappings() {}
@@ -21,15 +24,15 @@ public final class MissingWoodMappings {
     }
 
     private static <T> void remap(MissingMappingsEvent event, ResourceKey<Registry<T>> key, Registry<T> registry) {
-        for (MissingMappingsEvent.Mapping<T> mapping : event.getMappings(key, "gt6ce")) {
+        for (MissingMappingsEvent.Mapping<T> mapping : event.getMappings(key, REGISTRY_NAMESPACE)) {
             ResourceLocation target = target(mapping.getKey().getPath());
-            if (target == null) continue;
-            T value = registry.get(target);
-            if (value != null) mapping.remap(value);
+            if (target != null && registry.containsKey(target)) mapping.remap(registry.get(target));
         }
     }
 
     private static ResourceLocation target(String path) {
+        String blueMahoe = LegacyWoodIds.BLUE_MAHOE.get(path);
+        if (blueMahoe != null) return id(blueMahoe);
         if (!path.startsWith("beam_")) return null;
         String wood = path.substring("beam_".length());
         return switch (wood) {
@@ -39,7 +42,6 @@ public final class MissingWoodMappings {
             case "jungle" -> vanilla("stripped_jungle_log");
             case "acacia" -> vanilla("stripped_acacia_log");
             case "darkoak" -> vanilla("stripped_dark_oak_log");
-            case "bluemahoe" -> id("stripped_log_blue_mahoe");
             case "blue_mahoe",
                     "rubber",
                     "maple",
@@ -55,7 +57,7 @@ public final class MissingWoodMappings {
     }
 
     private static ResourceLocation id(String path) {
-        return ResourceLocation.fromNamespaceAndPath("gt6ce", path);
+        return ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE, path);
     }
 
     private static ResourceLocation vanilla(String path) {
