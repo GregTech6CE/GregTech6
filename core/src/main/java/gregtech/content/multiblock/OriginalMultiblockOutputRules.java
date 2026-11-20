@@ -18,7 +18,7 @@ public final class OriginalMultiblockOutputRules {
     public static final StructureOutput LIGHTNING_ENERGY =
             StructureOutput.port(ENERGY_OUTPUT, IoTarget.at(0, -1, 0, TOP));
     public static final StructureOutput TOWER_ITEMS = buffered(ITEM_OUTPUT, 0, 0, 3, FRONT);
-    public static final StructureOutput HEAT_EXCHANGER_FLUID = buffered(FLUID_OUTPUT, 0, -1, 0, TOP);
+    public static final StructureOutput HEAT_EXCHANGER_FLUID = buffered(FLUID_OUTPUT, 0, 0, -1, TOP);
     public static final List<StructureOutput> COKE_FLUIDS = coke();
     public static final List<StructureOutput> BOILER_STEAM = List.of(
             StructureOutput.port(FLUID_OUTPUT, IoTarget.at(0, 3, 1, BOTTOM)),
@@ -46,8 +46,9 @@ public final class OriginalMultiblockOutputRules {
     private static List<StructureOutput> heat() {
         var result = new ArrayList<StructureOutput>();
         // Preserve GT6's order; heat is spent equally at all eight transmitters, including blocked ones.
+        // The controller faces down: local back is world +Y and local up is world -Z.
         for (int[] p : new int[][] {{0, -1}, {-1, 0}, {0, 1}, {1, 0}, {1, -1}, {-1, -1}, {-1, 1}, {1, 1}})
-            result.add(buffered(ENERGY_OUTPUT, p[0], 2, p[1], BOTTOM));
+            result.add(buffered(ENERGY_OUTPUT, p[0], -p[1], 2, BOTTOM));
         return List.copyOf(result);
     }
 }
