@@ -200,6 +200,7 @@ public final class CraftingItemCompositions {
                 var choices = new ArrayList<ItemStack>();
                 for (var holder : BuiltInRegistries.ITEM.getTagOrEmpty(tag))
                     choices.add(new ItemStack(holder.value(), input.getCount()));
+                    if(choices.isEmpty()) return;
                 inputs.add(choices);
             }
         }
