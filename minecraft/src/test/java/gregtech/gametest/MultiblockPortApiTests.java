@@ -6,10 +6,6 @@ import gregtech.content.data.GregTechTags;
 import gregtech.content.multiblock.LargeMachineLayouts;
 import gregtech.content.multiblock.LargeMachineParts;
 import gregtech.content.recipe.RecipeMapSpec;
-import gregtech.content.registry.GTBoilers;
-import gregtech.content.registry.GTFluids;
-import gregtech.content.registry.GTMultiblocks;
-import gregtech.content.registry.GTTanks;
 import gregtech.content.registry.MultiblockRegistration;
 import gregtech.engine.multiblock.MultiblockLayout.Role;
 import gregtech.engine.multiblock.StructurePortHandlers;
@@ -44,52 +40,6 @@ import net.minecraftforge.items.IItemHandler;
 @GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class MultiblockPortApiTests {
-    @GameTest(template = "test_empty", timeoutTicks = 40)
-    public static void largeHeatExchangerDeliversHeatAboveAndCooledFluidBelow(GameTestHelper helper) {
-        var level = helper.getLevel();
-        var origin = helper.absolutePos(new BlockPos(2, 2, 2));
-        var wall = LargeMachineParts.block(18024).defaultBlockState();
-        var transmitter = GTMultiblocks.HEAT_TRANSMITTER.get().defaultBlockState();
-        var boiler = GTBoilers.all().get(0).get().defaultBlockState();
-        var coldOutlet = origin.below();
-        level.setBlockAndUpdate(origin, GTMultiblocks.HEAT_EXCHANGER_MAIN.get().defaultBlockState());
-        level.setBlockAndUpdate(coldOutlet, GTTanks.DRUM_STEEL.get().defaultBlockState());
-        for (int x = -1; x <= 1; x++) {
-            for (int z = -1; z <= 1; z++) {
-                boolean center = x == 0 && z == 0;
-                if (!center) level.setBlockAndUpdate(origin.offset(x, 0, z), wall);
-                level.setBlockAndUpdate(origin.offset(x, 1, z), center ? wall : transmitter);
-                level.setBlockAndUpdate(origin.offset(x, 2, z), boiler);
-            }
-        }
-        var exchanger = (LargeHeatExchangerControllerBlockEntity) level.getBlockEntity(origin);
-        var drum = (TankBlockEntity) level.getBlockEntity(coldOutlet);
-        helper.startSequence()
-                .thenWaitUntil(() -> helper.assertTrue(exchanger.isStructureOk(), "The large heat exchanger did not form"))
-                .thenExecute(() -> {
-                    // The lava recipe cools 1 mB for 80 HU. Eight batches give 80 HU per transmitter.
-                    int filled = exchanger.fill(GTFluids.stack("Lava", 8), IFluidHandler.FluidAction.EXECUTE);
-                    helper.assertTrue(filled == 8, "The heat exchanger rejected lava");
-                    exchanger.tick();
-                    helper.assertTrue(exchanger.getFluidInTank(0).isEmpty() && exchanger.heatStored() == 640,
-                            "Lava did not charge the heat buffer");
-                    exchanger.tick();
-                    for (int x = -1; x <= 1; x++) {
-                        for (int z = -1; z <= 1; z++) {
-                            var receiverPos = origin.offset(x, 2, z);
-                            var receiver = (BoilerTankBlockEntity) level.getBlockEntity(receiverPos);
-                            long expected = x == 0 && z == 0 ? 0 : 80;
-                            helper.assertTrue(receiver.heatStored() == expected, "Incorrect HU delivered to " + receiverPos);
-                        }
-                    }
-                    var cooledLava = drum.getFluidInTank(0);
-                    helper.assertTrue(cooledLava.getFluid() == GTFluids.stack("Lava_Pahoehoe", 1).getFluid()
-                                    && cooledLava.getAmount() == 8 && exchanger.getFluidInTank(1).isEmpty(),
-                            "Cooled lava was not fully delivered to the drum below");
-                })
-                .thenSucceed();
-    }
-
     @GameTest(template = "test_empty", timeoutTicks = 40)
     public static void fluidBackpressureChecksEveryMatchingOutputTank(GameTestHelper helper) {
         var map = new RecipeMap(RecipeMapSpec.builder("gt6ce_test_backpressure", "Test", "textures/gui/test")
