@@ -215,9 +215,9 @@ public abstract class VirtualAssetPackResources extends AbstractPackResources {
     /**
      * Smeltery hulls, molds and hoppers are drawn from the shared hull models and generated geometry,
      * so their static blockstate and inventory JSON only has to hand the bakery a loaded model. Every
-     * smeltery hull and every plain hopper also gets a {@code models/block/blocks/<id>.json} parent so
-     * an addon pack can build on a stable path; the six-way hoppers keep their directional blockstate
-     * and their own inventory parent instead.
+     * smeltery hull and every plain hopper also gets a {@code models/block/blocks/<id>.json} parent that
+     * its inventory model inherits from, so an addon pack can build on a stable path; the six-way
+     * hoppers keep their directional blockstate and their own inventory parent instead.
      *
      * @return how many blocks were written
      */
@@ -232,21 +232,19 @@ public abstract class VirtualAssetPackResources extends AbstractPackResources {
         return emitted;
     }
 
-    /** Stone placeholders plus the iron-block parent model every smeltery hull resolves to. */
+    /** Generated-geometry placeholders whose inventory model inherits from the block's own model. */
     private static <T extends Block> int emitHullPlaceholders(
             Map<ResourceLocation, byte[]> result, List<RegisteredBlock<T>> entries) {
         int emitted = 0;
         for (RegisteredBlock<T> entry : entries) {
             if (!entry.isPresent()) continue;
-            ResourceLocation id = entry.getId();
-            emitStonePlaceholder(result, id);
-            result.put(blockModelLocation(id), IRON_BLOCK_MODEL);
+            emitBlockParentPlaceholder(result, entry.getId());
             emitted++;
         }
         return emitted;
     }
 
-    /** Six-way hoppers keep their directional blockstate; every other hopper gets a stone placeholder. */
+    /** Six-way hoppers keep their directional blockstate; every other hopper gets a generated-geometry placeholder. */
     private static <T extends Block> int emitHopperPlaceholders(
             Map<ResourceLocation, byte[]> result, List<RegisteredBlock<T>> entries) {
         int emitted = 0;
@@ -255,8 +253,7 @@ public abstract class VirtualAssetPackResources extends AbstractPackResources {
             ResourceLocation id = entry.getId();
             SixWayHopper sixWay = SIX_WAY_HOPPERS.get(id.getPath());
             if (sixWay == null) {
-                emitStonePlaceholder(result, id);
-                result.put(blockModelLocation(id), IRON_BLOCK_MODEL);
+                emitBlockParentPlaceholder(result, id);
             } else {
                 result.put(named(id.getNamespace(), "blockstates/" + id.getPath() + ".json"), sixWay.blockstate());
                 result.put(named(id.getNamespace(), "models/item/" + id.getPath() + ".json"), sixWay.itemModel());
@@ -264,6 +261,18 @@ public abstract class VirtualAssetPackResources extends AbstractPackResources {
             emitted++;
         }
         return emitted;
+    }
+
+    /**
+     * Stone blockstate, an inventory model inheriting from the block's own
+     * {@code models/block/blocks/<id>.json} parent, and the iron-block model that parent resolves to.
+     */
+    private static void emitBlockParentPlaceholder(Map<ResourceLocation, byte[]> result, ResourceLocation id) {
+        result.put(named(id.getNamespace(), "blockstates/" + id.getPath() + ".json"), STONE_BLOCKSTATE);
+        result.put(
+                named(id.getNamespace(), "models/item/" + id.getPath() + ".json"),
+                encode("{\"parent\":\"" + id.getNamespace() + ":block/blocks/" + id.getPath() + "\"}"));
+        result.put(blockModelLocation(id), IRON_BLOCK_MODEL);
     }
 
     /**

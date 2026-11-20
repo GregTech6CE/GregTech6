@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -75,9 +76,12 @@ public final class ResourceFilterPackTests {
     /** Stone placeholder documents the generated-geometry blocks resolve to. */
     private static final String STONE_BLOCKSTATE_JSON = "{\"variants\":{\"\":{\"model\":\"minecraft:block/stone\"}}}";
 
-    private static final String STONE_ITEM_JSON = "{\"parent\":\"minecraft:block/stone\"}";
     private static final String IRON_BLOCK_MODEL_JSON =
             "{\"parent\":\"minecraft:block/cube_all\",\"textures\":{\"all\":\"minecraft:block/iron_block\"}}";
+
+    /** Higher-priority resource pack override of a generated {@code models/block/blocks/} parent. */
+    private static final String GOLD_BLOCK_MODEL_JSON =
+            "{\"parent\":\"minecraft:block/cube_all\",\"textures\":{\"all\":\"minecraft:block/gold_block\"}}";
 
     /** Facing order of the six-way hopper blockstates. */
     private static final String[] SIX_WAY_FACINGS = {"down", "up", "north", "south", "west", "east"};
@@ -462,14 +466,24 @@ public final class ResourceFilterPackTests {
         Predicate<ResourceLocation> gtNamespace = id -> GregTechIdentity.REGISTRY_NAMESPACE.equals(id.getNamespace());
         byte[] childModel = "{\"parent\":\"gt6ce:block/blocks/crucible_faucet_bronze\"}"
                 .getBytes(StandardCharsets.UTF_8);
+        byte[] externalChildModel = "{\"parent\":\"gt6ce:item/hopper_lead\"}".getBytes(StandardCharsets.UTF_8);
+        byte[] overriddenHopperModel = GOLD_BLOCK_MODEL_JSON.getBytes(StandardCharsets.UTF_8);
+        ResourceLocation stickModel = ResourceLocation.fromNamespaceAndPath("minecraft", "models/item/stick.json");
         PackResources placeholderPack = placeholderCatalogPack();
-        PackResources childPack = memoryPack(
-                PLACEHOLDER_CHILD_PACK_ID, null, Map.of("models/block/custom_faucet_child.json", childModel));
+        PackResources childPack = namespacedMemoryPack(
+                PLACEHOLDER_CHILD_PACK_ID,
+                null,
+                Map.of(
+                        gtResource("models/block/custom_faucet_child.json"), childModel,
+                        stickModel, externalChildModel,
+                        gtResource("models/block/blocks/hopper_lead.json"), overriddenHopperModel));
 
         try (var manager = new MultiPackResourceManager(
                 PackType.CLIENT_RESOURCES, List.of(placeholderPack, childPack))) {
-            // Every generated block resolves the one shared iron-block parent model.
+            // Every generated block resolves the one shared iron-block parent model, except the
+            // parent the higher pack overrides.
             var blockModelsListed = manager.listResources("models/block/blocks", gtNamespace);
+            var itemModels = manager.listResources("models/item", gtNamespace);
             helper.assertTrue(
                     blockModelsListed.size() == blockModels.size(),
                     "Expected " + blockModels.size() + " models/block/blocks documents, got "
@@ -477,36 +491,54 @@ public final class ResourceFilterPackTests {
             for (String id : blockModels) {
                 ResourceLocation model = gtResource("models/block/blocks/" + id + ".json");
                 helper.assertTrue(blockModelsListed.containsKey(model), "Missing generated block model " + model);
+                String expectedPack = "hopper_lead".equals(id) ? PLACEHOLDER_CHILD_PACK_ID : PLACEHOLDER_PACK_ID;
                 helper.assertTrue(
-                        PLACEHOLDER_PACK_ID.equals(listedPackId(blockModelsListed, model)),
-                        "Generated block model " + model + " must come from the placeholder pack");
+                        expectedPack.equals(listedPackId(blockModelsListed, model)),
+                        "Generated block model " + model + " must come from the " + expectedPack + " pack");
             }
             ResourceLocation faucetParent = gtResource("models/block/blocks/crucible_faucet_bronze.json");
             helper.assertTrue(
                     IRON_BLOCK_MODEL_JSON.equals(readResource(helper, manager, faucetParent)),
                     "Sampled faucet parent must be the iron-block model");
             assertEnumeratedMatches(helper, blockModelsListed, faucetParent, IRON_BLOCK_MODEL_JSON);
+            ResourceLocation faucetItem = gtResource("models/item/crucible_faucet_bronze.json");
+            helper.assertTrue(
+                    "gt6ce:block/blocks/crucible_faucet_bronze".equals(modelParent(helper, manager, faucetItem)),
+                    "Smeltery inventory model " + faucetItem + " must inherit from its generated block model");
 
             // An addon child model reaches the placeholder pack through its parent reference.
             ResourceLocation child = gtResource("models/block/custom_faucet_child.json");
             String childJson = readResource(helper, manager, child);
-            String parent = JsonParser.parseString(childJson).getAsJsonObject().get("parent").getAsString();
+            List<ResourceLocation> faucetChain =
+                    assertModelChain(helper, manager, child, "gt6ce:block/blocks/crucible_faucet_bronze");
             helper.assertTrue(
-                    "gt6ce:block/blocks/crucible_faucet_bronze".equals(parent),
-                    "Child model must reference the generated faucet parent, got: " + parent);
-            ResourceLocation parentId = ResourceLocation.tryParse(parent);
-            helper.assertTrue(parentId != null, "Child model parent must parse, got: " + parent);
-            if (parentId != null) {
-                ResourceLocation parentResource = ResourceLocation.fromNamespaceAndPath(
-                        parentId.getNamespace(), "models/" + parentId.getPath() + ".json");
-                helper.assertTrue(
-                        IRON_BLOCK_MODEL_JSON.equals(readResource(helper, manager, parentResource)),
-                        "Child model parent chain must resolve to the iron-block model");
-            }
+                    IRON_BLOCK_MODEL_JSON.equals(readResource(helper, manager, faucetChain.get(1))),
+                    "Child model parent chain must resolve to the iron-block model");
             var blockModelsOfChild = manager.listResources("models/block", gtNamespace);
             helper.assertTrue(
                     blockModelsOfChild.containsKey(child), "Listing must contain the addon child model " + child);
             assertEnumeratedMatches(helper, blockModelsOfChild, child, childJson);
+
+            // An item model outside the GregTech namespace walks the same inheritance chain, whose
+            // last link the higher pack overrides.
+            List<ResourceLocation> hopperChain = assertModelChain(
+                    helper, manager, stickModel, "gt6ce:item/hopper_lead", "gt6ce:block/blocks/hopper_lead");
+            ResourceLocation hopperItemModel = hopperChain.get(1);
+            helper.assertTrue(
+                    PLACEHOLDER_PACK_ID.equals(listedPackId(itemModels, hopperItemModel)),
+                    "Placeholder inventory model " + hopperItemModel + " must come from the placeholder pack");
+            assertEnumeratedMatches(
+                    helper, itemModels, hopperItemModel, readResource(helper, manager, hopperItemModel));
+            ResourceLocation hopperBlockModel = hopperChain.get(2);
+            String hopperBlockJson = readResource(helper, manager, hopperBlockModel);
+            helper.assertTrue(
+                    GOLD_BLOCK_MODEL_JSON.equals(hopperBlockJson),
+                    "Overridden hopper parent model must serve the higher pack's model instead of the"
+                            + " iron-block model, got: " + hopperBlockJson);
+            helper.assertTrue(
+                    PLACEHOLDER_CHILD_PACK_ID.equals(listedPackId(blockModelsListed, hopperBlockModel)),
+                    "Overridden hopper parent model " + hopperBlockModel + " must be listed from the higher pack");
+            assertEnumeratedMatches(helper, blockModelsListed, hopperBlockModel, hopperBlockJson);
 
             // Six-way hoppers keep their directional blockstate and their own inventory parent.
             for (String id : SIX_WAY_HOPPER_IDS) {
@@ -530,29 +562,30 @@ public final class ResourceFilterPackTests {
                         "Six-way hopper " + id + " must stay out of the models/block/blocks listing");
             }
 
-            // Every other hopper keeps the stone placeholders plus the iron-block parent model.
+            // Every other hopper keeps the stone blockstate and an inventory model inheriting from
+            // its own generated block model.
             for (String id : List.of("hopper_lead", "queue_hopper_lead")) {
                 helper.assertTrue(hoppers.contains(id), "Expected a registered hopper " + id);
                 String blockstate = readResource(helper, manager, gtResource("blockstates/" + id + ".json"));
                 helper.assertTrue(
                         STONE_BLOCKSTATE_JSON.equals(blockstate),
-                        "Plain hopper " + id + " must keep the stone blockstate");
+                        "Plain hopper " + id + " must keep the stone blockstate, got: " + blockstate);
                 String item = readResource(helper, manager, gtResource("models/item/" + id + ".json"));
+                String expectedItem = "{\"parent\":\"gt6ce:block/blocks/" + id + "\"}";
                 helper.assertTrue(
-                        STONE_ITEM_JSON.equals(item),
-                        "Plain hopper " + id + " must keep the stone inventory parent");
-                helper.assertTrue(
-                        IRON_BLOCK_MODEL_JSON.equals(
-                                readResource(helper, manager, gtResource("models/block/blocks/" + id + ".json"))),
-                        "Plain hopper " + id + " must resolve the iron-block parent model");
+                        expectedItem.equals(item),
+                        "Plain hopper " + id + " must inherit from its generated block model, got: " + item);
             }
+            ResourceLocation unoverriddenHopperModel = gtResource("models/block/blocks/queue_hopper_lead.json");
+            helper.assertTrue(
+                    IRON_BLOCK_MODEL_JSON.equals(readResource(helper, manager, unoverriddenHopperModel)),
+                    "Un-overridden plain hopper must resolve the iron-block parent model");
 
             // Exact placeholder counts: one blockstate and one inventory parent per block, and one
             // parent model per smeltery hull and plain hopper.
             List<String> placeholders = new ArrayList<>(hulls);
             placeholders.addAll(hoppers);
             var blockstates = manager.listResources("blockstates", gtNamespace);
-            var itemModels = manager.listResources("models/item", gtNamespace);
             int placeholderStates = 0;
             int placeholderItems = 0;
             for (String id : placeholders) {
@@ -656,6 +689,48 @@ public final class ResourceFilterPackTests {
         }
     }
 
+    /** The model JSON a model reference such as {@code gt6ce:item/hopper_lead} resolves to. */
+    @Nullable
+    private static ResourceLocation modelJsonOf(String modelReference) {
+        ResourceLocation reference = ResourceLocation.tryParse(modelReference);
+        if (reference == null) return null;
+        return ResourceLocation.fromNamespaceAndPath(
+                reference.getNamespace(), "models/" + reference.getPath() + ".json");
+    }
+
+    /** The {@code parent} reference of the model JSON served for {@code id}. */
+    private static String modelParent(GameTestHelper helper, ResourceManager manager, ResourceLocation id)
+            throws IOException {
+        var model = JsonParser.parseString(readResource(helper, manager, id)).getAsJsonObject();
+        var parent = model.get("parent");
+        helper.assertTrue(parent != null, "Model " + id + " must declare a parent");
+        return parent == null ? "" : parent.getAsString();
+    }
+
+    /**
+     * Asserts that the model served for {@code start} inherits through {@code expectedParents} and
+     * returns every model of the chain, beginning with {@code start}.
+     */
+    private static List<ResourceLocation> assertModelChain(
+            GameTestHelper helper, ResourceManager manager, ResourceLocation start, String... expectedParents)
+            throws IOException {
+        List<ResourceLocation> chain = new ArrayList<>();
+        ResourceLocation current = start;
+        for (String expectedParent : expectedParents) {
+            chain.add(current);
+            String parent = modelParent(helper, manager, current);
+            helper.assertTrue(
+                    expectedParent.equals(parent),
+                    "Model " + current + " must inherit from " + expectedParent + ", got: " + parent);
+            ResourceLocation next = modelJsonOf(parent);
+            helper.assertTrue(next != null, "Model parent must parse, got: " + parent);
+            if (next == null) return chain;
+            current = next;
+        }
+        chain.add(current);
+        return chain;
+    }
+
     private static PackResources virtualCatalogPack() {
 //? if >=1.21.1 {
         /*return VirtualAssetPackResources.catalogOnly(new PackLocationInfo(
@@ -707,8 +782,17 @@ public final class ResourceFilterPackTests {
         return json.getBytes(StandardCharsets.UTF_8);
     }
 
+    /** A pack serving {@code files} under the GregTech asset namespace. */
     private static PackResources memoryPack(
             String id, @Nullable byte[] packMcmeta, Map<String, byte[]> files) {
+        Map<ResourceLocation, byte[]> namespaced = new LinkedHashMap<>();
+        files.forEach((rel, bytes) -> namespaced.put(gtResource(rel), bytes));
+        return namespacedMemoryPack(id, packMcmeta, namespaced);
+    }
+
+    /** A pack serving {@code files} under the namespaces their resource locations declare. */
+    private static PackResources namespacedMemoryPack(
+            String id, @Nullable byte[] packMcmeta, Map<ResourceLocation, byte[]> files) {
 //? if >=1.21.1 {
         /*return new InMemoryPack(
                 new PackLocationInfo(id, Component.literal(id), PackSource.BUILT_IN, Optional.empty()),
@@ -722,21 +806,31 @@ public final class ResourceFilterPackTests {
     private static final class InMemoryPack extends AbstractPackResources {
         @Nullable
         private final byte[] packMcmeta;
-        private final Map<String, byte[]> files;
+        private final Map<ResourceLocation, byte[]> files;
+        private final Set<String> namespaces;
 
 //? if >=1.21.1 {
-        /*private InMemoryPack(PackLocationInfo info, @Nullable byte[] packMcmeta, Map<String, byte[]> files) {
+        /*private InMemoryPack(PackLocationInfo info, @Nullable byte[] packMcmeta, Map<ResourceLocation, byte[]> files) {
             super(info);
             this.packMcmeta = packMcmeta;
             this.files = Map.copyOf(files);
+            this.namespaces = namespacesOf(this.files);
         }
 *///?} else {
-        private InMemoryPack(String id, @Nullable byte[] packMcmeta, Map<String, byte[]> files) {
+        private InMemoryPack(String id, @Nullable byte[] packMcmeta, Map<ResourceLocation, byte[]> files) {
             super(id, true);
             this.packMcmeta = packMcmeta;
             this.files = Map.copyOf(files);
+            this.namespaces = namespacesOf(this.files);
         }
 //?}
+
+        /** Namespaces served by the pack, derived from the stored resource locations. */
+        private static Set<String> namespacesOf(Map<ResourceLocation, byte[]> files) {
+            Set<String> namespaces = new HashSet<>();
+            files.keySet().forEach(id -> namespaces.add(id.getNamespace()));
+            return Set.copyOf(namespaces);
+        }
 
         @Override
         @Nullable
@@ -750,36 +844,25 @@ public final class ResourceFilterPackTests {
         @Override
         @Nullable
         public IoSupplier<InputStream> getResource(PackType type, ResourceLocation id) {
-            if (type != PackType.CLIENT_RESOURCES
-                    || !GregTechIdentity.REGISTRY_NAMESPACE.equals(id.getNamespace())) {
-                return null;
-            }
-            byte[] bytes = files.get(id.getPath());
+            if (type != PackType.CLIENT_RESOURCES) return null;
+            byte[] bytes = files.get(id);
             return bytes == null ? null : () -> new ByteArrayInputStream(bytes);
         }
 
         @Override
         public void listResources(PackType type, String namespace, String path, ResourceOutput output) {
-            if (type != PackType.CLIENT_RESOURCES
-                    || !GregTechIdentity.REGISTRY_NAMESPACE.equals(namespace)) {
-                return;
-            }
+            if (type != PackType.CLIENT_RESOURCES) return;
             String prefix = path.isEmpty() ? "" : path + "/";
-            files.forEach((rel, bytes) -> {
-                if (rel.startsWith(prefix)) {
-                    output.accept(
-                            ResourceLocation.fromNamespaceAndPath(namespace, rel),
-                            () -> new ByteArrayInputStream(bytes));
+            files.forEach((id, bytes) -> {
+                if (id.getNamespace().equals(namespace) && id.getPath().startsWith(prefix)) {
+                    output.accept(id, () -> new ByteArrayInputStream(bytes));
                 }
             });
         }
 
         @Override
         public Set<String> getNamespaces(PackType type) {
-            if (type == PackType.CLIENT_RESOURCES && !files.isEmpty()) {
-                return Set.of(GregTechIdentity.REGISTRY_NAMESPACE);
-            }
-            return Set.of();
+            return type == PackType.CLIENT_RESOURCES ? namespaces : Set.of();
         }
 
         @Override
