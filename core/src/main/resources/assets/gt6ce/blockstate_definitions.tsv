@@ -726,13 +726,11 @@ large_tungsten_tank_main_valve	FACING_6_ROT	gt6ce:block/machine/multiblock/large
 large_tungstensteel_crucible	SINGLETON	gt6ce:block/machine/multiblock/large_tungstensteel_crucible
 large_tungstensteel_tank_main_valve	FACING_6_ROT	gt6ce:block/machine/multiblock/large_tungstensteel_tank_main_valve
 lead_wall	SINGLETON	gt6ce:block/machine/multiblock/lead_wall
-leaves_bluemahoe	SINGLETON	gt6ce:block/iconsets/leaves_bluemahoe
 leaves_bluespruce_xmas	SINGLETON	gt6ce:block/iconsets/leaves_bluespruce_xmas
 leaves_maple_brown	SINGLETON	gt6ce:block/iconsets/leaves_maple_brown
 leaves_maple_orange	SINGLETON	gt6ce:block/iconsets/leaves_maple_orange
 leaves_maple_red	SINGLETON	gt6ce:block/iconsets/leaves_maple_red
 leaves_maple_yellow	SINGLETON	gt6ce:block/iconsets/leaves_maple_yellow
-leaves_opaque_bluemahoe	SINGLETON	gt6ce:block/iconsets/leaves_opaque_bluemahoe
 leaves_opaque_bluespruce	SINGLETON	gt6ce:block/iconsets/leaves_opaque_bluespruce
 leaves_opaque_bluespruce_xmas	SINGLETON	gt6ce:block/iconsets/leaves_opaque_bluespruce_xmas
 leaves_opaque_cinnamon	SINGLETON	gt6ce:block/iconsets/leaves_opaque_cinnamon
@@ -792,7 +790,6 @@ locker_tungsten	FACING_4_ROT	gt6ce:block/machine/storage/locker
 locker_tungsten_carbide	FACING_4_ROT	gt6ce:block/machine/storage/locker
 locker_tungstensteel	FACING_4_ROT	gt6ce:block/machine/storage/locker
 locker_ultimet	FACING_4_ROT	gt6ce:block/machine/storage/locker
-log_bluemahoe	AXIS_2	gt6ce:block/iconsets/log_bluemahoe_horizontal;gt6ce:block/iconsets/log_bluemahoe
 log_bluespruce	AXIS_2	gt6ce:block/iconsets/log_bluespruce_horizontal;gt6ce:block/iconsets/log_bluespruce
 log_cinnamon	AXIS_2	gt6ce:block/iconsets/log_cinnamon_horizontal;gt6ce:block/iconsets/log_cinnamon
 log_coconut	AXIS_2	gt6ce:block/iconsets/log_coconut_horizontal;gt6ce:block/iconsets/log_coconut
@@ -970,7 +967,6 @@ panel_wood	FACING_6_ROT	gt6ce:block/misc/panel_wood
 piston_idle	SINGLETON	gt6ce:block/iconsets/piston_idle
 piston_moving	SINGLETON	gt6ce:block/iconsets/piston_moving
 planks_blue_mahoe	SINGLETON	gt6ce:block/wood/planks_blue_mahoe
-planks_bluemahoe	SINGLETON	gt6ce:block/iconsets/planks_bluemahoe
 planks_bluespruce	SINGLETON	gt6ce:block/iconsets/planks_bluespruce
 planks_cinnamon	SINGLETON	gt6ce:block/iconsets/planks_cinnamon
 planks_coconut	SINGLETON	gt6ce:block/iconsets/planks_coconut
@@ -1116,7 +1112,6 @@ sand_granite_magnetite	SINGLETON	gt6ce:block/iconsets/sand_granite_magnetite
 sand_magnetite	SINGLETON	gt6ce:block/iconsets/sand_magnetite
 sandwich_block	SINGLETON	gt6ce:block/decoration/sandwich_block
 sap_bag	FACING_4_ROT	gt6ce:block/tool/sap_bag
-sapling_large_bluemahoe	SINGLETON	gt6ce:block/iconsets/sapling_large_bluemahoe
 sapling_large_bluespruce	SINGLETON	gt6ce:block/iconsets/sapling_large_bluespruce
 sapling_large_cinnamon	SINGLETON	gt6ce:block/iconsets/sapling_large_cinnamon
 sapling_large_coconut	SINGLETON	gt6ce:block/iconsets/sapling_large_coconut
@@ -1125,7 +1120,6 @@ sapling_large_maple	SINGLETON	gt6ce:block/iconsets/sapling_large_maple
 sapling_large_rainbowood	SINGLETON	gt6ce:block/iconsets/sapling_large_rainbowood
 sapling_large_rubber	SINGLETON	gt6ce:block/iconsets/sapling_large_rubber
 sapling_large_willow	SINGLETON	gt6ce:block/iconsets/sapling_large_willow
-sapling_small_bluemahoe	SINGLETON	gt6ce:block/iconsets/sapling_small_bluemahoe
 sapling_small_bluespruce	SINGLETON	gt6ce:block/iconsets/sapling_small_bluespruce
 sapling_small_cinnamon	SINGLETON	gt6ce:block/iconsets/sapling_small_cinnamon
 sapling_small_coconut	SINGLETON	gt6ce:block/iconsets/sapling_small_coconut

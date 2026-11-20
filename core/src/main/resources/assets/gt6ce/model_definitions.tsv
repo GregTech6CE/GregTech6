@@ -288,7 +288,6 @@ block/iconsets/leaves_maple_brown	minecraft:block/leaves	minecraft:cutout_mipped
 block/iconsets/leaves_maple_orange	minecraft:block/leaves	minecraft:cutout_mipped	all=gt6ce:block/iconsets/leaves_maple_orange
 block/iconsets/leaves_maple_red	minecraft:block/leaves	minecraft:cutout_mipped	all=gt6ce:block/iconsets/leaves_maple_red
 block/iconsets/leaves_maple_yellow	minecraft:block/leaves	minecraft:cutout_mipped	all=gt6ce:block/iconsets/leaves_maple_yellow
-block/iconsets/leaves_opaque_bluemahoe	minecraft:block/cube_all		all=gt6ce:block/iconsets/leaves_opaque_bluemahoe
 block/iconsets/leaves_opaque_bluespruce	minecraft:block/cube_all		all=gt6ce:block/iconsets/leaves_opaque_bluespruce
 block/iconsets/leaves_opaque_bluespruce_xmas	minecraft:block/cube_all		all=gt6ce:block/iconsets/leaves_opaque_bluespruce_xmas
 block/iconsets/leaves_opaque_cinnamon	minecraft:block/cube_all		all=gt6ce:block/iconsets/leaves_opaque_cinnamon
@@ -305,8 +304,6 @@ block/iconsets/leaves_opaque_willow	minecraft:block/cube_all		all=gt6ce:block/ic
 block/iconsets/leaves_rainbowood	minecraft:block/leaves	minecraft:cutout_mipped	all=gt6ce:block/iconsets/leaves_rainbowood
 block/iconsets/leaves_rubber	minecraft:block/leaves	minecraft:cutout_mipped	all=gt6ce:block/iconsets/leaves_rubber
 block/iconsets/leaves_willow	minecraft:block/leaves	minecraft:cutout_mipped	all=gt6ce:block/iconsets/leaves_willow
-block/iconsets/log_bluemahoe	minecraft:block/cube_column		end=gt6ce:block/iconsets/log_top_bluemahoe;side=gt6ce:block/iconsets/log_side_bluemahoe
-block/iconsets/log_bluemahoe_horizontal	minecraft:block/cube_column_horizontal		end=gt6ce:block/iconsets/log_top_bluemahoe;side=gt6ce:block/iconsets/log_side_bluemahoe
 block/iconsets/log_bluespruce	minecraft:block/cube_column		end=gt6ce:block/iconsets/log_top_bluespruce;side=gt6ce:block/iconsets/log_side_bluespruce
 block/iconsets/log_bluespruce_horizontal	minecraft:block/cube_column_horizontal		end=gt6ce:block/iconsets/log_top_bluespruce;side=gt6ce:block/iconsets/log_side_bluespruce
 block/iconsets/log_cinnamon	minecraft:block/cube_column		end=gt6ce:block/iconsets/log_top_cinnamon;side=gt6ce:block/iconsets/log_side_cinnamon
@@ -784,12 +781,6 @@ block/wood_slabs/blue_mahoe_north	gt6ce:block/wood_slabs/template_north		all=gt6
 block/wood_slabs/blue_mahoe_south	gt6ce:block/wood_slabs/template_south		all=gt6ce:block/iconsets/planks_bluemahoe;particle=gt6ce:block/iconsets/planks_bluemahoe
 block/wood_slabs/blue_mahoe_up	gt6ce:block/wood_slabs/template_up		all=gt6ce:block/iconsets/planks_bluemahoe;particle=gt6ce:block/iconsets/planks_bluemahoe
 block/wood_slabs/blue_mahoe_west	gt6ce:block/wood_slabs/template_west		all=gt6ce:block/iconsets/planks_bluemahoe;particle=gt6ce:block/iconsets/planks_bluemahoe
-block/wood_slabs/bluemahoe_down	gt6ce:block/wood_slabs/template_down		all=gt6ce:block/iconsets/planks_bluemahoe;particle=gt6ce:block/iconsets/planks_bluemahoe
-block/wood_slabs/bluemahoe_east	gt6ce:block/wood_slabs/template_east		all=gt6ce:block/iconsets/planks_bluemahoe;particle=gt6ce:block/iconsets/planks_bluemahoe
-block/wood_slabs/bluemahoe_north	gt6ce:block/wood_slabs/template_north		all=gt6ce:block/iconsets/planks_bluemahoe;particle=gt6ce:block/iconsets/planks_bluemahoe
-block/wood_slabs/bluemahoe_south	gt6ce:block/wood_slabs/template_south		all=gt6ce:block/iconsets/planks_bluemahoe;particle=gt6ce:block/iconsets/planks_bluemahoe
-block/wood_slabs/bluemahoe_up	gt6ce:block/wood_slabs/template_up		all=gt6ce:block/iconsets/planks_bluemahoe;particle=gt6ce:block/iconsets/planks_bluemahoe
-block/wood_slabs/bluemahoe_west	gt6ce:block/wood_slabs/template_west		all=gt6ce:block/iconsets/planks_bluemahoe;particle=gt6ce:block/iconsets/planks_bluemahoe
 block/wood_slabs/bluespruce_down	gt6ce:block/wood_slabs/template_down		all=gt6ce:block/iconsets/planks_bluespruce;particle=gt6ce:block/iconsets/planks_bluespruce
 block/wood_slabs/bluespruce_east	gt6ce:block/wood_slabs/template_east		all=gt6ce:block/iconsets/planks_bluespruce;particle=gt6ce:block/iconsets/planks_bluespruce
 block/wood_slabs/bluespruce_north	gt6ce:block/wood_slabs/template_north		all=gt6ce:block/iconsets/planks_bluespruce;particle=gt6ce:block/iconsets/planks_bluespruce
@@ -2840,7 +2831,6 @@ item/lead_acid_cell_filled	minecraft:item/generated		layer0=gt6ce:item/technolog
 item/lead_key	minecraft:item/generated		layer0=gt6ce:item/randomtools/lead_key
 item/lead_wall	gt6ce:block/machine/multiblock/lead_wall		
 item/leaves_blue_mahoe	gt6ce:block/iconsets/leaves_bluemahoe		
-item/leaves_bluemahoe	gt6ce:block/iconsets/leaves_bluemahoe		
 item/leaves_bluespruce	gt6ce:block/iconsets/leaves_bluespruce		
 item/leaves_bluespruce_xmas	gt6ce:block/iconsets/leaves_bluespruce_xmas		
 item/leaves_cinnamon	gt6ce:block/iconsets/leaves_cinnamon		
@@ -2851,7 +2841,6 @@ item/leaves_maple_brown	gt6ce:block/iconsets/leaves_maple_brown
 item/leaves_maple_orange	gt6ce:block/iconsets/leaves_maple_orange		
 item/leaves_maple_red	gt6ce:block/iconsets/leaves_maple_red		
 item/leaves_maple_yellow	gt6ce:block/iconsets/leaves_maple_yellow		
-item/leaves_opaque_bluemahoe	gt6ce:block/iconsets/leaves_opaque_bluemahoe		
 item/leaves_opaque_bluespruce	gt6ce:block/iconsets/leaves_opaque_bluespruce		
 item/leaves_opaque_bluespruce_xmas	gt6ce:block/iconsets/leaves_opaque_bluespruce_xmas		
 item/leaves_opaque_cinnamon	gt6ce:block/iconsets/leaves_opaque_cinnamon		
@@ -2933,7 +2922,6 @@ item/locker_tungsten_carbide	gt6ce:block/machine/storage/locker
 item/locker_tungstensteel	gt6ce:block/machine/storage/locker		
 item/locker_ultimet	gt6ce:block/machine/storage/locker		
 item/log_blue_mahoe	gt6ce:block/wood/log_blue_mahoe		
-item/log_bluemahoe	gt6ce:block/iconsets/log_bluemahoe		
 item/log_bluespruce	gt6ce:block/iconsets/log_bluespruce		
 item/log_cinnamon	gt6ce:block/iconsets/log_cinnamon		
 item/log_coconut	gt6ce:block/iconsets/log_coconut		
@@ -3388,7 +3376,6 @@ item/piston_moving	gt6ce:block/iconsets/piston_moving
 item/pizza_hawaii	minecraft:item/generated		layer0=gt6ce:item/food/pizza_hawaii
 item/pizza_margherita	minecraft:item/generated		layer0=gt6ce:item/food/pizza_margherita
 item/planks_blue_mahoe	gt6ce:block/iconsets/planks_bluemahoe		
-item/planks_bluemahoe	gt6ce:block/iconsets/planks_bluemahoe		
 item/planks_bluespruce	gt6ce:block/iconsets/planks_bluespruce		
 item/planks_cinnamon	gt6ce:block/iconsets/planks_cinnamon		
 item/planks_coconut	gt6ce:block/iconsets/planks_coconut		
@@ -3731,7 +3718,6 @@ item/sapling_bluespruce	minecraft:item/generated		layer0=gt6ce:block/iconsets/sa
 item/sapling_cinnamon	minecraft:item/generated		layer0=gt6ce:block/iconsets/sapling_small_cinnamon
 item/sapling_coconut	minecraft:item/generated		layer0=gt6ce:block/iconsets/sapling_small_coconut
 item/sapling_hazel	minecraft:item/generated		layer0=gt6ce:block/iconsets/sapling_small_hazel
-item/sapling_large_bluemahoe	minecraft:item/generated		layer0=gt6ce:block/iconsets/sapling_large_bluemahoe
 item/sapling_large_bluespruce	minecraft:item/generated		layer0=gt6ce:block/iconsets/sapling_large_bluespruce
 item/sapling_large_cinnamon	minecraft:item/generated		layer0=gt6ce:block/iconsets/sapling_large_cinnamon
 item/sapling_large_coconut	minecraft:item/generated		layer0=gt6ce:block/iconsets/sapling_large_coconut
@@ -3743,7 +3729,6 @@ item/sapling_large_willow	minecraft:item/generated		layer0=gt6ce:block/iconsets/
 item/sapling_maple	minecraft:item/generated		layer0=gt6ce:block/iconsets/sapling_small_maple
 item/sapling_rainbowood	minecraft:item/generated		layer0=gt6ce:block/iconsets/sapling_small_rainbowood
 item/sapling_rubber	minecraft:item/generated		layer0=gt6ce:block/iconsets/sapling_small_rubber
-item/sapling_small_bluemahoe	minecraft:item/generated		layer0=gt6ce:block/iconsets/sapling_small_bluemahoe
 item/sapling_small_bluespruce	minecraft:item/generated		layer0=gt6ce:block/iconsets/sapling_small_bluespruce
 item/sapling_small_cinnamon	minecraft:item/generated		layer0=gt6ce:block/iconsets/sapling_small_cinnamon
 item/sapling_small_coconut	minecraft:item/generated		layer0=gt6ce:block/iconsets/sapling_small_coconut
@@ -3852,7 +3837,6 @@ item/single_use_saw	minecraft:item/generated		layer0=gt6ce:item/randomtools/sing
 item/single_use_screwdriver	minecraft:item/generated		layer0=gt6ce:item/randomtools/single_use_screwdriver
 item/single_use_wrench	minecraft:item/generated		layer0=gt6ce:item/randomtools/single_use_wrench
 item/slab_blue_mahoe	gt6ce:block/wood_slabs/blue_mahoe_down		
-item/slab_bluemahoe	gt6ce:block/wood_slabs/bluemahoe_down		
 item/slab_bluespruce	gt6ce:block/wood_slabs/bluespruce_down		
 item/slab_cinnamon	gt6ce:block/wood_slabs/cinnamon_down		
 item/slab_coconut	gt6ce:block/wood_slabs/coconut_down		

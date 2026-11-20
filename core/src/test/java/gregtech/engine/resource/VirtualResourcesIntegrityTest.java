@@ -48,12 +48,12 @@ final class VirtualResourcesIntegrityTest {
     private static final int MAX_STATIC_JSON = 450;
     private static final int EXPECTED_STATIC_MODELS = 319;
     private static final int EXPECTED_STATIC_BLOCKSTATES = 100;
-    private static final int EXPECTED_VIRTUAL_MODELS = 6624;
-    private static final int EXPECTED_MODEL_TSV_ROWS = 4394;
-    private static final int EXPECTED_VIRTUAL_BLOCKSTATES = 2187;
-    private static final int EXPECTED_BLOCKSTATE_TSV_ROWS = 1251;
+    private static final int EXPECTED_VIRTUAL_MODELS = 6608;
+    private static final int EXPECTED_MODEL_TSV_ROWS = 4378;
+    private static final int EXPECTED_VIRTUAL_BLOCKSTATES = 2180;
+    private static final int EXPECTED_BLOCKSTATE_TSV_ROWS = 1245;
     private static final int EXPECTED_BLOCKSTATE_KINDS = 6;
-    private static final int EXPECTED_FAMILY_BLOCKSTATES = 290;
+    private static final int EXPECTED_FAMILY_BLOCKSTATES = 289;
     private static final int EXPECTED_STACK_GROUPS = 464;
     private static final int EXPECTED_REGEX_GROUPS = 45;
     private static final int EXPECTED_TAG_GROUPS = 111;
