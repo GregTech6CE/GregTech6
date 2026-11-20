@@ -14,8 +14,8 @@ Checks:
   * static publish exclusions exist and name a shipped recipe
   * `--converted DIR`: one native output per published recipe and item tag, no stale or
     legacy-shaped file, and every converted tag keeps its source values
-  * gt6ce: item ids that have no shipped, table, family or procedural model or blockstate
-    (warning only)
+  * gt6ce: item ids that have no shipped, table, family, procedural or placeholder model or
+    blockstate (warning only)
 
 Exit code is 0 unless --strict is given and errors were found.
 """
@@ -55,6 +55,19 @@ FAMILY_BLOCKSTATES = Path("core/src/main/java/gregtech/engine/resource/FamilyBlo
 SENSOR_CATALOG = Path("core/src/main/java/gregtech/engine/sensor/SensorCatalog.java")
 TRACK_CATALOG = Path("core/src/main/java/gregtech/content/transport/TrackCatalog.java")
 WOOD_SLAB_CATALOG = Path("core/src/main/java/gregtech/content/plant/WoodSlabCatalog.java")
+
+# Java tables that drive the client pack placeholders for smeltery components and hoppers.
+SMELTERY_DEFINITIONS = Path("core/src/main/java/gregtech/engine/machine/OriginalSmelteryDefinitions.java")
+HOPPER_CATALOG = Path("core/src/main/java/gregtech/content/transport/HopperCatalog.java")
+
+# One component family per crucible tier; `mold_` must not swallow the `mold_basin_` rows.
+SMELTERY_COMPONENT_PREFIXES = (
+    "smelting_crucible_",
+    "mold_",
+    "mold_basin_",
+    "crucible_crossing_",
+    "crucible_faucet_",
+)
 
 KNOWN_TYPES = {
     "minecraft:crafting_shaped",
@@ -205,6 +218,14 @@ def require_entries(values, family: str):
     """Rejects an empty extraction so a renamed table fails the audit instead of passing it."""
     if not values:
         raise RuntimeError(f"no entries extracted for {family}")
+    return values
+
+
+def require_unique(values, family: str):
+    """Rejects a table that lists one id twice, which would collapse into a single model."""
+    duplicates = sorted(value for value, count in Counter(values).items() if count > 1)
+    if duplicates:
+        raise RuntimeError(f"duplicate entries in {family}: {duplicates}")
     return values
 
 
@@ -372,6 +393,57 @@ def family_blockstate_ids():
     return {f"gt6ce:{stem}" for stem in stems}
 
 
+def smeltery_component_family(stem: str) -> str:
+    """Longest smeltery component prefix of `stem`, so `mold_basin_` wins over `mold_`."""
+    matches = [prefix for prefix in SMELTERY_COMPONENT_PREFIXES if stem.startswith(prefix)]
+    if not matches:
+        raise RuntimeError(f"unexpected smeltery component id: {stem}")
+    return max(matches, key=len)
+
+
+def placeholder_model_ids():
+    """Item ids whose models and blockstates the client pack renders from placeholder templates.
+
+    The smeltery and hopper tables are the source of truth, so a table that loses entries or a
+    component family that stops being emitted fails the audit instead of silently dropping the
+    check.
+    """
+    smeltery = require_unique(
+        require_entries(
+            re.findall(r'add\(\s*"([a-z0-9_]+)"', java_source(SMELTERY_DEFINITIONS)),
+            "OriginalSmelteryDefinitions",
+        ),
+        "OriginalSmelteryDefinitions",
+    )
+    families = Counter(smeltery_component_family(stem) for stem in smeltery)
+    if set(families) != set(SMELTERY_COMPONENT_PREFIXES):
+        raise RuntimeError(f"smeltery component families changed: {sorted(families)}")
+    sizes = set(families.values())
+    if len(sizes) != 1 or 0 in sizes:
+        raise RuntimeError(f"uneven smeltery component families: {dict(sorted(families.items()))}")
+
+    hoppers = require_unique(
+        require_entries(
+            re.findall(
+                r'new Entry\(\s*(true|false),\s*HopperSpec\.of\(\s*"([a-z0-9_]+)"',
+                java_source(HOPPER_CATALOG),
+            ),
+            "HopperCatalog.ALL",
+        ),
+        "HopperCatalog.ALL",
+    )
+    regular = [stem for queue, stem in hoppers if queue == "false"]
+    queued = [stem for queue, stem in hoppers if queue == "true"]
+    if not regular or not queued:
+        raise RuntimeError(f"hopper catalog lost its regular or queue entries: {len(hoppers)}")
+    for stems, prefix in ((regular, "hopper_"), (queued, "queue_hopper_")):
+        unexpected = [stem for stem in stems if not stem.startswith(prefix)]
+        if unexpected:
+            raise RuntimeError(f"unexpected {prefix}* id(s): {unexpected}")
+
+    return {"gt6ce:" + stem for stem in smeltery + regular + queued}
+
+
 def virtual_model_ids():
     """Item ids whose models and blockstates are generated instead of shipped as JSON."""
     models = {
@@ -382,7 +454,7 @@ def virtual_model_ids():
     if not models:
         raise RuntimeError(f"no item rows in {MODEL_DEFINITIONS.as_posix()}")
     states = {"gt6ce:" + row[0] for row in definition_rows(BLOCKSTATE_DEFINITIONS, 3)}
-    return models | states | procedural_model_ids() | family_blockstate_ids()
+    return models | states | procedural_model_ids() | family_blockstate_ids() | placeholder_model_ids()
 
 
 def camel_to_snake(name: str) -> str:

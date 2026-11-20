@@ -11,7 +11,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import gregtech.content.block.stone.StoneType;
 import gregtech.content.material.MaterialTestFixture;
+import gregtech.content.transport.HopperCatalog;
 import gregtech.engine.definition.TexturePaletteTable;
+import gregtech.engine.machine.CrucibleSpec;
+import gregtech.engine.machine.OriginalSmelteryDefinitions;
 import gregtech.engine.machine.OrthogonalMachineModels;
 import gregtech.engine.mod.GregTechIdentity;
 import gregtech.engine.recipe.data.JsonMaps;
@@ -32,6 +35,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 /**
  * Verifies integrity, parser strictness, reference closure, and static asset budgets for the
@@ -54,6 +58,13 @@ final class VirtualResourcesIntegrityTest {
     private static final int EXPECTED_REGEX_GROUPS = 45;
     private static final int EXPECTED_TAG_GROUPS = 111;
     private static final int EXPECTED_ITEM_GROUPS = 308;
+    private static final int EXPECTED_SMELTERY_CRUCIBLES = 29;
+    private static final int EXPECTED_SMELTERY_COMPONENTS = 145;
+    private static final int EXPECTED_HOPPER_ENTRIES = 88;
+    private static final List<String> SMELTERY_COMPONENT_PREFIXES =
+            List.of("smelting_crucible_", "mold_", "mold_basin_", "crucible_crossing_", "crucible_faucet_");
+    private static final List<String> HOPPER_FAMILIES = List.of("hopper", "queuehopper");
+    private static final List<String> HOPPER_DIRECTIONS = List.of("down", "up", "north", "south", "west", "east");
 
     @Test
     void stoneSpecsMatchStoneTypeEnum() {
@@ -75,14 +86,16 @@ final class VirtualResourcesIntegrityTest {
         assertThrows(
                 IOException.class,
                 () -> VirtualModelCatalog.parse(utf8Stream("item/x\tminecraft:item/generated\t\tbadpair\n")));
-        assertThrows(
-                IOException.class,
+        assertParseFailure(
                 () -> VirtualModelCatalog.parse(
-                        utf8Stream("item/x\tminecraft:item/generated\t\tlayer0=gt6ce:item/a;layer0=gt6ce:item/b\n")));
-        assertThrows(
-                IOException.class,
+                        utf8Stream("item/x\tminecraft:item/generated\t\tlayer0=gt6ce:item/a;layer0=gt6ce:item/b\n")),
+                1,
+                "layer0");
+        assertParseFailure(
                 () -> VirtualModelCatalog.parse(utf8Stream("item/dup\tminecraft:item/generated\t\tlayer0=gt6ce:item/a\n"
-                        + "item/dup\tminecraft:item/generated\t\tlayer0=gt6ce:item/a\n")));
+                        + "item/dup\tminecraft:item/generated\t\tlayer0=gt6ce:item/a\n")),
+                2,
+                "item/dup");
         assertThrows(
                 IOException.class,
                 () -> VirtualModelCatalog.parse(
@@ -98,10 +111,11 @@ final class VirtualResourcesIntegrityTest {
         assertThrows(
                 IOException.class,
                 () -> VirtualBlockstateCatalog.parse(utf8Stream("b\tSINGLETON\tgt6ce:block/a;gt6ce:block/b\n")));
-        assertThrows(
-                IOException.class,
+        assertParseFailure(
                 () -> VirtualBlockstateCatalog.parse(
-                        utf8Stream("dup\tSINGLETON\tgt6ce:block/a\ndup\tSINGLETON\tgt6ce:block/b\n")));
+                        utf8Stream("dup\tSINGLETON\tgt6ce:block/a\ndup\tSINGLETON\tgt6ce:block/b\n")),
+                2,
+                "dup");
         for (String retired : List.of("WOOD_SLAB", "BUSH_STAGES")) {
             assertThrows(
                     IOException.class,
@@ -116,18 +130,73 @@ final class VirtualResourcesIntegrityTest {
         assertThrows(
                 IOException.class, () -> StackGroupCatalog.parseItems(utf8Stream("g\t0\tName\tgt6ce:a;;gt6ce:b\t\n")));
         assertThrows(IOException.class, () -> StackGroupCatalog.parseItems(utf8Stream("g\t0\tName\tgt6ce:a\tBOGUS\n")));
-        assertThrows(
-                IOException.class,
-                () -> StackGroupCatalog.parseItems(utf8Stream("dup\t0\tA\tgt6ce:a\t\ndup\t0\tB\tgt6ce:b\t\n")));
+        assertParseFailure(
+                () -> StackGroupCatalog.parseItems(utf8Stream("dup\t0\tA\tgt6ce:a\t\ndup\t0\tB\tgt6ce:b\t\n")),
+                2,
+                "dup");
 
         assertThrows(IOException.class, () -> StackGroupCatalog.parseRegex(utf8Stream("bad\n")));
         assertThrows(IOException.class, () -> StackGroupCatalog.parseRegex(utf8Stream("g\t0\tName\t\t\n")));
         assertThrows(IOException.class, () -> StackGroupCatalog.parseRegex(utf8Stream("g\t0\tName\t[unclosed\t\n")));
         assertThrows(
                 IOException.class, () -> StackGroupCatalog.parseRegex(utf8Stream("g\t0\tName\t^gt6ce:a$\tBOGUS\n")));
-        assertThrows(
-                IOException.class,
-                () -> StackGroupCatalog.parseRegex(utf8Stream("dup\t0\tA\t^gt6ce:a$\t\ndup\t0\tB\t^gt6ce:b$\t\n")));
+        assertParseFailure(
+                () -> StackGroupCatalog.parseRegex(utf8Stream("dup\t0\tA\t^gt6ce:a$\t\ndup\t0\tB\t^gt6ce:b$\t\n")),
+                2,
+                "dup");
+    }
+
+    /**
+     * Verifies that the smeltery component and hopper placeholder ids stay disjoint from the virtual
+     * catalogs and that the shared hopper templates their fallback blockstates reference are shipped as
+     * static JSON.
+     */
+    @Test
+    void placeholderModelsAreDisjointAndResolveToSharedTemplates() throws IOException {
+        MaterialTestFixture.ensureInitialized();
+        Map<String, String> staticModels = collectStaticJson("models");
+
+        Set<String> smelteryIds = new HashSet<>();
+        for (CrucibleSpec spec : OriginalSmelteryDefinitions.all()) {
+            smelteryIds.add(spec.id());
+        }
+        List<CrucibleSpec> crucibles = OriginalSmelteryDefinitions.crucibles();
+        assertEquals(EXPECTED_SMELTERY_CRUCIBLES, crucibles.size(), "Smeltery crucible count");
+        assertEquals(EXPECTED_SMELTERY_COMPONENTS, smelteryIds.size(), "Smeltery component id count");
+        for (CrucibleSpec crucible : crucibles) {
+            String tier = crucible.id().substring("smelting_crucible_".length());
+            for (String prefix : SMELTERY_COMPONENT_PREFIXES) {
+                String id = prefix + tier;
+                assertTrue(smelteryIds.contains(id), "Missing smeltery component " + id);
+            }
+        }
+        assertTrue(smelteryIds.contains("crucible_crossing_steel"), "Missing crucible_crossing_steel");
+
+        Set<String> hopperIds = new HashSet<>();
+        for (HopperCatalog.Entry entry : HopperCatalog.ALL) {
+            hopperIds.add(entry.spec().id());
+        }
+        assertEquals(EXPECTED_HOPPER_ENTRIES, hopperIds.size(), "Hopper catalog entry count");
+        assertTrue(hopperIds.contains("hopper_bronze"), "Missing hopper_bronze");
+
+        Set<String> placeholders = new HashSet<>(smelteryIds);
+        placeholders.addAll(hopperIds);
+        for (String id : placeholders) {
+            assertFalse(VirtualModelCatalog.contains("item/" + id), "Virtual item model shadows placeholder " + id);
+            assertFalse(
+                    VirtualModelCatalog.contains("block/blocks/" + id),
+                    "Virtual block model shadows placeholder " + id);
+            assertFalse(VirtualBlockstateCatalog.contains(id), "Virtual blockstate shadows placeholder " + id);
+        }
+
+        assertTrue(
+                staticModels.containsKey("block/machine/hopper"), "Missing shared hopper model: block/machine/hopper");
+        for (String family : HOPPER_FAMILIES) {
+            for (String direction : HOPPER_DIRECTIONS) {
+                String path = "block/machine/" + family + "_" + direction;
+                assertTrue(staticModels.containsKey(path), "Missing shared hopper model: " + path);
+            }
+        }
     }
 
     @Test
@@ -691,6 +760,22 @@ final class VirtualResourcesIntegrityTest {
 
     private static InputStream utf8Stream(String text) {
         return new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
+    }
+
+    /**
+     * Asserts that {@code parse} rejects its input and that the diagnostic names the offending line and
+     * duplicate key, so a collision is reported where it is found instead of at the end of the table.
+     */
+    private static void assertParseFailure(Executable parse, int line, String... keys) {
+        IOException failure = assertThrows(IOException.class, parse);
+        String message = failure.getMessage();
+        assertNotNull(message, "Parser failure must carry a message");
+        assertTrue(
+                Pattern.compile("\\bline " + line + "\\b").matcher(message).find(),
+                "Message must name line " + line + ": " + message);
+        for (String key : keys) {
+            assertTrue(message.contains(key), "Message must name " + key + ": " + message);
+        }
     }
 
     private static List<Path> assetRoots() {

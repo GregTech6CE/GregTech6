@@ -9,12 +9,9 @@ import gregtech.content.item.CreativeTabIconItem;
 import gregtech.content.registry.AddonPipeRegistration;
 import gregtech.content.registry.GTAxles;
 import gregtech.content.registry.GTFluidPipes;
-import gregtech.content.registry.GTHoppers;
 import gregtech.content.registry.GTItemPipes;
 import gregtech.content.registry.GTSignalWires;
-import gregtech.content.registry.GTSmeltery;
 import gregtech.content.registry.GTWires;
-import gregtech.content.registry.RegisteredBlock;
 import gregtech.engine.machine.OrthogonalMachineModels;
 import gregtech.engine.mod.GregTechIdentity;
 import gregtech.engine.prefix.BlockMaterialPrefix;
@@ -261,9 +258,8 @@ public final class SharedInventoryModelPack extends VirtualAssetPackResources {
         // the generated one has to win inside this pack.
         int specs = emitMachineModelSpecs(result);
         // Emitted after the catalogs so a generated template can never shadow a placeholder.
-        Placeholder placeholders = Placeholder.stone();
-        int transportPlaceholders = emitTransportPlaceholders(result, placeholders);
-        int smelteryPlaceholders = emitSmelteryAndHopperPlaceholders(result, placeholders);
+        int transportPlaceholders = emitTransportPlaceholders(result);
+        int smelteryPlaceholders = VirtualAssetPackResources.emitSmelteryAndHopperPlaceholders(result);
         int machines = emitMachineBlockstatesAndItems(result);
         com.mojang.logging.LogUtils.getLogger()
                 .info("[gregtech] Shared inventory resources: {} files, {} templates, {} shared material models,"
@@ -551,76 +547,20 @@ public final class SharedInventoryModelPack extends VirtualAssetPackResources {
         }
     }
 
-    /** The stone blockstate and item JSON every generated-geometry block resolves to. */
-    private record Placeholder(byte[] blockstate, byte[] item) {
-        static Placeholder stone() {
-            return new Placeholder(
-                    ("{\"variants\":{\"\":{\"model\":\"" + STONE_TEMPLATE + "\"}}}").getBytes(StandardCharsets.UTF_8),
-                    ("{\"parent\":\"" + STONE_TEMPLATE + "\"}").getBytes(StandardCharsets.UTF_8));
-        }
-    }
-
     /**
      * Transport blocks, wires, cables and axles are baked into generated geometry, so their static
      * blockstate and inventory JSON only has to hand the bakery a loaded model. The stone template is
      * already registered as a shared model and needs no per-block file on disk.
      */
-    private static int emitTransportPlaceholders(Map<ResourceLocation, byte[]> result, Placeholder placeholders) {
-        int emitted = emitPlaceholders(result, GTFluidPipes.all(), placeholders);
-        emitted += emitPlaceholders(result, AddonPipeRegistration.fluidBlocks(), placeholders);
-        emitted += emitPlaceholders(result, GTItemPipes.all(), placeholders);
-        emitted += emitPlaceholders(result, AddonPipeRegistration.itemBlocks(), placeholders);
-        emitted += emitPlaceholders(result, GTWires.all(), placeholders);
-        emitted += emitPlaceholders(result, GTSignalWires.all(), placeholders);
-        emitted += emitPlaceholders(result, GTAxles.all(), placeholders);
+    private static int emitTransportPlaceholders(Map<ResourceLocation, byte[]> result) {
+        int emitted = VirtualAssetPackResources.emitStonePlaceholders(result, GTFluidPipes.all());
+        emitted += VirtualAssetPackResources.emitStonePlaceholders(result, AddonPipeRegistration.fluidBlocks());
+        emitted += VirtualAssetPackResources.emitStonePlaceholders(result, GTItemPipes.all());
+        emitted += VirtualAssetPackResources.emitStonePlaceholders(result, AddonPipeRegistration.itemBlocks());
+        emitted += VirtualAssetPackResources.emitStonePlaceholders(result, GTWires.all());
+        emitted += VirtualAssetPackResources.emitStonePlaceholders(result, GTSignalWires.all());
+        emitted += VirtualAssetPackResources.emitStonePlaceholders(result, GTAxles.all());
         return emitted;
-    }
-
-    /**
-     * Smeltery hulls, molds and hoppers are drawn from the shared hull models and generated geometry,
-     * so their static blockstate and inventory JSON only has to hand the bakery a loaded model.
-     */
-    private static int emitSmelteryAndHopperPlaceholders(Map<ResourceLocation, byte[]> result,
-                                                         Placeholder placeholders) {
-        int emitted = emitPlaceholders(result, GTSmeltery.crucibles(), placeholders);
-        emitted += emitPlaceholders(result, GTSmeltery.basins(), placeholders);
-        emitted += emitPlaceholders(result, GTSmeltery.molds(), placeholders);
-        emitted += emitPlaceholders(result, GTSmeltery.crossings(), placeholders);
-        emitted += emitPlaceholders(result, GTSmeltery.faucets(), placeholders);
-        emitted += emitPlaceholders(result, GTHoppers.hoppers(), placeholders);
-        emitted += emitPlaceholders(result, GTHoppers.queues(), placeholders);
-        return emitted;
-    }
-
-    /** Emits a placeholder for every registered entry of {@code entries}; returns how many were written. */
-    private static <T extends Block> int emitPlaceholders(Map<ResourceLocation, byte[]> result,
-                                                          List<RegisteredBlock<T>> entries,
-                                                          Placeholder placeholders) {
-        int emitted = 0;
-        for (RegisteredBlock<T> entry : entries) {
-            if (!entry.isPresent()) continue;
-            emitPlaceholder(result, entry.get(), placeholders);
-            emitted++;
-        }
-        return emitted;
-    }
-
-    /** Emits a placeholder for every block of {@code blocks}; returns how many were written. */
-    private static int emitPlaceholders(Map<ResourceLocation, byte[]> result, Collection<? extends Block> blocks,
-                                        Placeholder placeholders) {
-        for (Block block : blocks) emitPlaceholder(result, block, placeholders);
-        return blocks.size();
-    }
-
-    /**
-     * Written unconditionally: the pack is registered at the bottom position, so an installed
-     * resource pack still wins, and the bakery replaces both entries before anything renders.
-     */
-    private static void emitPlaceholder(Map<ResourceLocation, byte[]> result, Block block,
-                                        Placeholder placeholders) {
-        ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
-        result.put(named(id.getNamespace(), "blockstates/" + id.getPath() + ".json"), placeholders.blockstate());
-        result.put(named(id.getNamespace(), "models/item/" + id.getPath() + ".json"), placeholders.item());
     }
 
     private static ResourceLocation location(String path) { return ResourceLocation.fromNamespaceAndPath("gt6ce", path); }

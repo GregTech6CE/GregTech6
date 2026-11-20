@@ -1,17 +1,24 @@
 package gregtech.engine.resource;
 
+import gregtech.content.registry.GTHoppers;
+import gregtech.content.registry.GTSmeltery;
+import gregtech.content.registry.RegisteredBlock;
 import gregtech.engine.mod.GregTechIdentity;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.AbstractPackResources;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.IoSupplier;
+import net.minecraft.world.level.block.Block;
 //? if >=1.21.1 {
 /*import net.minecraft.server.packs.PackLocationInfo;
 *///?}
@@ -21,10 +28,10 @@ import org.jetbrains.annotations.Nullable;
  * Client-free resource routing shared by every pack that serves GregTech's virtual assets.
  *
  * <p>The class owns the single copy of the {@code models/}, {@code blockstates/} and
- * {@code stack_groups/} lookups, the {@code pack.mcmeta} payload and the directory enumeration
- * rules, so the client pack and a catalog-only pack answer resource-manager queries identically. No
- * client-only type is referenced, which keeps the class loadable on a dedicated server and in
- * {@code runGameTestServer}.
+ * {@code stack_groups/} lookups, the placeholder payloads of the blocks drawn by generated geometry,
+ * the {@code pack.mcmeta} payload and the directory enumeration rules, so the client pack and a
+ * catalog-only pack answer resource-manager queries identically. No client-only type is referenced,
+ * which keeps the class loadable on a dedicated server and in {@code runGameTestServer}.
  *
  * <p>Subclasses supply the model map and the client-only sprite hooks; {@link #isBuilding()} lets a
  * subclass short-circuit reads while it builds that map.
@@ -44,6 +51,69 @@ public abstract class VirtualAssetPackResources extends AbstractPackResources {
 *///?} else {
     private static final int PACK_FORMAT = 15;
 //?}
+
+    /** Facing order of the six-way hopper blockstates. */
+    private static final String[] SIX_WAY_FACINGS = {"down", "up", "north", "south", "west", "east"};
+
+    /** Stone blockstate handed to the bakery for a block drawn by generated geometry. */
+    public static final byte[] STONE_BLOCKSTATE =
+            encode("{\"variants\":{\"\":{\"model\":\"minecraft:block/stone\"}}}");
+
+    /** Stone inventory parent paired with {@link #STONE_BLOCKSTATE}. */
+    public static final byte[] STONE_ITEM_MODEL = encode("{\"parent\":\"minecraft:block/stone\"}");
+
+    /** Iron cube model that gives every generated block a resolvable {@code models/block/blocks/} parent. */
+    public static final byte[] IRON_BLOCK_MODEL = encode(
+            "{\"parent\":\"minecraft:block/cube_all\",\"textures\":{\"all\":\"minecraft:block/iron_block\"}}");
+
+    /** Six-way blockstate of the plain hoppers, keyed by {@code facing}. */
+    public static final byte[] HOPPER_SIX_WAY_BLOCKSTATE = sixWayBlockstate("hopper");
+
+    /** Six-way blockstate of the queue hoppers, keyed by {@code facing}. */
+    public static final byte[] QUEUE_HOPPER_SIX_WAY_BLOCKSTATE = sixWayBlockstate("queuehopper");
+
+    /** Inventory parent of the plain hoppers. */
+    public static final byte[] HOPPER_ITEM_MODEL =
+            encode("{\"parent\":\"" + GregTechIdentity.REGISTRY_NAMESPACE + ":block/machine/hopper\"}");
+
+    /** Inventory parent of the queue hoppers; the nozzle points north in the inventory. */
+    public static final byte[] QUEUE_HOPPER_ITEM_MODEL = encode(
+            "{\"parent\":\"" + GregTechIdentity.REGISTRY_NAMESPACE + ":block/machine/queuehopper_north\"}");
+
+    /** Hopper ids that keep a six-way blockstate and their own inventory parent. */
+    private static final Map<String, SixWayHopper> SIX_WAY_HOPPERS = Map.of(
+            "hopper_bronze", new SixWayHopper(HOPPER_SIX_WAY_BLOCKSTATE, HOPPER_ITEM_MODEL),
+            "hopper_steel", new SixWayHopper(HOPPER_SIX_WAY_BLOCKSTATE, HOPPER_ITEM_MODEL),
+            "hopper_tungsten", new SixWayHopper(HOPPER_SIX_WAY_BLOCKSTATE, HOPPER_ITEM_MODEL),
+            "queue_hopper_bronze", new SixWayHopper(QUEUE_HOPPER_SIX_WAY_BLOCKSTATE, QUEUE_HOPPER_ITEM_MODEL),
+            "queue_hopper_steel", new SixWayHopper(QUEUE_HOPPER_SIX_WAY_BLOCKSTATE, QUEUE_HOPPER_ITEM_MODEL),
+            "queue_hopper_tungsten", new SixWayHopper(QUEUE_HOPPER_SIX_WAY_BLOCKSTATE, QUEUE_HOPPER_ITEM_MODEL));
+
+    /** Blockstate and inventory JSON a six-way hopper keeps instead of the stone placeholder. */
+    private record SixWayHopper(byte[] blockstate, byte[] itemModel) {}
+
+    /** JSON payload of {@code json}; every resource serving the same document shares one array. */
+    private static byte[] encode(String json) {
+        return json.getBytes(StandardCharsets.UTF_8);
+    }
+
+    /** Six-way {@code facing} blockstate pointing at {@code gt6ce:block/machine/<prefix>_<facing>}. */
+    private static byte[] sixWayBlockstate(String modelPrefix) {
+        StringBuilder json = new StringBuilder("{\"variants\":{");
+        for (int i = 0; i < SIX_WAY_FACINGS.length; i++) {
+            if (i > 0) json.append(',');
+            json.append("\"facing=")
+                    .append(SIX_WAY_FACINGS[i])
+                    .append("\":{\"model\":\"")
+                    .append(GregTechIdentity.REGISTRY_NAMESPACE)
+                    .append(":block/machine/")
+                    .append(modelPrefix)
+                    .append('_')
+                    .append(SIX_WAY_FACINGS[i])
+                    .append("\"}");
+        }
+        return encode(json.append("}}").toString());
+    }
 
     private Map<ResourceLocation, byte[]> stackGroups;
 
@@ -116,6 +186,102 @@ public abstract class VirtualAssetPackResources extends AbstractPackResources {
                 (stem, bytes) -> files.put(gtLocation("blockstates/" + stem + ".json"), bytes));
         result.putAll(files);
         return files.size();
+    }
+
+    /**
+     * Emits the stone blockstate and inventory placeholder for every present entry of
+     * {@code entries}, returning how many were written.
+     */
+    public static <T extends Block> int emitStonePlaceholders(
+            Map<ResourceLocation, byte[]> result, List<RegisteredBlock<T>> entries) {
+        int emitted = 0;
+        for (RegisteredBlock<T> entry : entries) {
+            if (!entry.isPresent()) continue;
+            emitStonePlaceholder(result, entry.getId());
+            emitted++;
+        }
+        return emitted;
+    }
+
+    /**
+     * Emits the stone blockstate and inventory placeholder for every block of {@code blocks},
+     * returning how many were written.
+     */
+    public static int emitStonePlaceholders(Map<ResourceLocation, byte[]> result, Collection<? extends Block> blocks) {
+        for (Block block : blocks) emitStonePlaceholder(result, BuiltInRegistries.BLOCK.getKey(block));
+        return blocks.size();
+    }
+
+    /**
+     * Smeltery hulls, molds and hoppers are drawn from the shared hull models and generated geometry,
+     * so their static blockstate and inventory JSON only has to hand the bakery a loaded model. Every
+     * smeltery hull and every plain hopper also gets a {@code models/block/blocks/<id>.json} parent so
+     * an addon pack can build on a stable path; the six-way hoppers keep their directional blockstate
+     * and their own inventory parent instead.
+     *
+     * @return how many blocks were written
+     */
+    public static int emitSmelteryAndHopperPlaceholders(Map<ResourceLocation, byte[]> result) {
+        int emitted = emitHullPlaceholders(result, GTSmeltery.crucibles());
+        emitted += emitHullPlaceholders(result, GTSmeltery.basins());
+        emitted += emitHullPlaceholders(result, GTSmeltery.molds());
+        emitted += emitHullPlaceholders(result, GTSmeltery.crossings());
+        emitted += emitHullPlaceholders(result, GTSmeltery.faucets());
+        emitted += emitHopperPlaceholders(result, GTHoppers.hoppers());
+        emitted += emitHopperPlaceholders(result, GTHoppers.queues());
+        return emitted;
+    }
+
+    /** Stone placeholders plus the iron-block parent model every smeltery hull resolves to. */
+    private static <T extends Block> int emitHullPlaceholders(
+            Map<ResourceLocation, byte[]> result, List<RegisteredBlock<T>> entries) {
+        int emitted = 0;
+        for (RegisteredBlock<T> entry : entries) {
+            if (!entry.isPresent()) continue;
+            ResourceLocation id = entry.getId();
+            emitStonePlaceholder(result, id);
+            result.put(blockModelLocation(id), IRON_BLOCK_MODEL);
+            emitted++;
+        }
+        return emitted;
+    }
+
+    /** Six-way hoppers keep their directional blockstate; every other hopper gets a stone placeholder. */
+    private static <T extends Block> int emitHopperPlaceholders(
+            Map<ResourceLocation, byte[]> result, List<RegisteredBlock<T>> entries) {
+        int emitted = 0;
+        for (RegisteredBlock<T> entry : entries) {
+            if (!entry.isPresent()) continue;
+            ResourceLocation id = entry.getId();
+            SixWayHopper sixWay = SIX_WAY_HOPPERS.get(id.getPath());
+            if (sixWay == null) {
+                emitStonePlaceholder(result, id);
+                result.put(blockModelLocation(id), IRON_BLOCK_MODEL);
+            } else {
+                result.put(named(id.getNamespace(), "blockstates/" + id.getPath() + ".json"), sixWay.blockstate());
+                result.put(named(id.getNamespace(), "models/item/" + id.getPath() + ".json"), sixWay.itemModel());
+            }
+            emitted++;
+        }
+        return emitted;
+    }
+
+    /**
+     * Written unconditionally: the pack is registered at the bottom position, so an installed
+     * resource pack still wins, and the bakery replaces both entries before anything renders.
+     */
+    private static void emitStonePlaceholder(Map<ResourceLocation, byte[]> result, ResourceLocation id) {
+        result.put(named(id.getNamespace(), "blockstates/" + id.getPath() + ".json"), STONE_BLOCKSTATE);
+        result.put(named(id.getNamespace(), "models/item/" + id.getPath() + ".json"), STONE_ITEM_MODEL);
+    }
+
+    /** The {@code models/block/blocks/<id>.json} parent an addon pack can reference. */
+    private static ResourceLocation blockModelLocation(ResourceLocation id) {
+        return named(id.getNamespace(), "models/block/blocks/" + id.getPath() + ".json");
+    }
+
+    private static ResourceLocation named(String namespace, String path) {
+        return ResourceLocation.fromNamespaceAndPath(namespace, path);
     }
 
     /** Model and blockstate JSON of this pack, keyed by full resource location. */
@@ -203,25 +369,45 @@ public abstract class VirtualAssetPackResources extends AbstractPackResources {
      */
 //? if >=1.21.1 {
     /*public static VirtualAssetPackResources catalogOnly(PackLocationInfo info) {
-        return new CatalogOnlyPack(info);
+        return new CatalogOnlyPack(info, false);
     }
 *///?} else {
     public static VirtualAssetPackResources catalogOnly(String id) {
-        return new CatalogOnlyPack(id);
+        return new CatalogOnlyPack(id, false);
     }
 //?}
 
-    /** Serves the virtual catalogs alone; the model tree and the sprite hooks stay empty. */
+    /**
+     * Catalog-only pack that also serves the smeltery and hopper placeholders, so a dedicated-server
+     * test mounts the placeholder routing the client pack uses for those blocks.
+     */
+//? if >=1.21.1 {
+    /*public static VirtualAssetPackResources catalogWithPlaceholders(PackLocationInfo info) {
+        return new CatalogOnlyPack(info, true);
+    }
+*///?} else {
+    public static VirtualAssetPackResources catalogWithPlaceholders(String id) {
+        return new CatalogOnlyPack(id, true);
+    }
+//?}
+
+    /**
+     * Serves the virtual catalogs alone, plus the smeltery and hopper placeholders when asked; the
+     * sprite hooks stay empty either way.
+     */
     private static final class CatalogOnlyPack extends VirtualAssetPackResources {
+        private final boolean includePlaceholders;
         private Map<ResourceLocation, byte[]> catalogs;
 
 //? if >=1.21.1 {
-        /*private CatalogOnlyPack(PackLocationInfo info) {
+        /*private CatalogOnlyPack(PackLocationInfo info, boolean includePlaceholders) {
             super(info);
+            this.includePlaceholders = includePlaceholders;
         }
 *///?} else {
-        private CatalogOnlyPack(String id) {
+        private CatalogOnlyPack(String id, boolean includePlaceholders) {
             super(id);
+            this.includePlaceholders = includePlaceholders;
         }
 //?}
 
@@ -231,6 +417,7 @@ public abstract class VirtualAssetPackResources extends AbstractPackResources {
             Map<ResourceLocation, byte[]> built = new HashMap<>();
             emitVirtualModels(built);
             emitVirtualBlockstates(built);
+            if (includePlaceholders) emitSmelteryAndHopperPlaceholders(built);
             catalogs = Collections.unmodifiableMap(built);
             return catalogs;
         }

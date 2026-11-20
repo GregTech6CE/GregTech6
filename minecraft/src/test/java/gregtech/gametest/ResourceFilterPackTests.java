@@ -11,14 +11,20 @@ import gregtech.client.MoldBasinIcons;
 import gregtech.content.block.inventory.BottleCrateBlock;
 import gregtech.content.book.BookShelfVariants;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTHoppers;
+import gregtech.content.registry.GTSmeltery;
+import gregtech.content.registry.RegisteredBlock;
 import gregtech.engine.material.MaterialIconDefinitions;
 import gregtech.engine.mod.GregTechIdentity;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.resource.VirtualAssetPackResources;
+import gregtech.engine.resource.VirtualBlockstateCatalog;
+import gregtech.engine.resource.VirtualModelCatalog;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -53,8 +59,8 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * Verifies resource-manager mounting, pack overrides, and {@code pack.mcmeta} {@code filter}
- * handling for material sprites, bottle-crate frames and the virtual asset catalogs on the dedicated
- * server.
+ * handling for material sprites, bottle-crate frames, the virtual asset catalogs and the smeltery
+ * and hopper placeholders on the dedicated server.
  */
 @GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
@@ -62,7 +68,31 @@ public final class ResourceFilterPackTests {
     private static final String BATCH = "resource_filter_pack";
     private static final String VIRTUAL_PACK_ID = "test_virtual_catalog";
     private static final String HIGH_PACK_ID = "test_virtual_override_filter";
+    private static final String PLACEHOLDER_PACK_ID = "test_placeholder_catalog";
+    private static final String PLACEHOLDER_CHILD_PACK_ID = "test_placeholder_child";
     private static final byte[] DUMMY_PNG = new byte[] {1};
+
+    /** Stone placeholder documents the generated-geometry blocks resolve to. */
+    private static final String STONE_BLOCKSTATE_JSON = "{\"variants\":{\"\":{\"model\":\"minecraft:block/stone\"}}}";
+
+    private static final String STONE_ITEM_JSON = "{\"parent\":\"minecraft:block/stone\"}";
+    private static final String IRON_BLOCK_MODEL_JSON =
+            "{\"parent\":\"minecraft:block/cube_all\",\"textures\":{\"all\":\"minecraft:block/iron_block\"}}";
+
+    /** Facing order of the six-way hopper blockstates. */
+    private static final String[] SIX_WAY_FACINGS = {"down", "up", "north", "south", "west", "east"};
+
+    /** Hoppers that keep a six-way blockstate and their own inventory parent. */
+    private static final List<String> SIX_WAY_HOPPER_IDS = List.of(
+            "hopper_bronze",
+            "hopper_steel",
+            "hopper_tungsten",
+            "queue_hopper_bronze",
+            "queue_hopper_steel",
+            "queue_hopper_tungsten");
+
+    private static final int SMELTERY_BLOCK_COUNT = 145;
+    private static final int HOPPER_COUNT = 88;
 
     private ResourceFilterPackTests() {}
 
@@ -405,6 +435,191 @@ public final class ResourceFilterPackTests {
         helper.succeed();
     }
 
+    /**
+     * The smeltery and hopper placeholders are the production routing for every block drawn by
+     * generated geometry, so the dedicated server verifies the documents an addon pack resolves and
+     * the six-way hopper blockstates the client pack serves.
+     */
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 40)
+    public static void placeholderPackServesSmelteryHopperModelsAndSixWayStates(GameTestHelper helper)
+            throws IOException {
+        List<String> hulls = smelteryBlockIds();
+        List<String> hoppers = hopperBlockIds();
+        List<String> plainHoppers = new ArrayList<>(hoppers);
+        plainHoppers.removeAll(SIX_WAY_HOPPER_IDS);
+        List<String> blockModels = new ArrayList<>(hulls);
+        blockModels.addAll(plainHoppers);
+        helper.assertTrue(
+                hulls.size() == SMELTERY_BLOCK_COUNT,
+                "Expected " + SMELTERY_BLOCK_COUNT + " smeltery blocks, got " + hulls.size());
+        helper.assertTrue(
+                hoppers.size() == HOPPER_COUNT, "Expected " + HOPPER_COUNT + " hoppers, got " + hoppers.size());
+        helper.assertTrue(
+                blockModels.size() == SMELTERY_BLOCK_COUNT + HOPPER_COUNT - SIX_WAY_HOPPER_IDS.size(),
+                "Expected " + (SMELTERY_BLOCK_COUNT + HOPPER_COUNT - SIX_WAY_HOPPER_IDS.size())
+                        + " generated block models, got " + blockModels.size());
+
+        Predicate<ResourceLocation> gtNamespace = id -> GregTechIdentity.REGISTRY_NAMESPACE.equals(id.getNamespace());
+        byte[] childModel = "{\"parent\":\"gt6ce:block/blocks/crucible_faucet_bronze\"}"
+                .getBytes(StandardCharsets.UTF_8);
+        PackResources placeholderPack = placeholderCatalogPack();
+        PackResources childPack = memoryPack(
+                PLACEHOLDER_CHILD_PACK_ID, null, Map.of("models/block/custom_faucet_child.json", childModel));
+
+        try (var manager = new MultiPackResourceManager(
+                PackType.CLIENT_RESOURCES, List.of(placeholderPack, childPack))) {
+            // Every generated block resolves the one shared iron-block parent model.
+            var blockModelsListed = manager.listResources("models/block/blocks", gtNamespace);
+            helper.assertTrue(
+                    blockModelsListed.size() == blockModels.size(),
+                    "Expected " + blockModels.size() + " models/block/blocks documents, got "
+                            + blockModelsListed.size());
+            for (String id : blockModels) {
+                ResourceLocation model = gtResource("models/block/blocks/" + id + ".json");
+                helper.assertTrue(blockModelsListed.containsKey(model), "Missing generated block model " + model);
+                helper.assertTrue(
+                        PLACEHOLDER_PACK_ID.equals(listedPackId(blockModelsListed, model)),
+                        "Generated block model " + model + " must come from the placeholder pack");
+            }
+            ResourceLocation faucetParent = gtResource("models/block/blocks/crucible_faucet_bronze.json");
+            helper.assertTrue(
+                    IRON_BLOCK_MODEL_JSON.equals(readResource(helper, manager, faucetParent)),
+                    "Sampled faucet parent must be the iron-block model");
+            assertEnumeratedMatches(helper, blockModelsListed, faucetParent, IRON_BLOCK_MODEL_JSON);
+
+            // An addon child model reaches the placeholder pack through its parent reference.
+            ResourceLocation child = gtResource("models/block/custom_faucet_child.json");
+            String childJson = readResource(helper, manager, child);
+            String parent = JsonParser.parseString(childJson).getAsJsonObject().get("parent").getAsString();
+            helper.assertTrue(
+                    "gt6ce:block/blocks/crucible_faucet_bronze".equals(parent),
+                    "Child model must reference the generated faucet parent, got: " + parent);
+            ResourceLocation parentId = ResourceLocation.tryParse(parent);
+            helper.assertTrue(parentId != null, "Child model parent must parse, got: " + parent);
+            if (parentId != null) {
+                ResourceLocation parentResource = ResourceLocation.fromNamespaceAndPath(
+                        parentId.getNamespace(), "models/" + parentId.getPath() + ".json");
+                helper.assertTrue(
+                        IRON_BLOCK_MODEL_JSON.equals(readResource(helper, manager, parentResource)),
+                        "Child model parent chain must resolve to the iron-block model");
+            }
+            var blockModelsOfChild = manager.listResources("models/block", gtNamespace);
+            helper.assertTrue(
+                    blockModelsOfChild.containsKey(child), "Listing must contain the addon child model " + child);
+            assertEnumeratedMatches(helper, blockModelsOfChild, child, childJson);
+
+            // Six-way hoppers keep their directional blockstate and their own inventory parent.
+            for (String id : SIX_WAY_HOPPER_IDS) {
+                boolean queue = id.startsWith("queue_");
+                String blockstate = readResource(helper, manager, gtResource("blockstates/" + id + ".json"));
+                helper.assertTrue(
+                        sixWayBlockstate(queue ? "queuehopper" : "hopper").equals(blockstate),
+                        "Six-way blockstate mismatch for " + id + ", got: " + blockstate);
+                String item = readResource(helper, manager, gtResource("models/item/" + id + ".json"));
+                String expectedItem = queue
+                        ? "{\"parent\":\"gt6ce:block/machine/queuehopper_north\"}"
+                        : "{\"parent\":\"gt6ce:block/machine/hopper\"}";
+                helper.assertTrue(
+                        expectedItem.equals(item), "Inventory parent mismatch for " + id + ", got: " + item);
+                ResourceLocation blocksModel = gtResource("models/block/blocks/" + id + ".json");
+                helper.assertTrue(
+                        manager.getResource(blocksModel).isEmpty(),
+                        "Six-way hopper " + id + " must not emit " + blocksModel);
+                helper.assertTrue(
+                        !blockModelsListed.containsKey(blocksModel),
+                        "Six-way hopper " + id + " must stay out of the models/block/blocks listing");
+            }
+
+            // Every other hopper keeps the stone placeholders plus the iron-block parent model.
+            for (String id : List.of("hopper_lead", "queue_hopper_lead")) {
+                helper.assertTrue(hoppers.contains(id), "Expected a registered hopper " + id);
+                String blockstate = readResource(helper, manager, gtResource("blockstates/" + id + ".json"));
+                helper.assertTrue(
+                        STONE_BLOCKSTATE_JSON.equals(blockstate),
+                        "Plain hopper " + id + " must keep the stone blockstate");
+                String item = readResource(helper, manager, gtResource("models/item/" + id + ".json"));
+                helper.assertTrue(
+                        STONE_ITEM_JSON.equals(item),
+                        "Plain hopper " + id + " must keep the stone inventory parent");
+                helper.assertTrue(
+                        IRON_BLOCK_MODEL_JSON.equals(
+                                readResource(helper, manager, gtResource("models/block/blocks/" + id + ".json"))),
+                        "Plain hopper " + id + " must resolve the iron-block parent model");
+            }
+
+            // Exact placeholder counts: one blockstate and one inventory parent per block, and one
+            // parent model per smeltery hull and plain hopper.
+            List<String> placeholders = new ArrayList<>(hulls);
+            placeholders.addAll(hoppers);
+            var blockstates = manager.listResources("blockstates", gtNamespace);
+            var itemModels = manager.listResources("models/item", gtNamespace);
+            int placeholderStates = 0;
+            int placeholderItems = 0;
+            for (String id : placeholders) {
+                if (blockstates.containsKey(gtResource("blockstates/" + id + ".json"))) placeholderStates++;
+                if (itemModels.containsKey(gtResource("models/item/" + id + ".json"))) placeholderItems++;
+                helper.assertTrue(
+                        !VirtualBlockstateCatalog.contains(id),
+                        "Placeholder blockstate " + id + " must not overlap the virtual blockstate catalog");
+            }
+            helper.assertTrue(
+                    placeholderStates == SMELTERY_BLOCK_COUNT + HOPPER_COUNT,
+                    "Expected " + (SMELTERY_BLOCK_COUNT + HOPPER_COUNT) + " placeholder blockstates, got "
+                            + placeholderStates);
+            helper.assertTrue(
+                    placeholderItems == SMELTERY_BLOCK_COUNT + HOPPER_COUNT,
+                    "Expected " + (SMELTERY_BLOCK_COUNT + HOPPER_COUNT) + " placeholder inventory parents, got "
+                            + placeholderItems);
+            for (String id : blockModels) {
+                helper.assertTrue(
+                        !VirtualModelCatalog.contains("block/blocks/" + id),
+                        "Generated block model block/blocks/" + id + " must not overlap the virtual model catalog");
+            }
+        }
+        helper.succeed();
+    }
+
+    /** The six-way {@code facing} blockstate of {@code modelPrefix} hoppers. */
+    private static String sixWayBlockstate(String modelPrefix) {
+        StringBuilder json = new StringBuilder("{\"variants\":{");
+        for (int i = 0; i < SIX_WAY_FACINGS.length; i++) {
+            if (i > 0) json.append(',');
+            json.append("\"facing=")
+                    .append(SIX_WAY_FACINGS[i])
+                    .append("\":{\"model\":\"gt6ce:block/machine/")
+                    .append(modelPrefix)
+                    .append('_')
+                    .append(SIX_WAY_FACINGS[i])
+                    .append("\"}");
+        }
+        return json.append("}}").toString();
+    }
+
+    /** Registered smeltery hull, mold, basin, crossing and faucet paths. */
+    private static List<String> smelteryBlockIds() {
+        List<String> ids = new ArrayList<>();
+        addBlockIds(ids, GTSmeltery.crucibles());
+        addBlockIds(ids, GTSmeltery.basins());
+        addBlockIds(ids, GTSmeltery.molds());
+        addBlockIds(ids, GTSmeltery.crossings());
+        addBlockIds(ids, GTSmeltery.faucets());
+        return ids;
+    }
+
+    /** Registered hopper and queue hopper paths. */
+    private static List<String> hopperBlockIds() {
+        List<String> ids = new ArrayList<>();
+        addBlockIds(ids, GTHoppers.hoppers());
+        addBlockIds(ids, GTHoppers.queues());
+        return ids;
+    }
+
+    private static <T extends Block> void addBlockIds(List<String> ids, List<RegisteredBlock<T>> entries) {
+        for (RegisteredBlock<T> entry : entries) {
+            if (entry.isPresent()) ids.add(entry.getId().getPath());
+        }
+    }
+
     /** Resource location in the GregTech asset namespace. */
     private static ResourceLocation gtResource(String path) {
         return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, path);
@@ -450,6 +665,19 @@ public final class ResourceFilterPackTests {
                 Optional.empty()));
 *///?} else {
         return VirtualAssetPackResources.catalogOnly(VIRTUAL_PACK_ID);
+//?}
+    }
+
+    /** The production placeholder routing, mounted without any client wiring. */
+    private static PackResources placeholderCatalogPack() {
+//? if >=1.21.1 {
+        /*return VirtualAssetPackResources.catalogWithPlaceholders(new PackLocationInfo(
+                PLACEHOLDER_PACK_ID,
+                Component.literal(PLACEHOLDER_PACK_ID),
+                PackSource.BUILT_IN,
+                Optional.empty()));
+*///?} else {
+        return VirtualAssetPackResources.catalogWithPlaceholders(PLACEHOLDER_PACK_ID);
 //?}
     }
 
