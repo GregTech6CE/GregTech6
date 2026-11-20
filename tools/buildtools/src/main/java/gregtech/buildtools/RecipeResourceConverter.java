@@ -24,6 +24,7 @@ public final class RecipeResourceConverter {
             "gt6ce:tool_shapeless",
             "gt6ce:book_binding",
             "gt6ce:spike_conversion",
+            "gt6ce:tape_repack",
             "gt6ce:tool_repair");
 
     private RecipeResourceConverter() {}

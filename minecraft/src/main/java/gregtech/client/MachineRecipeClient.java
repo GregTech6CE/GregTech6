@@ -51,10 +51,12 @@ public final class MachineRecipeClient {
     private static void apply(RecipeManager recipes) {
         // Integrated server and client share the static maps. The server pass already applied them.
         if (ServerLifecycleHooks.getCurrentServer() != null) return;
-        var overlay = MachineRecipeOverlay.apply(recipes);
-        // Like the server, mirror vanilla smelting even after reverting the machine overlay to its baseline.
         var connection = Minecraft.getInstance().getConnection();
-        if (connection != null) MachineRecipeOverlay.publishFurnace(recipes, connection.registryAccess());
+        if (connection == null) return;
+        var access = connection.registryAccess();
+        var overlay = MachineRecipeOverlay.apply(recipes, access);
+        // Like the server, mirror vanilla smelting even after reverting the machine overlay to its baseline.
+        MachineRecipeOverlay.publishFurnace(recipes, access);
         if (overlay.failed()) {
             refresh("jei", "gregtech.compat.jei.GregTechJEIPlugin", "overlayFailed");
             refresh("emi", "gregtech.compat.emi.GregTechEMIPlugin", "overlayFailed");

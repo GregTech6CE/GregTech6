@@ -154,7 +154,7 @@ public final class MaterialItemCompositions {
         for (Block block : BuiltInRegistries.BLOCK) {
             var id = BuiltInRegistries.BLOCK.getKey(block);
             if (!id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) continue;
-            if (block instanceof BasicMachineBlock machine) {
+            if (block instanceof BasicMachineBlock machine && !CraftingItemCompositions.tracks(machine)) {
                 MachineConstructionMaterials.machine(
                                 machine.basicSpec().machineName(),
                                 machine.basicSpec().tier())

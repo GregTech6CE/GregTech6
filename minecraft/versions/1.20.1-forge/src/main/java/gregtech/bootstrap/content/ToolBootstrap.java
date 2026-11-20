@@ -38,6 +38,8 @@ public record ToolBootstrap() implements InitializationStep {
     public static final RegistryObject<RecipeSerializer<gregtech.content.recipe.SpikeConversionRecipe>>
             SPIKE_CONVERSION = RECIPE_SERIALIZERS.register(
                     "spike_conversion", () -> gregtech.content.recipe.SpikeConversionRecipe.SERIALIZER);
+    public static final RegistryObject<RecipeSerializer<gregtech.content.recipe.TapeRepackRecipe>> TAPE_REPACK =
+            RECIPE_SERIALIZERS.register("tape_repack", () -> gregtech.content.recipe.TapeRepackRecipe.SERIALIZER);
 
     public static final RegistryObject<RecipeSerializer<gregtech.content.recipe.ToolShapelessRecipe>> TOOL_SHAPELESS =
             RECIPE_SERIALIZERS.register("tool_shapeless", () -> gregtech.content.recipe.ToolShapelessRecipe.SERIALIZER);

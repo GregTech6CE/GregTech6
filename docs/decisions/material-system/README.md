@@ -37,9 +37,9 @@
   ItemMaterialRegistry（validateExplicitSnapshot 校验替换链后锁定 explicitClosed）
 
 [3. 平台内容绑定与可重载代次（启动与资源重载）]
-  原生资源 Tag 导入 / 数据包变更
-        │  beginTagGeneration() → 构建新代 Tag 候选 → ItemCompositionResolver
-        ▼  刷新 MaterialFormContent 绑定 → 回收/分解 RecipeMap overlay 重建
+  原生资源 Tag 导入 / 数据包与脚本配方变更
+        │  beginTagGeneration() → 发布 Tag 候选 → 从当前工作台、烧制与机器配方发布成分候选
+        ▼  ItemCompositionResolver 裁决 → 更新查询、展示与回收配方
   成功：candidatePlatformGeneration(compRev, recipeRev) → 服务端配方发布或客户端炉桥完成后 commit(candidate)
   失败：按检查点回滚成分快照与机器配方，保持上一完整 Stamp 不变
 ```

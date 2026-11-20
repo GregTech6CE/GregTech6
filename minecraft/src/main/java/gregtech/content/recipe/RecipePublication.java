@@ -41,13 +41,15 @@ public final class RecipePublication {
 
     /** Publishes the current generation unless the manager already holds exactly these rows. */
     public static void publish(MinecraftServer server) {
+        publish(server, false);
+    }
+
+    static void publish(MinecraftServer server, boolean tagsUpdated) {
         RecipeManager manager = server.getRecipeManager();
         Collection<?> current = manager.getRecipes();
         var applied = APPLIED.get(manager);
-        if (applied != null && applied.size() == current.size() && applied.containsAll(current)) {
-            commitOverlay();
-            return;
-        }
+        boolean alreadyPublished = applied != null && applied.size() == current.size() && applied.containsAll(current);
+        if (alreadyPublished && !tagsUpdated) return;
         RegistryAccess access = server.registryAccess();
 //? if >=1.21.1 {
         /*var working = new RecipeManager(access);
@@ -55,10 +57,12 @@ public final class RecipePublication {
         var working = new RecipeManager();
 //?}
         working.replaceRecipes(manager.getRecipes());
-        for (var contribution : CONTRIBUTIONS) contribution.apply(working, access);
-        // The furnace bridge also adds rows; deduplicate only after every producer ran.
+        if (!alreadyPublished) {
+            for (var contribution : CONTRIBUTIONS) contribution.apply(working, access);
+            dedup(working, access);
+        }
+        MachineRecipeOverlay.apply(working, access);
         MachineRecipeOverlay.publishFurnace(working, access);
-        dedup(working, access);
         manager.replaceRecipes(working.getRecipes());
         commitOverlay();
 //? if >=1.21.1 {

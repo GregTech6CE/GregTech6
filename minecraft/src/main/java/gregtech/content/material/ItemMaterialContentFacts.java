@@ -43,6 +43,14 @@ final class ItemMaterialContentFacts implements ItemMaterialRuntimeFacts.StoredC
 //?}
     }
 
+    @Override
+    public ItemMaterialRuntimeFacts.Durability compositionDurability(ItemStack stack) {
+        var tape = RecipeCompositionItems.tape(stack);
+        if (tape == null) return null;
+        long remaining = Math.max(0, Math.min(tape.uses(), tape.remaining(stack)));
+        return new ItemMaterialRuntimeFacts.Durability(Math.toIntExact(remaining), Math.toIntExact(tape.uses()));
+    }
+
     private static boolean hasStoredBlockEntityData(ItemStack stack, net.minecraft.nbt.CompoundTag tag) {
         if (tag.isEmpty()) return false;
         if (stack.getItem() instanceof BlockItem item

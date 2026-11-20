@@ -8,6 +8,7 @@
 | plunger | 机器路径先抽输出罐；输出罐为空时才抽输入罐；每次最多 1000 mB。抽出的流体交给 `GarbageData` 丢弃。 | 原版 `Behavior_Plunger_Fluid` 的顺序；CE 把机器路径补进 `BasicMachineBlockEntity.useMachineTool`，见 `purgeTank`。 |
 | igniter | 物品级点火已存在；`BasicMachineBlock.useRemainder` 对会消费点火器的宿主返回 `PASS`，避免 GUI 吞掉点火。 | 原版 `Behavior_FlintAndTinder` 在方块拒绝后执行；CE 的机器 GUI 不能抢先消费。 |
 | 封面工具守卫 | 封面过滤器的工具判断用 `PanelCoverHost.consumesTool`，由宿主按实际工具动作决定；静态列表会漏 igniter/plunger、多 soldering_iron。 | 原版静态列表跨宿主近似；CE 改为宿主守卫，见 `UtilityCoverInteraction.use`。 |
+| 胶带合卷 | 合并四卷旧胶带的剩余用量，结果最多一整卷。 | 成分随剩余用量缩放，合卷后的可回收材料受输入约束。见[物品成分解析](../material-system/item-composition.md#从当前配方反推成分)。 |
 
 ## 与 Stonecutter 分支的关系
 

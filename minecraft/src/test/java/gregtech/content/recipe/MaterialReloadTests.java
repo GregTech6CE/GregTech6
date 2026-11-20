@@ -4,6 +4,7 @@ import gregtech.api.addon.recipe.MachineRecipeDocuments;
 import gregtech.api.material.GTValues;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.material.CraftingItemCompositions;
 import gregtech.content.material.generated.WoodMaterials;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.material.GTMaterialRegistry;
@@ -20,6 +21,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.core.NonNullList;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
@@ -28,6 +30,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.level.material.Fluids;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.gametest.GameTestHolder;
@@ -119,22 +124,210 @@ public final class MaterialReloadTests {
                 "stamp names the composition used by the overlay");
         var server = helper.getLevel().getServer();
         var tagAliases = ItemMaterialForms.aliases();
+        var mold = item("extruder_shape_plate");
+        var moldBeforeFailure = ItemMaterialRegistry.base(mold).orElseThrow(() -> new IllegalStateException("extruder shape composition is missing"));
         try {
-            var failed = MachineRecipeOverlay.apply(null);
+            var failed = MachineRecipeOverlay.apply(null, server.registryAccess());
             helper.assertTrue(failed.failed(), "invalid overlay fails through the real recovery path");
             helper.assertTrue(ItemMaterialForms.aliases() == tagAliases, "failed overlay restores tagged form aliases");
+            helper.assertTrue(ItemMaterialRegistry.base(mold).orElseThrow().equals(moldBeforeFailure),
+                    "failed overlay restores recipe-derived compositions");
             helper.assertTrue(MaterialPublication.current() == current, "failed overlay preserves the prior stamp");
             helper.assertTrue(MachineRecipeMaps.Bath.recipeRows.size() == MachineRecipeMaps.Bath.baselineSize(),
                     "failure restores the Bath baseline instead of a partial overlay");
         } finally {
-            var restored = MachineRecipeOverlay.apply(server.getRecipeManager());
+            var restored = MachineRecipeOverlay.apply(server.getRecipeManager(), server.registryAccess());
             if (restored.failed()) throw new IllegalStateException("could not restore overlay after failure probe");
             MachineRecipeOverlay.publishFurnace(server.getRecipeManager(), server.registryAccess());
             MaterialPublication.commit(MachineRecipeOverlay.lastPublication());
         }
         helper.assertTrue(SharedSpecialProcessRows.owned().size() == owned, "successful overlay restores owned rows");
         assertFurnaceMarkers(helper);
+        assertCraftingCompositions(helper);
+        assertProductionCompositions(helper);
         helper.succeed();
+    }
+
+    private static void assertCraftingCompositions(GameTestHelper helper) {
+        var server = helper.getLevel().getServer();
+        var manager = server.getRecipeManager();
+        var access = server.registryAccess();
+        assertComposition(helper, "press_bronze", "Bronze", GTValues.U * 27 / 2);
+        assertComposition(helper, "extruder_shape_plate", "TungstenCarbide", GTValues.U * 2);
+        assertComposition(helper, "low_heat_extruder_shape_plate", "Steel", GTValues.U * 2);
+        assertComposition(helper, "press_bullet_casing_shape_small", "Steel", GTValues.U * 5 + 2 * GTValues.U9);
+        var shredder = craftingRecovery(item("low_heat_extruder_shape_plate")).orElseThrow();
+        helper.assertFalse(shredder.isCatalystInput(0), "shredding consumes a production mold");
+
+        var blank = item("extruder_shape_empty");
+        var shaped = item("extruder_shape_plate");
+        var id = ResourceLocation.fromNamespaceAndPath("gt6ce", "extruder_shapes/extruder_shape_empty");
+        var output = new ItemStack(blank, 2);
+        var inputs = NonNullList.of(Ingredient.EMPTY, Ingredient.of(Items.IRON_INGOT));
+        var filtered = new ArrayList<>(manager.getRecipes());
+//? if >=1.21.1 {
+        /*var working = new RecipeManager(access);
+        filtered.removeIf(recipe -> recipe.id().equals(id));
+        var replacement = new net.minecraft.world.item.crafting.RecipeHolder<>(id,
+                new ShapelessRecipe("", CraftingBookCategory.MISC, output, inputs));
+*///?} else {
+        var working = new RecipeManager();
+        filtered.removeIf(recipe -> recipe.getId().equals(id));
+        var replacement = new ShapelessRecipe(id, "", CraftingBookCategory.MISC, output, inputs);
+//?}
+        try {
+            working.replaceRecipes(filtered);
+            CraftingItemCompositions.rebuild(working, access);
+            VanillaRecoveryRecipes.rebuildCraftingRows();
+            helper.assertTrue(ItemMaterialRegistry.base(blank).isEmpty()
+                    && ItemMaterialRegistry.base(shaped).isEmpty(), "removed recipe invalidates both mold compositions");
+            helper.assertTrue(craftingRecovery(shaped).isEmpty(), "removed recipe withdraws the old shredder row");
+            filtered.add(replacement);
+            working.replaceRecipes(filtered);
+            CraftingItemCompositions.rebuild(working, access);
+            VanillaRecoveryRecipes.rebuildCraftingRows();
+            assertComposition(helper, "extruder_shape_empty", "Iron", GTValues.U2);
+            assertComposition(helper, "extruder_shape_plate", "Iron", GTValues.U2);
+            var updated = craftingRecovery(shaped).orElseThrow();
+            long recovered = 0;
+            for (var dust : updated.itemOutputs) {
+                var composition = ItemMaterialRegistry.get(dust).orElseThrow();
+                helper.assertTrue(composition.material().resolve() == GTMaterialRegistry.get("Iron").resolve(),
+                        "updated shredder output is iron");
+                recovered += composition.amount() * dust.getCount();
+            }
+            helper.assertTrue(recovered == GTValues.U2, "updated shredder output follows the divided material amount");
+        } finally {
+            CraftingItemCompositions.rebuild(manager, access);
+            VanillaRecoveryRecipes.rebuildCraftingRows();
+        }
+    }
+
+    private static java.util.Optional<gregtech.engine.recipe.Recipe> craftingRecovery(Item item) {
+        return VanillaRecoveryRecipes.craftingRows().stream()
+                .filter(row -> row.itemInputs[0].is(item))
+                .findFirst();
+    }
+
+    private static void assertComposition(GameTestHelper helper, String path, String material, long amount) {
+        var stack = new ItemStack(item(path));
+        var data = ItemMaterialRegistry.get(stack).orElseThrow();
+        helper.assertTrue(data.components().size() == 1
+                && data.material().resolve() == GTMaterialRegistry.get(material).resolve()
+                && data.amount() == amount, path + " has its expected crafting composition: " + data.components());
+        helper.assertTrue(ItemMaterialRegistry.canMelt(stack), path + " is admitted to crucible recovery");
+    }
+
+    private static Item item(String path) {
+        return BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", path));
+    }
+
+    private static void assertProductionCompositions(GameTestHelper helper) {
+        var cable = new ItemStack(item("cable_04_copper"));
+        assertAmount(helper, cable, "Copper", 2 * GTValues.U);
+        assertAmount(helper, cable, "Rubber", 2 * GTValues.U);
+        assertAmount(helper, new ItemStack(item("cable_01_redalloy")), "Rubber", GTValues.U);
+        assertAmount(helper, new ItemStack(item("clay_plate_mold")), "Clay", 5 * GTValues.U);
+        assertAmount(helper, new ItemStack(item("fluid_measuring_pot")), "Ceramic", 4 * GTValues.U);
+        assertAmount(helper, new ItemStack(item("circuit_plate")), "SiliconDioxide", GTValues.U);
+        assertAmount(helper, new ItemStack(item("crystal_circuit_diamond")), "Diamond", GTValues.U);
+        assertAmount(helper, new ItemStack(item("crystal_circuit_emerald")), "Emerald", GTValues.U);
+        assertAmount(helper, new ItemStack(item("flux_laser_lv")), "Lead", 8 * GTValues.U);
+        helper.assertTrue(ItemMaterialRegistry.base(item("flux_laser_lv")).orElseThrow().components().size() > 1,
+                "the flux laser includes its CO2 laser");
+        for (String path : List.of("aneutronic_fusion_power_cell_helium_3", "universal_suit_helmet",
+                "usb3_hdd", "portable_scanner", "robot_arm_wrench_tip", "long_dist_pipe_tungsten")) {
+            helper.assertTrue(ItemMaterialRegistry.base(item(path)).isPresent(), path + " has derived composition");
+        }
+        var spray = new ItemStack(item("spray_paint_red_2"));
+        helper.assertTrue(ItemMaterialRegistry.get(spray).orElseThrow().components().equals(
+                ItemMaterialRegistry.base(item("empty_spray_can")).orElseThrow().components()),
+                "spray variants retain only the empty can's composition");
+        var tape = gregtech.content.item.behavior.BehaviorDuctTape.consumable(1);
+        var used = tape.prepared(tape.full());
+        assertAmount(helper, tape.full(), "Plastic", 3 * GTValues.U / 4);
+        assertAmount(helper, tape.spent(used, tape.uses() / 2), "Plastic", 3 * GTValues.U / 8);
+        helper.assertFalse(ItemMaterialRegistry.canRecover(tape.used()), "a spent tape roll has no recoverable material");
+        assertTapeRepack(helper, tape);
+        assertLaminatorReplacement(helper, cable);
+    }
+
+    private static void assertAmount(GameTestHelper helper, ItemStack stack, String material, long expected) {
+        var data = ItemMaterialRegistry.get(stack).orElseThrow(() -> new IllegalStateException("missing composition for " + stack));
+        long amount = data.components().stream()
+                .filter(component -> component.material() == GTMaterialRegistry.get(material).resolve())
+                .mapToLong(component -> component.amount()).sum();
+        helper.assertTrue(amount == expected, stack + " has " + expected + " units of " + material + ", got " + amount);
+    }
+
+    private static void assertTapeRepack(GameTestHelper helper,
+            gregtech.content.item.behavior.ItemBehaviors.Consumable tape) {
+        var level = helper.getLevel();
+        var id = ResourceLocation.fromNamespaceAndPath("gt6ce", "catalog_repairs/duct_tape_repack");
+        var entry = level.getRecipeManager().byKey(id).orElseThrow();
+        var used = tape.spent(tape.prepared(tape.full()), tape.uses() * 7 / 8);
+//? if >=1.21.1 {
+        /*var recipe = (TapeRepackRecipe) entry.value();
+        var grid = net.minecraft.world.item.crafting.CraftingInput.of(2, 2, java.util.Collections.nCopies(4, used));
+*///?} else {
+        var recipe = (TapeRepackRecipe) entry;
+        var menu = new net.minecraft.world.inventory.AbstractContainerMenu(null, 0) {
+            @Override public ItemStack quickMoveStack(net.minecraft.world.entity.player.Player player, int index) {
+                return ItemStack.EMPTY;
+            }
+            @Override public boolean stillValid(net.minecraft.world.entity.player.Player player) {
+                return true;
+            }
+        };
+        var grid = new net.minecraft.world.inventory.TransientCraftingContainer(menu, 2, 2);
+        for (int slot = 0; slot < 4; slot++) grid.setItem(slot, used.copy());
+//?}
+        helper.assertTrue(recipe.matches(grid, level), "four used rolls can be repacked");
+        var result = recipe.assemble(grid, level.registryAccess());
+        helper.assertTrue(tape.isUsed(result) && tape.remaining(result) == tape.uses() / 2,
+                "repacking four eighth-rolls returns a half-used roll");
+        assertAmount(helper, result, "Plastic", 3 * GTValues.U / 8);
+    }
+
+    private static void assertLaminatorReplacement(GameTestHelper helper, ItemStack cable) {
+        var server = helper.getLevel().getServer();
+        var manager = server.getRecipeManager();
+        var access = server.registryAccess();
+        String map = MachineRecipeMaps.Laminator.internalName;
+        var removal = MachineRecipeDocuments.removal(Map.of(
+                "map", map, "item_outputs", List.of(Map.of("item", "gt6ce:cable_04_copper"))));
+        var addition = MachineRecipeDocuments.addition(Map.of(
+                "map", map,
+                "item_inputs", List.of(Map.of("item", "gt6ce:wire_04_copper"),
+                        Map.of("item", "gt6ce:plate_rubber", "count", 3)),
+                "item_outputs", List.of(Map.of("item", "gt6ce:cable_04_copper")),
+                "eu_per_tick", 16, "duration", 32));
+        var addId = ResourceLocation.fromNamespaceAndPath("gt6ce", "test/cable_add");
+        var removeId = ResourceLocation.fromNamespaceAndPath("gt6ce", "test/cable_remove");
+        var recipes = new ArrayList<>(manager.getRecipes());
+//? if >=1.21.1 {
+        /*recipes.add(new net.minecraft.world.item.crafting.RecipeHolder<>(addId, MachineDatapackRecipe.addition(addition)));
+        recipes.add(new net.minecraft.world.item.crafting.RecipeHolder<>(removeId, MachineDatapackRecipe.removal(removal)));
+        var working = new RecipeManager(access);
+*///?} else {
+        recipes.add(MachineDatapackRecipe.addition(addId, addition));
+        recipes.add(MachineDatapackRecipe.removal(removeId, removal));
+        var working = new RecipeManager();
+//?}
+        try {
+            working.replaceRecipes(recipes);
+            var overlay = MachineRecipeOverlay.apply(working, access);
+            helper.assertTrue(!overlay.failed() && overlay.removed() > 0 && overlay.added() == 1,
+                    "the cable's laminator route was replaced");
+            assertAmount(helper, cable, "Copper", 2 * GTValues.U);
+            assertAmount(helper, cable, "Rubber", 3 * GTValues.U);
+        } finally {
+            var restored = MachineRecipeOverlay.apply(manager, access);
+            if (restored.failed()) throw new IllegalStateException("could not restore cable overlay");
+            MachineRecipeOverlay.publishFurnace(manager, access);
+            MaterialPublication.commit(MachineRecipeOverlay.lastPublication());
+        }
+        assertAmount(helper, cable, "Rubber", 2 * GTValues.U);
     }
 
     private static void assertFurnaceMarkers(GameTestHelper helper) {

@@ -48,6 +48,7 @@ public final class NeoRecipeSerializers {
     static {
         SERIALIZERS.register("tool_repair", () -> GTToolRepairRecipe.SERIALIZER);
         SERIALIZERS.register("spike_conversion", () -> SpikeConversionRecipe.SERIALIZER);
+        SERIALIZERS.register("tape_repack", () -> TapeRepackRecipe.SERIALIZER);
         SERIALIZERS.register("book_binding", () -> BookBindingRecipe.SERIALIZER);
         SERIALIZERS.register("tool_shapeless", () -> ToolShapelessRecipe.SERIALIZER);
         SERIALIZERS.register("creosote_axle", () -> CreosoteAxleRecipe.SERIALIZER);
