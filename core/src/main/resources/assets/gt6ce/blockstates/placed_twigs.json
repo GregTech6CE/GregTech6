@@ -1,0 +1,66 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "gt6ce:block/twigs_0"
+      },
+      {
+        "model": "gt6ce:block/twigs_0",
+        "y": 90
+      },
+      {
+        "model": "gt6ce:block/twigs_0",
+        "y": 180
+      },
+      {
+        "model": "gt6ce:block/twigs_0",
+        "y": 270
+      },
+      {
+        "model": "gt6ce:block/twigs_1"
+      },
+      {
+        "model": "gt6ce:block/twigs_1",
+        "y": 90
+      },
+      {
+        "model": "gt6ce:block/twigs_1",
+        "y": 180
+      },
+      {
+        "model": "gt6ce:block/twigs_1",
+        "y": 270
+      },
+      {
+        "model": "gt6ce:block/twigs_2"
+      },
+      {
+        "model": "gt6ce:block/twigs_2",
+        "y": 90
+      },
+      {
+        "model": "gt6ce:block/twigs_2",
+        "y": 180
+      },
+      {
+        "model": "gt6ce:block/twigs_2",
+        "y": 270
+      },
+      {
+        "model": "gt6ce:block/twigs_3"
+      },
+      {
+        "model": "gt6ce:block/twigs_3",
+        "y": 90
+      },
+      {
+        "model": "gt6ce:block/twigs_3",
+        "y": 180
+      },
+      {
+        "model": "gt6ce:block/twigs_3",
+        "y": 270
+      }
+    ]
+  }
+}

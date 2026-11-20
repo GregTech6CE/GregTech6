@@ -19,22 +19,18 @@ import org.jspecify.annotations.Nullable;
  * Virtual model definitions served by the shared item model pack.
  *
  * <p>Rows of {@link #RESOURCE_PATH} describe models that are not shipped as JSON files on disk: a parent
- * model, an optional render type, an optional ambient occlusion opt-out and optional texture slots. Models
- * whose parent is {@code @scaffold1} are generated procedurally from their {@code rod} texture, so a row
- * that omits that texture is rejected while parsing.
+ * model, an optional render type and optional texture slots. Families with a fixed geometry per material
+ * are rendered by {@link ProceduralModels} instead of being listed here.
  */
 public final class VirtualModelCatalog {
     public static final String RESOURCE_PATH = "/assets/gt6ce/model_definitions.tsv";
-
-    private static final String SCAFFOLD_PARENT = "@scaffold1";
 
     private static volatile @Nullable Map<String, Entry> cache;
 
     private VirtualModelCatalog() {}
 
     /** One virtual model row; {@code path} is a model path without the {@code .json} suffix. */
-    public record Entry(
-            String path, String parent, String renderType, boolean disableAo, Map<String, String> textures) {}
+    public record Entry(String path, String parent, String renderType, Map<String, String> textures) {}
 
     public static Map<String, Entry> parse(InputStream stream) throws IOException {
         Map<String, Entry> entries = new LinkedHashMap<>();
@@ -45,8 +41,8 @@ public final class VirtualModelCatalog {
                 lineNo++;
                 if (line.isBlank() || line.startsWith("#")) continue;
                 String[] parts = line.split("\t", -1);
-                if (parts.length != 5) {
-                    throw new IOException("Malformed model definition row at line " + lineNo + ": expected 5 columns");
+                if (parts.length != 4) {
+                    throw new IOException("Malformed model definition row at line " + lineNo + ": expected 4 columns");
                 }
                 Entry entry = createEntry(parts, lineNo);
                 if (entries.putIfAbsent(entry.path(), entry) != null) {
@@ -85,7 +81,7 @@ public final class VirtualModelCatalog {
     /** Renders {@code modelPath}, or returns {@code null} when no virtual or procedural model matches. */
     public static @Nullable String renderJson(String modelPath, String compositeLoader) {
         Entry entry = modelPath == null ? null : entries().get(modelPath);
-        if (entry != null) return renderEntryJson(entry, compositeLoader);
+        if (entry != null) return renderEntryJson(entry);
         return ProceduralModels.renderModelJson(modelPath, compositeLoader);
     }
 
@@ -104,7 +100,7 @@ public final class VirtualModelCatalog {
             sink.accept(path, bytes);
         });
         for (Entry entry : entries().values()) {
-            String json = renderEntryJson(entry, compositeLoader);
+            String json = renderEntryJson(entry);
             if (!seen.add(entry.path())) {
                 throw new IllegalStateException("Duplicate virtual model: " + entry.path());
             }
@@ -121,16 +117,11 @@ public final class VirtualModelCatalog {
         if (parent.isEmpty()) {
             throw new IOException("Empty model definition parent at line " + lineNo + ": " + path);
         }
-        boolean disableAo = switch (parts[3]) {
-            case "" -> false;
-            case "0" -> true;
-            default -> throw new IOException("Invalid ambient occlusion flag at line " + lineNo + ": " + parts[3]);
-        };
-        Map<String, String> textures = parseTextures(parts[4], path, lineNo);
-        if (SCAFFOLD_PARENT.equals(parent) && !textures.containsKey("rod")) {
-            throw new IOException("Scaffold model missing rod texture at line " + lineNo + ": " + path);
+        if (parent.startsWith("@")) {
+            throw new IOException("Unsupported model definition parent at line " + lineNo + ": " + parent);
         }
-        return new Entry(path, parent, parts[2], disableAo, textures);
+        Map<String, String> textures = parseTextures(parts[3], path, lineNo);
+        return new Entry(path, parent, parts[2], textures);
     }
 
     private static Map<String, String> parseTextures(String spec, String path, int lineNo) throws IOException {
@@ -151,19 +142,11 @@ public final class VirtualModelCatalog {
         return Collections.unmodifiableMap(textures);
     }
 
-    private static String renderEntryJson(Entry entry, String compositeLoader) {
-        if (SCAFFOLD_PARENT.equals(entry.parent())) {
-            return ProceduralModels.scaffoldDesign1Json(
-                    compositeLoader, entry.textures().get("rod"));
-        }
+    private static String renderEntryJson(Entry entry) {
         StringBuilder sb = new StringBuilder(192);
         sb.append('{');
         appendStringField(sb, "parent", entry.parent());
         appendStringField(sb, "render_type", entry.renderType());
-        if (entry.disableAo()) {
-            startField(sb, "ambientocclusion");
-            sb.append("false");
-        }
         appendTextures(sb, entry.textures());
         return sb.append('}').toString();
     }

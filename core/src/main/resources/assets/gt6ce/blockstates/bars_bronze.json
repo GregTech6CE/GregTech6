@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "mask=0": {
+      "model": "gt6ce:block/decoration/bars_bronze_0"
+    },
+    "mask=1": {
+      "model": "gt6ce:block/decoration/bars_bronze_1"
+    },
+    "mask=2": {
+      "model": "gt6ce:block/decoration/bars_bronze_2"
+    },
+    "mask=3": {
+      "model": "gt6ce:block/decoration/bars_bronze_3"
+    },
+    "mask=4": {
+      "model": "gt6ce:block/decoration/bars_bronze_4"
+    },
+    "mask=5": {
+      "model": "gt6ce:block/decoration/bars_bronze_5"
+    },
+    "mask=6": {
+      "model": "gt6ce:block/decoration/bars_bronze_6"
+    },
+    "mask=7": {
+      "model": "gt6ce:block/decoration/bars_bronze_7"
+    },
+    "mask=8": {
+      "model": "gt6ce:block/decoration/bars_bronze_8"
+    },
+    "mask=9": {
+      "model": "gt6ce:block/decoration/bars_bronze_9"
+    },
+    "mask=10": {
+      "model": "gt6ce:block/decoration/bars_bronze_10"
+    },
+    "mask=11": {
+      "model": "gt6ce:block/decoration/bars_bronze_11"
+    },
+    "mask=12": {
+      "model": "gt6ce:block/decoration/bars_bronze_12"
+    },
+    "mask=13": {
+      "model": "gt6ce:block/decoration/bars_bronze_13"
+    },
+    "mask=14": {
+      "model": "gt6ce:block/decoration/bars_bronze_14"
+    },
+    "mask=15": {
+      "model": "gt6ce:block/decoration/bars_bronze_15"
+    }
+  }
+}

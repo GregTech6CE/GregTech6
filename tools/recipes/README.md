@@ -2,8 +2,8 @@
 
 `audit_recipes.py` 对随模组分发的**静态**数据包配方做静态审计。它只读
 `core/src/main/resources/data/gt6ce/recipes`、`tags/items`、`assets/*/models/item`、
-`assets/*/blockstates`、虚拟资源目录表（`model_definitions.tsv`、`blockstate_definitions.tsv`、
-`ProceduralModels`、`StoneVariant`、`ChemicalBatterySpec`）
+`assets/*/blockstates`、虚拟资源目录表与家族生成器（`model_definitions.tsv` 4 列扁平表、`blockstate_definitions.tsv` 6 种通用几何 `Kind`、
+`ProceduralModels`、`FamilyBlockstateGenerators`、`SensorCatalog`、`TrackCatalog`、`WoodSlabCatalog`、`StoneVariant`、`ChemicalBatterySpec`）
 和生成配方的 Java 表，不启动游戏；由 `RecipePublishing`（`gt6ce:generated_recipes`）及运行期注入器在内存中生成的配方不在静态 JSON 审计范围内，其结构与等价性由单元测试与 GameTest 验证。
 
 ## 运行
@@ -45,7 +45,7 @@ python tools/recipes/audit_recipes.py --strict   # 有 error 时返回 1
   `data/*/tags/item/` 也必须与 `core/src/main/resources/data/*/tags/items/` 一一对应，
   内容逐文档比较；生成树缺少某个标签、多出无源标签或值不一致都报 error。
 - **物品模型**：结果物品在 `assets/*/models/item`、`blockstates` 以及虚拟资源目录
-  （`model_definitions.tsv`、`blockstate_definitions.tsv` 与 `ProceduralModels` 程序化家族）中均找不到模型时
+  （`model_definitions.tsv`、`blockstate_definitions.tsv` 与 `ProceduralModels`、`FamilyBlockstateGenerators` 家族生成器）中均找不到模型时
   报 warning；材料物品与部分运行期生成机器模型由客户端资源包动态提供，warning 只作提示。
 
 ## 维护约定

@@ -5,6 +5,7 @@ import gregtech.content.energy.ChemicalBatterySpec;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -18,9 +19,10 @@ import org.jspecify.annotations.Nullable;
 /**
  * Model and blockstate documents derived from a block family's parameters instead of shipped JSON.
  *
- * <p>Stones, decoration piles, logistics extenders and filters, reactor cores, chemical batteries and
- * compasses repeat one fixed geometry per family, so only their textures and the hand-written
- * templates they reference stay on disk. Every document is rendered from the family tables below.
+ * <p>Stones, decoration piles, logistics extenders and filters, reactor cores, chemical batteries,
+ * compasses and scaffolds repeat one fixed geometry per family, so only their textures and the
+ * hand-written templates they reference stay on disk. Every document is rendered from the family
+ * tables below.
  *
  * <p>Model paths are pack paths without the {@code models/} prefix and the {@code .json} suffix;
  * blockstate keys are bare registry paths. Nothing here touches Minecraft types.
@@ -89,6 +91,58 @@ public final class ProceduralModels {
     private static final String SCAFFOLD_PLATE = "gt6ce:block/iconsets/plate";
     private static final String SCAFFOLD_HATCH = "gt6ce:block/iconsets/hatch";
 
+    /** Solid block sprite that every scaffold design 1 model uses for its rods. */
+    private static final String SCAFFOLD_ROD = "gt6ce:block/material_icons/dull/blocksolid";
+
+    /** Scaffold design 1 ships for each of these materials plus the uncoloured {@code scaffold_1}. */
+    private static final List<String> SCAFFOLD_MATERIALS = List.of(
+            "adamantium",
+            "aluminium",
+            "antimony",
+            "arsenic_bronze",
+            "arsenic_copper",
+            "bismuth",
+            "bismuth_bronze",
+            "brass",
+            "bronze",
+            "chromium",
+            "cobalt",
+            "constantan",
+            "duranium",
+            "efrine",
+            "electrum",
+            "elven_elementium",
+            "germanium",
+            "gold",
+            "invar",
+            "iridium",
+            "knightmetal",
+            "lead",
+            "lumium",
+            "manasteel",
+            "manganese",
+            "molybdenum",
+            "netherite",
+            "nickel",
+            "osmium",
+            "palladium",
+            "platinum",
+            "silver",
+            "stainless_steel",
+            "steel_galvanized",
+            "terrasteel",
+            "thaumium",
+            "tin_alloy",
+            "titanium",
+            "tritanium",
+            "tungsten",
+            "tungsten_carbide",
+            "tungstensteel",
+            "ultimet");
+
+    /** Every scaffold design 1 model path, derived from {@link #SCAFFOLD_MATERIALS}. */
+    private static final Set<String> SCAFFOLD_PATHS = scaffoldPaths();
+
     private static final List<String> VERTICAL_FACES = List.of("down", "up");
 
     private static volatile @Nullable Set<String> cachedModelPaths;
@@ -101,15 +155,16 @@ public final class ProceduralModels {
      * Emits every procedural model to {@code sink}, keyed by model path and encoded as UTF-8.
      *
      * <p>The path table is the single source of truth, so a path that has no renderer fails the build
-     * instead of silently dropping a model.
+     * instead of silently dropping a model. Identical documents share one byte array.
      */
     public static void emitModels(String compositeLoader, BiConsumer<String, byte[]> sink) {
+        Map<String, byte[]> encoded = new HashMap<>();
         for (String path : modelPaths()) {
             String json = renderModelJson(path, compositeLoader);
             if (json == null) {
                 throw new IllegalStateException("Procedural model has no renderer: " + path);
             }
-            sink.accept(path, json.getBytes(StandardCharsets.UTF_8));
+            sink.accept(path, encoded.computeIfAbsent(json, text -> text.getBytes(StandardCharsets.UTF_8)));
         }
     }
 
@@ -127,41 +182,6 @@ public final class ProceduralModels {
             }
             sink.accept(stem, json.getBytes(StandardCharsets.UTF_8));
         }
-    }
-
-    /** Renders the first scaffold design, whose rods take the material's solid block sprite. */
-    public static String scaffoldDesign1Json(String compositeLoader, String rodTexture) {
-        Objects.requireNonNull(rodTexture, "rodTexture");
-        List<Object> baseElements = List.of(
-                scaffoldElement(0, 10, 0, 16, 16, 16, "#plate", ALL_FACINGS),
-                scaffoldElement(0, 0, 0, 2, 10, 2, "#rod", ALL_FACINGS),
-                scaffoldElement(0, 0, 14, 2, 10, 16, "#rod", ALL_FACINGS),
-                scaffoldElement(14, 0, 0, 16, 10, 2, "#rod", ALL_FACINGS),
-                scaffoldElement(14, 0, 14, 16, 10, 16, "#rod", ALL_FACINGS),
-                scaffoldElement(2, 4, 0, 14, 5, 4, "#plate", ALL_FACINGS),
-                scaffoldElement(2, 12, 0, 14, 13, 4, "#plate", ALL_FACINGS));
-        List<Object> hatchElements = List.of(
-                scaffoldElement(0, 10, 0, 16, 16, 16, "#hatch", VERTICAL_FACES),
-                scaffoldElement(2, 4, 0, 14, 5, 4, "#hatch", VERTICAL_FACES),
-                scaffoldElement(2, 12, 0, 14, 13, 4, "#hatch", VERTICAL_FACES));
-        Map<String, Object> base = object(
-                "textures",
-                object("particle", SCAFFOLD_PLATE, "plate", SCAFFOLD_PLATE, "rod", rodTexture),
-                "elements",
-                baseElements);
-        Map<String, Object> hatch = object(
-                "textures", object("hatch", SCAFFOLD_HATCH),
-                "elements", hatchElements,
-                "render_type", CUTOUT);
-        return toJson(object(
-                "parent",
-                BLOCK_PARENT,
-                "loader",
-                compositeLoader,
-                "textures",
-                object("particle", SCAFFOLD_PLATE),
-                "children",
-                object("base", base, "hatch", hatch)));
     }
 
     /** Reports whether {@code modelPath} is one of the procedural models. */
@@ -185,6 +205,7 @@ public final class ProceduralModels {
         if (modelPath.startsWith("item/compass_") || modelPath.startsWith("item/compass/")) {
             return renderCompassModel(modelPath);
         }
+        if (SCAFFOLD_PATHS.contains(modelPath)) return scaffoldDesign1Json(compositeLoader, SCAFFOLD_ROD);
         return null;
     }
 
@@ -219,6 +240,7 @@ public final class ProceduralModels {
                 forEachReactorCoreModelPath(paths::add);
                 forEachBatteryModelPath(paths::add);
                 forEachCompassModelPath(paths::add);
+                paths.addAll(SCAFFOLD_PATHS);
                 current = Collections.unmodifiableSet(paths);
                 cachedModelPaths = current;
             }
@@ -994,6 +1016,53 @@ public final class ProceduralModels {
         if (!modelPath.startsWith("item/compass_")) return null;
         String mode = modelPath.substring("item/compass_".length());
         return COMPASS_MODES.contains(mode) ? compassItemJson(mode) : null;
+    }
+
+    // -------------------------------------------------------------- scaffolds
+
+    /** Every scaffold design 1 model path, derived from {@link #SCAFFOLD_MATERIALS}. */
+    private static Set<String> scaffoldPaths() {
+        Set<String> paths = new LinkedHashSet<>(SCAFFOLD_MATERIALS.size() + 1);
+        paths.add("block/tool/scaffold_1");
+        for (String material : SCAFFOLD_MATERIALS) {
+            paths.add("block/tool/scaffold_" + material + "_1");
+        }
+        return Collections.unmodifiableSet(paths);
+    }
+
+    /** Renders the first scaffold design, whose rods take the material's solid block sprite. */
+    public static String scaffoldDesign1Json(String compositeLoader, String rodTexture) {
+        Objects.requireNonNull(rodTexture, "rodTexture");
+        List<Object> baseElements = List.of(
+                scaffoldElement(0, 10, 0, 16, 16, 16, "#plate", ALL_FACINGS),
+                scaffoldElement(0, 0, 0, 2, 10, 2, "#rod", ALL_FACINGS),
+                scaffoldElement(0, 0, 14, 2, 10, 16, "#rod", ALL_FACINGS),
+                scaffoldElement(14, 0, 0, 16, 10, 2, "#rod", ALL_FACINGS),
+                scaffoldElement(14, 0, 14, 16, 10, 16, "#rod", ALL_FACINGS),
+                scaffoldElement(2, 4, 0, 14, 5, 4, "#plate", ALL_FACINGS),
+                scaffoldElement(2, 12, 0, 14, 13, 4, "#plate", ALL_FACINGS));
+        List<Object> hatchElements = List.of(
+                scaffoldElement(0, 10, 0, 16, 16, 16, "#hatch", VERTICAL_FACES),
+                scaffoldElement(2, 4, 0, 14, 5, 4, "#hatch", VERTICAL_FACES),
+                scaffoldElement(2, 12, 0, 14, 13, 4, "#hatch", VERTICAL_FACES));
+        Map<String, Object> base = object(
+                "textures",
+                object("particle", SCAFFOLD_PLATE, "plate", SCAFFOLD_PLATE, "rod", rodTexture),
+                "elements",
+                baseElements);
+        Map<String, Object> hatch = object(
+                "textures", object("hatch", SCAFFOLD_HATCH),
+                "elements", hatchElements,
+                "render_type", CUTOUT);
+        return toJson(object(
+                "parent",
+                BLOCK_PARENT,
+                "loader",
+                compositeLoader,
+                "textures",
+                object("particle", SCAFFOLD_PLATE),
+                "children",
+                object("base", base, "hatch", hatch)));
     }
 
     // ------------------------------------------------------------------ json

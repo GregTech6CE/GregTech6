@@ -24,8 +24,9 @@ import org.jspecify.annotations.Nullable;
  * models its variants cycle through. A kind resolves its own property keys and rotations, so a row
  * carries no JSON and a whole family of blocks costs one line each.
  *
- * <p>Blockstate stems that are not listed here but follow a procedural family are rendered by
- * {@link ProceduralModels}; {@link #contains} and {@link #renderJson} cover both sources.
+ * <p>Stems that are not listed here but follow a generated family are rendered by
+ * {@link FamilyBlockstateGenerators}, and the procedural families by {@link ProceduralModels};
+ * {@link #contains} and {@link #renderJson} cover all three sources.
  */
 public final class VirtualBlockstateCatalog {
     public static final String RESOURCE_PATH = "/assets/gt6ce/blockstate_definitions.tsv";
@@ -38,52 +39,6 @@ public final class VirtualBlockstateCatalog {
 
     private static final List<String> HORIZONTAL_MODEL_ORDER = List.of("east", "north", "south", "west");
 
-    private static final List<String> SLAB_TYPES = List.of("bottom", "double", "top");
-
-    /** Slab model of a horizontal facing; the downward facing is handled separately. */
-    private static final Map<String, Integer> SLAB_FACING_MODEL =
-            Map.of("up", 2, "east", 3, "north", 4, "south", 5, "west", 6);
-
-    private static final List<String> RAIL_SHAPES = List.of(
-            "ascending_east",
-            "ascending_north",
-            "ascending_south",
-            "ascending_west",
-            "east_west",
-            "north_east",
-            "north_south",
-            "north_west",
-            "south_east",
-            "south_west");
-
-    /** Rail shapes that only exist on plain tracks. */
-    private static final Set<String> CURVED_RAIL_SHAPES =
-            Set.of("north_east", "north_west", "south_east", "south_west");
-
-    /** First solar panel model of a facing; each facing owns an inactive and an active variant. */
-    private static final Map<String, Integer> SOLAR_MODEL_BASE =
-            Map.of("down", 0, "up", 0, "east", 2, "north", 4, "south", 6, "west", 8);
-
-    private static final List<String> COLORS = List.of(
-            "white",
-            "orange",
-            "magenta",
-            "light_blue",
-            "yellow",
-            "lime",
-            "pink",
-            "gray",
-            "light_gray",
-            "cyan",
-            "purple",
-            "blue",
-            "brown",
-            "green",
-            "red",
-            "black");
-
-    private static final int[] QUARTER_TURNS = {0, 90, 180, 270};
-
     private static volatile @Nullable Map<String, Entry> cache;
 
     private VirtualBlockstateCatalog() {}
@@ -92,10 +47,10 @@ public final class VirtualBlockstateCatalog {
     public record Entry(String block, Kind kind, List<String> models) {}
 
     /** Model reference of one variant: an index into {@link Entry#models()} plus its rotation. */
-    private record ModelRef(int model, int x, int y) {}
+    record ModelRef(int model, int x, int y) {}
 
     /** One blockstate variant: its property key and the model references it applies in order. */
-    private record Variant(String key, List<ModelRef> models) {}
+    record Variant(String key, List<ModelRef> models) {}
 
     /** The repeated variant shapes; each declares how many models a row of that shape lists. */
     public enum Kind {
@@ -104,33 +59,7 @@ public final class VirtualBlockstateCatalog {
         FACING_6_MODELS(6),
         FACING_4_MODELS(4),
         FACING_6_ROT(1),
-        FACING_6_OPEN_2(2),
-        FACING_6_OPEN_1(1),
-        SCAFFOLD_DESIGN_4(4),
-        FACING_6_LIT_1(1),
-        AXIS_2(2),
-        FACING_5_FLAT_DOWN(1),
-        FACING_6_LIT_2(2),
-        FACING_6_SENSOR(1),
-        FACING_6_ACTIVE_2(2),
-        RAIL_BOOSTER(6),
-        WOOD_SLAB(7),
-        BUSH_STAGES(28),
-        RAIL_REGULAR(4),
-        LEAVES(1),
-        SAPLING(2),
-        FACING_6_HEAT_EXCHANGER(4),
-        BARS_MASK_16(16),
-        FACING_5_FUNNEL(2),
-        FLUID_LEVEL_16(2),
-        FACING_6_ACTIVITY_4(4),
-        COLOR_16_SINGLE(1),
-        BOMBS_ARMED_SUNK_4(4),
-        FACING_4_RESIN_2(2),
-        ACTIVE_2(2),
-        TWIGS_4(4),
-        FACING_6_SOLAR_10(10),
-        FACING_6_ACTIVE_LOADED_4(4);
+        AXIS_2(2);
 
         private final int modelCount;
 
@@ -149,35 +78,9 @@ public final class VirtualBlockstateCatalog {
                 case SINGLETON -> List.of(variant("", ref(0)));
                 case FACING_4_ROT -> facingRotations(0, HORIZONTAL_FACINGS);
                 case FACING_6_ROT -> facingRotations(0, ALL_FACINGS);
-                case FACING_6_SENSOR -> sensorRotations();
                 case FACING_6_MODELS -> facingModelPerDirection();
                 case FACING_4_MODELS -> horizontalModelPerDirection();
-                case FACING_6_OPEN_1 -> openVariants(false);
-                case FACING_6_OPEN_2 -> openVariants(true);
-                case SCAFFOLD_DESIGN_4 -> scaffoldDesigns();
-                case FACING_6_LIT_1 -> litVariants(false);
-                case FACING_6_LIT_2 -> litVariants(true);
-                case FACING_6_ACTIVE_2 -> activeVariants();
-                case FACING_6_ACTIVITY_4 -> activityVariants();
-                case FACING_6_ACTIVE_LOADED_4 -> activeLoadedVariants();
-                case FACING_6_HEAT_EXCHANGER -> heatExchangerVariants();
-                case FACING_6_SOLAR_10 -> solarPanelVariants();
-                case FACING_4_RESIN_2 -> resinVariants();
-                case BOMBS_ARMED_SUNK_4 -> bombVariants();
-                case FACING_5_FLAT_DOWN -> flatDownVariants(0);
-                case FACING_5_FUNNEL -> flatDownVariants(1);
                 case AXIS_2 -> axisVariants();
-                case RAIL_BOOSTER -> railBoosterVariants();
-                case RAIL_REGULAR -> railVariants();
-                case WOOD_SLAB -> woodSlabVariants();
-                case BUSH_STAGES -> bushVariants();
-                case LEAVES -> leafVariants();
-                case SAPLING -> saplingVariants();
-                case BARS_MASK_16 -> barVariants();
-                case FLUID_LEVEL_16 -> fluidLevelVariants();
-                case COLOR_16_SINGLE -> colorVariants();
-                case ACTIVE_2 -> List.of(variant("active=false", ref(0)), variant("active=true", ref(1)));
-                case TWIGS_4 -> twigVariants();
             };
         }
     }
@@ -224,38 +127,42 @@ public final class VirtualBlockstateCatalog {
         }
     }
 
-    /** Reports whether {@code stem} resolves to a virtual or procedural blockstate. */
+    /** Reports whether {@code stem} resolves to a table, family or procedural blockstate. */
     public static boolean contains(String stem) {
-        return stem != null && (entries().containsKey(stem) || ProceduralModels.containsBlockstate(stem));
+        return stem != null
+                && (entries().containsKey(stem)
+                        || FamilyBlockstateGenerators.contains(stem)
+                        || ProceduralModels.containsBlockstate(stem));
     }
 
-    /** Renders {@code stem}, or returns {@code null} when no virtual or procedural blockstate matches. */
+    /** Renders {@code stem}, or returns {@code null} when no table, family or procedural blockstate matches. */
     public static @Nullable String renderJson(String stem) {
-        Entry entry = stem == null ? null : entries().get(stem);
+        if (stem == null) return null;
+        Entry entry = entries().get(stem);
         if (entry != null) return renderEntryJson(entry);
+        String family = FamilyBlockstateGenerators.renderJson(stem);
+        if (family != null) return family;
         return ProceduralModels.renderBlockstateJson(stem);
     }
 
     /**
-     * Emits every virtual and procedural blockstate to {@code sink}.
+     * Emits every table, family and procedural blockstate to {@code sink}.
      *
      * <p>Identical rendered documents share one byte array, and a stem emitted twice fails the pack build.
      */
     public static void emitAll(BiConsumer<String, byte[]> sink) {
         Set<String> seen = new HashSet<>(2048);
         Map<String, byte[]> encoded = new HashMap<>();
-        ProceduralModels.emitBlockstates((stem, bytes) -> {
+        BiConsumer<String, byte[]> guarded = (stem, bytes) -> {
             if (!seen.add(stem)) {
                 throw new IllegalStateException("Duplicate virtual blockstate: " + stem);
             }
             sink.accept(stem, bytes);
-        });
+        };
+        ProceduralModels.emitBlockstates(guarded);
+        FamilyBlockstateGenerators.emitAll(guarded);
         for (Entry entry : entries().values()) {
-            if (!seen.add(entry.block())) {
-                throw new IllegalStateException("Duplicate virtual blockstate: " + entry.block());
-            }
-            String json = renderEntryJson(entry);
-            sink.accept(entry.block(), encoded.computeIfAbsent(json, text -> text.getBytes(StandardCharsets.UTF_8)));
+            guarded.accept(entry.block(), encodeUtf8(encoded, renderEntryJson(entry)));
         }
     }
 
@@ -282,17 +189,27 @@ public final class VirtualBlockstateCatalog {
     }
 
     private static String renderEntryJson(Entry entry) {
+        return renderVariantsJson(entry.kind().variants(), entry.models());
+    }
+
+    /** Renders one blockstate document from a variant table and the models its references index. */
+    static String renderVariantsJson(List<Variant> variants, List<String> models) {
         StringBuilder out = new StringBuilder(320);
         out.append("{\"variants\":{");
         boolean first = true;
-        for (Variant variant : entry.kind().variants()) {
+        for (Variant variant : variants) {
             if (!first) out.append(',');
             first = false;
             JsonEscaper.appendQuoted(out, variant.key());
             out.append(':');
-            appendModels(out, variant.models(), entry.models());
+            appendModels(out, variant.models(), models);
         }
         return out.append("}}").toString();
+    }
+
+    /** Encodes {@code json} once per distinct document. */
+    static byte[] encodeUtf8(Map<String, byte[]> cache, String json) {
+        return cache.computeIfAbsent(json, text -> text.getBytes(StandardCharsets.UTF_8));
     }
 
     private static void appendModels(StringBuilder out, List<ModelRef> refs, List<String> models) {
@@ -315,20 +232,20 @@ public final class VirtualBlockstateCatalog {
 
     // -------------------------------------------------------------- variant tables
 
-    private static Variant variant(String key, ModelRef... refs) {
+    static Variant variant(String key, ModelRef... refs) {
         return new Variant(key, List.of(refs));
     }
 
-    private static ModelRef ref(int model) {
+    static ModelRef ref(int model) {
         return new ModelRef(model, 0, 0);
     }
 
-    private static ModelRef ref(int model, int x, int y) {
+    static ModelRef ref(int model, int x, int y) {
         return new ModelRef(model, x, y);
     }
 
     /** Rotation that turns a north-facing model onto {@code facing}. */
-    private static ModelRef facingRotation(int model, String facing) {
+    static ModelRef facingRotation(int model, String facing) {
         return switch (facing) {
             case "north" -> ref(model);
             case "east" -> ref(model, 0, 90);
@@ -340,27 +257,10 @@ public final class VirtualBlockstateCatalog {
         };
     }
 
-    /** Sensor blocks sit a half turn further round than the plain facing rotation. */
-    private static ModelRef sensorRotation(int model, String facing) {
-        return switch (facing) {
-            case "up" -> ref(model, 270, 180);
-            case "down" -> ref(model, 90, 180);
-            default -> facingRotation(model, facing);
-        };
-    }
-
     private static List<Variant> facingRotations(int model, List<String> facings) {
         List<Variant> variants = new ArrayList<>(facings.size());
         for (String facing : facings) {
             variants.add(variant("facing=" + facing, facingRotation(model, facing)));
-        }
-        return variants;
-    }
-
-    private static List<Variant> sensorRotations() {
-        List<Variant> variants = new ArrayList<>(ALL_FACINGS.size());
-        for (String facing : ALL_FACINGS) {
-            variants.add(variant("facing=" + facing, sensorRotation(0, facing)));
         }
         return variants;
     }
@@ -381,253 +281,21 @@ public final class VirtualBlockstateCatalog {
         return variants;
     }
 
-    /** Scaffold designs 1 and 2 hang their hatch on the opposite side, so they turn a half turn further. */
-    private static List<Variant> scaffoldDesigns() {
-        List<Variant> variants = new ArrayList<>(16);
-        for (int design = 0; design < 4; design++) {
-            for (String facing : HORIZONTAL_FACINGS) {
-                int yaw = HORIZONTAL_FACINGS.indexOf(facing) * 90;
-                if (design == 1 || design == 2) yaw = (yaw + 180) % 360;
-                variants.add(variant("design=" + design + ",facing=" + facing, ref(design, 0, yaw)));
-            }
-        }
-        return variants;
+    private static List<Variant> axisVariants() {
+        return List.of(variant("axis=y", ref(1)), variant("axis=z", ref(0, 90, 0)), variant("axis=x", ref(0, 90, 90)));
     }
 
-    private static List<Variant> openVariants(boolean distinctModels) {
-        List<Variant> variants = new ArrayList<>(12);
-        for (String facing : ALL_FACINGS) {
-            for (boolean open : new boolean[] {false, true}) {
-                variants.add(variant(
-                        "facing=" + facing + ",open=" + open, facingRotation(distinctModels && open ? 1 : 0, facing)));
-            }
-        }
-        return variants;
-    }
-
-    private static List<Variant> litVariants(boolean distinctModels) {
-        List<Variant> variants = new ArrayList<>(12);
-        for (String facing : ALL_FACINGS) {
-            for (boolean lit : new boolean[] {false, true}) {
-                variants.add(variant(
-                        "facing=" + facing + ",lit=" + lit, facingRotation(distinctModels && lit ? 1 : 0, facing)));
-            }
-        }
-        return variants;
-    }
-
-    private static List<Variant> activeVariants() {
-        List<Variant> variants = new ArrayList<>(12);
-        for (String facing : ALL_FACINGS) {
-            for (boolean active : new boolean[] {false, true}) {
-                variants.add(variant("facing=" + facing + ",active=" + active, facingRotation(active ? 1 : 0, facing)));
-            }
-        }
-        return variants;
-    }
-
-    private static List<Variant> activityVariants() {
-        List<Variant> variants = new ArrayList<>(24);
-        for (String facing : ALL_FACINGS) {
-            for (int activity = 0; activity < 4; activity++) {
-                variants.add(variant("facing=" + facing + ",activity=" + activity, facingRotation(activity, facing)));
-            }
-        }
-        return variants;
-    }
-
-    private static List<Variant> activeLoadedVariants() {
-        List<Variant> variants = new ArrayList<>(24);
-        for (String facing : ALL_FACINGS) {
-            for (boolean active : new boolean[] {false, true}) {
-                for (boolean loaded : new boolean[] {false, true}) {
-                    int model = (active ? 2 : 0) + (loaded ? 1 : 0);
-                    variants.add(variant(
-                            "facing=" + facing + ",active=" + active + ",loaded=" + loaded,
-                            facingRotation(model, facing)));
-                }
-            }
-        }
-        return variants;
-    }
-
-    /** Heat exchangers keep a separate model for the downward facing and do not tilt up or down. */
-    private static List<Variant> heatExchangerVariants() {
-        List<Variant> variants = new ArrayList<>(12);
-        for (String facing : ALL_FACINGS) {
-            for (boolean lit : new boolean[] {false, true}) {
-                int model = facing.equals("down") ? (lit ? 1 : 0) : 2 + (lit ? 1 : 0);
-                ModelRef reference =
-                        facing.equals("down") || facing.equals("up") ? ref(model) : facingRotation(model, facing);
-                variants.add(variant("facing=" + facing + ",lit=" + lit, reference));
-            }
-        }
-        return variants;
-    }
-
-    private static List<Variant> solarPanelVariants() {
-        List<Variant> variants = new ArrayList<>(12);
-        for (String facing : ALL_FACINGS) {
-            for (boolean active : new boolean[] {false, true}) {
-                variants.add(variant(
-                        "facing=" + facing + ",solar_active=" + active,
-                        ref(SOLAR_MODEL_BASE.get(facing) + (active ? 1 : 0))));
-            }
-        }
-        return variants;
-    }
-
-    private static List<Variant> resinVariants() {
-        List<Variant> variants = new ArrayList<>(8);
-        for (String facing : HORIZONTAL_FACINGS) {
-            for (boolean resin : new boolean[] {false, true}) {
-                variants.add(variant("facing=" + facing + ",resin=" + resin, facingRotation(resin ? 1 : 0, facing)));
-            }
-        }
-        return variants;
-    }
-
-    private static List<Variant> bombVariants() {
-        List<Variant> variants = new ArrayList<>(24);
-        for (boolean armed : new boolean[] {false, true}) {
-            for (String facing : ALL_FACINGS) {
-                for (boolean sunk : new boolean[] {false, true}) {
-                    int model = (armed ? 2 : 0) + (sunk ? 1 : 0);
-                    variants.add(variant(
-                            "armed=" + armed + ",facing=" + facing + ",sunk=" + sunk, facingRotation(model, facing)));
-                }
-            }
-        }
-        return variants;
-    }
-
-    /** Facings that carry a dedicated model; the downward facing keeps the flat model unrotated. */
-    private static List<Variant> flatDownVariants(int horizontalModel) {
+    /**
+     * Facings that carry a dedicated model; the downward facing keeps the flat model unrotated.
+     *
+     * <p>Shared with the fluid attachment family, whose horizontal facings all point at the flat model.
+     */
+    static List<Variant> flatDownVariants(int horizontalModel) {
         List<Variant> variants = new ArrayList<>(5);
         for (String facing : HORIZONTAL_FACINGS) {
             variants.add(variant("facing=" + facing, facingRotation(horizontalModel, facing)));
         }
         variants.add(variant("facing=down", ref(0)));
         return variants;
-    }
-
-    private static List<Variant> axisVariants() {
-        return List.of(variant("axis=y", ref(1)), variant("axis=z", ref(0, 90, 0)), variant("axis=x", ref(0, 90, 90)));
-    }
-
-    private static List<Variant> railVariants() {
-        List<Variant> variants = new ArrayList<>(RAIL_SHAPES.size());
-        for (String shape : RAIL_SHAPES) {
-            variants.add(variant("shape=" + shape, railRef(shape, 0)));
-        }
-        return variants;
-    }
-
-    private static List<Variant> railBoosterVariants() {
-        List<Variant> variants = new ArrayList<>(12);
-        for (boolean powered : new boolean[] {false, true}) {
-            for (String shape : RAIL_SHAPES) {
-                if (CURVED_RAIL_SHAPES.contains(shape)) continue;
-                variants.add(variant("powered=" + powered + ",shape=" + shape, railRef(shape, powered ? 3 : 0)));
-            }
-        }
-        return variants;
-    }
-
-    /** Rail model and rotation for one shape; {@code base} selects the powered or unpowered model set. */
-    private static ModelRef railRef(String shape, int base) {
-        return switch (shape) {
-            case "ascending_north" -> ref(base);
-            case "ascending_east" -> ref(base, 0, 90);
-            case "ascending_south" -> ref(base + 1);
-            case "ascending_west" -> ref(base + 1, 0, 90);
-            case "north_south" -> ref(base + 2);
-            case "east_west" -> ref(base + 2, 0, 90);
-            case "south_east" -> ref(base + 3);
-            case "south_west" -> ref(base + 3, 0, 90);
-            case "north_west" -> ref(base + 3, 0, 180);
-            case "north_east" -> ref(base + 3, 0, 270);
-            default -> throw new IllegalArgumentException("Unknown rail shape: " + shape);
-        };
-    }
-
-    private static List<Variant> woodSlabVariants() {
-        List<Variant> variants = new ArrayList<>(18);
-        for (String facing : ALL_FACINGS) {
-            for (String type : SLAB_TYPES) {
-                variants.add(variant("facing=" + facing + ",type=" + type, ref(slabModel(facing, type))));
-            }
-        }
-        return variants;
-    }
-
-    /**
-     * Slab model for one facing and slab type: a double slab shows the planks model, and the top half
-     * of a downward facing block shows the upward model.
-     */
-    private static int slabModel(String facing, String type) {
-        if (type.equals("double")) return 1;
-        if (facing.equals("down")) return type.equals("bottom") ? 0 : 2;
-        return SLAB_FACING_MODEL.get(facing);
-    }
-
-    /** Bushes list seven models per growth stage: six support variants and the unsupported one. */
-    private static List<Variant> bushVariants() {
-        List<Variant> variants = new ArrayList<>(28);
-        for (int stage = 0; stage < 4; stage++) {
-            for (int support = 0; support < 7; support++) {
-                variants.add(variant("stage=" + stage + ",support=" + support, ref(stage * 7 + support)));
-            }
-        }
-        return variants;
-    }
-
-    private static List<Variant> leafVariants() {
-        List<Variant> variants = new ArrayList<>(14);
-        for (int distance = 1; distance <= 7; distance++) {
-            for (boolean persistent : new boolean[] {false, true}) {
-                variants.add(variant("distance=" + distance + ",persistent=" + persistent, ref(0)));
-            }
-        }
-        return variants;
-    }
-
-    private static List<Variant> saplingVariants() {
-        return List.of(variant("stage=0", ref(0), ref(1)), variant("stage=1", ref(0), ref(1)));
-    }
-
-    private static List<Variant> barVariants() {
-        List<Variant> variants = new ArrayList<>(16);
-        for (int mask = 0; mask < 16; mask++) {
-            variants.add(variant("mask=" + mask, ref(mask)));
-        }
-        return variants;
-    }
-
-    private static List<Variant> fluidLevelVariants() {
-        List<Variant> variants = new ArrayList<>(16);
-        variants.add(variant("level=0", ref(0)));
-        for (int level = 1; level < 16; level++) {
-            variants.add(variant("level=" + level, ref(1)));
-        }
-        return variants;
-    }
-
-    private static List<Variant> colorVariants() {
-        List<Variant> variants = new ArrayList<>(COLORS.size());
-        for (String color : COLORS) {
-            variants.add(variant("color=" + color, ref(0)));
-        }
-        return variants;
-    }
-
-    private static List<Variant> twigVariants() {
-        List<ModelRef> refs = new ArrayList<>(16);
-        for (int twig = 0; twig < 4; twig++) {
-            for (int yaw : QUARTER_TURNS) {
-                refs.add(ref(twig, 0, yaw));
-            }
-        }
-        return List.of(new Variant("", refs));
     }
 }

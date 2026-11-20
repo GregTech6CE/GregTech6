@@ -17,8 +17,8 @@ python tools/resources/check_packaged_resources.py minecraft/versions/1.21.1-neo
 检查内容：
 
 - 包内不存在已退役的 `META-INF/gt6ce/model-json-aliases.json`，无重复 ZIP 条目或空目录条目。
-- 处理后资源目录与发行 JAR 均不携带 `assets/gt6ce/stack_groups/` 静态 JSON（改由运行期从 `stack_groups.tsv` 延迟提供）。
-- 静态模型、静态方块状态、`assets/gt6ce/` 顶层 `.tsv` 表（`model_definitions.tsv`、`blockstate_definitions.tsv`、`stack_groups.tsv`、`machine_models.tsv`、`texture_palettes.tsv` 等）与全部 PNG 与 `build/resources/main` 逐字节一致，跨输入根无重复声明，且静态模型与方块状态总数不超过 `--max-static-json`。
+- 处理后资源目录与发行 JAR 均不携带 `assets/gt6ce/stack_groups/` 静态 JSON（改由 `StackGroupCatalog` 从代码规则与 `stack_groups_items.tsv`、`stack_groups_regex.tsv` 延迟提供）。
+- 静态模型、静态方块状态、`assets/gt6ce/` 顶层 `.tsv` 表（`model_definitions.tsv`、`blockstate_definitions.tsv`、`stack_groups_items.tsv`、`stack_groups_regex.tsv`、`machine_models.tsv`、`texture_palettes.tsv` 等）与全部 PNG 与 `build/resources/main` 逐字节一致，跨输入根无重复声明，且静态模型与方块状态总数不超过 `--max-static-json`。
 
 PNG 比较的是处理后产物：`processResources` 在复制时剥离贴图元数据块，JAR 与 `build/resources/main` 因此逐字节相同，两者都不同于提交树里的原始贴图。成功时输出 JAR 大小、条目数及各类资源数量；不匹配时以非零退出码结束。
 

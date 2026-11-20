@@ -14,7 +14,8 @@ Checks:
   * static publish exclusions exist and name a shipped recipe
   * `--converted DIR`: one native output per published recipe and item tag, no stale or
     legacy-shaped file, and every converted tag keeps its source values
-  * gt6ce: item ids that have no shipped or procedurally generated model or blockstate (warning only)
+  * gt6ce: item ids that have no shipped, table, family or procedural model or blockstate
+    (warning only)
 
 Exit code is 0 unless --strict is given and errors were found.
 """
@@ -48,6 +49,12 @@ BLOCKSTATE_DEFINITIONS = Path("core/src/main/resources/assets/gt6ce/blockstate_d
 PROCEDURAL_MODELS = Path("core/src/main/java/gregtech/engine/resource/ProceduralModels.java")
 STONE_VARIANTS = Path("core/src/main/java/gregtech/content/block/stone/StoneVariant.java")
 BATTERY_SPECS = Path("core/src/main/java/gregtech/content/energy/ChemicalBatterySpec.java")
+
+# Java catalogue tables that drive the blockstate families FamilyBlockstateGenerators renders.
+FAMILY_BLOCKSTATES = Path("core/src/main/java/gregtech/engine/resource/FamilyBlockstateGenerators.java")
+SENSOR_CATALOG = Path("core/src/main/java/gregtech/engine/sensor/SensorCatalog.java")
+TRACK_CATALOG = Path("core/src/main/java/gregtech/content/transport/TrackCatalog.java")
+WOOD_SLAB_CATALOG = Path("core/src/main/java/gregtech/content/plant/WoodSlabCatalog.java")
 
 KNOWN_TYPES = {
     "minecraft:crafting_shaped",
@@ -126,7 +133,7 @@ def tag_ids():
 
 
 def model_ids():
-    """Item ids with a shipped or procedurally generated model or blockstate."""
+    """Item ids with a shipped or generated model or blockstate."""
     ids = set()
     for root in ASSET_ROOTS:
         for namespace in (REPO / root / "assets").glob("*"):
@@ -143,16 +150,21 @@ def model_ids():
     return ids | virtual_model_ids()
 
 
-def definition_rows(relative: Path):
+def definition_rows(relative: Path, columns: int):
     """Non-comment, tab-separated rows of a virtual definition table."""
     path = REPO / relative
     if not path.is_file():
         raise RuntimeError(f"missing virtual definition table: {relative.as_posix()}")
-    rows = [
-        line.split("\t")
-        for line in path.read_text(encoding="utf-8").splitlines()
-        if line.strip() and not line.lstrip().startswith("#")
-    ]
+    rows = []
+    for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+        if not line.strip() or line.lstrip().startswith("#"):
+            continue
+        row = line.split("\t")
+        if len(row) != columns:
+            raise RuntimeError(
+                f"{relative.as_posix()}:{number}: expected {columns} columns, got {len(row)}"
+            )
+        rows.append(row)
     if not rows:
         raise RuntimeError(f"no rows in virtual definition table: {relative.as_posix()}")
     return rows
@@ -280,17 +292,97 @@ def procedural_model_ids():
     return ids
 
 
+def stem_family(prefix: str, materials):
+    """One `<prefix>_<material>` stem per material of a family table."""
+    return [f"{prefix}_{material}" for material in materials]
+
+
+def table_strings(text: str, name: str):
+    """String literals of one family table, declared as a `List.of`."""
+    return require_entries(java_strings(java_section(text, name)), name)
+
+
+def family_blockstate_ids():
+    """Item ids of the blockstate stems FamilyBlockstateGenerators renders from its family tables.
+
+    The generator tables are the source of truth, so a family that stops being emitted or a table
+    that loses its entries fails the audit instead of silently dropping the check.
+    """
+    text = java_source(FAMILY_BLOCKSTATES)
+    storage = table_strings(text, "STORAGE_MATERIALS")
+    if "withoutPlainSteel(STORAGE_MATERIALS)" not in text:
+        raise RuntimeError("MECHANICAL_MATERIALS no longer derives from STORAGE_MATERIALS")
+    mechanical = [material for material in storage if material != "steel"]
+    if len(mechanical) == len(storage):
+        raise RuntimeError("STORAGE_MATERIALS no longer lists the plain steel entry")
+
+    stems = set()
+    for prefix in ("safe", "scaffold"):
+        stems.add(prefix)
+        stems.update(stem_family(prefix, mechanical))
+    stems.update(f"key_safe_{material}" for material in storage)
+    for prefix, materials in require_entries(
+        re.findall(r'new EngineFamily\(\s*"([a-z0-9_]+)",\s*"[a-z0-9_]+",\s*([A-Z_]+)\)', text),
+        "EngineFamily",
+    ):
+        stems.update(stem_family(prefix, table_strings(text, materials)))
+    for prefix, materials in require_entries(
+        re.findall(
+            r'new FluidAttachment\(\s*"([a-z0-9_]+)",\s*"[a-z0-9_]+",\s*"[a-z0-9_]+",\s*([A-Z_]+)\)',
+            text,
+        ),
+        "FluidAttachment",
+    ):
+        stems.add(prefix)
+        stems.update(stem_family(prefix, table_strings(text, materials)))
+    stems.update(
+        require_entries(
+            re.findall(
+                r'new Entry\("([a-z0-9_]+)"',
+                java_section(java_source(SENSOR_CATALOG), "public static final List<Entry> ALL"),
+            ),
+            "SensorCatalog.ALL",
+        )
+    )
+    for name, tiers in require_entries(
+        re.findall(r'new EnergyMachine\(\s*"([a-z0-9_]+)",\s*([A-Z_]+)\)', text), "EnergyMachine"
+    ):
+        stems.update(stem_family(name, table_strings(text, tiers)))
+    track_kinds = table_strings(text, "TRACK_KINDS")
+    for material in require_entries(
+        re.findall(
+            r'new Material\("([A-Za-z]+)"',
+            java_section(
+                java_source(TRACK_CATALOG), "public static final List<Material> MATERIALS"
+            ),
+        ),
+        "TrackCatalog.MATERIALS",
+    ):
+        slug = material.lower()
+        stems.update(f"{kind}_{slug}" for kind in track_kinds)
+    for wood in require_entries(
+        java_strings(
+            java_section(
+                java_source(WOOD_SLAB_CATALOG), "public static final java.util.List<String> WOODS"
+            )
+        ),
+        "WoodSlabCatalog.WOODS",
+    ):
+        stems.add(f"slab_{wood}")
+    return {f"gt6ce:{stem}" for stem in stems}
+
+
 def virtual_model_ids():
     """Item ids whose models and blockstates are generated instead of shipped as JSON."""
     models = {
         "gt6ce:" + row[0][len("item/") :]
-        for row in definition_rows(MODEL_DEFINITIONS)
+        for row in definition_rows(MODEL_DEFINITIONS, 4)
         if row[0].startswith("item/")
     }
     if not models:
         raise RuntimeError(f"no item rows in {MODEL_DEFINITIONS.as_posix()}")
-    states = {"gt6ce:" + row[0] for row in definition_rows(BLOCKSTATE_DEFINITIONS)}
-    return models | states | procedural_model_ids()
+    states = {"gt6ce:" + row[0] for row in definition_rows(BLOCKSTATE_DEFINITIONS, 3)}
+    return models | states | procedural_model_ids() | family_blockstate_ids()
 
 
 def camel_to_snake(name: str) -> str:

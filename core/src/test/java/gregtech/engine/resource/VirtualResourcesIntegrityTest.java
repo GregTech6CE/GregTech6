@@ -42,10 +42,14 @@ final class VirtualResourcesIntegrityTest {
     private static final String FORGE_COMPOSITE = "forge:composite";
     private static final String NEOFORGE_COMPOSITE = "neoforge:composite";
     private static final int MAX_STATIC_JSON = 450;
+    private static final int EXPECTED_STATIC_MODELS = 319;
+    private static final int EXPECTED_STATIC_BLOCKSTATES = 100;
     private static final int EXPECTED_VIRTUAL_MODELS = 6624;
-    private static final int EXPECTED_MODEL_TSV_ROWS = 4438;
-    private static final int EXPECTED_VIRTUAL_BLOCKSTATES = 2276;
-    private static final int EXPECTED_BLOCKSTATE_TSV_ROWS = 1630;
+    private static final int EXPECTED_MODEL_TSV_ROWS = 4394;
+    private static final int EXPECTED_VIRTUAL_BLOCKSTATES = 2187;
+    private static final int EXPECTED_BLOCKSTATE_TSV_ROWS = 1251;
+    private static final int EXPECTED_BLOCKSTATE_KINDS = 6;
+    private static final int EXPECTED_FAMILY_BLOCKSTATES = 290;
     private static final int EXPECTED_STACK_GROUPS = 464;
     private static final int EXPECTED_REGEX_GROUPS = 45;
     private static final int EXPECTED_TAG_GROUPS = 111;
@@ -67,27 +71,24 @@ final class VirtualResourcesIntegrityTest {
 
     @Test
     void parsersFailFastOnMalformedRowsAndDuplicateKeys() {
+        assertThrows(IOException.class, () -> VirtualModelCatalog.parse(utf8Stream("bad\tonlytwo\n")));
         assertThrows(
                 IOException.class,
-                () -> VirtualModelCatalog.parse(utf8Stream("path\tparent\trender_type\tao\ttextures\nbad\tonlytwo\n")));
-        assertThrows(
-                IOException.class,
-                () -> VirtualModelCatalog.parse(utf8Stream("item/x\tminecraft:item/generated\t\tmaybe\t\n")));
-        assertThrows(
-                IOException.class,
-                () -> VirtualModelCatalog.parse(utf8Stream("item/x\tminecraft:item/generated\t\t\tbadpair\n")));
-        assertThrows(
-                IOException.class,
-                () -> VirtualModelCatalog.parse(utf8Stream(
-                        "item/dup\tminecraft:item/generated\t\t\t\n" + "item/dup\tminecraft:item/generated\t\t\t\n")));
+                () -> VirtualModelCatalog.parse(utf8Stream("item/x\tminecraft:item/generated\t\tbadpair\n")));
         assertThrows(
                 IOException.class,
                 () -> VirtualModelCatalog.parse(
-                        utf8Stream("block/tool/scaffold_x\t@scaffold1\t\t\tparticle=gt6ce:block/iconsets/plate\n")));
-
+                        utf8Stream("item/x\tminecraft:item/generated\t\tlayer0=gt6ce:item/a;layer0=gt6ce:item/b\n")));
         assertThrows(
                 IOException.class,
-                () -> VirtualBlockstateCatalog.parse(utf8Stream("block\tkind\tmodels\nbad\tSINGLE\n")));
+                () -> VirtualModelCatalog.parse(utf8Stream("item/dup\tminecraft:item/generated\t\tlayer0=gt6ce:item/a\n"
+                        + "item/dup\tminecraft:item/generated\t\tlayer0=gt6ce:item/a\n")));
+        assertThrows(
+                IOException.class,
+                () -> VirtualModelCatalog.parse(
+                        utf8Stream("block/tool/scaffold_x\t@scaffold1\t\tparticle=gt6ce:block/iconsets/plate\n")));
+
+        assertThrows(IOException.class, () -> VirtualBlockstateCatalog.parse(utf8Stream("bad\tonly_two_columns\n")));
         assertThrows(
                 IOException.class,
                 () -> VirtualBlockstateCatalog.parse(utf8Stream("b\tUNKNOWN_KIND\tgt6ce:block/x\n")));
@@ -96,29 +97,45 @@ final class VirtualResourcesIntegrityTest {
                 () -> VirtualBlockstateCatalog.parse(utf8Stream("b\tFACING_4_MODELS\tgt6ce:block/only_one\n")));
         assertThrows(
                 IOException.class,
-                () -> VirtualBlockstateCatalog.parse(utf8Stream("b\tSINGLE\tgt6ce:block/a;gt6ce:block/b\n")));
+                () -> VirtualBlockstateCatalog.parse(utf8Stream("b\tSINGLETON\tgt6ce:block/a;gt6ce:block/b\n")));
         assertThrows(
                 IOException.class,
                 () -> VirtualBlockstateCatalog.parse(
-                        utf8Stream("dup\tSINGLE\tgt6ce:block/a\ndup\tSINGLE\tgt6ce:block/b\n")));
+                        utf8Stream("dup\tSINGLETON\tgt6ce:block/a\ndup\tSINGLETON\tgt6ce:block/b\n")));
+        for (String retired : List.of("WOOD_SLAB", "BUSH_STAGES")) {
+            assertThrows(
+                    IOException.class,
+                    () -> VirtualBlockstateCatalog.parse(utf8Stream("b\t" + retired + "\tgt6ce:block/a\n")),
+                    "Retired blockstate kind must be rejected: " + retired);
+        }
 
+        assertThrows(IOException.class, () -> StackGroupCatalog.parseItems(utf8Stream("bad\n")));
+        assertThrows(
+                IOException.class, () -> StackGroupCatalog.parseItems(utf8Stream("g\tnot_int\tName\tgt6ce:ingot\t\n")));
+        assertThrows(IOException.class, () -> StackGroupCatalog.parseItems(utf8Stream("g\t0\tName\t\t\n")));
+        assertThrows(
+                IOException.class, () -> StackGroupCatalog.parseItems(utf8Stream("g\t0\tName\tgt6ce:a;;gt6ce:b\t\n")));
+        assertThrows(IOException.class, () -> StackGroupCatalog.parseItems(utf8Stream("g\t0\tName\tgt6ce:a\tBOGUS\n")));
         assertThrows(
                 IOException.class,
-                () -> StackGroupCatalog.parse(utf8Stream("stem\tpriority\tname\tkind\tpayload\texclusions\nbad\n")));
+                () -> StackGroupCatalog.parseItems(utf8Stream("dup\t0\tA\tgt6ce:a\t\ndup\t0\tB\tgt6ce:b\t\n")));
+
+        assertThrows(IOException.class, () -> StackGroupCatalog.parseRegex(utf8Stream("bad\n")));
+        assertThrows(IOException.class, () -> StackGroupCatalog.parseRegex(utf8Stream("g\t0\tName\t\t\n")));
+        assertThrows(IOException.class, () -> StackGroupCatalog.parseRegex(utf8Stream("g\t0\tName\t[unclosed\t\n")));
+        assertThrows(
+                IOException.class, () -> StackGroupCatalog.parseRegex(utf8Stream("g\t0\tName\t^gt6ce:a$\tBOGUS\n")));
         assertThrows(
                 IOException.class,
-                () -> StackGroupCatalog.parse(utf8Stream("g\tnot_int\tName\tTAG\tgt6ce:ingots\t\n")));
-        assertThrows(IOException.class, () -> StackGroupCatalog.parse(utf8Stream("g\t0\tName\tBOGUS\tpayload\t\n")));
-        assertThrows(IOException.class, () -> StackGroupCatalog.parse(utf8Stream("g\t0\tName\tREGEX\t[unclosed\t\n")));
-        assertThrows(
-                IOException.class,
-                () -> StackGroupCatalog.parse(utf8Stream("dup\t0\tA\tTAG\tgt6ce:a\t\ndup\t0\tB\tTAG\tgt6ce:b\t\n")));
+                () -> StackGroupCatalog.parseRegex(utf8Stream("dup\t0\tA\t^gt6ce:a$\t\ndup\t0\tB\t^gt6ce:b$\t\n")));
     }
 
     @Test
     void virtualAndStaticModelsAreValidJsonNonOverlappingAndWithinBudget() throws IOException {
         Map<String, String> staticModels = collectStaticJson("models");
         Map<String, String> staticBlockstates = collectStaticJson("blockstates");
+        assertEquals(EXPECTED_STATIC_MODELS, staticModels.size(), "Static model JSON count");
+        assertEquals(EXPECTED_STATIC_BLOCKSTATES, staticBlockstates.size(), "Static blockstate JSON count");
         int totalStaticJson = staticModels.size() + staticBlockstates.size();
         assertTrue(
                 totalStaticJson <= MAX_STATIC_JSON,
@@ -203,6 +220,9 @@ final class VirtualResourcesIntegrityTest {
     void virtualBlockstatesAreValidJsonWithCompleteModelReferences() throws IOException {
         Map<String, String> staticModels = collectStaticJson("models");
         Map<String, String> staticBlockstates = collectStaticJson("blockstates");
+        assertEquals(EXPECTED_BLOCKSTATE_KINDS, VirtualBlockstateCatalog.Kind.values().length, "Blockstate kind count");
+        assertEquals(
+                EXPECTED_FAMILY_BLOCKSTATES, FamilyBlockstateGenerators.stems().size(), "Family blockstate stem count");
         assertEquals(
                 EXPECTED_BLOCKSTATE_TSV_ROWS, VirtualBlockstateCatalog.entries().size());
 
@@ -272,6 +292,8 @@ final class VirtualResourcesIntegrityTest {
                 "block/chemical_battery/",
                 "block/chemical_battery/standard_8_00",
                 "block/chemical_battery/standard_8_5",
+                "block/tool/scaffold_steel_1",
+                "block/tool/scaffold_bogus_1",
                 "item/battery_");
         for (String loader : List.of(FORGE_COMPOSITE, NEOFORGE_COMPOSITE)) {
             for (String path : unknownModels) {
@@ -299,6 +321,15 @@ final class VirtualResourcesIntegrityTest {
             }
         }
 
+        for (String path : List.of("block/tool/scaffold_1", "block/tool/scaffold_steel_galvanized_1")) {
+            assertTrue(VirtualModelCatalog.contains(path), "Procedural scaffold model must be contained: " + path);
+            for (String loader : List.of(FORGE_COMPOSITE, NEOFORGE_COMPOSITE)) {
+                assertNotNull(
+                        VirtualModelCatalog.renderJson(path, loader),
+                        "Procedural scaffold model must render for " + loader + ": " + path);
+            }
+        }
+
         Map<String, String> emittedBlockstates = new LinkedHashMap<>();
         VirtualBlockstateCatalog.emitAll(
                 (stem, bytes) -> emittedBlockstates.put(stem, new String(bytes, StandardCharsets.UTF_8)));
@@ -320,10 +351,32 @@ final class VirtualResourcesIntegrityTest {
                 "ingot_piles",
                 "filter_other",
                 "battery_unknown",
+                "battery_lit_ulv",
                 "reactor_core_3x3",
-                "reactor_core_down_down")) {
+                "reactor_core_down_down",
+                "safe_steel",
+                "safe_bogus",
+                "scaffold_steel",
+                "scaffold_bogus",
+                "key_safe_bogus",
+                "engine_electric_bogus",
+                "sensor_bogus",
+                "co2_laser_uv",
+                "quantum_energizer_hv",
+                "track_booster_bogus",
+                "slab_bogus")) {
             assertFalse(VirtualBlockstateCatalog.contains(stem), "Unknown blockstate must not be contained: " + stem);
             assertNull(VirtualBlockstateCatalog.renderJson(stem), "Unknown blockstate must not render: " + stem);
+        }
+
+        Set<String> familyStems = FamilyBlockstateGenerators.stems();
+        assertEquals(EXPECTED_FAMILY_BLOCKSTATES, familyStems.size(), "Family blockstate stem count");
+        for (String stem : familyStems) {
+            assertTrue(VirtualBlockstateCatalog.contains(stem), "Family blockstate must be contained: " + stem);
+            assertEquals(
+                    FamilyBlockstateGenerators.renderJson(stem),
+                    VirtualBlockstateCatalog.renderJson(stem),
+                    "Catalog render differs from the family render: " + stem);
         }
 
         for (VirtualBlockstateCatalog.Kind kind : VirtualBlockstateCatalog.Kind.values()) {
@@ -340,7 +393,7 @@ final class VirtualResourcesIntegrityTest {
     }
 
     @Test
-    void stackGroupsAreCleanValidAndComplete() {
+    void stackGroupsAreCleanValidAndComplete() throws IOException {
         Map<String, StackGroupCatalog.Entry> entries = StackGroupCatalog.entries();
         assertEquals(EXPECTED_STACK_GROUPS, entries.size());
 
@@ -357,6 +410,7 @@ final class VirtualResourcesIntegrityTest {
                 case TAG -> {
                     tagCount++;
                     assertFalse(entry.payload().isBlank(), "Empty tag payload on " + entry.stem());
+                    verifyTagEntry(entry);
                 }
                 case ITEMS -> {
                     itemsCount++;
@@ -380,6 +434,15 @@ final class VirtualResourcesIntegrityTest {
         assertEquals(EXPECTED_REGEX_GROUPS, regexCount);
         assertEquals(EXPECTED_TAG_GROUPS, tagCount);
         assertEquals(EXPECTED_ITEM_GROUPS, itemsCount);
+
+        assertEquals(
+                EXPECTED_ITEM_GROUPS,
+                parseItemsResource().size(),
+                "Row count of " + StackGroupCatalog.ITEMS_RESOURCE_PATH);
+        assertEquals(
+                EXPECTED_REGEX_GROUPS,
+                parseRegexResource().size(),
+                "Row count of " + StackGroupCatalog.REGEX_RESOURCE_PATH);
 
         StackGroupCatalog.Entry ores = StackGroupCatalog.entry("ores");
         assertNotNull(ores);
@@ -414,6 +477,42 @@ final class VirtualResourcesIntegrityTest {
             String key = "stack_groups/material_forms/" + stem + ".json";
             assertTrue(built.containsKey(key), "Missing stack_groups path: " + key);
         }
+    }
+
+    /**
+     * Verifies a generated tag group: the shared priority, the item-group translation key, the single
+     * {@code #gt6ce:} tag it selects and the exclusion list its code resolves to.
+     */
+    private static void verifyTagEntry(StackGroupCatalog.Entry entry) {
+        String stem = entry.stem();
+        boolean plate = stem.equals("plate");
+        assertEquals(100, entry.priority(), "Tag group priority on " + stem);
+        assertEquals("itemGroup.gt6ce." + stem, entry.name(), "Tag group name on " + stem);
+        assertEquals(List.of("#gt6ce:" + stem), entry.contents(), "Tag group contents on " + stem);
+        assertEquals(plate ? "STD_PLATE" : "STD", entry.exclusionsCode(), "Tag group exclusions code on " + stem);
+        assertEquals(plate ? 6 : 3, entry.exclusions().size(), "Tag group exclusion count on " + stem);
+    }
+
+    /** Parses {@link StackGroupCatalog#ITEMS_RESOURCE_PATH} on its own, without the merged catalog. */
+    private static Map<String, StackGroupCatalog.Entry> parseItemsResource() throws IOException {
+        try (InputStream stream = openResource(StackGroupCatalog.ITEMS_RESOURCE_PATH)) {
+            return StackGroupCatalog.parseItems(stream);
+        }
+    }
+
+    /** Parses {@link StackGroupCatalog#REGEX_RESOURCE_PATH} on its own, without the merged catalog. */
+    private static Map<String, StackGroupCatalog.Entry> parseRegexResource() throws IOException {
+        try (InputStream stream = openResource(StackGroupCatalog.REGEX_RESOURCE_PATH)) {
+            return StackGroupCatalog.parseRegex(stream);
+        }
+    }
+
+    private static InputStream openResource(String path) throws IOException {
+        InputStream stream = VirtualResourcesIntegrityTest.class.getResourceAsStream(path);
+        if (stream == null) {
+            throw new IOException("Missing test resource: " + path);
+        }
+        return stream;
     }
 
     /**
