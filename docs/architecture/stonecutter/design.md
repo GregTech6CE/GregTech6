@@ -79,6 +79,14 @@
 
 平台细节与验收见[共享门面](../packages/platforms/facade.md)。`CoverStackData` 目前是过渡门面，部分方法为纯转发；调用点迁移完成后应收敛。共享目录/物品类的落点偏差案例见[实现落点偏差](Placement/README.md)。
 
+## 共享薄基类（签名适配）
+
+静态工具门面无法消除 Java `@Override` 签名与抽象父类强约束。共享薄基类作为共享代码与原版父类之间的极薄适配层，集中承接此类跨版本签名差异：
+
+- **职责边界**：仅用于吸收 `1.20.1` / `1.21.1` 原版覆写签名差异（如 `GTBlockEntity` 承接 `saveAdditional` / `loadAdditional` / `getUpdateTag` / `handleUpdateTag`、`GTBlock` / `GTDirectionalBlock` / `GTHorizontalDirectionalBlock` 承接 `useItemOn` / `useWithoutItem` / `appendHoverText` 与强制 `MapCodec` stub、`GTItem` / `GTBlockItem` 承接 `appendHoverText`）。
+- **硬性约束**：禁止向薄基类塞入业务字段、持久化状态或特定机器规则；不得破坏既有继承层次，仅在确实需要统一原版覆写签名的子类链路中插入。
+- **行为等价**：薄基类只做参数转发、空 `provider` 适配与最小 stub（见 [BlockCodec](BlockCodec/README.md)、[Interaction](Interaction/README.md)），不改变运行时逻辑。
+
 ## Provider 基础
 
 `HolderLookup.Provider` 是 Codec 解析注册表条目时使用的上下文。1.20.5 起物品/流体栈的序列化改为 Codec 驱动，编解码需要它；1.20.1 的序列化方法不接收它。
@@ -94,9 +102,21 @@
 `//?` 是共享输入内的条件编译，不是一层。它只承载平台 API 运行时差异：API 签名、数据格式、注册表、能力、网络、事件生命周期。注册归属差异由共享门面收敛为唯一路径，不保留为 `//?`。行为差异见 [`docs/decisions/parity/`](../../decisions/parity/README.md)；Stonecutter 文档只记录代码写法差异，不重复记录行为实现。
 
 - 能收进门面的差异，不留在业务代码。
+- 能由共享薄基类吸收的原版覆写签名与强制 `MapCodec` stub，收进薄基类，不在子类重复复制。
 - 同一调用在两个版本都有同名同义方法时，直接调用共享方法。
 - 分支两侧必须同义；确需不同行为时写明原因并分别验证。
 - 具体语法、输入与生成见[用法](usage.md)。
+
+### 方案 A 永久地板与全量扫描入口
+
+除可收敛的 `Actionable Backlog`（薄基类、直接去除、共享门面、随正文消除）外，以下四类加载器/第三方边界差异按**方案 A 永久地板**（`FLOOR_KEEP`）口径认账保留，不纳入待清理队列：
+
+- Capability 暴露与查询（`ForgeCapabilities` ↔ `Capabilities`、`LazyOptional` ↔ `Optional`、`getCapability` 及对应 import）；
+- 纯 Loader 1:1 包名切换（`net.minecraftforge.*` ↔ `net.neoforged.neoforge.*` 等 import 与正文 FQCN，暂不引入构建期源码文本替换）；
+- 第三方 Mod 联动（`compat/` 下 Jade / JEI / EMI / KubeJS 跨版本适配）；
+- Mixin 目标签名差异（`mixin/`）。
+
+全量闭环扫描、二维归因矩阵与硬违规检查入口见 [`tools/stonecutter/audit_stonecutter_matrix.py`](../../../tools/stonecutter/audit_stonecutter_matrix.py)（用法见 [stonecutter 工具文档](../../../tools/stonecutter/README.md)），跨版本系统性治理总纲见 [issue #422](https://github.com/GregTech6CE/GregTech6/issues/422)。
 
 ## 与节点实现的关系
 

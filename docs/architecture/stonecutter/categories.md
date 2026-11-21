@@ -2,6 +2,17 @@
 
 本页是 Stonecutter 分类总览，按作用对象划分 13 个分类，设计、用法与模板见[设计](design.md)、[用法](usage.md)、[模板](templates.md)。
 
+## 差异来源 × 处置策略总览
+
+跨版本 `//?` 分支按“差异来源 × 处置策略”正交归因（治理总纲见 [issue #422](https://github.com/GregTech6CE/GregTech6/issues/422)）；全量实时统计与波次导出由 [`audit_stonecutter_matrix.py`](../../../tools/stonecutter/audit_stonecutter_matrix.py) 生成。
+
+| 差异来源（Origin） | 薄基类（`BASE_CLASS`） | 直接去除（`REMOVE`） | 共享门面（`FACADE`） | 随正文消（`FOLLOW_BODY`） | 方案 A 永久地板（`FLOOR_KEEP`） |
+| --- | --- | --- | --- | --- | --- |
+| **MC 版本差异**（1.20.1 → 1.21.1 原版 API） | BE 序列化/同步、方块交互、`MapCodec` stub、`appendHoverText` | — | `HolderLookup.Provider`、`ItemStack`/组件、`ResourceLocation`、客户端渲染等 | 随薄基类/门面收敛后失效的 import | Mixin 原版目标签名差异 |
+| **Loader 差异**（Forge → NeoForge） | — | — | 配置、事件总线、网络、非 1:1 流体/模型/注册门面 | 随 Loader 门面收敛后失效的 import | Capability 暴露/查询、纯 Loader 1:1 包名切换（import 与 FQCN）、Loader Mixin |
+| **自身实现缺陷**（迁移遗留 / 落点偏差 / 跨层引用） | — | 共享层直引 `gregtech.platform.*`、空块/同义/拆分重复、内部 provider 签名、结构与逻辑分叉 | — | — | — |
+| **第三方联动**（Jade / JEI / EMI / KubeJS） | — | — | — | — | `compat/` 跨版本联动接口 |
+
 ## 文件清单
 
 | 文件 | 名称 |
