@@ -14,7 +14,7 @@ import net.minecraft.network.chat.Component;
 import java.util.List;
 
 /** A passive placed battery and the very same charged inventory item (TileEntityBase08Battery). */
-public class ChemicalBatteryItem extends BlockItem implements IItemEnergy {
+public class ChemicalBatteryItem extends GTBlockItem implements IItemEnergy {
     public static final String CHARGE="gt.charge";
     public ChemicalBatteryItem(ChemicalBatteryBlock block){super(block,new Properties().stacksTo(16));}
     public PortableBatterySpec spec(){return ((ChemicalBatteryBlock)getBlock()).spec();}
@@ -67,13 +67,8 @@ public class ChemicalBatteryItem extends BlockItem implements IItemEnergy {
     @Override public boolean isBarVisible(ItemStack stack){return stored(stack)>0;}
     @Override public int getBarWidth(ItemStack stack){return (int)(13*stored(stack)/spec().capacity());}
     @Override public int getBarColor(ItemStack stack){return spec().color();}
-//? if >=1.21.1 {
-    /*@Override public void appendHoverText(ItemStack stack,Item.TooltipContext context,List<Component> tip,TooltipFlag flags){
-        super.appendHoverText(stack,context,tip,flags);
-*///?} else {
-    @Override public void appendHoverText(ItemStack stack,@javax.annotation.Nullable Level level,List<Component> tip,TooltipFlag flags){
-        super.appendHoverText(stack,level,tip,flags);
-//?}
+    @Override protected void appendTooltip(ItemStack stack,@javax.annotation.Nullable Level level,List<Component> tip,TooltipFlag flags){
+        super.appendTooltip(stack,level,tip,flags);
         gregtech.client.TooltipHelper.appendPortableBattery(stored(stack), spec().capacity(),
                 spec().minimumPacket(), spec().maximumPacket(), spec().energyType().getShortName(), tip);
         tip.add(Component.translatable("tooltip.gt6ce.chemical_battery.place").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));

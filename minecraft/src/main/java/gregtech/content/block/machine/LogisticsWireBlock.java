@@ -43,23 +43,11 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.List;
 
+import gregtech.content.block.GTBlock;
 /** GT6 24901: six-way cuttable logistics connector, 6/16 block diameter. */
-public final class LogisticsWireBlock extends Block implements EntityBlock, ToolInteractionTarget, SimpleWaterloggedBlock {
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
+public final class LogisticsWireBlock extends GTBlock implements EntityBlock, ToolInteractionTarget, SimpleWaterloggedBlock {
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (hand != InteractionHand.MAIN_HAND) return InteractionResult.PASS;
         if (level.getBlockEntity(pos) instanceof LogisticsWireBlockEntity wire) {
             var coverResult = gregtech.content.logistics.LogisticsCoverInteraction.use(

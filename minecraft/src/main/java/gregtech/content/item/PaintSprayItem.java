@@ -1,14 +1,14 @@
 package gregtech.content.item;
 
-import gregtech.content.tool.*;
 import gregtech.content.item.behavior.ItemBehaviors;
-import net.minecraft.world.item.*;
-import net.minecraft.world.item.context.UseOnContext;
+import gregtech.content.tool.*;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.animal.*;
-import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 
 /** Brokestar paint/entity adaptation over the original full/used/empty spray ledger. */
@@ -21,9 +21,11 @@ public final class PaintSprayItem extends TechItem {
     }
 
     private ItemBehaviors.Consumable can() {
-        return new ItemBehaviors.Consumable(ItemBehaviors.stack("gt6ce:empty_spray_can"),
+        return new ItemBehaviors.Consumable(
+                ItemBehaviors.stack("gt6ce:empty_spray_can"),
                 ItemBehaviors.stack("gt6ce:" + dye.usedId()),
-                ItemBehaviors.stack("gt6ce:" + dye.fullId()), PaintingRules.CAPACITY);
+                ItemBehaviors.stack("gt6ce:" + dye.fullId()),
+                PaintingRules.CAPACITY);
     }
 
     @Override
@@ -35,27 +37,47 @@ public final class PaintSprayItem extends TechItem {
     public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
         var pos = context.getClickedPos();
         var point = context.getClickLocation();
-        var outcome = ItemBehaviors.useSpray(context.getLevel(), pos, context.getClickedFace(), context.getPlayer(), stack, can(),
+        var outcome = ItemBehaviors.useSpray(
+                context.getLevel(),
+                pos,
+                context.getClickedFace(),
+                context.getPlayer(),
+                stack,
+                can(),
                 (level, targetPos, side, uses, player, holder, x, y, z) -> {
                     if (uses <= 0) return 0;
                     long spent = PaintTargets.color(level, targetPos, dye.index());
                     if (spent > 0)
-                        level.playSound(null, targetPos, net.minecraft.sounds.SoundEvents.FIRE_EXTINGUISH,
-                                net.minecraft.sounds.SoundSource.PLAYERS, 1, 1);
+                        level.playSound(
+                                null,
+                                targetPos,
+                                net.minecraft.sounds.SoundEvents.FIRE_EXTINGUISH,
+                                net.minecraft.sounds.SoundSource.PLAYERS,
+                                1,
+                                1);
                     return spent;
-                }, (float) (point.x - pos.getX()), (float) (point.y - pos.getY()), (float) (point.z - pos.getZ()));
-        if (context.getPlayer() != null)
-            context.getPlayer().setItemInHand(context.getHand(), outcome.stack());
+                },
+                (float) (point.x - pos.getX()),
+                (float) (point.y - pos.getY()),
+                (float) (point.z - pos.getZ()));
+        if (context.getPlayer() != null) context.getPlayer().setItemInHand(context.getHand(), outcome.stack());
         return outcome.acted() ? InteractionResult.SUCCESS : InteractionResult.PASS;
     }
 
     @Override
-    public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
+    public InteractionResult interactLivingEntity(
+            ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
         if (stack.getCount() != 1) return InteractionResult.PASS;
-        int current = target instanceof Sheep sheep ? sheep.getColor().getId()
+        int current = target instanceof Sheep sheep
+                ? sheep.getColor().getId()
                 : target instanceof Wolf wolf ? wolf.getCollarColor().getId() : -1;
-        var facts = new PaintingRules.EntityFacts(target.isAlive(), target instanceof Sheep, target instanceof Sheep sheep && sheep.isSheared(),
-                target instanceof Wolf, target instanceof Wolf wolf && wolf.isTame(), current);
+        var facts = new PaintingRules.EntityFacts(
+                target.isAlive(),
+                target instanceof Sheep,
+                target instanceof Sheep sheep && sheep.isSheared(),
+                target instanceof Wolf,
+                target instanceof Wolf wolf && wolf.isTame(),
+                current);
         int color = PaintingRules.entityDyeId(facts, dye.index());
         if (color < 0) return InteractionResult.PASS;
         if (target.level().isClientSide) return InteractionResult.SUCCESS;
@@ -66,11 +88,10 @@ public final class PaintSprayItem extends TechItem {
             return InteractionResult.PASS;
         }
         var desired = DyeColor.byId(color);
-        if (target instanceof Sheep sheep)
-            sheep.setColor(desired);
-        else
-            ((gregtech.mixin.WolfCollarAccessor) target).gregtech$setCollarColor(desired);
-        player.setItemInHand(hand, ItemBehaviors.creative(player) ? prepared : ledger.spent(prepared, PaintingRules.ENTITY_COST));
+        if (target instanceof Sheep sheep) sheep.setColor(desired);
+        else ((gregtech.mixin.WolfCollarAccessor) target).gregtech$setCollarColor(desired);
+        player.setItemInHand(
+                hand, ItemBehaviors.creative(player) ? prepared : ledger.spent(prepared, PaintingRules.ENTITY_COST));
         return InteractionResult.CONSUME;
     }
 
@@ -88,17 +109,10 @@ public final class PaintSprayItem extends TechItem {
     public int getBarColor(ItemStack stack) {
         return dye.rgb();
     }
-//? if >=1.21.1 {
-    /*@Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, java.util.List<Component> lines, TooltipFlag flag) {
-        super.appendHoverText(stack, context, lines, flag);
-        lines.add(Component.translatable("gt6ce.spray.remaining", can().remaining(stack) / 10.0));
-    }
-*///?} else {
+
     @Override
-    public void appendHoverText(ItemStack stack, Level level, java.util.List<Component> lines, TooltipFlag flag) {
-        super.appendHoverText(stack, level, lines, flag);
+    protected void appendTooltip(ItemStack stack, Level level, java.util.List<Component> lines, TooltipFlag flag) {
+        super.appendTooltip(stack, level, lines, flag);
         lines.add(Component.translatable("gt6ce.spray.remaining", can().remaining(stack) / 10.0));
     }
-//?}
 }

@@ -7,7 +7,6 @@ import gregtech.api.addon.platform.AddonTools;
 import gregtech.engine.machine.MachineSpec;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.tool.GTToolHelper;
-import gregtech.engine.tool.ToolInteractions;
 import gregtech.content.blockentity.machine.BehaviorMachineBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,10 +14,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-//? if >=1.21.1 {
-/*import net.minecraft.world.ItemInteractionResult;
-*///?} else {
-//?}
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -54,24 +49,12 @@ public class BehaviorMachineBlock extends GTFacingMachineBlock implements gregte
     private final AddonMachines.AcceptedBehavior accepted;
     private Supplier<BlockEntityType<?>> beType = () -> null;
 
-//? if >=1.21.1 {
-    /*@Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?}
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hit) {
         InteractionResult tool = toolClick(level, pos, player, hand, hit);
         if (tool != InteractionResult.PASS) return tool;
-        InteractionResult wrench = super.use(state, level, pos, player, hand, hit);
+        InteractionResult wrench = super.useBlock(state, level, pos, player, hand, hit);
         if (wrench != InteractionResult.PASS) return wrench;
         BlockEntity entity = level.getBlockEntity(pos);
         if (!(entity instanceof BehaviorMachineBlockEntity machine)) return InteractionResult.PASS;

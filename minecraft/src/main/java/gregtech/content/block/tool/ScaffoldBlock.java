@@ -1,12 +1,8 @@
 package gregtech.content.block.tool;
 
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
-import gregtech.engine.GTWaterloggable;
 import gregtech.api.material.*;
-
+import gregtech.engine.GTWaterloggable;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -17,16 +13,16 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
-import java.util.List;
 
 /**
  * GT6 {@code MultiTileEntityScaffold}: unsupported ledges fall, while a ledge joined to a
@@ -37,12 +33,17 @@ public final class ScaffoldBlock extends ShapedToolBlock implements SimpleWaterl
     public static final IntegerProperty DESIGN = IntegerProperty.create("design", 0, 3);
     private static final VoxelShape LEDGE = Block.box(0, 14, 0, 16, 16, 16);
     private static final VoxelShape POSTS = Shapes.or(
-            Block.box(0, 0, 0, 2, 16, 2), Block.box(0, 0, 14, 2, 16, 16),
-            Block.box(14, 0, 0, 16, 16, 2), Block.box(14, 0, 14, 16, 16, 16)).optimize();
-    private static final VoxelShape NORTH_FRAME = Shapes.or(POSTS, Block.box(0, 0, 0, 16, 16, 2)).optimize();
-    private static final VoxelShape SOUTH_FRAME = Shapes.or(POSTS, Block.box(0, 0, 14, 16, 16, 16)).optimize();
-    private static final VoxelShape EAST_FRAME = Shapes.or(POSTS, Block.box(14, 0, 0, 16, 16, 16)).optimize();
-    private static final VoxelShape WEST_FRAME = Shapes.or(POSTS, Block.box(0, 0, 0, 2, 16, 16)).optimize();
+                    Block.box(0, 0, 0, 2, 16, 2), Block.box(0, 0, 14, 2, 16, 16),
+                    Block.box(14, 0, 0, 16, 16, 2), Block.box(14, 0, 14, 16, 16, 16))
+            .optimize();
+    private static final VoxelShape NORTH_FRAME =
+            Shapes.or(POSTS, Block.box(0, 0, 0, 16, 16, 2)).optimize();
+    private static final VoxelShape SOUTH_FRAME =
+            Shapes.or(POSTS, Block.box(0, 0, 14, 16, 16, 16)).optimize();
+    private static final VoxelShape EAST_FRAME =
+            Shapes.or(POSTS, Block.box(14, 0, 0, 16, 16, 16)).optimize();
+    private static final VoxelShape WEST_FRAME =
+            Shapes.or(POSTS, Block.box(0, 0, 0, 2, 16, 16)).optimize();
 
     private final gregtech.api.material.GTMaterial material;
 
@@ -64,12 +65,11 @@ public final class ScaffoldBlock extends ShapedToolBlock implements SimpleWaterl
 
     /** Original scaffold inherits the facing-wrench row without extra instructions. */
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
-*///?} else {
-    public void appendHoverText(ItemStack stack, @org.jetbrains.annotations.Nullable BlockGetter level,
-//?}
-            List<net.minecraft.network.chat.Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {
+    protected void appendTooltip(
+            ItemStack stack,
+            @org.jetbrains.annotations.Nullable BlockGetter level,
+            List<net.minecraft.network.chat.Component> tooltip,
+            net.minecraft.world.item.TooltipFlag flag) {
         gregtech.client.StorageBlockTooltips.facing(tooltip);
     }
 
@@ -84,8 +84,9 @@ public final class ScaffoldBlock extends ShapedToolBlock implements SimpleWaterl
         if (context.getPlayer() == null || !context.getPlayer().isShiftKeyDown())
             return GTWaterloggable.getStateForPlacement(super.getStateForPlacement(context), context);
         Direction clicked = context.getClickedFace();
-        return GTWaterloggable.getStateForPlacement(defaultBlockState().setValue(FACING,
-                clicked.getAxis().isHorizontal() ? clicked : Direction.NORTH), context);
+        return GTWaterloggable.getStateForPlacement(
+                defaultBlockState().setValue(FACING, clicked.getAxis().isHorizontal() ? clicked : Direction.NORTH),
+                context);
     }
 
     private static boolean isScaffold(BlockState state) {
@@ -106,16 +107,20 @@ public final class ScaffoldBlock extends ShapedToolBlock implements SimpleWaterl
     }
 
     @Override
-    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighbor,
-            BlockPos neighborPos, boolean movedByPiston) {
+    public void neighborChanged(
+            BlockState state, Level level, BlockPos pos, Block neighbor, BlockPos neighborPos, boolean movedByPiston) {
         super.neighborChanged(state, level, pos, neighbor, neighborPos, movedByPiston);
         if (!level.isClientSide) level.scheduleTick(pos, this, 1);
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
+    public BlockState updateShape(
+            BlockState state,
+            Direction side,
+            BlockState neighbor,
             net.minecraft.world.level.LevelAccessor level,
-            BlockPos pos, BlockPos neighborPos) {
+            BlockPos pos,
+            BlockPos neighborPos) {
         GTWaterloggable.updateShape(state, level, pos);
         // Also called by chunk postprocessing for naturally generated scaffolds.
         level.scheduleTick(pos, this, 1);
@@ -131,8 +136,8 @@ public final class ScaffoldBlock extends ShapedToolBlock implements SimpleWaterl
             level.removeBlock(pos, false);
             return;
         }
-        int design = gregtech.content.tool.UtilityToolRules.scaffoldDesign(vertical, isScaffold(level.getBlockState(pos.above())),
-                isScaffold(level.getBlockState(pos.below())));
+        int design = gregtech.content.tool.UtilityToolRules.scaffoldDesign(
+                vertical, isScaffold(level.getBlockState(pos.above())), isScaffold(level.getBlockState(pos.below())));
         if (state.getValue(DESIGN) != design) level.setBlock(pos, state.setValue(DESIGN, design), Block.UPDATE_ALL);
     }
 
@@ -144,9 +149,7 @@ public final class ScaffoldBlock extends ShapedToolBlock implements SimpleWaterl
 
     private boolean groundConnection(LevelReader level, BlockPos pos, Direction facing) {
         Direction first = facing.getAxis() == Direction.Axis.X ? Direction.EAST : Direction.NORTH;
-        for (Direction direction : new Direction[]{
-                first, first.getOpposite()
-        }) {
+        for (Direction direction : new Direction[] {first, first.getOpposite()}) {
             for (int distance = 1; distance < gregtech.content.tool.UtilityToolRules.SCAFFOLD_SEARCH; distance++) {
                 BlockPos next = pos.relative(direction, distance);
                 if (!isScaffold(level.getBlockState(next))) break;
@@ -168,11 +171,13 @@ public final class ScaffoldBlock extends ShapedToolBlock implements SimpleWaterl
         VoxelShape frame = collisionFrame(state.getValue(FACING));
         return switch (state.getValue(DESIGN)) {
             case 0 -> LEDGE;
-            case 1 -> context instanceof EntityCollisionContext collision
-                    && collision.getEntity() != null
-                    && (collision.getEntity().isShiftKeyDown()
-                            || collision.getEntity().getY() < pos.getY() + 1)
-                    ? frame : Shapes.or(LEDGE, frame).optimize();
+            case 1 ->
+                context instanceof EntityCollisionContext collision
+                                && collision.getEntity() != null
+                                && (collision.getEntity().isShiftKeyDown()
+                                        || collision.getEntity().getY() < pos.getY() + 1)
+                        ? frame
+                        : Shapes.or(LEDGE, frame).optimize();
             case 2 -> frame;
             default -> Shapes.block();
         };

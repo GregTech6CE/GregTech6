@@ -3,34 +3,22 @@ import gregtech.engine.mod.GregTechIdentity;
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.MaterialPresentation;
 import gregtech.engine.material.GTMaterialRegistry;
-//? if >=1.21.1 {
-//?} else {
 import gregtech.client.MaterialTooltips;
-//?}
 import gregtech.content.data.MaterialPrefix;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-//? if >=1.21.1 {
-//?} else {
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
-//?}
-
-/** Neo platform item: material and prefix belong to its actual registry identity, never stack NBT. */
-//? if >=1.21.1 {
-//?} else {
 import java.util.List;
 
 /**
  * One registered item per (prefix, material) pair.
  * <p>
  * Material data lives on the {@link Item} instance (registry identity), not on stack NBT.
- * This matches the GregTech Modern approach on 1.20.1: no MetaItem / stack-tag material payload.
  */
-//?}
-public class MaterialItem extends Item implements gregtech.engine.material.MaterialFormItem {
+public class MaterialItem extends GTItem implements gregtech.engine.material.MaterialFormItem {
     private final MaterialPrefix prefix;
     private final GTMaterial material;
 
@@ -138,15 +126,9 @@ public class MaterialItem extends Item implements gregtech.engine.material.Mater
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack, TooltipContext context, java.util.List<Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {
-        gregtech.client.MaterialTooltips.append(stack, material, prefix, tooltip, flag);
-        super.appendHoverText(stack, context, tooltip, flag);
-*///?} else {
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+    protected void appendTooltip(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
         MaterialTooltips.append(stack, material, prefix, tooltip, flag);
-        super.appendHoverText(stack, level, tooltip, flag);
-//?}
+        super.appendTooltip(stack, level, tooltip, flag);
     }
 
     public int getTintColor() {

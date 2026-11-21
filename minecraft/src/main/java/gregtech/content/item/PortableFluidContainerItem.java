@@ -27,7 +27,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /** Finite, persistent fluid storage. Both machine interaction and automation use the same handler. */
-public final class PortableFluidContainerItem extends BlockItem implements gregtech.engine.inventory.ContainerShapeLike {
+public final class PortableFluidContainerItem extends GTBlockItem implements gregtech.engine.inventory.ContainerShapeLike {
     private final PortableFluidContainerSpec spec;
 
     public PortableFluidContainerItem(net.minecraft.world.level.block.Block block, PortableFluidContainerSpec spec, Properties properties) {
@@ -187,13 +187,8 @@ public final class PortableFluidContainerItem extends BlockItem implements gregt
         return FluidUtil.interactWithFluidHandler(player, context.getHand(), context.getLevel(),
                 context.getClickedPos(), context.getClickedFace()) ? InteractionResult.SUCCESS : InteractionResult.PASS;
     }
-//? if >=1.21.1 {
-    /*@Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-*///?} else {
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-//?}
+    protected void appendTooltip(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
         var fluid = FluidUtil.getFluidContained(stack).orElse(FluidStack.EMPTY);
         tooltip.add(gregtech.client.TooltipHelper.stat("tooltip.gt6ce.portable_fluid.contents", net.minecraft.ChatFormatting.AQUA,
                 fluid.isEmpty() ? Component.translatable("tooltip.gt6ce.portable_fluid.empty") : fluid.getDisplayName(),

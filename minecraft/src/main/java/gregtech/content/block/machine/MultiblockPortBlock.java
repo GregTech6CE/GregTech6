@@ -1,30 +1,20 @@
 package gregtech.content.block.machine;
 
+import gregtech.content.block.GTBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
-public final class MultiblockPortBlock extends Block implements EntityBlock {
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack stack, BlockState state,
-            net.minecraft.world.level.Level level, BlockPos pos, net.minecraft.world.entity.player.Player player,
-            net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
-        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
+public final class MultiblockPortBlock extends GTBlock implements EntityBlock {
     @Override
-    protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
-        return use(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public net.minecraft.world.InteractionResult use(BlockState state, net.minecraft.world.level.Level level,
-            BlockPos pos, net.minecraft.world.entity.player.Player player,
-            net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
+    protected net.minecraft.world.InteractionResult useBlock(
+            BlockState state,
+            net.minecraft.world.level.Level level,
+            BlockPos pos,
+            net.minecraft.world.entity.player.Player player,
+            net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
         if (level.getBlockEntity(pos) instanceof gregtech.content.blockentity.machine.MultiblockPortBlockEntity part)
             return gregtech.content.logistics.LogisticsCoverInteraction.use(
                     part, level, player, hand, hit.getDirection());
@@ -32,44 +22,59 @@ public final class MultiblockPortBlock extends Block implements EntityBlock {
     }
 
     @Override
-    public void stepOn(net.minecraft.world.level.Level level, BlockPos pos, BlockState state,
+    public void stepOn(
+            net.minecraft.world.level.Level level,
+            BlockPos pos,
+            BlockState state,
             net.minecraft.world.entity.Entity entity) {
-        if (!level.isClientSide && !entity.isSpectator() && entity instanceof net.minecraft.world.entity.LivingEntity
-                && level.getBlockEntity(pos) instanceof gregtech.content.blockentity.machine.MultiblockPortBlockEntity port) {
+        if (!level.isClientSide
+                && !entity.isSpectator()
+                && entity instanceof net.minecraft.world.entity.LivingEntity
+                && level.getBlockEntity(pos)
+                        instanceof gregtech.content.blockentity.machine.MultiblockPortBlockEntity port) {
             var crucible = port.crucibleController();
             if (crucible != null)
                 gregtech.util.GTEntityHelper.applyTemperatureDamage(entity, crucible.getCrucibleTemperature());
         }
         super.stepOn(level, pos, state, entity);
     }
+
     @Override
-    public void appendHoverText(net.minecraft.world.item.ItemStack stack,
-//? if >=1.21.1 {
-            /*net.minecraft.world.item.Item.TooltipContext context, java.util.List<net.minecraft.network.chat.Component> lines,
-*///?} else {
-            @javax.annotation.Nullable net.minecraft.world.level.BlockGetter level, java.util.List<net.minecraft.network.chat.Component> lines,
-//?}
+    protected void appendTooltip(
+            net.minecraft.world.item.ItemStack stack,
+            @javax.annotation.Nullable net.minecraft.world.level.BlockGetter level,
+            java.util.List<net.minecraft.network.chat.Component> lines,
             net.minecraft.world.item.TooltipFlag flag) {
         var registryId = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(this);
-        if (gregtech.content.multiblock.OriginalMultiblockPartData.byPath(registryId.getPath()).isEmpty()) return;
+        if (gregtech.content.multiblock.OriginalMultiblockPartData.byPath(registryId.getPath())
+                .isEmpty()) return;
         for (var key : gregtech.content.multiblock.OriginalMultiblockPartData.TOOLTIP_KEYS)
             if (!gregtech.client.CommonBlockTooltips.containsKey(lines, key))
-                lines.add(net.minecraft.network.chat.Component.translatable(key).withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
+                lines.add(net.minecraft.network.chat.Component.translatable(key)
+                        .withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
     }
+
     public static final net.minecraft.world.level.block.state.properties.BooleanProperty CRUCIBLE_FORMED =
             net.minecraft.world.level.block.state.properties.BooleanProperty.create("crucible_formed");
 
     @Override
-    public int getFlammability(BlockState state, net.minecraft.world.level.BlockGetter level,
-            BlockPos pos, net.minecraft.core.Direction side) {
+    public int getFlammability(
+            BlockState state,
+            net.minecraft.world.level.BlockGetter level,
+            BlockPos pos,
+            net.minecraft.core.Direction side) {
         var registryId = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(this);
         return gregtech.content.multiblock.OriginalMultiblockPartData.byPath(registryId.getPath())
-                .map(gregtech.content.multiblock.OriginalMultiblockPartData.Part::flammability).orElse(0);
+                .map(gregtech.content.multiblock.OriginalMultiblockPartData.Part::flammability)
+                .orElse(0);
     }
 
     @Override
-    public int getFireSpreadSpeed(BlockState state, net.minecraft.world.level.BlockGetter level,
-            BlockPos pos, net.minecraft.core.Direction side) {
+    public int getFireSpreadSpeed(
+            BlockState state,
+            net.minecraft.world.level.BlockGetter level,
+            BlockPos pos,
+            net.minecraft.core.Direction side) {
         return getFlammability(state, level, pos, side);
     }
 
@@ -79,7 +84,8 @@ public final class MultiblockPortBlock extends Block implements EntityBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(net.minecraft.world.level.block.state.StateDefinition.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(
+            net.minecraft.world.level.block.state.StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(CRUCIBLE_FORMED);
     }
 
@@ -89,27 +95,33 @@ public final class MultiblockPortBlock extends Block implements EntityBlock {
     }
 
     @Override
-    public net.minecraft.world.phys.shapes.VoxelShape getOcclusionShape(BlockState state, net.minecraft.world.level.BlockGetter level, BlockPos pos) {
-        return state.getValue(CRUCIBLE_FORMED) ? net.minecraft.world.phys.shapes.Shapes.empty() : super.getOcclusionShape(state, level, pos);
+    public net.minecraft.world.phys.shapes.VoxelShape getOcclusionShape(
+            BlockState state, net.minecraft.world.level.BlockGetter level, BlockPos pos) {
+        return state.getValue(CRUCIBLE_FORMED)
+                ? net.minecraft.world.phys.shapes.Shapes.empty()
+                : super.getOcclusionShape(state, level, pos);
     }
 
     @Override
     public int getLightBlock(BlockState state, net.minecraft.world.level.BlockGetter level, BlockPos pos) {
         return state.getValue(CRUCIBLE_FORMED) ? 0 : super.getLightBlock(state, level, pos);
     }
+
     @Override
-    public void onRemove(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
-            BlockState next, boolean moving) {
-        if (!state.is(next.getBlock()) && !level.isClientSide
-                && level.getBlockEntity(pos) instanceof gregtech.content.blockentity.machine.MultiblockPortBlockEntity part)
+    public void onRemove(
+            BlockState state, net.minecraft.world.level.Level level, BlockPos pos, BlockState next, boolean moving) {
+        if (!state.is(next.getBlock())
+                && !level.isClientSide
+                && level.getBlockEntity(pos)
+                        instanceof gregtech.content.blockentity.machine.MultiblockPortBlockEntity part)
             part.logisticsCovers().dropAll();
         super.onRemove(state, level, pos, next, moving);
     }
 
     /** Base structural-part drop; the final drop mixin handles attached cover data separately. */
     @Override
-    public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState state,
-            net.minecraft.world.level.storage.loot.LootParams.Builder context) {
+    public java.util.List<net.minecraft.world.item.ItemStack> getDrops(
+            BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder context) {
         return java.util.List.of(new net.minecraft.world.item.ItemStack(asItem()));
     }
 
@@ -124,14 +136,20 @@ public final class MultiblockPortBlock extends Block implements EntityBlock {
     }
 
     @Override
-    public int getSignal(BlockState state, net.minecraft.world.level.BlockGetter level,
-            BlockPos pos, net.minecraft.core.Direction side) {
+    public int getSignal(
+            BlockState state,
+            net.minecraft.world.level.BlockGetter level,
+            BlockPos pos,
+            net.minecraft.core.Direction side) {
         return gregtech.content.logistics.LogisticsCoverSignals.at(level, pos, side.getOpposite());
     }
 
     @Override
-    public int getDirectSignal(BlockState state, net.minecraft.world.level.BlockGetter level,
-            BlockPos pos, net.minecraft.core.Direction side) {
+    public int getDirectSignal(
+            BlockState state,
+            net.minecraft.world.level.BlockGetter level,
+            BlockPos pos,
+            net.minecraft.core.Direction side) {
         return getSignal(state, level, pos, side);
     }
 }

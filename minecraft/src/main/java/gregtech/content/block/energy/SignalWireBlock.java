@@ -28,28 +28,15 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.*;
 import java.util.List;
 
+import gregtech.content.block.GTBlock;
 /** Six independent ports; the common cutter spec also drives the client face overlay. */
 //? if >=1.21.1 {
-/*public final class SignalWireBlock extends Block implements EntityBlock, ToolInteractionTarget, SimpleWaterloggedBlock {
+/*public final class SignalWireBlock extends GTBlock implements EntityBlock, ToolInteractionTarget, SimpleWaterloggedBlock {
 *///?} else {
-public final class SignalWireBlock extends Block implements EntityBlock, ToolInteractionTarget {
+public final class SignalWireBlock extends GTBlock implements EntityBlock, ToolInteractionTarget {
 //?}
-//? if >=1.21.1 {
-    /*@Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
-            BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hit) {
         if (ToolInteractions.use(state, level, pos, player, hand, hit))
             return InteractionResult.sidedSuccess(level.isClientSide);
@@ -213,13 +200,8 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
         return List.of(new ItemStack(this));
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> text, TooltipFlag flag) {
-*///?} else {
     @Override
-    public void appendHoverText(ItemStack stack, BlockGetter level, List<Component> text, TooltipFlag flag) {
-//?}
+    protected void appendTooltip(ItemStack stack, BlockGetter level, List<Component> text, TooltipFlag flag) {
 
         text.add(Component.translatable("tooltip.gt6ce.signal_wire.range", range));
         text.add(Component.translatable("tooltip.gt6ce.signal_wire.controls"));

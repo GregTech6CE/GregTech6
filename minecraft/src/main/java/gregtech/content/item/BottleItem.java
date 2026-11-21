@@ -31,7 +31,7 @@ import net.minecraftforge.fluids.FluidStack;
  * <p>Drinking gives back GT6's own empty bottle ({@code bottle_empty}, the {@code bottle} material
  * prefix's "Empty") and only falls back to a vanilla glass bottle when that item is missing.
  */
-public class BottleItem extends Item {
+public class BottleItem extends GTItem {
     /** GT6's drink bottle size: every {@code MultiItemBottles} drink row is {@code .make(250)}. */
     public static final int BOTTLE_AMOUNT = 250;
     /** GT6 {@code OP.bottle.dat(MT.Empty)} — the empty bottle a drink hands back. */
@@ -63,18 +63,10 @@ public class BottleItem extends Item {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack, Item.TooltipContext context,
-*///?} else {
-    public void appendHoverText(ItemStack stack, @org.jetbrains.annotations.Nullable Level level,
-//?}
+    protected void appendTooltip(ItemStack stack, @org.jetbrains.annotations.Nullable Level level,
             java.util.List<net.minecraft.network.chat.Component> tooltip,
             net.minecraft.world.item.TooltipFlag flag) {
-//? if >=1.21.1 {
-        /*super.appendHoverText(stack, context, tooltip, flag);
-*///?} else {
-        super.appendHoverText(stack, level, tooltip, flag);
-//?}
+        super.appendTooltip(stack, level, tooltip, flag);
         // Original MultiItemBottles inherits MultiItem's per-item description.
         String key = getDescriptionId() + ".tooltip";
         if (net.minecraft.locale.Language.getInstance().has(key)) {

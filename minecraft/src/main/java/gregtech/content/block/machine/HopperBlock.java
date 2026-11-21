@@ -8,7 +8,7 @@ import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
 import gregtech.engine.machine.HopperSpec;
 import gregtech.engine.tool.GTToolHelper;
-import gregtech.engine.tool.ToolInteractions;
+import gregtech.content.block.GTDirectionalBlock;
 import gregtech.content.blockentity.machine.HopperBlockEntity;
 import gregtech.content.registry.GTBlockEntities;
 import net.minecraft.core.BlockPos;
@@ -27,7 +27,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -44,9 +43,9 @@ import javax.annotation.Nullable;
 
 /** GT6 hopper block ({@code MultiTileEntityHopper}). Parallel-slot inventory, 6-way facing output. */
 //? if >=1.21.1 {
-/*public class HopperBlock extends DirectionalBlock implements EntityBlock, ToolInteractionTarget, gregtech.engine.tool.ScrewdriverUseTarget, SimpleWaterloggedBlock {
+/*public class HopperBlock extends GTDirectionalBlock implements EntityBlock, ToolInteractionTarget, gregtech.engine.tool.ScrewdriverUseTarget, SimpleWaterloggedBlock {
 *///?} else {
-public class HopperBlock extends DirectionalBlock implements EntityBlock, ToolInteractionTarget {
+public class HopperBlock extends GTDirectionalBlock implements EntityBlock, ToolInteractionTarget {
 //?}
     // Bowl [0,10,0]-[16,16,16] + Funnel [4,4,4]-[12,10,12] + per-facing nozzle (4px high, none for UP)
     private static final VoxelShape BOWL   = Shapes.box(0, 10 / 16.0D, 0, 1.0D, 1.0D, 1.0D);
@@ -67,32 +66,18 @@ public class HopperBlock extends DirectionalBlock implements EntityBlock, ToolIn
         SHAPES.put(Direction.UP,    SHAPE_UP);
     }
 
-//? if >=1.21.1 {
-    /*@Override public com.mojang.serialization.MapCodec<HopperBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-*///?} else {
-//?}
     private final HopperSpec spec;
 
 //? if >=1.21.1 {
     /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state,
-            Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-
-    @Override
     public InteractionResult useScrewdriver(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return use(state, level, pos, player, hand, hit);
+        return useBlock(state, level, pos, player, hand, hit);
     }
 *///?} else {
-    @Override
 //?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+
+    @Override
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hit) {
         ItemStack held = player.getItemInHand(hand);
 

@@ -61,27 +61,14 @@ import java.util.List;
  * <p>The frame is a block model; synchronized inventory entries render as GT6 book cuboids
  * with the original spine and side textures.
  */
-public class BookShelfBlock extends HorizontalDirectionalBlock implements EntityBlock, ToolInteractionTarget, SimpleWaterloggedBlock {
+public class BookShelfBlock extends GTHorizontalDirectionalBlock implements EntityBlock, ToolInteractionTarget, SimpleWaterloggedBlock {
     /**
      * GT6's click handling: the click lands in the exact slot the player aimed at (GT6's
      * {@code tIndex} formula over the 28-slot layout). Ordinary occupied slots give their item back;
      * buttons and levers activate until taken with sneaking or pincers.
      */
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hit) {
         if (ToolInteractions.use(state, level, pos, player, hand, hit))
             return InteractionResult.sidedSuccess(level.isClientSide);
@@ -135,10 +122,6 @@ public class BookShelfBlock extends HorizontalDirectionalBlock implements Entity
         return InteractionResult.PASS;
     }
 
-//? if >=1.21.1 {
-    /*@Override protected com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-*///?} else {
-//?}
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     private final BookShelfVariants.Variant variant;
     // GT6's isSideSolid2 is false on the two book faces and true on the other four.
@@ -251,11 +234,7 @@ public class BookShelfBlock extends HorizontalDirectionalBlock implements Entity
 
     /** GT6's shelf tooltips: no GUI, pincers take the books out, the magnifying glass reads them. */
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip,
-*///?} else {
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip,
-//?}
+    protected void appendTooltip(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip,
                                 TooltipFlag flag) {
         gregtech.client.StorageBlockTooltips.bookShelf(tooltip);
     }

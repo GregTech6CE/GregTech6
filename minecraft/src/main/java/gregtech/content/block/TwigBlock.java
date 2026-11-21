@@ -1,6 +1,5 @@
 package gregtech.content.block;
 
-import gregtech.engine.tool.ToolInteractions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -11,7 +10,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
@@ -22,23 +20,10 @@ import java.util.Collections;
 import java.util.List;
 
 /** Source MultiTileEntityStick: biome/dimension wood, including dead, mossy and rotten wood. */
-public class TwigBlock extends Block {
+public class TwigBlock extends GTBlock {
     /** Right-click picks the twigs up as sticks. */
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hit) {
         if (!level.isClientSide) {
             ItemStack stack = contents(level, pos, 1);

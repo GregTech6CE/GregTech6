@@ -6,6 +6,7 @@ import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import gregtech.engine.GTWaterloggable;
 import gregtech.api.material.*;
 
+import gregtech.content.block.GTHorizontalDirectionalBlock;
 import gregtech.content.blockentity.inventory.BottleCrateBlockEntity;
 import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.BlockPos;
@@ -22,7 +23,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -32,22 +32,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /** GT6 bottle crate: nine X/Z cells, whole-stack interaction and inventory-preserving drops. */
-public class BottleCrateBlock extends HorizontalDirectionalBlock implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget, SimpleWaterloggedBlock {
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
+public class BottleCrateBlock extends GTHorizontalDirectionalBlock implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget, SimpleWaterloggedBlock {
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hit) {
         if (hand != InteractionHand.MAIN_HAND || !(level.getBlockEntity(pos) instanceof BottleCrateBlockEntity crate)) return InteractionResult.PASS;
         if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit))
@@ -75,10 +62,6 @@ public class BottleCrateBlock extends HorizontalDirectionalBlock implements Enti
         return InteractionResult.CONSUME;
     }
 
-//? if >=1.21.1 {
-    /*@Override protected com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-*///?} else {
-//?}
     private final gregtech.api.material.GTMaterial material;
     private final String woodTexture;
     public BottleCrateBlock(Properties properties) {
@@ -198,11 +181,7 @@ public class BottleCrateBlock extends HorizontalDirectionalBlock implements Enti
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip,
-*///?} else {
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip,
-//?}
+    protected void appendTooltip(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip,
                                 TooltipFlag flag) {
         gregtech.client.StorageBlockTooltips.bottleCrate(tooltip);
     }

@@ -16,18 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with GregTech. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package gregtech.content.block.misc;
 
 import gregtech.api.material.*;
+import gregtech.content.block.GTDirectionalBlock;
 import net.minecraft.core.*;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.*;
 
-public class LongDistEndpointBlock extends DirectionalBlock implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget,
-        gregtech.engine.machine.GTMachineBlock {
+public class LongDistEndpointBlock extends GTDirectionalBlock
+        implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget, gregtech.engine.machine.GTMachineBlock {
     private final boolean fluid;
 
     public boolean isFluid() {
@@ -40,32 +40,18 @@ public class LongDistEndpointBlock extends DirectionalBlock implements EntityBlo
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.UP));
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack stack, BlockState state,
-            net.minecraft.world.level.Level level, BlockPos pos, net.minecraft.world.entity.player.Player player,
-            net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
-        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
-        return use(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
-    }
-
-    @Override
-    public com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec() {
-        return com.mojang.serialization.MapCodec.unit(this);
-    }
-*///?} else {
-    @Override
-//?}
-    public net.minecraft.world.InteractionResult use(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
+    protected net.minecraft.world.InteractionResult useBlock(
+            BlockState state,
+            net.minecraft.world.level.Level level,
+            BlockPos pos,
+            net.minecraft.world.entity.player.Player player,
+            net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
         var tool = player.getItemInHand(hand);
         if (!player.mayBuild() || !level.mayInteract(player, pos)) return net.minecraft.world.InteractionResult.PASS;
-        if (gregtech.engine.tool.GTToolHelper.isSoftHammer(tool) || gregtech.engine.tool.GTToolHelper.isMagnifyingGlass(tool)) {
+        if (gregtech.engine.tool.GTToolHelper.isSoftHammer(tool)
+                || gregtech.engine.tool.GTToolHelper.isMagnifyingGlass(tool)) {
             if (!level.isClientSide) {
                 boolean reset = gregtech.engine.tool.GTToolHelper.isSoftHammer(tool);
                 if (level.getBlockEntity(pos) instanceof LongDistEndpointBlockEntity endpoint) {
@@ -81,9 +67,11 @@ public class LongDistEndpointBlock extends DirectionalBlock implements EntityBlo
             return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
         }
         var spec = toolInteraction(state, tool);
-        boolean same = spec != null && state.getValue(FACING) == gregtech.engine.tool.ToolInteractions.selectedFace(hit);
-        boolean allowed = spec != null && gregtech.engine.tool.ToolInteractions.canApply(spec, state, level, pos, player, tool,
-                gregtech.engine.tool.ToolInteractions.selectedFace(hit));
+        boolean same =
+                spec != null && state.getValue(FACING) == gregtech.engine.tool.ToolInteractions.selectedFace(hit);
+        boolean allowed = spec != null
+                && gregtech.engine.tool.ToolInteractions.canApply(
+                        spec, state, level, pos, player, tool, gregtech.engine.tool.ToolInteractions.selectedFace(hit));
         if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit)) {
             if (allowed && !level.isClientSide && !(tool.getItem() instanceof gregtech.content.item.ElectricToolItem))
                 gregtech.engine.tool.GTToolHelper.damageForToolClickReturn(tool, same ? 10000 : 9900, player);
@@ -107,37 +95,52 @@ public class LongDistEndpointBlock extends DirectionalBlock implements EntityBlo
     }
 
     @Override
-    public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, net.minecraft.world.item.ItemStack tool) {
+    public gregtech.engine.tool.ToolInteractionSpec toolInteraction(
+            BlockState state, net.minecraft.world.item.ItemStack tool) {
         return gregtech.engine.tool.GTToolHelper.matchesTool(tool, gregtech.engine.tool.GTToolType.WRENCH)
-                ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING, gregtech.content.block.machine.MachineRotationType.ALL) : null;
+                ? gregtech.engine.tool.ToolInteractionSpec.facing(
+                        FACING, gregtech.content.block.machine.MachineRotationType.ALL)
+                : null;
     }
 
     @Override
     public void toolStateChanged(net.minecraft.world.level.Level level, BlockPos pos, BlockState state) {
         LongDistanceTopology.changed(level);
         if (level.getBlockEntity(pos) instanceof LongDistEndpointBlockEntity endpoint) endpoint.invalidateRoute();
-        if (level.getBlockEntity(pos) instanceof LongDistanceTransformerBlockEntity endpoint) endpoint.invalidateRoute();
+        if (level.getBlockEntity(pos) instanceof LongDistanceTransformerBlockEntity endpoint)
+            endpoint.invalidateRoute();
     }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         var player = context.getPlayer();
-        int side = gregtech.engine.logistics.LongDistanceNetwork.placement(player == null ? 0 : player.getXRot(),
+        int side = gregtech.engine.logistics.LongDistanceNetwork.placement(
+                player == null ? 0 : player.getXRot(),
                 context.getHorizontalDirection().getOpposite().ordinal());
         return defaultBlockState().setValue(FACING, Direction.values()[side]);
     }
 
     @Override
-    public void onPlace(net.minecraft.world.level.block.state.BlockState state, net.minecraft.world.level.Level level,
-            net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState previous, boolean moving) {
-        if (!state.is(previous.getBlock()) || state.getValue(FACING) != previous.getValue(FACING)) LongDistanceTopology.changed(level);
+    public void onPlace(
+            net.minecraft.world.level.block.state.BlockState state,
+            net.minecraft.world.level.Level level,
+            net.minecraft.core.BlockPos pos,
+            net.minecraft.world.level.block.state.BlockState previous,
+            boolean moving) {
+        if (!state.is(previous.getBlock()) || state.getValue(FACING) != previous.getValue(FACING))
+            LongDistanceTopology.changed(level);
         super.onPlace(state, level, pos, previous, moving);
     }
 
     @Override
-    public void onRemove(net.minecraft.world.level.block.state.BlockState state, net.minecraft.world.level.Level level,
-            net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState next, boolean moving) {
-        if (!state.is(next.getBlock()) || state.getValue(FACING) != next.getValue(FACING)) LongDistanceTopology.changed(level);
+    public void onRemove(
+            net.minecraft.world.level.block.state.BlockState state,
+            net.minecraft.world.level.Level level,
+            net.minecraft.core.BlockPos pos,
+            net.minecraft.world.level.block.state.BlockState next,
+            boolean moving) {
+        if (!state.is(next.getBlock()) || state.getValue(FACING) != next.getValue(FACING))
+            LongDistanceTopology.changed(level);
         super.onRemove(state, level, pos, next, moving);
     }
 }

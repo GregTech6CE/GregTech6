@@ -1,6 +1,7 @@
 package gregtech.content.block.machine;
 
 import gregtech.api.addon.machine.LayoutPart;
+import gregtech.content.block.GTHorizontalDirectionalBlock;
 import gregtech.content.blockentity.machine.AddonFunctionalPartBlockEntity;
 import gregtech.content.blockentity.machine.FunctionalPartRuntime;
 import net.minecraft.core.BlockPos;
@@ -9,7 +10,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -20,25 +20,14 @@ import net.minecraft.world.level.block.state.StateDefinition;
  * Addon part with slots, a tick, a click handler or named fields, and no energy role.
  * A part that also emits or accepts energy uses {@link AddonEnergyPartBlock}.
  */
-public class AddonFunctionalPartBlock extends HorizontalDirectionalBlock implements EntityBlock {
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack stack, BlockState state,
-            Level level, BlockPos pos, net.minecraft.world.entity.player.Player player,
-            net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
-        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
+public class AddonFunctionalPartBlock extends GTHorizontalDirectionalBlock implements EntityBlock {
     @Override
-    protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
-        return use(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public net.minecraft.world.InteractionResult use(BlockState state, Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
+    protected net.minecraft.world.InteractionResult useBlock(
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            net.minecraft.world.entity.player.Player player,
+            net.minecraft.world.InteractionHand hand,
             net.minecraft.world.phys.BlockHitResult hit) {
         return FunctionalPartInteraction.interact(level, pos, player, hand, hit);
     }
@@ -53,48 +42,57 @@ public class AddonFunctionalPartBlock extends HorizontalDirectionalBlock impleme
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
-    public String addonId() { return addonId; }
-
-    public LayoutPart declaration() { return declaration; }
-
-//? if >=1.21.1 {
-    /*@Override public com.mojang.serialization.MapCodec<AddonFunctionalPartBlock> codec() {
-        return com.mojang.serialization.MapCodec.unit(this);
+    public String addonId() {
+        return addonId;
     }
-*///?} else {
-//?}
 
-    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+    public LayoutPart declaration() {
+        return declaration;
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
     }
 
-    @Override public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return defaultBlockState()
+                .setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
 
-    @Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new AddonFunctionalPartBlockEntity(pos, state);
     }
 
-    @Override public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        if (level.isClientSide || !declaration.ticks()
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, BlockEntityType<T> type) {
+        if (level.isClientSide
+                || !declaration.ticks()
                 || type != gregtech.content.registry.GTBlockEntities.ADDON_FUNCTIONAL_PART.get()) return null;
-        return (lvl, pos, blockState, be) -> AddonFunctionalPartBlockEntity.serverTick(lvl, pos, blockState,
-                (AddonFunctionalPartBlockEntity) be);
+        return (lvl, pos, blockState, be) ->
+                AddonFunctionalPartBlockEntity.serverTick(lvl, pos, blockState, (AddonFunctionalPartBlockEntity) be);
     }
 
-    @Override public void onRemove(BlockState state, Level level, BlockPos pos, BlockState next, boolean moving) {
-        if (!state.is(next.getBlock()) && !level.isClientSide
-                && level.getBlockEntity(pos) instanceof FunctionalPartRuntime.Host host && host.function() != null)
-            host.function().dropInto(level, pos);
-        if (!state.is(next.getBlock()) && !level.isClientSide
-                && level.getBlockEntity(pos) instanceof gregtech.content.blockentity.machine.MultiblockPortBlockEntity part)
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState next, boolean moving) {
+        if (!state.is(next.getBlock())
+                && !level.isClientSide
+                && level.getBlockEntity(pos) instanceof FunctionalPartRuntime.Host host
+                && host.function() != null) host.function().dropInto(level, pos);
+        if (!state.is(next.getBlock())
+                && !level.isClientSide
+                && level.getBlockEntity(pos)
+                        instanceof gregtech.content.blockentity.machine.MultiblockPortBlockEntity part)
             part.logisticsCovers().dropAll();
         super.onRemove(state, level, pos, next, moving);
     }
 
-    @Override public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState state,
-            net.minecraft.world.level.storage.loot.LootParams.Builder context) {
+    @Override
+    public java.util.List<net.minecraft.world.item.ItemStack> getDrops(
+            BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder context) {
         return java.util.List.of(new net.minecraft.world.item.ItemStack(asItem()));
     }
 }

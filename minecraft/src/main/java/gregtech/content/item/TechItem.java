@@ -1,9 +1,7 @@
 package gregtech.content.item;
 
-import net.minecraft.world.item.Item;
-
 /** Pure technological item — carries a display name, no functionality. */
-public class TechItem extends Item implements gregtech.engine.recipe.RecipeCatalystLike {
+public class TechItem extends GTItem implements gregtech.engine.recipe.RecipeCatalystLike {
     private final String englishName;
     private final boolean catalyst;
 
@@ -17,11 +15,14 @@ public class TechItem extends Item implements gregtech.engine.recipe.RecipeCatal
         this.catalyst = catalyst;
     }
 
-    public String englishName() { return englishName; }
+    public String englishName() {
+        return englishName;
+    }
 
     @Override
     public boolean hasCraftingRemainingItem(net.minecraft.world.item.ItemStack stack) {
-        return !gregtech.content.item.behavior.BehaviorLighter.craftingRemainder(stack).isEmpty()
+        return !gregtech.content.item.behavior.BehaviorLighter.craftingRemainder(stack)
+                        .isEmpty()
                 || super.hasCraftingRemainingItem(stack);
     }
 
@@ -32,19 +33,11 @@ public class TechItem extends Item implements gregtech.engine.recipe.RecipeCatal
     }
 
     @Override
-    public void appendHoverText(net.minecraft.world.item.ItemStack stack,
-//? if >=1.21.1 {
-            /*net.minecraft.world.item.Item.TooltipContext context,
-*///?} else {
+    protected void appendTooltip(
+            net.minecraft.world.item.ItemStack stack,
             @org.jetbrains.annotations.Nullable net.minecraft.world.level.Level level,
-//?}
             java.util.List<net.minecraft.network.chat.Component> tooltip,
             net.minecraft.world.item.TooltipFlag flag) {
-//? if >=1.21.1 {
-        /*super.appendHoverText(stack, context, tooltip, flag);
-*///?} else {
-        super.appendHoverText(stack, level, tooltip, flag);
-//?}
         // GT6 addItem tooltips live in the lang files as <descriptionId>.tooltip
         String key = getDescriptionId() + ".tooltip";
         if (net.minecraft.locale.Language.getInstance().has(key)) {
@@ -71,5 +64,7 @@ public class TechItem extends Item implements gregtech.engine.recipe.RecipeCatal
      * recipe to match but are never consumed by it — GT6 modelled this with
      * zero-size recipe inputs, which 1.20 {@code ItemStack} cannot represent.
      */
-    public boolean isCatalyst() { return catalyst; }
+    public boolean isCatalyst() {
+        return catalyst;
+    }
 }

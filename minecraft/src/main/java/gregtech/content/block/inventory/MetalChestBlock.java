@@ -1,12 +1,15 @@
 package gregtech.content.block.inventory;
 
+import gregtech.api.material.GTMaterial;
+import gregtech.content.block.GTHorizontalDirectionalBlock;
+import gregtech.content.blockentity.inventory.MetalChestBlockEntity;
+import gregtech.engine.GTWaterloggable;
 import gregtech.engine.tool.GTToolHelper;
-import gregtech.engine.tool.ToolInteractions;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
-import gregtech.engine.GTWaterloggable;
-import gregtech.api.material.GTMaterial;
-import gregtech.content.blockentity.inventory.MetalChestBlockEntity;
+import gregtech.engine.tool.ToolInteractions;
+import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -22,7 +25,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -31,35 +33,19 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import javax.annotation.Nullable;
-import java.util.List;
 
 /** GT6 metal chest (MultiTileEntityChest): 54 slots, material-tinted chest shell. */
-public class MetalChestBlock extends HorizontalDirectionalBlock
+public class MetalChestBlock extends GTHorizontalDirectionalBlock
         implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget {
 
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         // both hands fire use(); handling the off hand double-triggers
         if (hand == InteractionHand.OFF_HAND) return InteractionResult.PASS;
         if (ToolInteractions.use(state, level, pos, player, hand, hit))
             return InteractionResult.sidedSuccess(level.isClientSide);
-        if (!(level.getBlockEntity(pos) instanceof MetalChestBlockEntity chest))
-            return InteractionResult.PASS;
+        if (!(level.getBlockEntity(pos) instanceof MetalChestBlockEntity chest)) return InteractionResult.PASS;
         if (level.getBlockState(pos.above()).isRedstoneConductor(level, pos.above()))
             return InteractionResult.sidedSuccess(level.isClientSide);
         if (!level.isClientSide && player instanceof ServerPlayer sp) {
@@ -91,13 +77,6 @@ public class MetalChestBlock extends HorizontalDirectionalBlock
 
     private final Shell shell;
 
-//? if >=1.21.1 {
-    /*@Override
-    protected com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec() {
-        return com.mojang.serialization.MapCodec.unit(this);
-    }
-*///?} else {
-//?}
     public MetalChestBlock(GTMaterial material, Properties properties) {
         this(material, Shell.METAL, properties);
     }
@@ -106,15 +85,15 @@ public class MetalChestBlock extends HorizontalDirectionalBlock
         super(properties);
         this.material = material;
         this.shell = shell;
-        registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH)
-                .setValue(GTWaterloggable.WATERLOGGED, false));
+        registerDefaultState(
+                defaultBlockState().setValue(FACING, Direction.NORTH).setValue(GTWaterloggable.WATERLOGGED, false));
     }
 
     @Override
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return GTToolHelper.isMachineWrench(tool)
-                ? ToolInteractionSpec.facing(FACING,
-                        gregtech.content.block.machine.MachineRotationType.HORIZONTAL) : null;
+                ? ToolInteractionSpec.facing(FACING, gregtech.content.block.machine.MachineRotationType.HORIZONTAL)
+                : null;
     }
 
     public GTMaterial material() {
@@ -127,8 +106,9 @@ public class MetalChestBlock extends HorizontalDirectionalBlock
 
     @Override
     public int getFlammability(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
-        return shell == Shell.REINFORCED_WOOD
-                && !material.has(gregtech.api.material.MaterialProperty.UNBURNABLE) ? 100 : 0;
+        return shell == Shell.REINFORCED_WOOD && !material.has(gregtech.api.material.MaterialProperty.UNBURNABLE)
+                ? 100
+                : 0;
     }
 
     @Override
@@ -148,8 +128,11 @@ public class MetalChestBlock extends HorizontalDirectionalBlock
     }
 
     @Override
-    public void tick(BlockState state, net.minecraft.server.level.ServerLevel level, BlockPos pos,
-                     net.minecraft.util.RandomSource random) {
+    public void tick(
+            BlockState state,
+            net.minecraft.server.level.ServerLevel level,
+            BlockPos pos,
+            net.minecraft.util.RandomSource random) {
         if (level.getBlockEntity(pos) instanceof MetalChestBlockEntity chest) chest.recheckOpeners();
     }
 
@@ -174,7 +157,8 @@ public class MetalChestBlock extends HorizontalDirectionalBlock
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        BlockState base = defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
+        BlockState base = defaultBlockState()
+                .setValue(FACING, ctx.getHorizontalDirection().getOpposite());
         return GTWaterloggable.getStateForPlacement(base, ctx);
     }
 
@@ -184,8 +168,13 @@ public class MetalChestBlock extends HorizontalDirectionalBlock
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction dir, BlockState neighborState,
-                                  LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+    public BlockState updateShape(
+            BlockState state,
+            Direction dir,
+            BlockState neighborState,
+            LevelAccessor level,
+            BlockPos pos,
+            BlockPos neighborPos) {
         GTWaterloggable.updateShape(state, level, pos);
         return state;
     }
@@ -203,15 +192,13 @@ public class MetalChestBlock extends HorizontalDirectionalBlock
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (!state.is(newState.getBlock())
-                && level.getBlockEntity(pos) instanceof MetalChestBlockEntity chest) {
+        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof MetalChestBlockEntity chest) {
             chest.dropComponentCovers();
             var inv = chest.inventory();
             for (int i = 0; i < inv.getSlots(); i++) {
                 ItemStack stack = inv.getStackInSlot(i);
                 if (!stack.isEmpty())
-                    gregtech.util.GTItemDrops.dropItemStack(
-                            level, pos.getX(), pos.getY(), pos.getZ(), stack);
+                    gregtech.util.GTItemDrops.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), stack);
                 inv.setStackInSlot(i, ItemStack.EMPTY);
             }
         }
@@ -219,11 +206,11 @@ public class MetalChestBlock extends HorizontalDirectionalBlock
     }
 
     @Override
-    public java.util.List<ItemStack> getDrops(BlockState state,
-            net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
+    public java.util.List<ItemStack> getDrops(
+            BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
         ItemStack result = new ItemStack(this);
         if (builder.getOptionalParameter(
-                net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY)
+                        net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY)
                 instanceof MetalChestBlockEntity chest) {
             var data = chest.lootItemData();
             if (data.isEmpty()) return java.util.List.of(result);
@@ -234,14 +221,9 @@ public class MetalChestBlock extends HorizontalDirectionalBlock
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
-                                List<Component> tooltip, TooltipFlag flag) {
-*///?} else {
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level,
-                                List<Component> tooltip, TooltipFlag flag) {
-//?}
-        gregtech.client.StorageBlockTooltips.chest(stack,
-                this instanceof LootChestBlock lootChest ? lootChest.lootTable() : null, tooltip);
+    protected void appendTooltip(
+            ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
+        gregtech.client.StorageBlockTooltips.chest(
+                stack, this instanceof LootChestBlock lootChest ? lootChest.lootTable() : null, tooltip);
     }
 }

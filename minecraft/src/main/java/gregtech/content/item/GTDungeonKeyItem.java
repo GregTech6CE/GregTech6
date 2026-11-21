@@ -42,7 +42,7 @@ import java.util.List;
  *       the port registers them with 64 as well.</li>
  * </ul>
  */
-public class GTDungeonKeyItem extends Item {
+public class GTDungeonKeyItem extends GTItem {
 
     /** GT6's {@code NBT_KEY} ({@code CS}). */
     public static final String NBT_KEY = "gt.key";
@@ -100,11 +100,7 @@ public class GTDungeonKeyItem extends Item {
      * {@code *BLANK*} for a key that has none.
      */
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-*///?} else {
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-//?}
+    protected void appendTooltip(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(Component.translatable("tooltip.gt6ce.key.lock").withStyle(ChatFormatting.GRAY));
         long keyId = keyId(stack);
         tooltip.add(keyId == 0

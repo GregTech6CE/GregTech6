@@ -3,7 +3,6 @@ package gregtech.content.block.machine;
 import gregtech.engine.machine.TankSpec;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
-import gregtech.engine.tool.ToolInteractions;
 import gregtech.content.blockentity.machine.TankBlockEntity;
 import gregtech.client.TankTooltips;
 import gregtech.content.registry.GTSounds;
@@ -15,7 +14,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -25,25 +23,13 @@ import net.minecraft.world.phys.BlockHitResult;
 
 import javax.annotation.Nullable;
 
+import gregtech.content.block.GTBlock;
 /** GT6 fluid container block — wood barrel, plastic canister, or metal drum. */
-public class TankBlock extends Block implements EntityBlock {
+public class TankBlock extends GTBlock implements EntityBlock {
     private final TankSpec spec;
 
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hit) {
         if (level.isClientSide) return InteractionResult.sidedSuccess(true);
         BlockEntity be = level.getBlockEntity(pos);

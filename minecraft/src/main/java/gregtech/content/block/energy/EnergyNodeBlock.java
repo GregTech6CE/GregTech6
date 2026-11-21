@@ -1,5 +1,6 @@
 package gregtech.content.block.energy;
 
+import gregtech.content.block.GTDirectionalBlock;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.ToolInteractions;
 import gregtech.engine.tool.ToolInteractionSpec;
@@ -17,7 +18,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -28,26 +28,11 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /** GT6 energy-net node block (motor/dynamo/transformer/turbine/solar/storage). */
-public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, ToolInteractionTarget,
+public class EnergyNodeBlock extends GTDirectionalBlock implements EntityBlock, ToolInteractionTarget,
         gregtech.engine.machine.PipeGeometry.FluidConnectorGeometry {
 
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
-            BlockPos pos, net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
-            net.minecraft.world.phys.BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
-        return use(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos,
             net.minecraft.world.entity.player.Player player,
             net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
         // both hands fire use(); handling the off hand double-triggers
@@ -208,11 +193,7 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, To
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-*///?} else {
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
-//?}
+    protected void appendTooltip(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
         if (gregtech.content.energy.OriginalEnergyDeviceTooltipData.handles(spec)) {
             var data = gregtech.engine.stack.BlockEntityData.readOrEmpty(stack);
             gregtech.client.EnergyDeviceTooltips.append(spec,
@@ -272,11 +253,9 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, To
         }
     }
 //? if >=1.21.1 {
-    /*@Override protected com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-    @Override public void toolStateChanged(Level level,BlockPos pos,BlockState state) {
+    /*@Override public void toolStateChanged(Level level,BlockPos pos,BlockState state) {
         level.invalidateCapabilities(pos);
     }
-
 *///?} else {
 //?}
     @Override public void onRemove(net.minecraft.world.level.block.state.BlockState state,

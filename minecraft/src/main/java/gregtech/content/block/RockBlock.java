@@ -1,11 +1,12 @@
 package gregtech.content.block;
 
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
-import gregtech.engine.material.MaterialStackItemHelper;
 import gregtech.content.blockentity.RockBlockEntity;
 import gregtech.content.data.MaterialPrefix;
-import gregtech.engine.tool.ToolInteractions;
+import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.material.MaterialStackItemHelper;
+import java.util.Collections;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.StringRepresentable;
@@ -30,33 +31,17 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collections;
-import java.util.List;
-
 /**
  * Ground pebble (GT6 surface rock) — drops/picks up the {@code rockGt} item of its
  * material. The {@code ground} state matches the supporting block's look (sand rocks
  * on sand, deepslate rocks on deepslate, ...); the blockstate file holds several
  * position-randomized shape variants per ground.
  */
-public class RockBlock extends Block implements EntityBlock {
+public class RockBlock extends GTBlock implements EntityBlock {
     /** Right-click picks the rock up (rockGt item, or only raw ore when marking a bedrock deposit). */
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!level.isClientSide) {
             List<ItemStack> stacks = yields(level.getBlockEntity(pos));
             level.removeBlock(pos, false);
@@ -73,23 +58,35 @@ public class RockBlock extends Block implements EntityBlock {
 
     /** Visual family of the block the rock is lying on. */
     public enum Ground implements StringRepresentable {
-        STONE("stone"), SAND("sand"), RED_SAND("red_sand"), GRAVEL("gravel"),
-        DEEPSLATE("deepslate"), GRANITE("granite"), DIORITE("diorite"), ANDESITE("andesite"),
-        NETHERRACK("netherrack"), END_STONE("end_stone");
+        STONE("stone"),
+        SAND("sand"),
+        RED_SAND("red_sand"),
+        GRAVEL("gravel"),
+        DEEPSLATE("deepslate"),
+        GRANITE("granite"),
+        DIORITE("diorite"),
+        ANDESITE("andesite"),
+        NETHERRACK("netherrack"),
+        END_STONE("end_stone");
 
         private final String name;
 
-        Ground(String name) { this.name = name; }
+        Ground(String name) {
+            this.name = name;
+        }
 
         @Override
-        public String getSerializedName() { return name; }
+        public String getSerializedName() {
+            return name;
+        }
 
         /** Visual family for an arbitrary supporting block state. */
         public static Ground of(BlockState below) {
             if (below.is(Blocks.SAND) || below.is(Blocks.SANDSTONE)) return SAND;
             if (below.is(Blocks.RED_SAND) || below.is(Blocks.RED_SANDSTONE)) return RED_SAND;
             if (below.is(Blocks.GRAVEL)) return GRAVEL;
-            if (below.is(Blocks.DEEPSLATE) || below.is(Blocks.TUFF) || below.is(Blocks.COBBLED_DEEPSLATE)) return DEEPSLATE;
+            if (below.is(Blocks.DEEPSLATE) || below.is(Blocks.TUFF) || below.is(Blocks.COBBLED_DEEPSLATE))
+                return DEEPSLATE;
             if (below.is(Blocks.GRANITE)) return GRANITE;
             if (below.is(Blocks.DIORITE)) return DIORITE;
             if (below.is(Blocks.ANDESITE)) return ANDESITE;
@@ -128,9 +125,15 @@ public class RockBlock extends Block implements EntityBlock {
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction side, BlockState neighbour,
-            net.minecraft.world.level.LevelAccessor level, BlockPos pos, BlockPos neighbourPos) {
-        return !canSurvive(state, level, pos) ? Blocks.AIR.defaultBlockState()
+    public BlockState updateShape(
+            BlockState state,
+            Direction side,
+            BlockState neighbour,
+            net.minecraft.world.level.LevelAccessor level,
+            BlockPos pos,
+            BlockPos neighbourPos) {
+        return !canSurvive(state, level, pos)
+                ? Blocks.AIR.defaultBlockState()
                 : super.updateShape(state, side, neighbour, level, pos, neighbourPos);
     }
 
@@ -138,19 +141,20 @@ public class RockBlock extends Block implements EntityBlock {
     public static List<ItemStack> yields(@Nullable BlockEntity be) {
         // GT6's item-on-the-ground mode: the rock carries the exact item it hands out.
         if (be instanceof RockBlockEntity rock && !rock.itemId().isEmpty()) {
-            ItemStack explicit=rock.itemStack();
+            ItemStack explicit = rock.itemStack();
             // The original lying-item mode represents one exact item. Indicator bonuses belong
             // to the separate material-rock mode; otherwise meteoric raw ore is duplicated.
-            return explicit.isEmpty()?java.util.List.of():java.util.List.of(explicit);
+            return explicit.isEmpty() ? java.util.List.of() : java.util.List.of(explicit);
         }
-        String materialName = be instanceof RockBlockEntity rock ? rock.getMaterial() : RockBlockEntity.DEFAULT_MATERIAL;
+        String materialName =
+                be instanceof RockBlockEntity rock ? rock.getMaterial() : RockBlockEntity.DEFAULT_MATERIAL;
         GTMaterial material = GTMaterialRegistry.get(materialName);
         if (material == null || !material.resolve().isValid()) return Collections.emptyList();
         int amount = be instanceof RockBlockEntity rock ? rock.count() : 1;
         // Original bedrock markers carry only oreRaw, not an extra rockGt stack. Also repairs
         // legacy markers that stored the old rawOre flag instead of an explicit item identity.
-        MaterialPrefix prefix = be instanceof RockBlockEntity rock && rock.hasRawOre()
-                ? MaterialPrefix.oreRaw : MaterialPrefix.rockGt;
+        MaterialPrefix prefix =
+                be instanceof RockBlockEntity rock && rock.hasRawOre() ? MaterialPrefix.oreRaw : MaterialPrefix.rockGt;
         ItemStack result = MaterialStackItemHelper.mat(prefix, material.resolve(), amount);
         return result.isEmpty() ? List.of() : List.of(result);
     }

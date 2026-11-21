@@ -1,7 +1,10 @@
 package gregtech.content.block.energy;
 
-import gregtech.engine.machine.PumpSpec;
+import gregtech.content.block.GTBlock;
 import gregtech.content.blockentity.energy.PumpBlockEntity;
+import gregtech.engine.machine.PumpSpec;
+import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -24,31 +27,14 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 
-import javax.annotation.Nullable;
-
-import java.util.List;
-
 /** GT6 rotational pump — drains fluid blocks using RU power. */
-public class PumpBlock extends Block implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget {
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
-            BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
+public class PumpBlock extends GTBlock implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget {
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
-            BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         return gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit)
-                ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
+                ? InteractionResult.sidedSuccess(level.isClientSide)
+                : InteractionResult.PASS;
     }
 
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
@@ -61,7 +47,9 @@ public class PumpBlock extends Block implements EntityBlock, gregtech.engine.too
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
-    public PumpSpec spec() { return spec; }
+    public PumpSpec spec() {
+        return spec;
+    }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -83,8 +71,8 @@ public class PumpBlock extends Block implements EntityBlock, gregtech.engine.too
     @Override
     public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return gregtech.engine.tool.GTToolHelper.isMachineWrench(tool)
-                ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING,
-                        gregtech.content.block.machine.MachineRotationType.ALL)
+                ? gregtech.engine.tool.ToolInteractionSpec.facing(
+                        FACING, gregtech.content.block.machine.MachineRotationType.ALL)
                 : null;
     }
 
@@ -99,22 +87,22 @@ public class PumpBlock extends Block implements EntityBlock, gregtech.engine.too
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide) return null;
         return (BlockEntityTicker<T>) (BlockEntityTicker<PumpBlockEntity>) PumpBlockEntity::serverTick;
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack,net.minecraft.world.item.Item.TooltipContext context,List<Component> tooltip, TooltipFlag flag) {
-*///?} else {
-    public void appendHoverText(ItemStack stack, BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
-//?}
+    protected void appendTooltip(ItemStack stack, BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(Component.translatable("gt.tooltip.pump.1").withStyle(net.minecraft.ChatFormatting.AQUA));
-        tooltip.add(Component.translatable("gt.lang.energy.input").withStyle(net.minecraft.ChatFormatting.GREEN)
+        tooltip.add(Component.translatable("gt.lang.energy.input")
+                .withStyle(net.minecraft.ChatFormatting.GREEN)
                 .append(": " + spec.inputSpeed() + " ")
                 .append(Component.translatable("gt.td.short.energy.kinetic_rotation"))
-                .append("/t (").append(Component.translatable("gt.lang.face.back")).append(")"));
+                .append("/t (")
+                .append(Component.translatable("gt.lang.face.back"))
+                .append(")"));
         tooltip.add(Component.translatable("gt.tooltip.pump.2").withStyle(net.minecraft.ChatFormatting.GOLD));
         tooltip.add(Component.translatable("gt.tooltip.pump.3").withStyle(net.minecraft.ChatFormatting.GOLD));
     }

@@ -13,7 +13,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -31,25 +30,11 @@ import net.minecraftforge.fluids.FluidUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import gregtech.content.block.GTBlock;
 /** GT6 numeric ID 17999: real top-center drilling controller, output on its upper side. */
-public final class OriginalBedrockDrillControllerBlock extends Block implements gregtech.engine.multiblock.StructurePreviewSource {
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack stack, BlockState state, Level level,
-            BlockPos pos, net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
-            net.minecraft.world.phys.BlockHitResult hit) {
-        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
+public final class OriginalBedrockDrillControllerBlock extends GTBlock implements gregtech.engine.multiblock.StructurePreviewSource {
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hit) {
         if (!(level.getBlockEntity(pos) instanceof BedrockDrillControllerBlockEntity drill))
         return InteractionResult.PASS;
@@ -102,13 +87,8 @@ public final class OriginalBedrockDrillControllerBlock extends Block implements 
         super.onRemove(state, level, pos, next, moving);
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
-*///?} else {
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level,
-//?}
+    protected void appendTooltip(ItemStack stack, @Nullable BlockGetter level,
             List<Component> tooltip, TooltipFlag flag) {
         gregtech.client.OriginalControllerTooltips.standalone(
                 gregtech.content.multiblock.OriginalControllerTooltipData.Family.BEDROCK_DRILL, tooltip);

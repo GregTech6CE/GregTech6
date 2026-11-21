@@ -53,8 +53,9 @@ import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import gregtech.content.block.GTBlock;
 /** Material and shape are registry identity; only mounting direction is block state. */
-public final class SpikeBlock extends Block implements ToolInteractionTarget, SimpleWaterloggedBlock {
+public final class SpikeBlock extends GTBlock implements ToolInteractionTarget, SimpleWaterloggedBlock {
     public enum Family { METAL, STEEL, SHARP, FANCY, SUPER }
     public enum Mode implements StringRepresentable {
         WALL("wall"), OMNI("omni"), FALLING("falling");
@@ -90,21 +91,8 @@ public final class SpikeBlock extends Block implements ToolInteractionTarget, Si
     public Family family() { return family; }
     public Mode mode() { return mode; }
     public boolean secondary() { return secondary; }
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hit) {
         return ToolInteractions.use(state, level, pos, player, hand, hit)
                 ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;

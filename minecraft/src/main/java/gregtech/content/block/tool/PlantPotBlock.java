@@ -47,11 +47,7 @@ public final class PlantPotBlock extends ShapedToolBlock {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
-*///?} else {
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level,
-//?}
+    protected void appendTooltip(ItemStack stack, @Nullable BlockGetter level,
             List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(Component.translatable("gt.multitileentity.plantpot.tooltip.1")
                 .withStyle(net.minecraft.ChatFormatting.AQUA));

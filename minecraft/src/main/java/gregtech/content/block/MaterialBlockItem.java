@@ -6,23 +6,17 @@ import gregtech.content.block.stone.GTStoneBlock;
 import gregtech.content.block.stone.GTStoneSlabBlock;
 import gregtech.engine.material.MaterialPresentation;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-//? if >=1.21.1 {
-//?} else {
 import net.minecraft.world.level.Level;
-//?}
 import net.minecraft.world.level.block.Block;
-//? if >=1.21.1 {
-//?} else {
 import org.jetbrains.annotations.Nullable;
-//?}
 
 import java.util.List;
+import gregtech.content.item.GTBlockItem;
 
 /** Block item for {@link MaterialBlock} and {@link GTStoneBlock}. */
-public class MaterialBlockItem extends BlockItem {
+public class MaterialBlockItem extends GTBlockItem {
 //? if >=1.21.1 {
 //?} else {
     @Nullable
@@ -57,11 +51,7 @@ public class MaterialBlockItem extends BlockItem {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-*///?} else {
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-//?}
+    protected void appendTooltip(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
         if (material != null && getBlock() instanceof MaterialBlockLike materialBlock) {
             MaterialTooltips.appendBlock(stack, materialBlock.material(), materialBlock.prefix(), tooltip, flag);
         } else if (getBlock() instanceof GTStoneBlock stoneBlock) {
@@ -69,11 +59,7 @@ public class MaterialBlockItem extends BlockItem {
         } else if (getBlock() instanceof GTStoneSlabBlock stoneSlab) {
             MaterialTooltips.appendStoneBlock(stack, stoneSlab.stoneMaterial(), stoneSlab.variant(), true, tooltip, flag);
         }
-//? if >=1.21.1 {
-        /*super.appendHoverText(stack, context, tooltip, flag);
-*///?} else {
-        super.appendHoverText(stack, level, tooltip, flag);
-//?}
+        super.appendTooltip(stack, level, tooltip, flag);
     }
 
     public int getTintColor() {

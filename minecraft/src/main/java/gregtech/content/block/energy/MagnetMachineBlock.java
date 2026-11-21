@@ -20,7 +20,7 @@ import net.minecraft.world.phys.BlockHitResult;
 /** GT6 bipolar magnet: four input faces, positive front and negative rear output. */
 public final class MagnetMachineBlock extends EnergyNodeBlock {
     @Override
-    public InteractionResult use(
+    protected InteractionResult useBlock(
             BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (hand == InteractionHand.OFF_HAND) return InteractionResult.PASS;
         ItemStack tool = player.getItemInHand(hand);
@@ -36,7 +36,7 @@ public final class MagnetMachineBlock extends EnergyNodeBlock {
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
         }
-        return super.use(state, level, pos, player, hand, hit);
+        return super.useBlock(state, level, pos, player, hand, hit);
     }
 
     public static final BooleanProperty ACTIVE = BooleanProperty.create("active");

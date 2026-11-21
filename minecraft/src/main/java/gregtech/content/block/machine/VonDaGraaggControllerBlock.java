@@ -1,27 +1,27 @@
 package gregtech.content.block.machine;
 
+import gregtech.content.block.GTBlock;
 import gregtech.content.blockentity.machine.VonDaGraaggControllerBlockEntity;
 import gregtech.content.registry.GTBlockEntities;
+import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.Nullable;
-import java.util.List;
-
 /**
  * The original GT6 17996 spawn inhibitor controller. Its front is fixed downward,
  * so placement and wrench use must not introduce a rotatable facing state.
  */
-public final class VonDaGraaggControllerBlock extends Block implements gregtech.engine.multiblock.StructurePreviewSource {
+public final class VonDaGraaggControllerBlock extends GTBlock
+        implements gregtech.engine.multiblock.StructurePreviewSource {
 
     public VonDaGraaggControllerBlock(Properties properties) {
         super(properties);
@@ -35,27 +35,22 @@ public final class VonDaGraaggControllerBlock extends Block implements gregtech.
     @Nullable
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state,
-            BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide || type != GTBlockEntities.VON_DA_GRAAGG.get()) return null;
         return (tickLevel, tickPos, tickState, machine) -> VonDaGraaggControllerBlockEntity.serverTick(
                 tickLevel, tickPos, tickState, (VonDaGraaggControllerBlockEntity) machine);
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
-*///?} else {
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level,
-//?}
-            List<Component> tooltip, TooltipFlag flag) {
+    protected void appendTooltip(
+            ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
         gregtech.client.UtilityControllerTooltips.vonDaGraagg(tooltip);
     }
 
     @Override
-    public List<ItemStack> getDrops(BlockState state,
-            net.minecraft.world.level.storage.loot.LootParams.Builder context) {
+    public List<ItemStack> getDrops(
+            BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder context) {
         return List.of(new ItemStack(this));
     }
 }

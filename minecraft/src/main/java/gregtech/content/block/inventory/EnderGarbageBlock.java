@@ -1,7 +1,10 @@
 package gregtech.content.block.inventory;
 
-import gregtech.engine.GTWaterloggable;
+import gregtech.content.block.GTBlock;
 import gregtech.content.blockentity.inventory.EnderGarbageBlockEntity;
+import gregtech.engine.GTWaterloggable;
+import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -29,28 +32,12 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import javax.annotation.Nullable;
-import java.util.List;
-
 /** GT6 Ender Garbage Bin: buffers trash and teleports it into the global Garbage Dump. */
-public class EnderGarbageBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
-
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
+public class EnderGarbageBlock extends GTBlock implements EntityBlock, SimpleWaterloggedBlock {
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         // both hands fire use(); handling the off hand double-triggers
         if (hand == InteractionHand.OFF_HAND) return InteractionResult.PASS;
         if (!(level.getBlockEntity(pos) instanceof EnderGarbageBlockEntity bin)) return InteractionResult.PASS;
@@ -61,9 +48,7 @@ public class EnderGarbageBlock extends Block implements EntityBlock, SimpleWater
     }
 
     // GT6 visual bounds; this port also uses these boxes for its outline and collision.
-    private static final VoxelShape SHAPE = Shapes.or(
-            Block.box(0, 12, 0, 16, 16, 16),
-            Block.box(1, 0, 1, 15, 12, 15));
+    private static final VoxelShape SHAPE = Shapes.or(Block.box(0, 12, 0, 16, 16, 16), Block.box(1, 0, 1, 15, 12, 15));
 
     public EnderGarbageBlock(Properties properties) {
         super(properties);
@@ -86,7 +71,12 @@ public class EnderGarbageBlock extends Block implements EntityBlock, SimpleWater
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos,
+    public BlockState updateShape(
+            BlockState state,
+            Direction direction,
+            BlockState neighborState,
+            LevelAccessor level,
+            BlockPos pos,
             BlockPos neighborPos) {
         GTWaterloggable.updateShape(state, level, pos);
         return state;
@@ -106,30 +96,29 @@ public class EnderGarbageBlock extends Block implements EntityBlock, SimpleWater
     @Nullable
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide || type != gregtech.content.registry.GTBlockEntities.ENDER_GARBAGE.get()) return null;
         return (BlockEntityTicker<T>) (BlockEntityTicker<EnderGarbageBlockEntity>) EnderGarbageBlockEntity::serverTick;
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-*///?} else {
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
-//?}
-        tooltip.add(Component.translatable("gt.tooltip.ender_garbage.1")
-                .withStyle(net.minecraft.ChatFormatting.AQUA));
-        tooltip.add(Component.translatable("gt.tooltip.ender_garbage.2")
-                .withStyle(net.minecraft.ChatFormatting.AQUA));
-        tooltip.add(Component.translatable("gt.tooltip.ender_garbage.3")
-                .withStyle(net.minecraft.ChatFormatting.AQUA));
+    protected void appendTooltip(
+            ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
+        tooltip.add(Component.translatable("gt.tooltip.ender_garbage.1").withStyle(net.minecraft.ChatFormatting.AQUA));
+        tooltip.add(Component.translatable("gt.tooltip.ender_garbage.2").withStyle(net.minecraft.ChatFormatting.AQUA));
+        tooltip.add(Component.translatable("gt.tooltip.ender_garbage.3").withStyle(net.minecraft.ChatFormatting.AQUA));
     }
 
     @Override
-    public void onRemove(net.minecraft.world.level.block.state.BlockState state,
-            net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos,
-            net.minecraft.world.level.block.state.BlockState next, boolean moving) {
-        if (!state.is(next.getBlock()) && !level.isClientSide
+    public void onRemove(
+            net.minecraft.world.level.block.state.BlockState state,
+            net.minecraft.world.level.Level level,
+            net.minecraft.core.BlockPos pos,
+            net.minecraft.world.level.block.state.BlockState next,
+            boolean moving) {
+        if (!state.is(next.getBlock())
+                && !level.isClientSide
                 && level.getBlockEntity(pos) instanceof gregtech.engine.inventory.BlockContents contents) {
             contents.dropContents();
             level.updateNeighbourForOutputSignal(pos, this);

@@ -1,17 +1,16 @@
 package gregtech.content.block.tool;
 
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import gregtech.content.block.GTDirectionalBlock;
+import gregtech.content.block.machine.MachineRotationType;
+import gregtech.content.blockentity.tool.AdvancedButtonBlockEntity;
+import gregtech.content.registry.GTBlockEntities;
 import gregtech.engine.GTWaterloggable;
+import gregtech.engine.stack.StackData;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
 import gregtech.engine.tool.ToolInteractions;
-import gregtech.engine.stack.StackData;
-import gregtech.content.block.machine.MachineRotationType;
-import gregtech.content.blockentity.tool.AdvancedButtonBlockEntity;
-import gregtech.content.registry.GTBlockEntities;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -20,9 +19,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-//? if >=1.21.1 {
-/*import net.minecraft.world.ItemInteractionResult;
-*///?}
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -30,17 +26,19 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
@@ -49,34 +47,15 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
 /** GT6's six-face advanced button with pulse, switch and indicator-lamp modes. */
-public final class AdvancedButtonBlock extends DirectionalBlock implements EntityBlock, ToolInteractionTarget, SimpleWaterloggedBlock {
+public final class AdvancedButtonBlock extends GTDirectionalBlock
+        implements EntityBlock, ToolInteractionTarget, SimpleWaterloggedBlock {
     public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
     public static final BooleanProperty LIT = BooleanProperty.create("lit");
 
-//? if >=1.21.1 {
-    /*@Override
-    public com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec() {
-        return com.mojang.serialization.MapCodec.unit(this);
-    }
-
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack held = player.getItemInHand(hand);
         boolean screwdriver = GTToolHelper.isScrewdriver(held);
         boolean cutter = GTToolHelper.isWireCutter(held);
@@ -91,8 +70,7 @@ public final class AdvancedButtonBlock extends DirectionalBlock implements Entit
                 else if (hammer) button.toggleInversion(player.isShiftKeyDown());
                 else if (monkey) button.cycleMode(player.isShiftKeyDown());
                 player.displayClientMessage(button.status(), true);
-                if (!magnifier) GTToolHelper.damageForToolClickReturn(held,
-                        hammer || monkey ? 1000 : 100, player);
+                if (!magnifier) GTToolHelper.damageForToolClickReturn(held, hammer || monkey ? 1000 : 100, player);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
@@ -106,8 +84,12 @@ public final class AdvancedButtonBlock extends DirectionalBlock implements Entit
 
     public AdvancedButtonBlock(Properties properties) {
         super(properties.noOcclusion().noCollission());
-        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.SOUTH)
-        .setValue(ACTIVE, false).setValue(LIT, false).setValue(GTWaterloggable.WATERLOGGED, false));
+        registerDefaultState(stateDefinition
+                .any()
+                .setValue(FACING, Direction.SOUTH)
+                .setValue(ACTIVE, false)
+                .setValue(LIT, false)
+                .setValue(GTWaterloggable.WATERLOGGED, false));
     }
 
     @Override
@@ -118,12 +100,13 @@ public final class AdvancedButtonBlock extends DirectionalBlock implements Entit
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return GTWaterloggable.getStateForPlacement(defaultBlockState().setValue(FACING, context.getClickedFace()), context);
+        return GTWaterloggable.getStateForPlacement(
+                defaultBlockState().setValue(FACING, context.getClickedFace()), context);
     }
 
     @Override
-    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer,
-            ItemStack stack) {
+    public void setPlacedBy(
+            Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
         if (level.getBlockEntity(pos) instanceof AdvancedButtonBlockEntity button) {
             CompoundTag tag = StackData.read(stack);
@@ -166,23 +149,26 @@ public final class AdvancedButtonBlock extends DirectionalBlock implements Entit
     }
 
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state,
-            BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, BlockEntityType<T> type) {
         return !level.isClientSide && type == GTBlockEntities.ADVANCED_BUTTON.get()
-        ? (world, pos, blockState, entity) -> ((AdvancedButtonBlockEntity) entity).serverTick() : null;
+                ? (world, pos, blockState, entity) -> ((AdvancedButtonBlockEntity) entity).serverTick()
+                : null;
     }
 
     @Override
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return GTToolHelper.isMachineWrench(tool) && !GTToolHelper.isMonkeyWrench(tool)
-        ? ToolInteractionSpec.facing(FACING, MachineRotationType.ALL) : null;
+                ? ToolInteractionSpec.facing(FACING, MachineRotationType.ALL)
+                : null;
     }
+
     @Override
-    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighbor,
-            BlockPos fromPos, boolean movedByPiston) {
+    public void neighborChanged(
+            BlockState state, Level level, BlockPos pos, Block neighbor, BlockPos fromPos, boolean movedByPiston) {
         super.neighborChanged(state, level, pos, neighbor, fromPos, movedByPiston);
         if (!level.isClientSide && level.getBlockEntity(pos) instanceof AdvancedButtonBlockEntity button)
-        button.updateLampInput();
+            button.updateLampInput();
     }
 
     @Override
@@ -192,8 +178,11 @@ public final class AdvancedButtonBlock extends DirectionalBlock implements Entit
 
     @Override
     public int getSignal(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-        return level.getBlockEntity(pos) instanceof AdvancedButtonBlockEntity button && !button.isLampMode()
-        && state.getValue(ACTIVE) ? button.strength() : 0;
+        return level.getBlockEntity(pos) instanceof AdvancedButtonBlockEntity button
+                        && !button.isLampMode()
+                        && state.getValue(ACTIVE)
+                ? button.strength()
+                : 0;
     }
 
     @Override
@@ -205,27 +194,29 @@ public final class AdvancedButtonBlock extends DirectionalBlock implements Entit
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         ItemStack item = new ItemStack(this);
         if (builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof AdvancedButtonBlockEntity button)
-        StackData.update(item, tag -> tag.put("GT6Button", button.saveItemConfig()));
+            StackData.update(item, tag -> tag.put("GT6Button", button.saveItemConfig()));
         return List.of(item);
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip,
-*///?} else {
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip,
-//?}
-            TooltipFlag flag) {
-        for (String operation : new String[]{
+    protected void appendTooltip(
+            ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
+        for (String operation : new String[] {
             "screwdriver", "cutter", "monkey_wrench",
             "soft_hammer", "magnifying_glass", "sneak"
         })
-        tooltip.add(Component.translatable("tooltip.gt6ce.advanced_button." + operation).withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
+            tooltip.add(Component.translatable("tooltip.gt6ce.advanced_button." + operation)
+                    .withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
-            LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+    public BlockState updateShape(
+            BlockState state,
+            Direction side,
+            BlockState neighbor,
+            LevelAccessor level,
+            BlockPos pos,
+            BlockPos neighborPos) {
         GTWaterloggable.updateShape(state, level, pos);
         return super.updateShape(state, side, neighbor, level, pos, neighborPos);
     }

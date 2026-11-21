@@ -1,7 +1,8 @@
 package gregtech.content.block.misc;
 
-import gregtech.engine.tool.*;
+import gregtech.content.block.GTDirectionalBlock;
 import gregtech.content.logistics.ExtenderSpec;
+import gregtech.engine.tool.*;
 import net.minecraft.core.*;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
@@ -15,66 +16,59 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 
 /** GT6 double-facing extender; bridges independently forward each face straight across. */
-public final class SourceExtenderBlock extends DirectionalBlock implements EntityBlock, ToolInteractionTarget {
+public final class SourceExtenderBlock extends GTDirectionalBlock implements EntityBlock, ToolInteractionTarget {
     public static final DirectionProperty SECONDARY = DirectionProperty.create("secondary");
     private final ExtenderSpec spec;
 
     public SourceExtenderBlock(ExtenderSpec spec, Properties properties) {
         super(properties);
         this.spec = spec;
-        registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH).setValue(SECONDARY, Direction.SOUTH));
+        registerDefaultState(
+                defaultBlockState().setValue(FACING, Direction.NORTH).setValue(SECONDARY, Direction.SOUTH));
     }
 
     public ExtenderSpec spec() {
         return spec;
     }
-//? if >=1.21.1 {
-    /*@Override
-    protected com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec() {
-        return com.mojang.serialization.MapCodec.unit(this);
-    }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         var tool = player.getItemInHand(hand);
         if (level.getBlockEntity(pos) instanceof ExtenderBlockEntity host) {
             var result = gregtech.content.cover.PanelCoverInteraction.use(host, player, hand, hit, true);
             if (result != InteractionResult.PASS) return result;
         }
-        if (spec.universal() && (GTToolHelper.isSoftHammer(tool) || GTToolHelper.isScrewdriver(tool))
+        if (spec.universal()
+                && (GTToolHelper.isSoftHammer(tool) || GTToolHelper.isScrewdriver(tool))
                 && level.getBlockEntity(pos) instanceof ExtenderBlockEntity relay) {
             if (!level.isClientSide) {
                 var control = relay.machineControl(spec.bridge ? hit.getDirection() : null);
                 if (!control.available() || (GTToolHelper.isScrewdriver(tool) && !control.supportsMode())) {
-                    player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gt6ce.extender.unavailable"), true);
+                    player.displayClientMessage(
+                            net.minecraft.network.chat.Component.translatable("message.gt6ce.extender.unavailable"),
+                            true);
                     return InteractionResult.CONSUME;
                 }
                 if (GTToolHelper.isScrewdriver(tool)) {
                     int mode = control.setMode((control.mode() + 1) & 15);
-                    player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gt6ce.extender.mode", mode), true);
+                    player.displayClientMessage(
+                            net.minecraft.network.chat.Component.translatable("message.gt6ce.extender.mode", mode),
+                            true);
                 } else {
                     boolean enabled = control.setEnabled(!control.enabled());
-                    player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gt6ce.extender." + (enabled ? "enabled"
-                            : "disabled")), true);
+                    player.displayClientMessage(
+                            net.minecraft.network.chat.Component.translatable(
+                                    "message.gt6ce.extender." + (enabled ? "enabled" : "disabled")),
+                            true);
                 }
                 GTToolHelper.damageForUse(tool, 1, player);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
-        return ToolInteractions.use(state, level, pos, player, hand,
-                hit) ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
+        return ToolInteractions.use(state, level, pos, player, hand, hit)
+                ? InteractionResult.sidedSuccess(level.isClientSide)
+                : InteractionResult.PASS;
     }
 
     @Override
@@ -94,10 +88,11 @@ public final class SourceExtenderBlock extends DirectionalBlock implements Entit
     }
 
     @Override
-    public <T extends BlockEntity> net.minecraft.world.level.block.entity.BlockEntityTicker<T> getTicker(Level level, BlockState state,
-            net.minecraft.world.level.block.entity.BlockEntityType<T> type) {
-        return !level.isClientSide && type == gregtech.content.registry.GTBlockEntities.EXTENDER.get() ? (world, pos, current,
-                blockEntity) -> ((ExtenderBlockEntity) blockEntity).tickSignals() : null;
+    public <T extends BlockEntity> net.minecraft.world.level.block.entity.BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, net.minecraft.world.level.block.entity.BlockEntityType<T> type) {
+        return !level.isClientSide && type == gregtech.content.registry.GTBlockEntities.EXTENDER.get()
+                ? (world, pos, current, blockEntity) -> ((ExtenderBlockEntity) blockEntity).tickSignals()
+                : null;
     }
 
     @Override
@@ -128,27 +123,31 @@ public final class SourceExtenderBlock extends DirectionalBlock implements Entit
     @Override
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         if (spec.bridge) return null;
-        if (GTToolHelper.isMonkeyWrench(tool)) return ToolInteractionSpec.facing(SECONDARY,
-                gregtech.content.block.machine.MachineRotationType.ALL);
-        return GTToolHelper.isMachineWrench(tool) ? ToolInteractionSpec.facing(FACING,
-                gregtech.content.block.machine.MachineRotationType.ALL) : null;
+        if (GTToolHelper.isMonkeyWrench(tool))
+            return ToolInteractionSpec.facing(SECONDARY, gregtech.content.block.machine.MachineRotationType.ALL);
+        return GTToolHelper.isMachineWrench(tool)
+                ? ToolInteractionSpec.facing(FACING, gregtech.content.block.machine.MachineRotationType.ALL)
+                : null;
     }
-//? if >=1.21.1 {
-    /*@Override
-    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
-            java.util.List<net.minecraft.network.chat.Component> lines, TooltipFlag flag) {
-*///?} else {
+
     @Override
-    public void appendHoverText(ItemStack stack, BlockGetter level, java.util.List<net.minecraft.network.chat.Component> lines, TooltipFlag flag) {
-//?}
-        lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.extender." + (spec.bridge ? "bridge" : "routing")));
+    protected void appendTooltip(
+            ItemStack stack,
+            BlockGetter level,
+            java.util.List<net.minecraft.network.chat.Component> lines,
+            TooltipFlag flag) {
+        lines.add(net.minecraft.network.chat.Component.translatable(
+                "tooltip.gt6ce.extender." + (spec.bridge ? "bridge" : "routing")));
         if (!spec.bridge) lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.extender.tools"));
-        if (spec.universal()) lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.extender.control"));
+        if (spec.universal())
+            lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.extender.control"));
     }
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState next, boolean moving) {
-        if (!state.is(next.getBlock()) && !level.isClientSide && level.getBlockEntity(pos) instanceof ExtenderBlockEntity host) {
+        if (!state.is(next.getBlock())
+                && !level.isClientSide
+                && level.getBlockEntity(pos) instanceof ExtenderBlockEntity host) {
             host.dropContents();
             level.updateNeighborsAt(pos, this);
         }
@@ -156,7 +155,8 @@ public final class SourceExtenderBlock extends DirectionalBlock implements Entit
     }
 
     @Override
-    public java.util.List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
+    public java.util.List<ItemStack> getDrops(
+            BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
         return java.util.List.of(new ItemStack(this));
     }
 }

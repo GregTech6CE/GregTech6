@@ -35,7 +35,8 @@ public final class ProcessingToolBlock extends ShapedToolBlock implements Entity
     @Override
     public int tintRgb() {
         return toolId().equals("bathing_pot") || toolId().equals("bathing_pot_table")
-        ? gregtech.content.material.Materials.StainlessSteel.getColor() : super.tintRgb();
+                ? gregtech.content.material.Materials.StainlessSteel.getColor()
+                : super.tintRgb();
     }
 
     @Override
@@ -46,44 +47,46 @@ public final class ProcessingToolBlock extends ShapedToolBlock implements Entity
     @Override
     public <T extends BlockEntity> net.minecraft.world.level.block.entity.BlockEntityTicker<T> getTicker(
             Level level, BlockState state, net.minecraft.world.level.block.entity.BlockEntityType<T> type) {
-        if (level.isClientSide || type != gregtech.content.registry.GTBlockEntities.PROCESSING_TOOL.get()
+        if (level.isClientSide
+                || type != gregtech.content.registry.GTBlockEntities.PROCESSING_TOOL.get()
                 || toolId().equals("juicer")) return null;
         return (world, pos, blockState, entity) -> {
-            if (gregtech.content.tool.OpenVesselRules.rainDue(world.getGameTime())) ((ProcessingToolBlockEntity) entity).collectRain();
+            if (gregtech.content.tool.OpenVesselRules.rainDue(world.getGameTime()))
+                ((ProcessingToolBlockEntity) entity).collectRain();
         };
     }
+
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (hand != InteractionHand.MAIN_HAND) return InteractionResult.PASS;
-        var rotation = super.use(state, level, pos, player, hand, hit);
+        var rotation = super.useBlock(state, level, pos, player, hand, hit);
         if (rotation.consumesAction()) return rotation;
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof ProcessingToolBlockEntity tool) tool.interact(player, hand,
-                hit.getDirection());
+        if (!level.isClientSide && level.getBlockEntity(pos) instanceof ProcessingToolBlockEntity tool)
+            tool.interact(player, hand, hit.getDirection());
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState next, boolean moving) {
-        if (!state.is(next.getBlock()) && !level.isClientSide
+        if (!state.is(next.getBlock())
+                && !level.isClientSide
                 && level.getBlockEntity(pos) instanceof ProcessingToolBlockEntity tool) tool.dropContents();
         super.onRemove(state, level, pos, next, moving);
     }
 
     @Override
-    public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState state,
-            net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
+    public java.util.List<net.minecraft.world.item.ItemStack> getDrops(
+            BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
         return java.util.List.of(new net.minecraft.world.item.ItemStack(this));
     }
-//? if >=1.21.1 {
-    /*@Override
-    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
-            java.util.List<net.minecraft.network.chat.Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {
-*///?} else {
+
     @Override
-    public void appendHoverText(ItemStack stack, BlockGetter context, java.util.List<net.minecraft.network.chat.Component> tooltip,
+    protected void appendTooltip(
+            ItemStack stack,
+            BlockGetter context,
+            java.util.List<net.minecraft.network.chat.Component> tooltip,
             net.minecraft.world.item.TooltipFlag flag) {
-//?}
         gregtech.client.FunctionalBlockTooltips.appendManual(toolId(), getExplosionResistance(), tooltip);
     }
 }

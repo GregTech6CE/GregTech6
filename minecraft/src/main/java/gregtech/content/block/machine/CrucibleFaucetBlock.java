@@ -24,7 +24,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -39,12 +38,9 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import javax.annotation.Nullable;
 
+import gregtech.content.block.GTHorizontalDirectionalBlock;
 /** Crucible faucet (GT6 {@code MultiTileEntityFaucet}) — directional pour spout from crucible to mold. */
-public class CrucibleFaucetBlock extends HorizontalDirectionalBlock implements EntityBlock, GTMachineBlock, SimpleWaterloggedBlock, ToolInteractionTarget {
-//? if >=1.21.1 {
-    /*@Override public com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-*///?} else {
-//?}
+public class CrucibleFaucetBlock extends GTHorizontalDirectionalBlock implements EntityBlock, GTMachineBlock, SimpleWaterloggedBlock, ToolInteractionTarget {
     private static final VoxelShape NORTH = Shapes.or(
             Shapes.box(6 / 16.0D, 1 / 16.0D, 0.0D, 10 / 16.0D, 2 / 16.0D, 4 / 16.0D),
             Shapes.box(5 / 16.0D, 2 / 16.0D, 0.0D, 6 / 16.0D, 6 / 16.0D, 4 / 16.0D),
@@ -64,21 +60,8 @@ public class CrucibleFaucetBlock extends HorizontalDirectionalBlock implements E
 
     private final CrucibleSpec spec;
 
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hit) {
         if (!(level.getBlockEntity(pos) instanceof CrucibleFaucetBlockEntity faucet)) {
             return InteractionResult.PASS;

@@ -1,7 +1,8 @@
 package gregtech.content.block.misc;
 
-import gregtech.engine.tool.*;
+import gregtech.content.block.GTDirectionalBlock;
 import gregtech.content.block.machine.MachineRotationType;
+import gregtech.engine.tool.*;
 import net.minecraft.core.*;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
@@ -14,55 +15,72 @@ import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.phys.BlockHitResult;
 
 /** Six-sided automatic tool housing, sharing wrench selection and preview with other machines. */
-public abstract class AutoToolBlock extends DirectionalBlock implements EntityBlock, ToolInteractionTarget {
+public abstract class AutoToolBlock extends GTDirectionalBlock implements EntityBlock, ToolInteractionTarget {
     private final long input;
     private final int quality;
+
     protected AutoToolBlock(Properties properties, long input, int quality) {
-        super(properties); this.input=input; this.quality=quality;
-        registerDefaultState(stateDefinition.any().setValue(FACING,Direction.NORTH));
+        super(properties);
+        this.input = input;
+        this.quality = quality;
+        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
-    public long input() { return input; }
-    public int quality() { return quality; }
-//? if >=1.21.1 {
-    /*@Override protected com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-    @Override
-    protected ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+
+    public long input() {
+        return input;
+    }
+
+    public int quality() {
+        return quality;
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        if (ToolInteractions.use(state,level,pos,player,hand,hit)) return InteractionResult.sidedSuccess(level.isClientSide);
-        if (player.isShiftKeyDown() && player.getItemInHand(hand).isEmpty() && level.getBlockEntity(pos) instanceof AutoToolBlockEntity tool) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (ToolInteractions.use(state, level, pos, player, hand, hit))
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        if (player.isShiftKeyDown()
+                && player.getItemInHand(hand).isEmpty()
+                && level.getBlockEntity(pos) instanceof AutoToolBlockEntity tool) {
             if (!level.isClientSide) tool.setStopped(!tool.stopped());
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
         return InteractionResult.PASS;
     }
+
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
-*///?} else {
-    public void appendHoverText(ItemStack stack, net.minecraft.world.level.BlockGetter level,
-//?}
-                                java.util.List<net.minecraft.network.chat.Component> lines, net.minecraft.world.item.TooltipFlag flag) {
+    protected void appendTooltip(
+            ItemStack stack,
+            net.minecraft.world.level.BlockGetter level,
+            java.util.List<net.minecraft.network.chat.Component> lines,
+            net.minecraft.world.item.TooltipFlag flag) {
         gregtech.client.AutomaticToolTooltips.append(this, lines);
     }
-    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> builder) { builder.add(FACING); }
-    @Override public BlockState getStateForPlacement(BlockPlaceContext context) { return defaultBlockState().setValue(FACING,context.getNearestLookingDirection().getOpposite()); }
-    @Override public ToolInteractionSpec toolInteraction(BlockState state,ItemStack tool) {
-        return GTToolHelper.matchesTool(tool,GTToolType.WRENCH)?ToolInteractionSpec.facing(FACING,MachineRotationType.ALL):null;
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING);
     }
-    @Override public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level,BlockState state,BlockEntityType<T> type) {
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return defaultBlockState()
+                .setValue(FACING, context.getNearestLookingDirection().getOpposite());
+    }
+
+    @Override
+    public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+        return GTToolHelper.matchesTool(tool, GTToolType.WRENCH)
+                ? ToolInteractionSpec.facing(FACING, MachineRotationType.ALL)
+                : null;
+    }
+
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide) return null;
-        return (world,pos,current,entity)->{ if (entity instanceof AutoToolBlockEntity tool) tool.tick(); };
+        return (world, pos, current, entity) -> {
+            if (entity instanceof AutoToolBlockEntity tool) tool.tick();
+        };
     }
 }

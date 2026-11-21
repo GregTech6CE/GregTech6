@@ -1,7 +1,6 @@
 package gregtech.content.block.wood;
 
 import gregtech.content.blockentity.TreeHoleBlockEntity;
-import gregtech.engine.tool.ToolInteractions;
 import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -13,7 +12,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -38,6 +36,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;
 
+import gregtech.content.block.GTHorizontalDirectionalBlock;
 /**
  * GT6's tree holes: {@code MultiTileEntityResinHoleRubber}, {@code MultiTileEntitySapHoleMaple} and
  * {@code MultiTileEntitySapHoleRainbowood} (registry ids 32762/32761/32760).
@@ -48,23 +47,10 @@ import java.util.List;
  * This port's right-click branch selects the resin item (rubber) or sap fluid (maple/rainbowood);
  * the original rubber hole can provide both. Breaking a hole drops its source log.
  */
-public class TreeHoleBlock extends HorizontalDirectionalBlock implements EntityBlock {
+public class TreeHoleBlock extends GTHorizontalDirectionalBlock implements EntityBlock {
     /** GT6 {@code onBlockActivated3}: hand out the resin, or fill the container the player holds. */
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hit) {
         if (hand != InteractionHand.MAIN_HAND || hit.getDirection() != state.getValue(FACING)
                 // Modern portable vessels are BlockItems too; retain their container interaction.
@@ -86,13 +72,6 @@ public class TreeHoleBlock extends HorizontalDirectionalBlock implements EntityB
         return InteractionResult.CONSUME;
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    public com.mojang.serialization.MapCodec<TreeHoleBlock> codec() {
-        return com.mojang.serialization.MapCodec.unit(this);
-    }
-*///?} else {
-//?}
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     /** GT6's {@code mHasResin} — the hole is full and ready to be tapped. */

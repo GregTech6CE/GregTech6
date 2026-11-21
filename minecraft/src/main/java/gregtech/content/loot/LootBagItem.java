@@ -1,5 +1,7 @@
 package gregtech.content.loot;
 
+import gregtech.content.item.GTItem;
+import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -12,8 +14,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-
-import java.util.List;
 
 /**
  * GT6's loot bags — the items that open GT's own loot tables.
@@ -31,7 +31,7 @@ import java.util.List;
  * <p>The port registers the four bags in {@code GTMultiItems} (their ids come from the GT6 display
  * names: Bagged Sapling, Seed Pouch, Gem Pouch, Loot Pouch) and the Dusty Guide Book here.</p>
  */
-public class LootBagItem extends Item {
+public class LootBagItem extends GTItem {
 
     /** GT6's {@code Behavior_Drop_Loot} tables, rolled in this order. */
     private final String[] tables;
@@ -68,13 +68,8 @@ public class LootBagItem extends Item {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack,net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        super.appendHoverText(stack,context,tooltip,flag);
-*///?} else {
-    public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
-        super.appendHoverText(stack, level, tooltip, flag);
-//?}
+    protected void appendTooltip(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
+        super.appendTooltip(stack, level, tooltip, flag);
         // GT6: Behavior_Drop_Loot.getAdditionalToolTips -> "Rightclick this on a Block to loot"
         tooltip.add(Component.translatable("gt6ce.tooltip.loot_bag").withStyle(ChatFormatting.GRAY));
     }

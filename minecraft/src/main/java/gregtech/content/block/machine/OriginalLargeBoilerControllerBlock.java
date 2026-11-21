@@ -1,5 +1,6 @@
 package gregtech.content.block.machine;
 
+import gregtech.content.block.GTHorizontalDirectionalBlock;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
@@ -20,7 +21,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -34,7 +34,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /** Material-specific GT6 large boiler main barometer, original IDs 17201–17205. */
-public final class OriginalLargeBoilerControllerBlock extends HorizontalDirectionalBlock
+public final class OriginalLargeBoilerControllerBlock extends GTHorizontalDirectionalBlock
         implements gregtech.engine.multiblock.StructurePreviewSource, ToolInteractionTarget {
     private final OriginalLargeBoilerSpecs.Variant variant;
 
@@ -46,22 +46,8 @@ public final class OriginalLargeBoilerControllerBlock extends HorizontalDirectio
 
     public OriginalLargeBoilerSpecs.Variant variant() { return variant; }
 
-//? if >=1.21.1 {
-    /*@Override protected com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
     @Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hit) {
         if (ToolInteractions.use(state, level, pos, player, hand, hit))
             return InteractionResult.sidedSuccess(level.isClientSide);
@@ -106,12 +92,9 @@ public final class OriginalLargeBoilerControllerBlock extends HorizontalDirectio
                 world, pos, current, (OriginalLargeBoilerControllerBlockEntity) be);
     }
 
-//? if >=1.21.1 {
-    /*@Override public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
-*///?} else {
-    @Override public void appendHoverText(ItemStack stack, @Nullable BlockGetter level,
-//?}
-                                          List<Component> tooltip, TooltipFlag flag) {
+    @Override
+    protected void appendTooltip(ItemStack stack, @Nullable BlockGetter level,
+            List<Component> tooltip, TooltipFlag flag) {
         var data = gregtech.engine.stack.BlockEntityData.read(stack);
         int efficiency = data != null && data.contains("gt.efficiency") ? data.getInt("gt.efficiency") : 10000;
         gregtech.client.FunctionalBlockTooltips.appendLargeBoiler(variant.originalId(), efficiency, getExplosionResistance(), tooltip);

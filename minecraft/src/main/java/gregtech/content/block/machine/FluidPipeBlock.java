@@ -45,9 +45,10 @@ import javax.annotation.Nullable;
 import java.util.EnumMap;
 import java.util.Map;
 
+import gregtech.content.block.GTBlock;
 /** GT6 fluid pipe block with wrench-toggleable connections and thin-cross collision shape. */
 //? if >=1.21.1 {
-/*public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget, gregtech.engine.inventory.PipeFormLike {
+/*public class FluidPipeBlock extends GTBlock implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget, gregtech.engine.inventory.PipeFormLike {
     public static final BooleanProperty UP    = gregtech.engine.transport.PipeConnections.UP;
     public static final BooleanProperty DOWN  = gregtech.engine.transport.PipeConnections.DOWN;
     public static final BooleanProperty NORTH = gregtech.engine.transport.PipeConnections.NORTH;
@@ -55,7 +56,7 @@ import java.util.Map;
     public static final BooleanProperty WEST  = gregtech.engine.transport.PipeConnections.WEST;
     public static final BooleanProperty EAST  = gregtech.engine.transport.PipeConnections.EAST;
 *///?} else {
-public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget, gregtech.engine.inventory.PipeFormLike {
+public class FluidPipeBlock extends GTBlock implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget, gregtech.engine.inventory.PipeFormLike {
     public static final BooleanProperty UP    = BooleanProperty.create("up");
     public static final BooleanProperty DOWN  = BooleanProperty.create("down");
     public static final BooleanProperty NORTH = BooleanProperty.create("north");
@@ -88,21 +89,8 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
      * it returns {@code PASS} as soon as {@code PanelCoverRuntime.configure} answers false, which it
      * does whenever the clicked face has no cover ({@code PanelCoverRuntime}).</p>
      */
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hit) {
         ItemStack held = player.getItemInHand(hand);
 

@@ -22,24 +22,10 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.*;
 import java.util.List;
 
-public final class PowerCellBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
-            BlockPos pos, Player player, net.minecraft.world.InteractionHand hand,
-            net.minecraft.world.phys.BlockHitResult hit) {
-        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
+import gregtech.content.block.GTBlock;
+public final class PowerCellBlock extends GTBlock implements EntityBlock, SimpleWaterloggedBlock {
     @Override
-    protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
-            Player player, net.minecraft.world.phys.BlockHitResult hit) {
-        return use(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public net.minecraft.world.InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+    protected net.minecraft.world.InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
             net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
         var tool=player.getItemInHand(hand);
         if (!gregtech.engine.tool.GTToolHelper.matchesTool(tool,gregtech.engine.tool.GTToolType.MAGNIFYING_GLASS))

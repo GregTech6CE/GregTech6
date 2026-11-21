@@ -15,32 +15,13 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.*;
 import java.util.EnumMap;
 
+import gregtech.content.block.GTHorizontalDirectionalBlock;
 /** Shared outline, collision and wrench rotation for the restored utility meshes. */
-public class ShapedToolBlock extends HorizontalDirectionalBlock implements ToolInteractionTarget {
+public class ShapedToolBlock extends GTHorizontalDirectionalBlock implements ToolInteractionTarget {
     private final String toolId;
     private final EnumMap<Direction, VoxelShape> shapes = new EnumMap<>(Direction.class);
-//? if >=1.21.1 {
-    /*@Override
-    public com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec() {
-        return com.mojang.serialization.MapCodec.unit(this);
-    }
-*///?} else {
-//?}
-//? if >=1.21.1 {
-    /*@Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hit) {
         return ToolInteractions.use(state, level, pos, player, hand, hit)
                 ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;

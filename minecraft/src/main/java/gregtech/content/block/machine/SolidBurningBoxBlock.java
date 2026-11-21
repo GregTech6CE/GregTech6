@@ -3,7 +3,6 @@ package gregtech.content.block.machine;
 import gregtech.engine.machine.MachineSpec;
 import gregtech.content.blockentity.machine.SolidBurningBoxBlockEntity;
 import gregtech.content.registry.GTBlockEntities;
-import gregtech.engine.tool.ToolInteractions;
 import gregtech.util.GTEntityHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -28,20 +27,8 @@ public class SolidBurningBoxBlock extends GTFacingMachineBlock implements Entity
     /** GT6 collision height {@code box(0,0,0,1,0.875,1)} — enables {@code entityInside} contact damage. */
     private static final VoxelShape COLLISION_SHAPE = Shapes.box(0.0D, 0.0D, 0.0D, 1.0D, 0.875D, 1.0D);
 
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack stack,
-            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?}
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hit) {
         BlockEntity be = level.getBlockEntity(pos);
         if (be instanceof SolidBurningBoxBlockEntity burningBox) {
@@ -57,7 +44,7 @@ public class SolidBurningBoxBlock extends GTFacingMachineBlock implements Entity
 //? if >=1.21.1 {
         /*return InteractionResult.PASS;
 *///?} else {
-        return super.use(state, level, pos, player, hand, hit);
+        return super.useBlock(state, level, pos, player, hand, hit);
 //?}
     }
 

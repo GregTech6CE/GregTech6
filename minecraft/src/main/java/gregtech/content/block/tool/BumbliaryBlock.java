@@ -89,7 +89,7 @@ public class BumbliaryBlock extends ShapedToolBlock implements EntityBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hit) {
         // `SIDES_TOP[aSide]`: the bees are only reachable from above.
         var heldId = Mc.itemId(player.getItemInHand(hand).getItem());
@@ -121,7 +121,7 @@ public class BumbliaryBlock extends ShapedToolBlock implements EntityBlock {
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
         }
-        return super.use(state, level, pos, player, hand, hit);
+        return super.useBlock(state, level, pos, player, hand, hit);
     }
 
     /**
@@ -165,20 +165,12 @@ public class BumbliaryBlock extends ShapedToolBlock implements EntityBlock {
      * thermometer hint. The port reuses its own thermometer key and adds the two missing ones.
      */
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip,
-*///?} else {
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip,
-//?}
+    protected void appendTooltip(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip,
                                 TooltipFlag flag) {
         tooltip.add(gregtech.client.TooltipHelper.stat("tooltip.gt6ce.machine.range", net.minecraft.ChatFormatting.AQUA,
                 advanced ? "3x3x3" : "7x7x7"));
         tooltip.add(Component.translatable("tooltip.gt6ce.machine.tool.scoop").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
         tooltip.add(Component.translatable("tooltip.gt6ce.crucible.thermometer").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
-//? if >=1.21.1 {
-        /*super.appendHoverText(stack, context, tooltip, flag);
-*///?} else {
-        super.appendHoverText(stack, level, tooltip, flag);
-//?}
+        super.appendTooltip(stack, level, tooltip, flag);
     }
 }

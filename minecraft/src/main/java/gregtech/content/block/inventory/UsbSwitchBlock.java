@@ -1,9 +1,11 @@
 package gregtech.content.block.inventory;
 
+import gregtech.content.block.GTHorizontalDirectionalBlock;
 import gregtech.content.blockentity.inventory.UsbSwitchBlockEntity;
 import gregtech.content.cover.PanelCoverInteraction;
 import gregtech.content.data.UsbDataMedia;
 import gregtech.content.registry.GTBlockEntities;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -18,7 +20,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -27,26 +28,11 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
 /** Two GT6 data switches: 19000 selects one of 16 sticks; 19001 selects one file on a HDD. */
-public class UsbSwitchBlock extends HorizontalDirectionalBlock implements EntityBlock {
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
+public class UsbSwitchBlock extends GTHorizontalDirectionalBlock implements EntityBlock {
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (hand != InteractionHand.MAIN_HAND || !(level.getBlockEntity(pos) instanceof UsbSwitchBlockEntity machine))
             return InteractionResult.PASS;
         InteractionResult panel = PanelCoverInteraction.use(machine, player, hand, hit, true);
@@ -60,7 +46,11 @@ public class UsbSwitchBlock extends HorizontalDirectionalBlock implements Entity
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
-    public enum Kind { USB, HDD }
+    public enum Kind {
+        USB,
+        HDD
+    }
+
     private final Kind kind;
 
     public UsbSwitchBlock(Kind kind, Properties properties) {
@@ -68,29 +58,39 @@ public class UsbSwitchBlock extends HorizontalDirectionalBlock implements Entity
         this.kind = kind;
         registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
     }
-    public Kind kind() { return kind; }
 
-//? if >=1.21.1 {
-    /*@Override protected com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec() { return com.mojang.serialization.MapCodec.unit(this); }
-*///?} else {
-//?}
-    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+    public Kind kind() {
+        return kind;
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
     }
-    @Override public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return defaultBlockState()
+                .setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
-    @Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new UsbSwitchBlockEntity(pos, state);
     }
-    @Override public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state,
-                                                                            BlockEntityType<T> type) {
+
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, BlockEntityType<T> type) {
         return !level.isClientSide && type == GTBlockEntities.USB_SWITCH.get()
-                ? (l, p, s, be) -> ((UsbSwitchBlockEntity) be).serverTick() : null;
+                ? (l, p, s, be) -> ((UsbSwitchBlockEntity) be).serverTick()
+                : null;
     }
-    @Override public void onRemove(BlockState state, Level level, BlockPos pos,
-                                   BlockState next, boolean movedByPiston) {
-        if (!state.is(next.getBlock()) && !level.isClientSide
+
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState next, boolean movedByPiston) {
+        if (!state.is(next.getBlock())
+                && !level.isClientSide
                 && level.getBlockEntity(pos) instanceof UsbSwitchBlockEntity machine) {
             for (int slot = 0; slot < machine.items().getSlots(); slot++) {
                 ItemStack stack = machine.items().getStackInSlot(slot);
@@ -104,18 +104,17 @@ public class UsbSwitchBlock extends HorizontalDirectionalBlock implements Entity
         }
         super.onRemove(state, level, pos, next, movedByPiston);
     }
-    @Override public List<ItemStack> getDrops(BlockState state,
-            net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
+
+    @Override
+    public List<ItemStack> getDrops(
+            BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
         return List.of(new ItemStack(this));
     }
-//? if >=1.21.1 {
-    /*@Override public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
-*///?} else {
-    @Override public void appendHoverText(ItemStack stack, @Nullable BlockGetter level,
-//?}
-                                          List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable(kind == Kind.USB
-                ? "gt.tooltip.usb_switch" : "gt.tooltip.hdd_switch")
+
+    @Override
+    protected void appendTooltip(
+            ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
+        tooltip.add(Component.translatable(kind == Kind.USB ? "gt.tooltip.usb_switch" : "gt.tooltip.hdd_switch")
                 .withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
     }
 }

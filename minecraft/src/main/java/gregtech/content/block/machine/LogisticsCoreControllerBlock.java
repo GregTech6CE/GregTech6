@@ -1,11 +1,13 @@
 package gregtech.content.block.machine;
 
+import gregtech.content.block.GTDirectionalBlock;
 import gregtech.content.blockentity.machine.LogisticsCoreControllerBlockEntity;
+import gregtech.content.registry.GTBlockEntities;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
 import gregtech.engine.tool.ToolInteractions;
-import gregtech.content.registry.GTBlockEntities;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -18,7 +20,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -28,31 +29,12 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
 /** GT6 17997: the outward-facing main block in a 5x5x5 Logistics Core. */
-public final class LogisticsCoreControllerBlock extends DirectionalBlock implements gregtech.engine.multiblock.StructurePreviewSource, ToolInteractionTarget {
-//? if >=1.21.1 {
-    /*@Override
-    public com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec() {
-        return com.mojang.serialization.MapCodec.unit(this);
-    }
-
+public final class LogisticsCoreControllerBlock extends GTDirectionalBlock
+        implements gregtech.engine.multiblock.StructurePreviewSource, ToolInteractionTarget {
     @Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (level.getBlockEntity(pos) instanceof LogisticsCoreControllerBlockEntity core) {
             var coverResult = gregtech.content.logistics.LogisticsCoverInteraction.use(
                     core, level, player, hand, hit.getDirection());
@@ -61,14 +43,19 @@ public final class LogisticsCoreControllerBlock extends DirectionalBlock impleme
                 if (!level.isClientSide) {
                     var cpu = core.processorCounts();
                     if (cpu == null) player.displayClientMessage(Component.literal("Structure Incomplete!"), false);
-                    else player.displayClientMessage(Component.literal(
-                            "Logic: "+cpu.logic()+", Control: "+cpu.control()+", Storage: "+cpu.storage()+", Conversion: "+cpu.conversion()+"; "+cpu.fixedEnergyPerTick()+" EU/t"), false);
+                    else
+                        player.displayClientMessage(
+                                Component.literal("Logic: " + cpu.logic() + ", Control: " + cpu.control()
+                                        + ", Storage: " + cpu.storage() + ", Conversion: " + cpu.conversion() + "; "
+                                        + cpu.fixedEnergyPerTick() + " EU/t"),
+                                false);
                 }
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
         }
         return ToolInteractions.use(state, level, pos, player, hand, hit)
-        ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
+                ? InteractionResult.sidedSuccess(level.isClientSide)
+                : InteractionResult.PASS;
     }
 
     public LogisticsCoreControllerBlock(Properties properties) {
@@ -83,13 +70,13 @@ public final class LogisticsCoreControllerBlock extends DirectionalBlock impleme
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState().setValue(FACING, context.getNearestLookingDirection().getOpposite());
+        return defaultBlockState()
+                .setValue(FACING, context.getNearestLookingDirection().getOpposite());
     }
 
     @Override
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
-        return GTToolHelper.isMachineWrench(tool)
-        ? ToolInteractionSpec.facing(FACING, MachineRotationType.ALL) : null;
+        return GTToolHelper.isMachineWrench(tool) ? ToolInteractionSpec.facing(FACING, MachineRotationType.ALL) : null;
     }
 
     @Override
@@ -103,21 +90,18 @@ public final class LogisticsCoreControllerBlock extends DirectionalBlock impleme
         return new LogisticsCoreControllerBlockEntity(pos, state);
     }
 
-    @Nullable @Override public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
             Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide || type != GTBlockEntities.LOGISTICS_CORE.get()) return null;
         return (tickLevel, tickPos, tickState, blockEntity) -> LogisticsCoreControllerBlockEntity.serverTick(
                 tickLevel, tickPos, tickState, (LogisticsCoreControllerBlockEntity) blockEntity);
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
-*///?} else {
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level,
-//?}
-            List<Component> tooltip, TooltipFlag flag) {
+    protected void appendTooltip(
+            ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
         gregtech.client.OriginalControllerTooltips.standalone(
                 gregtech.content.multiblock.OriginalControllerTooltipData.Family.LOGISTICS_CORE, tooltip);
     }
@@ -144,9 +128,9 @@ public final class LogisticsCoreControllerBlock extends DirectionalBlock impleme
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState next, boolean moving) {
-        if (!state.is(next.getBlock()) && !level.isClientSide
-                && level.getBlockEntity(pos) instanceof LogisticsCoreControllerBlockEntity core)
-        core.dropContents();
+        if (!state.is(next.getBlock())
+                && !level.isClientSide
+                && level.getBlockEntity(pos) instanceof LogisticsCoreControllerBlockEntity core) core.dropContents();
         super.onRemove(state, level, pos, next, moving);
     }
 }

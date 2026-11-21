@@ -1,16 +1,21 @@
 package gregtech.content.block.machine;
 
-import gregtech.engine.tool.ToolInteractions;
-import gregtech.engine.tool.ToolInteractionSpec;
-import gregtech.engine.tool.ToolInteractionTarget;
-import gregtech.engine.machine.ItemPipeSpec;
 import gregtech.api.material.MaterialTextureSet;
-import gregtech.engine.tool.GTToolHelper;
-import gregtech.engine.tool.GTToolType;
+import gregtech.content.block.GTBlock;
 import gregtech.content.blockentity.machine.ItemPipeBlockEntity;
 import gregtech.content.cover.CoverItems;
 import gregtech.content.cover.CoverUtilityBehaviors.FilterAction;
 import gregtech.content.cover.PanelCoverInteraction;
+import gregtech.engine.GTWaterloggable;
+import gregtech.engine.machine.ItemPipeSpec;
+import gregtech.engine.tool.GTToolHelper;
+import gregtech.engine.tool.GTToolType;
+import gregtech.engine.tool.ToolInteractionSpec;
+import gregtech.engine.tool.ToolInteractionTarget;
+import gregtech.engine.tool.ToolInteractions;
+import java.util.EnumMap;
+import java.util.Map;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -22,7 +27,6 @@ import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import gregtech.engine.GTWaterloggable;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
@@ -36,18 +40,16 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import javax.annotation.Nullable;
-import java.util.EnumMap;
-import java.util.Map;
 
 /** GT6 item pipe block with wrench-toggleable I/O and thin-cross collision shape. */
-public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget, gregtech.engine.inventory.PipeFormLike {
-    public static final BooleanProperty UP    = BooleanProperty.create("up");
-    public static final BooleanProperty DOWN  = BooleanProperty.create("down");
+public class ItemPipeBlock extends GTBlock
+        implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget, gregtech.engine.inventory.PipeFormLike {
+    public static final BooleanProperty UP = BooleanProperty.create("up");
+    public static final BooleanProperty DOWN = BooleanProperty.create("down");
     public static final BooleanProperty NORTH = BooleanProperty.create("north");
     public static final BooleanProperty SOUTH = BooleanProperty.create("south");
-    public static final BooleanProperty WEST  = BooleanProperty.create("west");
-    public static final BooleanProperty EAST  = BooleanProperty.create("east");
+    public static final BooleanProperty WEST = BooleanProperty.create("west");
+    public static final BooleanProperty EAST = BooleanProperty.create("east");
 
     public static final BooleanProperty[] CONNECTIONS = {DOWN, UP, NORTH, SOUTH, WEST, EAST};
 
@@ -77,22 +79,9 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
      * branches below are all keyed on the face's cover id, so a coverless pipe falls through them to
      * the unchanged debug path.</p>
      */
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state,
-            Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack held = player.getItemInHand(hand);
 
         if (ToolInteractions.use(state, level, pos, player, hand, hit)) {
@@ -102,8 +91,7 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
         // Covers on the clicked face — the machine's order, see the method javadoc.
         BlockEntity be = level.getBlockEntity(pos);
         if (be instanceof ItemPipeBlockEntity coverHost) {
-            InteractionResult panelResult =
-                    PanelCoverInteraction.use(coverHost, player, hand, hit, false);
+            InteractionResult panelResult = PanelCoverInteraction.use(coverHost, player, hand, hit, false);
             if (panelResult != InteractionResult.PASS) return panelResult;
 
             if (gregtech.content.cover.CoverPlacement.placing(player) && CoverItems.isCover(held)) {
@@ -128,8 +116,7 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
                         && coverHost.configureFilterCover(hit.getDirection(), FilterAction.CLEAR)) {
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }
-                if (!CoverItems.isCover(held)
-                        && coverHost.clickFilterCover(hit.getDirection(), held)) {
+                if (!CoverItems.isCover(held) && coverHost.clickFilterCover(hit.getDirection(), held)) {
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }
             }
@@ -157,10 +144,17 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
         registerDefaultState(defaultState.setValue(GTWaterloggable.WATERLOGGED, false));
     }
 
-    public ItemPipeSpec spec() { return spec; }
-    @Override public String pipeSizeName() { return spec.size().name(); }
+    public ItemPipeSpec spec() {
+        return spec;
+    }
+
+    @Override
+    public String pipeSizeName() {
+        return spec.size().name();
+    }
 
     private static final Map<Direction, BooleanProperty> DIR_TO_PROP = new EnumMap<>(Direction.class);
+
     static {
         DIR_TO_PROP.put(Direction.UP, UP);
         DIR_TO_PROP.put(Direction.DOWN, DOWN);
@@ -170,13 +164,15 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
         DIR_TO_PROP.put(Direction.EAST, EAST);
     }
 
-    public static BooleanProperty propFor(Direction dir) { return DIR_TO_PROP.get(dir); }
+    public static BooleanProperty propFor(Direction dir) {
+        return DIR_TO_PROP.get(dir);
+    }
 
     @Override
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return GTToolHelper.isMachineWrench(tool)
-                ? ToolInteractionSpec.connections(
-                    ToolInteractionSpec.ConnectionKind.ITEM) : null;
+                ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.ITEM)
+                : null;
     }
 
     /**
@@ -191,7 +187,8 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
         return GTWaterloggable.getStateForPlacement(defaultBlockState(), ctx);
     }
 
-    @Nullable Direction consumePlacementFace() {
+    @Nullable
+    Direction consumePlacementFace() {
         Direction f = placementFace;
         placementFace = null;
         return f;
@@ -215,7 +212,7 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
         if (context instanceof EntityCollisionContext ctx
                 && ctx.getEntity() instanceof Player player
                 && (GTToolHelper.isMachineWrench(player.getMainHandItem())
-                    || GTToolHelper.isMachineWrench(player.getOffhandItem()))) {
+                        || GTToolHelper.isMachineWrench(player.getOffhandItem()))) {
             return Shapes.block();
         }
         return shapeFor(state, level, pos);
@@ -235,8 +232,7 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
         VoxelShape shape = Shapes.box(min, min, min, max, max, max);
         for (Direction dir : Direction.values()) {
             if (!state.getValue(propFor(dir))) continue;
-            double n = gregtech.engine.machine.PipeGeometry.pipeHalfOf(
-                    level.getBlockState(pos.relative(dir)));
+            double n = gregtech.engine.machine.PipeGeometry.pipeHalfOf(level.getBlockState(pos.relative(dir)));
             double[] box = gregtech.engine.machine.PipeGeometry.localArmBox(dir, half, n);
             if (box != null) shape = Shapes.or(shape, gregtech.engine.machine.PipeGeometry.boxShape(box));
         }
@@ -253,23 +249,28 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
 
     /** The block entity exists by now: connect the clicked face and everything already adjacent. */
     @Override
-    public void setPlacedBy(Level level, BlockPos pos, BlockState state,
-                            net.minecraft.world.entity.LivingEntity placer, ItemStack stack) {
+    public void setPlacedBy(
+            Level level,
+            BlockPos pos,
+            BlockState state,
+            net.minecraft.world.entity.LivingEntity placer,
+            ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
         if (level.isClientSide) return;
         if (level.getBlockEntity(pos) instanceof ItemPipeBlockEntity pipe) {
             pipe.autoConnectOnPlace(consumePlacementFace());
         }
     }
+
     private void printDebug(Player player, ItemPipeBlockEntity pipeEntity) {
         int itemCount = 0;
         for (int i = 0; i < pipeEntity.getSlots(); i++) {
             itemCount += pipeEntity.getStackInSlot(i).getCount();
         }
         player.sendSystemMessage(net.minecraft.network.chat.Component.literal(
-                "Item Pipe " + spec.size() + " (" + spec.materialName() + "): " +
-                itemCount + " items, step=" + spec.stepSize() +
-                ", inv=" + spec.invSize() + ", transferred=" + pipeEntity.getTransferredThisSecond()));
+                "Item Pipe " + spec.size() + " (" + spec.materialName() + "): " + itemCount
+                        + " items, step=" + spec.stepSize() + ", inv="
+                        + spec.invSize() + ", transferred=" + pipeEntity.getTransferredThisSecond()));
     }
 
     @Override
@@ -285,12 +286,12 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
 
     /** Repair a connection toward a neighbour that changed after this pipe was placed. */
     @Override
-    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighbor,
-                                BlockPos neighborPos, boolean isMoving) {
+    public void neighborChanged(
+            BlockState state, Level level, BlockPos pos, Block neighbor, BlockPos neighborPos, boolean isMoving) {
         super.neighborChanged(state, level, pos, neighbor, neighborPos, isMoving);
         if (level.isClientSide) return;
-        Direction side = Direction.fromDelta(neighborPos.getX() - pos.getX(),
-                neighborPos.getY() - pos.getY(), neighborPos.getZ() - pos.getZ());
+        Direction side = Direction.fromDelta(
+                neighborPos.getX() - pos.getX(), neighborPos.getY() - pos.getY(), neighborPos.getZ() - pos.getZ());
         if (side != null && level.getBlockEntity(pos) instanceof ItemPipeBlockEntity pipe) {
             pipe.tryConnectTo(side);
         }
@@ -364,7 +365,8 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
         ItemStack tool = player.getMainHandItem();
         MaterialTextureSet texSet = spec.material().getTextureSet();
         if (texSet == MaterialTextureSet.RUBBER) {
-            if (tool.getItem() instanceof ShearsItem || GTToolHelper.matchesTool(tool, GTToolType.SCISSORS)) return true;
+            if (tool.getItem() instanceof ShearsItem || GTToolHelper.matchesTool(tool, GTToolType.SCISSORS))
+                return true;
         } else if (texSet == MaterialTextureSet.WOOD) {
             if (tool.getItem() instanceof AxeItem || GTToolHelper.matchesTool(tool, GTToolType.AXE)) return true;
         } else {
@@ -388,6 +390,7 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
         }
         return p;
     }
+
     @Override
     public FluidState getFluidState(BlockState state) {
         return GTWaterloggable.getFluidState(state);
@@ -409,5 +412,4 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
         }
         return state;
     }
-
 }

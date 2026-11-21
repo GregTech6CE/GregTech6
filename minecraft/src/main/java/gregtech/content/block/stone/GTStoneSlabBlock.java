@@ -1,10 +1,14 @@
 package gregtech.content.block.stone;
-import gregtech.engine.material.MaterialPresentation;
 
-import gregtech.engine.GTWaterloggable;
 import gregtech.api.material.GTMaterial;
+import gregtech.content.block.GTBlock;
 import gregtech.content.registry.GTBlocks;
 import gregtech.content.worldgen.OreHarvest;
+import gregtech.engine.GTWaterloggable;
+import gregtech.engine.material.MaterialPresentation;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -29,12 +33,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
-
 /** GT6-style oriented stone half-block (any axis, including vertical). */
-public final class GTStoneSlabBlock extends Block implements SimpleWaterloggedBlock, gregtech.engine.block.FaceGridSlab {
+public final class GTStoneSlabBlock extends GTBlock
+        implements SimpleWaterloggedBlock, gregtech.engine.block.FaceGridSlab {
     public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
 
     private static final Map<Direction, VoxelShape> SHAPES = new EnumMap<>(Direction.class);
@@ -57,8 +58,8 @@ public final class GTStoneSlabBlock extends Block implements SimpleWaterloggedBl
         this.stoneType = stoneType;
         this.variant = variant;
         this.stoneMaterial = stoneType.material();
-        registerDefaultState(defaultBlockState().setValue(FACING, Direction.DOWN)
-                .setValue(GTWaterloggable.WATERLOGGED, false));
+        registerDefaultState(
+                defaultBlockState().setValue(FACING, Direction.DOWN).setValue(GTWaterloggable.WATERLOGGED, false));
     }
 
     public StoneType stoneType() {
@@ -97,7 +98,8 @@ public final class GTStoneSlabBlock extends Block implements SimpleWaterloggedBl
 
     @Override
     public MutableComponent getName() {
-        return Component.translatable(getDescriptionId(), MaterialPresentation.name(stoneMaterial), variant.displayName());
+        return Component.translatable(
+                getDescriptionId(), MaterialPresentation.name(stoneMaterial), variant.displayName());
     }
 
     @Override
@@ -109,7 +111,9 @@ public final class GTStoneSlabBlock extends Block implements SimpleWaterloggedBl
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
         Direction facing = ctx.getNearestLookingDirection().getOpposite();
         return GTWaterloggable.getStateForPlacement(
-                defaultBlockState().setValue(FACING, facing.getAxis() == Direction.Axis.Y ? facing : facing.getOpposite()), ctx);
+                defaultBlockState()
+                        .setValue(FACING, facing.getAxis() == Direction.Axis.Y ? facing : facing.getOpposite()),
+                ctx);
     }
 
     @Override
@@ -118,8 +122,13 @@ public final class GTStoneSlabBlock extends Block implements SimpleWaterloggedBl
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction dir, BlockState neighborState,
-                                  LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+    public BlockState updateShape(
+            BlockState state,
+            Direction dir,
+            BlockState neighborState,
+            LevelAccessor level,
+            BlockPos pos,
+            BlockPos neighborPos) {
         GTWaterloggable.updateShape(state, level, pos);
         return state;
     }
@@ -146,8 +155,6 @@ public final class GTStoneSlabBlock extends Block implements SimpleWaterloggedBl
         return List.of(new ItemStack(this));
     }
 
-
-
     @Override
     public boolean skipRendering(BlockState state, BlockState adjacent, Direction direction) {
         if (adjacent.getBlock() instanceof GTStoneSlabBlock other
@@ -159,22 +166,9 @@ public final class GTStoneSlabBlock extends Block implements SimpleWaterloggedBl
         return super.skipRendering(state, adjacent, direction);
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack held = player.getItemInHand(hand);
         if (!(held.getItem() instanceof GTStoneSlabBlockItem slabItem)) return InteractionResult.PASS;
         if (!slabItem.getBlock().equals(this)) return InteractionResult.PASS;
@@ -182,11 +176,17 @@ public final class GTStoneSlabBlock extends Block implements SimpleWaterloggedBl
         if (clicked != state.getValue(FACING).getOpposite()) return InteractionResult.PASS;
         Block full = GTBlocks.getStone(stoneType, variant);
         if (full == null) return InteractionResult.PASS;
-        if (!level.isUnobstructed(full.defaultBlockState(), pos, CollisionContext.of(player))) return InteractionResult.FAIL;
+        if (!level.isUnobstructed(full.defaultBlockState(), pos, CollisionContext.of(player)))
+            return InteractionResult.FAIL;
         if (!level.isClientSide) {
             level.setBlockAndUpdate(pos, full.defaultBlockState());
-            level.playSound(null, pos, full.defaultBlockState().getSoundType(level, pos, player).getPlaceSound(),
-                    net.minecraft.sounds.SoundSource.BLOCKS, 1.0F, 1.0F);
+            level.playSound(
+                    null,
+                    pos,
+                    full.defaultBlockState().getSoundType(level, pos, player).getPlaceSound(),
+                    net.minecraft.sounds.SoundSource.BLOCKS,
+                    1.0F,
+                    1.0F);
             if (!player.getAbilities().instabuild) {
                 held.shrink(1);
             }

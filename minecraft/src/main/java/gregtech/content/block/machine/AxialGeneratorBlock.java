@@ -15,8 +15,9 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import java.util.List;
 
+import gregtech.content.block.GTDirectionalBlock;
 /** Shared placement, wrench, stop switch and stored-content drops for axial generators. */
-public abstract class AxialGeneratorBlock extends DirectionalBlock implements gregtech.engine.multiblock.StructurePreviewSource, gregtech.engine.tool.ToolInteractionTarget {
+public abstract class AxialGeneratorBlock extends GTDirectionalBlock implements gregtech.engine.multiblock.StructurePreviewSource, gregtech.engine.tool.ToolInteractionTarget {
     @Override public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state,ItemStack tool) {
         return gregtech.engine.tool.GTToolHelper.isMachineWrench(tool)
                 ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING,MachineRotationType.ALL) : null;
@@ -26,22 +27,8 @@ public abstract class AxialGeneratorBlock extends DirectionalBlock implements gr
         super(properties);this.grade=grade;registerDefaultState(stateDefinition.any().setValue(FACING,Direction.NORTH));
     }
     public AxialGeneratorDefinitions.Grade grade() { return grade; }
-//? if >=1.21.1 {
-    /*@Override protected com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
     @Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hit) {
         if (MachineRotationType.handleWrench(state,level,pos,player,hand,hit,FACING,MachineRotationType.ALL))return InteractionResult.sidedSuccess(level.isClientSide);
         if (level.getBlockEntity(pos) instanceof AxialGeneratorBlockEntity machine) {
@@ -91,11 +78,9 @@ public abstract class AxialGeneratorBlock extends DirectionalBlock implements gr
         }
         return List.of(stack);
     }
-//? if >=1.21.1 {
-    /*@Override public void appendHoverText(ItemStack stack,net.minecraft.world.item.Item.TooltipContext context,List<net.minecraft.network.chat.Component> lines,TooltipFlag flag) {
-*///?} else {
-    @Override public void appendHoverText(ItemStack stack,BlockGetter level,List<net.minecraft.network.chat.Component> lines,TooltipFlag flag) {
-//?}
-        gregtech.client.GeneratorSourceTooltips.append(gregtech.content.multiblock.OriginalGeneratorTooltipData.find(grade.id()),lines);
+    @Override
+    protected void appendTooltip(ItemStack stack, BlockGetter level,
+            List<net.minecraft.network.chat.Component> lines, TooltipFlag flag) {
+        gregtech.client.GeneratorSourceTooltips.append(gregtech.content.multiblock.OriginalGeneratorTooltipData.find(grade.id()), lines);
     }
 }

@@ -69,13 +69,8 @@ public final class CannedFoodItem extends TechItem {
         var result=new ItemStack(item,stack.getCount()); if (stack.hasTag()) result.setTag(stack.getTag().copy()); return result;
 //?}
     }
-//? if >=1.21.1 {
-    /*@Override public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        super.appendHoverText(stack, context, tooltip, flag);
-*///?} else {
-    @Override public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
-        super.appendHoverText(stack, level, tooltip, flag);
-//?}
+    @Override protected void appendTooltip(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
+        super.appendTooltip(stack, level, tooltip, flag);
         var food=spec.food().food();
         if (food.level()>0 || food.saturation()>0) tooltip.add(Component.translatable("tooltip.gt6ce.sandwich.food",food.level(),food.saturation()).withStyle(net.minecraft.ChatFormatting.RED));
         if (food.rotten()) tooltip.add(Component.translatable("tooltip.gt6ce.food.rotten").withStyle(net.minecraft.ChatFormatting.DARK_RED));

@@ -3,15 +3,11 @@ package gregtech.content.block.tool;
 import gregtech.content.blockentity.tool.DynamiteBlockEntity;
 import gregtech.content.item.behavior.RemoteActivatable;
 import gregtech.content.tool.DynamiteExplosion;
-import gregtech.engine.tool.ToolInteractions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-//? if >=1.21.1 {
-/*import net.minecraft.world.ItemInteractionResult;
-*///?}
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -25,27 +21,11 @@ import net.minecraft.world.phys.shapes.*;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import gregtech.content.block.GTDirectionalBlock;
 /** GT6 mining charges: fixed 3x3x3 blast, material-resistance threshold and a cancellable fuse. */
-public class DynamiteBlock extends DirectionalBlock implements RemoteActivatable, EntityBlock {
-//? if >=1.21.1 {
-    /*@Override public com.mojang.serialization.MapCodec<DynamiteBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-*///?} else {
-//?}
-//? if >=1.21.1 {
-    /*@Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
+public class DynamiteBlock extends GTDirectionalBlock implements RemoteActivatable, EntityBlock {
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack held=player.getItemInHand(hand);
         if (!(held.is(Items.FLINT_AND_STEEL)||held.is(Items.FIRE_CHARGE))) return InteractionResult.PASS;
@@ -136,11 +116,7 @@ public class DynamiteBlock extends DirectionalBlock implements RemoteActivatable
     }
     @Override public boolean dropFromExplosion(Explosion explosion) { return false; }
     @Override public void onBlockExploded(BlockState state, Level level, BlockPos pos, Explosion explosion) { detonate(level,pos); }
-//? if >=1.21.1 {
-    /*@Override public void appendHoverText(ItemStack stack,Item.TooltipContext context,List<Component> tooltip,TooltipFlag flag) {
-*///?} else {
-    @Override public void appendHoverText(ItemStack stack,@Nullable BlockGetter level,List<Component> tooltip,TooltipFlag flag) {
-//?}
+    @Override protected void appendTooltip(ItemStack stack,@Nullable BlockGetter level,List<Component> tooltip,TooltipFlag flag) {
         tooltip.add(gregtech.client.TooltipHelper.stat("tooltip.gt6ce.dynamite.resistance",net.minecraft.ChatFormatting.AQUA,maxResistance));
         tooltip.add(Component.translatable("tooltip.gt6ce.dynamite.range").withStyle(net.minecraft.ChatFormatting.AQUA));
         tooltip.add(gregtech.client.TooltipHelper.stat("tooltip.gt6ce.dynamite.fortune",net.minecraft.ChatFormatting.AQUA,fortune));

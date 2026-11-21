@@ -9,7 +9,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -20,8 +19,9 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import gregtech.content.block.GTBlock;
 /** GT6 numeric ID 17998: the controller occupies the bottom-center tungsten wall. */
-public final class OriginalLightningRodControllerBlock extends Block implements gregtech.engine.multiblock.StructurePreviewSource {
+public final class OriginalLightningRodControllerBlock extends GTBlock implements gregtech.engine.multiblock.StructurePreviewSource {
     public OriginalLightningRodControllerBlock(Properties properties) { super(properties); }
 
     @Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
@@ -35,11 +35,7 @@ public final class OriginalLightningRodControllerBlock extends Block implements 
                 world, pos, current, (LightningRodControllerBlockEntity) be);
     }
 
-//? if >=1.21.1 {
-    /*@Override public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
-*///?} else {
-    @Override public void appendHoverText(ItemStack stack, @Nullable BlockGetter level,
-//?}
+    @Override protected void appendTooltip(ItemStack stack, @Nullable BlockGetter level,
                                           List<Component> tooltip, TooltipFlag flag) {
         gregtech.client.UtilityControllerTooltips.lightning(tooltip);
     }

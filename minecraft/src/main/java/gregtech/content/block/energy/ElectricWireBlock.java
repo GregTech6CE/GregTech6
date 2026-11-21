@@ -41,28 +41,15 @@ import javax.annotation.Nullable;
 import java.util.EnumMap;
 import java.util.Map;
 
+import gregtech.content.block.GTBlock;
 /** GT6 electric wire block with pipe-style 6-way BooleanProperty connections and dynamic thickness. */
 //? if >=1.21.1 {
-/*public class ElectricWireBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, gregtech.engine.energy.WireMaterialLike, ToolInteractionTarget {
+/*public class ElectricWireBlock extends GTBlock implements EntityBlock, SimpleWaterloggedBlock, gregtech.engine.energy.WireMaterialLike, ToolInteractionTarget {
 *///?} else {
-public class ElectricWireBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget, gregtech.engine.energy.WireMaterialLike {
+public class ElectricWireBlock extends GTBlock implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget, gregtech.engine.energy.WireMaterialLike {
 //?}
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
-            BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
-            BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hit) {
         if (ToolInteractions.use(state, level, pos, player, hand, hit)) {
             return InteractionResult.sidedSuccess(level.isClientSide);
@@ -210,11 +197,7 @@ public class ElectricWireBlock extends Block implements EntityBlock, SimpleWater
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-*///?} else {
-    public void appendHoverText(ItemStack stack, BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
-//?}
+    protected void appendTooltip(ItemStack stack, BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
         WireTooltips.append(spec, tooltip);
     }
 

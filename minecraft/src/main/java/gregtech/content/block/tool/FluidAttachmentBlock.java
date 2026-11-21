@@ -1,4 +1,5 @@
 package gregtech.content.block.tool;
+import gregtech.content.block.GTBlock;
 import gregtech.content.tool.FluidAttachmentSpec;
 import gregtech.api.material.*;
 import gregtech.engine.material.*;
@@ -22,27 +23,14 @@ import net.minecraftforge.fluids.*;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 //?}
 /** Material-defined attachment; explicit source tool access precedes ordinary fluid capabilities. */
-public class FluidAttachmentBlock extends net.minecraft.world.level.block.Block implements gregtech.engine.tool.ToolInteractionTarget {
+public class FluidAttachmentBlock extends GTBlock implements gregtech.engine.tool.ToolInteractionTarget {
     public static final net.minecraft.world.level.block.state.properties.DirectionProperty FACING =
             net.minecraft.world.level.block.state.properties.DirectionProperty.create("facing", d -> d != Direction.UP);
     private final java.util.EnumMap<Direction, net.minecraft.world.phys.shapes.VoxelShape> shapes = new java.util.EnumMap<>(Direction.class);
     private final FluidAttachmentSpec spec;
 
-//? if >=1.21.1 {
-    /*@Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hit) {
         if (hand != InteractionHand.MAIN_HAND) return InteractionResult.PASS;
         if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand,
@@ -122,11 +110,7 @@ public class FluidAttachmentBlock extends net.minecraft.world.level.block.Block 
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(net.minecraft.world.item.ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
-*///?} else {
-    public void appendHoverText(net.minecraft.world.item.ItemStack stack, @org.jetbrains.annotations.Nullable BlockGetter level,
-//?}
+    protected void appendTooltip(net.minecraft.world.item.ItemStack stack, @org.jetbrains.annotations.Nullable BlockGetter level,
             java.util.List<net.minecraft.network.chat.Component> lines, net.minecraft.world.item.TooltipFlag flag) {
         String key = spec.fillsTarget()
                 ? (spec.acceptsGas() ? "tooltip.gt6ce.ui.attachment.fill_gas" : "tooltip.gt6ce.ui.attachment.fill_liquid")

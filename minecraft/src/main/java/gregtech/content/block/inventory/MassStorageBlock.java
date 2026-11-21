@@ -5,39 +5,34 @@ package gregtech.content.block.inventory;
 import gregtech.api.material.GTMaterial;
 *///?} else {
 //?}
+import gregtech.content.block.GTBlock;
+import gregtech.content.block.GTHorizontalDirectionalBlock;
 import gregtech.content.blockentity.inventory.MassStorageBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.Containers;
 *///?} else {
-import net.minecraft.network.chat.Component;
 //?}
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-//? if >=1.21.1 {
-/*import net.minecraft.world.ItemInteractionResult;
-*///?} else {
-//?}
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.minecraft.world.item.component.CustomData;
 *///?} else {
-import net.minecraft.world.item.TooltipFlag;
 //?}
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
-//? if >=1.21.1 {
-//?} else {
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-//?}
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -62,14 +57,14 @@ import java.util.List;
 
 //? if >=1.21.1 {
 /*/^* Bulk-storage front interaction, mode tools, tape packing and harvest; remaining tool gap: ALIGN-136. ^/
-public class MassStorageBlock extends Block implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget {
+public class MassStorageBlock extends GTBlock implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     private final GTMaterial material;
     public MassStorageBlock(GTMaterial material, Properties properties) {
         super(properties); this.material = material;
 *///?} else {
 /** Bulk-storage front interaction, mode tools, tape packing and harvest; remaining tool gap: ALIGN-136. */
-public class MassStorageBlock extends HorizontalDirectionalBlock
+public class MassStorageBlock extends GTHorizontalDirectionalBlock
         implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget {
 
     @Nullable
@@ -86,21 +81,8 @@ public class MassStorageBlock extends HorizontalDirectionalBlock
         registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    protected ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hit) {
         // both hands fire use(); handling the off hand double-triggers
         // (insert+extract in one click, double withdrawals, armor swap-backs)
@@ -249,12 +231,8 @@ public class MassStorageBlock extends HorizontalDirectionalBlock
         return stack;
     }
 
-    @Override
 //? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
-            List<net.minecraft.network.chat.Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {
-        gregtech.client.StorageBlockTooltips.massStorage(stack, context, tooltip);
-*///?} else {
+//?} else {
     public List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
         BlockEntity be = builder.getOptionalParameter(
                 net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY);
@@ -269,11 +247,12 @@ public class MassStorageBlock extends HorizontalDirectionalBlock
     public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
         return packed(state, level.getBlockEntity(pos));
     }
+//?}
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
-        gregtech.client.StorageBlockTooltips.massStorage(stack, tooltip);
-//?}
+    protected void appendTooltip(ItemStack stack, @javax.annotation.Nullable BlockGetter level,
+            @javax.annotation.Nullable HolderLookup.Provider registries, List<Component> tooltip, TooltipFlag flag) {
+        gregtech.client.StorageBlockTooltips.massStorage(stack, registries, tooltip);
     }
 
     public long capacity() { return gregtech.content.storage.OriginalStorageTooltipData.MASS_CAPACITY; }

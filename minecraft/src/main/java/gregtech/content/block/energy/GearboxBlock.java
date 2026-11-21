@@ -1,16 +1,19 @@
 package gregtech.content.block.energy;
 
-import gregtech.engine.energy.GearboxSpec;
-import gregtech.engine.tool.ToolInteractionTarget;
-import gregtech.engine.tool.ToolInteractionSpec;
-import gregtech.engine.tool.ToolInteractions;
+import gregtech.content.block.GTBlock;
 import gregtech.content.block.machine.MachineRotationType;
-import gregtech.engine.tool.GTToolHelper;
 import gregtech.content.blockentity.energy.GearboxBlockEntity;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.item.MaterialItem;
 import gregtech.content.registry.GTGearboxes;
 import gregtech.content.registry.GTItems;
+import gregtech.engine.energy.GearboxSpec;
+import gregtech.engine.tool.GTToolHelper;
+import gregtech.engine.tool.ToolInteractionSpec;
+import gregtech.engine.tool.ToolInteractionTarget;
+import gregtech.engine.tool.ToolInteractions;
+import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -35,28 +38,11 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 
-import javax.annotation.Nullable;
-import java.util.List;
-
 /** GT6 custom gearbox: wrench mounts physical gears; monkey wrench selects axle axis. */
-public class GearboxBlock extends Block implements EntityBlock, ToolInteractionTarget {
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
-            BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
+public class GearboxBlock extends GTBlock implements EntityBlock, ToolInteractionTarget {
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
-            BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack held = player.getItemInHand(hand);
         boolean monkey = GTToolHelper.isMonkeyWrench(held);
         boolean wrench = GTToolHelper.isMachineWrench(held) && !monkey;
@@ -64,8 +50,9 @@ public class GearboxBlock extends Block implements EntityBlock, ToolInteractionT
         boolean glass = GTToolHelper.isMagnifyingGlass(held);
         if (!monkey && !wrench && !hammer && !glass) return InteractionResult.PASS;
         Direction side = ToolInteractions.selectedFace(hit);
-        if ((wrench || monkey) && !ToolInteractions.canApply(toolInteraction(state, held),
-                state, level, pos, player, held, side)) return InteractionResult.FAIL;
+        if ((wrench || monkey)
+                && !ToolInteractions.canApply(toolInteraction(state, held), state, level, pos, player, held, side))
+            return InteractionResult.FAIL;
         if (level.isClientSide) return InteractionResult.SUCCESS;
         if (!(level.getBlockEntity(pos) instanceof GearboxBlockEntity gearbox)) return InteractionResult.PASS;
 
@@ -100,9 +87,10 @@ public class GearboxBlock extends Block implements EntityBlock, ToolInteractionT
             GTToolHelper.damageForToolClickReturn(held, 10000, player);
             return InteractionResult.CONSUME;
         }
-        player.sendSystemMessage(Component.literal(gearbox.gearsWork()
-                ? gearbox.isJammed() ? "Gears interlocked, but stopped." : "Gears interlocked properly."
-                : "Gears interlocked improperly."));
+        player.sendSystemMessage(Component.literal(
+                gearbox.gearsWork()
+                        ? gearbox.isJammed() ? "Gears interlocked, but stopped." : "Gears interlocked properly."
+                        : "Gears interlocked improperly."));
         GTToolHelper.damageForToolClickReturn(held, 1, player);
         return InteractionResult.CONSUME;
     }
@@ -116,7 +104,9 @@ public class GearboxBlock extends Block implements EntityBlock, ToolInteractionT
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
-    public GearboxSpec spec() { return spec; }
+    public GearboxSpec spec() {
+        return spec;
+    }
 
     @Override
     public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
@@ -146,7 +136,8 @@ public class GearboxBlock extends Block implements EntityBlock, ToolInteractionT
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide || type != GTGearboxes.GEARBOX.get()) return null;
         return (l, pos, s, be) -> GearboxBlockEntity.serverTick(l, pos, s, (GearboxBlockEntity) be);
     }
@@ -168,8 +159,9 @@ public class GearboxBlock extends Block implements EntityBlock, ToolInteractionT
     @Override
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return gregtech.engine.tool.GTToolHelper.isMachineWrench(tool)
-                || gregtech.engine.tool.GTToolHelper.isMonkeyWrench(tool)
-                ? ToolInteractionSpec.facing(FACING, MachineRotationType.ALL) : null;
+                        || gregtech.engine.tool.GTToolHelper.isMonkeyWrench(tool)
+                ? ToolInteractionSpec.facing(FACING, MachineRotationType.ALL)
+                : null;
     }
 
     private static int matchingGearSlot(Player player, GearboxSpec spec) {
@@ -181,11 +173,7 @@ public class GearboxBlock extends Block implements EntityBlock, ToolInteractionT
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-*///?} else {
-    public void appendHoverText(ItemStack stack, BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
-//?}
+    protected void appendTooltip(ItemStack stack, BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
         var data = gregtech.engine.stack.BlockEntityData.read(stack);
         int gears = data == null ? 0 : data.getByte("gearMask") & 63;
         int axis = data == null ? 0 : Math.min(3, data.getByte("axisCode") & 255);

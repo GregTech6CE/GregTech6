@@ -2,12 +2,8 @@ package gregtech.content.block;
 
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
-import gregtech.engine.tool.ToolInteractions;
 import gregtech.platform.Mc;
 
-//? if >=1.21.1 {
-//?} else {
-//?}
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -18,14 +14,9 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-//? if >=1.21.1 {
-/*import net.minecraft.world.item.Item;
-*///?} else {
-//?}
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -42,23 +33,10 @@ import java.util.List;
  * — a random vanilla chest table with the dungeon chest as the fallback. The port keeps that: the ten
  * vanilla tables GT6's loot loader also touches, with {@code chests/simple_dungeon} first.
  */
-public class LootCrateBlock extends Block {
+public class LootCrateBlock extends GTBlock {
     /** GT6 {@code onToolClick}: a crowbar pries the crate open. */
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack held = player.getItemInHand(hand);
         if (!GTToolHelper.matchesTool(held, GTToolType.CROWBAR)) return InteractionResult.PASS;
@@ -128,11 +106,7 @@ public class LootCrateBlock extends Block {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack,Item.TooltipContext context,List<Component> tooltip, TooltipFlag flag) {
-*///?} else {
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
-//?}
+    protected void appendTooltip(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(Component.translatable("block.gt6ce.loot_crate.tooltip").withStyle(ChatFormatting.DARK_GRAY));
     }
 }

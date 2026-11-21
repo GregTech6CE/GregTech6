@@ -12,8 +12,9 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.storage.loot.LootParams;
 import java.util.List;
 
+import gregtech.content.block.GTBlock;
 /** GT6 BlockColored metadata palette; colour survives picking, drops and vanilla placement. */
-public class ColoredConstructionBlock extends Block {
+public class ColoredConstructionBlock extends GTBlock {
     public static final EnumProperty<DyeColor> COLOR = ConcreteBlock.COLOR;
     public ColoredConstructionBlock(Properties properties, DyeColor color) {
         super(properties);

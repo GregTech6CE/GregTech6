@@ -153,17 +153,9 @@ public final class GunToolItem extends GTToolItem {
   if (struck){gregtech.engine.tool.MaterialEnchantmentStacks.postAttack(ammo,target,source);int knock=enchantment(gun,"punch",level)+Math.max(enchantment(ammo,"knockback",level),MaterialToolEnchantments.ammunition(bullet).getOrDefault("knockback",0));if (knock>0)target.push(direction.x*knock*power/50000,.05,direction.z*knock*power/50000);if (target instanceof Creeper creeper&&fire>0)creeper.ignite();}
   return struck||target.invulnerableTime<=0;
  }
-//? if >=1.21.1 {
- /*@Override public void appendHoverText(ItemStack stack,Item.TooltipContext context,List<net.minecraft.network.chat.Component> tooltip,TooltipFlag flag){super.appendHoverText(stack,context,tooltip,flag);
-*///?} else {
- @Override public void appendHoverText(ItemStack stack,Level context,List<net.minecraft.network.chat.Component> tooltip,TooltipFlag flag){super.appendHoverText(stack,context,tooltip,flag);
-//?}
+ @Override protected void appendTooltip(ItemStack stack,Level level,List<net.minecraft.network.chat.Component> tooltip,TooltipFlag flag){super.appendTooltip(stack,level,tooltip,flag);
   tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.gun.reload"));
   tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.gun.caliber",net.minecraft.network.chat.Component.translatable("item.gt6ce."+definition().ammunition().getRegistryName()),definition().magazine()));
-//? if >=1.21.1 {
-  /*var ammo=ammunition(stack,context.level());tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.gun.ammo",ammo.getCount(),definition().magazine()));if (!ammo.isEmpty())tooltip.add(ammo.getHoverName());
-*///?} else {
-  var ammo=ammunition(stack,context);tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.gun.ammo",ammo.getCount(),definition().magazine()));if (!ammo.isEmpty())tooltip.add(ammo.getHoverName());
-//?}
+  var ammo=ammunition(stack,level);tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.gun.ammo",ammo.getCount(),definition().magazine()));if (!ammo.isEmpty())tooltip.add(ammo.getHoverName());
  }
 }

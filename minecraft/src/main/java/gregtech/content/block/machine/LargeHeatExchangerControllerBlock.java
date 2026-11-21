@@ -1,12 +1,12 @@
 package gregtech.content.block.machine;
 
+import gregtech.content.block.GTDirectionalBlock;
 import gregtech.content.blockentity.machine.LargeHeatExchangerControllerBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -15,35 +15,15 @@ import net.minecraft.world.level.block.state.StateDefinition;
 
 import javax.annotation.Nullable;
 
-public class LargeHeatExchangerControllerBlock extends DirectionalBlock implements gregtech.engine.multiblock.StructurePreviewSource, gregtech.engine.tool.ToolInteractionTarget {
+public class LargeHeatExchangerControllerBlock extends GTDirectionalBlock implements gregtech.engine.multiblock.StructurePreviewSource, gregtech.engine.tool.ToolInteractionTarget {
 
     public LargeHeatExchangerControllerBlock(Properties properties) {
         super(properties);
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.DOWN));
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    protected com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec() {
-        return com.mojang.serialization.MapCodec.unit(this);
-    }
-
     @Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack held, BlockState state, Level level,
-            BlockPos pos, net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
-            net.minecraft.world.phys.BlockHitResult hit) {
-        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
-    @Override
-    protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
-        return use(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public net.minecraft.world.InteractionResult use(BlockState state, Level level, BlockPos pos,
+    protected net.minecraft.world.InteractionResult useBlock(BlockState state, Level level, BlockPos pos,
             net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
             net.minecraft.world.phys.BlockHitResult hit) {
         if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit))
@@ -120,13 +100,8 @@ public class LargeHeatExchangerControllerBlock extends DirectionalBlock implemen
         return java.util.List.of(stack);
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    public void appendHoverText(net.minecraft.world.item.ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
-*///?} else {
     @Override
-    public void appendHoverText(net.minecraft.world.item.ItemStack stack, @Nullable net.minecraft.world.level.BlockGetter level,
-//?}
+    protected void appendTooltip(net.minecraft.world.item.ItemStack stack, @Nullable net.minecraft.world.level.BlockGetter level,
             java.util.List<net.minecraft.network.chat.Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {
         gregtech.client.UtilityControllerTooltips.heat(stack, tooltip);
     }

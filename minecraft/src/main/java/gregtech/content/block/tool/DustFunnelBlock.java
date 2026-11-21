@@ -1,15 +1,11 @@
 package gregtech.content.block.tool;
 
 import gregtech.content.blockentity.tool.DustFunnelBlockEntity;
-import gregtech.engine.tool.ToolInteractions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-//? if >=1.21.1 {
-/*import net.minecraft.world.ItemInteractionResult;
-*///?}
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -34,8 +30,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import gregtech.content.block.GTBlock;
 /** GT6 Dust Funnel: combines dust sizes and sends the selected form downward. */
-public class DustFunnelBlock extends Block implements EntityBlock {
+public class DustFunnelBlock extends GTBlock implements EntityBlock {
 
     /** GT6 output forms in toggle order: blockDust, dust, dustSmall, dustTiny, dustDiv72. */
     public static final IntegerProperty MODE = IntegerProperty.create("mode", 0, 4);
@@ -56,21 +53,8 @@ public class DustFunnelBlock extends Block implements EntityBlock {
         }
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hit) {
         // both hands fire use(); handling the off hand double-triggers
         if (hand == InteractionHand.OFF_HAND) return InteractionResult.PASS;
@@ -178,11 +162,7 @@ public class DustFunnelBlock extends Block implements EntityBlock {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack,net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-*///?} else {
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
-//?}
+    protected void appendTooltip(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(Component.translatable("gt.tooltip.dust_funnel.1").withStyle(net.minecraft.ChatFormatting.GRAY));
         tooltip.add(Component.translatable("gt.lang.nogui.rightclick.interact").append(" (")
                 .append(Component.translatable("gt.lang.face.top")).append(")").withStyle(net.minecraft.ChatFormatting.GRAY));

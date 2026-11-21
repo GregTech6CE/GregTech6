@@ -1,18 +1,16 @@
 package gregtech.content.item;
-import gregtech.platform.Mc;
-import gregtech.engine.stack.StackData;
 
+import gregtech.engine.stack.StackData;
+import gregtech.platform.Mc;
+import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
-
-import javax.annotation.Nullable;
-import java.util.List;
 
 /**
  * Fuel-rod block item backed by a shared reactor definition when available.
@@ -22,7 +20,7 @@ import java.util.List;
  * legacy port content. Compatibility-only items without a definition are not
  * accepted by the current reactor cores.</p>
  */
-public class FuelRodItem extends net.minecraft.world.item.BlockItem {
+public class FuelRodItem extends GTBlockItem {
 
     public static final String TAG_FUEL_TYPE = "gt_fuel_type";
     public static final String TAG_HEALTH = "gt_health";
@@ -34,27 +32,60 @@ public class FuelRodItem extends net.minecraft.world.item.BlockItem {
     private final int tier;
     private final int maxHealth;
 
-    public FuelRodItem(net.minecraft.world.level.block.Block block, FuelType fuelType, int tier, Properties properties) {
+    public FuelRodItem(
+            net.minecraft.world.level.block.Block block, FuelType fuelType, int tier, Properties properties) {
         super(block, properties);
-        this.definition = gregtech.content.nuclear.ReactorRodCatalog.byOriginal(switch (fuelType) {
-            case U_235 -> 9221; case U_238 -> 9220; case Pu_239 -> 9233; case Th_232 -> 9210;
-            case Co_60 -> 9250; case Am_241 -> 9241; default -> 0;
-        });
+        this.definition = gregtech.content.nuclear.ReactorRodCatalog.byOriginal(
+                switch (fuelType) {
+                    case U_235 -> 9221;
+                    case U_238 -> 9220;
+                    case Pu_239 -> 9233;
+                    case Th_232 -> 9210;
+                    case Co_60 -> 9250;
+                    case Am_241 -> 9241;
+                    default -> 0;
+                });
         this.fuelType = fuelType;
         this.tier = tier;
         this.maxHealth = fuelType.baseHealth * (tier + 1);
     }
 
-    public FuelRodItem(net.minecraft.world.level.block.Block block, gregtech.content.nuclear.ReactorRodCatalog.Rod definition, Properties properties) {
-        super(block,properties);this.definition=definition;this.fuelType=FuelType.NONE;this.tier=0;this.maxHealth=0;
+    public FuelRodItem(
+            net.minecraft.world.level.block.Block block,
+            gregtech.content.nuclear.ReactorRodCatalog.Rod definition,
+            Properties properties) {
+        super(block, properties);
+        this.definition = definition;
+        this.fuelType = FuelType.NONE;
+        this.tier = 0;
+        this.maxHealth = 0;
     }
-    @Override public String getDescriptionId() { return "item.gt6ce." + Mc.itemId(this).getPath(); }
-    public gregtech.content.nuclear.ReactorRodCatalog.Rod definition(){return definition;}
-    public FuelType fuelType() { return fuelType; }
-    public int tier() { return tier; }
-    public int maxHealth() { return maxHealth; }
+
+    @Override
+    public String getDescriptionId() {
+        return "item.gt6ce." + Mc.itemId(this).getPath();
+    }
+
+    public gregtech.content.nuclear.ReactorRodCatalog.Rod definition() {
+        return definition;
+    }
+
+    public FuelType fuelType() {
+        return fuelType;
+    }
+
+    public int tier() {
+        return tier;
+    }
+
+    public int maxHealth() {
+        return maxHealth;
+    }
+
     public int tintRgb() {
-        if (definition!=null)return gregtech.engine.material.GTMaterialRegistry.get(definition.material()).getColor();
+        if (definition != null)
+            return gregtech.engine.material.GTMaterialRegistry.get(definition.material())
+                    .getColor();
         var material = switch (fuelType) {
             case U_235 -> gregtech.content.material.Materials.Uranium235;
             case U_238 -> gregtech.content.material.Materials.Uranium;
@@ -77,7 +108,7 @@ public class FuelRodItem extends net.minecraft.world.item.BlockItem {
         tag.putInt(TAG_HEALTH, maxHealth);
         tag.putInt(TAG_MAX_HEALTH, maxHealth);
         tag.putBoolean(TAG_DEPLETED, false);
-        if (definition!=null)tag.putLong("gt.reactor_life",definition.life());
+        if (definition != null) tag.putLong("gt.reactor_life", definition.life());
         StackData.write(stack, tag);
         return stack;
     }
@@ -87,8 +118,11 @@ public class FuelRodItem extends net.minecraft.world.item.BlockItem {
         if (!(stack.getItem() instanceof FuelRodItem)) return FuelType.NONE;
         CompoundTag tag = StackData.read(stack);
         if (tag == null) return FuelType.NONE;
-        try { return FuelType.valueOf(tag.getString(TAG_FUEL_TYPE)); }
-        catch (IllegalArgumentException e) { return FuelType.NONE; }
+        try {
+            return FuelType.valueOf(tag.getString(TAG_FUEL_TYPE));
+        } catch (IllegalArgumentException e) {
+            return FuelType.NONE;
+        }
     }
 
     /** Read remaining health from NBT. */
@@ -135,42 +169,52 @@ public class FuelRodItem extends net.minecraft.world.item.BlockItem {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(@NotNull ItemStack stack, Item.TooltipContext context,
-*///?} else {
-    public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level,
-//?}
-                                @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
-//? if >=1.21.1 {
-        /*super.appendHoverText(stack, context, tooltip, flag);
-*///?} else {
-        super.appendHoverText(stack, level, tooltip, flag);
-//?}
-        if (definition!=null) {
-            tooltip.add(Component.translatable("tooltip.gt6ce.ui.rod.kind." + definition.kind().name().toLowerCase(java.util.Locale.ROOT)).withStyle(ChatFormatting.GRAY));
-            if (definition.life()>0) tooltip.add(Component.translatable("tooltip.gt6ce.ui.rod.remaining", gregtech.content.nuclear.RodPhysics.life(stack)).withStyle(ChatFormatting.GREEN));
-            if (definition.kind()==gregtech.content.nuclear.ReactorRodCatalog.Kind.NUCLEAR)
-                tooltip.add(Component.translatable("tooltip.gt6ce.ui.rod.neutrons", definition.self(), definition.emission(), definition.maximum(), definition.divisor()));
+    protected void appendTooltip(
+            @NotNull ItemStack stack,
+            @Nullable Level level,
+            @NotNull List<Component> tooltip,
+            @NotNull TooltipFlag flag) {
+        super.appendTooltip(stack, level, tooltip, flag);
+        if (definition != null) {
+            tooltip.add(Component.translatable("tooltip.gt6ce.ui.rod.kind."
+                            + definition.kind().name().toLowerCase(java.util.Locale.ROOT))
+                    .withStyle(ChatFormatting.GRAY));
+            if (definition.life() > 0)
+                tooltip.add(Component.translatable(
+                                "tooltip.gt6ce.ui.rod.remaining", gregtech.content.nuclear.RodPhysics.life(stack))
+                        .withStyle(ChatFormatting.GREEN));
+            if (definition.kind() == gregtech.content.nuclear.ReactorRodCatalog.Kind.NUCLEAR)
+                tooltip.add(Component.translatable(
+                        "tooltip.gt6ce.ui.rod.neutrons",
+                        definition.self(),
+                        definition.emission(),
+                        definition.maximum(),
+                        definition.divisor()));
             return;
         }
         CompoundTag tag = StackData.read(stack);
-        if (tag == null) {tooltip.add(Component.translatable("gt.tooltip.reactor.legacy_rod"));return;}
+        if (tag == null) {
+            tooltip.add(Component.translatable("gt.tooltip.reactor.legacy_rod"));
+            return;
+        }
         int health = tag.getInt(TAG_HEALTH);
         int max = tag.getInt(TAG_MAX_HEALTH);
         boolean depleted = tag.getBoolean(TAG_DEPLETED);
 
-        tooltip.add(Component.translatable("tooltip.gt6ce.ui.rod.fuel", Component.translatable("tooltip.gt6ce.ui.rod.fuel_type." + fuelType.name().toLowerCase(java.util.Locale.ROOT)))
+        tooltip.add(Component.translatable(
+                        "tooltip.gt6ce.ui.rod.fuel",
+                        Component.translatable("tooltip.gt6ce.ui.rod.fuel_type."
+                                + fuelType.name().toLowerCase(java.util.Locale.ROOT)))
                 .withStyle(ChatFormatting.YELLOW));
-        tooltip.add(Component.translatable("tooltip.gt6ce.ui.rod.tier", tier + 1)
-                .withStyle(ChatFormatting.GRAY));
+        tooltip.add(
+                Component.translatable("tooltip.gt6ce.ui.rod.tier", tier + 1).withStyle(ChatFormatting.GRAY));
 
         if (depleted || health <= 0) {
-            tooltip.add(Component.translatable("tooltip.gt6ce.ui.rod.depleted")
-                    .withStyle(ChatFormatting.RED));
+            tooltip.add(Component.translatable("tooltip.gt6ce.ui.rod.depleted").withStyle(ChatFormatting.RED));
         } else if (max > 0) {
             int pct = health * 100 / max;
-            ChatFormatting color = pct > 50 ? ChatFormatting.GREEN
-                    : pct > 25 ? ChatFormatting.YELLOW : ChatFormatting.RED;
+            ChatFormatting color =
+                    pct > 50 ? ChatFormatting.GREEN : pct > 25 ? ChatFormatting.YELLOW : ChatFormatting.RED;
             tooltip.add(Component.translatable("tooltip.gt6ce.ui.rod.durability", health, max, pct)
                     .withStyle(color));
         }

@@ -26,9 +26,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+import gregtech.content.block.GTBlock;
 /** Large Crucible multiblock controller. 3x3x3 hollow of crucible wall blocks, HU-powered.
  *  27x capacity of single-block crucible. */
-public class LargeCrucibleControllerBlock extends Block
+public class LargeCrucibleControllerBlock extends GTBlock
         implements gregtech.engine.multiblock.StructurePreviewSource {
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, net.minecraft.world.entity.Entity entity) {
@@ -37,10 +38,6 @@ public class LargeCrucibleControllerBlock extends Block
             gregtech.util.GTEntityHelper.applyTemperatureDamage(entity, crucible.getTemperature());
         super.stepOn(level, pos, state, entity);
     }
-//? if >=1.21.1 {
-    /*@Override public com.mojang.serialization.MapCodec<? extends Block> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-*///?} else {
-//?}
     private final gregtech.content.multiblock.LargeCrucibleSpecs.Variant variant;
 
     /** A formed vessel keeps a solid floor but stops supporting blocks on its open mouth. */
@@ -102,11 +99,7 @@ public class LargeCrucibleControllerBlock extends Block
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(@NotNull ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
-*///?} else {
-    public void appendHoverText(@NotNull ItemStack stack, @Nullable BlockGetter level,
-//?}
+    protected void appendTooltip(@NotNull ItemStack stack, @Nullable BlockGetter level,
                                 @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
         gregtech.client.CrucibleTooltips.appendLargeCrucible(variant.crucible(), tooltip);
     }
@@ -124,21 +117,8 @@ public class LargeCrucibleControllerBlock extends Block
         }
         super.onRemove(state, level, pos, next, moving);
     }
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit)) return InteractionResult.sidedSuccess(level.isClientSide);
         InteractionResult result = InteractionResult.PASS;
         if (level.getBlockEntity(pos) instanceof LargeCrucibleControllerBlockEntity be)

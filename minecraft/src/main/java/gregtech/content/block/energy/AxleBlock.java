@@ -1,13 +1,17 @@
 package gregtech.content.block.energy;
 
-import gregtech.engine.tool.GTToolHelper;
-import gregtech.engine.tool.ToolInteractions;
-import gregtech.engine.tool.ToolInteractionSpec;
-import gregtech.engine.tool.ToolInteractionTarget;
+import gregtech.content.block.GTBlock;
+import gregtech.content.blockentity.energy.AxleBlockEntity;
 import gregtech.engine.GTWaterloggable;
 import gregtech.engine.energy.AxleSpec;
-
-import gregtech.content.blockentity.energy.AxleBlockEntity;
+import gregtech.engine.tool.GTToolHelper;
+import gregtech.engine.tool.ToolInteractionSpec;
+import gregtech.engine.tool.ToolInteractionTarget;
+import gregtech.engine.tool.ToolInteractions;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -33,44 +37,31 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import javax.annotation.Nullable;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
 
 /** GT6 rotational axle block — RU conductor with pipe-style 6-way connections. */
-public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, gregtech.engine.machine.PipeGeometry.AxleConnectorGeometry, ToolInteractionTarget {
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
-            BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
+public class AxleBlock extends GTBlock
+        implements EntityBlock,
+                SimpleWaterloggedBlock,
+                gregtech.engine.machine.PipeGeometry.AxleConnectorGeometry,
+                ToolInteractionTarget {
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
-            BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (ToolInteractions.use(state, level, pos, player, hand, hit))
             return InteractionResult.sidedSuccess(level.isClientSide);
         return InteractionResult.PASS;
     }
 
-    public static final BooleanProperty UP    = BooleanProperty.create("up");
-    public static final BooleanProperty DOWN  = BooleanProperty.create("down");
+    public static final BooleanProperty UP = BooleanProperty.create("up");
+    public static final BooleanProperty DOWN = BooleanProperty.create("down");
     public static final BooleanProperty NORTH = BooleanProperty.create("north");
     public static final BooleanProperty SOUTH = BooleanProperty.create("south");
-    public static final BooleanProperty WEST  = BooleanProperty.create("west");
-    public static final BooleanProperty EAST  = BooleanProperty.create("east");
+    public static final BooleanProperty WEST = BooleanProperty.create("west");
+    public static final BooleanProperty EAST = BooleanProperty.create("east");
     public static final BooleanProperty[] CONNECTIONS = {DOWN, UP, NORTH, SOUTH, WEST, EAST};
 
     private static final Map<Direction, BooleanProperty> DIR_TO_PROP = new EnumMap<>(Direction.class);
+
     static {
         DIR_TO_PROP.put(Direction.DOWN, DOWN);
         DIR_TO_PROP.put(Direction.UP, UP);
@@ -91,10 +82,16 @@ public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBl
         registerDefaultState(def.setValue(GTWaterloggable.WATERLOGGED, false));
     }
 
-    public AxleSpec spec() { return spec; }
-    public static BooleanProperty propFor(Direction dir) { return DIR_TO_PROP.get(dir); }
+    public AxleSpec spec() {
+        return spec;
+    }
 
-    @Nullable Direction consumePlacementFace() {
+    public static BooleanProperty propFor(Direction dir) {
+        return DIR_TO_PROP.get(dir);
+    }
+
+    @Nullable
+    Direction consumePlacementFace() {
         Direction f = placementFace;
         placementFace = null;
         return f;
@@ -102,7 +99,9 @@ public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBl
 
     /** Axles may only connect in a straight line: max 2 connections on the same axis. */
     public static boolean isValidConnectionState(BlockState state) {
-        int mask=0;for (var direction:Direction.values())if (state.getValue(propFor(direction)))mask|=1<<direction.ordinal();
+        int mask = 0;
+        for (var direction : Direction.values())
+            if (state.getValue(propFor(direction))) mask |= 1 << direction.ordinal();
         return gregtech.engine.energy.AxleConnectionRules.valid(mask);
     }
 
@@ -115,9 +114,11 @@ public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBl
         return Direction.EAST;
     }
 
-    @Override public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+    @Override
+    public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return GTToolHelper.isMachineWrench(tool)
-                ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.AXLE) : null;
+                ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.AXLE)
+                : null;
     }
 
     @Override
@@ -143,7 +144,7 @@ public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBl
         if (ctx instanceof EntityCollisionContext entityCtx
                 && entityCtx.getEntity() instanceof Player player
                 && (GTToolHelper.isMachineWrench(player.getMainHandItem())
-                    || GTToolHelper.isMachineWrench(player.getOffhandItem()))) {
+                        || GTToolHelper.isMachineWrench(player.getOffhandItem()))) {
             return Shapes.block();
         }
         return shapeFor(state, level, pos);
@@ -161,8 +162,7 @@ public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBl
         VoxelShape shape = Shapes.box(min, min, min, max, max, max);
         for (Direction dir : Direction.values()) {
             if (!state.getValue(propFor(dir))) continue;
-            double n = gregtech.engine.machine.PipeGeometry.axleHalfOf(
-                    level.getBlockState(pos.relative(dir)));
+            double n = gregtech.engine.machine.PipeGeometry.axleHalfOf(level.getBlockState(pos.relative(dir)));
             double[] box = gregtech.engine.machine.PipeGeometry.localArmBox(dir, half, n);
             if (box != null) shape = Shapes.or(shape, gregtech.engine.machine.PipeGeometry.boxShape(box));
         }
@@ -178,9 +178,9 @@ public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBl
     @Nullable
     @Override
     public <T extends BlockEntity> net.minecraft.world.level.block.entity.BlockEntityTicker<T> getTicker(
-            Level level,BlockState state,net.minecraft.world.level.block.entity.BlockEntityType<T> type) {
-        if (level.isClientSide || type!=gregtech.content.registry.GTAxles.AXLE.get())return null;
-        return (world,pos,blockState,entity)->((AxleBlockEntity)entity).serverTick();
+            Level level, BlockState state, net.minecraft.world.level.block.entity.BlockEntityType<T> type) {
+        if (level.isClientSide || type != gregtech.content.registry.GTAxles.AXLE.get()) return null;
+        return (world, pos, blockState, entity) -> ((AxleBlockEntity) entity).serverTick();
     }
 
     @Override
@@ -192,21 +192,23 @@ public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBl
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-*///?} else {
-    public void appendHoverText(ItemStack stack, BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
-//?}
+    protected void appendTooltip(ItemStack stack, BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
         gregtech.client.MechanicalBlockTooltips.appendAxle(spec, getExplosionResistance(), tooltip);
     }
 
-    @Override public double axleHalfThickness(){return spec.halfThickness();}
-
-    @Override public int getFlammability(BlockState state,BlockGetter level,BlockPos pos,Direction face) {
-        return spec.material()==gregtech.content.material.generated.WoodMaterials.WoodTreated?150:0;
+    @Override
+    public double axleHalfThickness() {
+        return spec.halfThickness();
     }
-    @Override public int getFireSpreadSpeed(BlockState state,BlockGetter level,BlockPos pos,Direction face) {
-        return getFlammability(state,level,pos,face);
+
+    @Override
+    public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
+        return spec.material() == gregtech.content.material.generated.WoodMaterials.WoodTreated ? 150 : 0;
+    }
+
+    @Override
+    public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
+        return getFlammability(state, level, pos, face);
     }
 
     @Override
@@ -215,8 +217,13 @@ public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBl
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction dir, BlockState neighborState,
-                                  LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+    public BlockState updateShape(
+            BlockState state,
+            Direction dir,
+            BlockState neighborState,
+            LevelAccessor level,
+            BlockPos pos,
+            BlockPos neighborPos) {
         GTWaterloggable.updateShape(state, level, pos);
         if (level.isClientSide()) {
             BlockEntity be = level.getBlockEntity(pos);

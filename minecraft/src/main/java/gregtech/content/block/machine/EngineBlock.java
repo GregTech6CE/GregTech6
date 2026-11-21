@@ -50,8 +50,9 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
+import gregtech.content.block.GTDirectionalBlock;
 /** KU generator engine block. 6-directional facing (DirectionalBlock), no GUI. */
-public class EngineBlock extends DirectionalBlock implements EntityBlock, GTMachineBlock, ToolInteractionTarget,
+public class EngineBlock extends GTDirectionalBlock implements EntityBlock, GTMachineBlock, ToolInteractionTarget,
         gregtech.engine.machine.PipeGeometry.FluidConnectorGeometry {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
@@ -144,26 +145,8 @@ public class EngineBlock extends DirectionalBlock implements EntityBlock, GTMach
 
     // ── Interaction ───────────────────────────────────────────────────────
 
-//? if >=1.21.1 {
-    /*@Override
-    protected com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec() {
-        return com.mojang.serialization.MapCodec.unit(this);
-    }
-
     @Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hit) {
         ItemStack held = player.getItemInHand(hand);
 

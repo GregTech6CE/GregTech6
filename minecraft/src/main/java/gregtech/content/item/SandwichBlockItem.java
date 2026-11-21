@@ -8,7 +8,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
@@ -20,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /** GT6 sandwich items are edible in the hand, and place only while sneaking. */
-public final class SandwichBlockItem extends BlockItem {
+public final class SandwichBlockItem extends GTBlockItem {
     public SandwichBlockItem(Block block, Properties properties) { super(block, properties.stacksTo(16)); }
 
 //? if >=1.21.1 {
@@ -75,26 +74,18 @@ public final class SandwichBlockItem extends BlockItem {
         return stack;
     }
 
-//? if >=1.21.1 {
-    /*@Override public void appendHoverText(ItemStack stack,net.minecraft.world.item.Item.TooltipContext context,
-*///?} else {
-    @Override public void appendHoverText(ItemStack stack, @Nullable Level level,
-//?}
-                                          List<Component> tooltip, TooltipFlag flag) {
-//? if >=1.21.1 {
-        /*super.appendHoverText(stack,context,tooltip,flag);
-*///?} else {
-        super.appendHoverText(stack, level, tooltip, flag);
-//?}
+    @Override
+    protected void appendTooltip(ItemStack stack, @Nullable Level level,
+            @Nullable net.minecraft.core.HolderLookup.Provider registries, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(Component.translatable("tooltip.gt6ce.sandwich.food",
 //? if >=1.21.1 {
-                /*SandwichBlockEntity.itemFood(stack,context.registries()), SandwichBlockEntity.itemSaturation(stack,context.registries()))
+                /*SandwichBlockEntity.itemFood(stack,registries), SandwichBlockEntity.itemSaturation(stack,registries))
 *///?} else {
                 SandwichBlockEntity.itemFood(stack), SandwichBlockEntity.itemSaturation(stack))
 //?}
                 .withStyle(ChatFormatting.RED));
 //? if >=1.21.1 {
-        /*var layers = SandwichBlockEntity.readItemIngredients(stack,context.registries());
+        /*var layers = SandwichBlockEntity.readItemIngredients(stack,registries);
 *///?} else {
         var layers = SandwichBlockEntity.readItemIngredients(stack);
 //?}

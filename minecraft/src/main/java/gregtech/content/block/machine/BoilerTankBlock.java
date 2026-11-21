@@ -28,12 +28,13 @@ import net.minecraft.world.phys.BlockHitResult;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import gregtech.content.block.GTBlock;
 /**
  * GT6 single-block Steam Boiler Tank. Symmetric full cube (top/bottom/side
  * material-tinted textures); HU in from any face, steam out the top.
  * The front face shows a pressure gauge; rotate with a wrench.
  */
-public class BoilerTankBlock extends Block implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget,
+public class BoilerTankBlock extends GTBlock implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget,
         gregtech.engine.machine.PipeGeometry.FluidConnectorGeometry {
 
     /** Original boilers retain a full-width attachment surface; they do not use the engine's tiny outlets. */
@@ -70,21 +71,8 @@ public class BoilerTankBlock extends Block implements EntityBlock, gregtech.engi
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hit) {
         if (!level.isClientSide && hand == InteractionHand.MAIN_HAND) {
             BlockEntity be = level.getBlockEntity(pos);
@@ -147,11 +135,7 @@ public class BoilerTankBlock extends Block implements EntityBlock, gregtech.engi
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack,net.minecraft.world.item.Item.TooltipContext context,List<Component> tooltip, TooltipFlag flag) {
-*///?} else {
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
-//?}
+    protected void appendTooltip(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
         var data = gregtech.engine.stack.BlockEntityData.read(stack);
         int efficiency = data != null && data.contains("gt.efficiency") ? data.getShort("gt.efficiency") : 10000;
         gregtech.client.FunctionalBlockTooltips.appendBoiler(spec, efficiency, getExplosionResistance(), tooltip);

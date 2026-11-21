@@ -1,12 +1,13 @@
 package gregtech.content.block.machine;
 
-import gregtech.engine.tool.ToolInteractionSpec;
-import gregtech.engine.tool.ToolInteractionTarget;
-import gregtech.engine.tool.ToolInteractions;
+import gregtech.content.block.GTHorizontalDirectionalBlock;
 import gregtech.engine.machine.GTMachineBlock;
 import gregtech.engine.machine.MachineSpec;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
+import gregtech.engine.tool.ToolInteractionSpec;
+import gregtech.engine.tool.ToolInteractionTarget;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -20,58 +21,42 @@ import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import javax.annotation.Nullable;
 
 /**
  * Horizontal machine shell (GT6 {@code TileEntityBase09FacingSingle} placement).
  */
-public abstract class GTFacingMachineBlock extends HorizontalDirectionalBlock implements GTMachineBlock, ToolInteractionTarget {
-//? if >=1.21.1 {
-    /*@Override public com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-*///?} else {
-//?}
+public abstract class GTFacingMachineBlock extends GTHorizontalDirectionalBlock
+        implements GTMachineBlock, ToolInteractionTarget {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     private static final VoxelShape SHAPE = Shapes.block();
 
     private final MachineSpec spec;
 
     /** GT6 wrench rotation: click a face to rotate the machine front to that face. */
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state,
-            Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return MachineRotationType.handleWrench(state, level, pos, player, hand, hit,
-                FACING, MachineRotationType.HORIZONTAL)
-                ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        return MachineRotationType.handleWrench(
+                        state, level, pos, player, hand, hit, FACING, MachineRotationType.HORIZONTAL)
+                ? InteractionResult.sidedSuccess(level.isClientSide)
+                : InteractionResult.PASS;
     }
 
     protected GTFacingMachineBlock(MachineSpec spec, Properties properties) {
         super(properties);
         this.spec = spec;
-        registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH).setValue(LIT, false));
+        registerDefaultState(
+                defaultBlockState().setValue(FACING, Direction.NORTH).setValue(LIT, false));
     }
 
     public MachineSpec spec() {
@@ -85,7 +70,8 @@ public abstract class GTFacingMachineBlock extends HorizontalDirectionalBlock im
     @Override
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return GTToolHelper.isMachineWrench(tool)
-                ? ToolInteractionSpec.facing(FACING, MachineRotationType.HORIZONTAL) : null;
+                ? ToolInteractionSpec.facing(FACING, MachineRotationType.HORIZONTAL)
+                : null;
     }
 
     @Override
@@ -95,7 +81,8 @@ public abstract class GTFacingMachineBlock extends HorizontalDirectionalBlock im
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+        return defaultBlockState()
+                .setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
 
     @Override
@@ -115,11 +102,17 @@ public abstract class GTFacingMachineBlock extends HorizontalDirectionalBlock im
 
     /** GT6 wrench auto-collect: machine item goes to inventory; spills only when full. */
     @Override
-    public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state,
-                              @Nullable BlockEntity blockEntity, ItemStack tool) {
+    public void playerDestroy(
+            Level level,
+            Player player,
+            BlockPos pos,
+            BlockState state,
+            @Nullable BlockEntity blockEntity,
+            ItemStack tool) {
         if (!level.isClientSide && GTToolHelper.canCollectMachineDrop(tool, state)) {
             ItemStack machine = createMachineDrop(state, blockEntity);
-                gregtech.content.cover.CoverDrops.capture(state,(net.minecraft.server.level.ServerLevel)level,blockEntity,java.util.List.of(machine));
+            gregtech.content.cover.CoverDrops.capture(
+                    state, (net.minecraft.server.level.ServerLevel) level, blockEntity, java.util.List.of(machine));
             if (!machine.isEmpty()) {
                 if (!player.getInventory().add(machine)) {
                     popResource(level, pos, machine);
@@ -130,8 +123,7 @@ public abstract class GTFacingMachineBlock extends HorizontalDirectionalBlock im
                             SoundEvents.ITEM_PICKUP,
                             SoundSource.PLAYERS,
                             0.2F,
-                            (player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.7F + 1.0F
-                    );
+                            (player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.7F + 1.0F);
                 }
             }
             level.playSound(null, pos, gregtech.content.registry.GTSounds.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
@@ -174,5 +166,8 @@ public abstract class GTFacingMachineBlock extends HorizontalDirectionalBlock im
         }
         return super.getDestroyProgress(state, player, level, pos);
     }
-    protected ItemStack createMachineDrop(BlockState state, @Nullable BlockEntity entity) { return createMachineDrop(state); }
+
+    protected ItemStack createMachineDrop(BlockState state, @Nullable BlockEntity entity) {
+        return createMachineDrop(state);
+    }
 }

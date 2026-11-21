@@ -4,7 +4,6 @@ import gregtech.engine.machine.BurningBoxFuelType;
 import gregtech.engine.machine.MachineSpec;
 import gregtech.content.blockentity.machine.BurningBoxBlockEntity;
 import gregtech.content.registry.GTBlockEntities;
-import gregtech.engine.tool.ToolInteractions;
 import gregtech.util.GTEntityHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -31,20 +30,8 @@ public class BurningBoxBlock extends GTFacingMachineBlock implements EntityBlock
 
     private final BurningBoxFuelType fuelType;
 
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack stack,
-            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?}
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hit) {
         BlockEntity be = level.getBlockEntity(pos);
         if (be instanceof BurningBoxBlockEntity burningBox) {
@@ -60,7 +47,7 @@ public class BurningBoxBlock extends GTFacingMachineBlock implements EntityBlock
 //? if >=1.21.1 {
         /*return InteractionResult.PASS;
 *///?} else {
-        return super.use(state, level, pos, player, hand, hit);
+        return super.useBlock(state, level, pos, player, hand, hit);
 //?}
     }
 

@@ -1,8 +1,9 @@
 package gregtech.content.block.energy;
 
-import gregtech.content.nuclear.ReactorPorts;
-
+import gregtech.content.block.GTHorizontalDirectionalBlock;
 import gregtech.content.blockentity.energy.ReactorCore2x2BlockEntity;
+import gregtech.content.nuclear.ReactorPorts;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -16,7 +17,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -27,44 +27,34 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
 /** Four-rod core with a directional hot-fluid outlet. */
-public class ReactorCore2x2Block extends HorizontalDirectionalBlock implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget {
-//? if >=1.21.1 {
-    /*@Override public com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-*///?} else {
-//?}
-
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
-            BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
+public class ReactorCore2x2Block extends GTHorizontalDirectionalBlock
+        implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget {
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
-            BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public @NotNull InteractionResult use(
-            @NotNull BlockState state, @NotNull Level level,
-            @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand,
+    protected @NotNull InteractionResult useBlock(
+            @NotNull BlockState state,
+            @NotNull Level level,
+            @NotNull BlockPos pos,
+            @NotNull Player player,
+            @NotNull InteractionHand hand,
             @NotNull BlockHitResult hit) {
-        if (level.getBlockEntity(pos) instanceof ReactorCore2x2BlockEntity core) return gregtech.content.nuclear.ReactorInteraction.use(core,player,hand,hit);
+        if (level.getBlockEntity(pos) instanceof ReactorCore2x2BlockEntity core)
+            return gregtech.content.nuclear.ReactorInteraction.use(core, player, hand, hit);
         return InteractionResult.PASS;
     }
 
     public ReactorCore2x2Block() {
         super(Properties.of()
-                .strength(8.0F, 18.0F).noOcclusion()
+                .strength(8.0F, 18.0F)
+                .noOcclusion()
                 .sound(SoundType.METAL)
                 .requiresCorrectToolForDrops());
-        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(ReactorPorts.HOT, Direction.DOWN).setValue(ReactorPorts.COLD, Direction.DOWN));
+        registerDefaultState(stateDefinition
+                .any()
+                .setValue(FACING, Direction.NORTH)
+                .setValue(ReactorPorts.HOT, Direction.DOWN)
+                .setValue(ReactorPorts.COLD, Direction.DOWN));
     }
 
     @Override
@@ -86,8 +76,11 @@ public class ReactorCore2x2Block extends HorizontalDirectionalBlock implements E
 
     /** GT6 {@code MultiTileEntityReactorCore} is the shared base of the 1x1 and the 2x2 core. */
     @Override
-    public void entityInside(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos,
-                             @NotNull net.minecraft.world.entity.Entity entity) {
+    public void entityInside(
+            @NotNull BlockState state,
+            @NotNull Level level,
+            @NotNull BlockPos pos,
+            @NotNull net.minecraft.world.entity.Entity entity) {
         gregtech.content.nuclear.ReactorHazards.contact(level, pos, entity);
     }
 
@@ -97,37 +90,46 @@ public class ReactorCore2x2Block extends HorizontalDirectionalBlock implements E
             Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
         if (level.isClientSide) return null;
         return (lvl, pos, st, be) -> {
-            if (be instanceof ReactorCore2x2BlockEntity r)
-                ReactorCore2x2BlockEntity.serverTick(lvl, pos, st, r);
+            if (be instanceof ReactorCore2x2BlockEntity r) ReactorCore2x2BlockEntity.serverTick(lvl, pos, st, r);
         };
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(@NotNull ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
-*///?} else {
-    public void appendHoverText(@NotNull ItemStack stack, @Nullable BlockGetter level,
-//?}
-                                @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
+    protected void appendTooltip(
+            @NotNull ItemStack stack,
+            @Nullable BlockGetter level,
+            @NotNull List<Component> tooltip,
+            @NotNull TooltipFlag flag) {
         tooltip.add(Component.translatable("gt.tooltip.reactor.updated"));
     }
-    @Override public void onRemove(net.minecraft.world.level.block.state.BlockState state,
-            net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos,
-            net.minecraft.world.level.block.state.BlockState next, boolean moving) {
-        if (!state.is(next.getBlock()) && !level.isClientSide
+
+    @Override
+    public void onRemove(
+            net.minecraft.world.level.block.state.BlockState state,
+            net.minecraft.world.level.Level level,
+            net.minecraft.core.BlockPos pos,
+            net.minecraft.world.level.block.state.BlockState next,
+            boolean moving) {
+        if (!state.is(next.getBlock())
+                && !level.isClientSide
                 && level.getBlockEntity(pos) instanceof gregtech.engine.inventory.BlockContents contents) {
             contents.dropContents();
             level.updateNeighbourForOutputSignal(pos, this);
         }
         super.onRemove(state, level, pos, next, moving);
     }
-    @Override public java.util.List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder){
-        var stack=new ItemStack(this);
+
+    @Override
+    public java.util.List<ItemStack> getDrops(
+            BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
+        var stack = new ItemStack(this);
         // GT6 keeps coolant, heat and rods out of the item; rods drop separately via BlockContents.
         ReactorPorts.saveItemState(stack, state);
         return java.util.List.of(stack);
     }
-    @Override public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+
+    @Override
+    public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return ReactorPorts.tool(tool);
     }
 }

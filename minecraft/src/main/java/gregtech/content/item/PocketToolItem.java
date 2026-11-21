@@ -78,10 +78,6 @@ public final class PocketToolItem extends GTToolItem {
  @Override public float getDestroySpeed(ItemStack stack,net.minecraft.world.level.block.state.BlockState state){return GTToolHelper.isUsable(stack)&&specialHarvest(state)?Math.max(Float.MIN_NORMAL,GTToolHelper.getHead(stack).getToolSpeed()*toolType().speedMultiplier()*(activeType()==GTToolType.FILE?3:1)):super.getDestroySpeed(stack,state);}
  @Override public boolean isCorrectToolForDrops(ItemStack stack,net.minecraft.world.level.block.state.BlockState state){return GTToolHelper.isUsable(stack)&&specialHarvest(state)||super.isCorrectToolForDrops(stack,state);}
 
-//? if >=1.21.1 {
-/* @Override public void appendHoverText(ItemStack stack,Item.TooltipContext context,java.util.List<net.minecraft.network.chat.Component> tooltip,TooltipFlag flag){super.appendHoverText(stack,context,tooltip,flag);tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.pocket.switch"));}
-*///?} else {
- @Override public void appendHoverText(ItemStack stack,net.minecraft.world.level.Level context,java.util.List<net.minecraft.network.chat.Component> tooltip,TooltipFlag flag){super.appendHoverText(stack,context,tooltip,flag);tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.pocket.switch"));}
-//?}
+ @Override protected void appendTooltip(ItemStack stack,net.minecraft.world.level.Level context,java.util.List<net.minecraft.network.chat.Component> tooltip,TooltipFlag flag){super.appendTooltip(stack,context,tooltip,flag);tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.pocket.switch"));}
 
 }

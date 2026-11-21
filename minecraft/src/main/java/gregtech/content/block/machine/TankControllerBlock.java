@@ -1,9 +1,11 @@
 package gregtech.content.block.machine;
 
+import gregtech.content.block.GTDirectionalBlock;
 import gregtech.content.blockentity.machine.MultiblockTankControllerBlockEntity;
 import gregtech.content.multiblock.TankValveParameters;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -11,7 +13,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -23,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /** Multiblock tank controller (3x3x3 or 5x5x5). Size is determined by the block variant. */
-public class TankControllerBlock extends DirectionalBlock implements gregtech.engine.multiblock.StructurePreviewSource, gregtech.engine.tool.ToolInteractionTarget {
+public class TankControllerBlock extends GTDirectionalBlock implements gregtech.engine.multiblock.StructurePreviewSource, gregtech.engine.tool.ToolInteractionTarget {
     private final int size;
     private final TankValveParameters valveSpec;
 
@@ -45,27 +46,8 @@ public class TankControllerBlock extends DirectionalBlock implements gregtech.en
         if (level.getBlockEntity(pos) instanceof MultiblockTankControllerBlockEntity tank)
             gregtech.engine.multiblock.tracking.StructureTracking.invalidate(tank);
     }
-//? if >=1.21.1 {
-    /*@Override
-    protected com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec() {
-        return com.mojang.serialization.MapCodec.unit(this);
-    }
-
     @Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
-        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
-    @Override
-    protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
-        return use(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public net.minecraft.world.InteractionResult use(BlockState state, Level level, BlockPos pos,
+    protected net.minecraft.world.InteractionResult useBlock(BlockState state, Level level, BlockPos pos,
             net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
             net.minecraft.world.phys.BlockHitResult hit) {
         if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit))
@@ -118,14 +100,10 @@ public class TankControllerBlock extends DirectionalBlock implements gregtech.en
     }
 
     @Override
+    protected void appendTooltip(@NotNull ItemStack stack, @Nullable BlockGetter level,
+            @Nullable HolderLookup.Provider registries, @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
 //? if >=1.21.1 {
-    /*public void appendHoverText(@NotNull ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
-*///?} else {
-    public void appendHoverText(@NotNull ItemStack stack, @Nullable BlockGetter level,
-//?}
-            @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
-//? if >=1.21.1 {
-        /*gregtech.client.MultiblockTankTooltips.append(size, valveSpec, stack, context.registries(), tooltip);
+        /*gregtech.client.MultiblockTankTooltips.append(size, valveSpec, stack, registries, tooltip);
 *///?} else {
         gregtech.client.MultiblockTankTooltips.append(size, valveSpec, stack, tooltip);
 //?}

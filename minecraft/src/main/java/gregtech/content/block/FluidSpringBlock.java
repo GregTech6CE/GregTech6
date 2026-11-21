@@ -10,7 +10,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -29,7 +28,7 @@ import java.util.List;
  * {@link FluidSpringBlockEntity} then pushes its fluid upwards. Player placed springs work the same
  * way, so a spring head plus a pump is a real (if slow) infinite fluid source.
  */
-public class FluidSpringBlock extends Block implements EntityBlock {
+public class FluidSpringBlock extends GTBlock implements EntityBlock {
     private final gregtech.content.worldgen.FluidSpringRules.Spring spring;
 
     public FluidSpringBlock(Properties properties) {
@@ -46,11 +45,7 @@ public class FluidSpringBlock extends Block implements EntityBlock {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
-*///?} else {
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level,
-//?}
+    protected void appendTooltip(ItemStack stack, @Nullable BlockGetter level,
             List<net.minecraft.network.chat.Component> lines, net.minecraft.world.item.TooltipFlag flag) {
         lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.ui.spring"));
     }

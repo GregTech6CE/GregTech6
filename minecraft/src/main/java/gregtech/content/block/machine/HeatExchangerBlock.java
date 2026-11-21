@@ -1,6 +1,7 @@
 /* Gregorius Techneticies / GregTech-6 Team; LGPL-3.0-or-later. */
 package gregtech.content.block.machine;
 
+import gregtech.content.block.GTDirectionalBlock;
 import gregtech.content.blockentity.machine.HeatExchangerBlockEntity;
 import gregtech.content.energy.HeatExchangerCatalog;
 import gregtech.engine.tool.*;
@@ -18,62 +19,92 @@ import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.*;
 
-public final class HeatExchangerBlock extends DirectionalBlock implements EntityBlock, ToolInteractionTarget {
+public final class HeatExchangerBlock extends GTDirectionalBlock implements EntityBlock, ToolInteractionTarget {
     public static final BooleanProperty ACTIVE = BlockStateProperties.LIT;
     private static final VoxelShape COLLISION = Shapes.box(0, 0, 0, 1, 0.875, 1);
     private final HeatExchangerCatalog.Spec spec;
+
     public HeatExchangerBlock(HeatExchangerCatalog.Spec spec, Properties properties) {
-        super(properties); this.spec = spec;
-        registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH).setValue(ACTIVE, false));
+        super(properties);
+        this.spec = spec;
+        registerDefaultState(
+                defaultBlockState().setValue(FACING, Direction.NORTH).setValue(ACTIVE, false));
     }
-    public HeatExchangerCatalog.Spec spec() { return spec; }
-//? if >=1.21.1 {
-    /*@Override protected com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec() { return com.mojang.serialization.MapCodec.unit(this); }
-*///?} else {
-//?}
-//? if >=1.21.1 {
-    /*@Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+
+    public HeatExchangerCatalog.Spec spec() {
+        return spec;
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
-        if (ToolInteractions.use(state, level, pos, player, hand, hit)) return InteractionResult.sidedSuccess(level.isClientSide);
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (ToolInteractions.use(state, level, pos, player, hand, hit))
+            return InteractionResult.sidedSuccess(level.isClientSide);
         if (level.getBlockEntity(pos) instanceof HeatExchangerBlockEntity entity) return entity.interact(player, hand);
         return InteractionResult.PASS;
     }
-    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) { builder.add(FACING, ACTIVE); }
-    @Override public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING, ACTIVE);
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
         var facing = ctx.getNearestLookingDirection().getOpposite();
         return defaultBlockState().setValue(FACING, facing == Direction.UP ? Direction.DOWN : facing);
     }
-    @Override public BlockState rotate(BlockState state, Rotation rotation) { return state.setValue(FACING, rotation.rotate(state.getValue(FACING))); }
-    @Override public BlockState mirror(BlockState state, Mirror mirror) { return rotate(state, mirror.getRotation(state.getValue(FACING))); }
-    @Override public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
-        return GTToolHelper.isMachineWrench(tool) ? ToolInteractionSpec.facing(FACING, MachineRotationType.BOTTOM_HORIZONTAL) : null;
+
+    @Override
+    public BlockState rotate(BlockState state, Rotation rotation) {
+        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
     }
-    @Override public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) { return COLLISION; }
-    @Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) { return new HeatExchangerBlockEntity(pos, state); }
-    @Override public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide || type != gregtech.content.registry.GTBlockEntities.HEAT_EXCHANGER.get() ? null
-                : (world, pos, current, entity) -> ((HeatExchangerBlockEntity)entity).tick();
+
+    @Override
+    public BlockState mirror(BlockState state, Mirror mirror) {
+        return rotate(state, mirror.getRotation(state.getValue(FACING)));
     }
-    @Override public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        if (!level.isClientSide && state.getValue(ACTIVE)) gregtech.util.GTEntityHelper.applyHeatDamage(entity, Math.min(10F, spec.rate() / 10F));
+
+    @Override
+    public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+        return GTToolHelper.isMachineWrench(tool)
+                ? ToolInteractionSpec.facing(FACING, MachineRotationType.BOTTOM_HORIZONTAL)
+                : null;
     }
-    @Override public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
-        entityInside(state, level, pos, entity); super.stepOn(level, pos, state, entity);
+
+    @Override
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return COLLISION;
     }
-    @Override public java.util.List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new HeatExchangerBlockEntity(pos, state);
+    }
+
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, BlockEntityType<T> type) {
+        return level.isClientSide || type != gregtech.content.registry.GTBlockEntities.HEAT_EXCHANGER.get()
+                ? null
+                : (world, pos, current, entity) -> ((HeatExchangerBlockEntity) entity).tick();
+    }
+
+    @Override
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        if (!level.isClientSide && state.getValue(ACTIVE))
+            gregtech.util.GTEntityHelper.applyHeatDamage(entity, Math.min(10F, spec.rate() / 10F));
+    }
+
+    @Override
+    public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
+        entityInside(state, level, pos, entity);
+        super.stepOn(level, pos, state, entity);
+    }
+
+    @Override
+    public java.util.List<ItemStack> getDrops(
+            BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
         return java.util.List.of(new ItemStack(this));
     }
 }

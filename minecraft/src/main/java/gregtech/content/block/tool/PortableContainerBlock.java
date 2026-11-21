@@ -7,7 +7,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import gregtech.engine.GTWaterloggable;
 import gregtech.engine.fluid.PortableFluidContainerSpec;
 import gregtech.content.blockentity.tool.PortableContainerBlockEntity;
-import gregtech.engine.tool.ToolInteractions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.LivingEntity;
@@ -23,25 +22,13 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.*;
 import java.util.List;
 
+import gregtech.content.block.GTBlock;
 /** Placeable vessel; the same item fluid data survives placement and removal. */
-public final class PortableContainerBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
+public final class PortableContainerBlock extends GTBlock implements EntityBlock, SimpleWaterloggedBlock {
     private final PortableFluidContainerSpec spec;
     private final VoxelShape shape;
-//? if >=1.21.1 {
-    /*@Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hit) {
         if (level.getBlockEntity(pos) instanceof PortableContainerBlockEntity vessel) {
             if (player.getItemInHand(hand).isEmpty()&&hit.getDirection().getAxis().isHorizontal()

@@ -35,6 +35,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+import gregtech.content.block.GTBlock;
 /**
  * GT6's loose ingot / plate / gem-plate piles on the dungeon floor.
  *
@@ -75,7 +76,7 @@ import java.util.List;
  *       already had.</li>
  * </ul>
  */
-public class PileBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
+public class PileBlock extends GTBlock implements EntityBlock, SimpleWaterloggedBlock {
     /**
      * The stack size GT6 draws, as a block state.
      *
@@ -179,23 +180,8 @@ public class PileBlock extends Block implements EntityBlock, SimpleWaterloggedBl
      * because GT6 keeps its counter in the top block of the column. A take that
      * empties its pile removes that block, since in GT6 the pile is its items.</p>
      */
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hit) {
         if (!(level.getBlockEntity(pos) instanceof PileBlockEntity pile)) return InteractionResult.PASS;
         // GT6: `if (isClientSide()) return T;` (MultiTileEntityPlaceable) - the client never

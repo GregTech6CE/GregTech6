@@ -32,11 +32,12 @@ import net.minecraft.world.phys.BlockHitResult;
 import java.util.List;
 import java.util.Set;
 
+import gregtech.content.block.GTBlock;
 /**
  * GT6 concrete/reinforced-concrete behavior. Retained palette IDs read the old color state;
  * {@link FixedConstructionBlocks.Concrete} stores the color in each registered identity.
  */
-public class ConcreteBlock extends Block {
+public class ConcreteBlock extends GTBlock {
     public static final EnumProperty<DyeColor> COLOR = EnumProperty.create("color", DyeColor.class);
     private static final TagKey<Item> IRON_RODS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", "rods/iron"));
     private static final TagKey<Item> STEEL_RODS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", "rods/steel"));
@@ -114,21 +115,8 @@ public class ConcreteBlock extends Block {
     }
 
     /** GT6 BlockConcrete: drill-click consumes one iron/steel stick and preserves the dye. */
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hit) {
         if (reinforced || !GTToolHelper.matchesTool(player.getItemInHand(hand), GTToolType.HAND_DRILL))
             return InteractionResult.PASS;

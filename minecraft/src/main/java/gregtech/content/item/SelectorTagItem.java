@@ -1,9 +1,9 @@
 package gregtech.content.item;
 
+import java.util.List;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import java.util.List;
 
 /** Original ItemIntegratedCircuit family name and configuration tooltip, for the flattened 0..24 tags. */
 public final class SelectorTagItem extends TechItem {
@@ -16,13 +16,13 @@ public final class SelectorTagItem extends TechItem {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        super.appendHoverText(stack, context, tooltip, flag);
-*///?} else {
-    public void appendHoverText(ItemStack stack, @org.jetbrains.annotations.Nullable net.minecraft.world.level.Level level, List<Component> tooltip, TooltipFlag flag) {
-        super.appendHoverText(stack, level, tooltip, flag);
-//?}
-        tooltip.add(Component.translatable("gt.integrated_circuit.configuration").append("== " + configuration));
+    protected void appendTooltip(
+            ItemStack stack,
+            @org.jetbrains.annotations.Nullable net.minecraft.world.level.Level level,
+            List<Component> tooltip,
+            TooltipFlag flag) {
+        super.appendTooltip(stack, level, tooltip, flag);
+        tooltip.add(
+                Component.translatable("gt.integrated_circuit.configuration").append("== " + configuration));
     }
 }

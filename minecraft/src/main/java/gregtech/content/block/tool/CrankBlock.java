@@ -6,8 +6,8 @@ import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import gregtech.engine.GTWaterloggable;
 import gregtech.engine.energy.EnergyBlockViews;
 import gregtech.engine.energy.EnergyTransfer;
+import gregtech.content.block.GTDirectionalBlock;
 import gregtech.content.data.GregTechTags;
-import gregtech.engine.tool.ToolInteractions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -17,9 +17,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-//? if >=1.21.1 {
-/*import net.minecraft.world.ItemInteractionResult;
-*///?}
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -28,7 +25,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -49,7 +45,7 @@ import java.util.List;
  *
  * <p>The original villager-operated idle crank is not implemented by this player-duration fix.</p>
  */
-public class CrankBlock extends DirectionalBlock implements SimpleWaterloggedBlock {
+public class CrankBlock extends GTDirectionalBlock implements SimpleWaterloggedBlock {
 
     /** Loader_MultiTileEntities 32111 uses ANY.Iron, whose appearance is MT.Fe. */
     public static int tintRgb() {
@@ -75,26 +71,8 @@ public class CrankBlock extends DirectionalBlock implements SimpleWaterloggedBlo
         SHAPES[Direction.EAST.ordinal()] = Block.box(0, 2, 2, 3, 14, 14);
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    public com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec() {
-        return com.mojang.serialization.MapCodec.unit(this);
-    }
-
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hit) {
         // Only the main hand drives the crank; processing the off hand would send a second packet.
         if (hand == net.minecraft.world.InteractionHand.OFF_HAND) return InteractionResult.PASS;
@@ -237,11 +215,7 @@ public class CrankBlock extends DirectionalBlock implements SimpleWaterloggedBlo
 *///?} else {
 //?}
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-*///?} else {
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
-//?}
+    protected void appendTooltip(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(Component.translatable("gt.tooltip.crank.1"));
         tooltip.add(Component.translatable("gt.tooltip.crank.2"));
     }

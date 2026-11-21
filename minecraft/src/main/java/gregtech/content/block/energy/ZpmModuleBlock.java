@@ -1,40 +1,72 @@
 package gregtech.content.block.energy;
 
-import net.minecraft.core.Direction;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import gregtech.engine.GTWaterloggable;
-import gregtech.content.energy.ZpmEnergy;
+import gregtech.content.block.GTBlock;
 import gregtech.content.blockentity.energy.ZpmModuleBlockEntity;
+import gregtech.content.energy.ZpmEnergy;
+import gregtech.engine.GTWaterloggable;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.shapes.*;
-import net.minecraft.world.item.*;
-public final class ZpmModuleBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
-    public static final IntegerProperty CHARGE=IntegerProperty.create("charge",0,15);
-    private static final VoxelShape SHAPE=Shapes.or(Block.box(4,0,4,12,4,12),Block.box(5,4,5,11,12,11));
-    public ZpmModuleBlock(Properties properties){super(properties.noOcclusion().lightLevel(s->s.getValue(CHARGE)));registerDefaultState(defaultBlockState().setValue(CHARGE,0).setValue(GTWaterloggable.WATERLOGGED, false));}
-    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState>b){
-        b.add(GTWaterloggable.WATERLOGGED);b.add(CHARGE);}
-    @Override public VoxelShape getShape(BlockState s,BlockGetter w,BlockPos p,CollisionContext c){return SHAPE;}
-    @Override public BlockEntity newBlockEntity(BlockPos p,BlockState s){return new ZpmModuleBlockEntity(p,s);}
-    @Override public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level l,BlockState s,BlockEntityType<T> t){return l.isClientSide?null:(w,p,state,e)->{if (e instanceof ZpmModuleBlockEntity z)z.updateLight();};}
-    @Override public java.util.List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder){
-        var stack=new ItemStack(this);
-        if (builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof ZpmModuleBlockEntity z)ZpmEnergy.set(stack,z.energy());
+
+public final class ZpmModuleBlock extends GTBlock implements EntityBlock, SimpleWaterloggedBlock {
+    public static final IntegerProperty CHARGE = IntegerProperty.create("charge", 0, 15);
+    private static final VoxelShape SHAPE = Shapes.or(Block.box(4, 0, 4, 12, 4, 12), Block.box(5, 4, 5, 11, 12, 11));
+
+    public ZpmModuleBlock(Properties properties) {
+        super(properties.noOcclusion().lightLevel(s -> s.getValue(CHARGE)));
+        registerDefaultState(defaultBlockState().setValue(CHARGE, 0).setValue(GTWaterloggable.WATERLOGGED, false));
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> b) {
+        b.add(GTWaterloggable.WATERLOGGED);
+        b.add(CHARGE);
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState s, BlockGetter w, BlockPos p, CollisionContext c) {
+        return SHAPE;
+    }
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos p, BlockState s) {
+        return new ZpmModuleBlockEntity(p, s);
+    }
+
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level l, BlockState s, BlockEntityType<T> t) {
+        return l.isClientSide
+                ? null
+                : (w, p, state, e) -> {
+                    if (e instanceof ZpmModuleBlockEntity z) z.updateLight();
+                };
+    }
+
+    @Override
+    public java.util.List<ItemStack> getDrops(
+            BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
+        var stack = new ItemStack(this);
+        if (builder.getOptionalParameter(
+                        net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY)
+                instanceof ZpmModuleBlockEntity z) ZpmEnergy.set(stack, z.energy());
         return java.util.List.of(stack);
     }
-//? if >=1.21.1 {
-    /*@Override public void appendHoverText(ItemStack s,net.minecraft.world.item.Item.TooltipContext context,java.util.List<net.minecraft.network.chat.Component> lines,TooltipFlag f){
-*///?} else {
-    @Override public void appendHoverText(ItemStack s,BlockGetter w,java.util.List<net.minecraft.network.chat.Component> lines,TooltipFlag f){
-//?}
-        lines.add(gregtech.client.TooltipHelper.stat("gt6ce.zpm.charge",net.minecraft.ChatFormatting.GREEN,ZpmEnergy.stored(s),ZpmEnergy.CAPACITY));
-        lines.add(net.minecraft.network.chat.Component.translatable("gt6ce.zpm.non_rechargeable").withStyle(net.minecraft.ChatFormatting.GOLD));
+
+    @Override
+    protected void appendTooltip(
+            ItemStack s, BlockGetter w, java.util.List<net.minecraft.network.chat.Component> lines, TooltipFlag f) {
+        lines.add(gregtech.client.TooltipHelper.stat(
+                "gt6ce.zpm.charge", net.minecraft.ChatFormatting.GREEN, ZpmEnergy.stored(s), ZpmEnergy.CAPACITY));
+        lines.add(net.minecraft.network.chat.Component.translatable("gt6ce.zpm.non_rechargeable")
+                .withStyle(net.minecraft.ChatFormatting.GOLD));
     }
 
     @Override
@@ -43,8 +75,13 @@ public final class ZpmModuleBlock extends Block implements EntityBlock, SimpleWa
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
-            LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+    public BlockState updateShape(
+            BlockState state,
+            Direction side,
+            BlockState neighbor,
+            LevelAccessor level,
+            BlockPos pos,
+            BlockPos neighborPos) {
         GTWaterloggable.updateShape(state, level, pos);
         return super.updateShape(state, side, neighbor, level, pos, neighborPos);
     }

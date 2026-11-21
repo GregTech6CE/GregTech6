@@ -9,9 +9,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-//? if >=1.21.1 {
-/*import net.minecraft.world.ItemInteractionResult;
-*///?}
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -27,8 +24,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import gregtech.content.block.GTHorizontalDirectionalBlock;
 /** GT6 manual tool stations: mortar, grind stone, sifting table. */
-public class ManualToolBlock extends net.minecraft.world.level.block.HorizontalDirectionalBlock implements EntityBlock, ToolInteractionTarget {
+public class ManualToolBlock extends GTHorizontalDirectionalBlock implements EntityBlock, ToolInteractionTarget {
     public static final net.minecraft.world.level.block.state.properties.BooleanProperty STONE = net.minecraft.world.level.block.state.properties.BooleanProperty.create("stone");
 
     private final ManualToolBlockEntity.Kind kind;
@@ -52,26 +50,8 @@ public class ManualToolBlock extends net.minecraft.world.level.block.HorizontalD
         };
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    public com.mojang.serialization.MapCodec<? extends net.minecraft.world.level.block.HorizontalDirectionalBlock> codec() {
-        return com.mojang.serialization.MapCodec.unit(this);
-    }
-
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hit) {
         // both hands fire use(); handling the off hand double-triggers
         // (insert+extract in one click, double withdrawals, armor swap-backs)
@@ -148,11 +128,7 @@ public class ManualToolBlock extends net.minecraft.world.level.block.HorizontalD
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-*///?} else {
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
-//?}
+    protected void appendTooltip(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
         gregtech.client.FunctionalBlockTooltips.appendManual(kind.name(), getExplosionResistance(), tooltip);
     }
 }

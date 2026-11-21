@@ -10,8 +10,6 @@ import gregtech.engine.machine.MachineSpec;
 
 import gregtech.engine.tool.GTToolHelper;
 
-import gregtech.engine.tool.ToolInteractions;
-
 
 
 import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
@@ -106,23 +104,11 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements gregtech.
 
     private Supplier<BlockEntityType<?>> beTypeSupplier = () -> null;
 
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state,
-            Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?}
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hit) {
         // Wrench rotation first (from GTFacingMachineBlock)
-        InteractionResult wrenchResult = super.use(state, level, pos, player, hand, hit);
+        InteractionResult wrenchResult = super.useBlock(state, level, pos, player, hand, hit);
         if (wrenchResult != InteractionResult.PASS) {
             return wrenchResult;
         }

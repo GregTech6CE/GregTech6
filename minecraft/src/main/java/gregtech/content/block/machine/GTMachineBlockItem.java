@@ -1,17 +1,18 @@
 package gregtech.content.block.machine;
 
 import gregtech.client.TankTooltips;
+import gregtech.content.item.GTBlockItem;
 import java.util.List;
 import javax.annotation.Nullable;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 
 /** Tank, fluid pipe and item pipe item with the original stack limit and tooltips. */
-public class GTMachineBlockItem extends BlockItem {
+public class GTMachineBlockItem extends GTBlockItem {
     public GTMachineBlockItem(Block block, Properties properties) {
         super(block, properties);
     }
@@ -25,22 +26,16 @@ public class GTMachineBlockItem extends BlockItem {
         return super.getMaxStackSize(stack);
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> lines, TooltipFlag flag) {
-        super.appendHoverText(stack, context, lines, flag);
-        if (getBlock() instanceof TankBlock tank)
-            TankTooltips.appendTank(tank.spec(), stack, context.registries(), lines);
-        if (getBlock() instanceof FluidPipeBlock pipe) TankTooltips.appendPipe(pipe.spec(), lines);
-        if (getBlock() instanceof ItemPipeBlock pipe) TankTooltips.appendItemPipe(pipe.spec(), lines);
-    }
-*///?} else {
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-        super.appendHoverText(stack, level, tooltip, flag);
-        if (getBlock() instanceof TankBlock tank) TankTooltips.appendTank(tank.spec(), stack, tooltip);
+    protected void appendTooltip(ItemStack stack, @Nullable Level level,
+            @Nullable HolderLookup.Provider registries, List<Component> tooltip, TooltipFlag flag) {
+        if (getBlock() instanceof TankBlock tank)
+//? if >=1.21.1 {
+            /*TankTooltips.appendTank(tank.spec(), stack, registries, tooltip);
+*///?} else {
+            TankTooltips.appendTank(tank.spec(), stack, tooltip);
+//?}
         if (getBlock() instanceof FluidPipeBlock pipe) TankTooltips.appendPipe(pipe.spec(), tooltip);
         if (getBlock() instanceof ItemPipeBlock pipe) TankTooltips.appendItemPipe(pipe.spec(), tooltip);
     }
-//?}
 }

@@ -5,7 +5,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import gregtech.engine.GTWaterloggable;
-import gregtech.engine.tool.ToolInteractions;
 import gregtech.content.blockentity.BushBlockEntity;
 import gregtech.content.plant.GTBerryBushes;
 import net.minecraft.core.BlockPos;
@@ -37,6 +36,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+import gregtech.content.block.GTBlock;
 /**
  * GT6's berry bush ({@code MultiTileEntityBush}, multi-tile 32759).
  *
@@ -49,23 +49,10 @@ import java.util.List;
  * {@link GTBerryBushes#stageColour} gives GT6's exact colour per stage, applied by the client colour
  * handler.
  */
-public class BushBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
+public class BushBlock extends GTBlock implements EntityBlock, SimpleWaterloggedBlock {
     /** GT6 {@code onBlockActivated3}: harvest when ripe, otherwise take a berry as the bush's type. */
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hit) {
         if (level.isClientSide) return InteractionResult.SUCCESS;
         if (!(level.getBlockEntity(pos) instanceof BushBlockEntity bush)) return InteractionResult.PASS;

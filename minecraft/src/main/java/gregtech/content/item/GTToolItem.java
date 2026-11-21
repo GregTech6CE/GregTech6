@@ -48,7 +48,7 @@ import java.util.UUID;
 
 
 /** One registered item per {@link GTToolType} (GT6 {@code gt.metatool.01} split by tool kind). */
-public class GTToolItem extends Item {
+public class GTToolItem extends GTItem {
 
 //? if >=1.21.1 {
 /**///?} else {
@@ -328,12 +328,7 @@ if (!(context.getLevel().getBlockEntity(pos) instanceof SmeltingCrucibleBlockEnt
     }
 
     @Override
-
-//? if >=1.21.1 {
-/*    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-*///?} else {
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-//?}
+    protected void appendTooltip(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
 
         if (GTToolHelper.isTool(stack)) {
             GTToolTooltips.append(stack, tooltip, flag);

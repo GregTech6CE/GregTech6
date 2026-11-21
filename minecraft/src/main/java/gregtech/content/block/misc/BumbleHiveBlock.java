@@ -21,6 +21,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+import gregtech.content.block.GTBlock;
 /**
  * GT6's wild bumblebee hive ({@code MultiTileEntityBumbleHive}): a painted block that holds the
  * colony the world generator put in it.
@@ -33,7 +34,7 @@ import java.util.List;
  * {@code mDroppable}, and only then does the hive hand out its contents — a piston, an explosion or
  * {@code /setblock} destroys the colony with the block.</p>
  */
-public class BumbleHiveBlock extends Block implements EntityBlock {
+public class BumbleHiveBlock extends GTBlock implements EntityBlock {
 
     /** Legacy colour state; current fixed variants omit this property. */
     public static final EnumProperty<DyeColor> COLOR =
@@ -94,18 +95,10 @@ public class BumbleHiveBlock extends Block implements EntityBlock {
 
     /** GT6's thermometer tooltip ({@code addToolTips}), reusing the port's own lang key. */
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip,
-*///?} else {
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip,
-//?}
+    protected void appendTooltip(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip,
                                 TooltipFlag flag) {
         tooltip.add(Component.translatable("tooltip.gt6ce.crucible.thermometer").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
-//? if >=1.21.1 {
-        /*super.appendHoverText(stack, context, tooltip, flag);
-*///?} else {
-        super.appendHoverText(stack, level, tooltip, flag);
-//?}
+        super.appendTooltip(stack, level, tooltip, flag);
     }
 
     @Override

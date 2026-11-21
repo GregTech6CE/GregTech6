@@ -1,6 +1,9 @@
 package gregtech.content.block.sensor;
 
+import gregtech.content.block.GTDirectionalBlock;
 import gregtech.content.blockentity.sensor.SensorBlockEntity;
+import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -10,7 +13,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -18,42 +20,28 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 
-import javax.annotation.Nullable;
-import java.util.List;
-
 /** GT6 sensor panel block (fluid/item/energy/progress meters). */
-public class SensorBlock extends DirectionalBlock implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget {
+public class SensorBlock extends GTDirectionalBlock implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget {
 
-    @Nullable private final SensorBlockEntity.Kind kind;
-    @Nullable private final gregtech.api.addon.platform.AddonSensor addon;
+    @Nullable
+    private final SensorBlockEntity.Kind kind;
 
-//? if >=1.21.1 {
-    /*@Override
-    public com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec() {
-        return com.mojang.serialization.MapCodec.unit(this);
-    }
+    @Nullable
+    private final gregtech.api.addon.platform.AddonSensor addon;
 
     @Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
-        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
-    }
-
-    @Override
-    protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
-        return use(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override
-//?}
-    public net.minecraft.world.InteractionResult use(BlockState state, Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
+    protected net.minecraft.world.InteractionResult useBlock(
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            net.minecraft.world.entity.player.Player player,
+            net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
         var tool = player.getItemInHand(hand);
         if (gregtech.engine.tool.GTToolHelper.isMonkeyWrench(tool)) {
             var side = gregtech.engine.tool.ToolInteractions.selectedFace(hit);
-            if (!player.mayBuild() || !level.mayInteract(player, pos)
-                    || side == state.getValue(FACING)) return net.minecraft.world.InteractionResult.PASS;
+            if (!player.mayBuild() || !level.mayInteract(player, pos) || side == state.getValue(FACING))
+                return net.minecraft.world.InteractionResult.PASS;
             if (tool.getItem() instanceof gregtech.content.item.ElectricToolItem electric
                     && !electric.canInteract(tool)) return net.minecraft.world.InteractionResult.PASS;
             if (!level.isClientSide && level.getBlockEntity(pos) instanceof SensorBlockEntity sensor) {
@@ -64,12 +52,18 @@ public class SensorBlock extends DirectionalBlock implements EntityBlock, gregte
         }
         if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit))
             return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
-        if (hit.getDirection() != state.getValue(FACING) || !player.mayBuild() || !level.mayInteract(player, pos)) return net.minecraft.world.InteractionResult.PASS;
-        var point = gregtech.engine.block.FaceCoordinates.pixels(hit.getDirection(),
-                hit.getLocation().x - pos.getX(), hit.getLocation().y - pos.getY(), hit.getLocation().z - pos.getZ());
+        if (hit.getDirection() != state.getValue(FACING) || !player.mayBuild() || !level.mayInteract(player, pos))
+            return net.minecraft.world.InteractionResult.PASS;
+        var point = gregtech.engine.block.FaceCoordinates.pixels(
+                hit.getDirection(),
+                hit.getLocation().x - pos.getX(),
+                hit.getLocation().y - pos.getY(),
+                hit.getLocation().z - pos.getZ());
         var held = player.getItemInHand(hand);
-        boolean screwdriver = gregtech.engine.tool.GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.SCREWDRIVER);
-        boolean reset = gregtech.engine.tool.GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.SOFT_HAMMER);
+        boolean screwdriver =
+                gregtech.engine.tool.GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.SCREWDRIVER);
+        boolean reset =
+                gregtech.engine.tool.GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.SOFT_HAMMER);
         if (level.isClientSide) {
             // Predict the click so the panel redraws in the same frame; the server's block-entity
             // update then overwrites this state.
@@ -77,8 +71,10 @@ public class SensorBlock extends DirectionalBlock implements EntityBlock, gregte
                 sensor.control(point.x(), point.y(), screwdriver, reset);
             return net.minecraft.world.InteractionResult.SUCCESS;
         }
-        if (!(level.getBlockEntity(pos) instanceof SensorBlockEntity sensor)) return net.minecraft.world.InteractionResult.PASS;
-        if (!sensor.control(point.x(), point.y(), screwdriver, reset)) return net.minecraft.world.InteractionResult.PASS;
+        if (!(level.getBlockEntity(pos) instanceof SensorBlockEntity sensor))
+            return net.minecraft.world.InteractionResult.PASS;
+        if (!sensor.control(point.x(), point.y(), screwdriver, reset))
+            return net.minecraft.world.InteractionResult.PASS;
         if (screwdriver || reset) gregtech.engine.tool.GTToolHelper.damageForUse(held, 1, player);
         return net.minecraft.world.InteractionResult.CONSUME;
     }
@@ -99,28 +95,46 @@ public class SensorBlock extends DirectionalBlock implements EntityBlock, gregte
     }
 
     /** Null for an addon sensor. */
-    @Nullable public SensorBlockEntity.Kind kind() { return kind; }
+    @Nullable
+    public SensorBlockEntity.Kind kind() {
+        return kind;
+    }
 
     /** Null for a built-in sensor. */
-    @Nullable public gregtech.api.addon.platform.AddonSensor addon() { return addon; }
+    @Nullable
+    public gregtech.api.addon.platform.AddonSensor addon() {
+        return addon;
+    }
 
-    public String kindName() { return addon != null ? addon.id() : kind.name(); }
+    public String kindName() {
+        return addon != null ? addon.id() : kind.name();
+    }
 
-    @Override public net.minecraft.world.phys.shapes.VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos,
+    @Override
+    public net.minecraft.world.phys.shapes.VoxelShape getShape(
+            BlockState state,
+            BlockGetter level,
+            BlockPos pos,
             net.minecraft.world.phys.shapes.CollisionContext context) {
         int[] b = gregtech.engine.sensor.SensorPanelGeometry.bounds(state.getValue(FACING));
         return Block.box(b[0], b[1], b[2], b[3], b[4], b[5]);
     }
-    @Override public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+
+    @Override
+    public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return gregtech.engine.tool.GTToolHelper.matchesTool(tool, gregtech.engine.tool.GTToolType.WRENCH)
-                ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING, gregtech.content.block.machine.MachineRotationType.ALL) : null;
+                ? gregtech.engine.tool.ToolInteractionSpec.facing(
+                        FACING, gregtech.content.block.machine.MachineRotationType.ALL)
+                : null;
     }
+
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
     }
 
-    @Override public void toolStateChanged(Level level, BlockPos pos, BlockState state) {
+    @Override
+    public void toolStateChanged(Level level, BlockPos pos, BlockState state) {
         if (level.getBlockEntity(pos) instanceof SensorBlockEntity sensor) sensor.resetInputSide();
     }
 
@@ -139,7 +153,8 @@ public class SensorBlock extends DirectionalBlock implements EntityBlock, gregte
     @Nullable
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide || type != gregtech.content.registry.GTBlockEntities.SENSOR.get()) return null;
         return (BlockEntityTicker<T>) (BlockEntityTicker<SensorBlockEntity>) SensorBlockEntity::serverTick;
     }
@@ -161,11 +176,8 @@ public class SensorBlock extends DirectionalBlock implements EntityBlock, gregte
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,List<Component> tooltip, TooltipFlag flag) {
-*///?} else {
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
-//?}
+    protected void appendTooltip(
+            ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
         gregtech.client.SensorTooltips.add(tooltip, this);
     }
 }
