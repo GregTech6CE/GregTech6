@@ -26,6 +26,8 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 //?}
 import java.util.*;
 
+import javax.annotation.Nullable;
+
 /** GT6 gas turbines: solid 3x3x4 structure, front fuel and bottom exhaust. */
 public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity implements MultiblockPortOwner, IFluidHandler,
         gregtech.api.platform.machine.MachineControl.Provider, gregtech.engine.multiblock.tracking.TrackedMultiblock {
@@ -390,51 +392,36 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
     public long getEnergyCapacity(GregTechTags.Tag type, Direction side) {
         return type == GregTechTags.Energy.RU ? grade().outputMaximum() : type == GregTechTags.Energy.HU ? grade().inputMaximum() : 0;
     }
-//? if >=1.21.1 {
-    /*@Override
-    protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
+    @Override
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putLong("gt.ru", ruStored);
         tag.putLong("gt.fuel", fuelEnergy);
         tag.putBoolean("gt.stopped", stopped);
         tag.putBoolean("gt.rotor_formed", rotorFormed);
         tag.putBoolean("gt.rotor_active", rotorActive);
-        tag.put("gt.tank", fuel.writeToNBT(lookup, new CompoundTag()));
+//? if >=1.21.1 {
+        /*tag.put("gt.tank", fuel.writeToNBT(lookup, new CompoundTag()));
         for (int i = 0; i < 3; i++) tag.put("gt.exhaust" + i, exhaust[i].writeToNBT(lookup, new CompoundTag()));
+*///?} else {
+        tag.put("gt.tank", fuel.writeToNBT(new CompoundTag()));
+        for (int i = 0; i < 3; i++) tag.put("gt.exhaust" + i, exhaust[i].writeToNBT(new CompoundTag()));
+//?}
     }
 
     @Override
-    public void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         ruStored = Math.max(0, Math.min(grade().outputMaximum(), tag.getLong("gt.ru")));
         fuelEnergy = Math.max(0, tag.getLong("gt.fuel"));
         stopped = tag.getBoolean("gt.stopped");
         rotorFormed = tag.getBoolean("gt.rotor_formed");
         rotorActive = rotorFormed && tag.getBoolean("gt.rotor_active");
-        gregtech.engine.fluid.NativeMachineTankData.restore(fuel, tag.getCompound("gt.tank"), lookup);
+//? if >=1.21.1 {
+        /*gregtech.engine.fluid.NativeMachineTankData.restore(fuel, tag.getCompound("gt.tank"), lookup);
         for (int i = 0; i < 3; i++) gregtech.engine.fluid.NativeMachineTankData.restore(exhaust[i], tag.getCompound("gt.exhaust" + i),
                 lookup);
 *///?} else {
-    @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        tag.putLong("gt.ru", ruStored);
-        tag.putLong("gt.fuel", fuelEnergy);
-        tag.putBoolean("gt.stopped", stopped);
-        tag.putBoolean("gt.rotor_formed", rotorFormed);
-        tag.putBoolean("gt.rotor_active", rotorActive);
-        tag.put("gt.tank", fuel.writeToNBT(new CompoundTag()));
-        for (int i = 0; i < 3; i++) tag.put("gt.exhaust" + i, exhaust[i].writeToNBT(new CompoundTag()));
-    }
-
-    @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        ruStored = Math.max(0, Math.min(grade().outputMaximum(), tag.getLong("gt.ru")));
-        fuelEnergy = Math.max(0, tag.getLong("gt.fuel"));
-        stopped = tag.getBoolean("gt.stopped");
-        rotorFormed = tag.getBoolean("gt.rotor_formed");
-        rotorActive = rotorFormed && tag.getBoolean("gt.rotor_active");
         var data = tag.getCompound("gt.tank");
         if (data.contains("Fluid")) {
             var fluid = FluidStack.loadFluidStackFromNBT(data.getCompound("Fluid"));

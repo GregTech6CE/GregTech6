@@ -125,11 +125,8 @@ public class FilterBlock extends net.minecraft.world.level.block.DirectionalBloc
         var stack = new net.minecraft.world.item.ItemStack(this);
         var entity = builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY);
         if (entity instanceof FilterBlockEntity) {
-//? if >=1.21.1 {
-            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(entity, entity.saveWithId(builder.getLevel().registryAccess()));
-*///?} else {
-            var data = gregtech.content.cover.ComponentCoverFallback.forItem(entity, entity.saveWithoutMetadata());
-//?}
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(entity,
+                    gregtech.engine.stack.NbtCompat.saveForBlockItem(entity, builder.getLevel().registryAccess()));
             gregtech.engine.stack.BlockEntityData.write(stack, data);
         }
         return java.util.List.of(stack);

@@ -8,20 +8,15 @@ import gregtech.engine.machine.TankSpec;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.content.block.machine.FluidPipeBlock;
 import gregtech.content.block.machine.TankBlock;
+import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.data.GregTechConstants;
-
-
-//? if >=1.21.1 {
-//?} else {
-//?}
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.registry.GTFluids;
+import gregtech.engine.stack.NbtCompat;
 
-//? if >=1.21.1 {
-//?} else {
-//?}
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -36,8 +31,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 //? if >=1.21.1 {
-/*import net.minecraft.core.HolderLookup;
-import net.neoforged.neoforge.capabilities.Capabilities;
+/*import net.neoforged.neoforge.capabilities.Capabilities;
 import gregtech.platform.neoforge.transport.FluidTransportEnvironment;
 
 
@@ -57,9 +51,9 @@ import org.jetbrains.annotations.Nullable;
 
 /** GT6 fluid container tile entity. Handles wood barrels, plastic canisters, and metal drums. */
 //? if >=1.21.1 {
-/*public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregtech.engine.fluid.FluidToolTarget, gregtech.content.cover.PanelCoverHost, gregtech.api.sensor.ProgressSensorSource {
+/*public class TankBlockEntity extends GTBlockEntity implements IFluidHandler, gregtech.engine.fluid.FluidToolTarget, gregtech.content.cover.PanelCoverHost, gregtech.api.sensor.ProgressSensorSource {
 *///?} else {
-public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregtech.engine.fluid.FluidToolTarget, gregtech.content.cover.PanelCoverHost, gregtech.api.sensor.ProgressSensorSource {    private final java.util.Map<Direction, LazyOptional<IFluidHandler>> componentFaceCaps = new java.util.EnumMap<>(Direction.class);
+public class TankBlockEntity extends GTBlockEntity implements IFluidHandler, gregtech.engine.fluid.FluidToolTarget, gregtech.content.cover.PanelCoverHost, gregtech.api.sensor.ProgressSensorSource {    private final java.util.Map<Direction, LazyOptional<IFluidHandler>> componentFaceCaps = new java.util.EnumMap<>(Direction.class);
 
 //?}
     private final gregtech.content.cover.ComponentCoverStorage componentCovers = new gregtech.content.cover.ComponentCoverStorage(this);
@@ -420,10 +414,10 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
      */
 //? if >=1.21.1 {
     /*public CompoundTag saveItemData(HolderLookup.Provider lookup) {
-        CompoundTag tag = saveWithoutMetadata(lookup);
+        CompoundTag tag = NbtCompat.saveWithoutMetadata(this, lookup);
 *///?} else {
     public CompoundTag saveItemData() {
-        CompoundTag tag = saveWithoutMetadata();
+        CompoundTag tag = NbtCompat.saveWithoutMetadata(this, null);
 //?}
         if (temperature == GregTechConstants.DEF_ENV_TEMP) tag.remove(NBT_TEMPERATURE);
         if (!autoOutput) tag.remove(NBT_AUTO_OUTPUT);
@@ -447,92 +441,50 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-        componentCovers.load(tag,lookup);
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        componentCovers.load(tag, null);
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
+        componentCovers.load(tag, lookup);
         temperature = tag.contains(NBT_TEMPERATURE) ? tag.getLong(NBT_TEMPERATURE) : GregTechConstants.DEF_ENV_TEMP;
         autoOutput = tag.contains(NBT_AUTO_OUTPUT) && tag.getBoolean(NBT_AUTO_OUTPUT);
         softHammerState = tag.contains(NBT_SOFT_HAMMER) && tag.getBoolean(NBT_SOFT_HAMMER);
+        if (tag.contains("gt.tank")) NbtCompat.readTank(tank, tag.getCompound("gt.tank"), lookup);
 //? if >=1.21.1 {
-        /*if (tag.contains("gt.tank")) tank.readFromNBT(tag.getCompound("gt.tank"),lookup);
-        fluidAccessKnown = false;
-*///?} else {
-        if (tag.contains("gt.tank")) tank.readFromNBT(tag.getCompound("gt.tank"));
-//?}
+        /*fluidAccessKnown = false;
+*///?}
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-        componentCovers.save(tag,lookup);
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        componentCovers.save(tag, null);
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
+        componentCovers.save(tag, lookup);
         tag.putLong(NBT_TEMPERATURE, temperature);
         tag.putBoolean(NBT_AUTO_OUTPUT, autoOutput);
         tag.putBoolean(NBT_SOFT_HAMMER, softHammerState);
         CompoundTag tankTag = new CompoundTag();
-//? if >=1.21.1 {
-        /*tank.writeToNBT(tankTag,lookup);
-*///?} else {
-        tank.writeToNBT(tankTag);
-//?}
+        NbtCompat.writeTank(tank, tankTag, lookup);
         tag.put("gt.tank", tankTag);
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public CompoundTag getUpdateTag(HolderLookup.Provider lookup) {
-        CompoundTag tag = super.getUpdateTag(lookup);
-*///?} else {
-    public CompoundTag getUpdateTag() {
-        CompoundTag tag = super.getUpdateTag();
-//?}
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.writeUpdateTag(tag, lookup);
         tag.putLong(NBT_TEMPERATURE, temperature);
         tag.putBoolean(NBT_AUTO_OUTPUT, autoOutput);
         tag.putBoolean(NBT_SOFT_HAMMER, softHammerState);
         CompoundTag tankTag = new CompoundTag();
-//? if >=1.21.1 {
-        /*tank.writeToNBT(tankTag,lookup);
-*///?} else {
-        tank.writeToNBT(tankTag);
-//?}
+        NbtCompat.writeTank(tank, tankTag, lookup);
         tag.put("gt.tank", tankTag);
-//? if >=1.21.1 {
-        /*componentCovers.save(tag,lookup);
-*///?} else {
-        componentCovers.save(tag, null);
-//?}
-        return tag;
+        componentCovers.save(tag, lookup);
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void handleUpdateTag(CompoundTag tag,HolderLookup.Provider lookup) {
-        super.handleUpdateTag(tag,lookup);
-        componentCovers.load(tag,lookup);
-*///?} else {
-    public void handleUpdateTag(CompoundTag tag) {
-        super.handleUpdateTag(tag);
-        componentCovers.load(tag, null);
-//?}
+    protected void readUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.readUpdateTag(tag, lookup);
+        componentCovers.load(tag, lookup);
         if (tag.contains(NBT_TEMPERATURE)) temperature = tag.getLong(NBT_TEMPERATURE);
         if (tag.contains(NBT_AUTO_OUTPUT)) autoOutput = tag.getBoolean(NBT_AUTO_OUTPUT);
         if (tag.contains(NBT_SOFT_HAMMER)) softHammerState = tag.getBoolean(NBT_SOFT_HAMMER);
-//? if >=1.21.1 {
-        /*if (tag.contains("gt.tank")) tank.readFromNBT(tag.getCompound("gt.tank"),lookup);
-*///?} else {
-        if (tag.contains("gt.tank")) tank.readFromNBT(tag.getCompound("gt.tank"));
-//?}
+        if (tag.contains("gt.tank")) NbtCompat.readTank(tank, tag.getCompound("gt.tank"), lookup);
     }
 
     public long getTemperature() { return temperature; }

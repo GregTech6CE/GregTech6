@@ -47,11 +47,8 @@ public final class OriginalLightningRodControllerBlock extends Block implements 
     @Override public List<ItemStack> getDrops(BlockState state, LootParams.Builder context) {
         ItemStack stack = new ItemStack(this);
         if (context.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof LightningRodControllerBlockEntity rod) {
-//? if >=1.21.1 {
-            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(rod, rod.saveWithId(rod.getLevel().registryAccess()));
-*///?} else {
-            var data = gregtech.content.cover.ComponentCoverFallback.forItem(rod, rod.saveWithoutMetadata());
-//?}
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(rod,
+                    gregtech.engine.stack.NbtCompat.saveForBlockItem(rod, context.getLevel().registryAccess()));
             data.remove("gt.energy");
             gregtech.engine.stack.BlockEntityData.write(stack, data);
         }
@@ -65,11 +62,8 @@ public final class OriginalLightningRodControllerBlock extends Block implements 
 //?}
         ItemStack stack = new ItemStack(this);
         if (level.getBlockEntity(pos) instanceof LightningRodControllerBlockEntity rod) {
-//? if >=1.21.1 {
-            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(rod, rod.saveWithId(rod.getLevel().registryAccess()));
-*///?} else {
-            var data = gregtech.content.cover.ComponentCoverFallback.forItem(rod, rod.saveWithoutMetadata());
-//?}
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(rod,
+                    gregtech.engine.stack.NbtCompat.saveForBlockItem(rod, rod.getLevel().registryAccess()));
             data.remove("gt.energy");
             gregtech.engine.stack.BlockEntityData.write(stack, data);
         }

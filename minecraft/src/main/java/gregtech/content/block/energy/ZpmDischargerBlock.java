@@ -40,11 +40,8 @@ public final class ZpmDischargerBlock extends AutoToolBlock {
     @Override public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState s,net.minecraft.world.level.storage.loot.LootParams.Builder b){
         var stack=new net.minecraft.world.item.ItemStack(asItem());
         if (b.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof ZpmDischargerBlockEntity z) {
-//? if >=1.21.1 {
-            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(z, z.saveWithId(b.getLevel().registryAccess()));
-*///?} else {
-            var data = gregtech.content.cover.ComponentCoverFallback.forItem(z, z.saveWithoutMetadata());
-//?}
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(z,
+                    gregtech.engine.stack.NbtCompat.saveForBlockItem(z, b.getLevel().registryAccess()));
             data.remove("gt.zpm.buffer");
             data.remove("gt.stopped");
             gregtech.engine.stack.BlockEntityData.write(stack, data);

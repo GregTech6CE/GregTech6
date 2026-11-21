@@ -3,9 +3,9 @@ package gregtech.content.blockentity;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.client.model.data.ModelData;
@@ -22,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
  * carrying a material — rocks above ore veins use the vein material, telling the
  * player what generates below. Drops the {@code rockGt} item of its material.
  */
-public class RockBlockEntity extends BlockEntity {
+public class RockBlockEntity extends GTBlockEntity {
     public static final String TAG_MATERIAL = "material";
     public static final String TAG_RAW_ORE = "rawOre";
     public static final String TAG_ITEM = "item";
@@ -99,13 +99,8 @@ public class RockBlockEntity extends BlockEntity {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         String s = tag.getString(TAG_MATERIAL);
         boolean retired = gregtech.content.block.stone.RetiredStoneIds.isMaterial(s);
         s = gregtech.content.block.stone.RetiredStoneIds.material(s);
@@ -129,13 +124,8 @@ public class RockBlockEntity extends BlockEntity {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         if (!DEFAULT_MATERIAL.equals(material)) tag.putString(TAG_MATERIAL, material);
         if (rawOre) tag.putBoolean(TAG_RAW_ORE, true);
         if (!itemId.isEmpty()) tag.putString(TAG_ITEM, itemId);
@@ -143,13 +133,8 @@ public class RockBlockEntity extends BlockEntity {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider registries) {
-        return saveWithoutMetadata(registries);
-*///?} else {
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
-//?}
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        writeWithoutMetadata(tag, lookup);
     }
 
     @Nullable

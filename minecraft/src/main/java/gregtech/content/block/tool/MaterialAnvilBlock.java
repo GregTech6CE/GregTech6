@@ -45,32 +45,21 @@ public final class MaterialAnvilBlock extends ShapedToolBlock implements EntityB
         if (!level.isClientSide && level.getBlockEntity(pos) instanceof MaterialAnvilBlockEntity anvil) anvil.interact(player, hand, hit);
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
-//? if >=1.21.1 {
-    /*private ItemStack packed(BlockEntity entity,net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
     private ItemStack packed(BlockEntity entity) {
-//?}
         ItemStack stack = new ItemStack(this);
         if (entity instanceof MaterialAnvilBlockEntity anvil) {
-//? if >=1.21.1 {
-            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(anvil,anvil.saveWithId(lookup));
-*///?} else {
-            var data = gregtech.content.cover.ComponentCoverFallback.forItem(anvil,anvil.saveWithoutMetadata());
-//?}
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(anvil,
+                    gregtech.engine.stack.NbtCompat.saveForBlockItem(anvil, anvil.getLevel().registryAccess()));
             data.remove("gt.work0"); data.remove("gt.work1");
             gregtech.engine.stack.BlockEntityData.write(stack, data);
         }
         return stack;
     }
     @Override public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
-//? if >=1.21.1 {
-        /*return List.of(packed(builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY),builder.getLevel().registryAccess()));
-*///?} else {
         return List.of(packed(builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY)));
-//?}
     }
 //? if >=1.21.1 {
-    /*@Override public ItemStack getCloneItemStack(BlockState state,net.minecraft.world.phys.HitResult hit,LevelReader level,BlockPos pos,Player player) { return packed(level.getBlockEntity(pos),level.registryAccess()); }
+    /*@Override public ItemStack getCloneItemStack(BlockState state,net.minecraft.world.phys.HitResult hit,LevelReader level,BlockPos pos,Player player) { return packed(level.getBlockEntity(pos)); }
     @Override public void appendHoverText(ItemStack stack,net.minecraft.world.item.Item.TooltipContext context,List<net.minecraft.network.chat.Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {
 *///?} else {
     @Override public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) { return packed(level.getBlockEntity(pos)); }

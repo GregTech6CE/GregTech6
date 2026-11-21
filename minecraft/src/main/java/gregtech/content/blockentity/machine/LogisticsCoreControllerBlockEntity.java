@@ -19,6 +19,7 @@ import gregtech.content.data.GregTechTags;
 import gregtech.content.registry.GTBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -33,6 +34,8 @@ import net.minecraftforge.items.ItemStackHandler;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 /** GT6 Logistics Core structure, EU input, network discovery and private 108-slot buffers. */
 public final class LogisticsCoreControllerBlockEntity extends GTEnergyBlockEntity
@@ -399,20 +402,9 @@ implements MultiblockPortOwner, LogisticsCoverHost, BlockContents, gregtech.engi
         return role == MultiblockLayout.Role.ENERGY_INPUT && type == GregTechTags.Energy.EU;
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-        saveData(tag, lookup);
-    }
-*///?} else {
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        saveData(tag, null);
-    }
-//?}
-    private void saveData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putLong("gt.energy", energy);
         tag.put("gt.items", gregtech.engine.stack.HandlerNbt.save(items, lookup));
         covers.save(tag, lookup);
@@ -434,20 +426,9 @@ implements MultiblockPortOwner, LogisticsCoverHost, BlockContents, gregtech.engi
         tag.putInt("gt.cpu.conversion.used", usedProcessors.conversion());
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-        loadData(tag, lookup);
-    }
-*///?} else {
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        loadData(tag, null);
-    }
-//?}
-    private void loadData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         energy = Math.max(0, tag.getLong("gt.energy"));
         usedProcessors = new LogisticsCpuDisplay.Usage(
                 Math.max(0, tag.getInt("gt.cpu.logic.used")),

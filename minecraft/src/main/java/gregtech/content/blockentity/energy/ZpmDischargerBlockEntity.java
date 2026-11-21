@@ -16,6 +16,9 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.*;
 //?}
 import java.util.*;
+
+import javax.annotation.Nullable;
+
 /** GT6 11170/11171: one artifact, QU buffer, one front packet per tick. */
 public final class ZpmDischargerBlockEntity extends GTEnergyBlockEntity implements gregtech.api.platform.machine.MachineControl.Provider {
     private long buffer;
@@ -84,21 +87,19 @@ public final class ZpmDischargerBlockEntity extends GTEnergyBlockEntity implemen
     @Override public long getEnergyStored(GregTechTags.Tag t,Direction s){return t==GregTechTags.Energy.QU?totalEnergy():0;}
     @Override public long getEnergyCapacity(GregTechTags.Tag t,Direction s){return t==GregTechTags.Energy.QU?ZpmEnergy.CAPACITY+ZpmEnergy.PACKET*320:0;}
 //? if >=1.21.1 {
-    /*@Override protected void saveAdditional(CompoundTag t,net.minecraft.core.HolderLookup.Provider lookup){super.saveAdditional(t,lookup);saveData(t,lookup);}
-    @Override protected void loadAdditional(CompoundTag t,net.minecraft.core.HolderLookup.Provider lookup){super.loadAdditional(t,lookup);loadData(t,lookup);}
-*///?} else {
+//?} else {
     @Override public <T> LazyOptional<T> getCapability(Capability<T> c,Direction s){return c==ForgeCapabilities.ITEM_HANDLER&&!isRemoved()?items.cast():super.getCapability(c,s);}
     @Override public void invalidateCaps(){super.invalidateCaps();items.invalidate();}
     @Override public void reviveCaps(){super.reviveCaps();items=LazyOptional.of(()->inventory);}
-    @Override protected void saveAdditional(CompoundTag t){super.saveAdditional(t);saveData(t,null);}
-    @Override public void load(CompoundTag t){super.load(t);loadData(t,null);}
 //?}
-    private void saveData(CompoundTag t,net.minecraft.core.HolderLookup.Provider lookup){
+    @Override protected void saveData(CompoundTag t,@Nullable HolderLookup.Provider lookup){
+        super.saveData(t,lookup);
         t.put("gt.zpm.inventory",gregtech.engine.stack.HandlerNbt.save(inventory, lookup));
         t.putLong("gt.zpm.buffer",buffer);
         t.putBoolean("gt.stopped",stopped);
     }
-    private void loadData(CompoundTag t,net.minecraft.core.HolderLookup.Provider lookup){
+    @Override protected void loadData(CompoundTag t,@Nullable HolderLookup.Provider lookup){
+        super.loadData(t,lookup);
         if (t.contains("gt.zpm.inventory"))gregtech.engine.stack.HandlerNbt.load(inventory, t.getCompound("gt.zpm.inventory"), lookup);
         buffer=gregtech.engine.energy.ZpmWorkRules.savedBuffer(t.getLong("gt.zpm.buffer"));
         stopped=t.getBoolean("gt.stopped");

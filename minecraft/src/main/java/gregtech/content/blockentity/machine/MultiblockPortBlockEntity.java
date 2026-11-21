@@ -22,6 +22,8 @@ import net.minecraftforge.items.IItemHandler;
 //?}
 import java.util.*;
 
+import javax.annotation.Nullable;
+
 /** Transient binding is rebuilt after chunk load; no duplicated inventory or heat is stored here. */
 public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
         gregtech.content.logistics.LogisticsCoverHost,
@@ -258,29 +260,15 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
                 ? crucible.getCrucibleContentAmount() : 0;
     }
     @Override public gregtech.content.logistics.LogisticsCovers logisticsCovers() { return covers; }
-//? if >=1.21.1 {
-    /*@Override protected void saveAdditional(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
+    @Override protected void saveData(net.minecraft.nbt.CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         covers.save(tag, lookup);
         saveDesign(tag);
-*///?} else {
-    @Override protected void saveAdditional(net.minecraft.nbt.CompoundTag tag) {
-        super.saveAdditional(tag);
-        covers.save(tag, null);
-        saveDesign(tag);
-//?}
     }
-//? if >=1.21.1 {
-    /*@Override protected void loadAdditional(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
+    @Override protected void loadData(net.minecraft.nbt.CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         covers.load(tag, lookup);
         loadDesign(tag);
-*///?} else {
-    @Override public void load(net.minecraft.nbt.CompoundTag tag) {
-        super.load(tag);
-        covers.load(tag, null);
-        loadDesign(tag);
-//?}
     }
 
     private void saveDesign(net.minecraft.nbt.CompoundTag tag) {
@@ -394,41 +382,25 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
     @Override public long doInject(GregTechTags.Tag t,Direction side,long size,long amount,boolean execute) {var o=owner();return o!=null&&o.isStructureOk()&&portAllows(gregtech.api.multiblock.PortChannel.ENERGY_INPUT,side)?o.injectPortEnergy(role,t,portFace(o,side),size,amount,execute):0;}
 
 //? if >=1.21.1 {
-/*    @Override public net.minecraft.nbt.CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
-        var tag = super.getUpdateTag(lookup);
-        writeClientBinding(tag);
-        return tag;
-    }
-    @Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
-    }
-    @Override public void onDataPacket(net.minecraft.network.Connection net,
-            net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet,
-            net.minecraft.core.HolderLookup.Provider lookup) {
-        if (packet.getTag() != null) loadAdditional(packet.getTag(), lookup);
-    }
-    @Override public net.neoforged.neoforge.client.model.data.ModelData getModelData() {
+    /*@Override public net.neoforged.neoforge.client.model.data.ModelData getModelData() {
         return net.neoforged.neoforge.client.model.data.ModelData.builder()
                 .with(DESIGN, design).build();
     }
 *///?} else {
-    @Override public net.minecraft.nbt.CompoundTag getUpdateTag() {
-        var tag = super.getUpdateTag();
-        writeClientBinding(tag);
-        return tag;
-    }
-    @Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
-    }
-    @Override public void onDataPacket(net.minecraft.network.Connection net,
-            net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet) {
-        if (packet.getTag() != null) load(packet.getTag());
-    }
     @Override public net.minecraftforge.client.model.data.ModelData getModelData() {
         return net.minecraftforge.client.model.data.ModelData.builder()
                 .with(DESIGN, design).build();
     }
 //?}
+    @Override protected void writeUpdateTag(net.minecraft.nbt.CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.writeUpdateTag(tag, lookup);
+        writeClientBinding(tag);
+    }
+    @Override protected void handleDataPacket(net.minecraft.network.Connection net,
+            net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet,
+            @Nullable HolderLookup.Provider lookup) {
+        if (packet.getTag() != null) loadFromTag(packet.getTag(), lookup);
+    }
     private void writeClientBinding(net.minecraft.nbt.CompoundTag tag) {
         tag.putBoolean("gt.port_sync", true);
         if (controller != null && role != null) {

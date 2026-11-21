@@ -13,13 +13,13 @@ import gregtech.engine.recipe.FluidFuelBatch;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.block.machine.FuelGeneratorBlock;
+import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.data.GregTechTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
@@ -43,7 +43,7 @@ import java.util.List;
  * Fluid fuel to one energy packet per tick. The buffer spends the packet only after a receiver accepts it.
  * Built-in engines and turbines do not use this class.
  */
-public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBlock, IFluidHandler,
+public class FuelGeneratorBlockEntity extends GTBlockEntity implements IEnergyBlock, IFluidHandler,
         gregtech.engine.fluid.FluidToolTarget, gregtech.api.platform.machine.MachineControl.Provider {
     private final FluidTank fuel;
     private final List<FluidTank> exhaust;
@@ -345,51 +345,36 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
         return isRemoved() ? null : filling ? toolFill : toolDrain;
     }
 
-//? if >=1.21.1 {
-/*    @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-        writeMachine(tag, lookup);
-*///?} else {
+//? if <1.21.1 {
     @Override public void invalidateCaps() {
         super.invalidateCaps();
         if (fluids != null) fluids.invalidate();
         fluids = null;
-//?}
     }
 
     @Override
-//? if >=1.21.1 {
-/*    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-        readMachine(tag, lookup);
-*///?} else {
     public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
         if (cap == ForgeCapabilities.FLUID_HANDLER && acceptsFluid(side)) {
             if (fluids == null || !fluids.isPresent()) fluids = LazyOptional.of(() -> this);
             return fluids.cast();
         }
         return super.getCapability(cap, side);
-//?}
     }
+//?}
 
-//? if >=1.21.1 {
-/*    protected void writeMachine(CompoundTag tag, HolderLookup.Provider lookup) {
-*///?} else {
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        writeMachine(tag);
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
+        writeMachine(tag, lookup);
     }
 
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        readMachine(tag);
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
+        readMachine(tag, lookup);
     }
 
-    protected void writeMachine(CompoundTag tag) {
-//?}
+    protected void writeMachine(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         tag.putLong("gt.energy", stored);
         tag.putBoolean("gt.stopped", stopped);
         tag.putBoolean("gt.formed", formed);
@@ -402,11 +387,7 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
 //?}
     }
 
-//? if >=1.21.1 {
-/*    protected void readMachine(CompoundTag tag, HolderLookup.Provider lookup) {
-*///?} else {
-    protected void readMachine(CompoundTag tag) {
-//?}
+    protected void readMachine(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         stored = Math.max(0, tag.getLong("gt.energy"));
         stopped = tag.getBoolean("gt.stopped");
         formed = !tag.contains("gt.formed") || tag.getBoolean("gt.formed");

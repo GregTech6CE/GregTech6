@@ -4,6 +4,7 @@ import gregtech.engine.energy.EnergyTransfer;
 import gregtech.engine.energy.FaceConfig;
 import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.machine.SteamEngineData;
+import gregtech.engine.stack.NbtCompat;
 import gregtech.engine.stack.StackCompat;
 
 import gregtech.content.data.GregTechTags;
@@ -11,6 +12,7 @@ import gregtech.content.registry.GTFluids;
 import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
@@ -218,29 +220,16 @@ public class KineticSteamEngineBlockEntity extends EngineBaseBlockEntity impleme
     // ---- NBT ----------------------------------------------------------------
 
     @Override
-//? if >=1.21.1 {
-    /*public void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-*///?} else {
-    public void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         if (steamTank != null) {
             CompoundTag t = new CompoundTag();
-//? if >=1.21.1 {
-            /*steamTank.writeToNBT(t,lookup);
-*///?} else {
-            steamTank.writeToNBT(t);
-//?}
+            NbtCompat.writeTank(steamTank, t, lookup);
             tag.put("steamTank", t);
         }
         if (distilledWaterTank != null) {
             CompoundTag t = new CompoundTag();
-//? if >=1.21.1 {
-            /*distilledWaterTank.writeToNBT(t,lookup);
-*///?} else {
-            distilledWaterTank.writeToNBT(t);
-//?}
+            NbtCompat.writeTank(distilledWaterTank, t, lookup);
             tag.put("waterTank", t);
         }
         tag.putLong("outputRate", clientOutputRate);
@@ -250,26 +239,13 @@ public class KineticSteamEngineBlockEntity extends EngineBaseBlockEntity impleme
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         if (tag.contains("steamTank") && steamTank != null) {
-//? if >=1.21.1 {
-            /*steamTank.readFromNBT(tag.getCompound("steamTank"),lookup);
-*///?} else {
-            steamTank.readFromNBT(tag.getCompound("steamTank"));
-//?}
+            NbtCompat.readTank(steamTank, tag.getCompound("steamTank"), lookup);
         }
         if (tag.contains("waterTank") && distilledWaterTank != null) {
-//? if >=1.21.1 {
-            /*distilledWaterTank.readFromNBT(tag.getCompound("waterTank"),lookup);
-*///?} else {
-            distilledWaterTank.readFromNBT(tag.getCompound("waterTank"));
-//?}
+            NbtCompat.readTank(distilledWaterTank, tag.getCompound("waterTank"), lookup);
         }
         clientOutputRate = tag.getLong("outputRate");
         enabled = !tag.contains("enabled") || tag.getBoolean("enabled");

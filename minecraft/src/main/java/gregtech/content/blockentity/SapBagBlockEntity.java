@@ -3,13 +3,14 @@ package gregtech.content.blockentity;
 import gregtech.engine.fluid.FluidTankGT;
 import gregtech.content.block.wood.TreeHoleBlock;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.engine.stack.NbtCompat;
 import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
@@ -34,7 +35,7 @@ import org.jetbrains.annotations.Nullable;
  * the stored item first and then fills whatever container the player holds. Breaking the bag loses
  * the tank contents, exactly like GT6's {@code GarbageGT.trash(mTank)}.
  */
-public class SapBagBlockEntity extends BlockEntity implements IFluidHandler {
+public class SapBagBlockEntity extends GTBlockEntity implements IFluidHandler {
 
     /** GT6 {@code new FluidTankGT(8000)} — 32 taps of 250 mB. */
     public static final long CAPACITY = gregtech.content.tool.UtilityToolRules.SAP_CAPACITY;
@@ -110,41 +111,22 @@ public class SapBagBlockEntity extends BlockEntity implements IFluidHandler {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-        tank.readFromNBT(tag, lookup);
-        stored = ItemStack.parseOptional(lookup, tag.getCompound("stored"));
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        tank.readFromNBT(tag);
-        stored = ItemStack.of(tag.getCompound("stored"));
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
+        NbtCompat.readTank(tank, tag, lookup);
+        stored = NbtCompat.readItem(tag.getCompound("stored"), lookup);
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-        tank.writeToNBT(tag, lookup);
-        if (!stored.isEmpty()) tag.put("stored", stored.saveOptional(lookup));
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        tank.writeToNBT(tag);
-        if (!stored.isEmpty()) tag.put("stored", stored.save(new CompoundTag()));
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
+        NbtCompat.writeTank(tank, tag, lookup);
+        if (!stored.isEmpty()) tag.put("stored", NbtCompat.saveItem(stored, lookup));
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
-        return saveWithoutMetadata(lookup);
-*///?} else {
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
-//?}
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        writeWithoutMetadata(tag, lookup);
     }
 
     @Nullable
@@ -152,20 +134,6 @@ public class SapBagBlockEntity extends BlockEntity implements IFluidHandler {
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }
-//? if >=1.21.1 {
-
-    /*@Override
-    public void handleUpdateTag(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        loadAdditional(tag, lookup);
-    }
-
-    @Override
-    public void onDataPacket(net.minecraft.network.Connection connection, ClientboundBlockEntityDataPacket packet,
-            net.minecraft.core.HolderLookup.Provider lookup) {
-        if (packet.getTag() != null) loadAdditional(packet.getTag(), lookup);
-    }
-*///?} else {
-//?}
 
     // ── Port IFluidHandler extension (original public tank lookup does not expose the bag tank) ──────────────────────
 

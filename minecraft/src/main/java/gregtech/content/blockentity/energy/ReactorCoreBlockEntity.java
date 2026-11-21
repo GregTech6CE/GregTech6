@@ -1,7 +1,9 @@
 package gregtech.content.blockentity.energy;
 
+import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.inventory.BlockContents;
+import gregtech.engine.stack.NbtCompat;
 import gregtech.engine.stack.StackCompat;
 import gregtech.content.nuclear.*;
 import net.minecraft.core.*;
@@ -23,8 +25,10 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 //?}
 import java.util.*;
 
+import javax.annotation.Nullable;
+
 /** Original one/four-rod cores. Heat is converted into hot coolant, never emitted as free HU. */
-public class ReactorCoreBlockEntity extends BlockEntity implements BlockContents, gregtech.engine.fluid.FluidToolTarget, gregtech.api.platform.machine.MachineControl.Provider {
+public class ReactorCoreBlockEntity extends GTBlockEntity implements BlockContents, gregtech.engine.fluid.FluidToolTarget, gregtech.api.platform.machine.MachineControl.Provider {
     public final ItemStack[] rods;
     public final int[] neutrons;
     private final List<ItemStack> legacyOverflow = new ArrayList<>();
@@ -397,36 +401,8 @@ public class ReactorCoreBlockEntity extends BlockEntity implements BlockContents
     }
 
     public void restorePersistentState(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        loadAdditional(tag, lookup);
+        loadData(tag, lookup);
     }
-
-    private void changed() {
-        setChanged();
-        if (level != null && !level.isClientSide) level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
-    }
-
-    @Override
-    protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-        tag.putInt("gt.disabled_slots", disabledSlots);
-        tag.putInt("gt.reactor_version", 1);
-        tag.putBoolean("gt.stopped", stopped);
-        tag.putBoolean("gt.failed", failed);
-        tag.putLong("gt.heat", storedHeat);
-        tag.putLong("gt.last_heat", lastHeat);
-        tag.putIntArray("gt.neutrons", neutrons);
-        var list = new ListTag();
-        for (var rod : rods) list.add(rod.saveOptional(lookup));
-        tag.put("gt.rods", list);
-        var excess = new ListTag();
-        for (var rod : legacyOverflow) excess.add(rod.saveOptional(lookup));
-        tag.put("gt.overflow", excess);
-        var in = new CompoundTag();
-        input.writeToNBT(in, lookup);
-        tag.put("gt.input", in);
-        var out = new CompoundTag();
-        output.writeToNBT(out, lookup);
-        tag.put("gt.output", out);
 *///?} else {
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, @javax.annotation.Nullable Direction side) {
@@ -439,18 +415,8 @@ public class ReactorCoreBlockEntity extends BlockEntity implements BlockContents
             return fluidCap.cast();
         }
         return super.getCapability(cap, side);
-//?}
     }
-//? if >=1.21.1 {
-    /*@Override
-    protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-        Arrays.fill(rods, ItemStack.EMPTY);
-        Arrays.fill(neutrons, 0);
-        legacyOverflow.clear();
-        input.setEmpty();
-        output.setEmpty();
-*///?} else {
+
     @Override
     public void invalidateCaps() {
         super.invalidateCaps();
@@ -463,6 +429,7 @@ public class ReactorCoreBlockEntity extends BlockEntity implements BlockContents
             fluidCap = null;
         }
     }
+//?}
 
     private void changed() {
         setChanged();
@@ -470,8 +437,8 @@ public class ReactorCoreBlockEntity extends BlockEntity implements BlockContents
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putInt("gt.disabled_slots", disabledSlots);
         tag.putInt("gt.reactor_version", 1);
         tag.putBoolean("gt.stopped", stopped);
@@ -480,28 +447,27 @@ public class ReactorCoreBlockEntity extends BlockEntity implements BlockContents
         tag.putLong("gt.last_heat", lastHeat);
         tag.putIntArray("gt.neutrons", neutrons);
         var list = new ListTag();
-        for (var rod : rods) list.add(rod.save(new CompoundTag()));
+        for (var rod : rods) list.add(NbtCompat.saveItem(rod, lookup));
         tag.put("gt.rods", list);
         var excess = new ListTag();
-        for (var rod : legacyOverflow) excess.add(rod.save(new CompoundTag()));
+        for (var rod : legacyOverflow) excess.add(NbtCompat.saveItem(rod, lookup));
         tag.put("gt.overflow", excess);
         var in = new CompoundTag();
-        input.writeToNBT(in);
+        NbtCompat.writeTank(input, in, lookup);
         tag.put("gt.input", in);
         var out = new CompoundTag();
-        output.writeToNBT(out);
+        NbtCompat.writeTank(output, out, lookup);
         tag.put("gt.output", out);
     }
 
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         Arrays.fill(rods, ItemStack.EMPTY);
         Arrays.fill(neutrons, 0);
         legacyOverflow.clear();
         input.setEmpty();
         output.setEmpty();
-//?}
         disabledSlots = tag.getInt("gt.disabled_slots") & ((1 << rods.length) - 1);
         boolean current = tag.contains("gt.reactor_version");
         stopped = !current || tag.getBoolean("gt.stopped");
@@ -513,77 +479,30 @@ public class ReactorCoreBlockEntity extends BlockEntity implements BlockContents
             for (int i = 0; i < Math.min(counts.length, neutrons.length); i++) neutrons[i] = Math.max(0, counts[i]);
         }
         var list = tag.getList("gt.rods", 10);
-//? if >=1.21.1 {
-        /*for (int i = 0; i < list.size(); i++) {
-            var entry = list.getCompound(i);
-            var rod = ItemStack.parseOptional(lookup, entry.contains("rod") ? entry.getCompound("rod") : entry);
-            if (i < rods.length) rods[i] = rod;
-            else if (!rod.isEmpty()) legacyOverflow.add(rod);
-        }
-        for (var raw : tag.getList("gt.overflow", 10)) {
-            var rod = ItemStack.parseOptional(lookup, (CompoundTag) raw);
-            if (!rod.isEmpty()) legacyOverflow.add(rod);
-        }
-        if (tag.contains("gt.input")) input.readFromNBT(tag.getCompound("gt.input"), lookup);
-        else if (tag.contains("gt.coolant")) input.readFromNBT(tag.getCompound("gt.coolant"), lookup);
-        else if (tag.contains("gt.water")) input.readFromNBT(tag.getCompound("gt.water"), lookup);
-        if (tag.contains("gt.output")) output.readFromNBT(tag.getCompound("gt.output"), lookup);
-*///?} else {
         for (int i = 0; i < list.size(); i++) {
             var entry = list.getCompound(i);
-            var rod = ItemStack.of(entry.contains("rod") ? entry.getCompound("rod") : entry);
+            var rod = NbtCompat.readItem(entry.contains("rod") ? entry.getCompound("rod") : entry, lookup);
             if (i < rods.length) rods[i] = rod;
             else if (!rod.isEmpty()) legacyOverflow.add(rod);
         }
         for (var raw : tag.getList("gt.overflow", 10)) {
-            var rod = ItemStack.of((CompoundTag) raw);
+            var rod = NbtCompat.readItem((CompoundTag) raw, lookup);
             if (!rod.isEmpty()) legacyOverflow.add(rod);
         }
-        if (tag.contains("gt.input")) input.readFromNBT(tag.getCompound("gt.input"));
-        else if (tag.contains("gt.coolant")) input.readFromNBT(tag.getCompound("gt.coolant"));
-        else if (tag.contains("gt.water")) input.readFromNBT(tag.getCompound("gt.water"));
-        if (tag.contains("gt.output")) output.readFromNBT(tag.getCompound("gt.output"));
-//?}
+        if (tag.contains("gt.input")) NbtCompat.readTank(input, tag.getCompound("gt.input"), lookup);
+        else if (tag.contains("gt.coolant")) NbtCompat.readTank(input, tag.getCompound("gt.coolant"), lookup);
+        else if (tag.contains("gt.water")) NbtCompat.readTank(input, tag.getCompound("gt.water"), lookup);
+        if (tag.contains("gt.output")) NbtCompat.readTank(output, tag.getCompound("gt.output"), lookup);
         if (!current) input.setCapacity(Math.max(64000, input.getAmount()));
     }
-//? if >=1.21.1 {
-    /*@Override
-    public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
-        return saveWithoutMetadata(lookup);
-    }
-*///?} else {
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        writeWithoutMetadata(tag, lookup);
     }
-//?}
     @Override
     public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
         return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
     }
-//? if >=1.21.1 {
-    /*@Override
-    public void handleUpdateTag(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        loadAdditional(tag, lookup);
-    }
-
-    @Override
-    public void onDataPacket(net.minecraft.network.Connection connection,
-                             net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet,
-                             net.minecraft.core.HolderLookup.Provider lookup) {
-        if (packet.getTag() != null) loadAdditional(packet.getTag(), lookup);
-    }
-*///?} else {
-    @Override
-    public void handleUpdateTag(CompoundTag tag) {
-        load(tag);
-    }
-
-    @Override
-    public void onDataPacket(net.minecraft.network.Connection connection, net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet) {
-        if (packet.getTag() != null) load(packet.getTag());
-    }
-//?}
     @Override
     public void dropContents() {
         if (level == null || level.isClientSide) return;

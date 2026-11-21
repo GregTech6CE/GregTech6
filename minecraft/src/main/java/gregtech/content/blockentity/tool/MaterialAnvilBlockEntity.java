@@ -3,19 +3,22 @@ package gregtech.content.blockentity.tool;
 import gregtech.engine.recipe.*;
 import gregtech.engine.tool.*;
 import gregtech.content.block.tool.MaterialAnvilBlock;
+import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.data.MachineRecipeMaps;
+import gregtech.engine.stack.NbtCompat;
 import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
+import javax.annotation.Nullable;
+
 /** Two workpieces and persisted GT6 durability units. Failed recipes never consume either. */
-public final class MaterialAnvilBlockEntity extends BlockEntity implements gregtech.engine.inventory.BlockContents, PoweredToolTarget {
+public final class MaterialAnvilBlockEntity extends GTBlockEntity implements gregtech.engine.inventory.BlockContents, PoweredToolTarget {
     private final ItemStack[] work = {ItemStack.EMPTY, ItemStack.EMPTY};
     private long durability;
     public long remainingDurability() { return durability; }
@@ -170,51 +173,22 @@ public final class MaterialAnvilBlockEntity extends BlockEntity implements gregt
         super.setChanged();
         if (level != null && !level.isClientSide) level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
     }
-//? if >=1.21.1 {
-    /*@Override public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) { return saveWithoutMetadata(lookup); }
-    @Override public void handleUpdateTag(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) { loadAdditional(tag,lookup); }
-*///?} else {
-    @Override public CompoundTag getUpdateTag() { return saveWithoutMetadata(); }
-    @Override public void handleUpdateTag(CompoundTag tag) { load(tag); }
-//?}
+    @Override protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) { writeWithoutMetadata(tag, lookup); }
     @Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
         return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
-    }
-//? if >=1.21.1 {
-    /*@Override public void onDataPacket(net.minecraft.network.Connection connection, net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet,net.minecraft.core.HolderLookup.Provider lookup) {
-        if (packet.getTag() != null) loadAdditional(packet.getTag(),lookup);
-*///?} else {
-    @Override public void onDataPacket(net.minecraft.network.Connection connection, net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet) {
-        if (packet.getTag() != null) load(packet.getTag());
-//?}
     }
     private ItemStack[] consume(Recipe recipe) {
         return gregtech.content.tool.AnvilWorkInputs.consume(work, recipe);
     }
     private void give(Player player, ItemStack item) { if (player==null) gregtech.engine.inventory.BlockContents.drop(this,item); else if (!item.isEmpty() && !player.addItem(item)) player.drop(item, false); }
-//? if >=1.21.1 {
-    /*@Override protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup); tag.putLong("gt.durability", durability);
-        for (int i = 0; i < 2; i++) tag.put("gt.work" + i, work[i].saveOptional(lookup));
-*///?} else {
-    @Override protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag); tag.putLong("gt.durability", durability);
-        for (int i = 0; i < 2; i++) tag.put("gt.work" + i, work[i].save(new CompoundTag()));
-//?}
+    @Override protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup); tag.putLong("gt.durability", durability);
+        for (int i = 0; i < 2; i++) tag.put("gt.work" + i, NbtCompat.saveItem(work[i], lookup));
     }
-//? if >=1.21.1 {
-    /*@Override protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-*///?} else {
-    @Override public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    @Override protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         if (tag.contains("gt.durability")) durability = Math.max(0, Math.min(((MaterialAnvilBlock)getBlockState().getBlock()).durability(), tag.getLong("gt.durability")));
-//? if >=1.21.1 {
-        /*for (int i = 0; i < 2; i++) work[i] = ItemStack.parseOptional(lookup,tag.getCompound("gt.work" + i));
-*///?} else {
-        for (int i = 0; i < 2; i++) work[i] = ItemStack.of(tag.getCompound("gt.work" + i));
-//?}
+        for (int i = 0; i < 2; i++) work[i] = NbtCompat.readItem(tag.getCompound("gt.work" + i), lookup);
     }
     @Override public void dropContents() {
         if (level == null || level.isClientSide) return;

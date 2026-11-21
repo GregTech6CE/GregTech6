@@ -6,6 +6,7 @@ import gregtech.api.signal.GtSignalCarrier;
 import gregtech.api.signal.GtSignalReceiver;
 import gregtech.api.signal.GtSignalSource;
 import gregtech.content.block.energy.*;
+import gregtech.content.blockentity.GTBlockEntity;
 
 import gregtech.content.registry.GTSignalWires;
 
@@ -16,14 +17,15 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.piston.PistonBaseBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import java.util.*;
+
+import javax.annotation.Nullable;
 
 /** GT6 fractional redstone attenuation. Rebuild from sources so disconnected loops cannot latch.
  * Members cache their solved tick; mode changes invalidate that member. No world cache or chunk loading.
  */
-public final class SignalWireBlockEntity extends BlockEntity implements MachineControl.Provider, GtSignalCarrier {
+public final class SignalWireBlockEntity extends GTBlockEntity implements MachineControl.Provider, GtSignalCarrier {
     public static final long UNIT = GtSignalCarrier.UNIT;
 
     /** Addon blocks that accept signal power and are not sources. Vanilla receivers stay on the instanceof list. */
@@ -256,37 +258,20 @@ public final class SignalWireBlockEntity extends BlockEntity implements MachineC
         }
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
+    @Override
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider registries) {
+        super.saveData(tag, registries);
         tag.putInt("mode", mode);
     }
 
     @Override
-    public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider registries) {
+        super.loadData(tag, registries);
         mode = Math.max(0, Math.min(15, tag.getInt("mode")));
         signal = 0;
         received = null;
         solvedTick = Long.MIN_VALUE;
     }
-*///?} else {
-    @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        tag.putInt("mode", mode);
-    }
-
-    @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        mode = Math.max(0, Math.min(15, tag.getInt("mode")));
-        signal = 0;
-        received = null;
-        solvedTick = Long.MIN_VALUE;
-    }
-//?}
 
     @Override
     public MachineControl machineControl(Direction side) {

@@ -171,7 +171,7 @@ public class MassStorageBlock extends HorizontalDirectionalBlock
     private ItemStack shell(BlockState state, MassStorageBlockEntity storage) {
         ItemStack shell = new ItemStack(this); CompoundTag tag = new CompoundTag();
         if (storage.isPacked()) {
-            tag = storage.getUpdateTag(storage.getLevel().registryAccess());
+            tag = gregtech.engine.stack.NbtCompat.getUpdateTag(storage, storage.getLevel().registryAccess());
             tag.remove("gt.partial_units");
         } else if ((storage.mode() & 7) != 0) tag.putInt("gt.mode", storage.mode() & 7);
         if (!tag.isEmpty()) {
@@ -200,7 +200,7 @@ public class MassStorageBlock extends HorizontalDirectionalBlock
             net.minecraft.world.level.LevelReader level, BlockPos pos, Player player) {
         var stack = new ItemStack(state.getBlock());
         if (level.getBlockEntity(pos) instanceof MassStorageBlockEntity storage) {
-            var data = storage.getUpdateTag(level.registryAccess());
+            var data = gregtech.engine.stack.NbtCompat.getUpdateTag(storage, level.registryAccess());
             data.putString("id", BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(storage.getType()).toString());
             stack.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(data));
 *///?} else {
@@ -223,7 +223,7 @@ public class MassStorageBlock extends HorizontalDirectionalBlock
     private static ItemStack packed(BlockState state, @Nullable BlockEntity be) {
         ItemStack stack = new ItemStack(state.getBlock());
         if (be instanceof MassStorageBlockEntity storage)
-            stack.addTagElement("BlockEntityTag", storage.getUpdateTag());
+            stack.addTagElement("BlockEntityTag", gregtech.engine.stack.NbtCompat.getUpdateTag(storage, null));
         return stack;
     }
 

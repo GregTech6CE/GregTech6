@@ -5,15 +5,11 @@ import gregtech.content.plant.GTBerryBushes;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-//? if >=1.21.1 {
-/*import net.minecraft.core.registries.BuiltInRegistries;
-*///?} else {
-//?}
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -24,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
  * queries; their environment contracts differ from the original GT6 helpers and are audited
  * separately. This entity also maintains the current fixed-species identity and legacy migration.
  */
-public class BushBlockEntity extends BlockEntity {
+public class BushBlockEntity extends GTBlockEntity {
     /** GT6 checks {@code SERVER_TIME % 128} — the growth cycle length. */
     public static final int CYCLE_TICKS = gregtech.content.plant.BushGrowthRules.CYCLE_TICKS;
     /** GT6's byte overflow counter: a stage advances every 256 growth increments. */
@@ -49,9 +45,11 @@ public class BushBlockEntity extends BlockEntity {
     public void setBerry(String id) {
         var variant = gregtech.content.registry.GTBushes.byBerry(id);
         if (variant == null) return;
-        var state = variant.defaultBlockState().setValue(BushBlock.STAGE, stage())
+        var state = variant.defaultBlockState()
+                .setValue(BushBlock.STAGE, stage())
                 .setValue(BushBlock.SUPPORT, getBlockState().getValue(BushBlock.SUPPORT))
-                .setValue(gregtech.engine.GTWaterloggable.WATERLOGGED,
+                .setValue(
+                        gregtech.engine.GTWaterloggable.WATERLOGGED,
                         getBlockState().getValue(gregtech.engine.GTWaterloggable.WATERLOGGED));
         if (level == null) {
             setBlockState(state);
@@ -86,7 +84,8 @@ public class BushBlockEntity extends BlockEntity {
 
     public void tick() {
         if (level == null || level.isClientSide) return;
-        if (!legacyBerry.isEmpty() && ((BushBlock) getBlockState().getBlock()).berryId().isEmpty()
+        if (!legacyBerry.isEmpty()
+                && ((BushBlock) getBlockState().getBlock()).berryId().isEmpty()
                 && gregtech.content.registry.GTBushes.byBerry(legacyBerry) != null) {
             setBerry(legacyBerry);
             return;
@@ -115,9 +114,13 @@ public class BushBlockEntity extends BlockEntity {
         if (speed <= 0) return 0;
         if (state.getValue(BushBlock.STAGE) >= 3) return 0;
         int increments;
-        var support = BushBlock.isCore(state) ? null : net.minecraft.core.Direction.from3DDataValue(state.getValue(BushBlock.SUPPORT));
-        var sample = worldPosition.offset(support == null ? 0 : support.getStepX(),
-                support == net.minecraft.core.Direction.UP ? 1 : 2, support == null ? 0 : support.getStepZ());
+        var support = BushBlock.isCore(state)
+                ? null
+                : net.minecraft.core.Direction.from3DDataValue(state.getValue(BushBlock.SUPPORT));
+        var sample = worldPosition.offset(
+                support == null ? 0 : support.getStepX(),
+                support == net.minecraft.core.Direction.UP ? 1 : 2,
+                support == null ? 0 : support.getStepZ());
         if (level.canSeeSky(worldPosition.above())) {
             // GT6: mSpeed increments, plus the same again while it rains on the bush.
             increments = speed + (level.isRainingAt(sample) ? speed : 0);
@@ -145,7 +148,8 @@ public class BushBlockEntity extends BlockEntity {
         if (level == null) return 0;
         BlockState state = getBlockState();
         if (!BushBlock.isCore(state)) {
-            var parent = level.getBlockEntity(worldPosition.relative(net.minecraft.core.Direction.from3DDataValue(state.getValue(BushBlock.SUPPORT))));
+            var parent = level.getBlockEntity(worldPosition.relative(
+                    net.minecraft.core.Direction.from3DDataValue(state.getValue(BushBlock.SUPPORT))));
             return parent instanceof BushBlockEntity bush && BushBlock.isCore(bush.getBlockState()) ? bush.speed() : 0;
         }
         BlockState ground = level.getBlockState(worldPosition.below());
@@ -159,7 +163,8 @@ public class BushBlockEntity extends BlockEntity {
             level.removeBlock(worldPosition.above(), false);
         BlockState state = getBlockState();
         if (BushBlock.isCore(state)) return true;
-        BlockPos parentPos = worldPosition.relative(net.minecraft.core.Direction.from3DDataValue(state.getValue(BushBlock.SUPPORT)));
+        BlockPos parentPos =
+                worldPosition.relative(net.minecraft.core.Direction.from3DDataValue(state.getValue(BushBlock.SUPPORT)));
         if (level.getBlockEntity(parentPos) instanceof BushBlockEntity parent) {
             if (!berryId().equals(parent.berryId())) {
                 setBerry(parent.berryId());
@@ -175,38 +180,23 @@ public class BushBlockEntity extends BlockEntity {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         legacyBerry = ((BushBlock) getBlockState().getBlock()).berryId().isEmpty() ? tag.getString("berry") : "";
         growth = tag.getInt("growth");
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         if (((BushBlock) getBlockState().getBlock()).berryId().isEmpty() && !legacyBerry.isEmpty())
             tag.putString("berry", legacyBerry);
         tag.putInt("growth", growth);
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
-        return saveWithoutMetadata(lookup);
-*///?} else {
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
-//?}
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        writeWithoutMetadata(tag, lookup);
     }
 
     @Nullable

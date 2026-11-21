@@ -3,10 +3,12 @@ package gregtech.content.blockentity.machine;
 import gregtech.engine.energy.FaceConfig;
 import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.machine.DieselEngineSpec;
+import gregtech.engine.stack.NbtCompat;
 import gregtech.content.data.FuelRecipeMaps;
 import gregtech.content.data.GregTechTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -212,50 +214,27 @@ public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implem
     // ── NBT ──────────────────────────────────────────────────────────────────
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putBoolean("stopped", stopped);
         tag.putBoolean("dieselActive", active);
         tag.putLong("dieselActivityHistory", activityHistory);
         CompoundTag fuelTag = new CompoundTag();
-//? if >=1.21.1 {
-        /*fuelTank.writeToNBT(fuelTag,lookup);
-*///?} else {
-        fuelTank.writeToNBT(fuelTag);
-//?}
+        NbtCompat.writeTank(fuelTank, fuelTag, lookup);
         tag.put("fuelTank", fuelTag);
         CompoundTag exhaustTag = new CompoundTag();
-//? if >=1.21.1 {
-        /*exhaustTank.writeToNBT(exhaustTag,lookup);
-*///?} else {
-        exhaustTank.writeToNBT(exhaustTag);
-//?}
+        NbtCompat.writeTank(exhaustTank, exhaustTag, lookup);
         tag.put("exhaustTank", exhaustTag);
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         stopped = tag.getBoolean("stopped");
         active = tag.getBoolean("dieselActive");
         activityHistory = tag.getLong("dieselActivityHistory");
-//? if >=1.21.1 {
-        /*if (tag.contains("fuelTank")) fuelTank.readFromNBT(tag.getCompound("fuelTank"),lookup);
-        if (tag.contains("exhaustTank")) exhaustTank.readFromNBT(tag.getCompound("exhaustTank"),lookup);
-*///?} else {
-        if (tag.contains("fuelTank")) fuelTank.readFromNBT(tag.getCompound("fuelTank"));
-        if (tag.contains("exhaustTank")) exhaustTank.readFromNBT(tag.getCompound("exhaustTank"));
-//?}
+        if (tag.contains("fuelTank")) NbtCompat.readTank(fuelTank, tag.getCompound("fuelTank"), lookup);
+        if (tag.contains("exhaustTank")) NbtCompat.readTank(exhaustTank, tag.getCompound("exhaustTank"), lookup);
         // Original MultiTileEntityMotorLiquid re-applies mRate * 10 after reading the tanks.
         long capacity = outputRate() * 10;
         fuelTank.setCapacityPreservingContents(capacity);

@@ -25,7 +25,7 @@ import java.util.function.Function;
  * The destination lookup does not load its chunk; subclass route resolution may scan other chunks.
  * A shared visit set guards nested relay operations against cycles.
  */
-public abstract class CapabilityRelayBlockEntity extends BlockEntity {
+public abstract class CapabilityRelayBlockEntity extends GTBlockEntity {
 
     public record Target(BlockPos position, Direction side, net.minecraft.world.level.Level level) {
 

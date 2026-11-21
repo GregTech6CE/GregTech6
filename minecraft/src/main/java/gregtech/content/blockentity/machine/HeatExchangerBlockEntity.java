@@ -11,6 +11,8 @@ import gregtech.content.block.machine.HeatExchangerBlock;
 import gregtech.engine.multiblock.HeatExchangerRules;
 import gregtech.content.data.*;
 import net.minecraft.core.*;
+
+import javax.annotation.Nullable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.*;
@@ -175,26 +177,23 @@ public final class HeatExchangerBlockEntity extends GTEnergyBlockEntity implemen
     @Override public long getEnergyDemanded(GregTechTags.Tag type, Direction side, long size) { return 0; }
     @Override public long getEnergyStored(GregTechTags.Tag type, Direction side) { return type == GregTechTags.Energy.HU ? heat : 0; }
     @Override public long getEnergyCapacity(GregTechTags.Tag type, Direction side) { return type == GregTechTags.Energy.HU ? settings.bufferTarget() : 0; }
+    @Override protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
+        var input = new CompoundTag(); var output = new CompoundTag();
 //? if >=1.21.1 {
-    /*@Override protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-        var input = new CompoundTag(); var output = new CompoundTag();
-        hot.writeToNBT(input, lookup); cold.writeToNBT(output, lookup);
+        /*hot.writeToNBT(input, lookup); cold.writeToNBT(output, lookup);
 *///?} else {
-    @Override protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        var input = new CompoundTag(); var output = new CompoundTag();
         hot.writeToNBT(input); cold.writeToNBT(output);
 //?}
         tag.put("gt.hot", input); tag.put("gt.cold", output);
         tag.putLong("gt.energy", heat); tag.putLong("gt.active.data", history); tag.putBoolean("gt.active", active);
     }
+    @Override protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
 //? if >=1.21.1 {
-    /*@Override protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup); hot.readFromNBT(tag.getCompound("gt.hot"), lookup); cold.readFromNBT(tag.getCompound("gt.cold"), lookup);
+        /*hot.readFromNBT(tag.getCompound("gt.hot"), lookup); cold.readFromNBT(tag.getCompound("gt.cold"), lookup);
 *///?} else {
-    @Override public void load(CompoundTag tag) {
-        super.load(tag); hot.readFromNBT(tag.getCompound("gt.hot")); cold.readFromNBT(tag.getCompound("gt.cold"));
+        hot.readFromNBT(tag.getCompound("gt.hot")); cold.readFromNBT(tag.getCompound("gt.cold"));
 //?}
         heat = Math.max(0, tag.getLong("gt.energy")); history = tag.getLong("gt.active.data"); active = tag.getBoolean("gt.active");
     }

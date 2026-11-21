@@ -37,6 +37,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 //?}
 
+import javax.annotation.Nullable;
+
 /** Original GT6 17000: fire bricks, ignition, TU recipes and 16 parallel operations. */
 //? if >=1.21.1 {
 /*public class CokeOvenControllerBlockEntity extends LargeRecipeMachineBlockEntity implements ManualToolBehaviorAccess.Ignitable {
@@ -73,19 +75,10 @@ public class CokeOvenControllerBlockEntity extends LargeRecipeMachineBlockEntity
         }
     }
     @Override protected void autoOutputItems(Level level,BlockPos pos,int side) {} // GT6 has no automatic item outlet.
-//? if >=1.21.1 {
-    /*@Override public void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);tag.putInt("gt.coke_ignition",ignitionTicks);
-*///?} else {
-    @Override public void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);tag.putInt("gt.coke_ignition",ignitionTicks);
-//?}
+    @Override protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);tag.putInt("gt.coke_ignition",ignitionTicks);
     }
-//? if >=1.21.1 {
-    /*@Override public void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    @Override public void load(CompoundTag tag) {
-//?}
+    @Override protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         // Upgrade the old two-slot implementation without creating outputs or converting its HU buffer.
         if (!tag.contains("gt.inventory") && tag.contains("gt.items")) {
             tag=tag.copy();var inventory=tag.getCompound("gt.items").copy();inventory.putInt("Size",10);
@@ -93,11 +86,7 @@ public class CokeOvenControllerBlockEntity extends LargeRecipeMachineBlockEntity
             if (tag.contains("gt.output"))tag.put("gt.tanks_output0",tag.getCompound("gt.output").copy());
             tag.remove("gt.heat");tag.remove("gt.progress");
         }
-//? if >=1.21.1 {
-        /*super.loadAdditional(tag,lookup);getTanksOutput()[0].setCapacity(Long.MAX_VALUE);
-*///?} else {
-        super.load(tag);getTanksOutput()[0].setCapacity(Long.MAX_VALUE);
-//?}
+        super.loadData(tag, lookup);getTanksOutput()[0].setCapacity(Long.MAX_VALUE);
         ignitionTicks=Math.max(0,Math.min(OriginalCokeOvenRules.IGNITION_TICKS,tag.getInt("gt.coke_ignition")));fluidOutputTarget=null;
     }
 }

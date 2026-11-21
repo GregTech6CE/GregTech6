@@ -17,6 +17,8 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 //?}
 import java.util.*;
 
+import javax.annotation.Nullable;
+
 /** Shared solid 3x3x4 assembly and rear shaft output. Storage belongs only to the controller. */
 public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity implements MultiblockPortOwner,
         gregtech.api.platform.machine.MachineControl.Provider, gregtech.engine.multiblock.tracking.TrackedMultiblock {
@@ -284,10 +286,9 @@ public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity impl
     public long getEnergyCapacity(GregTechTags.Tag type, Direction side) {
         return 0;
     }
-//? if >=1.21.1 {
-    /*@Override
-    protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
+    @Override
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putLong("gt.axial.energy", energy);
         tag.putBoolean("gt.stopped", stopped);
         tag.putBoolean("gt.overloaded", overloaded);
@@ -296,33 +297,12 @@ public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity impl
     }
 
     @Override
-    public void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         energy = Math.max(0, Math.min(grade().inputMaximum(), tag.getLong("gt.axial.energy")));
         stopped = tag.getBoolean("gt.stopped");
         overloaded = tag.getBoolean("gt.overloaded");
         rotorFormed = tag.getBoolean("gt.rotor_formed");
         rotorActive = rotorFormed && tag.getBoolean("gt.rotor_active");
     }
-*///?} else {
-    @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        tag.putLong("gt.axial.energy", energy);
-        tag.putBoolean("gt.stopped", stopped);
-        tag.putBoolean("gt.overloaded", overloaded);
-        tag.putBoolean("gt.rotor_formed", rotorFormed);
-        tag.putBoolean("gt.rotor_active", rotorActive);
-    }
-
-    @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        energy = Math.max(0, Math.min(grade().inputMaximum(), tag.getLong("gt.axial.energy")));
-        stopped = tag.getBoolean("gt.stopped");
-        overloaded = tag.getBoolean("gt.overloaded");
-        rotorFormed = tag.getBoolean("gt.rotor_formed");
-        rotorActive = rotorFormed && tag.getBoolean("gt.rotor_active");
-    }
-//?}
 }

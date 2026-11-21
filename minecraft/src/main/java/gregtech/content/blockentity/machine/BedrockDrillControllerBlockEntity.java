@@ -11,6 +11,8 @@ import gregtech.content.blockentity.GTEnergyBlockEntity;
 import gregtech.content.data.*;
 import gregtech.content.registry.*;
 import net.minecraft.core.*;
+
+import javax.annotation.Nullable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -342,48 +344,35 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
     public long getEnergyCapacity(GregTechTags.Tag type, Direction side) {
         return type == GregTechTags.Energy.RU ? ENERGY_CAPACITY : 0;
     }
-//? if >=1.21.1 {
-    /*@Override
-    protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-        saveData(tag, lookup);
-        tag.put("gt.lubricant", lubricant.writeToNBT(lookup, new CompoundTag()));
-    }
-
     @Override
-    protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-        loadData(tag, lookup);
-        gregtech.engine.fluid.NativeMachineTankData.restore(lubricant, tag.getCompound("gt.lubricant"), lookup);
-    }
-
-    public void restorePersistentState(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        loadAdditional(tag, lookup);
-    }
-*///?} else {
-    @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        saveData(tag, null);
-        tag.put("gt.lubricant", lubricant.writeToNBT(new CompoundTag()));
-    }
-
-    @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        loadData(tag, null);
-        lubricant.readFromNBT(tag.getCompound("gt.lubricant"));
-    }
-//?}
-    private void saveData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putLong("gt.drill_energy", energy);
         tag.putInt("gt.stone_type", stoneType);
         tag.put("gt.output", gregtech.engine.stack.HandlerNbt.save(output, lookup));
+//? if >=1.21.1 {
+        /*tag.put("gt.lubricant", lubricant.writeToNBT(lookup, new CompoundTag()));
+*///?} else {
+        tag.put("gt.lubricant", lubricant.writeToNBT(new CompoundTag()));
+//?}
     }
 
-    private void loadData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    @Override
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         energy = Math.max(0, tag.getLong("gt.drill_energy"));
         stoneType = Math.floorMod(tag.getInt("gt.stone_type"), StoneType.values().length + 2);
         gregtech.engine.stack.HandlerNbt.load(output, tag.getCompound("gt.output"), lookup);
+//? if >=1.21.1 {
+        /*gregtech.engine.fluid.NativeMachineTankData.restore(lubricant, tag.getCompound("gt.lubricant"), lookup);
+*///?} else {
+        lubricant.readFromNBT(tag.getCompound("gt.lubricant"));
+//?}
     }
+
+//? if >=1.21.1 {
+    /*public void restorePersistentState(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        loadFromTag(tag, lookup);
+    }
+*///?}
 }

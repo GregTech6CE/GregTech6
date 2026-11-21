@@ -1,19 +1,19 @@
 package gregtech.content.blockentity.tool;
 
 import gregtech.content.block.tool.AdvancedButtonBlock;
+import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.registry.GTBlockEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 /** Persisted GT6 advanced-button configuration and tick-length redstone pulse. */
-public final class AdvancedButtonBlockEntity extends BlockEntity {
+public final class AdvancedButtonBlockEntity extends GTBlockEntity {
     private boolean active;
     private boolean inverted;
     private boolean glowInverted;
@@ -106,14 +106,14 @@ public final class AdvancedButtonBlockEntity extends BlockEntity {
     }
 
     public Component status() {
-        Component mode = Component.translatable("message.gt6ce.advanced_button.mode."
-                + (lampMode ? "lamp" : maxLength > 0 ? "button" : "switch"));
-        Component polarity = Component.translatable("message.gt6ce.advanced_button.polarity."
-                + (inverted ? "inverted" : "normal"));
+        Component mode = Component.translatable(
+                "message.gt6ce.advanced_button.mode." + (lampMode ? "lamp" : maxLength > 0 ? "button" : "switch"));
+        Component polarity =
+                Component.translatable("message.gt6ce.advanced_button.polarity." + (inverted ? "inverted" : "normal"));
         return maxLength > 0
-        ? Component.translatable("message.gt6ce.advanced_button.status_timed",
-                mode, strength, maxLength, polarity)
-        : Component.translatable("message.gt6ce.advanced_button.status", mode, strength, polarity);
+                ? Component.translatable(
+                        "message.gt6ce.advanced_button.status_timed", mode, strength, maxLength, polarity)
+                : Component.translatable("message.gt6ce.advanced_button.status", mode, strength, polarity);
     }
 
     private void refresh(boolean neighbors) {
@@ -122,13 +122,15 @@ public final class AdvancedButtonBlockEntity extends BlockEntity {
         BlockState oldState = getBlockState();
         if (!(oldState.getBlock() instanceof AdvancedButtonBlock)) return;
         BlockState newState = oldState.setValue(AdvancedButtonBlock.ACTIVE, active)
-        .setValue(AdvancedButtonBlock.LIT, active != glowInverted);
+                .setValue(AdvancedButtonBlock.LIT, active != glowInverted);
         if (oldState != newState) level.setBlock(worldPosition, newState, Block.UPDATE_ALL);
         else level.sendBlockUpdated(worldPosition, oldState, oldState, Block.UPDATE_CLIENTS);
         if (neighbors) {
             level.updateNeighborsAt(worldPosition, oldState.getBlock());
-            level.updateNeighborsAt(worldPosition.relative(oldState.getValue(AdvancedButtonBlock.FACING)
-            .getOpposite()), oldState.getBlock());
+            level.updateNeighborsAt(
+                    worldPosition.relative(
+                            oldState.getValue(AdvancedButtonBlock.FACING).getOpposite()),
+                    oldState.getBlock());
         }
     }
 
@@ -154,26 +156,16 @@ public final class AdvancedButtonBlockEntity extends BlockEntity {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.put("GT6Button", saveItemConfig());
         tag.putBoolean("Active", active);
         tag.putLong("Length", length);
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         if (tag.contains("GT6Button")) {
             CompoundTag config = tag.getCompound("GT6Button");
             inverted = config.getBoolean("Inverted");
@@ -186,34 +178,13 @@ public final class AdvancedButtonBlockEntity extends BlockEntity {
         length = tag.getLong("Length");
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
-        return saveWithoutMetadata(lookup);
+    @Override
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        writeWithoutMetadata(tag, lookup);
     }
 
     @Override
-    public void handleUpdateTag(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        loadAdditional(tag, lookup);
-    }
-*///?} else {
-    @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
-    }
-//?}
-    @Override
     public @Nullable ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
-    }
-//? if >=1.21.1 {
-    /*@Override
-    public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet, net.minecraft.core.HolderLookup.Provider lookup) {
-        if (packet.getTag() != null) loadAdditional(packet.getTag(), lookup);
-*///?} else {
-    @Override
-    public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet) {
-        if (packet.getTag() != null) load(packet.getTag());
-//?}
     }
 }

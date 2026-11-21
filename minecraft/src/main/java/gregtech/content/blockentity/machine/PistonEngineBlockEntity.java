@@ -7,9 +7,12 @@ import gregtech.content.block.machine.EngineBlock;
 import gregtech.content.data.GregTechTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+
+import javax.annotation.Nullable;
 
 /** GT6 electric/flux piston engine: back input, front signed output, 32 power settings. */
 public abstract class PistonEngineBlockEntity extends EngineBaseBlockEntity implements gregtech.api.platform.machine.MachineControl.Provider,
@@ -105,13 +108,8 @@ public abstract class PistonEngineBlockEntity extends EngineBaseBlockEntity impl
     public long operatingInput() { return pistonState.input(inputRate()); }
     public long operatingOutput() { return pistonState.output(outputRate()); }
     public int coreColor() { return pistonState.coreColor(); }
-//? if >=1.21.1 {
-    /*@Override public void handleUpdateTag(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.handleUpdateTag(tag,lookup);
-*///?} else {
-    @Override public void handleUpdateTag(CompoundTag tag) {
-        super.handleUpdateTag(tag);
-//?}
+    @Override protected void readUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.readUpdateTag(tag, lookup);
         if (level != null && level.isClientSide)
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 8);
     }
@@ -133,26 +131,18 @@ public abstract class PistonEngineBlockEntity extends EngineBaseBlockEntity impl
         }
         if (packet != 0) setChanged();
     }
-//? if >=1.21.1 {
-    /*@Override protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-*///?} else {
-    @Override protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+
+    @Override protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putLong("piston.inputEnergy", pistonState.energy());
         tag.putInt("piston.mode", pistonState.mode());
         tag.putInt("piston.phase", pistonState.piston());
         tag.putBoolean("piston.active", pistonState.active());
         tag.putBoolean("piston.stopped", pistonState.stopped());
     }
-//? if >=1.21.1 {
-    /*@Override protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-*///?} else {
-    @Override public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+
+    @Override protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         // Old kuEnergy actually stored unconverted input. Retain it as input once.
         pistonState.restore(tag.contains("piston.inputEnergy") ? tag.getLong("piston.inputEnergy") : kuEnergy,
                 tag.contains("piston.mode") ? tag.getInt("piston.mode") : 15,

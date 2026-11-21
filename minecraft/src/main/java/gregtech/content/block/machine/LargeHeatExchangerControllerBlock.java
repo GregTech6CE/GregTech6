@@ -107,11 +107,8 @@ public class LargeHeatExchangerControllerBlock extends DirectionalBlock implemen
             net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
         var stack = new net.minecraft.world.item.ItemStack(this);
         if (builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof LargeHeatExchangerControllerBlockEntity machine) {
-//? if >=1.21.1 {
-            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(machine, machine.saveWithId(machine.getLevel().registryAccess()));
-*///?} else {
-            var data = gregtech.content.cover.ComponentCoverFallback.forItem(machine, machine.saveWithoutMetadata());
-//?}
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(machine,
+                    gregtech.engine.stack.NbtCompat.saveForBlockItem(machine, builder.getLevel().registryAccess()));
             data.remove("gt.energy");
             data.remove("gt.active");
             data.remove("gt.active.data");

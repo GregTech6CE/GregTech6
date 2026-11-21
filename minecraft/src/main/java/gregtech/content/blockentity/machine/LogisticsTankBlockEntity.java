@@ -10,8 +10,8 @@ import net.minecraft.world.level.material.Fluid;
 import org.jetbrains.annotations.Nullable;
 
 /** GT6 multi-tile 32072: an unsealed barrel that participates in the logistics network directly. */
-public final class LogisticsTankBlockEntity extends TankBlockEntity implements LogisticsStorageHost,
-        gregtech.content.logistics.LogisticsCoverHost {
+public final class LogisticsTankBlockEntity extends TankBlockEntity
+        implements LogisticsStorageHost, gregtech.content.logistics.LogisticsCoverHost {
     private final gregtech.content.logistics.LogisticsCovers logisticsCovers =
             new gregtech.content.logistics.LogisticsCovers(this, this);
 
@@ -27,31 +27,20 @@ public final class LogisticsTankBlockEntity extends TankBlockEntity implements L
         getFluidTank().setKeepFilterOnEmpty(true);
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    protected void saveAdditional(net.minecraft.nbt.CompoundTag tag, net.minecraft.core.HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
+    @Override
+    protected void saveData(
+            net.minecraft.nbt.CompoundTag tag, @Nullable net.minecraft.core.HolderLookup.Provider registries) {
+        super.saveData(tag, registries);
         logisticsCovers.save(tag, registries);
     }
 
     @Override
-    public void loadAdditional(net.minecraft.nbt.CompoundTag tag, net.minecraft.core.HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
+    protected void loadData(
+            net.minecraft.nbt.CompoundTag tag, @Nullable net.minecraft.core.HolderLookup.Provider registries) {
+        super.loadData(tag, registries);
         logisticsCovers.load(tag, registries);
     }
-*///?} else {
-    @Override
-    protected void saveAdditional(net.minecraft.nbt.CompoundTag tag) {
-        super.saveAdditional(tag);
-        logisticsCovers.save(tag, null);
-    }
 
-    @Override
-    public void load(net.minecraft.nbt.CompoundTag tag) {
-        super.load(tag);
-        logisticsCovers.load(tag, null);
-    }
-//?}
     @Override
     public void dropComponentCovers() {
         super.dropComponentCovers();
@@ -89,6 +78,5 @@ public final class LogisticsTankBlockEntity extends TankBlockEntity implements L
      * remembered fluid to be cleared with the soft hammer; that action is still missing.
      */
     @Override
-    public void toggleSoftHammerState() {
-    }
+    public void toggleSoftHammerState() {}
 }

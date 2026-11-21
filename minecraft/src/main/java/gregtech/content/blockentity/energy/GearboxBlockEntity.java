@@ -4,6 +4,7 @@ import gregtech.engine.energy.EnergyTransfer;
 import gregtech.engine.energy.GearboxSpec;
 import gregtech.engine.energy.IEnergyBlock;
 import gregtech.content.block.energy.GearboxBlock;
+import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.data.MaterialPrefix;
 import net.minecraft.core.HolderLookup;
@@ -17,7 +18,6 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.client.model.data.ModelData;
@@ -31,7 +31,7 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 
 /** GT6 custom gearbox: six physical gears and an optional X/Y/Z axle. */
-public class GearboxBlockEntity extends BlockEntity implements IEnergyBlock {
+public class GearboxBlockEntity extends GTBlockEntity implements IEnergyBlock {
     /** Low six bits: mounted faces; next two bits: X/Y/Z axle selection. */
     public static final ModelProperty<Integer> VISUAL_CONFIGURATION = new ModelProperty<>();
     /** GT6 mRotationData: bit six means running, low bits select each gear's direction. */
@@ -179,13 +179,8 @@ public class GearboxBlockEntity extends BlockEntity implements IEnergyBlock {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void loadAdditional(CompoundTag tag,HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         gearMask = (byte) (tag.getByte("gearMask") & 63);
         axisCode = (byte) Math.min(3, tag.getByte("axisCode") & 255);
         jammed = tag.getBoolean("jammed");
@@ -195,30 +190,19 @@ public class GearboxBlockEntity extends BlockEntity implements IEnergyBlock {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putByte("gearMask", gearMask);
         tag.putByte("axisCode", axisCode);
         tag.putBoolean("jammed", jammed);
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public CompoundTag getUpdateTag(HolderLookup.Provider lookup) {
-*///?} else {
-    public CompoundTag getUpdateTag() {
-//?}
-        CompoundTag tag = new CompoundTag();
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         tag.putByte("gearMask", gearMask);
         tag.putByte("axisCode", axisCode);
         tag.putByte("visualRotationMask", (byte) visualRotationMask);
         tag.putBoolean("jammed", jammed);
-        return tag;
     }
 
     @Override
@@ -227,11 +211,7 @@ public class GearboxBlockEntity extends BlockEntity implements IEnergyBlock {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void handleUpdateTag(CompoundTag tag,HolderLookup.Provider lookup) {
-*///?} else {
-    public void handleUpdateTag(CompoundTag tag) {
-//?}
+    protected void readUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         gearMask = (byte) (tag.getByte("gearMask") & 63);
         axisCode = (byte) Math.min(3, tag.getByte("axisCode") & 255);
         visualRotationMask = tag.getByte("visualRotationMask") & 127;
@@ -242,13 +222,9 @@ public class GearboxBlockEntity extends BlockEntity implements IEnergyBlock {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet,HolderLookup.Provider lookup) {
-        if (packet.getTag() != null) handleUpdateTag(packet.getTag(),lookup);
-*///?} else {
-    public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet) {
-        if (packet.getTag() != null) handleUpdateTag(packet.getTag());
-//?}
+    protected void handleDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet,
+            @Nullable HolderLookup.Provider lookup) {
+        if (packet.getTag() != null) readUpdateTag(packet.getTag(), lookup);
     }
 
     @Override

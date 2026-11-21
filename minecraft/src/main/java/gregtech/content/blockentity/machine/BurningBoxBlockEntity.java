@@ -16,6 +16,7 @@ import gregtech.content.data.GregTechTags;
 import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -487,18 +488,8 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
     // ── NBT ──────────────────────────────────────────────────────────────────
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-        saveData(tag, lookup);
-    }
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        saveData(tag, null);
-    }
-//?}
-    private void saveData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putLong("gt.energy", energy);
         tag.putBoolean("gt.active", burning);
         tag.putInt("gt.cooldown", cooldown);
@@ -516,18 +507,8 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-        loadData(tag, lookup);
-    }
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        loadData(tag, null);
-    }
-//?}
-    private void loadData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         energy = tag.getLong("gt.energy");
         burning = tag.getBoolean("gt.active");
         cooldown = tag.getInt("gt.cooldown");

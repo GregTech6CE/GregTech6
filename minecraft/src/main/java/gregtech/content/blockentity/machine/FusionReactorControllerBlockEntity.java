@@ -20,6 +20,8 @@ import java.util.*;
 import net.minecraftforge.fluids.FluidStack;
 //?}
 
+import javax.annotation.Nullable;
+
 /** Dedicated GT6 fusion executor: input reservation, LU startup, timed EU output and retained products. */
 public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockEntity {
     private final PartBindings<BlockPos,MultiblockLayout.Role> fusionBindings=new PartBindings<>();
@@ -202,33 +204,20 @@ public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockE
         if (execute){chargeRemaining=accepted>chargeRemaining/size?0:chargeRemaining-accepted*size;setChanged();}
         return accepted;
     }
-//? if >=1.21.1 {
-    /*@Override public void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-        net.minecraft.core.HolderLookup.Provider codecLookup=lookup;
-*///?} else {
-    @Override public void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        net.minecraft.core.HolderLookup.Provider codecLookup=null;
-//?}
+    @Override protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         var job=new CompoundTag();job.putLong("charge",chargeRemaining);job.putLong("totalCharge",chargeTotal);
         job.putLong("progress",progress);job.putLong("duration",duration);job.putLong("outputEU",outputEU);
         job.putBoolean("passive",passive);job.putBoolean("processing",processing);
-        if (products!=null)job.put("products",products.save(codecLookup));
+        if (products!=null)job.put("products",products.save(lookup));
         tag.put("gt.fusion",job);
     }
-//? if >=1.21.1 {
-    /*@Override public void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);var job=tag.getCompound("gt.fusion");
-        net.minecraft.core.HolderLookup.Provider codecLookup=lookup;
-*///?} else {
-    @Override public void load(CompoundTag tag) {
-        super.load(tag);var job=tag.getCompound("gt.fusion");
-        net.minecraft.core.HolderLookup.Provider codecLookup=null;
-//?}
+    @Override protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
+        var job=tag.getCompound("gt.fusion");
         chargeTotal=Math.max(0,job.getLong("totalCharge"));chargeRemaining=Math.max(0,Math.min(chargeTotal,job.getLong("charge")));
         duration=Math.max(0,job.getLong("duration"));progress=Math.max(0,Math.min(duration,job.getLong("progress")));
-        outputEU=Math.max(0,job.getLong("outputEU"));products=job.contains("products")?MachineWorkOutputs.load(job.getCompound("products"),codecLookup):null;
+        outputEU=Math.max(0,job.getLong("outputEU"));products=job.contains("products")?MachineWorkOutputs.load(job.getCompound("products"),lookup):null;
         continuousRecipe=null;running=completed=false;
         // Restore only an explicit saved latch, never infer processing from a waiting job.
         // tickFusion validates the real structure before this latch can permit any work.

@@ -4,18 +4,19 @@ import gregtech.engine.fluid.FluidHazard;
 import gregtech.engine.fluid.FluidHazards;
 import gregtech.engine.fluid.FluidTankGT;
 import gregtech.content.block.machine.CompressedGasTankBlock;
+import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.registry.GTFluids;
+import gregtech.engine.stack.NbtCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 //? if >=1.21.1 {
-/*import net.minecraft.core.HolderLookup;
-import net.neoforged.neoforge.fluids.FluidStack;
+/*import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 *///?} else {
 import net.minecraftforge.common.capabilities.Capability;
@@ -33,7 +34,7 @@ import java.util.Set;
  * Stores one gas. Pipes, buckets and funnels cannot fill it.
  * {@link #fillCompressed} is the compressor path. Drain is open, so a fuel machine can take the gas.
  */
-public class CompressedGasTankBlockEntity extends BlockEntity implements IFluidHandler,
+public class CompressedGasTankBlockEntity extends GTBlockEntity implements IFluidHandler,
         gregtech.engine.fluid.CompressedGasReceiver {
     private final FluidTankGT tank;
     private final Set<FluidHazard> protections;
@@ -135,27 +136,14 @@ public class CompressedGasTankBlockEntity extends BlockEntity implements IFluidH
     @Override public FluidStack drain(int amount, FluidAction action) { return tank.drain(amount, action); }
 
     @Override
-//? if >=1.21.1 {
-/*    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-        tank.writeToNBT(tag, lookup);
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
+        NbtCompat.writeTank(tank, tag, lookup);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-        tank.readFromNBT(tag, lookup);
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
+        NbtCompat.readTank(tank, tag, lookup);
     }
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        tank.writeToNBT(tag);
-    }
-
-    @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        tank.readFromNBT(tag);
-    }
-//?}
 }

@@ -22,6 +22,9 @@ import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
 import java.util.*;
+
+import javax.annotation.Nullable;
+
 /** Resolves a cached remote item/fluid endpoint; the base class forwards its sided capabilities. */
 public class LongDistEndpointBlockEntity extends gregtech.content.blockentity.CapabilityRelayBlockEntity implements gregtech.api.platform.machine.MachineControl.Provider {
     private long temperature;
@@ -186,10 +189,9 @@ public class LongDistEndpointBlockEntity extends gregtech.content.blockentity.Ca
         return peer == null ? null : new Target(peer.worldPosition.relative(peer.front().getOpposite()), peer.front());
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
+    @Override
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putBoolean("gt.stopped", stopped);
         var target = link.targetPosition();
         if (target != null && !target.equals(worldPosition)) tag.putLong("gt.target", target.asLong());
@@ -197,30 +199,11 @@ public class LongDistEndpointBlockEntity extends gregtech.content.blockentity.Ca
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         stopped = tag.getBoolean("gt.stopped");
         link.restore(tag.contains("gt.target") ? BlockPos.of(tag.getLong("gt.target")) : null);
         routeWatch.clear();
         temperature = tag.getLong("gt.temperature");
     }
-*///?} else {
-    @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        tag.putBoolean("gt.stopped", stopped);
-        var target = link.targetPosition();
-        if (target != null && !target.equals(worldPosition)) tag.putLong("gt.target", target.asLong());
-        tag.putLong("gt.temperature", temperature);
-    }
-
-    @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        stopped = tag.getBoolean("gt.stopped");
-        link.restore(tag.contains("gt.target") ? BlockPos.of(tag.getLong("gt.target")) : null);
-        routeWatch.clear();
-        temperature = tag.getLong("gt.temperature");
-    }
-//?}
 }

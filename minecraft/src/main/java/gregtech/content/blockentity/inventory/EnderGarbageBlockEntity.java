@@ -1,10 +1,12 @@
 package gregtech.content.blockentity.inventory;
 
 import gregtech.client.gui.HopperContainerMenu;
+import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.registry.GTMenuTypes;
 import gregtech.content.world.GarbageData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -13,7 +15,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
@@ -37,7 +38,7 @@ import javax.annotation.Nullable;
  * contents (and any piped-in fluids) into the global {@link GarbageData}
  * garbage dump. A redstone signal pauses it.
  */
-public class EnderGarbageBlockEntity extends BlockEntity implements MenuProvider, gregtech.engine.inventory.BlockContents {
+public class EnderGarbageBlockEntity extends GTBlockEntity implements MenuProvider, gregtech.engine.inventory.BlockContents {
 
     private final ItemStackHandler inventory = new ItemStackHandler(9) {
 
@@ -198,37 +199,15 @@ public class EnderGarbageBlockEntity extends BlockEntity implements MenuProvider
 
     // ── NBT ──────────────────────────────────────────────────────────────
 
-//? if >=1.21.1 {
-    /*@Override
-    protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-        saveData(tag, lookup);
-    }
-*///?} else {
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        saveData(tag, null);
-    }
-//?}
-    private void saveData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.put("Inventory", gregtech.engine.stack.HandlerNbt.save(inventory, lookup));
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-        loadData(tag, lookup);
-    }
-*///?} else {
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        loadData(tag, null);
-    }
-//?}
-    private void loadData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         if (tag.contains("Inventory")) gregtech.engine.stack.HandlerNbt.load(inventory, tag.getCompound("Inventory"), lookup);
     }
 

@@ -29,6 +29,7 @@ import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.GregTechTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -884,31 +885,23 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     // ── NBT ──────────────────────────────────────────────────────────────
 
     @Override
-
-//? if >=1.21.1 {
-/*    public void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-        net.minecraft.core.HolderLookup.Provider codecLookup=lookup;
-*///?} else {
-    public void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        net.minecraft.core.HolderLookup.Provider codecLookup=null;
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
 
         if (sourceRequiresIgnition())tag.putByte(gregtech.content.machine.OriginalBasicMachineRules.IGNITION_NBT,(byte)sourceIgnitionTicks);
         tools.save(tag);
         covers.saveControl(tag);
         if (inventory != null)
-            tag.put(NBT_INVENTORY, gregtech.engine.stack.HandlerNbt.save(inventory.items(), codecLookup));
+            tag.put(NBT_INVENTORY, gregtech.engine.stack.HandlerNbt.save(inventory.items(), lookup));
 
         if (inventory.potionInput() != null)
-            tag.put("gt.potion_input", gregtech.engine.stack.HandlerNbt.save(inventory.potionInput(), codecLookup));
+            tag.put("gt.potion_input", gregtech.engine.stack.HandlerNbt.save(inventory.potionInput(), lookup));
 
         if (recipeMap == MachineRecipeMaps.Autocrafter || !autocraftingProgram.getStackInSlot(0).isEmpty())
-            tag.put("gt.autocrafting.program", gregtech.engine.stack.HandlerNbt.save(autocraftingProgram, codecLookup));
+            tag.put("gt.autocrafting.program", gregtech.engine.stack.HandlerNbt.save(autocraftingProgram, lookup));
 
         tag.putLong(NBT_ENERGY, energyPort.stored());
-        processor.save(tag, codecLookup);
+        processor.save(tag, lookup);
         if (spec != null && spec.auxiliaryEnergy() != null) {
             tag.putLong("gt.aux_energy", energyPort.auxStored());
             tag.putLong("gt.startup_energy", energyPort.startup());
@@ -918,7 +911,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             for (int i = 0; i < inventory.tanksInput().length; i++) {
                 CompoundTag t = new CompoundTag();
 
-                gregtech.engine.stack.NbtCompat.writeTank(inventory.tanksInput()[i],t,codecLookup);
+                gregtech.engine.stack.NbtCompat.writeTank(inventory.tanksInput()[i],t,lookup);
 
                 tag.put(NBT_TANKS_IN + i, t);
             }
@@ -927,83 +920,38 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             for (int i = 0; i < inventory.tanksOutput().length; i++) {
                 CompoundTag t = new CompoundTag();
 
-                gregtech.engine.stack.NbtCompat.writeTank(inventory.tanksOutput()[i],t,codecLookup);
+                gregtech.engine.stack.NbtCompat.writeTank(inventory.tanksOutput()[i],t,lookup);
 
                 tag.put(NBT_TANKS_OUT + i, t);
             }
         }
 
-        covers.save(tag, codecLookup);
+        covers.save(tag, lookup);
     }
 
     // ── Client sync (covers only — everything else travels via menus) ───────
 
     @Override
-
-//? if >=1.21.1 {
-/*    public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    public CompoundTag getUpdateTag() {
-//?}
-
-        CompoundTag tag = new CompoundTag();
-
-//? if >=1.21.1 {
-/*        covers.save(tag, lookup);
-*///?} else {
-        covers.save(tag, null);
-//?}
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        covers.save(tag, lookup);
         gregtech.engine.multiblock.tracking.ClientFormedSync.write(this, tag);
-        return tag;
     }
 
     @Override
-
-//? if >=1.21.1 {
-/*    public void handleUpdateTag(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
+    protected void readUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         covers.load(tag, lookup);
-*///?} else {
-    public void handleUpdateTag(CompoundTag tag) {
-        covers.load(tag, null);
-//?}
         gregtech.engine.multiblock.tracking.ClientFormedSync.read(this, tag);
     }
 
     @Override
-    public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override
-    public void onDataPacket(net.minecraft.network.Connection net,
-
-//? if >=1.21.1 {
-/*                             net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket pkt,net.minecraft.core.HolderLookup.Provider lookup) {
-        if (pkt.getTag() != null) handleUpdateTag(pkt.getTag(),lookup);
-*///?} else {
-                             net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket pkt) {
-        if (pkt.getTag() != null) handleUpdateTag(pkt.getTag());
-//?}
-
-    }
-
-    @Override
-
-//? if >=1.21.1 {
-/*    public void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-        net.minecraft.core.HolderLookup.Provider codecLookup=lookup;
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        net.minecraft.core.HolderLookup.Provider codecLookup=null;
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
 
         if (tag.contains("gt.autocrafting.program", 10)) {
             CompoundTag savedProgram = tag.getCompound("gt.autocrafting.program").copy();
             savedProgram.putInt("Size", 1);
 
-            gregtech.engine.stack.HandlerNbt.load(autocraftingProgram, savedProgram, codecLookup);
+            gregtech.engine.stack.HandlerNbt.load(autocraftingProgram, savedProgram, lookup);
 
         }
         sourceIgnitionTicks=Math.max(0,tag.getByte(gregtech.content.machine.OriginalBasicMachineRules.IGNITION_NBT));
@@ -1012,7 +960,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         adjacentEnergySourcesChanged();
         mInventoryChanged = true;
         if (tag.contains(NBT_ENERGY)) energyPort.setStored(tag.getLong(NBT_ENERGY));
-        processor.load(tag, codecLookup);
+        processor.load(tag, lookup);
         var auxiliary = spec == null ? null : spec.auxiliaryEnergy();
         energyPort.setAuxStored(auxiliary == null ? 0
                 : Math.max(0, Math.min(auxiliary.capacity(), tag.getLong("gt.aux_energy"))));
@@ -1021,27 +969,27 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if (inventory == null) {
             // Called before setSpec — defer
         } else if (tag.contains(NBT_INVENTORY)) {
-            gregtech.engine.stack.HandlerNbt.load(inventory.items(), tag.getCompound(NBT_INVENTORY), codecLookup);
+            gregtech.engine.stack.HandlerNbt.load(inventory.items(), tag.getCompound(NBT_INVENTORY), lookup);
         }
         if (inventory != null && inventory.potionInput() != null && tag.contains("gt.potion_input")) {
-            gregtech.engine.stack.HandlerNbt.load(inventory.potionInput(), tag.getCompound("gt.potion_input"), codecLookup);
+            gregtech.engine.stack.HandlerNbt.load(inventory.potionInput(), tag.getCompound("gt.potion_input"), lookup);
         }
         if (inventory != null) {
             for (int i = 0; i < inventory.tanksInput().length; i++)
                 if (tag.contains(NBT_TANKS_IN + i))
 
-                    gregtech.engine.stack.NbtCompat.readTank(inventory.tanksInput()[i],tag.getCompound(NBT_TANKS_IN + i),codecLookup);
+                    gregtech.engine.stack.NbtCompat.readTank(inventory.tanksInput()[i],tag.getCompound(NBT_TANKS_IN + i),lookup);
 
         }
         if (inventory != null) {
             for (int i = 0; i < inventory.tanksOutput().length; i++)
                 if (tag.contains(NBT_TANKS_OUT + i))
 
-                    gregtech.engine.stack.NbtCompat.readTank(inventory.tanksOutput()[i],tag.getCompound(NBT_TANKS_OUT + i),codecLookup);
+                    gregtech.engine.stack.NbtCompat.readTank(inventory.tanksOutput()[i],tag.getCompound(NBT_TANKS_OUT + i),lookup);
 
         }
 
-        covers.load(tag, codecLookup);
+        covers.load(tag, lookup);
         sanitizeForSpec();
     }
 

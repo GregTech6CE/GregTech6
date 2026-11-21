@@ -19,6 +19,8 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 //?}
 
+import javax.annotation.Nullable;
+
 /** GT6 17211–17214: a steam batch drives two consecutive RU pulses; 170 L condense to 1 L. */
 public class LargeTurbineControllerBlockEntity extends AxialGeneratorBlockEntity implements IFluidHandler {
     private long pending;
@@ -149,30 +151,6 @@ public class LargeTurbineControllerBlockEntity extends AxialGeneratorBlockEntity
     /*public IFluidHandler fluidCapability(Direction side) {
         return !isRemoved() && (side == null || side == front()) ? this : null;
     }
-
-    @Override
-    protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-        tag.putLong("gt.pending", pending);
-        tag.putInt("gt.steam_counter", steamCounter);
-        tag.put("gt.steam", steam.writeToNBT(lookup, new CompoundTag()));
-        tag.put("gt.water", water.writeToNBT(lookup, new CompoundTag()));
-    }
-
-    private static void readTank(FluidTank tank, CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        gregtech.engine.fluid.NativeMachineTankData.restore(tank, tag, lookup);
-    }
-
-    @Override
-    public void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-        pending = Math.max(0, Math.min(grade().inputMaximum(), tag.getLong("gt.pending")));
-        steamCounter = Math.floorMod(tag.getInt("gt.steam_counter"),
-                gregtech.content.multiblock.OriginalGeneratorParameters.STEAM_CONDENSATION_RATIO);
-        readTank(steam, tag.getCompound("gt.steam"), lookup);
-        if (!steam.isEmpty() && !isSteam(steam.getFluid())) steam.setFluid(FluidStack.EMPTY);
-        readTank(water, tag.getCompound("gt.water"), lookup);
-    }
 *///?} else {
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
@@ -190,17 +168,37 @@ public class LargeTurbineControllerBlockEntity extends AxialGeneratorBlockEntity
         super.reviveCaps();
         fluids = LazyOptional.of(() -> this);
     }
+//?}
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putLong("gt.pending", pending);
         tag.putInt("gt.steam_counter", steamCounter);
+//? if >=1.21.1 {
+        /*tag.put("gt.steam", steam.writeToNBT(lookup, new CompoundTag()));
+        tag.put("gt.water", water.writeToNBT(lookup, new CompoundTag()));
+*///?} else {
         tag.put("gt.steam", steam.writeToNBT(new CompoundTag()));
         tag.put("gt.water", water.writeToNBT(new CompoundTag()));
+//?}
     }
 
-    private static void readTank(FluidTank tank, CompoundTag tag) {
+    @Override
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
+        pending = Math.max(0, Math.min(grade().inputMaximum(), tag.getLong("gt.pending")));
+        steamCounter = Math.floorMod(tag.getInt("gt.steam_counter"),
+                gregtech.content.multiblock.OriginalGeneratorParameters.STEAM_CONDENSATION_RATIO);
+        readTank(steam, tag.getCompound("gt.steam"), lookup);
+        if (!steam.isEmpty() && !isSteam(steam.getFluid())) steam.setFluid(FluidStack.EMPTY);
+        readTank(water, tag.getCompound("gt.water"), lookup);
+    }
+
+    private static void readTank(FluidTank tank, CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+//? if >=1.21.1 {
+        /*gregtech.engine.fluid.NativeMachineTankData.restore(tank, tag, lookup);
+*///?} else {
         var fluid = tag.contains("Fluid") ? FluidStack.loadFluidStackFromNBT(tag.getCompound("Fluid")) : FluidStack.loadFluidStackFromNBT(tag);
         if (fluid.isEmpty()) {
             tank.setFluid(FluidStack.EMPTY);
@@ -209,17 +207,6 @@ public class LargeTurbineControllerBlockEntity extends AxialGeneratorBlockEntity
         long amount = tag.contains("Fluid") ? tag.getLong("Amount") : fluid.getAmount();
         fluid.setAmount((int) Math.max(0, Math.min(tank.getCapacity(), amount)));
         tank.setFluid(fluid);
-    }
-
-    @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        pending = Math.max(0, Math.min(grade().inputMaximum(), tag.getLong("gt.pending")));
-        steamCounter = Math.floorMod(tag.getInt("gt.steam_counter"),
-                gregtech.content.multiblock.OriginalGeneratorParameters.STEAM_CONDENSATION_RATIO);
-        readTank(steam, tag.getCompound("gt.steam"));
-        if (!steam.isEmpty() && !isSteam(steam.getFluid())) steam.setFluid(FluidStack.EMPTY);
-        readTank(water, tag.getCompound("gt.water"));
-    }
 //?}
+    }
 }

@@ -4,10 +4,11 @@ import gregtech.api.machine.BlockFace;
 
 import gregtech.api.addon.platform.AddonSensor;
 import gregtech.api.addon.platform.SensorContext;
+import gregtech.content.blockentity.GTBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DirectionalBlock;
@@ -23,11 +24,13 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
 //?}
 
+import javax.annotation.Nullable;
+
 /**
  * Samples the selected input at the end of each server tick, after machines have worked.
  * The TPS meter retains its original twenty-tick sampling interval.
  */
-public class SensorBlockEntity extends BlockEntity {
+public class SensorBlockEntity extends GTBlockEntity {
 
     public enum Kind {
         FLUID, ITEM, ENERGY, PROGRESS,
@@ -423,13 +426,8 @@ else if (target instanceof gregtech.content.blockentity.machine.SmeltingCrucible
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         saveDisplay(tag);
         tag.putIntArray("gt.average", average.values());
         tag.putInt("gt.average_index", average.index());
@@ -448,13 +446,8 @@ else if (target instanceof gregtech.content.blockentity.machine.SmeltingCrucible
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         int input = tag.contains("gt.sensor_input") ? tag.getByte("gt.sensor_input") : -1;
         configuredInput = gregtech.engine.sensor.SensorPanelRules.validInputSide(
                 getBlockState().getValue(DirectionalBlock.FACING).ordinal(), input) ? Direction.values()[input] : null;
@@ -472,38 +465,12 @@ else if (target instanceof gregtech.content.blockentity.machine.SmeltingCrucible
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    public CompoundTag getUpdateTag() {
-//?}
-        CompoundTag tag = new CompoundTag();
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         saveDisplay(tag);
-        return tag;
-    }
-
-    @Override
-//? if >=1.21.1 {
-    /*public void handleUpdateTag(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        loadAdditional(tag,lookup);
-*///?} else {
-    public void handleUpdateTag(CompoundTag tag) {
-        load(tag);
-//?}
     }
 
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override
-//? if >=1.21.1 {
-    /*public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt,net.minecraft.core.HolderLookup.Provider lookup) {
-        if (pkt.getTag() != null) loadAdditional(pkt.getTag(),lookup);
-*///?} else {
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        if (pkt.getTag() != null) load(pkt.getTag());
-//?}
     }
 }

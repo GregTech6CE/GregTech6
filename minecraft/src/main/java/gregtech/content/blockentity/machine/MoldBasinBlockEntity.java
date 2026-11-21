@@ -8,11 +8,15 @@ import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.content.block.machine.MoldBasinBlock;
+import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.data.GregTechConstants;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.engine.stack.NbtCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -31,7 +35,7 @@ import org.jetbrains.annotations.Nullable;
  * Produces solid metal blocks when filled and cooled. Only accepts input from the top face.
  * Supports auto-input from adjacent crucibles and item pickup with pincers.
  */
-public class MoldBasinBlockEntity extends BlockEntity implements MoldAutomation.Access {
+public class MoldBasinBlockEntity extends GTBlockEntity implements MoldAutomation.Access {
 
     private final MoldAutomation[] automation = new MoldAutomation[7];
     public MoldAutomation automation(@Nullable Direction side) {
@@ -446,13 +450,8 @@ public class MoldBasinBlockEntity extends BlockEntity implements MoldAutomation.
     // === NBT ===
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         temperature = tag.contains(NBT_TEMPERATURE) ? tag.getLong(NBT_TEMPERATURE) : GregTechConstants.DEF_ENV_TEMP;
         autoPullDirections = tag.contains(NBT_AUTO_PULL) ? tag.getByte(NBT_AUTO_PULL) : 0;
         if (tag.contains("gt.basin.has_content")) {
@@ -469,20 +468,12 @@ public class MoldBasinBlockEntity extends BlockEntity implements MoldAutomation.
         contentAmount = tag.contains(NBT_CONTENT_AMOUNT) ? tag.getLong(NBT_CONTENT_AMOUNT) : 0;
         if (tag.contains("gt.basin.has_solid")) {
             if (tag.getBoolean("gt.basin.has_solid") && tag.contains(NBT_SOLID_OUTPUT)) {
-//? if >=1.21.1 {
-                /*solidOutput = ItemStack.parseOptional(lookup,tag.getCompound(NBT_SOLID_OUTPUT));
-*///?} else {
-                solidOutput = ItemStack.of(tag.getCompound(NBT_SOLID_OUTPUT));
-//?}
+                solidOutput = NbtCompat.readItem(tag.getCompound(NBT_SOLID_OUTPUT), lookup);
             } else {
                 solidOutput = ItemStack.EMPTY;
             }
         } else if (tag.contains(NBT_SOLID_OUTPUT)) {
-//? if >=1.21.1 {
-            /*solidOutput = ItemStack.parseOptional(lookup,tag.getCompound(NBT_SOLID_OUTPUT));
-*///?} else {
-            solidOutput = ItemStack.of(tag.getCompound(NBT_SOLID_OUTPUT));
-//?}
+            solidOutput = NbtCompat.readItem(tag.getCompound(NBT_SOLID_OUTPUT), lookup);
         } else {
             solidOutput = ItemStack.EMPTY;
         }
@@ -490,13 +481,8 @@ public class MoldBasinBlockEntity extends BlockEntity implements MoldAutomation.
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putLong(NBT_TEMPERATURE, temperature);
         tag.putByte(NBT_AUTO_PULL, autoPullDirections);
         if (contentMaterial != null) {
@@ -504,23 +490,14 @@ public class MoldBasinBlockEntity extends BlockEntity implements MoldAutomation.
         }
         tag.putLong(NBT_CONTENT_AMOUNT, contentAmount);
         if (!solidOutput.isEmpty()) {
-//? if >=1.21.1 {
-            /*tag.put(NBT_SOLID_OUTPUT, solidOutput.saveOptional(lookup));
-*///?} else {
-            tag.put(NBT_SOLID_OUTPUT, solidOutput.save(new CompoundTag()));
-//?}
+            tag.put(NBT_SOLID_OUTPUT, NbtCompat.saveItem(solidOutput, lookup));
         }
         tag.putInt(NBT_SOLID_OUTPUT_TINT, solidOutputTint);
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
-        CompoundTag tag = super.getUpdateTag(lookup);
-*///?} else {
-    public CompoundTag getUpdateTag() {
-        CompoundTag tag = super.getUpdateTag();
-//?}
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.writeUpdateTag(tag, lookup);
         tag.putLong(NBT_TEMPERATURE, temperature);
         tag.putByte(NBT_AUTO_PULL, autoPullDirections);
         tag.putBoolean("gt.basin.has_content", contentMaterial != null);
@@ -531,24 +508,14 @@ public class MoldBasinBlockEntity extends BlockEntity implements MoldAutomation.
         // Always write solid output info so client can detect clears
         tag.putBoolean("gt.basin.has_solid", !solidOutput.isEmpty());
         if (!solidOutput.isEmpty()) {
-//? if >=1.21.1 {
-            /*tag.put(NBT_SOLID_OUTPUT, solidOutput.saveOptional(lookup));
-*///?} else {
-            tag.put(NBT_SOLID_OUTPUT, solidOutput.save(new CompoundTag()));
-//?}
+            tag.put(NBT_SOLID_OUTPUT, NbtCompat.saveItem(solidOutput, lookup));
         }
         tag.putInt(NBT_SOLID_OUTPUT_TINT, solidOutputTint);
-        return tag;
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void handleUpdateTag(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.handleUpdateTag(tag,lookup);
-*///?} else {
-    public void handleUpdateTag(CompoundTag tag) {
-        super.handleUpdateTag(tag);
-//?}
+    protected void readUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.readUpdateTag(tag, lookup);
         if (tag.contains(NBT_TEMPERATURE)) temperature = tag.getLong(NBT_TEMPERATURE);
         if (tag.contains(NBT_AUTO_PULL)) autoPullDirections = tag.getByte(NBT_AUTO_PULL);
         if (tag.getBoolean("gt.basin.has_content")) {
@@ -561,11 +528,7 @@ public class MoldBasinBlockEntity extends BlockEntity implements MoldAutomation.
         if (tag.contains(NBT_CONTENT_AMOUNT)) contentAmount = tag.getLong(NBT_CONTENT_AMOUNT);
         if (tag.getBoolean("gt.basin.has_solid")) {
             if (tag.contains(NBT_SOLID_OUTPUT)) {
-//? if >=1.21.1 {
-                /*solidOutput = ItemStack.parseOptional(lookup,tag.getCompound(NBT_SOLID_OUTPUT));
-*///?} else {
-                solidOutput = ItemStack.of(tag.getCompound(NBT_SOLID_OUTPUT));
-//?}
+                solidOutput = NbtCompat.readItem(tag.getCompound(NBT_SOLID_OUTPUT), lookup);
             }
         } else {
             solidOutput = ItemStack.EMPTY;
@@ -581,9 +544,7 @@ public class MoldBasinBlockEntity extends BlockEntity implements MoldAutomation.
     public long getTemperature() { return temperature; }
     public CrucibleSpec spec() { return spec; }
     public byte getAutoPullDirections() { return autoPullDirections; }
-//? if >=1.21.1 {
-    /*@Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket(){return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);}
-    @Override public void onDataPacket(net.minecraft.network.Connection connection,net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet,net.minecraft.core.HolderLookup.Provider lookup){if (packet.getTag()!=null)handleUpdateTag(packet.getTag(),lookup);}
-*///?} else {
-//?}
+    @Override public ClientboundBlockEntityDataPacket getUpdatePacket(){return ClientboundBlockEntityDataPacket.create(this);}
+    @Override protected void handleDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet,
+            @Nullable HolderLookup.Provider lookup){if (packet.getTag()!=null)readUpdateTag(packet.getTag(),lookup);}
 }

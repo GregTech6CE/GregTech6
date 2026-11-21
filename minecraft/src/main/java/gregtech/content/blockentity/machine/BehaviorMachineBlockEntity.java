@@ -30,6 +30,7 @@ import gregtech.engine.machine.ITileEntityCrucible;
 import gregtech.engine.machine.ITileEntityMold;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.content.block.machine.BehaviorMachineBlock;
+import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.blockentity.machine.BehaviorMachineTanks.Tank;
 import gregtech.client.gui.BehaviorMachineMenu;
 import gregtech.content.data.GregTechTags;
@@ -80,7 +81,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** Shell block entity. The addon behavior never sees this class. */
-public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlock, MenuProvider,
+public class BehaviorMachineBlockEntity extends GTBlockEntity implements EnergyBlock, MenuProvider,
         gregtech.engine.fluid.CompressedGasReceiver, ITileEntityCrucible,
         gregtech.engine.multiblock.MultiblockPortOwner, gregtech.api.signal.GtSignalSource,
         BehaviorMachineClientView, gregtech.engine.multiblock.tracking.TrackedMultiblock {
@@ -782,32 +783,18 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     }
 
     @Override
-//? if >=1.21.1 {
-/*    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         writeMachine(tag, lookup);
     }
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        writeMachine(tag, null);
-    }
-//?}
 
     @Override
-//? if >=1.21.1 {
-/*    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         readMachine(tag, lookup);
     }
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        readMachine(tag, null);
-    }
-//?}
 
-    public void writeMachine(CompoundTag tag, HolderLookup.Provider lookup) {
+    public void writeMachine(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         tag.putLong("gt.energy", stored);
         if (declaration.energy() != null && declaration.energy().dynamic() && dynamicEnergy != null)
             tag.putString("gt.energy_type", dynamicEnergy);
@@ -820,7 +807,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         tag.put("gt.behavior", state.save(lookup));
     }
 
-    public void readMachine(CompoundTag tag, HolderLookup.Provider lookup) {
+    public void readMachine(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         capacity = BehaviorEnergyRules.readCapacity(tag.contains("gt.capacity"), tag.getLong("gt.capacity"), declaredCapacity());
         capacitySet = tag.contains("gt.capacity");
         stored = Math.max(0, Math.min(bufferCapacity(), tag.getLong("gt.energy")));
@@ -839,32 +826,21 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         if (tag.contains("gt.behavior")) state.load(tag.getCompound("gt.behavior"), lookup);
     }
 
-//? if >=1.21.1 {
-/*    @Override public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        return writeClientState(new CompoundTag());
+    @Override
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        writeClientState(tag);
     }
 
-    @Override public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider registries) {
+    @Override
+    protected void readUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         readClientState(tag);
     }
 
-    @Override public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket packet,
-                                      HolderLookup.Provider lookup) {
+    @Override
+    protected void handleDataPacket(Connection net, ClientboundBlockEntityDataPacket packet,
+            @Nullable HolderLookup.Provider lookup) {
         if (packet.getTag() != null) readClientState(packet.getTag());
     }
-*///?} else {
-    @Override public CompoundTag getUpdateTag() {
-        return writeClientState(new CompoundTag());
-    }
-
-    @Override public void handleUpdateTag(CompoundTag tag) {
-        readClientState(tag);
-    }
-
-    @Override public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket packet) {
-        if (packet.getTag() != null) readClientState(packet.getTag());
-    }
-//?}
 
     @Override public ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);

@@ -137,11 +137,8 @@ public class TankControllerBlock extends DirectionalBlock implements gregtech.en
         ItemStack result = new ItemStack(this);
         if (context.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY)
                 instanceof MultiblockTankControllerBlockEntity tank) {
-//? if >=1.21.1 {
-            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(tank, tank.saveWithId(tank.getLevel().registryAccess()));
-*///?} else {
-            var data = gregtech.content.cover.ComponentCoverFallback.forItem(tank, tank.saveWithoutMetadata());
-//?}
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(tank,
+                    gregtech.engine.stack.NbtCompat.saveForBlockItem(tank, tank.getLevel().registryAccess()));
             data.remove("gt.tank");
             data.remove("gt.size");
             gregtech.engine.stack.BlockEntityData.write(result, data);
@@ -159,11 +156,8 @@ public class TankControllerBlock extends DirectionalBlock implements gregtech.en
 //?}
         ItemStack result = new ItemStack(this);
         if (level.getBlockEntity(pos) instanceof MultiblockTankControllerBlockEntity tank) {
-//? if >=1.21.1 {
-            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(tank, tank.saveWithId(tank.getLevel().registryAccess()));
-*///?} else {
-            var data = gregtech.content.cover.ComponentCoverFallback.forItem(tank, tank.saveWithoutMetadata());
-//?}
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(tank,
+                    gregtech.engine.stack.NbtCompat.saveForBlockItem(tank, tank.getLevel().registryAccess()));
             data.remove("gt.tank");
             data.remove("gt.size");
             gregtech.engine.stack.BlockEntityData.write(result, data);
@@ -176,10 +170,6 @@ public class TankControllerBlock extends DirectionalBlock implements gregtech.en
             @Nullable net.minecraft.world.entity.LivingEntity placer, ItemStack stack) {
         net.minecraft.nbt.CompoundTag saved = gregtech.engine.stack.BlockEntityData.read(stack);
         if (level.getBlockEntity(pos) instanceof MultiblockTankControllerBlockEntity tank && saved != null)
-//? if >=1.21.1 {
-        /*tank.loadAdditional(saved, level.registryAccess());
-*///?} else {
-        tank.load(saved);
-//?}
+            gregtech.engine.stack.NbtCompat.loadBlockEntity(tank, saved, level.registryAccess());
     }
 }

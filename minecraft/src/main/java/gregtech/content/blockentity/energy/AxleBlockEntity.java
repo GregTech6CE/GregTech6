@@ -8,6 +8,7 @@ import gregtech.engine.energy.EnergyTransfer;
 import gregtech.engine.energy.IEnergyBlock;
 import gregtech.engine.energy.IEnergyConductor;
 import gregtech.content.block.energy.AxleBlock;
+import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.data.GregTechTags;
 import net.minecraft.core.HolderLookup;
 import gregtech.content.registry.GTAxles;
@@ -28,7 +29,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /** GT6 rotational axle block entity — RU conductor, pipe-style connection grid. */
-public class AxleBlockEntity extends BlockEntity implements IEnergyConductor, IEnergyBlock, gregtech.api.sensor.ProgressSensorSource {
+public class AxleBlockEntity extends GTBlockEntity implements IEnergyConductor, IEnergyBlock, gregtech.api.sensor.ProgressSensorSource {
     // Sample the existing transfer accumulator between entity ticks; never substitute energy.
     @Override public long progressValue(BlockFace side) { return transferredPower(); }
     @Override public long progressMaximum(BlockFace side) { return maxPower(); }
@@ -144,24 +145,14 @@ public class AxleBlockEntity extends BlockEntity implements IEnergyConductor, IE
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void loadAdditional(CompoundTag tag,HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         rotationDir = Math.max(0, Math.min(2, tag.getByte("Rotation")));
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void saveAdditional(CompoundTag tag,HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-*///?} else {
-    public void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putByte("Rotation", (byte)rotationDir);
     }
 
@@ -285,32 +276,21 @@ public class AxleBlockEntity extends BlockEntity implements IEnergyConductor, IE
         }
     }
 
-//? if >=1.21.1 {
-    /*@Override public CompoundTag getUpdateTag(HolderLookup.Provider lookup) {
-*///?} else {
-    @Override public CompoundTag getUpdateTag() {
-//?}
-        CompoundTag tag=new CompoundTag(); tag.putByte("Rotation",(byte)rotationDir); return tag;
+    @Override protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        tag.putByte("Rotation",(byte)rotationDir);
     }
     @Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
         return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
     }
-//? if >=1.21.1 {
-    /*@Override public void handleUpdateTag(CompoundTag tag,HolderLookup.Provider lookup) {
-        loadAdditional(tag,lookup); requestModelDataUpdate();
-*///?} else {
-    @Override public void handleUpdateTag(CompoundTag tag) {
-        load(tag); requestModelDataUpdate();
-//?}
+    @Override protected void readUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        loadFromTag(tag, lookup);
+        requestModelDataUpdate();
         if (level!=null)level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),3);
     }
-//? if >=1.21.1 {
-    /*@Override public void onDataPacket(net.minecraft.network.Connection connection,net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet,HolderLookup.Provider lookup) {
-        if (packet.getTag()!=null)handleUpdateTag(packet.getTag(),lookup);
-*///?} else {
-    @Override public void onDataPacket(net.minecraft.network.Connection connection,net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet) {
-        if (packet.getTag()!=null)handleUpdateTag(packet.getTag());
-//?}
+    @Override protected void handleDataPacket(net.minecraft.network.Connection connection,
+            net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet,
+            @Nullable HolderLookup.Provider lookup) {
+        if (packet.getTag()!=null)readUpdateTag(packet.getTag(),lookup);
     }
 
     // --- IEnergyConductor ---

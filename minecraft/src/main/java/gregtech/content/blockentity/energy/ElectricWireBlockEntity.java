@@ -7,14 +7,13 @@ import gregtech.engine.energy.IEnergyConductor;
 import gregtech.engine.energy.WirePacketRules;
 import gregtech.engine.energy.WireSpec;
 import gregtech.content.block.energy.ElectricWireBlock;
+import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.transport.energy.ElectricNetwork;
 import gregtech.content.transport.energy.ElectricNetworks;
-import net.minecraft.core.HolderLookup;
 import gregtech.content.registry.GTWires;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -22,7 +21,7 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 
 /** GT6 electric wire block entity (EU cable, pipe-style connection grid). */
-public class ElectricWireBlockEntity extends BlockEntity implements IEnergyConductor, IEnergyBlock, gregtech.api.sensor.ProgressSensorSource {
+public class ElectricWireBlockEntity extends GTBlockEntity implements IEnergyConductor, IEnergyBlock, gregtech.api.sensor.ProgressSensorSource {
     // Sample the existing transfer accumulator between entity ticks; never substitute energy.
     @Override public long progressValue(BlockFace side) { return transferredAmperes(); }
     @Override public long progressMaximum(BlockFace side) { return amperage(); }
@@ -161,26 +160,6 @@ public class ElectricWireBlockEntity extends BlockEntity implements IEnergyCondu
     private boolean canConnectOnPlacement(Direction side) {
         return level != null && level.hasChunkAt(worldPosition.relative(side))
                 && gregtech.content.cover.CoverConnections.canConnect(level, worldPosition, side);
-    }
-
-    @Override
-//? if >=1.21.1 {
-    /*public void loadAdditional(CompoundTag tag,HolderLookup.Provider registries) {
-        super.loadAdditional(tag,registries);
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
-    }
-
-    @Override
-//? if >=1.21.1 {
-    /*public void saveAdditional(CompoundTag tag,HolderLookup.Provider registries) {
-        super.saveAdditional(tag,registries);
-*///?} else {
-    public void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
     }
 
     // --- IEnergyBlock ---

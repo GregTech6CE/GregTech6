@@ -1,14 +1,18 @@
 package gregtech.content.blockentity.machine;
 
+import gregtech.content.block.machine.CrucibleCrossingBlock;
+import gregtech.content.blockentity.GTBlockEntity;
+import gregtech.content.data.GregTechConstants;
+import gregtech.content.registry.GTBlockEntities;
 import gregtech.engine.machine.CrucibleSpec;
 import gregtech.engine.machine.ITileEntityCrucible;
 import gregtech.engine.machine.ITileEntityMold;
-import gregtech.content.block.machine.CrucibleCrossingBlock;
-import gregtech.content.data.GregTechConstants;
-import gregtech.content.registry.GTBlockEntities;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -22,7 +26,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * A 4-way channel block that routes molten material from any adjacent crucible
  * to all other horizontal directions. Supports redstone control.
  */
-public class CrucibleCrossingBlockEntity extends BlockEntity implements ITileEntityCrucible {
+public class CrucibleCrossingBlockEntity extends GTBlockEntity implements ITileEntityCrucible {
 
     /** Redstone control state. */
     private boolean redstonePowered = false;
@@ -36,6 +40,7 @@ public class CrucibleCrossingBlockEntity extends BlockEntity implements ITileEnt
 
     /** Global lock counter (prevents routing loops). */
     private static long sLockCounter = 0;
+
     private static boolean sLockActive = false;
 
     public CrucibleCrossingBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -128,47 +133,26 @@ public class CrucibleCrossingBlockEntity extends BlockEntity implements ITileEnt
     // === NBT ===
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         redstonePowered = tag.getBoolean(NBT_REDSTONE);
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putBoolean(NBT_REDSTONE, redstonePowered);
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
-        CompoundTag tag = super.getUpdateTag(lookup);
-*///?} else {
-    public CompoundTag getUpdateTag() {
-        CompoundTag tag = super.getUpdateTag();
-//?}
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.writeUpdateTag(tag, lookup);
         tag.putBoolean(NBT_REDSTONE, redstonePowered);
-        return tag;
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void handleUpdateTag(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.handleUpdateTag(tag,lookup);
-*///?} else {
-    public void handleUpdateTag(CompoundTag tag) {
-        super.handleUpdateTag(tag);
-//?}
+    protected void readUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.readUpdateTag(tag, lookup);
         if (tag.contains(NBT_REDSTONE)) {
             redstonePowered = tag.getBoolean(NBT_REDSTONE);
         }
@@ -179,11 +163,22 @@ public class CrucibleCrossingBlockEntity extends BlockEntity implements ITileEnt
     }
 
     // Accessors
-    public boolean isRedstonePowered() { return redstonePowered; }
-    public CrucibleSpec spec() { return spec; }
-//? if >=1.21.1 {
-    /*@Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket(){return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);}
-    @Override public void onDataPacket(net.minecraft.network.Connection connection,net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet,net.minecraft.core.HolderLookup.Provider lookup){if (packet.getTag()!=null)handleUpdateTag(packet.getTag(),lookup);}
-*///?} else {
-//?}
+    public boolean isRedstonePowered() {
+        return redstonePowered;
+    }
+
+    public CrucibleSpec spec() {
+        return spec;
+    }
+
+    @Override
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    protected void handleDataPacket(
+            Connection connection, ClientboundBlockEntityDataPacket packet, @Nullable HolderLookup.Provider lookup) {
+        if (packet.getTag() != null) readUpdateTag(packet.getTag(), lookup);
+    }
 }

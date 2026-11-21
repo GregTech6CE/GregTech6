@@ -19,6 +19,7 @@ import gregtech.content.registry.GTFluids;
 import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.FluidTags;
@@ -552,13 +553,8 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
     }
 //?}
 
-//? if >=1.21.1 {
-    /*@Override protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-*///?} else {
-    @Override protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+    @Override protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putLong("gt.heat", heat);
         tag.putInt("gt.cooldown", cooldown);
         tag.putInt("gt.efficiency", efficiency);
@@ -572,13 +568,8 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
         CompoundTag steamTag = new CompoundTag(); steam.writeToNBT(steamTag); tag.put("gt.steam", steamTag);
 //?}
     }
-//? if >=1.21.1 {
-    /*@Override public void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-*///?} else {
-    @Override public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    @Override protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         heat = Math.max(0, tag.getLong("gt.heat"));
         structureOkay=tag.getBoolean("gt.state.str");
         cooldown = tag.contains("gt.cooldown") ? Math.max(0, Math.min(128, tag.getInt("gt.cooldown"))) : 128;

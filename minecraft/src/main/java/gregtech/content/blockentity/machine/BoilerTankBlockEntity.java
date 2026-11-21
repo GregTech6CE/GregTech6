@@ -14,6 +14,7 @@ import gregtech.platform.Mc;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -180,30 +181,14 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements gregte
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    public CompoundTag getUpdateTag() {
-//?}
-        var tag = new CompoundTag();
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         tag.putByte("gt.boiler_visual", (byte) barometerValue());
-        return tag;
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void handleUpdateTag(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    public void handleUpdateTag(CompoundTag tag) {
-//?}
+    protected void readUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         if (tag.contains("gt.boiler_visual")) clientBarometer = tag.getByte("gt.boiler_visual") & 31;
-        else {
-//? if >=1.21.1 {
-            /*super.handleUpdateTag(tag, lookup);
-*///?} else {
-            super.handleUpdateTag(tag);
-//?}
-        }
+        else super.readUpdateTag(tag, lookup);
     }
 
     private void boil() {
@@ -473,13 +458,8 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements gregte
     // ── NBT ──────────────────────────────────────────────────────────────────
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putLong("gt.heat", heat);
         tag.putInt("gt.cooldown",cooldown);
         tag.putShort("gt.efficiency", efficiency);
@@ -500,13 +480,8 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements gregte
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         heat = Math.max(0,tag.getLong("gt.heat"));
         cooldown=tag.contains("gt.cooldown")?Math.max(0,Math.min(128,tag.getInt("gt.cooldown"))):128;
         if (tag.contains("gt.efficiency")) efficiency = (short) gregtech.content.machine.OriginalFunctionalTooltipData.boilerEfficiency(tag.getShort("gt.efficiency"));

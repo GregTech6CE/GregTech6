@@ -1,20 +1,22 @@
 package gregtech.content.blockentity.inventory;
 
 import gregtech.content.block.inventory.SafeBlock;
+import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.item.GTDungeonKeyItem;
+import gregtech.engine.stack.NbtCompat;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
 /** GT6 mechanical/key safe: 15 slots, front access, no automation capability. */
-public class SafeBlockEntity extends BlockEntity {
+public class SafeBlockEntity extends GTBlockEntity {
     private final SimpleContainer inventory = new SimpleContainer(gregtech.content.storage.SafeLockRules.SLOTS);
     @Nullable private UUID owner;
     private long keyId;
@@ -63,18 +65,10 @@ public class SafeBlockEntity extends BlockEntity {
             level.setBlock(worldPosition, getBlockState().setValue(SafeBlock.OPEN, opened), 3);
         if (level != null && !level.isClientSide) level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
     }
-//? if >=1.21.1 {
-    /*@Override public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    @Override public CompoundTag getUpdateTag() {
-//?}
-        var tag = new CompoundTag(); if (owner != null) tag.putUUID("gt.owner", owner); tag.putBoolean("gt.open", opened); return tag;
+    @Override protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        if (owner != null) tag.putUUID("gt.owner", owner); tag.putBoolean("gt.open", opened);
     }
-//? if >=1.21.1 {
-    /*@Override public void handleUpdateTag(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) { owner = tag.hasUUID("gt.owner") ? tag.getUUID("gt.owner") : null; opened = tag.getBoolean("gt.open"); }
-*///?} else {
-    @Override public void handleUpdateTag(CompoundTag tag) { owner = tag.hasUUID("gt.owner") ? tag.getUUID("gt.owner") : null; opened = tag.getBoolean("gt.open"); }
-//?}
+    @Override protected void readUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) { owner = tag.hasUUID("gt.owner") ? tag.getUUID("gt.owner") : null; opened = tag.getBoolean("gt.open"); }
     @Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() { return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this); }
     public void setDungeonLoot(ResourceLocation table, long seed) { dungeonLoot = table; lootSeed = seed; setChanged(); }
     /** GT6 rolls one candidate stack per empty slot; preserve preplaced keys and consume the table once. */
@@ -123,58 +117,32 @@ public class SafeBlockEntity extends BlockEntity {
         for (var stack : overflow) gregtech.util.GTItemDrops.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), stack);
         overflow.clear(); setChanged();
     }
-//? if >=1.21.1 {
-    /*@Override protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-*///?} else {
-    @Override protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+    @Override protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         // Explicit slot indexes: SimpleContainer.createTag/fromTag compacts holes.
         var items = new net.minecraft.nbt.ListTag();
         for (int slot = 0; slot < inventory.getContainerSize(); slot++) if (!inventory.getItem(slot).isEmpty()) {
-//? if >=1.21.1 {
-            /*var entry = (CompoundTag) inventory.getItem(slot).save(lookup); entry.putInt("Slot", slot); items.add(entry);
-*///?} else {
-            var entry = inventory.getItem(slot).save(new CompoundTag()); entry.putInt("Slot", slot); items.add(entry);
-//?}
+            var entry = (CompoundTag) NbtCompat.saveItem(inventory.getItem(slot), lookup); entry.putInt("Slot", slot); items.add(entry);
         }
         tag.put("gt.items", items);
-//? if >=1.21.1 {
-        /*var extra = new net.minecraft.nbt.ListTag(); for (var stack : overflow) extra.add(stack.save(lookup)); tag.put("gt.overflow", extra);
-*///?} else {
-        var extra = new net.minecraft.nbt.ListTag(); for (var stack : overflow) extra.add(stack.save(new CompoundTag())); tag.put("gt.overflow", extra);
-//?}
+        var extra = new net.minecraft.nbt.ListTag(); for (var stack : overflow) extra.add(NbtCompat.saveItem(stack, lookup)); tag.put("gt.overflow", extra);
         if (owner != null) tag.putUUID("gt.owner", owner);
         tag.putLong("gt.key", keyId); tag.putBoolean("gt.open", opened);
         if (dungeonLoot != null) tag.putString("gt.dungeonloot", dungeonLoot.toString());
         tag.putLong("gt.loot.seed", lootSeed);
     }
-//? if >=1.21.1 {
-    /*@Override protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-*///?} else {
-    @Override public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    @Override protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         inventory.clearContent();
         overflow.clear();
         var items = tag.getList("gt.items", 10);
         for (int i = 0; i < items.size(); i++) {
             var entry = items.getCompound(i); int slot = entry.contains("Slot") ? entry.getInt("Slot") : i;
-//? if >=1.21.1 {
-            /*var stack = ItemStack.parseOptional(lookup,entry);
-*///?} else {
-            var stack = ItemStack.of(entry);
-//?}
+            var stack = NbtCompat.readItem(entry, lookup);
             if (slot >= 0 && slot < 15) inventory.setItem(slot, stack);
             else if (!stack.isEmpty()) overflow.add(stack);
         }
-//? if >=1.21.1 {
-        /*var extra = tag.getList("gt.overflow", 10); for (int i = 0; i < extra.size(); i++) { var stack = ItemStack.parseOptional(lookup,extra.getCompound(i)); if (!stack.isEmpty()) overflow.add(stack); }
-*///?} else {
-        var extra = tag.getList("gt.overflow", 10); for (int i = 0; i < extra.size(); i++) { var stack = ItemStack.of(extra.getCompound(i)); if (!stack.isEmpty()) overflow.add(stack); }
-//?}
+        var extra = tag.getList("gt.overflow", 10); for (int i = 0; i < extra.size(); i++) { var stack = NbtCompat.readItem(extra.getCompound(i), lookup); if (!stack.isEmpty()) overflow.add(stack); }
         owner = tag.hasUUID("gt.owner") ? tag.getUUID("gt.owner") : null;
         keyId = tag.getLong("gt.key"); opened = tag.getBoolean("gt.open");
         dungeonLoot = tag.contains("gt.dungeonloot") ? ResourceLocation.tryParse(tag.getString("gt.dungeonloot")) : null;

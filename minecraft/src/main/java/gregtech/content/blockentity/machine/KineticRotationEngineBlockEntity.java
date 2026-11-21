@@ -1,20 +1,20 @@
 package gregtech.content.blockentity.machine;
 
+import gregtech.content.block.machine.EngineBlock;
+import gregtech.content.data.GregTechTags;
 import gregtech.engine.energy.EnergyBlockViews;
 import gregtech.engine.energy.EnergyTransfer;
 import gregtech.engine.energy.FaceConfig;
 import gregtech.engine.energy.IEnergyBlock;
 import gregtech.engine.machine.RotationEngineSpec;
-import gregtech.content.block.machine.EngineBlock;
-import gregtech.content.data.GregTechTags;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-
-import javax.annotation.Nullable;
 
 /**
  * GT6 bipolar RU -> KU engine. RU enters on the four faces around the shaft;
@@ -45,7 +45,9 @@ public class KineticRotationEngineBlockEntity extends EngineBaseBlockEntity {
 
     /** GT6's bipolar shaft has no user-editable face mask. */
     @Override
-    public FaceConfig getFaceConfig() { return defaultFaceConfig(); }
+    public FaceConfig getFaceConfig() {
+        return defaultFaceConfig();
+    }
 
     @Override
     public void setFaceConfig(FaceConfig unused) {
@@ -53,15 +55,40 @@ public class KineticRotationEngineBlockEntity extends EngineBaseBlockEntity {
         setChanged();
     }
 
-    public RotationEngineSpec spec() { return spec; }
-    public boolean isActive() { return active; }
-    public long storedRu() { return ruBuffer; }
-    public boolean negativeInput() { return negativeInput; }
-    public int overvoltagePreventionCount() { return overvoltagePrevention; }
+    public RotationEngineSpec spec() {
+        return spec;
+    }
 
-    @Override protected long outputRate() { return spec != null ? spec.outputRate() : 0; }
-    @Override protected long inputRate() { return spec != null ? spec.inputRate() : 0; }
-    @Override protected GregTechTags.Tag inputEnergyType() { return GregTechTags.Energy.RU; }
+    public boolean isActive() {
+        return active;
+    }
+
+    public long storedRu() {
+        return ruBuffer;
+    }
+
+    public boolean negativeInput() {
+        return negativeInput;
+    }
+
+    public int overvoltagePreventionCount() {
+        return overvoltagePrevention;
+    }
+
+    @Override
+    protected long outputRate() {
+        return spec != null ? spec.outputRate() : 0;
+    }
+
+    @Override
+    protected long inputRate() {
+        return spec != null ? spec.inputRate() : 0;
+    }
+
+    @Override
+    protected GregTechTags.Tag inputEnergyType() {
+        return GregTechTags.Energy.RU;
+    }
 
     @Override
     public long getEnergySizeInputMin(GregTechTags.Tag type, @Nullable Direction side) {
@@ -131,7 +158,9 @@ public class KineticRotationEngineBlockEntity extends EngineBaseBlockEntity {
 
     /** This converter pushes KU in its own tick; it has no pullable KU buffer. */
     @Override
-    public long getEnergyOffered(GregTechTags.Tag type, @Nullable Direction side, long size) { return 0; }
+    public long getEnergyOffered(GregTechTags.Tag type, @Nullable Direction side, long size) {
+        return 0;
+    }
 
     @Override
     public long doExtract(GregTechTags.Tag type, @Nullable Direction side, long size, long amount, boolean execute) {
@@ -149,25 +178,15 @@ public class KineticRotationEngineBlockEntity extends EngineBaseBlockEntity {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putLong(RU_BUFFER_KEY, ruBuffer);
         tag.putBoolean(NEGATIVE_INPUT_KEY, negativeInput);
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         // Older port saves could contain a generic one-output screwdriver mask.
         // The physical four-input/two-output axis is always authoritative.
         faceConfig = defaultFaceConfig();
@@ -194,14 +213,13 @@ public class KineticRotationEngineBlockEntity extends EngineBaseBlockEntity {
             if (!source.isEnergyEmittingTo(GregTechTags.Energy.RU, sourceSide, false)) continue;
             long offered = source.getEnergyOffered(GregTechTags.Energy.RU, sourceSide, inputRate());
             if (offered <= 0) continue;
-            long extracted = source.doEnergyExtraction(GregTechTags.Energy.RU, sourceSide,
-                    inputRate(), Math.min(offered, demand), true);
+            long extracted = source.doEnergyExtraction(
+                    GregTechTags.Energy.RU, sourceSide, inputRate(), Math.min(offered, demand), true);
             if (extracted > 0) doInject(GregTechTags.Energy.RU, side, inputRate(), extracted, true);
         }
     }
 
-    public static void serverTick(
-            Level level, BlockPos pos, BlockState state, KineticRotationEngineBlockEntity be) {
+    public static void serverTick(Level level, BlockPos pos, BlockState state, KineticRotationEngineBlockEntity be) {
         if (be.spec == null) return;
         be.pollRuFromNeighbors();
 

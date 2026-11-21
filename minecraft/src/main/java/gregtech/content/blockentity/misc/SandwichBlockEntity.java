@@ -1,13 +1,16 @@
 package gregtech.content.blockentity.misc;
 
+import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.food.SandwichIngredients;
 import gregtech.content.food.SandwichNutrition;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.registry.GTSandwich;
+import gregtech.engine.stack.NbtCompat;
 import gregtech.engine.stack.StackCompat;
 import gregtech.platform.Mc;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -15,9 +18,9 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,12 +28,11 @@ import java.util.List;
 /**
  * The sixteen GT6 sandwich layer slots. An occupied slot marks the layer's bottom pixel.
  *
- * <p>The version branches in this class are platform serialization signatures only: 1.21 uses the
- * registry-aware stack codecs and the {@code BLOCK_ENTITY_DATA} component, 1.20.1 uses
- * {@code ItemStack.of}/{@code save(CompoundTag)} and the {@code BlockEntityTag} element.
- * The layer logic itself is shared.</p>
+ * <p>The remaining version branches are the public static item helpers' signatures: 1.21 carries a
+ * registry lookup, 1.20.1 does not. Stack encoding itself goes through {@link NbtCompat}.
+ * The layer logic is shared.</p>
  */
-public final class SandwichBlockEntity extends BlockEntity {
+public final class SandwichBlockEntity extends GTBlockEntity {
     public static final int SLOTS = gregtech.content.food.SandwichRules.SLOTS;
     private final ItemStack[] ingredients = new ItemStack[SLOTS];
     private boolean redstone;
@@ -178,7 +180,7 @@ public final class SandwichBlockEntity extends BlockEntity {
         if (be.contains("Ingredients", Tag.TAG_LIST)) readIngredients(be,result,lookup);
 *///?} else {
         CompoundTag be = stack.getTagElement("BlockEntityTag");
-        if (be != null && be.contains("Ingredients", Tag.TAG_LIST)) readIngredients(be, result);
+        if (be != null && be.contains("Ingredients", Tag.TAG_LIST)) readIngredients(be, result, null);
 //?}
         else {
             result[0] = gt("toast"); result[2] = gt("cooked_meat_bar");
@@ -190,21 +192,13 @@ public final class SandwichBlockEntity extends BlockEntity {
         return result;
     }
 
-//? if >=1.21.1 {
-    /*private static void readIngredients(CompoundTag tag,ItemStack[] output,net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    private static void readIngredients(CompoundTag tag, ItemStack[] output) {
-//?}
+    private static void readIngredients(CompoundTag tag, ItemStack[] output, @Nullable HolderLookup.Provider lookup) {
         Arrays.fill(output, ItemStack.EMPTY);
         ListTag list = tag.getList("Ingredients", Tag.TAG_COMPOUND);
         for (int i = 0; i < list.size(); i++) {
             CompoundTag row = list.getCompound(i);
             int slot = row.getByte("Slot") & 255;
-//? if >=1.21.1 {
-            /*if (slot < SLOTS) output[slot]=ItemStack.parseOptional(lookup==null?net.minecraft.core.RegistryAccess.fromRegistryOfRegistries(net.minecraft.core.registries.BuiltInRegistries.REGISTRY):lookup,row.getCompound("Stack"));
-*///?} else {
-            if (slot < SLOTS) output[slot] = ItemStack.of(row.getCompound("Stack"));
-//?}
+            if (slot < SLOTS) output[slot] = NbtCompat.readItem(row.getCompound("Stack"), lookup);
         }
     }
 
@@ -235,7 +229,7 @@ public final class SandwichBlockEntity extends BlockEntity {
         tag.putString("id", "gt6ce:sandwich_block");
         result.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(tag));
 *///?} else {
-        writeFields(tag, true);
+        writeFields(tag, null, true);
         result.getOrCreateTag().put("BlockEntityTag", tag);
 //?}
         return result;
@@ -253,55 +247,37 @@ public final class SandwichBlockEntity extends BlockEntity {
         return out;
     }
 
-//? if >=1.21.1 {
-    /*@Override protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-        if (tag.contains("Ingredients", Tag.TAG_LIST)) readIngredients(tag,ingredients,lookup);
-*///?} else {
-    @Override public void load(CompoundTag tag) {
-        super.load(tag);
-        if (tag.contains("Ingredients", Tag.TAG_LIST)) readIngredients(tag, ingredients);
-//?}
+    @Override
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
+        if (tag.contains("Ingredients", Tag.TAG_LIST)) readIngredients(tag, ingredients, lookup);
         redstone = tag.getBoolean("Redstone");
         dropped = false;
     }
 
-//? if >=1.21.1 {
-    /*private void writeFields(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup, boolean item) {
-*///?} else {
-    private void writeFields(CompoundTag tag, boolean item) {
-//?}
+    private void writeFields(CompoundTag tag, @Nullable HolderLookup.Provider lookup, boolean item) {
         ListTag list = new ListTag();
         for (int i = 0; i < SLOTS; i++) if (!ingredients[i].isEmpty()) {
             CompoundTag row = new CompoundTag();
             row.putByte("Slot", (byte) i);
-//? if >=1.21.1 {
-            /*row.put("Stack", (item ? ingredients[i].copyWithCount(1) : ingredients[i]).saveOptional(lookup));
-*///?} else {
-            row.put("Stack", (item ? ingredients[i].copyWithCount(1) : ingredients[i]).save(new CompoundTag()));
-//?}
+            row.put("Stack", NbtCompat.saveItem(item ? ingredients[i].copyWithCount(1) : ingredients[i], lookup));
             list.add(row);
         }
         tag.put("Ingredients", list);
         tag.putBoolean("Redstone", redstone);
     }
 
-//? if >=1.21.1 {
-    /*@Override protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-        writeFields(tag,lookup,false);
-*///?} else {
-    @Override protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        writeFields(tag,false);
-//?}
+    @Override
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
+        writeFields(tag, lookup, false);
     }
 
-//? if >=1.21.1 {
-    /*@Override public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) { return saveWithoutMetadata(lookup); }
-*///?} else {
-    @Override public CompoundTag getUpdateTag() { return saveWithoutMetadata(); }
-//?}
+    @Override
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        writeWithoutMetadata(tag, lookup);
+    }
+
     @Override public ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }

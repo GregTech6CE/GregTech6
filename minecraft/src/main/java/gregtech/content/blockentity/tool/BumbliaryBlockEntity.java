@@ -1,6 +1,7 @@
 package gregtech.content.blockentity.tool;
 
 import gregtech.content.block.tool.BumbliaryBlock;
+import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.blockentity.machine.SmelteryBlockEntityHelper;
 import gregtech.content.bumble.BumbleBeeGenes;
 import gregtech.content.bumble.BumbleBeeType;
@@ -12,6 +13,7 @@ import gregtech.content.data.GregTechConstants;
 import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -20,7 +22,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 //? if >=1.21.1 {
@@ -124,7 +125,7 @@ import java.util.List;
  *       "outside" machine; the port keeps that behaviour on purpose.</li>
  * </ul>
  */
-public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
+public class BumbliaryBlockEntity extends GTBlockEntity implements MenuProvider,
         gregtech.engine.inventory.BlockContents {
 
     // ── GT6's NBT keys (CS) ───────────────────────────────────────────────────────────
@@ -631,19 +632,9 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
     // ── NBT (GT6 readFromNBT2) ────────────────────────────────────────────────────────────
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         brood = NO_BROOD;
-        loadData(tag, lookup);
-    }
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        loadData(tag, null);
-    }
-//?}
-    private void loadData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         if (tag.contains(NBT_INVENTORY)) gregtech.engine.stack.HandlerNbt.load(inventory, tag.getCompound(NBT_INVENTORY), lookup);
         if (tag.contains(NBT_PROGRESS)) life = tag.getLong(NBT_PROGRESS);
         if (tag.contains(NBT_COOLDOWN)) countdown = tag.getLong(NBT_COOLDOWN);
@@ -659,18 +650,8 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-        saveData(tag, lookup);
-    }
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        saveData(tag, null);
-    }
-//?}
-    private void saveData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.put(NBT_INVENTORY, gregtech.engine.stack.HandlerNbt.save(inventory, lookup));
         tag.putLong(NBT_PROGRESS, life);
         tag.putLong(NBT_COOLDOWN, countdown);

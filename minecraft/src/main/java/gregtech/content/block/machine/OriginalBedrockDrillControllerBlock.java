@@ -118,12 +118,8 @@ public final class OriginalBedrockDrillControllerBlock extends Block implements 
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder context) {
         ItemStack stack = new ItemStack(this);
         if (context.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof BedrockDrillControllerBlockEntity drill) {
-//? if >=1.21.1 {
-            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(drill,
-                    drill.saveWithId(drill.getLevel().registryAccess()));
-*///?} else {
-            var data = gregtech.content.cover.ComponentCoverFallback.forItem(drill, drill.saveWithoutMetadata());
-//?}
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(drill,
+                    gregtech.engine.stack.NbtCompat.saveForBlockItem(drill, context.getLevel().registryAccess()));
             data.remove("gt.output");
             data.remove("gt.drill_energy");
             data.remove("gt.stone_type");
@@ -144,11 +140,8 @@ public final class OriginalBedrockDrillControllerBlock extends Block implements 
 //?}
         ItemStack stack = new ItemStack(this);
         if (level.getBlockEntity(pos) instanceof BedrockDrillControllerBlockEntity drill) {
-//? if >=1.21.1 {
-            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(drill, drill.saveWithId(drill.getLevel().registryAccess()));
-*///?} else {
-            var data = gregtech.content.cover.ComponentCoverFallback.forItem(drill, drill.saveWithoutMetadata());
-//?}
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(drill,
+                    gregtech.engine.stack.NbtCompat.saveForBlockItem(drill, drill.getLevel().registryAccess()));
             data.remove("gt.output");
             data.remove("gt.drill_energy");
             data.remove("gt.stone_type");

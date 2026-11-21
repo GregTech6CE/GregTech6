@@ -80,11 +80,8 @@ public abstract class AxialGeneratorBlock extends DirectionalBlock implements gr
     @Override public List<ItemStack> getDrops(BlockState state,LootParams.Builder builder) {
         var stack=new ItemStack(this);
         if (builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof AxialGeneratorBlockEntity machine) {
-//? if >=1.21.1 {
-            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(machine, machine.saveWithId(machine.getLevel().registryAccess()));
-*///?} else {
-            var data = gregtech.content.cover.ComponentCoverFallback.forItem(machine, machine.saveWithoutMetadata());
-//?}
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(machine,
+                    gregtech.engine.stack.NbtCompat.saveForBlockItem(machine, builder.getLevel().registryAccess()));
             data.remove("gt.axial.energy");
             data.remove("gt.stopped");
             data.remove("gt.overloaded");

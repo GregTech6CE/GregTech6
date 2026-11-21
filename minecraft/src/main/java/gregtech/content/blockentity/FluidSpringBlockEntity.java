@@ -3,13 +3,13 @@ package gregtech.content.blockentity;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 //? if >=1.21.1 {
@@ -20,13 +20,15 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
 //?}
 
+import javax.annotation.Nullable;
+
 /**
  * Fixed spring variants take their fluid and roll interval from the registry definition.
  * Legacy carriers keep an explicit output and interval. Server ticks activate on replaceable
  * headspace, then roll before overwriting the block directly above; the original global
  * startup cadence, finite accumulation and horizontal source growth are separate contracts.
  */
-public class FluidSpringBlockEntity extends BlockEntity {
+public class FluidSpringBlockEntity extends GTBlockEntity {
 
     /** Default legacy roll bound; fixed variants use the interval in their catalog definition. */
     public static final int DEFAULT_AMOUNT = 1000;
@@ -164,13 +166,8 @@ public class FluidSpringBlockEntity extends BlockEntity {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         fluidId = definition() == null ? tag.getString("spring") : "";
         amount = gregtech.content.worldgen.FluidSpringRules.positiveAmount(tag.contains("amount") ? tag.getInt("amount") : DEFAULT_AMOUNT);
         active = tag.getBoolean("active");
@@ -181,13 +178,8 @@ public class FluidSpringBlockEntity extends BlockEntity {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         if (definition() == null) {
             if (!fluidId.isEmpty()) tag.putString("spring", fluidId);
             tag.putInt("amount", amount);
@@ -216,17 +208,11 @@ public class FluidSpringBlockEntity extends BlockEntity {
     public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
         return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
     }
-//? if >=1.21.1 {
-    /*@Override
-    public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
-        return saveWithoutMetadata(lookup);
-    }
-*///?} else {
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        writeWithoutMetadata(tag, lookup);
     }
-//?}
+
     @Override
     public void onLoad() {
         super.onLoad();

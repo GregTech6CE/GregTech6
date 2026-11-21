@@ -16,8 +16,8 @@ import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.registry.GTItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -642,13 +642,8 @@ public class MoldBlockEntity extends gregtech.content.blockentity.GTEnergyBlockE
     // === NBT ===
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         moldShape = tag.contains(NBT_SHAPE) ? tag.getInt(NBT_SHAPE) : 0;
         autoPullDirections = tag.contains(NBT_AUTO_PULL) ? tag.getByte(NBT_AUTO_PULL) : 0;
         useRedstone = tag.getBoolean(NBT_USE_REDSTONE);
@@ -688,13 +683,8 @@ public class MoldBlockEntity extends gregtech.content.blockentity.GTEnergyBlockE
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putInt(NBT_SHAPE, moldShape);
         tag.putByte(NBT_AUTO_PULL, autoPullDirections);
         tag.putBoolean(NBT_USE_REDSTONE, useRedstone);
@@ -714,13 +704,8 @@ public class MoldBlockEntity extends gregtech.content.blockentity.GTEnergyBlockE
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
-        CompoundTag tag = super.getUpdateTag(lookup);
-*///?} else {
-    public CompoundTag getUpdateTag() {
-        CompoundTag tag = super.getUpdateTag();
-//?}
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.writeUpdateTag(tag, lookup);
         tag.putInt(NBT_SHAPE, moldShape);
         tag.putBoolean(NBT_USE_REDSTONE, useRedstone);
         tag.putByte(NBT_AUTO_PULL, autoPullDirections);
@@ -739,17 +724,11 @@ public class MoldBlockEntity extends gregtech.content.blockentity.GTEnergyBlockE
             tag.put(NBT_SOLID_OUTPUT, solidOutput.save(new CompoundTag()));
 //?}
         }
-        return tag;
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void handleUpdateTag(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.handleUpdateTag(tag,lookup);
-*///?} else {
-    public void handleUpdateTag(CompoundTag tag) {
-        super.handleUpdateTag(tag);
-//?}
+    protected void readUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.readUpdateTag(tag, lookup);
         if (tag.contains(NBT_SHAPE)) moldShape = tag.getInt(NBT_SHAPE);
         if (tag.contains(NBT_AUTO_PULL)) autoPullDirections = tag.getByte(NBT_AUTO_PULL);
         if (tag.contains(NBT_USE_REDSTONE)) useRedstone = tag.getBoolean(NBT_USE_REDSTONE);
@@ -840,11 +819,4 @@ public class MoldBlockEntity extends gregtech.content.blockentity.GTEnergyBlockE
     @Override public long maximumK(BlockFace side) { return getMoldMaxTemperature(); }
     public long getTemperature() { return temperature; }
     public CrucibleSpec spec() { return spec; }
-//? if >=1.21.1 {
-    /*@Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket(){return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);}
-    @Override public void onDataPacket(net.minecraft.network.Connection connection,net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet,net.minecraft.core.HolderLookup.Provider lookup){if (packet.getTag()!=null)handleUpdateTag(packet.getTag(),lookup);}
-*///?} else {
-    @Override public ClientboundBlockEntityDataPacket getUpdatePacket(){return ClientboundBlockEntityDataPacket.create(this);}
-    @Override public void onDataPacket(net.minecraft.network.Connection connection,ClientboundBlockEntityDataPacket packet){if (packet.getTag()!=null)handleUpdateTag(packet.getTag());}
-//?}
 }

@@ -99,6 +99,40 @@ public final class NbtCompat {
 //?}
     }
 
+    /**
+     * A block entity snapshot suitable for storing on a dropped/cloned {@link ItemStack}: 1.21.1
+     * {@code BLOCK_ENTITY_DATA} requires the {@code "id"} entry while 1.20.1 {@code BlockEntityTag}
+     * keeps empty shells clean without it.
+     */
+    public static CompoundTag saveForBlockItem(net.minecraft.world.level.block.entity.BlockEntity blockEntity,
+            HolderLookup.Provider lookup) {
+//? if >=1.21.1 {
+/*        return blockEntity.saveWithId(provider(lookup));
+*///?} else {
+        return blockEntity.saveWithoutMetadata();
+//?}
+    }
+
+    /** Reads client update tag from a block entity; 1.20.1 ignores the lookup. */
+    public static CompoundTag getUpdateTag(net.minecraft.world.level.block.entity.BlockEntity blockEntity,
+            HolderLookup.Provider lookup) {
+//? if >=1.21.1 {
+/*        return blockEntity.getUpdateTag(provider(lookup));
+*///?} else {
+        return blockEntity.getUpdateTag();
+//?}
+    }
+
+    /** Loads serialized custom block entity data from {@code tag}; 1.20.1 ignores the lookup. */
+    public static void loadBlockEntity(net.minecraft.world.level.block.entity.BlockEntity blockEntity,
+            CompoundTag tag, HolderLookup.Provider lookup) {
+//? if >=1.21.1 {
+/*        blockEntity.loadCustomOnly(tag, provider(lookup));
+*///?} else {
+        blockEntity.load(tag);
+//?}
+    }
+
 //? if >=1.21.1 {
     /*private static HolderLookup.Provider provider(HolderLookup.Provider lookup) {
         return java.util.Objects.requireNonNull(lookup, "stack codec needs the registry lookup");

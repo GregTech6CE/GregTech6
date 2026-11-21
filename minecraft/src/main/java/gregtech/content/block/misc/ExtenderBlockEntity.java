@@ -1,7 +1,11 @@
 package gregtech.content.block.misc;
 
+import gregtech.engine.stack.NbtCompat;
 import net.minecraft.core.*;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
+
+import javax.annotation.Nullable;
 
 /** Extender/bridge state for covers, routed capabilities, machine controls and signals. */
 public class ExtenderBlockEntity extends gregtech.content.blockentity.EnergyRelayBlockEntity
@@ -55,89 +59,37 @@ public class ExtenderBlockEntity extends gregtech.content.blockentity.EnergyRela
             covers[side.ordinal()] = net.minecraft.world.item.ItemStack.EMPTY;
         }
     }
-//? if >=1.21.1 {
-    /*private void saveCovers(net.minecraft.nbt.CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+
+    private void saveCovers(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         for (var side : Direction.values())
-            if (!getCover(side).isEmpty()) tag.put("gt_cover_" + side.ordinal(), getCover(side).save(lookup));
+            if (!getCover(side).isEmpty()) tag.put("gt_cover_" + side.ordinal(), NbtCompat.saveItem(getCover(side), lookup));
     }
 
     @Override
-    protected void saveAdditional(net.minecraft.nbt.CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         saveCovers(tag, lookup);
     }
 
     @Override
-    protected void loadAdditional(net.minecraft.nbt.CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         for (var side : Direction.values())
-            covers[side.ordinal()] = net.minecraft.world.item.ItemStack.parseOptional(lookup,
-                tag.getCompound("gt_cover_" + side.ordinal()));
+            covers[side.ordinal()] = NbtCompat.readItem(tag.getCompound("gt_cover_" + side.ordinal()), lookup);
         panels.loaded();
     }
 
+    /** Covers alone travel to the client; the rest of the state stays server-side. */
     @Override
-    public net.minecraft.nbt.CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
-        var tag = new net.minecraft.nbt.CompoundTag();
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         saveCovers(tag, lookup);
-        return tag;
-    }
-*///?} else {
-    private void saveCovers(net.minecraft.nbt.CompoundTag tag) {
-        for (var side : Direction.values())
-            if (!getCover(side).isEmpty()) tag.put("gt_cover_" + side.ordinal(),
-                getCover(side).save(new net.minecraft.nbt.CompoundTag()));
     }
 
-    @Override
-    protected void saveAdditional(net.minecraft.nbt.CompoundTag tag) {
-        super.saveAdditional(tag);
-        saveCovers(tag);
-    }
-
-    @Override
-    public void load(net.minecraft.nbt.CompoundTag tag) {
-        super.load(tag);
-        for (var side : Direction.values())
-            covers[side.ordinal()] = net.minecraft.world.item.ItemStack.of(tag.getCompound(
-                "gt_cover_" + side.ordinal()));
-        panels.loaded();
-    }
-
-    @Override
-    public net.minecraft.nbt.CompoundTag getUpdateTag() {
-        var tag = new net.minecraft.nbt.CompoundTag();
-        saveCovers(tag);
-        return tag;
-    }
-//?}
     @Override
     public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
         return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
     }
-//? if >=1.21.1 {
-    /*@Override
-    public void onDataPacket(net.minecraft.network.Connection connection, net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet,
-            net.minecraft.core.HolderLookup.Provider lookup) {
-        if (packet.getTag() != null) loadAdditional(packet.getTag(), lookup);
-    }
 
-    @Override
-    public void handleUpdateTag(net.minecraft.nbt.CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        loadAdditional(tag, lookup);
-    }
-*///?} else {
-    @Override
-    public void onDataPacket(net.minecraft.network.Connection connection,
-            net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet) {
-        if (packet.getTag() != null) load(packet.getTag());
-    }
-
-    @Override
-    public void handleUpdateTag(net.minecraft.nbt.CompoundTag tag) {
-        load(tag);
-    }
-//?}
     @Override
     protected boolean permitsItem(Direction side, net.minecraft.world.item.ItemStack stack) {
         return !panels.shuttered(side);

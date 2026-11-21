@@ -1,6 +1,9 @@
 package gregtech.content.blockentity.inventory;
 
+import gregtech.content.blockentity.GTBlockEntity;
+import gregtech.engine.stack.NbtCompat;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.sounds.SoundEvents;
@@ -8,11 +11,12 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
+import javax.annotation.Nullable;
+
 /** GT6 Locker block entity: stores one armor set (head/chest/legs/feet). */
-public class LockerBlockEntity extends BlockEntity {
+public class LockerBlockEntity extends GTBlockEntity {
 
     private static final EquipmentSlot[] SLOTS =
             gregtech.content.storage.ContainerStorageRules.ARMOR_ORDER.stream()
@@ -60,40 +64,22 @@ public class LockerBlockEntity extends BlockEntity {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         ListTag list = new ListTag();
         for (ItemStack stack : armor) {
-//? if >=1.21.1 {
-            /*list.add(stack.saveOptional(lookup));
-*///?} else {
-            list.add(stack.save(new CompoundTag()));
-//?}
+            list.add(NbtCompat.saveItem(stack, lookup));
         }
         tag.put("gt.armor", list);
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         if (tag.contains("gt.armor")) {
             ListTag list = tag.getList("gt.armor", 10);
             for (int i = 0; i < armor.length && i < list.size(); i++) {
-//? if >=1.21.1 {
-                /*armor[i] = ItemStack.parseOptional(lookup, list.getCompound(i));
-*///?} else {
-                armor[i] = ItemStack.of(list.getCompound(i));
-//?}
+                armor[i] = NbtCompat.readItem(list.getCompound(i), lookup);
             }
         }
     }

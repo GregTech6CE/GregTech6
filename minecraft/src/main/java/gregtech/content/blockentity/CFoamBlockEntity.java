@@ -2,9 +2,10 @@ package gregtech.content.blockentity;
 
 import gregtech.content.block.misc.CFoamBlock;
 import gregtech.content.registry.GTBlockEntities;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
@@ -15,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * it by hand ({@code dryFoam}, which the port exposes as {@link #dry()}). The port turns the wet block
  * into {@code gt6ce:cfoam} — the same block GT6 swaps to.
  */
-public class CFoamBlockEntity extends BlockEntity {
+public class CFoamBlockEntity extends GTBlockEntity {
     /** GT6 waits a hundred ticks before the first drying roll. */
     public static final int GRACE_TICKS = gregtech.content.block.ConstructionRules.FOAM_GRACE;
     /** GT6's {@code rng(5900) == 0} — about five minutes per block on average. */
@@ -28,17 +29,24 @@ public class CFoamBlockEntity extends BlockEntity {
         super(GTBlockEntities.CFOAM.get(), pos, state);
     }
 
-    public boolean dried() { return dried; }
+    public boolean dried() {
+        return dried;
+    }
 
-    public long timer() { return timer; }
+    public long timer() {
+        return timer;
+    }
 
     /** Repainting changes the registered block identity, but must not restart its drying grace period. */
-    public void restoreTimer(long timer) { this.timer = Math.max(0, timer); setChanged(); }
+    public void restoreTimer(long timer) {
+        this.timer = Math.max(0, timer);
+        setChanged();
+    }
 
     public void tick() {
         if (level == null || level.isClientSide || dried) return;
         timer++;
-        if (!gregtech.content.block.ConstructionRules.dries(timer,level.random::nextInt)) return;
+        if (!gregtech.content.block.ConstructionRules.dries(timer, level.random::nextInt)) return;
         dry();
     }
 
@@ -58,25 +66,15 @@ public class CFoamBlockEntity extends BlockEntity {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         timer = tag.getLong("timer");
         dried = tag.getBoolean("dried");
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         if (timer != 0) tag.putLong("timer", timer);
         if (dried) tag.putBoolean("dried", true);
     }

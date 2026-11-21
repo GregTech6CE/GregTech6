@@ -1,13 +1,14 @@
 package gregtech.content.blockentity.tool;
 
+import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.engine.stack.NbtCompat;
 import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.*;
@@ -21,7 +22,7 @@ import net.minecraftforge.fluids.capability.*;
 import javax.annotation.Nullable;
 
 /** Stores one vessel item rather than maintaining a second, divergent fluid tank. */
-public final class PortableContainerBlockEntity extends BlockEntity {
+public final class PortableContainerBlockEntity extends GTBlockEntity {
     private ItemStack vessel = ItemStack.EMPTY;
 //? if >=1.21.1 {
 //?} else {
@@ -105,19 +106,10 @@ public final class PortableContainerBlockEntity extends BlockEntity {
         super.setChanged();
         if (level!=null&&!level.isClientSide&&!isRemoved())level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),2);
     }
-//? if >=1.21.1 {
-    /*@Override public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) { return saveWithoutMetadata(lookup); }
-*///?} else {
-    @Override public CompoundTag getUpdateTag() { return saveWithoutMetadata(); }
-//?}
+    @Override protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) { writeWithoutMetadata(tag, lookup); }
     @Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
         return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
     }
-//? if >=1.21.1 {
-    /*@Override protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) { super.saveAdditional(tag,lookup); tag.put("gt.vessel", contents().save(lookup)); }
-    @Override protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) { super.loadAdditional(tag,lookup); setContents(ItemStack.parseOptional(lookup,tag.getCompound("gt.vessel"))); }
-*///?} else {
-    @Override protected void saveAdditional(CompoundTag tag) { super.saveAdditional(tag); tag.put("gt.vessel", contents().save(new CompoundTag())); }
-    @Override public void load(CompoundTag tag) { super.load(tag); setContents(ItemStack.of(tag.getCompound("gt.vessel"))); }
-//?}
+    @Override protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) { super.saveData(tag, lookup); tag.put("gt.vessel", NbtCompat.saveItem(contents(), lookup)); }
+    @Override protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) { super.loadData(tag, lookup); setContents(NbtCompat.readItem(tag.getCompound("gt.vessel"), lookup)); }
 }

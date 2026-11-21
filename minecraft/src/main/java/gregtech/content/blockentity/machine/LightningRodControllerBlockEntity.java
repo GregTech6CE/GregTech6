@@ -4,6 +4,8 @@ import gregtech.content.blockentity.GTEnergyBlockEntity;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.registry.*;
 import net.minecraft.core.*;
+
+import javax.annotation.Nullable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -192,33 +194,21 @@ public class LightningRodControllerBlockEntity extends GTEnergyBlockEntity imple
     public long getEnergyCapacity(GregTechTags.Tag type, Direction side) {
         return type == GregTechTags.Energy.EU ? ENERGY_CAPACITY : 0;
     }
+    @Override
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
+        tag.putLong("gt.energy", energy);
+    }
+
+    @Override
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
+        energy = Math.max(0, Math.min(ENERGY_CAPACITY, tag.getLong("gt.energy")));
+    }
+
 //? if >=1.21.1 {
-    /*@Override
-    protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-        tag.putLong("gt.energy", energy);
+    /*public void restorePersistentState(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        loadFromTag(tag, lookup);
     }
-
-    @Override
-    protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-        energy = Math.max(0, Math.min(ENERGY_CAPACITY, tag.getLong("gt.energy")));
-    }
-
-    public void restorePersistentState(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        loadAdditional(tag, lookup);
-    }
-*///?} else {
-    @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        tag.putLong("gt.energy", energy);
-    }
-
-    @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        energy = Math.max(0, Math.min(ENERGY_CAPACITY, tag.getLong("gt.energy")));
-    }
-//?}
+*///?}
 }

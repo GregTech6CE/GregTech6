@@ -4,6 +4,7 @@ import gregtech.engine.energy.EnergyNodeSpec;
 import gregtech.engine.energy.EnergyTransfer;
 import gregtech.engine.energy.IEnergyBlock;
 import gregtech.engine.fluid.FluidTankGT;
+import gregtech.engine.stack.NbtCompat;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
 import net.minecraft.world.item.ItemStack;
@@ -13,6 +14,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -467,29 +470,15 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
 
     // ── Client sync (charge bar display) ────────────────────────────────────
 
+    /** The charge bar only needs the saved state; nodes never take part in formed-structure sync. */
     @Override
-//? if >=1.21.1 {
-    /*public CompoundTag getUpdateTag(HolderLookup.Provider lookup) {
-*///?} else {
-    public CompoundTag getUpdateTag() {
-//?}
-        CompoundTag tag = new CompoundTag();
-//? if >=1.21.1 {
-        /*saveAdditional(tag,lookup);
-*///?} else {
-        saveAdditional(tag);
-//?}
-        return tag;
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        saveEntityAdditional(tag, lookup);
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void handleUpdateTag(CompoundTag tag,HolderLookup.Provider lookup) {
-        loadAdditional(tag,lookup);
-*///?} else {
-    public void handleUpdateTag(CompoundTag tag) {
-        load(tag);
-//?}
+    protected void readUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        loadFromTag(tag, lookup);
     }
 
     @Override
@@ -498,14 +487,9 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
     }
 
     @Override
-    public void onDataPacket(net.minecraft.network.Connection net,
-//? if >=1.21.1 {
-                             /*net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket pkt,HolderLookup.Provider lookup) {
-        if (pkt.getTag() != null) loadAdditional(pkt.getTag(),lookup);
-*///?} else {
-                             net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket pkt) {
-        if (pkt.getTag() != null) load(pkt.getTag());
-//?}
+    protected void handleDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt,
+            @Nullable HolderLookup.Provider lookup) {
+        if (pkt.getTag() != null) loadFromTag(pkt.getTag(), lookup);
     }
 
     public long purgeTurbineSteam() {
@@ -1145,13 +1129,8 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
     // ── NBT ──────────────────────────────────────────────────────────────────
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putLong("gt.buffer", isSolar() ? solarEnergy.energy() : buffer);
         if (isSolar()) {
             tag.putBoolean("gt.solar_stopped", !solarEnergy.enabled());
@@ -1162,11 +1141,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
             batteryEnergy.save(tag);
 
         }
-//? if >=1.21.1 {
-        /*batteryCovers.forEach((side,stack)->tag.put("gt.battery_cover_"+side.ordinal(),stack.saveOptional(lookup)));
-*///?} else {
-        batteryCovers.forEach((side,stack)->tag.put("gt.battery_cover_"+side.ordinal(),stack.save(new CompoundTag())));
-//?}
+        batteryCovers.forEach((side,stack)->tag.put("gt.battery_cover_"+side.ordinal(),NbtCompat.saveItem(stack,lookup)));
         if (isElectricTransformer())transformerControl.save(tag);
         tag.putBoolean("gt.inverted", inverted);
         if (isMagnet()) {
@@ -1187,39 +1162,22 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
             tag.putBoolean("gt.can.energy", rotary.possible());
             if (isOriginalMotor()) tag.putBoolean("gt.visual", rotary.fast());
         }
-//? if >=1.21.1 {
-        /*if (!rotor.isEmpty()) tag.put("gt.rotor", rotor.saveOptional(lookup));
-*///?} else {
-        if (!rotor.isEmpty()) tag.put("gt.rotor", rotor.save(new CompoundTag()));
-//?}
+        if (!rotor.isEmpty()) tag.put("gt.rotor", NbtCompat.saveItem(rotor, lookup));
         if (!batteries.isEmpty()) {
             net.minecraft.nbt.ListTag list = new net.minecraft.nbt.ListTag();
-//? if >=1.21.1 {
-            /*for (var b : batteries) list.add(b.saveOptional(lookup));
-*///?} else {
-            for (var b : batteries) list.add(b.save(new CompoundTag()));
-//?}
+            for (var b : batteries) list.add(NbtCompat.saveItem(b, lookup));
             tag.put("gt.batteries", list);
         }
         if (steamTank != null) {
             CompoundTag t = new CompoundTag();
-//? if >=1.21.1 {
-            /*steamTank.writeToNBT(t,lookup);
-*///?} else {
-            steamTank.writeToNBT(t);
-//?}
+            NbtCompat.writeTank(steamTank, t, lookup);
             tag.put("gt.steam", t);
         }
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void loadAdditional(CompoundTag tag,HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         buffer = tag.getLong("gt.buffer");
         if (isSolar()) {
             solarEnergy.restore(buffer, tag.getBoolean("gt.solar_active"), tag.getBoolean("gt.solar_emitting"), tag.getBoolean("gt.solar_stopped"));
@@ -1233,11 +1191,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
             batteryCovers.clear();
             for (var side:Direction.values()){
                 String key="gt.battery_cover_"+side.ordinal();
-//? if >=1.21.1 {
-                /*if (tag.contains(key))batteryCovers.put(side,net.minecraft.world.item.ItemStack.parseOptional(lookup,tag.getCompound(key)));
-*///?} else {
-                if (tag.contains(key))batteryCovers.put(side,net.minecraft.world.item.ItemStack.of(tag.getCompound(key)));
-//?}
+                if (tag.contains(key))batteryCovers.put(side,NbtCompat.readItem(tag.getCompound(key),lookup));
             }
             panels().loaded();
         }
@@ -1256,31 +1210,17 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
                     tag.getByte(legacyMagnet ? "gt.magnet_mode" : "gt.mode"), isOriginalMotor() && tag.getBoolean("gt.reversed"), false,
                     tag.getBoolean("gt.can.energy"), tag.getBoolean("gt.active.energy"), isOriginalMotor() && tag.getBoolean("gt.visual")));
         rotor = tag.contains("gt.rotor")
-//? if >=1.21.1 {
-/*// Version-specific branch.
-                ? net.minecraft.world.item.ItemStack.parseOptional(lookup,tag.getCompound("gt.rotor"))
-*///?} else {
-// Version-specific branch.
-                ? net.minecraft.world.item.ItemStack.of(tag.getCompound("gt.rotor"))
-//?}
+                ? NbtCompat.readItem(tag.getCompound("gt.rotor"), lookup)
                 : net.minecraft.world.item.ItemStack.EMPTY;
         batteries.clear();
         if (tag.contains("gt.batteries")) {
             net.minecraft.nbt.ListTag list = tag.getList("gt.batteries", 10);
             for (int i = 0; i < Math.min(batteries.size(), list.size()); i++) {
-//? if >=1.21.1 {
-                /*batteries.set(i, net.minecraft.world.item.ItemStack.parseOptional(lookup,list.getCompound(i)).copyWithCount(1));
-*///?} else {
-                batteries.set(i, net.minecraft.world.item.ItemStack.of(list.getCompound(i)).copyWithCount(1));
-//?}
+                batteries.set(i, NbtCompat.readItem(list.getCompound(i), lookup).copyWithCount(1));
             }
         }
         if (steamTank != null && tag.contains("gt.steam")) {
-//? if >=1.21.1 {
-            /*steamTank.readFromNBT(tag.getCompound("gt.steam"),lookup);
-*///?} else {
-            steamTank.readFromNBT(tag.getCompound("gt.steam"));
-//?}
+            NbtCompat.readTank(steamTank, tag.getCompound("gt.steam"), lookup);
             steamTank.setCapacity(spec.inputRate() * 4); // Source resets rated tank capacity after loading saved contents.
         }
     }

@@ -4,6 +4,7 @@ import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.inventory.BlockContents;
 import gregtech.engine.recipe.*;
 import gregtech.content.block.tool.ProcessingToolBlock;
+import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.engine.stack.StackCompat;
@@ -12,7 +13,6 @@ import net.minecraft.nbt.*;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.*;
@@ -25,10 +25,11 @@ import net.minecraftforge.fluids.*;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.*;
 //?}
+import javax.annotation.Nullable;
 import java.util.*;
 
 /** GT6 bowl/bath/juicer: manual 32 GU recipes, finite tanks and atomic processing. */
-public final class ProcessingToolBlockEntity extends BlockEntity implements BlockContents {
+public final class ProcessingToolBlockEntity extends GTBlockEntity implements BlockContents {
     private final RecipeMap recipes;
     private final boolean juicer;
     private final boolean wooden;
@@ -437,20 +438,9 @@ public final class ProcessingToolBlockEntity extends BlockEntity implements Bloc
     public void dropContents() {
         BlockContents.drop(this, items);
     }
-//? if >=1.21.1 {
-    /*@Override
-    protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-        saveData(tag, lookup);
-    }
-*///?} else {
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        saveData(tag, null);
-    }
-//?}
-    private void saveData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.put("gt.items", gregtech.engine.stack.HandlerNbt.save(items, lookup));
         var list = new ListTag();
         for (var tank : allTanks()) {
@@ -467,62 +457,22 @@ public final class ProcessingToolBlockEntity extends BlockEntity implements Bloc
         migrated.putLong("Capacity", gregtech.content.tool.OpenVesselRules.outputCapacity(true, wooden));
         return migrated;
     }
-//? if >=1.21.1 {
-    /*@Override
-    protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-        loadData(tag, lookup);
-    }
-*///?} else {
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        loadData(tag, null);
-    }
-//?}
-    private void loadData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         if (tag.contains("gt.items")) gregtech.engine.stack.HandlerNbt.load(items, tag.getCompound("gt.items"), lookup);
         var list = tag.getList("gt.tanks", 10);
         var tanks = allTanks();
         for (int i = 0; i < tanks.size() && i < list.size(); i++)
             gregtech.engine.stack.NbtCompat.readTank(tanks.get(i), restoredTank(list.getCompound(i), i), lookup);
     }
-//? if >=1.21.1 {
-    /*@Override
-    public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
-        return saveWithoutMetadata(lookup);
+    @Override
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        writeWithoutMetadata(tag, lookup);
     }
 
-    @Override
-    public void handleUpdateTag(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        loadAdditional(tag, lookup);
-    }
-*///?} else {
-    @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
-    }
-
-    @Override
-    public void handleUpdateTag(CompoundTag tag) {
-        load(tag);
-    }
-//?}
     @Override
     public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
         return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
     }
-//? if >=1.21.1 {
-    /*@Override
-    public void onDataPacket(net.minecraft.network.Connection connection, net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet,
-            net.minecraft.core.HolderLookup.Provider lookup) {
-        if (packet.getTag() != null) loadAdditional(packet.getTag(), lookup);
-    }
-*///?} else {
-    @Override
-    public void onDataPacket(net.minecraft.network.Connection connection,
-            net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet) {
-        if (packet.getTag() != null) load(packet.getTag());
-    }
-//?}
 }

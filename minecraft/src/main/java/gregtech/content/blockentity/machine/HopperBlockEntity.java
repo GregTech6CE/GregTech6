@@ -3,12 +3,14 @@ package gregtech.content.blockentity.machine;
 import gregtech.engine.machine.HopperSpec;
 import gregtech.engine.machine.ITileEntityAdjacentInventoryUpdatable;
 import gregtech.content.block.machine.HopperBlock;
+import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.client.gui.HopperContainerMenu;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.registry.GTMenuTypes;
 import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -58,7 +60,7 @@ import static net.minecraft.world.level.block.DirectionalBlock.FACING;
  * Parallel-slot inventory: all slots are equal peers. Items enter from top, exit toward facing side.
  * Screwdriver adjusts emission count (mMode 0-64). Monkey wrench toggles exact/divisible mode.
  */
-public class HopperBlockEntity extends BlockEntity
+public class HopperBlockEntity extends GTBlockEntity
         implements IItemHandler, IItemHandlerModifiable, MenuProvider, gregtech.api.transport.ItemPipeConnectable {
     private static final String NBT_MODE = "gt.mode";
     private static final String NBT_EXACT = "gt.exact";
@@ -679,13 +681,8 @@ public class HopperBlockEntity extends BlockEntity
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
-        CompoundTag tag = super.getUpdateTag(lookup);
-*///?} else {
-    public CompoundTag getUpdateTag() {
-        CompoundTag tag = super.getUpdateTag();
-//?}
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.writeUpdateTag(tag, lookup);
         tag.putByte(NBT_MODE, mMode);
         tag.putBoolean(NBT_EXACT, mExactMode);
 //? if >=1.21.1 {
@@ -693,7 +690,6 @@ public class HopperBlockEntity extends BlockEntity
 *///?} else {
         ContainerHelper.saveAllItems(tag, inventory);
 //?}
-        return tag;
     }
 
     @Override
@@ -702,27 +698,14 @@ public class HopperBlockEntity extends BlockEntity
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt,net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-//?}
-        CompoundTag tag = pkt.getTag();
-//? if >=1.21.1 {
-        /*if (tag != null) handleUpdateTag(tag,lookup);
-*///?} else {
-        if (tag != null) handleUpdateTag(tag);
-//?}
+    protected void handleDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt,
+            @Nullable HolderLookup.Provider lookup) {
+        if (pkt.getTag() != null) readUpdateTag(pkt.getTag(), lookup);
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void handleUpdateTag(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.handleUpdateTag(tag,lookup);
-*///?} else {
-    public void handleUpdateTag(CompoundTag tag) {
-        super.handleUpdateTag(tag);
-//?}
+    protected void readUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.readUpdateTag(tag, lookup);
         if (tag.contains(NBT_MODE)) mMode = tag.getByte(NBT_MODE);
         if (tag.contains(NBT_EXACT)) mExactMode = tag.getBoolean(NBT_EXACT);
 //? if >=1.21.1 {
@@ -760,13 +743,8 @@ public class HopperBlockEntity extends BlockEntity
     // ── NBT ─────────────────────────────────────────────────────────────
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         mMode = tag.getByte(NBT_MODE);
         mExactMode = tag.getBoolean(NBT_EXACT);
         mCheck = tag.contains(NBT_CHECK) ? tag.getByte(NBT_CHECK) : 3;
@@ -778,13 +756,8 @@ public class HopperBlockEntity extends BlockEntity
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putByte(NBT_MODE, mMode);
         if (mExactMode) tag.putBoolean(NBT_EXACT, true);
         if (mCheck != 3) tag.putByte(NBT_CHECK, mCheck);

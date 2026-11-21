@@ -2,12 +2,14 @@ package gregtech.content.blockentity.energy;
 
 import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.machine.PumpSpec;
+import gregtech.engine.stack.NbtCompat;
 import gregtech.content.block.energy.PumpBlock;
 import gregtech.content.blockentity.GTEnergyBlockEntity;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.registry.GTBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -70,42 +72,24 @@ public class PumpBlockEntity extends GTEnergyBlockEntity {
     public void onRemoved() {}
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         energyBuffer = Math.max(0, tag.getLong("energyBuffer"));
         scanCooldown = tag.getInt("scanCooldown");
         pumpX = tag.getInt("pumpX");
         pumpZ = tag.getInt("pumpZ");
-//? if >=1.21.1 {
-        /*tank.readFromNBT(tag.getCompound("tank"), lookup);
-*///?} else {
-        tank.readFromNBT(tag.getCompound("tank"));
-//?}
+        NbtCompat.readTank(tank, tag.getCompound("tank"), lookup);
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-*///?} else {
-    public void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putLong("energyBuffer", energyBuffer);
         tag.putInt("scanCooldown", scanCooldown);
         tag.putInt("pumpX", pumpX);
         tag.putInt("pumpZ", pumpZ);
         CompoundTag tankTag = new CompoundTag();
-//? if >=1.21.1 {
-        /*tank.writeToNBT(tankTag, lookup);
-*///?} else {
-        tank.writeToNBT(tankTag);
-//?}
+        NbtCompat.writeTank(tank, tankTag, lookup);
         tag.put("tank", tankTag);
     }
 

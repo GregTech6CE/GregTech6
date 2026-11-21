@@ -39,11 +39,8 @@ public final class LaserConverterBlock extends AutoToolBlock {
     @Override public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
         var stack=new net.minecraft.world.item.ItemStack(this);
         if (builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof LaserConverterBlockEntity laser) {
-//? if >=1.21.1 {
-            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(laser, laser.saveWithId(builder.getLevel().registryAccess()));
-*///?} else {
-            var data = gregtech.content.cover.ComponentCoverFallback.forItem(laser, laser.saveWithoutMetadata());
-//?}
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(laser,
+                    gregtech.engine.stack.NbtCompat.saveForBlockItem(laser, builder.getLevel().registryAccess()));
             data.remove("gt.laser.energy");
             data.remove("gt.stopped");
             gregtech.engine.stack.BlockEntityData.write(stack, data);

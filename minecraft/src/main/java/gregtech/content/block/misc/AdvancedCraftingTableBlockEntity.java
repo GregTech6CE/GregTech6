@@ -1,5 +1,6 @@
 package gregtech.content.block.misc;
 
+import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.engine.inventory.BlockContents;
 import gregtech.client.gui.HopperContainerMenu;
 import gregtech.engine.stack.StackCompat;
@@ -10,7 +11,6 @@ import net.minecraft.world.entity.player.*;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
 
@@ -27,7 +27,7 @@ import java.util.stream.IntStream;
 /** GT6 Advanced Crafting Table: 71 addressed slots, ordinary grid and two independent stores.
  * Slot layout and consumption order follow MultiTileEntityAdvancedCraftingTable (LGPL-3.0-or-later).
  */
-public class AdvancedCraftingTableBlockEntity extends BlockEntity implements BlockContents {
+public class AdvancedCraftingTableBlockEntity extends GTBlockEntity implements BlockContents {
     public static final int SIZE = gregtech.content.storage.AdvancedCraftingRules.SIZE;
     public static final int[] INPUTS = gregtech.content.storage.AdvancedCraftingRules.inputs();
     public static final int[] STORAGE = gregtech.content.storage.AdvancedCraftingRules.storage();
@@ -448,18 +448,6 @@ public class AdvancedCraftingTableBlockEntity extends BlockEntity implements Blo
     public IItemHandler automation() {
         return isRemoved() ? null : automationHandler();
     }
-
-    @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-        saveData(tag, lookup);
-    }
-
-    @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-        loadData(tag, lookup);
-    }
 *///?} else {
     private void resetCapabilities() {
         itemCap.invalidate();
@@ -488,25 +476,17 @@ public class AdvancedCraftingTableBlockEntity extends BlockEntity implements Blo
         super.reviveCaps();
         capsValid = true;
     }
-
-    @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        saveData(tag, null);
-    }
-
-    @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        loadData(tag, null);
-    }
 //?}
-    private void saveData(CompoundTag tag, HolderLookup.Provider lookup) {
+    @Override
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.put("Inventory", gregtech.engine.stack.HandlerNbt.save(inventory, lookup));
         tag.putInt("Modes", modes());
     }
 
-    private void loadData(CompoundTag tag, HolderLookup.Provider lookup) {
+    @Override
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         loading = true;
         try {
             var data = tag.getCompound("Inventory").copy();

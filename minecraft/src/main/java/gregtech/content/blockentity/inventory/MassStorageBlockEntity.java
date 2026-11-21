@@ -3,16 +3,18 @@ package gregtech.content.blockentity.inventory;
 import gregtech.api.machine.BlockFace;
 
 import gregtech.engine.inventory.MassStorageMaterialForms;
+import gregtech.engine.stack.NbtCompat;
 import gregtech.engine.stack.StackCompat;
 
 //? if >=1.21.1 {
 //?} else {
 import gregtech.content.item.behavior.BehaviorDuctTape;
 //?}
+import gregtech.content.blockentity.GTBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.player.Player;
@@ -39,9 +41,9 @@ import java.util.List;
  * retain their separate saved mode bits.
  */
 //? if >=1.21.1 {
-/*public class MassStorageBlockEntity extends BlockEntity implements gregtech.content.item.behavior.BehaviorDuctTape.Tapeable, gregtech.api.sensor.ProgressSensorSource, gregtech.api.sensor.WeightSensorSource {
+/*public class MassStorageBlockEntity extends GTBlockEntity implements gregtech.content.item.behavior.BehaviorDuctTape.Tapeable, gregtech.api.sensor.ProgressSensorSource, gregtech.api.sensor.WeightSensorSource {
 *///?} else {
-public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctTape.Tapeable, gregtech.api.sensor.ProgressSensorSource, gregtech.api.sensor.WeightSensorSource {
+public class MassStorageBlockEntity extends GTBlockEntity implements BehaviorDuctTape.Tapeable, gregtech.api.sensor.ProgressSensorSource, gregtech.api.sensor.WeightSensorSource {
 //?}
     public static final long CAPACITY = gregtech.content.storage.OriginalStorageTooltipData.MASS_CAPACITY;
     private final gregtech.engine.inventory.BulkStorageState<ItemStack> storage =
@@ -426,80 +428,36 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
     // ── NBT + client sync (renderer shows content + amount) ─────────────────
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putLong("gt.stored", stored());
         tag.putLong("gt.partial_units", partialUnits);
         tag.putInt("gt.mode", mode);
-//? if >=1.21.1 {
-        /*if (!template().isEmpty()) tag.put("gt.template", template().save(lookup));
-*///?} else {
-        if (!template().isEmpty()) tag.put("gt.template", template().save(new CompoundTag()));
-//?}
+        if (!template().isEmpty()) tag.put("gt.template", NbtCompat.saveItem(template(), lookup));
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         mode = tag.contains("gt.mode") ? tag.getInt("gt.mode") : (tag.contains("gt.stored") ? 2 : 0);
         storage.setCapacity(maximumItems());
         inventoryChanged = true;
         // BulkStorageState's automatic reset only sees whole items. Keep reset
         // under this class's control so it cannot erase fractional contents.
         storage.setResetWhenEmpty(false);
-//? if >=1.21.1 {
-        /*ItemStack key = tag.contains("gt.template") ? ItemStack.parseOptional(lookup, tag.getCompound("gt.template")) : ItemStack.EMPTY;
-*///?} else {
-        ItemStack key = tag.contains("gt.template") ? ItemStack.of(tag.getCompound("gt.template")) : ItemStack.EMPTY;
-//?}
+        ItemStack key = tag.contains("gt.template") ? NbtCompat.readItem(tag.getCompound("gt.template"), lookup) : ItemStack.EMPTY;
         storage.restore(key.isEmpty() ? null : key, tag.getLong("gt.stored"));
         partialUnits = key.isEmpty() ? 0 : Math.max(0, tag.getLong("gt.partial_units"));
         clearFilterIfEmpty();
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    public CompoundTag getUpdateTag() {
-//?}
-        CompoundTag tag = new CompoundTag();
-//? if >=1.21.1 {
-        /*saveAdditional(tag, lookup);
-*///?} else {
-        saveAdditional(tag);
-//?}
-        return tag;
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        saveEntityAdditional(tag, lookup);
     }
-
-//? if >=1.21.1 {
-//?} else {
-    @Override
-    public void handleUpdateTag(CompoundTag tag) {
-        load(tag);
-    }
-//?}
 
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }
-
-//? if >=1.21.1 {
-//?} else {
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        if (pkt.getTag() != null) load(pkt.getTag());
-    }
-//?}
 }

@@ -32,6 +32,8 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import java.util.*;
 
+import javax.annotation.Nullable;
+
 /** Shared execution, part ownership and tool routing for original large recipe-machine layouts. */
 public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity implements MultiblockPortOwner, TrackedMultiblock, MultiblockToolTarget {
     private final PartBindings<BlockPos,MultiblockLayout.Role> bindings=new PartBindings<>();
@@ -240,14 +242,8 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         pushItems(output.pos(), output.face());
     }
 
-//? if >=1.21.1 {
-/*    @Override public void loadAdditional(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-*///?} else {
-    @Override public void load(net.minecraft.nbt.CompoundTag tag) {
-        super.load(tag);
-//?}
-
+    @Override protected void loadData(net.minecraft.nbt.CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         if (sourceUnlimitedOutputs())for (var tank:getTanksOutput())tank.setCapacity(Long.MAX_VALUE);
     }
     @Override protected boolean usesTimeEnergy() { return spec()!=null&&spec().energyTag()==GregTechTags.Energy.TU; }

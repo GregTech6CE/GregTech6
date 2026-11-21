@@ -2,11 +2,12 @@ package gregtech.content.blockentity.machine;
 
 import gregtech.content.data.GregTechTags;
 import gregtech.content.registry.GTBlockEntities;
+import java.util.*;
+import javax.annotation.Nullable;
 import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import java.util.*;
 
 /** GT6 17221–17224: front RU, rear EU, 75% conversion, 17 walls and 18 copper coils. */
 public class LargeDynamoControllerBlockEntity extends AxialGeneratorBlockEntity {
@@ -15,7 +16,8 @@ public class LargeDynamoControllerBlockEntity extends AxialGeneratorBlockEntity 
         super(GTBlockEntities.LARGE_DYNAMO.get(), pos, state);
     }
 
-    public static void serverTick(Level level, BlockPos pos, BlockState state, LargeDynamoControllerBlockEntity machine) {
+    public static void serverTick(
+            Level level, BlockPos pos, BlockState state, LargeDynamoControllerBlockEntity machine) {
         machine.tick();
     }
 
@@ -47,13 +49,14 @@ public class LargeDynamoControllerBlockEntity extends AxialGeneratorBlockEntity 
     public long getEnergyDemanded(GregTechTags.Tag type, Direction side, long size) {
         if (size == Long.MIN_VALUE) return 0;
         size = Math.abs(size);
-        return isEnergyAcceptingFrom(type, side, false)
-                && size >= grade().input() / 2 && size <= grade().inputMaximum()
-                ? (grade().inputMaximum() - energy) / size : 0;
+        return isEnergyAcceptingFrom(type, side, false) && size >= grade().input() / 2 && size <= grade().inputMaximum()
+                ? (grade().inputMaximum() - energy) / size
+                : 0;
     }
 
     @Override
-    public synchronized long doEnergyInjection(GregTechTags.Tag type, Direction side, long size, long amount, boolean execute) {
+    public synchronized long doEnergyInjection(
+            GregTechTags.Tag type, Direction side, long size, long amount, boolean execute) {
         return doInject(type, side, size, amount, execute);
     }
 
@@ -84,16 +87,12 @@ public class LargeDynamoControllerBlockEntity extends AxialGeneratorBlockEntity 
     public long getEnergyCapacity(GregTechTags.Tag type, Direction side) {
         return type == GregTechTags.Energy.RU ? grade().inputMaximum() : 0;
     }
-//? if >=1.21.1 {
-    /*@Override
-    public void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-*///?} else {
+
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         // Preserve the old RU buffer up to the new physical capacity. Old EU storage no longer exists.
-        if (!tag.contains("gt.axial.energy")) energy = Math.max(0, Math.min(grade().inputMaximum(), tag.getLong("gt.ru")));
+        if (!tag.contains("gt.axial.energy"))
+            energy = Math.max(0, Math.min(grade().inputMaximum(), tag.getLong("gt.ru")));
     }
 }

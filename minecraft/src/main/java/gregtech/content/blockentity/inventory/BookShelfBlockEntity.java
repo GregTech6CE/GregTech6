@@ -1,12 +1,13 @@
 package gregtech.content.blockentity.inventory;
 
+import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.book.GTBookList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 //? if >=1.21.1 {
@@ -31,7 +32,7 @@ import javax.annotation.Nullable;
  * enchanting power computed from what is stored ({@code getEnchantPowerBonus}: +1 per book, +2 per
  * enchanted book).
  */
-public class BookShelfBlockEntity extends BlockEntity {
+public class BookShelfBlockEntity extends GTBlockEntity {
     private net.minecraft.resources.ResourceLocation frontLoot;
     private net.minecraft.resources.ResourceLocation backLoot;
     private long lootSeed;
@@ -177,18 +178,8 @@ public class BookShelfBlockEntity extends BlockEntity {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-        loadData(tag, lookup);
-    }
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        loadData(tag, null);
-    }
-//?}
-    private void loadData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         gregtech.engine.stack.HandlerNbt.load(inventory, tag.getCompound("inventory"), lookup);
         frontLoot = tag.contains("gt.dungeonloot.front") ? net.minecraft.resources.ResourceLocation.tryParse(tag.getString("gt.dungeonloot.front")) : null;
         backLoot = tag.contains("gt.dungeonloot.back") ? net.minecraft.resources.ResourceLocation.tryParse(tag.getString("gt.dungeonloot.back")) : null;
@@ -197,18 +188,8 @@ public class BookShelfBlockEntity extends BlockEntity {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-        saveData(tag, lookup);
-    }
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        saveData(tag, null);
-    }
-//?}
-    private void saveData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.put("inventory", gregtech.engine.stack.HandlerNbt.save(inventory, lookup));
         if (frontLoot != null) tag.putString("gt.dungeonloot.front", frontLoot.toString());
         if (backLoot != null) tag.putString("gt.dungeonloot.back", backLoot.toString());
@@ -217,10 +198,13 @@ public class BookShelfBlockEntity extends BlockEntity {
     }
 
     @Override
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        writeWithoutMetadata(tag, lookup);
+    }
+
 //? if >=1.21.1 {
-    /*public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
-        return saveWithoutMetadata(lookup);
-*///?} else {
+//?} else {
+    @Override
     public void invalidateCaps() {
         super.invalidateCaps();
         handler.invalidate();
@@ -231,12 +215,7 @@ public class BookShelfBlockEntity extends BlockEntity {
         super.reviveCaps();
         handler = LazyOptional.of(() -> inventory);
     }
-
-    @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
 //?}
-    }
 
     @Override
     public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {

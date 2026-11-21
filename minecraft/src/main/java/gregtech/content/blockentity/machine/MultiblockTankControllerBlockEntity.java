@@ -9,6 +9,7 @@ import gregtech.content.data.GregTechTags;
 import gregtech.content.data.RegisteredFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -375,13 +376,8 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
     // ── NBT ──────────────────────────────────────────────────────────────────
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         CompoundTag storedFluidTag = new CompoundTag();
 //? if >=1.21.1 {
         /*tank.writeToNBT(storedFluidTag, lookup);
@@ -393,13 +389,8 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         setSize(size);
         // The placed valve owns size/capacity/proof flags; contents keep their source long amount.
 //? if >=1.21.1 {

@@ -14,6 +14,7 @@ import gregtech.content.block.machine.AddonEnergyPartBlock;
 import gregtech.content.data.GregTechTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
@@ -21,6 +22,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.List;
 
@@ -374,21 +376,20 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity
         }
     }
 
+    private void saveFunction(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
 //? if >=1.21.1 {
-/*    private void saveFunction(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        if (function != null) function.save(tag, lookup);
-    }
-    private void loadFunction(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        if (function != null) function.load(tag, lookup);
-    }
+        /*if (function != null) function.save(tag, lookup);
 *///?} else {
-    private void saveFunction(CompoundTag tag) {
         if (function != null) function.save(tag);
-    }
-    private void loadFunction(CompoundTag tag) {
-        if (function != null) function.load(tag);
-    }
 //?}
+    }
+    private void loadFunction(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+//? if >=1.21.1 {
+        /*if (function != null) function.load(tag, lookup);
+*///?} else {
+        if (function != null) function.load(tag);
+//?}
+    }
 
     private void loadEnergy(CompoundTag tag) {
         stored = Math.max(0, tag.getLong("gt.part_energy"));
@@ -405,18 +406,26 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity
         }
     }
 
-//? if >=1.21.1 {
-    /*@Override protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
+    @Override protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         saveEnergy(tag);
         saveFunction(tag, lookup);
     }
-    @Override protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
+    @Override protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         loadEnergy(tag);
         loadFunction(tag, lookup);
     }
-    @Override public net.neoforged.neoforge.items.IItemHandler itemCapability(Direction side) {
+    @Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return function == null ? null : net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
+    }
+    @Override protected void handleDataPacket(net.minecraft.network.Connection net,
+            net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet,
+            @Nullable HolderLookup.Provider lookup) {
+        if (packet.getTag() != null) loadFromTag(packet.getTag(), lookup);
+    }
+//? if >=1.21.1 {
+    /*@Override public net.neoforged.neoforge.items.IItemHandler itemCapability(Direction side) {
         if (isRemoved()) return null;
         if (function != null) {
             var own = function.items(side);
@@ -432,25 +441,7 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity
         }
         return super.fluidCapability(side);
     }
-    @Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return function == null ? null : net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
-    }
-    @Override public void onDataPacket(net.minecraft.network.Connection net,
-            net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet,
-            net.minecraft.core.HolderLookup.Provider lookup) {
-        if (packet.getTag() != null) loadAdditional(packet.getTag(), lookup);
-    }
 *///?} else {
-    @Override protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        saveEnergy(tag);
-        saveFunction(tag);
-    }
-    @Override public void load(CompoundTag tag) {
-        super.load(tag);
-        loadEnergy(tag);
-        loadFunction(tag);
-    }
     @Override public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(
             net.minecraftforge.common.capabilities.Capability<T> cap, @javax.annotation.Nullable Direction side) {
         if (function != null && cap == net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER
@@ -484,13 +475,6 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity
         super.reviveCaps();
         unsided = net.minecraftforge.common.util.LazyOptional.empty();
         unsidedFluid = net.minecraftforge.common.util.LazyOptional.empty();
-    }
-    @Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return function == null ? null : net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
-    }
-    @Override public void onDataPacket(net.minecraft.network.Connection net,
-            net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet) {
-        if (packet.getTag() != null) load(packet.getTag());
     }
 //?}
 }

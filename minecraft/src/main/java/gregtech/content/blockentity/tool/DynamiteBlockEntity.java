@@ -1,6 +1,7 @@
 package gregtech.content.blockentity.tool;
 
 import gregtech.content.block.tool.DynamiteBlock;
+import gregtech.content.blockentity.GTBlockEntity;
 //? if >=1.21.1 {
 /*import gregtech.content.item.behavior.ManualToolBehaviorAccess;
 import gregtech.content.item.behavior.Extinguishable;
@@ -11,6 +12,7 @@ import gregtech.content.item.behavior.BehaviorSprayExtinguisher;
 import gregtech.content.registry.GTBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -18,15 +20,16 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+
+import javax.annotation.Nullable;
 
 /** GT6 MultiTileEntityDynamite: persisted fuse, ignition and defusing. */
 //? if >=1.21.1 {
-/*public final class DynamiteBlockEntity extends BlockEntity implements ManualToolBehaviorAccess.Ignitable,
+/*public final class DynamiteBlockEntity extends GTBlockEntity implements ManualToolBehaviorAccess.Ignitable,
         Extinguishable {
 *///?} else {
-public final class DynamiteBlockEntity extends BlockEntity implements ItemBehaviors.Ignitable,
+public final class DynamiteBlockEntity extends GTBlockEntity implements ItemBehaviors.Ignitable,
         BehaviorSprayExtinguisher.Extinguishable {
 //?}
     private int remaining;
@@ -70,11 +73,6 @@ public final class DynamiteBlockEntity extends BlockEntity implements ItemBehavi
         world.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1, .5f);
         return 10000;
     }
-//? if >=1.21.1 {
-    /*@Override protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) { super.saveAdditional(tag,lookup); tag.putInt("Fuse", remaining); }
-    @Override protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) { super.loadAdditional(tag,lookup); remaining = Math.max(0, Math.min(100, tag.getInt("Fuse"))); }
-*///?} else {
-    @Override protected void saveAdditional(CompoundTag tag) { super.saveAdditional(tag); tag.putInt("Fuse", remaining); }
-    @Override public void load(CompoundTag tag) { super.load(tag); remaining = Math.max(0, Math.min(100, tag.getInt("Fuse"))); }
-//?}
+    @Override protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) { super.saveData(tag, lookup); tag.putInt("Fuse", remaining); }
+    @Override protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) { super.loadData(tag, lookup); remaining = Math.max(0, Math.min(100, tag.getInt("Fuse"))); }
 }

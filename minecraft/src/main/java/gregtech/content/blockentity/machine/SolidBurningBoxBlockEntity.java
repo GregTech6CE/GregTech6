@@ -12,9 +12,11 @@ import gregtech.util.GTPlacementCode;
 import gregtech.content.data.GregTechConstants;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.engine.stack.NbtCompat;
 import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.InteractionHand;
@@ -364,44 +366,26 @@ private void tickServer() {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         energy = tag.getLong(GregTechConstants.NBT_ENERGY);
         burning = tag.getBoolean(GregTechConstants.NBT_ACTIVE);
         if (tag.contains("gt.pending_ash", Tag.TAG_COMPOUND)) {
-//? if >=1.21.1 {
-            /*pendingAsh = ItemStack.parseOptional(lookup, tag.getCompound("gt.pending_ash"));
-*///?} else {
-            pendingAsh = ItemStack.of(tag.getCompound("gt.pending_ash"));
-//?}
+            pendingAsh = NbtCompat.readItem(tag.getCompound("gt.pending_ash"), lookup);
         } else {
             pendingAsh = null;
         }
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putLong(GregTechConstants.NBT_ENERGY, energy);
         tag.putBoolean(GregTechConstants.NBT_ACTIVE, burning);
         tag.putLong(GregTechConstants.NBT_OUTPUT, spec.outputRate());
         tag.putInt(GregTechConstants.NBT_EFFICIENCY, spec.efficiency());
         if (pendingAsh != null && !pendingAsh.isEmpty()) {
-//? if >=1.21.1 {
-            /*tag.put("gt.pending_ash", pendingAsh.saveOptional(lookup));
-*///?} else {
-            tag.put("gt.pending_ash", pendingAsh.save(new CompoundTag()));
-//?}
+            tag.put("gt.pending_ash", NbtCompat.saveItem(pendingAsh, lookup));
         }
     }
 

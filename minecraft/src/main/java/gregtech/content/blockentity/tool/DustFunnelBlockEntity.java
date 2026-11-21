@@ -4,15 +4,16 @@ import gregtech.api.material.*;
 
 import gregtech.engine.machine.crucible.CrucibleItemInput;
 import gregtech.engine.machine.crucible.CrucibleMaterialStack;
+import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity;
 import gregtech.content.data.MaterialPrefix;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.items.IItemHandler;
@@ -32,7 +33,7 @@ import java.util.List;
  * GT6 Dust Funnel: combines dust fractions into a selected size, pulling from
  * above and pushing its output below. A crucible is also a valid receiver.
  */
-public class DustFunnelBlockEntity extends BlockEntity {
+public class DustFunnelBlockEntity extends GTBlockEntity {
 
     private gregtech.api.material.GTMaterial material;
     private long amount;
@@ -212,18 +213,7 @@ if (!(level.getBlockEntity(pos.below()) instanceof SmeltingCrucibleBlockEntity c
 //?}
 
 //? if >=1.21.1 {
-    /*@Override
-    protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-        saveData(tag, lookup);
-    }
-
-    @Override
-    protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-        loadData(tag, lookup);
-    }
-*///?} else {
+//?} else {
     @Override
     public <T> @org.jetbrains.annotations.NotNull LazyOptional<T> getCapability(
             @org.jetbrains.annotations.NotNull Capability<T> capability, @Nullable Direction side) {
@@ -244,26 +234,18 @@ if (!(level.getBlockEntity(pos.below()) instanceof SmeltingCrucibleBlockEntity c
         cap = LazyOptional.of(() -> buffer);
         bottomCap = LazyOptional.of(() -> new net.minecraftforge.items.wrapper.RangedWrapper(buffer, 1, 2));
     }
-
-    @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        saveData(tag, null);
-    }
-
-    @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        loadData(tag, null);
-    }
 //?}
 
-    private void saveData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    @Override
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.put("Buffer", gregtech.engine.stack.HandlerNbt.save(buffer, lookup));
         saveProcess(tag);
     }
 
-    private void loadData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    @Override
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         if (tag.contains("Buffer")) gregtech.engine.stack.HandlerNbt.load(buffer, tag.getCompound("Buffer"), lookup);
         loadProcess(tag);
     }

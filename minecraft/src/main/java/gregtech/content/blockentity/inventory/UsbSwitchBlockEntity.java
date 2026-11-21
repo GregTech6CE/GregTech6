@@ -10,8 +10,11 @@ import gregtech.content.cover.PanelCoverRuntime;
 import gregtech.content.data.UsbDataMedia;
 import gregtech.content.recipe.GTMaterialDataRecipes;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.blockentity.GTBlockEntity;
+import gregtech.content.registry.GTBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -20,7 +23,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.items.IItemHandler;
@@ -35,7 +37,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
 /** GT6's 19000 USB switch (16 sticks) and 19001 HDD switch (one drive, 16 files). */
-public class UsbSwitchBlockEntity extends BlockEntity
+public class UsbSwitchBlockEntity extends GTBlockEntity
         implements UsbDataPort, PanelCoverHost, MachineControl.Provider, MenuProvider {
     public static final int USB_SLOTS = gregtech.content.data.UsbDataRules.FILES;
     public static final int HDD_SLOTS = 1;
@@ -269,36 +271,18 @@ public class UsbSwitchBlockEntity extends BlockEntity
         if (level != null && !level.isClientSide)
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
     }
-//? if >=1.21.1 {
-    /*@Override
-    public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
-        return saveWithoutMetadata(lookup);
-    }
-*///?} else {
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        writeWithoutMetadata(tag, lookup);
     }
-//?}
     @Override
     @Nullable
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }
-//? if >=1.21.1 {
-    /*@Override
-    protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-        saveData(tag, lookup);
-    }
-*///?} else {
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        saveData(tag, null);
-    }
-//?}
-    private void saveData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putInt("gt.mode", mode);
         tag.put("gt_switch", gregtech.engine.stack.HandlerNbt.save(items, lookup));
         for (Direction side : Direction.values()) {
@@ -306,20 +290,9 @@ public class UsbSwitchBlockEntity extends BlockEntity
             if (!cover.isEmpty()) tag.put("gt_cover_" + side.ordinal(), gregtech.engine.stack.NbtCompat.saveItem(cover, lookup));
         }
     }
-//? if >=1.21.1 {
-    /*@Override
-    protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-        loadData(tag, lookup);
-    }
-*///?} else {
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        loadData(tag, null);
-    }
-//?}
-    private void loadData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         mode = gregtech.content.data.UsbDataRules.mode(tag.getInt("gt.mode"));
         CompoundTag inventory = tag.getCompound("gt_switch").copy();
         inventory.putInt("Size", items.getSlots());

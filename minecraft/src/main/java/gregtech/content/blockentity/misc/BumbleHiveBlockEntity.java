@@ -1,9 +1,10 @@
 package gregtech.content.blockentity.misc;
 
+import gregtech.content.blockentity.GTBlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
 
@@ -30,7 +31,7 @@ import org.jetbrains.annotations.Nullable;
  * the only way to get the bees out is to break it (and only a player's break drops them,
  * {@code onBlockHarvested}/{@code canDrop}).</p>
  */
-public class BumbleHiveBlockEntity extends BlockEntity {
+public class BumbleHiveBlockEntity extends GTBlockEntity {
 
     /** GT6's {@code getDefaultInventory}: nine slots. */
     public static final int SLOTS = 9;
@@ -78,49 +79,21 @@ public class BumbleHiveBlockEntity extends BlockEntity {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-        saveData(tag, lookup);
-    }
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        saveData(tag, null);
-    }
-//?}
-    private void saveData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.put("inventory", gregtech.engine.stack.HandlerNbt.save(inventory, lookup));
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-        loadData(tag, lookup);
-    }
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        loadData(tag, null);
-    }
-//?}
-    private void loadData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         if (tag.contains("inventory")) gregtech.engine.stack.HandlerNbt.load(inventory, tag.getCompound("inventory"), lookup);
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
-        CompoundTag tag = super.getUpdateTag(lookup);
-        net.minecraft.core.HolderLookup.Provider codecLookup = lookup;
-*///?} else {
-    public CompoundTag getUpdateTag() {
-        CompoundTag tag = super.getUpdateTag();
-        net.minecraft.core.HolderLookup.Provider codecLookup = null;
-//?}
-        tag.put("inventory", gregtech.engine.stack.HandlerNbt.save(inventory, codecLookup));
-        return tag;
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.writeUpdateTag(tag, lookup);
+        tag.put("inventory", gregtech.engine.stack.HandlerNbt.save(inventory, lookup));
     }
 
 //? if >=1.21.1 {

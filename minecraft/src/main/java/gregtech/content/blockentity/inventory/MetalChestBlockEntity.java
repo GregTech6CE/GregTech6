@@ -1,15 +1,18 @@
 package gregtech.content.blockentity.inventory;
 
 import gregtech.client.gui.MetalChestMenu;
+import gregtech.content.blockentity.GTBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.items.IItemHandler;
@@ -26,9 +29,9 @@ import javax.annotation.Nullable;
 
 /** GT6 metal chest: a plain 54-slot chest. */
 //? if >=1.21.1 {
-/*public class MetalChestBlockEntity extends BlockEntity implements MenuProvider, gregtech.content.cover.PanelCoverHost {
+/*public class MetalChestBlockEntity extends GTBlockEntity implements MenuProvider, gregtech.content.cover.PanelCoverHost {
 *///?} else {
-public class MetalChestBlockEntity extends BlockEntity implements MenuProvider, gregtech.content.cover.PanelCoverHost {
+public class MetalChestBlockEntity extends GTBlockEntity implements MenuProvider, gregtech.content.cover.PanelCoverHost {
     private final java.util.Map<Direction, LazyOptional<IItemHandler>> componentFaceCaps = new java.util.EnumMap<>(Direction.class);
 
 //?}
@@ -90,34 +93,21 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider, 
         }
         return super.triggerEvent(id, value);
     }
-    @Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
+    @Override public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
-//? if >=1.21.1 {
-    /*@Override public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
-        net.minecraft.core.HolderLookup.Provider codecLookup = lookup;
-*///?} else {
-    @Override public CompoundTag getUpdateTag() {
-        net.minecraft.core.HolderLookup.Provider codecLookup = null;
-//?}
-        CompoundTag tag = new CompoundTag();
+    @Override protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         tag.putBoolean("Open", openers.getOpenerCount() > 0);
-        componentCovers.save(tag, codecLookup);
-        return tag;
+        componentCovers.save(tag, lookup);
     }
-//? if >=1.21.1 {
-    /*@Override public void onDataPacket(net.minecraft.network.Connection connection, net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet, net.minecraft.core.HolderLookup.Provider lookup) {
-        if (packet.getTag()!=null)handleUpdateTag(packet.getTag(),lookup);
-*///?} else {
-    @Override public void onDataPacket(net.minecraft.network.Connection connection, net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet) {
-        if (packet.getTag()!=null)handleUpdateTag(packet.getTag());
-//?}
+    @Override protected void handleDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt,
+            @Nullable HolderLookup.Provider lookup) {
+        if (pkt.getTag() != null) readUpdateTag(pkt.getTag(), lookup);
     }
-//? if >=1.21.1 {
-    /*@Override public void handleUpdateTag(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) { lid.shouldBeOpen(tag.getBoolean("Open")); componentCovers.load(tag,lookup); }
-*///?} else {
-    @Override public void handleUpdateTag(CompoundTag tag) { lid.shouldBeOpen(tag.getBoolean("Open")); componentCovers.load(tag, null); }
-//?}
+    @Override protected void readUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        lid.shouldBeOpen(tag.getBoolean("Open"));
+        componentCovers.load(tag, lookup);
+    }
 
     private final ItemStackHandler inventory = new ItemStackHandler(54) {
         @Override
@@ -282,44 +272,20 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider, 
     }
 //?}
 
-//? if >=1.21.1 {
-    /*@Override
-    protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-        componentCovers.save(tag,lookup);
-        saveData(tag, lookup);
-    }
-*///?} else {
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        componentCovers.save(tag, null);
-        saveData(tag, null);
-    }
-//?}
-    private void saveData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
+        componentCovers.save(tag, lookup);
         tag.put("Inventory", gregtech.engine.stack.HandlerNbt.save(inventory, lookup));
         tag.putBoolean("GTLootGenerated", lootGenerated);
         if (dungeonLoot != null) tag.putString("gt.dungeonloot", dungeonLoot.toString());
         tag.putLong("GTDungeonLootSeed", dungeonLootSeed);
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-        componentCovers.load(tag,lookup);
-        loadData(tag, lookup);
-    }
-*///?} else {
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        componentCovers.load(tag, null);
-        loadData(tag, null);
-    }
-//?}
-    private void loadData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
+        componentCovers.load(tag, lookup);
         CompoundTag storedInventory = tag.getCompound("Inventory").copy();
         storedInventory.putInt("Size", 54);
         gregtech.engine.stack.HandlerNbt.load(inventory, storedInventory, lookup);

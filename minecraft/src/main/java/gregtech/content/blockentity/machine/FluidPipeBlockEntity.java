@@ -10,8 +10,10 @@ import gregtech.content.registry.GTFluids;
 import gregtech.engine.fluid.FluidHazards;
 import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.machine.PipeSpec;
+import gregtech.engine.stack.NbtCompat;
 import gregtech.engine.stack.StackCompat;
 import gregtech.content.block.machine.FluidPipeBlock;
+import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.cover.CoverAttachmentBehaviors;
 import gregtech.content.cover.CoverItems;
 import gregtech.content.cover.CoverStore;
@@ -28,6 +30,7 @@ import gregtech.util.GTEntityHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -45,8 +48,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.AABB;
 //? if >=1.21.1 {
-/*import net.minecraft.core.HolderLookup;
-import net.neoforged.neoforge.capabilities.Capabilities;
+/*import net.neoforged.neoforge.capabilities.Capabilities;
 import gregtech.platform.neoforge.transport.FluidTransportEnvironment;
 
 
@@ -103,7 +105,7 @@ import java.util.Set;
  * ({@code CoverPressureValve}) and can only be attached when the pipe has a single tank, so
  * {@code tanks[0]} and "the pipe" coincide there.</p>
  */
-public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, PanelCoverHost, CoverStore.Hooks, gregtech.api.sensor.CompressionSensorSource, gregtech.api.sensor.TemperatureSource, gregtech.api.sensor.ProgressSensorSource {
+public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler, PanelCoverHost, CoverStore.Hooks, gregtech.api.sensor.CompressionSensorSource, gregtech.api.sensor.TemperatureSource, gregtech.api.sensor.ProgressSensorSource {
     @Override public long gibblValue(BlockFace side) {
         long total = 0;
         for (var tank : tanks) total += tank.getAmount();
@@ -1130,15 +1132,8 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     // === NBT ===
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-        net.minecraft.core.HolderLookup.Provider codecLookup=lookup;
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        net.minecraft.core.HolderLookup.Provider codecLookup=null;
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         temperature = tag.contains(NBT_TEMPERATURE) ? tag.getLong(NBT_TEMPERATURE) : GregTechConstants.DEF_ENV_TEMP;
         transferredAmount = tag.contains(NBT_TRANSFERRED) ? tag.getLong(NBT_TRANSFERRED) : 0;
         manualDisconnects = tag.contains(NBT_MANUAL_DISCONNECTS) ? tag.getByte(NBT_MANUAL_DISCONNECTS) & 0x3F : 0;
@@ -1148,59 +1143,44 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
                 // The registered pipe owns capacity. Preserve overfull legacy contents until drained.
                 CompoundTag contents = tag.getCompound(NBT_TANK_PREFIX + i).copy();
                 contents.putLong("Capacity", spec.capacity());
-                gregtech.engine.stack.NbtCompat.readTank(tanks[i],contents,codecLookup);
+                NbtCompat.readTank(tanks[i],contents,lookup);
             }
         }
-        coverStore.load(tag, codecLookup);
+        coverStore.load(tag, lookup);
     }
 
     /**
      * The shared flat {@code gt_cover_*} keys, written only for non-empty faces; a coverless pipe
      * writes nothing. Loading a tag without cover keys clears the faces, so a cover removed on the
-     * server disappears on the client through {@link #handleUpdateTag} instead of lingering.
+     * server disappears on the client through {@link #readUpdateTag} instead of lingering.
      */
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-        net.minecraft.core.HolderLookup.Provider codecLookup=lookup;
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        net.minecraft.core.HolderLookup.Provider codecLookup=null;
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putLong(NBT_TEMPERATURE, temperature);
         tag.putLong(NBT_TRANSFERRED, transferredAmount);
         tag.putByte(NBT_MANUAL_DISCONNECTS, (byte) manualDisconnects);
         for (int i = 0; i < tanks.length; i++) {
             tag.putByte(NBT_LAST_RECEIVED + i, lastReceivedFrom[i]);
             CompoundTag tankTag = new CompoundTag();
-            gregtech.engine.stack.NbtCompat.writeTank(tanks[i],tankTag,codecLookup);
+            NbtCompat.writeTank(tanks[i],tankTag,lookup);
             tag.put(NBT_TANK_PREFIX + i, tankTag);
         }
-        coverStore.save(tag, codecLookup);
+        coverStore.save(tag, lookup);
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public CompoundTag getUpdateTag(HolderLookup.Provider lookup) {
-        CompoundTag tag = super.getUpdateTag(lookup);
-        net.minecraft.core.HolderLookup.Provider codecLookup=lookup;
-*///?} else {
-    public CompoundTag getUpdateTag() {
-        CompoundTag tag = super.getUpdateTag();
-        net.minecraft.core.HolderLookup.Provider codecLookup=null;
-//?}
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.writeUpdateTag(tag, lookup);
         tag.putLong(NBT_TEMPERATURE, temperature);
         tag.putLong(NBT_TRANSFERRED, transferredAmount);
         for (int i = 0; i < tanks.length; i++) {
             CompoundTag tankTag = new CompoundTag();
-            gregtech.engine.stack.NbtCompat.writeTank(tanks[i],tankTag,codecLookup);
+            NbtCompat.writeTank(tanks[i],tankTag,lookup);
             tag.put(NBT_TANK_PREFIX + i, tankTag);
         }
-        coverStore.save(tag, codecLookup);
-        return tag;
+        coverStore.save(tag, lookup);
     }
 
     /**
@@ -1214,25 +1194,15 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void onDataPacket(net.minecraft.network.Connection net,net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet,HolderLookup.Provider lookup){if (packet.getTag()!=null)handleUpdateTag(packet.getTag(),lookup);}
-*///?} else {
-    public void onDataPacket(net.minecraft.network.Connection net,
-                             net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket pkt) {
-        if (pkt.getTag() != null) coverStore.load(pkt.getTag(), null);
+    protected void handleDataPacket(net.minecraft.network.Connection net,
+            net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet,
+            @Nullable HolderLookup.Provider lookup) {
+        if (packet.getTag() != null) readUpdateTag(packet.getTag(), lookup);
     }
-//?}
 
     @Override
-//? if >=1.21.1 {
-    /*public void handleUpdateTag(CompoundTag tag,HolderLookup.Provider lookup) {
-        super.handleUpdateTag(tag,lookup);
-        net.minecraft.core.HolderLookup.Provider codecLookup=lookup;
-*///?} else {
-    public void handleUpdateTag(CompoundTag tag) {
-        super.handleUpdateTag(tag);
-        net.minecraft.core.HolderLookup.Provider codecLookup=null;
-//?}
+    protected void readUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.readUpdateTag(tag, lookup);
         if (tag.contains(NBT_TEMPERATURE)) temperature = tag.getLong(NBT_TEMPERATURE);
         if (tag.contains(NBT_TRANSFERRED)) transferredAmount = tag.getLong(NBT_TRANSFERRED);
         for (int i = 0; i < tanks.length; i++) {
@@ -1240,10 +1210,10 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
                 // The registered pipe owns capacity. Preserve overfull legacy contents until drained.
                 CompoundTag contents = tag.getCompound(NBT_TANK_PREFIX + i).copy();
                 contents.putLong("Capacity", spec.capacity());
-                gregtech.engine.stack.NbtCompat.readTank(tanks[i],contents,codecLookup);
+                NbtCompat.readTank(tanks[i],contents,lookup);
             }
         }
-        coverStore.load(tag, codecLookup);
+        coverStore.load(tag, lookup);
     }
 
     // Counter lifetime is the existing native pipe tick interval, not tank occupancy.

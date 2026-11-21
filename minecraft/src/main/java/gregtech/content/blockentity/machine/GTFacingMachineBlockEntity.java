@@ -6,6 +6,7 @@ import gregtech.content.blockentity.GTEnergyBlockEntity;
 import gregtech.content.data.GregTechConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -14,6 +15,8 @@ import net.minecraft.world.level.block.state.BlockState;
 *///?} else {
 import net.minecraftforge.items.ItemStackHandler;
 //?}
+
+import javax.annotation.Nullable;
 
 /**
  * Facing machine base (GT6 {@code TileEntityBase09FacingSingle} subset): horizontal front + 2-slot inventory.
@@ -74,40 +77,18 @@ public abstract class GTFacingMachineBlockEntity extends GTEnergyBlockEntity {
         }
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-        loadData(tag, lookup);
-    }
-*///?} else {
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        loadData(tag, null);
-    }
-//?}
-    private void loadData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         gregtech.engine.stack.HandlerNbt.load(inventory, tag.getCompound("gt.inv"), lookup);
         if (tag.contains(GregTechConstants.NBT_EFFICIENCY)) {
             // spec is fixed per block; stored value ignored for now
         }
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-        saveData(tag, lookup);
-    }
-*///?} else {
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        saveData(tag, null);
-    }
-//?}
-    private void saveData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.put("gt.inv", gregtech.engine.stack.HandlerNbt.save(inventory, lookup));
     }
 }

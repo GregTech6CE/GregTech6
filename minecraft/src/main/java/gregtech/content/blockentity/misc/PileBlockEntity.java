@@ -1,17 +1,21 @@
 package gregtech.content.blockentity.misc;
 
 import gregtech.api.material.GTMaterial;
+import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.content.block.misc.PileBlock;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.item.MaterialItem;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.engine.stack.NbtCompat;
 import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
@@ -41,7 +45,7 @@ import java.util.List;
  * {@code MultiTileEntityPlate}); the port drives geometry, selection and collision through
  * {@link PileBlock#STACK}, which {@link #syncState} keeps equal to {@link #count}.</p>
  */
-public class PileBlockEntity extends BlockEntity {
+public class PileBlockEntity extends GTBlockEntity {
     /** GT6's {@code NBT_VALUE} ({@code CS}) - the key GT6 saves the stack under. */
     public static final String NBT_VALUE = "gt.value";
     /** GT6's stack limit for a pile ({@code MultiTileEntityPlaceable}). */
@@ -236,18 +240,13 @@ public class PileBlockEntity extends BlockEntity {
 
     /** Initial chunk data carries the same material information as subsequent updates. */
     @Override
-//? if >=1.21.1 {
-    /*public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
-        return saveWithoutMetadata(lookup);
-*///?} else {
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
-//?}
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        writeWithoutMetadata(tag, lookup);
     }
 
     @Override
-    public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     /**
@@ -257,17 +256,12 @@ public class PileBlockEntity extends BlockEntity {
      * update. GT6 sent its material ID and size together in {@code getClientDataPacket}.
      */
     @Override
-//? if >=1.21.1 {
-    /*public void handleUpdateTag(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    public void handleUpdateTag(CompoundTag tag) {
-//?}
+    protected void readUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         ItemStack before = stored;
+        super.readUpdateTag(tag, lookup);
 //? if >=1.21.1 {
-        /*super.handleUpdateTag(tag,lookup);
-        if (level != null && level.isClientSide && !ItemStack.isSameItemSameComponents(before, stored)) {
+        /*if (level != null && level.isClientSide && !ItemStack.isSameItemSameComponents(before, stored)) {
 *///?} else {
-        super.handleUpdateTag(tag);
         if (level != null && level.isClientSide && !ItemStack.isSameItemSameTags(before, stored)) {
 //?}
             requestModelDataUpdate();
@@ -276,38 +270,21 @@ public class PileBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void onDataPacket(net.minecraft.network.Connection connection,
-//? if >=1.21.1 {
-                             /*net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet,net.minecraft.core.HolderLookup.Provider lookup) {
-        if (packet.getTag() != null) handleUpdateTag(packet.getTag(),lookup);
-*///?} else {
-                             net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet) {
-        if (packet.getTag() != null) handleUpdateTag(packet.getTag());
-//?}
+    protected void handleDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt,
+            @Nullable HolderLookup.Provider lookup) {
+        if (pkt.getTag() != null) readUpdateTag(pkt.getTag(), lookup);
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-        stored = tag.contains(NBT_VALUE) ? ItemStack.parseOptional(lookup,tag.getCompound(NBT_VALUE)) : ItemStack.EMPTY;
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        stored = tag.contains(NBT_VALUE) ? ItemStack.of(tag.getCompound(NBT_VALUE)) : ItemStack.EMPTY;
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
+        stored = tag.contains(NBT_VALUE) ? NbtCompat.readItem(tag.getCompound(NBT_VALUE), lookup) : ItemStack.EMPTY;
     }
 
     /** GT6 writes {@code ST.save(aNBT, NBT_VALUE, mStack)} ({@code MultiTileEntityPlaceable}). */
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-        if (!stored.isEmpty()) tag.put(NBT_VALUE, stored.save(lookup));
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        if (!stored.isEmpty()) tag.put(NBT_VALUE, stored.save(new CompoundTag()));
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
+        if (!stored.isEmpty()) tag.put(NBT_VALUE, NbtCompat.saveItem(stored, lookup));
     }
 }

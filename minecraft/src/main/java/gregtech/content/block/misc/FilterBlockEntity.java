@@ -2,6 +2,7 @@ package gregtech.content.block.misc;
 
 import gregtech.content.blockentity.CapabilityRelayBlockEntity;
 import gregtech.engine.fluid.FluidDisplayBinding;
+import gregtech.engine.stack.NbtCompat;
 import gregtech.content.logistics.LogisticsItemFilter;
 import gregtech.content.logistics.LogisticsSemiFilteredItem;
 import net.minecraft.core.*;
@@ -17,6 +18,8 @@ import net.minecraft.world.level.block.state.BlockState;
 *///?} else {
 import net.minecraftforge.fluids.*;
 //?}
+
+import javax.annotation.Nullable;
 
 /** Ghost templates select cargo; front-side capability operations bypass template selection. */
 public class FilterBlockEntity extends CapabilityRelayBlockEntity implements MenuProvider, LogisticsSemiFilteredItem {
@@ -151,54 +154,29 @@ public class FilterBlockEntity extends CapabilityRelayBlockEntity implements Men
     public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
         return new gregtech.client.gui.FilterMenu(id, inventory, this);
     }
-//? if >=1.21.1 {
-    /*@Override
-    protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-        tag.putBoolean("gt.blacklist", blacklist);
-        var list = new ListTag();
-        for (int templateSlot = 0; templateSlot < gregtech.content.logistics.FilterPolicy.TEMPLATES; templateSlot++)
-            if (!templates.getItem(templateSlot).isEmpty()) {
-                var entry = (CompoundTag) templates.getItem(templateSlot).save(lookup);
-                entry.putInt("Slot", templateSlot);
-                list.add(entry);
-            }
-*///?} else {
+
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putBoolean("gt.blacklist", blacklist);
         var list = new ListTag();
         for (int templateSlot = 0; templateSlot < gregtech.content.logistics.FilterPolicy.TEMPLATES; templateSlot++)
             if (!templates.getItem(templateSlot).isEmpty()) {
-                var entry = templates.getItem(templateSlot).save(new CompoundTag());
+                var entry = (CompoundTag) NbtCompat.saveItem(templates.getItem(templateSlot), lookup);
                 entry.putInt("Slot", templateSlot);
                 list.add(entry);
             }
-//?}
         tag.put("gt.filter_templates", list);
     }
-//? if >=1.21.1 {
-    /*@Override
-    protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-        blacklist = tag.getBoolean("gt.blacklist");
-        templates.clearContent();
-*///?} else {
+
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         blacklist = tag.getBoolean("gt.blacklist");
         templates.clearContent();
-//?}
         for (var entry : tag.getList("gt.filter_templates", 10)) {
-//? if >=1.21.1 {
-            /*var entryData = (CompoundTag) entry;
-            var templateStack = ItemStack.parseOptional(lookup, entryData);
-*///?} else {
             var entryData = (CompoundTag) entry;
-            var templateStack = ItemStack.of(entryData);
-//?}
+            var templateStack = NbtCompat.readItem(entryData, lookup);
             if (prefixMode()) {
                 if (selectedPrefix().isEmpty() && !gregtech.content.logistics.FilterRules.prefix(templateStack).isEmpty()) setTemplate(0,
                         templateStack);

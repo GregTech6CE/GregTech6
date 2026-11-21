@@ -9,9 +9,11 @@ import gregtech.engine.fluid.MoltenFluidHandler;
 import gregtech.engine.fluid.MoltenFluidPlans;
 import gregtech.content.blockentity.tool.ProcessingToolBlockEntity;
 import gregtech.content.block.machine.CrucibleFaucetBlock;
+import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.registry.GTBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -20,6 +22,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 //?}
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -27,13 +30,15 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
+import javax.annotation.Nullable;
+
 /**
  * Crucible faucet block entity (GT6 {@code MultiTileEntityFaucet}).
  * <p>
  * Transfers molten material from an adjacent crucible to a mold/basin below.
  * Supports: right-click to manually transfer, auto-pull mode, redstone trigger.
  */
-public class CrucibleFaucetBlockEntity extends BlockEntity implements ITileEntityMold {
+public class CrucibleFaucetBlockEntity extends GTBlockEntity implements ITileEntityMold {
 
     /** Facing direction (which side the input connects to). */
     private Direction facing = Direction.NORTH;
@@ -244,13 +249,8 @@ public class CrucibleFaucetBlockEntity extends BlockEntity implements ITileEntit
     // === NBT ===
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         if (tag.contains(NBT_FACING)) {
             facing = Direction.from3DDataValue(tag.getInt(NBT_FACING));
         }
@@ -258,38 +258,22 @@ public class CrucibleFaucetBlockEntity extends BlockEntity implements ITileEntit
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putInt(NBT_FACING, facing.get3DDataValue());
         tag.putBoolean(NBT_AUTO_PULL, autoPull);
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
-        CompoundTag tag = super.getUpdateTag(lookup);
-*///?} else {
-    public CompoundTag getUpdateTag() {
-        CompoundTag tag = super.getUpdateTag();
-//?}
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.writeUpdateTag(tag, lookup);
         tag.putInt(NBT_FACING, facing.get3DDataValue());
         tag.putBoolean(NBT_AUTO_PULL, autoPull);
-        return tag;
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void handleUpdateTag(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.handleUpdateTag(tag,lookup);
-*///?} else {
-    public void handleUpdateTag(CompoundTag tag) {
-        super.handleUpdateTag(tag);
-//?}
+    protected void readUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.readUpdateTag(tag, lookup);
         if (tag.contains(NBT_FACING)) {
             facing = Direction.from3DDataValue(tag.getInt(NBT_FACING));
         }
@@ -306,9 +290,7 @@ public class CrucibleFaucetBlockEntity extends BlockEntity implements ITileEntit
     public Direction getFacing() { return facing; }
     public boolean isAutoPull() { return autoPull; }
     public CrucibleSpec spec() { return spec; }
-//? if >=1.21.1 {
-    /*@Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket(){return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);}
-    @Override public void onDataPacket(net.minecraft.network.Connection connection,net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet,net.minecraft.core.HolderLookup.Provider lookup){if (packet.getTag()!=null)handleUpdateTag(packet.getTag(),lookup);}
-*///?} else {
-//?}
+    @Override public ClientboundBlockEntityDataPacket getUpdatePacket(){return ClientboundBlockEntityDataPacket.create(this);}
+    @Override protected void handleDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet,
+            @Nullable HolderLookup.Provider lookup){if (packet.getTag()!=null)readUpdateTag(packet.getTag(),lookup);}
 }

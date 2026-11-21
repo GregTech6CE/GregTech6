@@ -5,6 +5,7 @@ import gregtech.api.addon.platform.PartClientView;
 import gregtech.content.block.machine.AddonFunctionalPartBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
@@ -89,7 +90,7 @@ public class AddonFunctionalPartBlockEntity extends MultiblockPortBlockEntity
     private AddonFunctionalPartBlock block() { return (AddonFunctionalPartBlock) getBlockState().getBlock(); }
 
 //? if >=1.21.1 {
-/*    @Override public net.neoforged.neoforge.items.IItemHandler itemCapability(Direction side) {
+    /*@Override public net.neoforged.neoforge.items.IItemHandler itemCapability(Direction side) {
         if (isRemoved()) return null;
         var own = function.items(side);
         return own != null ? own : super.itemCapability(side);
@@ -99,36 +100,6 @@ public class AddonFunctionalPartBlockEntity extends MultiblockPortBlockEntity
         if (isRemoved()) return null;
         var own = function.fluids(side);
         return own != null ? own : super.fluidCapability(side);
-    }
-
-    @Override protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-        function.save(tag, lookup);
-    }
-
-    @Override protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-        function.load(tag, lookup);
-    }
-
-    @Override public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
-        CompoundTag tag = super.getUpdateTag(lookup);
-        function.save(tag, lookup);
-        return tag;
-    }
-
-    @Override public void handleUpdateTag(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        loadAdditional(tag, lookup);
-    }
-
-    @Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override public void onDataPacket(net.minecraft.network.Connection net,
-            net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet,
-            net.minecraft.core.HolderLookup.Provider lookup) {
-        if (packet.getTag() != null) loadAdditional(packet.getTag(), lookup);
     }
 *///?} else {
     @Override public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(
@@ -167,32 +138,46 @@ public class AddonFunctionalPartBlockEntity extends MultiblockPortBlockEntity
         unsided = net.minecraftforge.common.util.LazyOptional.empty();
         unsidedFluid = net.minecraftforge.common.util.LazyOptional.empty();
     }
-
-    @Override protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        function.save(tag);
-    }
-
-    @Override public void load(CompoundTag tag) {
-        super.load(tag);
-        function.load(tag);
-    }
-
-    @Override public CompoundTag getUpdateTag() {
-        CompoundTag tag = super.getUpdateTag();
-        function.save(tag);
-        return tag;
-    }
-
-    @Override public void handleUpdateTag(CompoundTag tag) { load(tag); }
-
-    @Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override public void onDataPacket(net.minecraft.network.Connection net,
-            net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet) {
-        if (packet.getTag() != null) load(packet.getTag());
-    }
 //?}
+
+    @Override protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
+        saveFunction(tag, lookup);
+    }
+
+    @Override protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
+        loadFunction(tag, lookup);
+    }
+
+    @Override protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.writeUpdateTag(tag, lookup);
+        saveFunction(tag, lookup);
+    }
+
+    @Override protected void readUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        loadFromTag(tag, lookup);
+    }
+
+    @Override protected void handleDataPacket(net.minecraft.network.Connection net,
+            net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet,
+            @Nullable HolderLookup.Provider lookup) {
+        if (packet.getTag() != null) loadFromTag(packet.getTag(), lookup);
+    }
+
+    private void saveFunction(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+//? if >=1.21.1 {
+        /*function.save(tag, lookup);
+*///?} else {
+        function.save(tag);
+//?}
+    }
+
+    private void loadFunction(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+//? if >=1.21.1 {
+        /*function.load(tag, lookup);
+*///?} else {
+        function.load(tag);
+//?}
+    }
 }

@@ -13,6 +13,8 @@ import gregtech.content.blockentity.GTEnergyBlockEntity;
 import gregtech.content.data.*;
 import gregtech.content.registry.*;
 import net.minecraft.core.*;
+
+import javax.annotation.Nullable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -473,15 +475,9 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
     public long getEnergyCapacity(GregTechTags.Tag type, Direction side) {
         return type != null && type == settings.energyType() ? settings.bufferTarget() : 0;
     }
-//? if >=1.21.1 {
-    /*@Override
-    protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-*///?} else {
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         HeatExchangerData.save(tag, settings);
         tag.putLong("gt.energy", heat);
         tag.putBoolean("gt.active", active);
@@ -499,15 +495,9 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
         tag.put("gt.hot", inputTag);
         tag.put("gt.cold", outputTag);
     }
-//? if >=1.21.1 {
-    /*@Override
-    public void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-*///?} else {
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         settings = HeatExchangerData.settings(tag);
         lastRecipe = null;
         heat = Math.max(0, tag.getLong(tag.contains("gt.energy") ? "gt.energy" : "gt.hu"));

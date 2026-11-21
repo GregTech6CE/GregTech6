@@ -16,26 +16,29 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with GregTech. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package gregtech.content.block.misc;
-import net.minecraft.core.*;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
+
+import gregtech.content.data.GregTechTags;
 import gregtech.engine.energy.EnergyBlockViews;
 import gregtech.engine.energy.IEnergyBlock;
-import gregtech.content.data.GregTechTags;
 import java.util.*;
+import javax.annotation.Nullable;
+import net.minecraft.core.*;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+
 /** Resolves a remote transformer and applies packet limits, line loss and native overload effects. */
-public class LongDistanceTransformerBlockEntity extends gregtech.content.blockentity.GTEnergyBlockEntity implements gregtech.api.platform.machine.MachineControl.Provider {
+public class LongDistanceTransformerBlockEntity extends gregtech.content.blockentity.GTEnergyBlockEntity
+        implements gregtech.api.platform.machine.MachineControl.Provider {
     private long distance, maximumVoltage, history;
     private boolean active;
     private Set<BlockPos> wires = Set.of();
 
     public LongDistanceTransformerBlockEntity(BlockPos pos, BlockState state) {
         super(gregtech.content.registry.GTBlockEntities.LONG_DIST_TRANSFORMER.get(), pos, state);
-        link = new gregtech.content.logistics.LongDistanceLink<>(pos, this,
-                () -> !isRemoved() && (level == null || level.hasChunkAt(worldPosition)));
+        link = new gregtech.content.logistics.LongDistanceLink<>(
+                pos, this, () -> !isRemoved() && (level == null || level.hasChunkAt(worldPosition)));
     }
 
     private Direction front() {
@@ -45,8 +48,9 @@ public class LongDistanceTransformerBlockEntity extends gregtech.content.blocken
     private final LongDistanceRouteWatch routeWatch = new LongDistanceRouteWatch();
     private boolean stopped;
     private final gregtech.content.logistics.LongDistanceLink<BlockPos, LongDistanceTransformerBlockEntity> link;
-    private final gregtech.api.platform.machine.MachineControl control = gregtech.engine.machine.MachineControls.switchable(this,
-            () -> !stopped, value -> setStopped(!value), () -> active, () -> active);
+    private final gregtech.api.platform.machine.MachineControl control =
+            gregtech.engine.machine.MachineControls.switchable(
+                    this, () -> !stopped, value -> setStopped(!value), () -> active, () -> active);
 
     @Override
     public gregtech.api.platform.machine.MachineControl machineControl(Direction side) {
@@ -78,11 +82,15 @@ public class LongDistanceTransformerBlockEntity extends gregtech.content.blocken
     private LongDistanceTransformerBlockEntity receiver() {
         if (level == null || level.isClientSide || stopped) return null;
         if ((link.known() && !routeWatch.validated()) || changed()) invalidateRoute();
-        if (link.known() && !worldPosition.equals(link.targetPosition()) && (distance <= 0 || maximumVoltage <= 0)) invalidateRoute();
+        if (link.known() && !worldPosition.equals(link.targetPosition()) && (distance <= 0 || maximumVoltage <= 0))
+            invalidateRoute();
         if (!link.known()) scan();
         var receiver = link.targetOwner();
         var position = link.targetPosition();
-        if (receiver == null && position != null && !position.equals(worldPosition) && LongDistanceRouteWatch.ready(level, position)) {
+        if (receiver == null
+                && position != null
+                && !position.equals(worldPosition)
+                && LongDistanceRouteWatch.ready(level, position)) {
             var entity = LongDistanceRouteWatch.entity(level, position);
             if (entity instanceof LongDistanceTransformerBlockEntity peer) {
                 link.bind(peer.link);
@@ -111,26 +119,38 @@ public class LongDistanceTransformerBlockEntity extends gregtech.content.blocken
         observe(worldPosition);
         var start = worldPosition.relative(front().getOpposite());
         if (!(observe(start).getBlock() instanceof LongDistPipeBlock line) || !line.isWire()) return;
-        var result = gregtech.engine.logistics.LongDistanceNetwork.scan(worldPosition, start, line.networkIdentity(),
-                new gregtech.engine.logistics.LongDistanceNetwork.World<BlockPos, LongDistanceTransformerBlockEntity>() {
+        var result = gregtech.engine.logistics.LongDistanceNetwork.scan(
+                worldPosition,
+                start,
+                line.networkIdentity(),
+                new gregtech.engine.logistics.LongDistanceNetwork.World<
+                        BlockPos, LongDistanceTransformerBlockEntity>() {
 
-            public String identity(BlockPos pos) {
-                if (level.isOutsideBuildHeight(pos)) return null;
-                return observe(pos).getBlock() instanceof LongDistPipeBlock candidate && candidate.isWire() ? candidate.networkIdentity() : null;
-            }
+                    public String identity(BlockPos pos) {
+                        if (level.isOutsideBuildHeight(pos)) return null;
+                        return observe(pos).getBlock() instanceof LongDistPipeBlock candidate && candidate.isWire()
+                                ? candidate.networkIdentity()
+                                : null;
+                    }
 
-            public Iterable<BlockPos> neighbors(BlockPos pos) {
-                return Arrays.stream(Direction.values()).map(pos::relative).toList();
-            }
+                    public Iterable<BlockPos> neighbors(BlockPos pos) {
+                        return Arrays.stream(Direction.values())
+                                .map(pos::relative)
+                                .toList();
+                    }
 
-            public LongDistanceTransformerBlockEntity endpoint(BlockPos pos) {
-                return routeWatch.loaded(level, pos) && LongDistanceRouteWatch.entity(level, pos) instanceof LongDistanceTransformerBlockEntity peer ? peer : null;
-            }
+                    public LongDistanceTransformerBlockEntity endpoint(BlockPos pos) {
+                        return routeWatch.loaded(level, pos)
+                                        && LongDistanceRouteWatch.entity(level, pos)
+                                                instanceof LongDistanceTransformerBlockEntity peer
+                                ? peer
+                                : null;
+                    }
 
-            public BlockPos front(LongDistanceTransformerBlockEntity peer) {
-                return peer.worldPosition.relative(peer.front());
-            }
-        });
+                    public BlockPos front(LongDistanceTransformerBlockEntity peer) {
+                        return peer.worldPosition.relative(peer.front());
+                    }
+                });
         if (result != null) {
             link.bind(result.receiver().link);
             routeWatch.resolved();
@@ -144,19 +164,24 @@ public class LongDistanceTransformerBlockEntity extends gregtech.content.blocken
     public void describe(net.minecraft.world.entity.player.Player player) {
         var sender = link.senderOwner();
         if (sender != null) {
-            player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gt6ce.long_distance.receiver"), false);
+            player.displayClientMessage(
+                    net.minecraft.network.chat.Component.translatable("message.gt6ce.long_distance.receiver"), false);
             coordinates(player, "sender", sender.worldPosition);
         } else {
-            player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gt6ce.long_distance." + (receiver() != null
-                    ? "target" : "no_target")), false);
+            player.displayClientMessage(
+                    net.minecraft.network.chat.Component.translatable(
+                            "message.gt6ce.long_distance." + (receiver() != null ? "target" : "no_target")),
+                    false);
             var target = link.targetPosition();
             if (target != null && !target.equals(worldPosition)) coordinates(player, "target_position", target);
         }
     }
 
     private void coordinates(net.minecraft.world.entity.player.Player player, String name, BlockPos pos) {
-        player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gt6ce.long_distance." + name, pos.getX(), pos.getY(),
-                pos.getZ()), false);
+        player.displayClientMessage(
+                net.minecraft.network.chat.Component.translatable(
+                        "message.gt6ce.long_distance." + name, pos.getX(), pos.getY(), pos.getZ()),
+                false);
     }
 
     public static long loss(long distance) {
@@ -175,7 +200,9 @@ public class LongDistanceTransformerBlockEntity extends gregtech.content.blocken
 
     @Override
     public boolean isEnergyAcceptingFrom(GregTechTags.Tag type, Direction side, boolean theoretical) {
-        return type == GregTechTags.Energy.EU && (side == null || side == front()) && (theoretical || receiver() != null);
+        return type == GregTechTags.Energy.EU
+                && (side == null || side == front())
+                && (theoretical || receiver() != null);
     }
 
     @Override
@@ -185,8 +212,14 @@ public class LongDistanceTransformerBlockEntity extends gregtech.content.blocken
 
     @Override
     public long doEnergyInjection(GregTechTags.Tag type, Direction side, long size, long amount, boolean execute) {
-        if (type != GregTechTags.Energy.EU || stopped || size == 0 || size == Long.MIN_VALUE || amount <= 0
-                || side != null && side != front() || level == null || level.isClientSide) return 0;
+        if (type != GregTechTags.Energy.EU
+                || stopped
+                || size == 0
+                || size == Long.MIN_VALUE
+                || amount <= 0
+                || side != null && side != front()
+                || level == null
+                || level.isClientSide) return 0;
         long magnitude = Math.abs(size);
         var visiting = TRANSFERRING.get();
         if (!visiting.add(this)) return 0;
@@ -220,7 +253,12 @@ public class LongDistanceTransformerBlockEntity extends gregtech.content.blocken
             if (!level.hasChunkAt(pos)) return 0;
             IEnergyBlock sink = EnergyBlockViews.view(level.getBlockEntity(pos));
             if (sink != null) {
-                long used = Math.max(0, Math.min(amount, sink.doEnergyInjection(type, out.getOpposite(), size < 0 ? -output : output, amount, true)));
+                long used = Math.max(
+                        0,
+                        Math.min(
+                                amount,
+                                sink.doEnergyInjection(
+                                        type, out.getOpposite(), size < 0 ? -output : output, amount, true)));
                 if (used > 0) {
                     active = true;
                     receiver.active = true;
@@ -259,21 +297,24 @@ public class LongDistanceTransformerBlockEntity extends gregtech.content.blocken
     public long voltage() {
         return ((LongDistanceTransformerBlock) getBlockState().getBlock()).voltage();
     }
-    private static final ThreadLocal<Set<LongDistanceTransformerBlockEntity>> TRANSFERRING = ThreadLocal.withInitial(HashSet::new);
+
+    private static final ThreadLocal<Set<LongDistanceTransformerBlockEntity>> TRANSFERRING =
+            ThreadLocal.withInitial(HashSet::new);
 
     public void tickActivity() {
-        boolean unavailable = link.known() && link.targetOwner() == null && !worldPosition.equals(link.targetPosition());
+        boolean unavailable =
+                link.known() && link.targetOwner() == null && !worldPosition.equals(link.targetPosition());
         history = gregtech.engine.logistics.LongDistanceNetwork.nextHistory(history, active, stopped, unavailable);
         int value = gregtech.engine.logistics.LongDistanceNetwork.activity(history, stopped, unavailable);
         active = false;
-        if (getBlockState().getValue(LongDistanceTransformerBlock.ACTIVITY) != value) level.setBlockAndUpdate(worldPosition,
-                getBlockState().setValue(LongDistanceTransformerBlock.ACTIVITY, value));
+        if (getBlockState().getValue(LongDistanceTransformerBlock.ACTIVITY) != value)
+            level.setBlockAndUpdate(
+                    worldPosition, getBlockState().setValue(LongDistanceTransformerBlock.ACTIVITY, value));
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
+    @Override
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putBoolean("gt.stopped", stopped);
         var target = link.targetPosition();
         if (target != null && !target.equals(worldPosition)) tag.putLong("gt.target", target.asLong());
@@ -284,8 +325,8 @@ public class LongDistanceTransformerBlockEntity extends gregtech.content.blocken
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         stopped = tag.getBoolean("gt.stopped");
         link.restore(tag.contains("gt.target") ? BlockPos.of(tag.getLong("gt.target")) : null);
         routeWatch.clear();
@@ -295,30 +336,4 @@ public class LongDistanceTransformerBlockEntity extends gregtech.content.blocken
         active = tag.getBoolean("gt.activity");
         wires = Set.of();
     }
-*///?} else {
-    @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        tag.putBoolean("gt.stopped", stopped);
-        var target = link.targetPosition();
-        if (target != null && !target.equals(worldPosition)) tag.putLong("gt.target", target.asLong());
-        tag.putLong("gt.distance", distance);
-        tag.putLong("gt.throughput", maximumVoltage);
-        tag.putLong("gt.activity.history", history);
-        tag.putBoolean("gt.activity", active);
-    }
-
-    @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        stopped = tag.getBoolean("gt.stopped");
-        link.restore(tag.contains("gt.target") ? BlockPos.of(tag.getLong("gt.target")) : null);
-        routeWatch.clear();
-        distance = tag.getLong("gt.distance");
-        maximumVoltage = tag.getLong("gt.throughput");
-        history = tag.getLong("gt.activity.history");
-        active = tag.getBoolean("gt.activity");
-        wires = Set.of();
-    }
-//?}
 }

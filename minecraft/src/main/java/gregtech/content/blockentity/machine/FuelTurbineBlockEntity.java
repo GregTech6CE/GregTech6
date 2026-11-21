@@ -104,25 +104,14 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public net.minecraft.nbt.CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
-        net.minecraft.nbt.CompoundTag tag = super.getUpdateTag(lookup);
-*///?} else {
-    public net.minecraft.nbt.CompoundTag getUpdateTag() {
-        net.minecraft.nbt.CompoundTag tag = super.getUpdateTag();
-//?}
+    protected void writeUpdateTag(net.minecraft.nbt.CompoundTag tag, @Nullable net.minecraft.core.HolderLookup.Provider lookup) {
+        super.writeUpdateTag(tag, lookup);
         gregtech.engine.multiblock.tracking.ClientFormedSync.write(this, tag);
-        return tag;
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void handleUpdateTag(net.minecraft.nbt.CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.handleUpdateTag(tag, lookup);
-*///?} else {
-    public void handleUpdateTag(net.minecraft.nbt.CompoundTag tag) {
-        super.handleUpdateTag(tag);
-//?}
+    protected void readUpdateTag(net.minecraft.nbt.CompoundTag tag, @Nullable net.minecraft.core.HolderLookup.Provider lookup) {
+        super.readUpdateTag(tag, lookup);
         gregtech.engine.multiblock.tracking.ClientFormedSync.read(this, tag);
     }
 

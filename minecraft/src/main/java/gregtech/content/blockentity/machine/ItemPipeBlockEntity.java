@@ -3,6 +3,7 @@ package gregtech.content.blockentity.machine;
 import gregtech.engine.machine.ITileEntityAdjacentInventoryUpdatable;
 import gregtech.engine.machine.ItemPipeSpec;
 import gregtech.content.block.machine.ItemPipeBlock;
+import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.cover.CoverItems;
 import gregtech.content.cover.CoverStore;
 import gregtech.content.cover.CoverUtilityBehaviors;
@@ -17,8 +18,10 @@ import gregtech.content.transport.ItemPipeNetwork;
 import gregtech.content.transport.ItemPipeNetwork.Membership;
 import gregtech.content.transport.ItemPipeNetworkTransfer;
 import gregtech.content.transport.ItemPipeNetworks;
+import gregtech.engine.stack.NbtCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -57,7 +60,7 @@ import java.util.*;
  * <p>The host does not expose MachineControl or ProgressSensorSource. In particular,
  * a transferred-item counter alone does not implement GT6's progress interface.
  */
-public class ItemPipeBlockEntity extends BlockEntity
+public class ItemPipeBlockEntity extends GTBlockEntity
         implements IItemHandler, ITileEntityAdjacentInventoryUpdatable, PanelCoverHost, CoverStore.Hooks {
     /** Bandwidth window: transfer counters restart every 20 ticks. */
     private static final int BANDWIDTH_WINDOW = 20;
@@ -1054,21 +1057,13 @@ public class ItemPipeBlockEntity extends BlockEntity
     // === NBT ===
 
     /** Integer slot indices preserve inventories larger than ContainerHelper's 256-slot format. */
-//? if >=1.21.1 {
-    /*private void saveInventory(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    private void saveInventory(CompoundTag tag) {
-//?}
+    private void saveInventory(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         ListTag items = new ListTag();
         for (int slot = 0; slot < inventory.size(); slot++) {
             ItemStack stack = inventory.get(slot);
             if (stack.isEmpty()) continue;
             ItemStack encoded = stack.getCount() > 99 ? stack.copyWithCount(1) : stack;
-//? if >=1.21.1 {
-            /*CompoundTag row = (CompoundTag) encoded.save(lookup);
-*///?} else {
-            CompoundTag row = encoded.save(new CompoundTag());
-//?}
+            CompoundTag row = (CompoundTag) NbtCompat.saveItem(encoded, lookup);
             row.putInt("Slot", slot);
             if (stack.getCount() > 99) row.putInt("gt.pipe_count", stack.getCount());
             items.add(row);
@@ -1076,22 +1071,14 @@ public class ItemPipeBlockEntity extends BlockEntity
         tag.put("Items", items);
     }
 
-//? if >=1.21.1 {
-    /*private void loadInventory(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    private void loadInventory(CompoundTag tag) {
-//?}
+    private void loadInventory(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         inventory.clear();
         ListTag items = tag.getList("Items", Tag.TAG_COMPOUND);
         for (int i = 0; i < items.size(); i++) {
             CompoundTag row = items.getCompound(i);
             int slot = row.contains("Slot", Tag.TAG_BYTE) ? row.getByte("Slot") & 255 : row.getInt("Slot");
             if (slot < 0 || slot >= inventory.size()) continue;
-//? if >=1.21.1 {
-            /*ItemStack stack = ItemStack.parseOptional(lookup, row);
-*///?} else {
-            ItemStack stack = ItemStack.of(row);
-//?}
+            ItemStack stack = NbtCompat.readItem(row, lookup);
             if (!stack.isEmpty() && row.contains("gt.pipe_count")) {
                 stack.setCount(Math.max(1, row.getInt("gt.pipe_count")));
             }
@@ -1114,32 +1101,20 @@ public class ItemPipeBlockEntity extends BlockEntity
             }
         }
     }
+
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         disabledInputs = tag.contains(NBT_DISABLED_INPUTS) ? tag.getByte(NBT_DISABLED_INPUTS) : 0;
         disabledOutputs = tag.contains(NBT_DISABLED_OUTPUTS) ? tag.getByte(NBT_DISABLED_OUTPUTS) : 0;
         manualDisconnects = tag.contains(NBT_MANUAL_DISCONNECTS) ? tag.getByte(NBT_MANUAL_DISCONNECTS) & 0x3F : 0;
         transferredThisSecond = tag.contains(NBT_TRANSFERRED) ? tag.getLong(NBT_TRANSFERRED) : 0;
         if (tag.contains(NBT_ITEMS)) {
-//? if >=1.21.1 {
-            /*loadInventory(tag.getCompound(NBT_ITEMS),lookup);
-*///?} else {
-            loadInventory(tag.getCompound(NBT_ITEMS));
-//?}
+            loadInventory(tag.getCompound(NBT_ITEMS), lookup);
         }
         loadOrigins(tag);
         splitLegacyStacks();
-//? if >=1.21.1 {
-        /*loadCovers(tag,lookup);
-*///?} else {
-        loadCovers(tag);
-//?}
+        loadCovers(tag, lookup);
         // /data and structure tools can replace an already-loaded pipe's inventory or covers.
         if (level != null && !level.isClientSide) ItemPipeNetworks.joined(this);
     }
@@ -1163,77 +1138,41 @@ public class ItemPipeBlockEntity extends BlockEntity
     /**
      * The shared flat {@code gt_cover_*} keys, written only for non-empty faces; a coverless pipe
      * (no array yet) writes nothing. Loading a tag without cover keys clears the faces, so a cover
-     * removed on the server disappears on the client through {@link #handleUpdateTag} instead of
+     * removed on the server disappears on the client through {@link #readUpdateTag} instead of
      * lingering; the store recomputes {@link #hasCovers()} so the tick pass and {@link #getCapability}
      * re-arm after a load that brings covers back.
      */
-//? if >=1.21.1 {
-    /*private void saveCovers(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        coverStore.save(tag,lookup);
+    private void saveCovers(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        coverStore.save(tag, lookup);
     }
 
-    private void loadCovers(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        coverStore.load(tag,lookup);
-*///?} else {
-    private void saveCovers(CompoundTag tag) {
-        coverStore.save(tag, null);
-    }
-
-    private void loadCovers(CompoundTag tag) {
-        coverStore.load(tag, null);
-//?}
+    private void loadCovers(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        coverStore.load(tag, lookup);
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putByteArray(NBT_SLOT_ORIGINS, slotOrigins.clone());
         tag.putByte(NBT_DISABLED_INPUTS, disabledInputs);
         tag.putByte(NBT_DISABLED_OUTPUTS, disabledOutputs);
         tag.putByte(NBT_MANUAL_DISCONNECTS, (byte) manualDisconnects);
         tag.putLong(NBT_TRANSFERRED, transferredThisSecond);
         CompoundTag itemsTag = new CompoundTag();
-//? if >=1.21.1 {
-        /*saveInventory(itemsTag,lookup);
-*///?} else {
-        saveInventory(itemsTag);
-//?}
+        saveInventory(itemsTag, lookup);
         tag.put(NBT_ITEMS, itemsTag);
-//? if >=1.21.1 {
-        /*saveCovers(tag,lookup);
-*///?} else {
-        saveCovers(tag);
-//?}
+        saveCovers(tag, lookup);
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
-        CompoundTag tag = super.getUpdateTag(lookup);
-*///?} else {
-    public CompoundTag getUpdateTag() {
-        CompoundTag tag = super.getUpdateTag();
-//?}
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.writeUpdateTag(tag, lookup);
         tag.putByte(NBT_DISABLED_INPUTS, disabledInputs);
         tag.putByte(NBT_DISABLED_OUTPUTS, disabledOutputs);
         CompoundTag itemsTag = new CompoundTag();
-//? if >=1.21.1 {
-        /*saveInventory(itemsTag,lookup);
-*///?} else {
-        saveInventory(itemsTag);
-//?}
+        saveInventory(itemsTag, lookup);
         tag.put(NBT_ITEMS, itemsTag);
-//? if >=1.21.1 {
-        /*saveCovers(tag,lookup);
-*///?} else {
-        saveCovers(tag);
-//?}
-        return tag;
+        saveCovers(tag, lookup);
     }
 
     /**
@@ -1247,39 +1186,22 @@ public class ItemPipeBlockEntity extends BlockEntity
     }
 
     @Override
-    public void onDataPacket(net.minecraft.network.Connection net,
-//? if >=1.21.1 {
-                             /*net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket pkt,net.minecraft.core.HolderLookup.Provider lookup) {
-        if (pkt.getTag() != null) loadCovers(pkt.getTag(),lookup);
-*///?} else {
-                             net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket pkt) {
-        if (pkt.getTag() != null) loadCovers(pkt.getTag());
-//?}
+    protected void handleDataPacket(net.minecraft.network.Connection net,
+            net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket pkt,
+            @Nullable HolderLookup.Provider lookup) {
+        if (pkt.getTag() != null) loadCovers(pkt.getTag(), lookup);
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void handleUpdateTag(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.handleUpdateTag(tag,lookup);
-*///?} else {
-    public void handleUpdateTag(CompoundTag tag) {
-        super.handleUpdateTag(tag);
-//?}
+    protected void readUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.readUpdateTag(tag, lookup);
         if (tag.contains(NBT_DISABLED_INPUTS)) disabledInputs = tag.getByte(NBT_DISABLED_INPUTS);
         if (tag.contains(NBT_DISABLED_OUTPUTS)) disabledOutputs = tag.getByte(NBT_DISABLED_OUTPUTS);
         if (tag.contains(NBT_TRANSFERRED)) transferredThisSecond = tag.getLong(NBT_TRANSFERRED);
         if (tag.contains(NBT_ITEMS)) {
-//? if >=1.21.1 {
-            /*loadInventory(tag.getCompound(NBT_ITEMS),lookup);
-*///?} else {
-            loadInventory(tag.getCompound(NBT_ITEMS));
-//?}
+            loadInventory(tag.getCompound(NBT_ITEMS), lookup);
         }
-//? if >=1.21.1 {
-        /*loadCovers(tag,lookup);
-*///?} else {
-        loadCovers(tag);
-//?}
+        loadCovers(tag, lookup);
     }
 
     public long getTransferredThisSecond() {

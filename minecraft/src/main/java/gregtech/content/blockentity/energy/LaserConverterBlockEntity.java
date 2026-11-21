@@ -21,6 +21,8 @@ import net.minecraftforge.energy.IEnergyStorage;
 //?}
 import java.util.*;
 
+import javax.annotation.Nullable;
+
 /** Packet-preserving conversion, with the original 50% EU/LU and 8:1 RF/LU ratios. */
 public final class LaserConverterBlockEntity extends GTEnergyBlockEntity implements gregtech.api.platform.machine.MachineControl.Provider {
     private long energy;
@@ -97,15 +99,13 @@ public final class LaserConverterBlockEntity extends GTEnergyBlockEntity impleme
     @Override public long getEnergyCapacity(GregTechTags.Tag type,Direction side){return type==spec().inputType()?spec().input()*2:0;}
 //? if >=1.21.1 {
     /*public IEnergyStorage fluxHandler(Direction side){return !isRemoved()&&spec().kind()==LaserSpec.Kind.FLUX&&(side==null||side!=front())?forgeEnergy:null;}
-    @Override protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup){super.saveAdditional(tag,lookup);tag.putLong("gt.laser.energy",energy);tag.putBoolean("gt.stopped",stopped);}
-    @Override protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup){super.loadAdditional(tag,lookup);energy=LaserWorkRules.stored(spec(),tag.getLong("gt.laser.energy"));stopped=tag.getBoolean("gt.stopped");}
 *///?} else {
     @Override public <T> LazyOptional<T> getCapability(Capability<T> cap,Direction side){
         return cap==ForgeCapabilities.ENERGY && spec().kind()==LaserSpec.Kind.FLUX && (side==null||side!=front())?forgeEnergy.cast():super.getCapability(cap,side);
     }
     @Override public void invalidateCaps(){super.invalidateCaps();forgeEnergy.invalidate();}
     @Override public void reviveCaps(){super.reviveCaps();forgeEnergy=createForgeEnergy();}
-    @Override protected void saveAdditional(CompoundTag tag){super.saveAdditional(tag);tag.putLong("gt.laser.energy",energy);tag.putBoolean("gt.stopped",stopped);}
-    @Override public void load(CompoundTag tag){super.load(tag);energy=LaserWorkRules.stored(spec(),tag.getLong("gt.laser.energy"));stopped=tag.getBoolean("gt.stopped");}
 //?}
+    @Override protected void saveData(CompoundTag tag,@Nullable HolderLookup.Provider lookup){super.saveData(tag,lookup);tag.putLong("gt.laser.energy",energy);tag.putBoolean("gt.stopped",stopped);}
+    @Override protected void loadData(CompoundTag tag,@Nullable HolderLookup.Provider lookup){super.loadData(tag,lookup);energy=LaserWorkRules.stored(spec(),tag.getLong("gt.laser.energy"));stopped=tag.getBoolean("gt.stopped");}
 }

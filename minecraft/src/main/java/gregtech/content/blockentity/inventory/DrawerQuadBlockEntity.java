@@ -1,16 +1,17 @@
 package gregtech.content.blockentity.inventory;
 
+import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.engine.inventory.BlockContents;
 import gregtech.content.block.inventory.DrawerQuadBlock;
 import gregtech.client.gui.HopperContainerMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
 
@@ -26,7 +27,7 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 /** Four 36-slot inventories. Side mapping follows GT6 MultiTileEntityDrawerQuad and CS.FACING_ROTATIONS. */
-public class DrawerQuadBlockEntity extends BlockEntity implements BlockContents {
+public class DrawerQuadBlockEntity extends GTBlockEntity implements BlockContents {
     public static final int COMPARTMENTS = gregtech.content.storage.ContainerStorageRules.COMPARTMENTS, PAGE_SIZE = gregtech.content.storage.ContainerStorageRules.PAGE_SIZE, SLOT_COUNT = gregtech.content.storage.ContainerStorageRules.DRAWER_SLOTS;
     private boolean sidedAccess, loading, refilling, capsValid = true;
     // Only used to retain over-capacity contents from the earlier, incorrect bulk implementation.
@@ -106,33 +107,13 @@ public class DrawerQuadBlockEntity extends BlockEntity implements BlockContents 
             }
         } finally { refilling = false; }
     }
-//? if >=1.21.1 {
-    /*@Override protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-        saveData(tag, lookup);
-    }
-*///?} else {
-    @Override protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        saveData(tag, null);
-    }
-//?}
-    private void saveData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    @Override protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.put("Inventory", gregtech.engine.stack.HandlerNbt.save(inventory, lookup)); tag.putBoolean("SidedAccess", sidedAccess);
         ListTag extras = new ListTag(); for (ItemStack stack : overflow) extras.add(gregtech.engine.stack.NbtCompat.saveItem(stack, lookup)); tag.put("LegacyOverflow", extras);
     }
-//? if >=1.21.1 {
-    /*@Override protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-        loadData(tag, lookup);
-    }
-*///?} else {
-    @Override public void load(CompoundTag tag) {
-        super.load(tag);
-        loadData(tag, null);
-    }
-//?}
-    private void loadData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    @Override protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         loading = true;
         try {
             inventory.setSize(SLOT_COUNT); overflow.clear(); sidedAccess = tag.getBoolean("SidedAccess");

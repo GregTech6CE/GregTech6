@@ -2,17 +2,18 @@ package gregtech.content.blockentity.tool;
 
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
+import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.data.MachineRecipeMaps;
+import gregtech.engine.stack.NbtCompat;
 import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
@@ -25,13 +26,14 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.IItemHandler;
 //?}
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 /**
  * Manual tool stations (GT6 mortar / grind stone / sifting table): one work
  * slot for sifting; mortar and grindstone process the item in the player's hand.
  */
-public class ManualToolBlockEntity extends BlockEntity {
+public class ManualToolBlockEntity extends GTBlockEntity {
 
     public enum Kind {
         MORTAR("Mortar"), GRINDSTONE("Sharpening"), SIFTING("Sifting");
@@ -361,82 +363,39 @@ public class ManualToolBlockEntity extends BlockEntity {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putInt("gt.progress", progress);
         tag.putInt("gt.stone_uses", stoneUses);
 //? if >=1.21.1 {
         /*net.minecraft.world.ContainerHelper.saveAllItems(tag, outputs, lookup);
-        if (!work.isEmpty()) tag.put("gt.work", work.saveOptional(lookup));
 *///?} else {
         net.minecraft.world.ContainerHelper.saveAllItems(tag, outputs);
-        if (!work.isEmpty()) tag.put("gt.work", work.save(new CompoundTag()));
 //?}
+        if (!work.isEmpty()) tag.put("gt.work", NbtCompat.saveItem(work, lookup));
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         progress = tag.getInt("gt.progress");
         stoneUses = Math.max(0, tag.getInt("gt.stone_uses"));
         outputs.clear();
 //? if >=1.21.1 {
         /*net.minecraft.world.ContainerHelper.loadAllItems(tag, outputs, lookup);
-        work = tag.contains("gt.work") ? ItemStack.parseOptional(lookup, tag.getCompound("gt.work")) : ItemStack.EMPTY;
 *///?} else {
         net.minecraft.world.ContainerHelper.loadAllItems(tag, outputs);
-        work = tag.contains("gt.work") ? ItemStack.of(tag.getCompound("gt.work")) : ItemStack.EMPTY;
 //?}
+        work = tag.contains("gt.work") ? NbtCompat.readItem(tag.getCompound("gt.work"), lookup) : ItemStack.EMPTY;
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    public CompoundTag getUpdateTag() {
-//?}
-        CompoundTag tag = new CompoundTag();
-//? if >=1.21.1 {
-        /*saveAdditional(tag, lookup);
-*///?} else {
-        saveAdditional(tag);
-//?}
-        return tag;
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        saveEntityAdditional(tag, lookup);
     }
-
-    @Override
-//? if >=1.21.1 {
-    /*public void handleUpdateTag(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        loadAdditional(tag, lookup);
-    }
-*///?} else {
-    public void handleUpdateTag(CompoundTag tag) {
-        load(tag);
-    }
-//?}
 
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override
-//? if >=1.21.1 {
-    /*public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, net.minecraft.core.HolderLookup.Provider lookup) {
-        if (pkt.getTag() != null) loadAdditional(pkt.getTag(), lookup);
-*///?} else {
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        if (pkt.getTag() != null) load(pkt.getTag());
-//?}
     }
 }

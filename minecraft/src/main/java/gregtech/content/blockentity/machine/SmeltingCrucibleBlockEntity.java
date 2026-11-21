@@ -23,8 +23,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.network.Connection;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -301,13 +299,8 @@ public class SmeltingCrucibleBlockEntity extends gregtech.content.blockentity.GT
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider lookup) {
-        super.handleUpdateTag(tag, lookup);
-*///?} else {
-    public void handleUpdateTag(CompoundTag tag) {
-        super.handleUpdateTag(tag);
-//?}
+    protected void readUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.readUpdateTag(tag, lookup);
         if (level != null && level.isClientSide) {
             requestModelDataUpdate();
 //? if >=1.21.1 {
@@ -319,22 +312,6 @@ public class SmeltingCrucibleBlockEntity extends gregtech.content.blockentity.GT
 //?}
         }
     }
-
-    @Override
-    public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override
-//? if >=1.21.1 {
-    /*public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet, HolderLookup.Provider lookup) {
-        if (packet.getTag() != null) handleUpdateTag(packet.getTag(), lookup);
-    }
-*///?} else {
-    public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet) {
-        if (packet.getTag() != null) handleUpdateTag(packet.getTag());
-    }
-//?}
 
     public long getTemperature() {
         return thermal.temperatureK();
@@ -871,13 +848,8 @@ public class SmeltingCrucibleBlockEntity extends gregtech.content.blockentity.GT
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag, HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-*///?} else {
-    public void load(CompoundTag tag) {
-        super.load(tag);
-//?}
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
         long temperature =
                 tag.contains("gt.temperature") ? tag.getLong("gt.temperature") : GregTechConstants.DEF_ENV_TEMP;
         thermal = new ThermalState(
@@ -902,13 +874,8 @@ public class SmeltingCrucibleBlockEntity extends gregtech.content.blockentity.GT
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag, HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-*///?} else {
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-//?}
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
         tag.putInt("Meta", spec.gt6MetaId());
         tag.putLong("gt.temperature", thermal.temperatureK());
         tag.putLong("gt.temperature.old", thermal.previousTemperatureK());
