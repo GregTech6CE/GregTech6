@@ -22,10 +22,10 @@ import net.minecraftforge.fluids.FluidStack;
 public final class NbtCompat {
     private NbtCompat() {}
 
-    /** Saved form of an item stack: a compound tag on both nodes. */
+    /** Saved form of an item stack (empty stacks encode cleanly as an empty/air tag on both nodes). */
     public static Tag saveItem(ItemStack stack, HolderLookup.Provider lookup) {
 //? if >=1.21.1 {
-/*        return stack.save(provider(lookup));
+/*        return stack.saveOptional(provider(lookup));
 *///?} else {
         return stack.save(new CompoundTag());
 //?}
@@ -47,10 +47,10 @@ public final class NbtCompat {
 //?}
     }
 
-    /** Saved form of a fluid stack: a compound tag on both nodes. */
+    /** Saved form of a fluid stack (empty stacks encode cleanly on both nodes). */
     public static Tag saveFluid(FluidStack stack, HolderLookup.Provider lookup) {
 //? if >=1.21.1 {
-/*        return stack.save(provider(lookup));
+/*        return stack.saveOptional(provider(lookup));
 *///?} else {
         return stack.writeToNBT(new CompoundTag());
 //?}
