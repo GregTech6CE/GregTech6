@@ -6,6 +6,7 @@ import gregtech.content.registry.FuelGeneratorRegistration;
 import gregtech.content.registry.GTBasicMachines;
 import gregtech.content.registry.GTBurningBoxes;
 import gregtech.content.registry.GTSmeltery;
+import gregtech.content.tool.OpenVesselRules;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.engine.stack.StackCompat;
 import java.util.*;
@@ -37,10 +38,8 @@ public final class RecipeMachines {
         for (var entry : gregtech.content.registry.GTManualStations.VESSELS)
             if (entry.isBound()) {
                 var tool = entry.get();
-                var map = tool.toolId().equals("juicer")
-                        ? MachineRecipeMaps.Juicer
-                        : tool.toolId().equals("bathing_pot") ? MachineRecipeMaps.Bath : MachineRecipeMaps.Mixer;
-                add(result, map, new ItemStack(tool));
+                var profile = OpenVesselRules.profile(tool.toolId());
+                add(result, MachineRecipeMaps.forOpenVessel(profile), new ItemStack(tool));
             }
 
         for (var entry : gregtech.content.registry.GTManualStations.ANVILS)

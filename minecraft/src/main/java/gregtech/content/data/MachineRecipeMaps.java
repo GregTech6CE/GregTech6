@@ -2,6 +2,7 @@ package gregtech.content.data;
 
 import gregtech.api.material.MaterialProperty;
 import gregtech.content.machine.BasicMachineCatalog;
+import gregtech.content.tool.OpenVesselRules;
 import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
 import net.minecraft.world.item.ItemStack;
@@ -157,6 +158,11 @@ public final class MachineRecipeMaps {
         var map = RecipeMap.RECIPE_MAPS.get(spec.internalName);
         if (map == null) throw new IllegalStateException("Missing built-in recipe map: " + spec.internalName);
         return map;
+    }
+
+    public static RecipeMap forOpenVessel(OpenVesselRules.Profile vessel) {
+        if (vessel.juicer()) return Juicer;
+        return vessel.bowl() ? Mixer : Bath;
     }
 
     // ── Static recipe helpers (1.20.1 port of the gregapi.data.RM helpers) ─

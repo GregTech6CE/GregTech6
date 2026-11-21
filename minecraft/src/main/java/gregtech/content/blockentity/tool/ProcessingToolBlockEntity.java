@@ -51,7 +51,7 @@ public final class ProcessingToolBlockEntity extends GTBlockEntity implements Bl
         juicer = profile.juicer();
         wooden = profile.wooden();
         bowl = profile.bowl();
-        recipes = juicer ? MachineRecipeMaps.Juicer : id.startsWith("bathing_pot") ? MachineRecipeMaps.Bath : MachineRecipeMaps.Mixer;
+        recipes = MachineRecipeMaps.forOpenVessel(profile);
         items = new ItemStackHandler(recipes.itemInputSlots + recipes.itemOutputSlots) {
 
             @Override

@@ -1,6 +1,8 @@
 package gregtech.gametest;
 
 import com.google.gson.JsonParser;
+import gregtech.compat.common.RecipeMachines;
+import gregtech.content.blockentity.tool.ProcessingToolBlockEntity;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.recipe.ToolShapedRecipe;
 import gregtech.content.recipe.ToolShapelessRecipe;
@@ -13,8 +15,10 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
@@ -46,6 +50,34 @@ public final class RecipePublishingParityTests {
     private static final Path SNAPSHOT_OUT = Path.of("build", "recipe-snapshot.tsv");
 
     private RecipePublishingParityTests() {}
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 20)
+    public static void openVesselsShowOnlyTheirProcessingCategory(GameTestHelper helper) {
+        var expected = Map.of(
+                "bathing_pot", MachineRecipeMaps.Bath,
+                "bathing_pot_table", MachineRecipeMaps.Bath,
+                "bathing_pot_wood", MachineRecipeMaps.Bath,
+                "bathing_pot_table_wood", MachineRecipeMaps.Bath,
+                "mixing_bowl", MachineRecipeMaps.Mixer,
+                "mixing_bowl_table", MachineRecipeMaps.Mixer,
+                "juicer", MachineRecipeMaps.Juicer);
+        var stations = RecipeMachines.collect();
+        var level = helper.getLevel();
+        var pos = helper.absolutePos(new BlockPos(1, 1, 1));
+        expected.forEach((id, map) -> {
+            var block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
+            level.setBlockAndUpdate(pos, block.defaultBlockState());
+            helper.assertTrue(level.getBlockEntity(pos) instanceof ProcessingToolBlockEntity vessel && vessel.recipes() == map,
+                    id + " should process " + map.internalName);
+            var categories = stations.entrySet().stream()
+                    .filter(entry -> entry.getValue().stream().anyMatch(stack -> stack.is(block.asItem())))
+                    .map(entry -> entry.getKey().internalName)
+                    .toList();
+            helper.assertTrue(categories.equals(List.of(map.internalName)),
+                    id + " should only appear in " + map.internalName + ", got " + categories);
+        });
+        helper.succeed();
+    }
 
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
     public static void captureOrVerifyRecipeTable(GameTestHelper helper) {
