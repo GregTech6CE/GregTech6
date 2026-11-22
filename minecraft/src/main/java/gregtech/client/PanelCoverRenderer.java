@@ -29,11 +29,29 @@ public final class PanelCoverRenderer {
         if (component != null)
             return List.of(ComponentCoverRules.texture(component, ComponentCoverRuntime.visual(stack)));
         if (panel == null) {
+            var spec = MachineCoverSpec.of(stack);
+            if (spec != null) return List.of(spec.texture + "/circuit");
             var id = CoverItems.behavior(stack);
+            if (CoverUtilityBehaviors.FILTER_ITEM.equals(id))
+                return List.of("filteritem/" + (MachineCoverSpec.inverted(stack) ? "inverted" : "normal"));
+            if (CoverUtilityBehaviors.FILTER_FLUID.equals(id))
+                return List.of("filterfluid/" + (MachineCoverSpec.inverted(stack) ? "inverted" : "normal"));
+            if (CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id))
+                return List.of("retrieveritem/" + (MachineCoverSpec.inverted(stack) ? "inverted" : "normal"));
+            if (CoverItems.TAG_SELECTOR.equals(id)) {
+                int tag = CoverItems.selectorTag(stack);
+                if (tag < 0) tag = gregtech.engine.stack.StackData.getInt(stack, "gt.circuit", 0);
+                return List.of("selectortag/underlay", "selectortag/" + Math.floorMod(tag, 16));
+            }
             int count = CoverUtilityBehaviors.designCount(id);
-            if (count > 0)
-                return List.of((CoverUtilityBehaviors.BLANK_COVER.equals(id) ? "blank/" : "warning/")
-                        + Math.floorMod(CoverUtilityBehaviors.design(stack), count));
+            if (count > 0) {
+                String folder = switch (id) {
+                    case CoverUtilityBehaviors.BLANK_COVER -> "blank/";
+                    case CoverUtilityBehaviors.CRAFTING_TABLE -> "crafting/";
+                    default -> "warning/";
+                };
+                return List.of(folder + Math.floorMod(CoverUtilityBehaviors.design(stack), count));
+            }
             return List.of();
         }
         int value = PanelCoverRuntime.value(stack), style = PanelCoverRuntime.style(stack);
@@ -103,12 +121,16 @@ public final class PanelCoverRenderer {
                     light);
             return true;
         }
-        if (CoverAttachmentBehaviors.AIR_VENT.equals(behavior)) {
-            var sprite = ArmRenderHelper.getSprite(
-                    ResourceLocation.fromNamespaceAndPath("gt6ce", "item/technological/air_vent"));
+        if (CoverAttachmentBehaviors.DRAIN.equals(behavior) || CoverAttachmentBehaviors.AIR_VENT.equals(behavior)) {
+            String folder = CoverAttachmentBehaviors.DRAIN.equals(behavior)
+                    ? "block/machines/covers/drain/"
+                    : "block/machines/covers/vent/";
+            var front = ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce", folder + "front"));
+            var back = ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce", folder + "back"));
+            var sides = ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce", folder + "sides"));
             var vertices = buffers.getBuffer(RenderType.cutout());
-            CoverSurfaceRenderer.attachment(owner, side, pose, vertices, sprite, light, -1);
-            CoverSurfaceRenderer.draw(owner, pose, vertices, side, sprite, light, 0);
+            CoverSurfaceRenderer.attachment(owner, side, pose, vertices, front, back, sides, light, -1);
+            CoverSurfaceRenderer.draw(owner, pose, vertices, side, front, light, 0);
             return true;
         }
         if (CanvasData.isCanvas(stack)) {
@@ -191,9 +213,8 @@ public final class PanelCoverRenderer {
                 return true;
             }
         }
-        if (PanelCover.of(stack) == null
-                && ComponentCoverRuntime.kind(stack) == null
-                && CoverUtilityBehaviors.designCount(CoverItems.behavior(stack)) == 0) {
+        var layers = layers(stack);
+        if (layers.isEmpty()) {
             var model = net.minecraft.client.Minecraft.getInstance()
                     .getItemRenderer()
                     .getModel(stack, host.coverOwner().getLevel(), null, 0);
@@ -236,7 +257,7 @@ public final class PanelCoverRenderer {
                     -1);
         }
         int layer = 1;
-        for (String texture : layers(stack)) {
+        for (String texture : layers) {
             var sprite = ArmRenderHelper.getSprite(
                     ResourceLocation.fromNamespaceAndPath("gt6ce", "block/machines/covers/" + texture));
             CoverSurfaceRenderer.draw(owner, pose, vc, side, sprite, light, layer++);

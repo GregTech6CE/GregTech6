@@ -38,10 +38,10 @@ class MachineModelIntegrityTest {
     private static final int TABLE_ROWS = 842;
     /**
      * The machine art budget. The client builds some sprite paths itself, so those files keep
-     * their own names and cannot be merged; with that pinned set the merged folder drops to 948
-     * files (including {@code endergarbage/bin/overlay/}), inside the 950 target.
+     * their own names and cannot be merged; with that pinned set (including {@code endergarbage/bin/overlay/}
+     * and the 45 restored original cover textures) the merged folder stays inside the 995 target.
      */
-    private static final int MAX_MACHINE_PNGS = 950;
+    private static final int MAX_MACHINE_PNGS = 995;
 
     private static final int TABLE_COLUMNS = 15;
     private static final String TABLE = "machine_models.tsv";

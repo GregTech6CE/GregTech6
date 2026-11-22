@@ -872,10 +872,10 @@ block/wood_slabs/wood_south	gt6ce:block/wood_slabs/template_south		all=gt6ce:blo
 block/wood_slabs/wood_up	gt6ce:block/wood_slabs/template_up		all=gt6ce:block/iconsets/planks_wood;particle=gt6ce:block/iconsets/planks_wood
 block/wood_slabs/wood_west	gt6ce:block/wood_slabs/template_west		all=gt6ce:block/iconsets/planks_wood;particle=gt6ce:block/iconsets/planks_wood
 item/abyssal_dough	minecraft:item/generated		layer0=gt6ce:item/food/abyssal_dough
-item/activity_detector_possible	minecraft:item/generated		layer0=gt6ce:block/machines/covers/base;layer1=gt6ce:block/machines/covers/detectorrunningpossible/circuit;particle=gt6ce:block/machines/covers/detectorrunningpossible/circuit
-item/activity_detector_processing	minecraft:item/generated		layer0=gt6ce:block/machines/covers/base;layer1=gt6ce:block/machines/covers/detectorrunningactively/circuit;particle=gt6ce:block/machines/covers/detectorrunningactively/circuit
-item/activity_detector_running	minecraft:item/generated		layer0=gt6ce:block/machines/covers/base;layer1=gt6ce:block/machines/covers/detectorrunningpassively/circuit;particle=gt6ce:block/machines/covers/detectorrunningpassively/circuit
-item/activity_detector_success	minecraft:item/generated		layer0=gt6ce:block/machines/covers/base;layer1=gt6ce:block/machines/covers/detectorrunningsuccessfully/circuit;particle=gt6ce:block/machines/covers/detectorrunningsuccessfully/circuit
+item/activity_detector_possible	minecraft:item/generated		layer0=gt6ce:item/technological/activity_detector_possible
+item/activity_detector_processing	minecraft:item/generated		layer0=gt6ce:item/technological/activity_detector_processing
+item/activity_detector_running	minecraft:item/generated		layer0=gt6ce:item/technological/activity_detector_running
+item/activity_detector_success	minecraft:item/generated		layer0=gt6ce:item/technological/activity_detector_success
 item/adamantium_boiler_main_barometer	gt6ce:block/machine/multiblock/adamantium_boiler_main_barometer_inventory		
 item/adamantium_dynamo_main_housing	gt6ce:block/machine/multiblock/adamantium_dynamo_main_housing		
 item/adamantium_wall	gt6ce:block/machine/multiblock/adamantium_wall		
@@ -1053,13 +1053,13 @@ item/auto_igniter_steel	gt6ce:block/misc/auto_igniter_steel
 item/auto_igniter_titanium	gt6ce:block/misc/auto_igniter_titanium		
 item/auto_igniter_tungsten	gt6ce:block/misc/auto_igniter_tungsten		
 item/auto_igniter_ultimet	gt6ce:block/misc/auto_igniter_ultimet		
-item/auto_reboot_switch_10m	minecraft:item/generated		layer0=gt6ce:block/machines/covers/base;layer1=gt6ce:block/machines/covers/autotimerswitch/12000/circuit;particle=gt6ce:block/machines/covers/autotimerswitch/12000/circuit
-item/auto_reboot_switch_1m	minecraft:item/generated		layer0=gt6ce:block/machines/covers/base;layer1=gt6ce:block/machines/covers/autotimerswitch/1200/circuit;particle=gt6ce:block/machines/covers/autotimerswitch/1200/circuit
-item/auto_reboot_switch_20m	minecraft:item/generated		layer0=gt6ce:block/machines/covers/base;layer1=gt6ce:block/machines/covers/autotimerswitch/24000/circuit;particle=gt6ce:block/machines/covers/autotimerswitch/24000/circuit
-item/auto_reboot_switch_30m	minecraft:item/generated		layer0=gt6ce:block/machines/covers/base;layer1=gt6ce:block/machines/covers/autotimerswitch/36000/circuit;particle=gt6ce:block/machines/covers/autotimerswitch/36000/circuit
-item/auto_reboot_switch_5m	minecraft:item/generated		layer0=gt6ce:block/machines/covers/base;layer1=gt6ce:block/machines/covers/autotimerswitch/6000/circuit;particle=gt6ce:block/machines/covers/autotimerswitch/6000/circuit
-item/auto_redstone_machine_switch	minecraft:item/generated		layer0=gt6ce:block/machines/covers/base;layer1=gt6ce:block/machines/covers/autoredstoneswitch/circuit;particle=gt6ce:block/machines/covers/autoredstoneswitch/circuit
-item/automatic_machine_switch	minecraft:item/generated		layer0=gt6ce:block/machines/covers/base;layer1=gt6ce:block/machines/covers/autoswitch/circuit;particle=gt6ce:block/machines/covers/autoswitch/circuit
+item/auto_reboot_switch_10m	minecraft:item/generated		layer0=gt6ce:item/technological/auto_reboot_switch_10m
+item/auto_reboot_switch_1m	minecraft:item/generated		layer0=gt6ce:item/technological/auto_reboot_switch_1m
+item/auto_reboot_switch_20m	minecraft:item/generated		layer0=gt6ce:item/technological/auto_reboot_switch_20m
+item/auto_reboot_switch_30m	minecraft:item/generated		layer0=gt6ce:item/technological/auto_reboot_switch_30m
+item/auto_reboot_switch_5m	minecraft:item/generated		layer0=gt6ce:item/technological/auto_reboot_switch_5m
+item/auto_redstone_machine_switch	minecraft:item/generated		layer0=gt6ce:item/technological/auto_redstone_machine_switch
+item/automatic_machine_switch	minecraft:item/generated		layer0=gt6ce:item/technological/automatic_machine_switch
 item/bacon_ice_cream	minecraft:item/generated		layer0=gt6ce:item/food/bacon_ice_cream
 item/bacon_sandwich	minecraft:item/generated		layer0=gt6ce:item/food/bacon_sandwich
 item/bag_of_chili_chips	minecraft:item/generated		layer0=gt6ce:item/food/bag_of_chili_chips
@@ -1432,7 +1432,7 @@ item/bush_cranberry	gt6ce:block/plants/bush_stage3
 item/bush_raspberry	gt6ce:block/plants/bush_stage3		
 item/bush_red_currants	gt6ce:block/plants/bush_stage3		
 item/bush_white_currants	gt6ce:block/plants/bush_stage3		
-item/button_panel_selector	minecraft:item/generated		layer0=gt6ce:block/machines/covers/buttonselector/underlay;layer1=gt6ce:block/machines/covers/buttonselector/0;particle=gt6ce:block/machines/covers/buttonselector/underlay
+item/button_panel_selector	minecraft:item/generated		layer0=gt6ce:item/technological/button_panel_selector
 item/c_foam_removal_spray	minecraft:item/generated		layer0=gt6ce:item/randomtools/c_foam_removal_spray
 item/c_foam_removal_spray_2	minecraft:item/generated		layer0=gt6ce:item/randomtools/c_foam_removal_spray_2
 item/cactus_water	minecraft:item/generated		layer0=gt6ce:item/bottles/cactus_water
@@ -1898,7 +1898,7 @@ item/cookie_shaped_chocolate_raisin_dough	minecraft:item/generated		layer0=gt6ce
 item/cookie_shaped_dough	minecraft:item/generated		layer0=gt6ce:item/food/cookie_shaped_dough
 item/cookie_shaped_raisin_dough	minecraft:item/generated		layer0=gt6ce:item/food/cookie_shaped_raisin_dough
 item/copper_key	minecraft:item/generated		layer0=gt6ce:item/randomtools/copper_key
-item/cover_controller	minecraft:item/generated		layer0=gt6ce:block/machines/covers/coverswitch/base;layer1=gt6ce:block/machines/covers/coverswitch/circuit;particle=gt6ce:block/machines/covers/coverswitch/base
+item/cover_controller	minecraft:item/generated		layer0=gt6ce:item/technological/cover_controller
 item/cow_hoof	minecraft:item/generated		layer0=gt6ce:item/food/cow_hoof
 item/cow_horn	minecraft:item/generated		layer0=gt6ce:item/food/cow_horn
 item/crafting_table_cover	minecraft:item/generated		layer0=gt6ce:item/technological/crafting_table_cover
@@ -2128,8 +2128,8 @@ item/end_bumblebee_scanned_queen	minecraft:item/generated		layer0=gt6ce:item/bum
 item/end_comb	minecraft:item/generated		layer0=gt6ce:item/food/end_comb
 item/ender_garbage_bin	gt6ce:block/machine/storage/ender_garbage_bin		
 item/ender_garbage_dump	gt6ce:block/machine/storage/ender_garbage_dump		
-item/energy_display_cover	minecraft:item/generated		layer0=gt6ce:block/machines/covers/base;layer1=gt6ce:block/machines/covers/energydisplay/underlay;particle=gt6ce:block/machines/covers/base
-item/energy_sensor	minecraft:item/generated		layer0=gt6ce:block/machines/covers/base;layer1=gt6ce:block/machines/covers/energyredstone/circuit;particle=gt6ce:block/machines/covers/base
+item/energy_display_cover	minecraft:item/generated		layer0=gt6ce:item/technological/energy_display_cover
+item/energy_sensor	minecraft:item/generated		layer0=gt6ce:item/technological/energy_sensor
 item/engine_diesel_arsenic_bronze	gt6ce:block/machine/engine/engine_diesel		
 item/engine_diesel_arsenic_copper	gt6ce:block/machine/engine/engine_diesel		
 item/engine_diesel_bronze	gt6ce:block/machine/engine/engine_diesel		
@@ -3085,7 +3085,7 @@ item/lt_bumbleson_scanned_princess	minecraft:item/generated		layer0=gt6ce:item/b
 item/lt_bumbleson_scanned_queen	minecraft:item/generated		layer0=gt6ce:item/bumblebee/lt_bumbleson;layer1=gt6ce:item/bumblebee/overlay_queen
 item/lubricant_bottle	minecraft:item/generated		layer0=gt6ce:item/bottles/lubricant_bottle
 item/machine	gt6ce:block/iconsets/machine		
-item/machine_status_display_cover	minecraft:item/generated		layer0=gt6ce:block/machines/covers/base;layer1=gt6ce:block/machines/covers/statusdisplay/bottom/base;layer2=gt6ce:block/machines/covers/statusdisplay/bottom/4_on;particle=gt6ce:block/machines/covers/base
+item/machine_status_display_cover	minecraft:item/generated		layer0=gt6ce:item/technological/machine_status_display_cover
 item/magic_comb	minecraft:item/generated		layer0=gt6ce:item/food/magic_comb
 item/magic_field_absorber	gt6ce:block/energy/magic_field_absorber_down		
 item/magic_research_paper_introduction	minecraft:item/generated		layer0=gt6ce:item/randomtools/magic_research_paper_introduction
@@ -3109,7 +3109,7 @@ item/magnalium_gas_turbine_main_housing	gt6ce:block/machine/multiblock/magnalium
 item/magnalium_steam_turbine_main_housing	gt6ce:block/machine/multiblock/magnalium_steam_turbine_main_housing		
 item/mango_juice	minecraft:item/generated		layer0=gt6ce:item/bottles/mango_juice
 item/mango_smoothie	minecraft:item/generated		layer0=gt6ce:item/bottles/mango_smoothie
-item/manual_selector	minecraft:item/generated		layer0=gt6ce:block/machines/covers/base;layer1=gt6ce:block/machines/covers/manualselector/underlay;layer2=gt6ce:block/machines/covers/manualselector/0;particle=gt6ce:block/machines/covers/base
+item/manual_selector	minecraft:item/generated		layer0=gt6ce:item/technological/manual_selector
 item/many_printed_pages	minecraft:item/generated		layer0=gt6ce:item/randomtools/many_printed_pages
 item/maple_ice_cream	minecraft:item/generated		layer0=gt6ce:item/food/maple_ice_cream
 item/maple_sap	minecraft:item/generated		layer0=gt6ce:item/bottles/maple_sap
@@ -3429,7 +3429,7 @@ item/private_bumble_scanned_dead	minecraft:item/generated		layer0=gt6ce:item/bum
 item/private_bumble_scanned_drone	minecraft:item/generated		layer0=gt6ce:item/bumblebee/private_bumble
 item/private_bumble_scanned_princess	minecraft:item/generated		layer0=gt6ce:item/bumblebee/private_bumble;layer1=gt6ce:item/bumblebee/overlay_princess
 item/private_bumble_scanned_queen	minecraft:item/generated		layer0=gt6ce:item/bumblebee/private_bumble;layer1=gt6ce:item/bumblebee/overlay_queen
-item/progress_sensor	minecraft:item/generated		layer0=gt6ce:block/machines/covers/base;layer1=gt6ce:block/machines/covers/progressredstone/circuit;particle=gt6ce:block/machines/covers/base
+item/progress_sensor	minecraft:item/generated		layer0=gt6ce:item/technological/progress_sensor
 item/pumpkin_juice	minecraft:item/generated		layer0=gt6ce:item/bottles/pumpkin_juice
 item/purple_drink	minecraft:item/generated		layer0=gt6ce:item/bottles/purple_drink
 item/purple_grapes	minecraft:item/generated		layer0=gt6ce:item/food/purple_grapes
@@ -3525,11 +3525,11 @@ item/red_currants	minecraft:item/generated		layer0=gt6ce:item/food/red_currants
 item/red_grapes	minecraft:item/generated		layer0=gt6ce:item/food/red_grapes
 item/red_pill	minecraft:item/generated		layer0=gt6ce:item/food/red_pill
 item/red_raisins	minecraft:item/generated		layer0=gt6ce:item/food/red_raisins
-item/redstone_conductor_cover_accept	minecraft:item/generated		layer0=gt6ce:block/machines/covers/base;layer1=gt6ce:block/machines/covers/redstoneconductor/in;particle=gt6ce:block/machines/covers/base
-item/redstone_conductor_cover_emit	minecraft:item/generated		layer0=gt6ce:block/machines/covers/base;layer1=gt6ce:block/machines/covers/redstoneconductor/out;particle=gt6ce:block/machines/covers/base
-item/redstone_emitter	minecraft:item/generated		layer0=gt6ce:block/machines/covers/base;layer1=gt6ce:block/machines/covers/redstoneemitter/underlay;layer2=gt6ce:block/machines/covers/redstoneemitter/0;particle=gt6ce:block/machines/covers/base
-item/redstone_machine_switch	minecraft:item/generated		layer0=gt6ce:block/machines/covers/base;layer1=gt6ce:block/machines/covers/redstoneswitch/circuit;particle=gt6ce:block/machines/covers/redstoneswitch/circuit
-item/redstone_selector	minecraft:item/generated		layer0=gt6ce:block/machines/covers/base;layer1=gt6ce:block/machines/covers/redstoneselector/underlay;layer2=gt6ce:block/machines/covers/redstoneselector/0;particle=gt6ce:block/machines/covers/base
+item/redstone_conductor_cover_accept	minecraft:item/generated		layer0=gt6ce:item/technological/redstone_conductor_cover_accept
+item/redstone_conductor_cover_emit	minecraft:item/generated		layer0=gt6ce:item/technological/redstone_conductor_cover_emit
+item/redstone_emitter	minecraft:item/generated		layer0=gt6ce:item/technological/redstone_emitter
+item/redstone_machine_switch	minecraft:item/generated		layer0=gt6ce:item/technological/redstone_machine_switch
+item/redstone_selector	minecraft:item/generated		layer0=gt6ce:item/technological/redstone_selector
 item/reedwater	minecraft:item/generated		layer0=gt6ce:item/bottles/reedwater
 item/reinforced_wood_chest	gt6ce:item/metal_chest		particle=gt6ce:block/machines/woodchest/overlay
 item/reinforced_wood_chest_adamantium	gt6ce:item/reinforced_wood_chest		
@@ -3823,7 +3823,7 @@ item/shiny_lighter_full	minecraft:item/generated		layer0=gt6ce:item/randomtools/
 item/short_mead	minecraft:item/generated		layer0=gt6ce:item/bottles/short_mead
 item/shredder_blades	gt6ce:block/machine/multiblock/shredder_blades		
 item/shroomy_comb	minecraft:item/generated		layer0=gt6ce:item/food/shroomy_comb
-item/shutter_cover	minecraft:item/generated		layer0=gt6ce:block/machines/covers/base;layer1=gt6ce:block/machines/covers/shutter/normal;particle=gt6ce:block/machines/covers/base
+item/shutter_cover	minecraft:item/generated		layer0=gt6ce:item/technological/shutter_cover
 item/sifting_table	gt6ce:block/machine/tool/sifting_table		
 item/silver_key	minecraft:item/generated		layer0=gt6ce:item/randomtools/silver_key
 item/single_use_blade	minecraft:item/generated		layer0=gt6ce:item/randomtools/single_use_blade

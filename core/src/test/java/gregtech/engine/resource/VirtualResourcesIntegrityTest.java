@@ -462,6 +462,89 @@ final class VirtualResourcesIntegrityTest {
     }
 
     @Test
+    void coverIconsAndBorderlessBlockSpritesRemainIntact() throws IOException {
+        Map<String, String> neoforgeVirtual = new LinkedHashMap<>();
+        VirtualModelCatalog.emitAll(
+                NEOFORGE_COMPOSITE,
+                (path, bytes) -> neoforgeVirtual.put(path, new String(bytes, StandardCharsets.UTF_8)));
+        Set<String> shippedTextures = collectShippedTextures();
+
+        List<String> restoredCoverItems = List.of(
+                "activity_detector_possible",
+                "activity_detector_processing",
+                "activity_detector_running",
+                "activity_detector_success",
+                "auto_reboot_switch_1m",
+                "auto_reboot_switch_5m",
+                "auto_reboot_switch_10m",
+                "auto_reboot_switch_20m",
+                "auto_reboot_switch_30m",
+                "auto_redstone_machine_switch",
+                "automatic_machine_switch",
+                "redstone_machine_switch",
+                "button_panel_selector",
+                "cover_controller",
+                "energy_display_cover",
+                "energy_sensor",
+                "machine_status_display_cover",
+                "manual_selector",
+                "progress_sensor",
+                "redstone_conductor_cover_accept",
+                "redstone_conductor_cover_emit",
+                "redstone_emitter",
+                "redstone_selector",
+                "shutter_cover");
+        for (String id : restoredCoverItems) {
+            String json = neoforgeVirtual.get("item/" + id);
+            assertNotNull(json, "Missing cover item model: item/" + id);
+            Map<String, Object> parsed = JsonMaps.object(json);
+            @SuppressWarnings("unchecked")
+            Map<String, Object> textures = (Map<String, Object>) parsed.get("textures");
+            assertNotNull(textures, "Missing textures map on item/" + id);
+            assertEquals(
+                    "gt6ce:item/technological/" + id, textures.get("layer0"), "Restored item icon mismatch: " + id);
+            assertFalse(
+                    textures.containsKey("layer1"), "Restored cover item must not use composed block layers: " + id);
+            assertTrue(
+                    shippedTextures.contains("textures/item/technological/" + id + ".png"),
+                    "Missing shipped technological icon: " + id);
+        }
+
+        List<String> expectedBlockCovers = new ArrayList<>(List.of(
+                "filteritem/normal",
+                "filteritem/inverted",
+                "filterfluid/normal",
+                "filterfluid/inverted",
+                "retrieveritem/normal",
+                "retrieveritem/inverted",
+                "drain/front",
+                "drain/back",
+                "drain/sides",
+                "vent/front",
+                "vent/back",
+                "vent/sides",
+                "selectortag/underlay",
+                "logistics/fluid/export",
+                "logistics/fluid/import",
+                "logistics/fluid/storage",
+                "logistics/item/export",
+                "logistics/item/import",
+                "logistics/item/storage",
+                "logistics/generic/export",
+                "logistics/generic/import",
+                "logistics/generic/storage",
+                "logistics/generic/dump"));
+        for (int i = 0; i < 6; i++) expectedBlockCovers.add("crafting/" + i);
+        for (int i = 0; i < 16; i++) expectedBlockCovers.add("selectortag/" + i);
+        assertEquals(45, expectedBlockCovers.size());
+        for (String sprite : expectedBlockCovers) {
+            assertTrue(
+                    shippedTextures.contains("textures/block/machines/covers/" + sprite + ".png"),
+                    "Missing borderless block cover sprite: " + sprite);
+        }
+    }
+
+    @Test
     void stackGroupsAreCleanValidAndComplete() throws IOException {
         Map<String, StackGroupCatalog.Entry> entries = StackGroupCatalog.entries();
         assertEquals(EXPECTED_STACK_GROUPS, entries.size());

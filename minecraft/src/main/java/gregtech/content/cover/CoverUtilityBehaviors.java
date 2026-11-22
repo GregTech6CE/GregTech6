@@ -629,13 +629,17 @@ public final class CoverUtilityBehaviors {
      */
     public static final int WARNING_COVER_DESIGNS = 20;
 
+    /** GT6 {@code CoverCrafting}: 6 chisel-selectable workbench styles. */
+    public static final int CRAFTING_COVER_DESIGNS = 6;
+
     /**
-     * The number of designs a texture cover can cycle through, by behaviour id; {@code 0} for
-     * anything that is not one of the two texture covers.
+     * The number of designs a texture cover or crafting cover can cycle through, by behaviour id;
+     * {@code 0} when the cover has no chisel-selectable designs.
      */
     public static int designCount(String behaviourId) {
         if (BLANK_COVER.equals(behaviourId)) return BLANK_COVER_DESIGNS;
         if (WARNING_COVER.equals(behaviourId)) return WARNING_COVER_DESIGNS;
+        if (CRAFTING_TABLE.equals(behaviourId)) return CRAFTING_COVER_DESIGNS;
         return 0;
     }
 

@@ -42,13 +42,25 @@ final class CoverSurfaceRenderer {
     }
     static void attachment(net.minecraft.world.level.block.entity.BlockEntity owner, Direction side,
                            PoseStack pose, VertexConsumer vertices, TextureAtlasSprite sprite, int light, int color) {
+        attachment(owner, side, pose, vertices, sprite, sprite, sprite, light, color);
+    }
+    static void attachment(net.minecraft.world.level.block.entity.BlockEntity owner, Direction side,
+                           PoseStack pose, VertexConsumer vertices,
+                           TextureAtlasSprite front, TextureAtlasSprite back, TextureAtlasSprite sides,
+                           int light, int color) {
         if (!needsAttachment(owner, side)) return;
         int covers = fullCoverMask(owner), hostFaces = hostFaceMask(owner);
         int faces = gregtech.content.cover.CoverRenderGeometry.plateFaces(side.ordinal(), covers | hostFaces);
         // Covers on existing full host faces have no backing cuboid to claim edge volume.
-        cuboid(pose, vertices, gregtech.content.cover.CoverRenderGeometry.plate(side.ordinal(), covers & ~hostFaces), sprite, light, color, faces);
+        var box = gregtech.content.cover.CoverRenderGeometry.plate(side.ordinal(), covers & ~hostFaces);
+        int frontMask = 1 << side.ordinal();
+        int backMask = 1 << side.getOpposite().ordinal();
+        int sideFaces = faces & ~(frontMask | backMask);
+        if ((faces & frontMask) != 0) cuboid(pose, vertices, box, front, light, color, faces & frontMask);
+        if ((faces & backMask) != 0) cuboid(pose, vertices, box, back, light, color, faces & backMask);
+        if (sideFaces != 0) cuboid(pose, vertices, box, sides, light, color, sideFaces);
         // Source holders inset their lateral faces by PX_OFFSET; physical torch bounds stay unchanged.
-        cuboid(pose, vertices, gregtech.content.cover.CoverRenderGeometry.holder(side.ordinal()), sprite, light, color, side.getAxis());
+        cuboid(pose, vertices, gregtech.content.cover.CoverRenderGeometry.holder(side.ordinal()), sides, light, color, side.getAxis());
     }
     private static int fullCoverMask(net.minecraft.world.level.block.entity.BlockEntity owner) {
         int mask = 0;
