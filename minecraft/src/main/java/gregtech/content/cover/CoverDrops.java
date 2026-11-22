@@ -1,16 +1,72 @@
 package gregtech.content.cover;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 /** Covers drop through their host's removal path, separately from the host item. */
 public final class CoverDrops {
+    private record Collector(ServerPlayer player, ServerLevel level, BlockPos pos) {
+        private static final Collector NONE = new Collector(null, null, null);
+    }
+
+    private static final ThreadLocal<Deque<Collector>> COLLECTORS = ThreadLocal.withInitial(ArrayDeque::new);
+
     private CoverDrops() {}
+
+    /** Pushes a balanced breaker-collection scope around block removal; unmatched breaks pass {@code null}. */
+    public static void pushCollector(ServerPlayer player, ServerLevel level, BlockPos pos) {
+        COLLECTORS
+                .get()
+                .push(
+                        player != null && level != null && pos != null
+                                ? new Collector(player, level, pos.immutable())
+                                : Collector.NONE);
+    }
+
+    public static void popCollector() {
+        var stack = COLLECTORS.get();
+        if (!stack.isEmpty()) stack.pop();
+        if (stack.isEmpty()) COLLECTORS.remove();
+    }
+
+    /** Drops a detached cover, inserting into the wrench breaker's inventory first when active. */
+    public static void dropCover(BlockEntity owner, ItemStack cover) {
+        if (cover == null || cover.isEmpty() || owner == null) return;
+        var level = owner.getLevel();
+        if (level == null || level.isClientSide) return;
+        var collector = COLLECTORS.get().peek();
+        if (collector != null
+                && collector != Collector.NONE
+                && collector.level() == level
+                && collector.pos().equals(owner.getBlockPos())
+                && collector.player().isAlive()
+                && collector.player().getInventory().add(cover)) {
+            level.playSound(
+                    null,
+                    owner.getBlockPos(),
+                    SoundEvents.ITEM_PICKUP,
+                    SoundSource.PLAYERS,
+                    0.2F,
+                    (collector.player().getRandom().nextFloat()
+                                            - collector.player().getRandom().nextFloat())
+                                    * 0.7F
+                            + 1.0F);
+            return;
+        }
+        if (!cover.isEmpty()) Block.popResource(level, owner.getBlockPos(), cover);
+    }
 
     public static void saveRuntime(BlockEntity owner, CompoundTag tag) {
         if (!ComponentCoverFallback.ownClass(owner) || !(owner instanceof PanelCoverHost host)) return;
@@ -54,8 +110,7 @@ public final class CoverDrops {
         if (owner instanceof PanelCoverHost host)
             for (var side : net.minecraft.core.Direction.values()) {
                 var cover = host.removeCover(side);
-                if (!cover.isEmpty())
-                    net.minecraft.world.level.block.Block.popResource(owner.getLevel(), owner.getBlockPos(), cover);
+                if (!cover.isEmpty()) dropCover(owner, cover);
             }
         if (owner instanceof gregtech.content.logistics.LogisticsCoverHost host)
             host.logisticsCovers().dropAll();

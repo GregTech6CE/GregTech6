@@ -129,6 +129,9 @@ public final class PanelCoverRuntime {
                     && host.componentFluids(side).getTanks() > 0;
         if (CoverUtilityBehaviors.PRESSURE_VALVE.equals(id))
             return host.coverOwner() instanceof gregtech.content.blockentity.machine.FluidPipeBlockEntity;
+        if (CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id))
+            return host.componentTicks()
+                    && host.coverOwner() instanceof gregtech.content.blockentity.machine.ItemPipeBlockEntity;
         if (MachineCoverSpec.of(stack) != null) return candidateControl != null && candidateControl.supportsSwitch();
         var panel = PanelCover.of(stack);
         if (panel == null) return CoverItems.isCover(stack);

@@ -242,15 +242,12 @@ public class ItemPipeBlockEntity extends GTBlockEntity
                 || GTToolHelper.isSoftHammer(tool);
     }
 
-    /** Item filters reject pipe-to-pipe faces; attempted placement disconnects that face. */
+    /** Item filters reject pipe-to-pipe faces without disconnecting existing pipe links. */
     @Override
     public boolean canAttach(Direction side, ItemStack stack) {
-        if (CoverUtilityBehaviors.FILTER_ITEM.equals(CoverItems.behavior(stack)) && level != null
-                && level.getBlockEntity(worldPosition.relative(side)) instanceof ItemPipeBlockEntity) {
-            gregtech.content.cover.CoverConnections.update(this, side, false);
-            return false;
-        }
-        return true;
+        return !(CoverUtilityBehaviors.FILTER_ITEM.equals(CoverItems.behavior(stack))
+                && level != null
+                && level.getBlockEntity(worldPosition.relative(side)) instanceof ItemPipeBlockEntity);
     }
 
     @Override
@@ -412,7 +409,6 @@ public class ItemPipeBlockEntity extends GTBlockEntity
      * {@code interceptItemInsert} and {@code interceptItemExtract}: the retriever refuses
      * <em>every</em> item insert and extract on the face it owns, so a pipe can neither push into nor
      * pull out of that face; only the retriever itself moves items there.
-     * {@link BasicMachineBlockEntity#coverBlocksItemTraffic(Direction)} is the same predicate.
      */
     public boolean coverBlocksItemTraffic(Direction side) {
         return CoverUtilityBehaviors.RETRIEVER_ITEM.equals(coverIdOf(side));

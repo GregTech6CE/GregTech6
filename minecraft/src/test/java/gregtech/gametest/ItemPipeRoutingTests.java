@@ -1,10 +1,19 @@
 package gregtech.gametest;
 
 import gregtech.content.block.machine.ItemPipeBlock;
+import gregtech.content.blockentity.inventory.MetalChestBlockEntity;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
 import gregtech.content.blockentity.machine.ItemPipeBlockEntity;
+import gregtech.content.cover.CoverAdmission;
+import gregtech.content.cover.CoverPlacement;
 import gregtech.content.cover.CoverUtilityBehaviors.FilterAction;
+import gregtech.content.cover.PanelCoverHost;
+import gregtech.content.data.generated.GT6Materials;
+import gregtech.content.item.GTToolItem;
 import gregtech.content.transport.ItemPipeNetwork;
 import gregtech.content.transport.ItemPipeNetworks;
+import gregtech.engine.tool.GTToolType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -12,11 +21,15 @@ import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.AABB;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
@@ -204,6 +217,112 @@ public final class ItemPipeRoutingTests {
                     "old snapshot refuses delivery even before setRemoved runs");
             finish(helper);
         });
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 40)
+    public static void retrieverRequiresTickingItemPipeAndFilterPreviewPreservesConnections(GameTestHelper helper) {
+        var level = helper.getLevel();
+        level.setBlockAndUpdate(at(helper, 1), BuiltInRegistries.BLOCK.get(id("mixer_bronze")).defaultBlockState());
+        ItemPipeBlockEntity lowerPipe = placePipe(helper, 2, "brass");
+        placePipe(helper, 3, "brass");
+        level.setBlockAndUpdate(at(helper, 4), BuiltInRegistries.BLOCK.get(id("pipe_medium_steel")).defaultBlockState());
+        level.setBlockAndUpdate(at(helper, 5), BuiltInRegistries.BLOCK.get(id("chest_steel")).defaultBlockState());
+        var machine = (BasicMachineBlockEntity) level.getBlockEntity(at(helper, 1));
+        var fluidPipe = (FluidPipeBlockEntity) level.getBlockEntity(at(helper, 4));
+        var metalChest = (MetalChestBlockEntity) level.getBlockEntity(at(helper, 5));
+        ItemStack retriever = item("item_retriever_cover");
+        ItemStack itemFilter = item("item_filter");
+
+        helper.runAfterDelay(2, () -> {
+            helper.assertTrue(CoverAdmission.allowCover(lowerPipe, Direction.EAST, retriever)
+                            && lowerPipe.panels().canAttach(Direction.EAST, retriever)
+                            && CoverPlacement.canPlace(level, at(helper, 2), Direction.EAST, retriever),
+                    "retriever preview and admission accept a ticking item pipe");
+            for (var forbidden : new PanelCoverHost[] {machine, fluidPipe, metalChest}) {
+                BlockPos pos = forbidden.coverOwner().getBlockPos();
+                helper.assertFalse(CoverAdmission.allowCover(forbidden.coverOwner(), Direction.UP, retriever),
+                        "CoverAdmission rejects retriever on " + forbidden.getClass().getSimpleName());
+                helper.assertFalse(forbidden.panels().canAttach(Direction.UP, retriever),
+                        "PanelCoverRuntime rejects retriever on " + forbidden.getClass().getSimpleName());
+                helper.assertFalse(CoverPlacement.canPlace(level, pos, Direction.UP, retriever),
+                        "CoverPlacement rejects retriever on " + forbidden.getClass().getSimpleName());
+                helper.assertFalse(forbidden.attachCover(Direction.UP, retriever),
+                        "attachCover rejects retriever on " + forbidden.getClass().getSimpleName());
+            }
+
+            helper.assertTrue(lowerPipe.getBlockState().getValue(ItemPipeBlock.UP),
+                    "adjacent item pipes start connected");
+            helper.assertFalse(CoverPlacement.canPlace(level, at(helper, 2), Direction.UP, itemFilter),
+                    "item filter preview rejects pipe-to-pipe face");
+            helper.assertTrue(lowerPipe.getBlockState().getValue(ItemPipeBlock.UP),
+                    "item filter preview does not disconnect pipes");
+            helper.assertFalse(lowerPipe.attachCover(Direction.UP, itemFilter),
+                    "item filter attach rejects pipe-to-pipe face");
+            helper.assertTrue(lowerPipe.getBlockState().getValue(ItemPipeBlock.UP),
+                    "rejected item filter attach preserves existing pipe-to-pipe connection");
+            helper.assertTrue(lowerPipe.attachCover(Direction.EAST, retriever),
+                    "retriever attaches to the item pipe's open face");
+            level.setBlockAndUpdate(at(helper, 3), Blocks.AIR.defaultBlockState());
+            helper.assertTrue(lowerPipe.attachCover(Direction.UP, itemFilter),
+                    "item filter attaches on open pipe face");
+            placePipe(helper, 3, "brass");
+            helper.assertFalse(gregtech.content.cover.CoverConnections.canConnect(level, at(helper, 2), Direction.UP),
+                    "pre-attached item filter still blocks new pipe connection");
+            finish(helper);
+        });
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 40)
+    public static void wrenchDismantleCollectsSeparatedCoversIntoInventoryUnlessFull(GameTestHelper helper) {
+        var level = helper.getLevel();
+        ItemStack filter = item("item_filter");
+        ItemStack retriever = item("item_retriever_cover");
+        ItemPipeBlockEntity pipe = placePipe(helper, 2, "brass");
+        helper.assertTrue(pipe.attachCover(Direction.EAST, filter), "attach filter before wrench dismantle");
+        helper.assertTrue(pipe.attachCover(Direction.WEST, retriever), "attach retriever before wrench dismantle");
+
+        var wrenchPlayer = MultiblockBehaviorApiTests.menuPlayer(helper);
+        wrenchPlayer.setGameMode(GameType.SURVIVAL);
+        try {
+            wrenchPlayer.setItemInHand(
+                    InteractionHand.MAIN_HAND,
+                    GTToolItem.create(GTToolType.WRENCH, GT6Materials.Compounds.VanadiumSteel, GT6Materials.Woods.Spruce));
+            helper.assertTrue(wrenchPlayer.gameMode.destroyBlock(at(helper, 2)), "wrench destroys brass pipe");
+            helper.assertTrue(
+                    count(wrenchPlayer.getInventory(), filter.getItem()) == 1
+                            && count(wrenchPlayer.getInventory(), retriever.getItem()) == 1,
+                    "wrench dismantle moves separated covers directly into player inventory");
+            helper.assertTrue(
+                    level.getEntitiesOfClass(ItemEntity.class, new AABB(at(helper, 2)).inflate(1.5)).isEmpty(),
+                    "no cover items spill when player inventory has room");
+        } finally {
+            wrenchPlayer.discard();
+        }
+
+        ItemPipeBlockEntity fullPipe = placePipe(helper, 2, "brass");
+        helper.assertTrue(fullPipe.attachCover(Direction.EAST, filter), "attach filter for full-inventory spill check");
+        var fullPlayer = MultiblockBehaviorApiTests.menuPlayer(helper);
+        fullPlayer.setGameMode(GameType.SURVIVAL);
+        try {
+            fullPlayer.setItemInHand(
+                    InteractionHand.MAIN_HAND,
+                    GTToolItem.create(
+                            GTToolType.MONKEY_WRENCH, GT6Materials.Compounds.VanadiumSteel, GT6Materials.Woods.Spruce));
+            for (int slot = 0; slot < fullPlayer.getInventory().items.size(); slot++) {
+                if (fullPlayer.getInventory().getItem(slot).isEmpty()) {
+                    fullPlayer.getInventory().setItem(slot, new ItemStack(Items.STICK));
+                }
+            }
+            helper.assertTrue(fullPlayer.gameMode.destroyBlock(at(helper, 2)), "monkey wrench destroys brass pipe");
+            var spilled = level.getEntitiesOfClass(ItemEntity.class, new AABB(at(helper, 2)).inflate(1.5));
+            helper.assertTrue(
+                    spilled.stream().anyMatch(entity -> entity.getItem().is(filter.getItem())),
+                    "monkey wrench spills separated cover to world when player inventory is full");
+            for (ItemEntity entity : spilled) entity.discard();
+        } finally {
+            fullPlayer.discard();
+        }
+        finish(helper);
     }
 
     private static ResourceLocation id(String path) {

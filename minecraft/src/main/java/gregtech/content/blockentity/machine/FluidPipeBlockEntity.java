@@ -414,8 +414,7 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
      * {@link FluidPipeBlock}'s.
      *
      * <p>GT6's right-click on a filter cover ({@code CoverFilterItem},
-     * {@code CoverFilterFluid}) and on the retriever ({@code CoverRetrieverItem}): the
-     * held stack becomes the filter, once.</p>
+     * {@code CoverFilterFluid}): the held stack becomes the filter, once.</p>
      *
      * @return whether a filter was stored
      */
@@ -423,7 +422,7 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
         String id = coverIdOf(side);
         if (id == null || held == null || held.isEmpty()) return false;
         ItemStack stack = getCover(side);
-        if (CoverUtilityBehaviors.FILTER_ITEM.equals(id) || CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id)) {
+        if (CoverUtilityBehaviors.FILTER_ITEM.equals(id)) {
             return CoverUtilityBehaviors.setItemFilter(stack, held,level.registryAccess());
         }
         if (CoverUtilityBehaviors.FILTER_FLUID.equals(id)) {
@@ -448,8 +447,7 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
         String id = coverIdOf(side);
         if (id == null) return false;
         boolean filterish = CoverUtilityBehaviors.FILTER_ITEM.equals(id)
-                || CoverUtilityBehaviors.FILTER_FLUID.equals(id)
-                || CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id);
+                || CoverUtilityBehaviors.FILTER_FLUID.equals(id);
         if (!filterish) return false;
         if (level != null && level.isClientSide) return true;
         action.apply(getCover(side));

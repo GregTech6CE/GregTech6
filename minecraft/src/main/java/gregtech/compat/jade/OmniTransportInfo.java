@@ -26,6 +26,7 @@ final class OmniTransportInfo {
             if (CoverItems.isCover(held)
                     && CoverAdmission.allowCover(entity, side, held)
                     && host.getCover(side).isEmpty()
+                    && (!(host instanceof CoverStore.Hooks hooks) || hooks.canAttach(side, held))
                     && host.panels().canAttach(side, held)) info.line("sneak_attach_cover");
         }
         if (entity instanceof ItemPipeBlockEntity pipe) {

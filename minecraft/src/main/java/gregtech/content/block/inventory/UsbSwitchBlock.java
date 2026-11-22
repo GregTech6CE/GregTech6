@@ -99,7 +99,7 @@ public class UsbSwitchBlock extends GTHorizontalDirectionalBlock implements Enti
             }
             for (Direction side : Direction.values()) {
                 ItemStack cover = machine.removeCover(side);
-                if (!cover.isEmpty()) popResource(level, pos, cover);
+                if (!cover.isEmpty()) gregtech.content.cover.CoverDrops.dropCover(machine, cover);
             }
         }
         super.onRemove(state, level, pos, next, movedByPiston);

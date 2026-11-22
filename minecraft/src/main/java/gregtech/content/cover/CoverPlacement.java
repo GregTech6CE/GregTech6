@@ -48,6 +48,7 @@ public final class CoverPlacement {
         return CoverItems.isCover(held)
                 && CoverAdmission.allowCover(host.coverOwner(), side, held)
                 && host.getCover(side).isEmpty()
+                && (!(host instanceof CoverStore.Hooks hooks) || hooks.canAttach(side, held))
                 && host.panels().canAttach(side, held);
     }
 

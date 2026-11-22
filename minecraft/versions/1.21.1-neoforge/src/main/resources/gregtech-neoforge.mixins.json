@@ -15,6 +15,7 @@
     "ComponentCoverHostMixin",
     "ComponentCoverRemovalMixin",
     "ConstructionRecipeMixin",
+    "CoverCollectDropMixin",
     "CoverCollisionMixin",
     "CoverDropMixin",
     "CoverSignalMixin",

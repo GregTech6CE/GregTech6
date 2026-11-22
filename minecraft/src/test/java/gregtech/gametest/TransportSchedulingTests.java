@@ -5,8 +5,10 @@ import gregtech.content.block.energy.ElectricWireBlock;
 import gregtech.content.block.machine.FluidPipeBlock;
 import gregtech.content.block.misc.ChargingCraftingTableBlockEntity;
 import gregtech.content.blockentity.energy.ElectricWireBlockEntity;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
 import gregtech.content.blockentity.tool.ManualToolBlockEntity;
+import gregtech.content.cover.CoverPlacement;
 import gregtech.content.cover.CoverUtilityBehaviors;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.data.MachineRecipeMaps;
@@ -376,6 +378,44 @@ public final class TransportSchedulingTests {
                 .setValue(FluidPipeBlock.DOWN, true);
         helper.getLevel().setBlockAndUpdate(at(helper, height), state);
         return (FluidPipeBlockEntity) helper.getLevel().getBlockEntity(at(helper, height));
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 40)
+    public static void pressureValvePreviewMatchesAttachOnMultiTankAndConnectedPipes(GameTestHelper helper) {
+        var level = helper.getLevel();
+        FluidPipeBlockEntity single = placePipe(helper, 2);
+        placePipe(helper, 3);
+        level.setBlockAndUpdate(at(helper, 4), BuiltInRegistries.BLOCK.get(id("pipe_quadruple_bronze")).defaultBlockState());
+        level.setBlockAndUpdate(at(helper, 5), BuiltInRegistries.BLOCK.get(id("mixer_bronze")).defaultBlockState());
+        var quad = (FluidPipeBlockEntity) level.getBlockEntity(at(helper, 4));
+        var machine = (BasicMachineBlockEntity) level.getBlockEntity(at(helper, 5));
+        var valve = new ItemStack(BuiltInRegistries.ITEM.get(id("pressure_value")));
+
+        helper.runAfterDelay(2, () -> {
+            helper.assertTrue(CoverPlacement.canPlace(level, at(helper, 2), Direction.EAST, valve),
+                    "single-tank fluid pipe preview allows pressure valve on open face");
+            helper.assertFalse(CoverPlacement.canPlace(level, at(helper, 2), Direction.UP, valve),
+                    "single-tank fluid pipe preview rejects pressure valve facing another fluid pipe");
+            helper.assertFalse(single.attachCover(Direction.UP, valve),
+                    "single-tank fluid pipe attach rejects pressure valve facing another fluid pipe");
+            helper.assertFalse(CoverPlacement.canPlace(level, at(helper, 4), Direction.EAST, valve),
+                    "quadruple fluid pipe preview rejects pressure valve");
+            helper.assertFalse(quad.attachCover(Direction.EAST, valve),
+                    "quadruple fluid pipe attach rejects pressure valve");
+            helper.assertFalse(CoverPlacement.canPlace(level, at(helper, 5), Direction.UP, valve),
+                    "basic machine preview rejects pressure valve");
+            helper.assertFalse(machine.attachCover(Direction.UP, valve),
+                    "basic machine attach rejects pressure valve");
+            helper.assertTrue(single.attachCover(Direction.EAST, valve),
+                    "single-tank fluid pipe attaches pressure valve on open face");
+            for (int height = 2; height <= 5; height++) {
+                if (level.getBlockEntity(at(helper, height)) instanceof FluidPipeBlockEntity pipe) {
+                    for (Direction face : Direction.values()) pipe.removeCover(face);
+                }
+                level.setBlockAndUpdate(at(helper, height), Blocks.AIR.defaultBlockState());
+            }
+            finish(helper);
+        });
     }
 
     private static void finish(GameTestHelper helper) {

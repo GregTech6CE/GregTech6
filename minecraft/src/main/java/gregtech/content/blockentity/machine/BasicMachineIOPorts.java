@@ -146,7 +146,6 @@ final class BasicMachineIOPorts {
         return !machine.isRemoved()
                 && !machine.isFaceShuttered(side)
                 && ComponentCoverRuntime.allowsItem(machine.getCover(side), inserting)
-                && !machine.coverBlocksItemTraffic(side)
                 && machine.coverFilterPermits(side, stack);
     }
 

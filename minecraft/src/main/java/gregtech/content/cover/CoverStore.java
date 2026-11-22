@@ -1,6 +1,5 @@
 package gregtech.content.cover;
 
-import gregtech.engine.inventory.BlockContents;
 import gregtech.engine.stack.NbtCompat;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -20,10 +19,7 @@ import net.minecraft.world.item.ItemStack;
 public final class CoverStore {
     /** Host-specific rules and side effects; the generic checks and storage stay here. */
     public interface Hooks extends PanelCoverHost {
-        /**
-         * Host admission asked before the generic checks. The item pipe disconnects a face here
-         * when an item filter is placed against another item pipe.
-         */
+        /** Host admission asked before the generic checks; implementations stay side-effect-free. */
         default boolean canAttach(Direction side, ItemStack stack) {
             return true;
         }
@@ -107,7 +103,7 @@ public final class CoverStore {
     public void drop() {
         if (covers == null) return;
         for (int i = 0; i < covers.length; i++) {
-            BlockContents.drop(host.coverOwner(), covers[i]);
+            CoverDrops.dropCover(host.coverOwner(), covers[i]);
             covers[i] = ItemStack.EMPTY;
         }
         hasCovers = false;

@@ -243,7 +243,7 @@ public final class CoverUtilityBehaviors {
      * <p>A face whose cover is <em>not</em> a filter admits everything: GT6 only ever asks this from
      * the filter cover that is attached to the face ({@code interceptItemInsert} is a method of
      * {@code CoverFilterItem}, and the retriever's own blanket rule lives in
-     * {@code BasicMachineBlockEntity#coverBlocksItemTraffic}), so a pump or a blank cover must not
+     * {@code ItemPipeBlockEntity#coverBlocksItemTraffic}), so a pump or a blank cover must not
      * start refusing pipe traffic by accident.</p>
      */
     public static boolean itemFilterPermits(ItemStack cover, boolean stopped, ItemStack candidate,

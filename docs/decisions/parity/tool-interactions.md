@@ -9,6 +9,7 @@
 | igniter | 物品级点火已存在；`BasicMachineBlock.useRemainder` 对会消费点火器的宿主返回 `PASS`，避免 GUI 吞掉点火。 | 原版 `Behavior_FlintAndTinder` 在方块拒绝后执行；CE 的机器 GUI 不能抢先消费。 |
 | 封面工具守卫 | 封面过滤器的工具判断用 `PanelCoverHost.consumesTool`，由宿主按实际工具动作决定；静态列表会漏 igniter/plunger、多 soldering_iron。 | 原版静态列表跨宿主近似；CE 改为宿主守卫，见 `UtilityCoverInteraction.use`。 |
 | 胶带合卷 | 合并四卷旧胶带的剩余用量，结果最多一整卷。 | 成分随剩余用量缩放，合卷后的可回收材料受输入约束。见[物品成分解析](../material-system/item-composition.md#从当前配方反推成分)。 |
+| 拆解覆盖板回收 | 拆除机器、管道或线缆时，覆盖板不随原版 NBT 打包进宿主方块物品，而是拆分单独掉落；使用扳手、活动扳手等可自动收集工具拆解时，覆盖板同样优先尝试插入玩家背包，满则溢出掉落。 | 保持宿主物品干净、避免重复或非法跨宿主附板，同时保留原版扳手拆解自动入包的收集体验；见 `CoverDrops.dropCover` 与 `CoverCollectDropMixin`。 |
 
 ## 与 Stonecutter 分支的关系
 

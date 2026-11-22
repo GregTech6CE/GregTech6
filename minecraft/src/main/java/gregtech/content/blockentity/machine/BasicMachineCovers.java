@@ -10,7 +10,6 @@ import gregtech.content.cover.CoverUtilityBehaviors.FilterAction;
 import gregtech.content.cover.MachineCoverSpec;
 import gregtech.content.cover.PanelCover;
 import gregtech.content.cover.PanelCoverRuntime;
-import gregtech.engine.machine.MachineInventory;
 import gregtech.engine.machine.RecipeProcessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -40,8 +39,6 @@ final class BasicMachineCovers {
     private final boolean[] coverStrong = new boolean[6];
     private boolean successful;
     private boolean workPossible;
-    private boolean utilityWasStopped;
-    private final boolean[] coverPending = new boolean[6];
 
     BasicMachineCovers(BasicMachineBlockEntity machine) {
         this.machine = machine;
@@ -176,40 +173,6 @@ final class BasicMachineCovers {
                         CoverAttachmentBehaviors.tickVent(level, pos, side, machine, coverTicks);
             }
         }
-        machine.tickUtilityCovers(level, pos);
-    }
-
-    void tickUtility(Level level, BlockPos pos) {
-        if (level == null) return;
-        if (machine.panels().stopped()) {
-            utilityWasStopped = true;
-            return;
-        }
-        boolean resumed = utilityWasStopped;
-        utilityWasStopped = false;
-
-        for (Direction side : Direction.values()) {
-            String id = coverId(side);
-            if (id == null) continue;
-            ItemStack stack = machine.getCover(side);
-            int index = side.ordinal();
-            MachineInventory inventory = machine.inventoryStorage();
-            switch (id) {
-                case CoverUtilityBehaviors.RETRIEVER_ITEM -> {
-                    if (inventory == null) continue;
-                    boolean acted = CoverUtilityBehaviors.tickRetriever(level, pos, side, inventory.items(),
-                            CoverUtilityBehaviors.itemFilter(stack, level.registryAccess()),
-                            MachineCoverSpec.inverted(stack), coverTicks, coverPending[index] || resumed);
-                    // Resume sets the pending bit until a transfer succeeds. It is deliberately transient.
-                    if (acted) coverPending[index] = false;
-                    else if (resumed) coverPending[index] = true;
-                }
-                case CoverUtilityBehaviors.PRESSURE_VALVE -> {
-                    if (inventory == null || inventory.tanksOutput().length == 0) continue;
-                    CoverUtilityBehaviors.tickPressureValve(level, pos, side, inventory.tanksOutput()[0], coverTicks);
-                }
-            }
-        }
     }
 
     boolean hasRedstoneCover() {
@@ -302,10 +265,6 @@ final class BasicMachineCovers {
                 machine.getCover(side), machine.panels().stopped(), candidate, level.registryAccess());
     }
 
-    boolean blocksItemTraffic(Direction side) {
-        return CoverUtilityBehaviors.RETRIEVER_ITEM.equals(coverId(side));
-    }
-
     ItemStack itemFilter(Direction side, Level level) {
         return CoverUtilityBehaviors.itemFilter(machine.getCover(side), level.registryAccess());
     }
@@ -318,7 +277,7 @@ final class BasicMachineCovers {
         String id = coverId(side);
         if (id == null || held == null || held.isEmpty()) return false;
         ItemStack stack = machine.getCover(side);
-        if (CoverUtilityBehaviors.FILTER_ITEM.equals(id) || CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id)) {
+        if (CoverUtilityBehaviors.FILTER_ITEM.equals(id)) {
             return CoverUtilityBehaviors.setItemFilter(stack, held, level.registryAccess());
         }
         if (CoverUtilityBehaviors.FILTER_FLUID.equals(id)) {
@@ -337,8 +296,7 @@ final class BasicMachineCovers {
     boolean configureFilter(Direction side, FilterAction action, Level level, BlockPos pos) {
         String id = coverId(side);
         if (!CoverUtilityBehaviors.FILTER_ITEM.equals(id)
-                && !CoverUtilityBehaviors.FILTER_FLUID.equals(id)
-                && !CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id)) return false;
+                && !CoverUtilityBehaviors.FILTER_FLUID.equals(id)) return false;
         if (level != null && level.isClientSide) return true;
         action.apply(machine.getCover(side));
         syncCover(level, pos);

@@ -512,7 +512,6 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     /** Cover-only lifecycle; recipe processing and energy polling stay on the machine's tick. */
     protected final void beginCoverTick() { covers.beginTick(); }
     protected final void tickCovers(Level level, BlockPos pos) { covers.tick(level, pos); }
-    public void tickUtilityCovers(Level level, BlockPos pos) { covers.tickUtility(level, pos); }
 
     public boolean hasRedstoneCover() { return covers.hasRedstoneCover(); }
 
@@ -1065,7 +1064,6 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         return covers.fluidFilterPermits(side, candidate, level);
     }
 
-    public boolean coverBlocksItemTraffic(Direction side) { return covers.blocksItemTraffic(side); }
     public ItemStack coverItemFilter(Direction side) { return covers.itemFilter(side, level); }
     public FluidStack coverFluidFilter(Direction side) { return covers.fluidFilter(side, level); }
 

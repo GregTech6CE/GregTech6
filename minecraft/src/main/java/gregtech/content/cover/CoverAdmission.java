@@ -139,6 +139,10 @@ public final class CoverAdmission {
         if (!allowCovers(owner, side)) return false;
         // MultiTileEntityBarrelWood/Plastic: decorative covers only.
         if (owner instanceof MassStorageBlockEntity) return isDecorative(stack);
+        // CoverRetrieverItem: ticking item pipes only.
+        if (CoverUtilityBehaviors.RETRIEVER_ITEM.equals(CoverItems.behavior(stack)))
+            return owner instanceof gregtech.content.blockentity.machine.ItemPipeBlockEntity pipe
+                    && pipe.componentTicks();
         return true;
     }
 

@@ -1,6 +1,5 @@
 package gregtech.content.logistics;
 
-import gregtech.engine.inventory.BlockContents;
 import net.minecraft.core.HolderLookup;
 //? if >=1.21.1 {
 /*import gregtech.engine.transport.PipeConnections;
@@ -156,7 +155,7 @@ public final class LogisticsCovers {
     public void dropAll() {
         for (int faceIndex = 0; faceIndex < faces.length; faceIndex++) {
             if (!faces[faceIndex].isEmpty())
-                BlockContents.drop(owner, faces[faceIndex]);
+                gregtech.content.cover.CoverDrops.dropCover(owner, faces[faceIndex]);
             faces[faceIndex] = ItemStack.EMPTY;
             displaySignals[faceIndex] = 0;
             displayVisuals[faceIndex] = 0;
