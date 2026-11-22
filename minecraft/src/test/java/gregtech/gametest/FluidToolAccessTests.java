@@ -300,6 +300,78 @@ public final class FluidToolAccessTests {
         helper.succeed();
     }
 
+    @GameTest(template = "test_empty", timeoutTicks = 40)
+    public static void fluidContainerInteractionAlignsWithVanillaCreativeAndSurvival(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var pos = helper.absolutePos(new BlockPos(2, 1, 2));
+        Block tankBlock = BuiltInRegistries.BLOCK.get(
+                ResourceLocation.fromNamespaceAndPath("gt6ce", "drum_bronze"));
+        level.setBlockAndUpdate(pos, tankBlock.defaultBlockState());
+        var be = level.getBlockEntity(pos);
+        helper.assertTrue(be instanceof TankBlockEntity, "The tank fixture did not create a TankBlockEntity");
+        var tank = (TankBlockEntity) be;
+
+        var creative = mockCreativePlayer(helper);
+        creative.setItemInHand(
+                net.minecraft.world.InteractionHand.MAIN_HAND,
+                new ItemStack(net.minecraft.world.item.Items.WATER_BUCKET));
+        helper.assertTrue(
+                gregtech.engine.fluid.FluidContainerInteraction.use(
+                        creative, net.minecraft.world.InteractionHand.MAIN_HAND, tank),
+                "Creative water bucket did not fill the tank");
+        helper.assertTrue(
+                creative.getMainHandItem().is(net.minecraft.world.item.Items.WATER_BUCKET)
+                        && !creative.getInventory().contains(new ItemStack(net.minecraft.world.item.Items.BUCKET))
+                        && tank.getFluidInTank(0).getAmount() == 1000,
+                "Creative fill did not preserve the water bucket or fill 1000 mB");
+
+        creative.setItemInHand(
+                net.minecraft.world.InteractionHand.MAIN_HAND,
+                new ItemStack(net.minecraft.world.item.Items.BUCKET));
+        helper.assertTrue(
+                gregtech.engine.fluid.FluidContainerInteraction.use(
+                        creative, net.minecraft.world.InteractionHand.MAIN_HAND, tank),
+                "Creative empty bucket did not drain the tank");
+        helper.assertTrue(
+                creative.getMainHandItem().is(net.minecraft.world.item.Items.BUCKET)
+                        && creative.getInventory().contains(new ItemStack(net.minecraft.world.item.Items.WATER_BUCKET))
+                        && tank.getFluidInTank(0).isEmpty(),
+                "Creative drain did not keep the empty bucket, stow a water bucket, and empty the tank");
+
+        creative.setItemInHand(
+                net.minecraft.world.InteractionHand.MAIN_HAND,
+                new ItemStack(net.minecraft.world.item.Items.WATER_BUCKET));
+        creative.getAbilities().instabuild = false;
+        helper.assertTrue(
+                gregtech.engine.fluid.FluidContainerInteraction.use(
+                        creative, net.minecraft.world.InteractionHand.MAIN_HAND, tank),
+                "Survival water bucket did not fill the tank");
+        helper.assertTrue(
+                creative.getMainHandItem().is(net.minecraft.world.item.Items.BUCKET)
+                        && tank.getFluidInTank(0).getAmount() == 1000,
+                "Survival fill did not swap to an empty bucket");
+
+        helper.assertTrue(
+                gregtech.engine.fluid.FluidContainerInteraction.use(
+                        creative, net.minecraft.world.InteractionHand.MAIN_HAND, tank),
+                "Survival empty bucket did not drain the tank");
+        helper.assertTrue(
+                creative.getMainHandItem().is(net.minecraft.world.item.Items.WATER_BUCKET)
+                        && tank.getFluidInTank(0).isEmpty(),
+                "Survival drain did not swap to a water bucket");
+        helper.succeed();
+    }
+
+    private static net.minecraft.world.entity.player.Player mockCreativePlayer(GameTestHelper helper) {
+//? if >=1.21.1 {
+/*        var player = helper.makeMockPlayer(net.minecraft.world.level.GameType.CREATIVE);
+*///?} else {
+        var player = helper.makeMockPlayer();
+//?}
+        player.getAbilities().instabuild = true;
+        return player;
+    }
+
     private static IFluidHandler fluidCapability(net.minecraft.server.level.ServerLevel level, BlockPos pos, Direction side) {
 //? if >=1.21.1 {
 /*        return level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK, pos, side);

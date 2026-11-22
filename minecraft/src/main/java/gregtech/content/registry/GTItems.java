@@ -21,8 +21,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.slf4j.Logger;
 //? if >=1.21.1 {
-/*import gregtech.platform.neoforge.GregTechNeoForge;
-import net.neoforged.bus.api.IEventBus;
+/*import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 *///?} else {
 import net.minecraftforge.registries.DeferredRegister;
@@ -32,10 +31,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 /** Material item handles over the single shared definition stream, bound by prefix and material. */
 public final class GTItems {
 //? if >=1.21.1 {
-    /*public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(GregTechNeoForge.NAMESPACE);
+    /*public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(GregTechIdentity.REGISTRY_NAMESPACE);
     private static final java.util.Map<String, DeferredRegister.Items> ADDON_ITEMS = new java.util.LinkedHashMap<>();
     public static DeferredRegister.Items items(String namespace) {
-        if (GregTechNeoForge.NAMESPACE.equals(namespace)) return ITEMS;
+        if (GregTechIdentity.REGISTRY_NAMESPACE.equals(namespace)) return ITEMS;
         return ADDON_ITEMS.computeIfAbsent(namespace, DeferredRegister::createItems);
     }
 *///?} else {

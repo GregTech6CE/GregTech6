@@ -30,11 +30,7 @@ public final class FluidDisplayInteraction {
                 || !level.mayInteract(player, pos)
                 || !player.mayUseItemAt(pos, context.getClickedFace(), stack))
             return InteractionResult.CONSUME;
-//? if >=1.21.1 {
-        /*var fluid = FluidDisplayBinding.resolve(level.registryAccess(), stack);
-*///?} else {
-        var fluid = FluidDisplayBinding.resolve(stack);
-//?}
+        var fluid = FluidDisplayBinding.resolve(level.registryAccess(), stack);
         if (fluid.isEmpty()) return InteractionResult.CONSUME;
         // Preserve the actual native identity and NBT/components, not merely the carrier's field.
         var offered = fluid.copy();

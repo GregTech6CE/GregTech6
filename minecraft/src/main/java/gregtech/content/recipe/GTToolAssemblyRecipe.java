@@ -110,6 +110,7 @@ public final class GTToolAssemblyRecipe extends ShapelessRecipe {
 
     private static ItemStack displayResult(GTToolType type) {
         GTMaterial head = displayHeadMaterial(type);
+        if (head == null) return ItemStack.EMPTY;
         GTMaterial handle = gregtech.content.tool.OriginalToolMaterials.defaultHandle(head);
         return GTToolItem.create(type, head, handle);
     }
@@ -128,16 +129,22 @@ public final class GTToolAssemblyRecipe extends ShapelessRecipe {
 
     private static GTMaterial displayHeadMaterial(GTToolType type) {
         MaterialPrefix prefix = type == GTToolType.MAGNIFYING_GLASS ? MaterialPrefix.lens : type.headPrefix();
-        if (prefix != null && Materials.Steel != null && prefix.isValidFor(Materials.Steel)
-                && (type == GTToolType.MAGNIFYING_GLASS || type.canUseHead(Materials.Steel))
-                && gregtech.content.tool.OriginalToolMaterials.acceptsAssemblyHead(type.definition(), Materials.Steel)) {
-            return Materials.Steel;
-        }
+        if (prefix == null) return null;
+        GTMaterial preferred = gregtech.content.tool.OriginalToolMaterials.displayHead(type.definition());
+        if (isValidDisplayHead(type, prefix, preferred)) return preferred;
+        if (Materials.Steel != null && isValidDisplayHead(type, prefix, Materials.Steel)) return Materials.Steel;
         for (var candidate : gregtech.engine.material.GTMaterialRegistry.allMaterials()) {
-            if (prefix != null && prefix.isValidFor(candidate) && type.canUseHead(candidate)
-                    && gregtech.content.tool.OriginalToolMaterials.acceptsAssemblyHead(type.definition(), candidate)) return candidate;
+            if (isValidDisplayHead(type, prefix, candidate)) return candidate;
         }
         return null;
+    }
+
+    private static boolean isValidDisplayHead(GTToolType type, MaterialPrefix prefix, GTMaterial material) {
+        return material != null
+                && prefix.isValidFor(material)
+                && (type == GTToolType.MAGNIFYING_GLASS || type.canUseHead(material))
+                && gregtech.content.tool.OriginalToolMaterials.acceptsAssemblyHead(type.definition(), material)
+                && !GTItems.getStack(prefix, material, 1).isEmpty();
     }
 
 }

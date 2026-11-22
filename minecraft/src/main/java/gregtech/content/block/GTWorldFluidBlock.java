@@ -76,6 +76,14 @@ public class GTWorldFluidBlock extends LiquidBlock {
         super(fluid, properties);
     }
 
+    private FlowingFluid sourceFluid() {
+//? if >=1.21.1 {
+        /*return this.fluid;
+*///?} else {
+        return getFluid();
+//?}
+    }
+
     /** Loader_Blocks assigns 1000 to all four oils and natural gas. */
     @Override
     public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
@@ -119,21 +127,16 @@ public class GTWorldFluidBlock extends LiquidBlock {
     @Override
 //? if >=1.21.1 {
     /*public boolean isPathfindable(BlockState state,PathComputationType type) {
-        return !fluid.is(FluidTags.LAVA);
 *///?} else {
     public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
-        return !getFluid().is(FluidTags.LAVA);
 //?}
+        return !sourceFluid().is(FluidTags.LAVA);
     }
 
     /** {@code LiquidBlock.skipRendering} with the fluid read through the supplier. */
     @Override
     public boolean skipRendering(BlockState state, BlockState neighbor, Direction direction) {
-//? if >=1.21.1 {
-        /*return neighbor.getFluidState().getType().isSame(fluid);
-*///?} else {
-        return neighbor.getFluidState().getType().isSame(getFluid());
-//?}
+        return neighbor.getFluidState().getType().isSame(sourceFluid());
     }
 
     /** {@code LiquidBlock.onPlace} with the fluid read through the supplier. */
@@ -141,11 +144,7 @@ public class GTWorldFluidBlock extends LiquidBlock {
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
         scheduleIgnition(state, level, pos);
         if (!FluidInteractionRegistry.canInteract(level, pos)) {
-//? if >=1.21.1 {
-            /*level.scheduleTick(pos, state.getFluidState().getType(), fluid.getTickDelay(level));
-*///?} else {
-            level.scheduleTick(pos, state.getFluidState().getType(), getFluid().getTickDelay(level));
-//?}
+            level.scheduleTick(pos, state.getFluidState().getType(), sourceFluid().getTickDelay(level));
         }
     }
 
@@ -154,11 +153,7 @@ public class GTWorldFluidBlock extends LiquidBlock {
     public BlockState updateShape(BlockState state, Direction direction, BlockState neighbor, LevelAccessor level,
                                   BlockPos pos, BlockPos neighborPos) {
         if (state.getFluidState().isSource() || neighbor.getFluidState().isSource()) {
-//? if >=1.21.1 {
-            /*level.scheduleTick(pos, state.getFluidState().getType(), fluid.getTickDelay(level));
-*///?} else {
-            level.scheduleTick(pos, state.getFluidState().getType(), getFluid().getTickDelay(level));
-//?}
+            level.scheduleTick(pos, state.getFluidState().getType(), sourceFluid().getTickDelay(level));
         }
         return super.updateShape(state, direction, neighbor, level, pos, neighborPos);
     }
@@ -169,11 +164,7 @@ public class GTWorldFluidBlock extends LiquidBlock {
                                 boolean isMoving) {
         scheduleIgnition(state, level, pos);
         if (!FluidInteractionRegistry.canInteract(level, pos)) {
-//? if >=1.21.1 {
-            /*level.scheduleTick(pos, state.getFluidState().getType(), fluid.getTickDelay(level));
-*///?} else {
-            level.scheduleTick(pos, state.getFluidState().getType(), getFluid().getTickDelay(level));
-//?}
+            level.scheduleTick(pos, state.getFluidState().getType(), sourceFluid().getTickDelay(level));
         }
     }
 
@@ -185,11 +176,7 @@ public class GTWorldFluidBlock extends LiquidBlock {
     public ItemStack pickupBlock(LevelAccessor level, BlockPos pos, BlockState state) {
 //?}
         if (state.getValue(LEVEL) == 0) {
-//? if >=1.21.1 {
-            /*ItemStack bucket = new ItemStack(fluid.getBucket());
-*///?} else {
-            ItemStack bucket = new ItemStack(getFluid().getBucket());
-//?}
+            ItemStack bucket = new ItemStack(sourceFluid().getBucket());
             if (!bucket.isEmpty() && level.setBlock(pos, Blocks.AIR.defaultBlockState(), 11)) return bucket;
         }
         return ItemStack.EMPTY;
@@ -199,11 +186,7 @@ public class GTWorldFluidBlock extends LiquidBlock {
     @Override
     public Optional<SoundEvent> getPickupSound() {
         // BucketItem and FluidUtil play this through the normal vanilla/loader filling flow.
-//? if >=1.21.1 {
-        /*return fluid.getPickupSound();
-*///?} else {
-        return getFluid().getPickupSound();
-//?}
+        return sourceFluid().getPickupSound();
     }
 
     /** {@code WebBlock.entityInside}: {@code makeStuckInBlock(state, new Vec3(0.25, 0.05, 0.25))}. */
@@ -224,11 +207,7 @@ public class GTWorldFluidBlock extends LiquidBlock {
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (entity.isSpectator()) return;
-//? if >=1.21.1 {
-        /*if (!level.isClientSide && WorldFluidEffects.actsLikeWeb(fluid)) {
-*///?} else {
-        if (!level.isClientSide && WorldFluidEffects.actsLikeWeb(getFluid())) {
-//?}
+        if (!level.isClientSide && WorldFluidEffects.actsLikeWeb(sourceFluid())) {
             entity.makeStuckInBlock(state, WEB_MOVEMENT_MULTIPLIER);
         }
         super.entityInside(state, level, pos, entity);

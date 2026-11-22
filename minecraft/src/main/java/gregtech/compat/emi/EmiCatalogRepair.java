@@ -16,13 +16,8 @@ final class EmiCatalogRepair {
         var representedFluids = new java.util.HashSet<net.minecraft.world.level.material.Fluid>();
         for (var stack : entries) {
             var item = stack.getItemStack();
-//? if >=1.21.1 {
-            /*if (!(item.getItem() instanceof gregtech.platform.neoforge.fluid.FluidDisplayItem)) continue;
+            if (!(item.getItem() instanceof gregtech.content.item.FluidDisplayItemLike)) continue;
             var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolveCurrent(item);
-*///?} else {
-            if (!(item.getItem() instanceof gregtech.content.item.FluidItem)) continue;
-            var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolve(item);
-//?}
             if (!fluid.isEmpty()) representedFluids.add(fluid.getFluid());
         }
         var original = entries.stream()
@@ -43,11 +38,7 @@ final class EmiCatalogRepair {
                         electric.getEnergyCapacity(item, gregtech.content.data.GregTechTags.Energy.EU))));
                 continue;
             }
-//? if >=1.21.1 {
-            /*var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolveCurrent(item);
-*///?} else {
-            var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolve(item);
-//?}
+            var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolveCurrent(item);
             sorted.add(fluid.isEmpty() ? stack : new FluidDisplayEmiStack(
 //? if >=1.21.1 {
                     /*EmiStack.of(fluid.getFluid(), fluid.getComponentsPatch(), fluid.getAmount()), stack, true));
@@ -64,11 +55,7 @@ final class EmiCatalogRepair {
         for (var stack : original) {
             if (stack.getId().getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) continue;
             var item = stack.getItemStack();
-//? if >=1.21.1 {
-            /*var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolveCurrent(item);
-*///?} else {
-            var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolve(item);
-//?}
+            var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolveCurrent(item);
             if (fluid.isEmpty()) continue;
             extras.put(stack, new FluidDisplayEmiStack(
 //? if >=1.21.1 {

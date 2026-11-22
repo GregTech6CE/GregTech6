@@ -540,6 +540,14 @@ final class VirtualResourcesIntegrityTest {
                     "functional_co2_laser must keep item:gt6ce:co2_laser_" + tier);
         }
 
+        StackGroupCatalog.Entry strippedLogs = StackGroupCatalog.entry("functional_stripped_logs");
+        assertNotNull(strippedLogs);
+        for (var species : gregtech.content.block.wood.WoodSpecies.values()) {
+            assertTrue(
+                    strippedLogs.contents().contains("item:gt6ce:stripped_log_" + species.id()),
+                    "functional_stripped_logs must include stripped_log_" + species.id());
+        }
+
         Map<String, byte[]> built = StackGroupCatalog.buildAllResources();
         assertEquals(EXPECTED_STACK_GROUPS, built.size());
         for (String stem : entries.keySet()) {

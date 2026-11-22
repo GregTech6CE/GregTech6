@@ -51,7 +51,7 @@ public final class SandwichBlockItem extends GTBlockItem {
         return gregtech.content.food.SandwichRules.useDuration(SandwichBlockEntity.itemFood(stack,entity.level().registryAccess()));
 *///?} else {
     @Override public int getUseDuration(ItemStack stack) {
-        return gregtech.content.food.SandwichRules.useDuration(SandwichBlockEntity.itemFood(stack));
+        return gregtech.content.food.SandwichRules.useDuration(SandwichBlockEntity.itemFood(stack, null));
 //?}
     }
 
@@ -59,13 +59,9 @@ public final class SandwichBlockItem extends GTBlockItem {
 
     @Override public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
         if (!level.isClientSide && entity instanceof Player player) {
-//? if >=1.21.1 {
-            /*player.getFoodData().eat(SandwichBlockEntity.itemFood(stack,entity.level().registryAccess()), SandwichBlockEntity.itemSaturation(stack,entity.level().registryAccess()));
-            for (var ingredient : SandwichBlockEntity.readItemIngredients(stack,entity.level().registryAccess()))
-*///?} else {
-            player.getFoodData().eat(SandwichBlockEntity.itemFood(stack), SandwichBlockEntity.itemSaturation(stack));
-            for (var ingredient : SandwichBlockEntity.readItemIngredients(stack))
-//?}
+            player.getFoodData().eat(SandwichBlockEntity.itemFood(stack, level.registryAccess()),
+                    SandwichBlockEntity.itemSaturation(stack, level.registryAccess()));
+            for (var ingredient : SandwichBlockEntity.readItemIngredients(stack, level.registryAccess()))
                 if (!ingredient.isEmpty()) gregtech.content.food.SandwichNutrition.apply(ingredient, player);
             level.playSound(null, player.blockPosition(), net.minecraft.sounds.SoundEvents.PLAYER_BURP,
                     net.minecraft.sounds.SoundSource.PLAYERS, .5f, .9f + level.random.nextFloat() * .1f);
@@ -78,17 +74,9 @@ public final class SandwichBlockItem extends GTBlockItem {
     protected void appendTooltip(ItemStack stack, @Nullable Level level,
             @Nullable net.minecraft.core.HolderLookup.Provider registries, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(Component.translatable("tooltip.gt6ce.sandwich.food",
-//? if >=1.21.1 {
-                /*SandwichBlockEntity.itemFood(stack,registries), SandwichBlockEntity.itemSaturation(stack,registries))
-*///?} else {
-                SandwichBlockEntity.itemFood(stack), SandwichBlockEntity.itemSaturation(stack))
-//?}
+                SandwichBlockEntity.itemFood(stack, registries), SandwichBlockEntity.itemSaturation(stack, registries))
                 .withStyle(ChatFormatting.RED));
-//? if >=1.21.1 {
-        /*var layers = SandwichBlockEntity.readItemIngredients(stack,registries);
-*///?} else {
-        var layers = SandwichBlockEntity.readItemIngredients(stack);
-//?}
+        var layers = SandwichBlockEntity.readItemIngredients(stack, registries);
         for (int slot = layers.length - 1; slot >= 0; slot--) if (!layers[slot].isEmpty())
             tooltip.add(layers[slot].getHoverName().copy().withStyle(ChatFormatting.GRAY));
     }

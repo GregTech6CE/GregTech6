@@ -2,13 +2,18 @@ package gregtech.engine.tool;
 
 import gregtech.content.tool.MaterialToolEnchantments;
 import gregtech.engine.stack.StackData;
+import net.minecraft.core.HolderLookup;
+import org.jetbrains.annotations.Nullable;
 //? if >=1.21.1 {
-/*import net.minecraft.core.HolderLookup;
-import net.minecraft.core.component.DataComponents;
+/*import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.neoforged.fml.util.thread.EffectiveSide;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
 *///?} else {
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraftforge.fml.util.thread.EffectiveSide;
+import net.minecraftforge.server.ServerLifecycleHooks;
 //?}
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -25,26 +30,31 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 public final class GTToolEnchantments {
     private GTToolEnchantments() {}
     private static final String APPLIED = "gt.material_enchantments.v2";
-//? if >=1.21.1 {
-    /*private static volatile java.util.function.Supplier<HolderLookup.Provider> clientLookup = () -> null;
+    private static volatile java.util.function.Supplier<HolderLookup.Provider> clientLookup = () -> null;
 
     public static void setClientLookup(java.util.function.Supplier<HolderLookup.Provider> lookup) {
         clientLookup = java.util.Objects.requireNonNull(lookup);
     }
 
-    /^* Integrated-server holders cannot be encoded against the client connection's registry. ^/
-    public static HolderLookup.Provider currentLookup() {
-        if (net.neoforged.fml.util.thread.EffectiveSide.get().isClient()) return clientLookup.get();
-        var server = net.neoforged.neoforge.server.ServerLifecycleHooks.getCurrentServer();
+    /** Integrated-server holders cannot be encoded against the client connection's registry. */
+    public static @Nullable HolderLookup.Provider currentLookup() {
+        if (EffectiveSide.get().isClient()) return clientLookup.get();
+        var server = ServerLifecycleHooks.getCurrentServer();
         return server == null ? null : server.registryAccess();
     }
 
     public static void applyCurrent(ItemStack stack) {
         var lookup = currentLookup();
-        if (lookup != null) apply(stack, lookup);
+//? if >=1.21.1 {
+        /*if (lookup != null) apply(stack, lookup);
+*///?} else {
+        apply(stack, lookup);
+//?}
     }
-    public static void apply(ItemStack stack, HolderLookup.Provider lookup) {
-        if (stack.isEmpty()) return;
+
+    public static void apply(ItemStack stack, @Nullable HolderLookup.Provider lookup) {
+//? if >=1.21.1 {
+        /*if (stack.isEmpty()) return;
         var data = StackData.readOrEmpty(stack);
         if (!data.contains(GTToolHelper.ROOT)) return;
         var registry = lookup.lookupOrThrow(Registries.ENCHANTMENT);
@@ -70,7 +80,6 @@ public final class GTToolEnchantments {
             return;
         }
 *///?} else {
-    public static void apply(ItemStack stack) {
         var data = StackData.readOrEmpty(stack);
         if (stack.isEmpty() || !data.contains(GTToolHelper.ROOT) || data.getBoolean(APPLIED)) return;
         var enchantments = EnchantmentHelper.getEnchantments(stack);
@@ -109,10 +118,4 @@ public final class GTToolEnchantments {
             tag.putBoolean(APPLIED, true);
         });
     }
-//? if >=1.21.1 {
-//?} else {
-    public static void apply(ItemStack stack, net.minecraft.core.HolderLookup.Provider lookup) {
-        apply(stack);
-    }
-//?}
 }

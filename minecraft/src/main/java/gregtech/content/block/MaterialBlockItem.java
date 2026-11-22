@@ -17,10 +17,7 @@ import gregtech.content.item.GTBlockItem;
 
 /** Block item for {@link MaterialBlock} and {@link GTStoneBlock}. */
 public class MaterialBlockItem extends GTBlockItem {
-//? if >=1.21.1 {
-//?} else {
     @Nullable
-//?}
     private final GTMaterial material;
 
     public MaterialBlockItem(Block block, Properties properties) {

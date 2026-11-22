@@ -2,10 +2,6 @@ package gregtech.engine.tool;
 
 import gregtech.content.material.Materials;
 
-//? if >=1.21.1 {
-/**///?} else {
-//?}
-
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.MaterialProperty;
@@ -55,7 +51,7 @@ public final class GTToolHelper {
 *///?} else {
         stack.setDamageValue(0);
         stack.hideTooltipPart(ItemStack.TooltipPart.MODIFIERS);
-        GTToolEnchantments.apply(stack);
+        GTToolEnchantments.applyCurrent(stack);
 //?}
 
         return stack;
@@ -616,8 +612,21 @@ public final class GTToolHelper {
      * bare {@code ItemStack} of the tool item has no {@code GT.ToolStats} and is therefore not usable.
      */
     public static ItemStack displayTool(GTToolType type) {
-        GTMaterial material = type.headPrefix() != null
-                ? firstToolMaterial(type.headPrefix(), type) : Materials.Steel;
+        GTMaterial preferred = gregtech.content.tool.OriginalToolMaterials.displayHead(type.definition());
+        GTMaterial material = null;
+        if (preferred != null && preferred.isValid() && type.canUseHead(preferred)) {
+            MaterialPrefix prefix = type.headPrefix();
+            if (prefix == null
+                    || (prefix.isValidFor(preferred)
+                            && gregtech.content.tool.OriginalToolMaterials.acceptsAssemblyHead(type.definition(), preferred)
+                            && !gregtech.content.registry.GTItems.getStack(prefix, preferred, 1).isEmpty())) {
+                material = preferred;
+            }
+        }
+        if (material == null) {
+            material = type.headPrefix() != null
+                    ? firstToolMaterial(type.headPrefix(), type) : Materials.Steel;
+        }
         if (material == null) material = Materials.Steel;
         GTMaterial handle = isValidStick(material) ? material : firstHandleMaterial();
         return gregtech.content.item.GTToolItem.create(type, material, handle == null ? material : handle);

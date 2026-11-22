@@ -123,7 +123,7 @@ public final class FiniteBottleFillingRecipe implements CraftingRecipe {
         @Override
         public boolean test(ItemStack input) {
             if (input == null || input.isEmpty()
-                    || input.getItem() instanceof gregtech.platform.neoforge.fluid.FluidDisplayItem
+                    || input.getItem() instanceof gregtech.content.item.FluidDisplayItemLike
                     || gregtech.engine.fluid.FluidDisplayBinding.hasPayload(input)) return false;
             if (allowLubricantBottle && input.getItem() instanceof gregtech.content.item.BottleItem bottle)
                 return accepts(bottle.fluid());
@@ -173,7 +173,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import gregtech.engine.fluid.FluidDisplayBinding;
 import gregtech.content.food.GTDrinks;
-import gregtech.content.item.FluidItem;
+import gregtech.content.item.FluidDisplayItemLike;
 import gregtech.content.registry.GTFluids;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
@@ -311,7 +311,7 @@ public final class FiniteBottleFillingRecipe extends ShapelessRecipe {
 
         @Override
         public boolean test(@Nullable ItemStack input) {
-            if (input == null || input.isEmpty() || input.getItem() instanceof FluidItem
+            if (input == null || input.isEmpty() || input.getItem() instanceof FluidDisplayItemLike
                     || FluidDisplayBinding.hasPayload(input)) return false;
             if (allowLubricantBottle && input.getItem() instanceof gregtech.content.item.BottleItem bottle)
                 return accepts(bottle.fluid());

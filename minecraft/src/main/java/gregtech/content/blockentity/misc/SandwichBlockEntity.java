@@ -160,19 +160,10 @@ public final class SandwichBlockEntity extends GTBlockEntity {
         return gregtech.content.food.SandwichRules.saturation(saturation);
     }
 
-//? if >=1.21.1 {
-    /*public static int itemFood(ItemStack stack,net.minecraft.core.HolderLookup.Provider lookup) { return totalFood(readItemIngredients(stack,lookup)); }
-    public static float itemSaturation(ItemStack stack,net.minecraft.core.HolderLookup.Provider lookup) { return totalSaturation(readItemIngredients(stack,lookup)); }
-*///?} else {
-    public static int itemFood(ItemStack stack) { return totalFood(readItemIngredients(stack)); }
-    public static float itemSaturation(ItemStack stack) { return totalSaturation(readItemIngredients(stack)); }
-//?}
+    public static int itemFood(ItemStack stack, @Nullable HolderLookup.Provider lookup) { return totalFood(readItemIngredients(stack, lookup)); }
+    public static float itemSaturation(ItemStack stack, @Nullable HolderLookup.Provider lookup) { return totalSaturation(readItemIngredients(stack, lookup)); }
 
-//? if >=1.21.1 {
-    /*public static ItemStack[] readItemIngredients(ItemStack stack,net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    public static ItemStack[] readItemIngredients(ItemStack stack) {
-//?}
+    public static ItemStack[] readItemIngredients(ItemStack stack, @Nullable HolderLookup.Provider lookup) {
         ItemStack[] result = new ItemStack[SLOTS];
         Arrays.fill(result, ItemStack.EMPTY);
 //? if >=1.21.1 {
@@ -180,7 +171,7 @@ public final class SandwichBlockEntity extends GTBlockEntity {
         if (be.contains("Ingredients", Tag.TAG_LIST)) readIngredients(be,result,lookup);
 *///?} else {
         CompoundTag be = stack.getTagElement("BlockEntityTag");
-        if (be != null && be.contains("Ingredients", Tag.TAG_LIST)) readIngredients(be, result, null);
+        if (be != null && be.contains("Ingredients", Tag.TAG_LIST)) readIngredients(be, result, lookup);
 //?}
         else {
             result[0] = gt("toast"); result[2] = gt("cooked_meat_bar");
@@ -224,12 +215,11 @@ public final class SandwichBlockEntity extends GTBlockEntity {
     public ItemStack sandwichItem(int count) {
         ItemStack result = new ItemStack(GTSandwich.SANDWICH_BLOCK.get().asItem(), count);
         CompoundTag tag = new CompoundTag();
+        writeFields(tag, level == null ? net.minecraft.core.RegistryAccess.fromRegistryOfRegistries(net.minecraft.core.registries.BuiltInRegistries.REGISTRY) : level.registryAccess(), true);
 //? if >=1.21.1 {
-        /*writeFields(tag, level==null ? net.minecraft.core.RegistryAccess.fromRegistryOfRegistries(net.minecraft.core.registries.BuiltInRegistries.REGISTRY) : level.registryAccess(), true);
-        tag.putString("id", "gt6ce:sandwich_block");
+        /*tag.putString("id", "gt6ce:sandwich_block");
         result.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(tag));
 *///?} else {
-        writeFields(tag, null, true);
         result.getOrCreateTag().put("BlockEntityTag", tag);
 //?}
         return result;

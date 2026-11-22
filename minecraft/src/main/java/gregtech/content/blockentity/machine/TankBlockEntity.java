@@ -2,8 +2,10 @@ package gregtech.content.blockentity.machine;
 
 import gregtech.api.machine.BlockFace;
 
+import gregtech.engine.fluid.FluidContainerInteraction;
 import gregtech.engine.fluid.FluidHazards;
 import gregtech.engine.fluid.FluidTankGT;
+import gregtech.engine.fluid.FluidTransportEnvironment;
 import gregtech.engine.machine.TankSpec;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.content.block.machine.FluidPipeBlock;
@@ -32,7 +34,6 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.capabilities.Capabilities;
-import gregtech.platform.neoforge.transport.FluidTransportEnvironment;
 
 
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -260,21 +261,13 @@ public class TankBlockEntity extends GTBlockEntity implements IFluidHandler, gre
         }
     }
 
-//? if >=1.21.1 {
-    /*/^* Handle player right-click interaction: fill tank fully from fluid container, or drain tank into container. ^/
-    public net.minecraft.world.InteractionResult handleUse(net.minecraft.world.entity.player.Player player,net.minecraft.world.InteractionHand hand) {
-        if (level==null||level.isClientSide||player.getItemInHand(hand).isEmpty())return net.minecraft.world.InteractionResult.PASS;
-        if (!gregtech.platform.neoforge.transport.FluidContainerInteraction.use(player,hand,this))return net.minecraft.world.InteractionResult.PASS;
-        setChanged();return net.minecraft.world.InteractionResult.CONSUME;
-*///?} else {
     /** Use the platform transaction so replacement containers, stacks and creative mode stay consistent. */
     public InteractionResult handleUse(Player player, InteractionHand hand) {
         if (level == null || level.isClientSide) return InteractionResult.PASS;
-        if (!gregtech.platform.forge.transport.FluidContainerInteraction.use(player, hand, this))
+        if (!FluidContainerInteraction.use(player, hand, this))
             return InteractionResult.PASS;
         setChanged();
         return InteractionResult.CONSUME;
-//?}
     }
 
 // === IFluidHandler ===
@@ -412,13 +405,8 @@ public class TankBlockEntity extends GTBlockEntity implements IFluidHandler, gre
      * World saves remain complete. Retained fluid filters, covers and nondefault settings
      * still make this a data-bearing item, so recovery cannot discard them.
      */
-//? if >=1.21.1 {
-    /*public CompoundTag saveItemData(HolderLookup.Provider lookup) {
+    public CompoundTag saveItemData(@Nullable HolderLookup.Provider lookup) {
         CompoundTag tag = NbtCompat.saveWithoutMetadata(this, lookup);
-*///?} else {
-    public CompoundTag saveItemData() {
-        CompoundTag tag = NbtCompat.saveWithoutMetadata(this, null);
-//?}
         if (temperature == GregTechConstants.DEF_ENV_TEMP) tag.remove(NBT_TEMPERATURE);
         if (!autoOutput) tag.remove(NBT_AUTO_OUTPUT);
         if (!softHammerState) tag.remove(NBT_SOFT_HAMMER);

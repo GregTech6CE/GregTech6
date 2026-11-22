@@ -148,10 +148,7 @@ public class MassStorageBlockEntity extends GTBlockEntity implements BehaviorDuc
     }
 
     /** GT6 {@code TOOL_ducttape}: one tape use per item, with a minimum cost of 100. */
-//? if >=1.21.1 {
-//?} else {
     @Override
-//?}
     public long onTape(Level level, BlockPos pos, Direction side, @Nullable Player player,
                        ItemStack tape, long uses, long quality, boolean sneaking,
                        float hitX, float hitY, float hitZ) {

@@ -157,13 +157,11 @@ public final class GregTechJEIPlugin implements IModPlugin {
         for (var item:gregtech.engine.recipe.UsbRecipeDisplayBinding.sticks())
             registration.registerSubtypeInterpreter(item,(stack,context)->gregtech.engine.recipe.UsbRecipeDisplayBinding.subtype(stack));
 
-//? if >=1.21.1 {
-/*        for (var entry:gregtech.platform.neoforge.fluid.FluidRegistries.allItems().toList()) if (entry.isBound())
-            registration.registerSubtypeInterpreter(entry.get(),(stack,context) -> gregtech.engine.fluid.FluidDisplayBinding.subtype(net.minecraft.client.Minecraft.getInstance().level.registryAccess(),stack));
-*///?} else {
-        for (var entry:gregtech.content.registry.GTFluidItems.allEntries()) if (entry.isPresent())
-            registration.registerSubtypeInterpreter(entry.get(),(stack,context) -> gregtech.engine.fluid.FluidDisplayBinding.subtype(stack));
-//?}
+        for (var entry : gregtech.content.registry.GTFluidItems.allEntries()) if (entry.isPresent())
+            registration.registerSubtypeInterpreter(entry.get(), (stack, context) -> {
+                var level = net.minecraft.client.Minecraft.getInstance().level;
+                return gregtech.engine.fluid.FluidDisplayBinding.subtype(level == null ? null : level.registryAccess(), stack);
+            });
 
     }
 

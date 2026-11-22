@@ -485,13 +485,8 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
         tag.putBoolean("gt.state.str", structureOkay);
         var inputTag = new CompoundTag();
         var outputTag = new CompoundTag();
-//? if >=1.21.1 {
-        /*hot.writeToNBT(inputTag, lookup);
+        hot.writeToNBT(inputTag, lookup);
         cold.writeToNBT(outputTag, lookup);
-*///?} else {
-        hot.writeToNBT(inputTag);
-        cold.writeToNBT(outputTag);
-//?}
         tag.put("gt.hot", inputTag);
         tag.put("gt.cold", outputTag);
     }
@@ -504,12 +499,7 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
         active = tag.getBoolean("gt.active");
         activityHistory = tag.getLong("gt.active.data");
         structureOkay = tag.getBoolean("gt.state.str");
-//? if >=1.21.1 {
-        /*HeatExchangerData.restore(hot, tag.getCompound(tag.contains("gt.hot") ? "gt.hot" : "gt.tank.0"), settings.inputCapacity(), lookup);
+        HeatExchangerData.restore(hot, tag.getCompound(tag.contains("gt.hot") ? "gt.hot" : "gt.tank.0"), settings.inputCapacity(), lookup);
         HeatExchangerData.restore(cold, tag.getCompound(tag.contains("gt.cold") ? "gt.cold" : "gt.tank.1"), Long.MAX_VALUE, lookup);
-*///?} else {
-        HeatExchangerData.restore(hot, tag.getCompound(tag.contains("gt.hot") ? "gt.hot" : "gt.tank.0"), settings.inputCapacity(), null);
-        HeatExchangerData.restore(cold, tag.getCompound(tag.contains("gt.cold") ? "gt.cold" : "gt.tank.1"), Long.MAX_VALUE, null);
-//?}
     }
 }

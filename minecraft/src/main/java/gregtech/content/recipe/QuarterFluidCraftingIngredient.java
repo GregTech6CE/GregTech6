@@ -53,11 +53,7 @@ public final class QuarterFluidCraftingIngredient extends AbstractIngredient {
 
     @Override public boolean test(ItemStack stack) {
         if (stack == null || stack.isEmpty() || FluidDisplayBinding.hasPayload(stack)) return false;
-//? if >=1.21.1 {
-        /*if (stack.getItem() instanceof gregtech.platform.neoforge.fluid.FluidDisplayItem) return false;
-*///?} else {
-        if (stack.getItem() instanceof gregtech.content.item.FluidItem) return false;
-//?}
+        if (stack.getItem() instanceof gregtech.content.item.FluidDisplayItemLike) return false;
         var wanted = GTDrinks.fluidForField(fluidKey);
         if (wanted == null) return false;
         if (stack.getItem() instanceof BottleItem bottle) return bottle.fluid() == wanted;

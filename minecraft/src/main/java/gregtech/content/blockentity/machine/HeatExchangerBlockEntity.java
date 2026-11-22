@@ -180,21 +180,13 @@ public final class HeatExchangerBlockEntity extends GTEnergyBlockEntity implemen
     @Override protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         super.saveData(tag, lookup);
         var input = new CompoundTag(); var output = new CompoundTag();
-//? if >=1.21.1 {
-        /*hot.writeToNBT(input, lookup); cold.writeToNBT(output, lookup);
-*///?} else {
-        hot.writeToNBT(input); cold.writeToNBT(output);
-//?}
+        hot.writeToNBT(input, lookup); cold.writeToNBT(output, lookup);
         tag.put("gt.hot", input); tag.put("gt.cold", output);
         tag.putLong("gt.energy", heat); tag.putLong("gt.active.data", history); tag.putBoolean("gt.active", active);
     }
     @Override protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         super.loadData(tag, lookup);
-//? if >=1.21.1 {
-        /*hot.readFromNBT(tag.getCompound("gt.hot"), lookup); cold.readFromNBT(tag.getCompound("gt.cold"), lookup);
-*///?} else {
-        hot.readFromNBT(tag.getCompound("gt.hot")); cold.readFromNBT(tag.getCompound("gt.cold"));
-//?}
+        hot.readFromNBT(tag.getCompound("gt.hot"), lookup); cold.readFromNBT(tag.getCompound("gt.cold"), lookup);
         heat = Math.max(0, tag.getLong("gt.energy")); history = tag.getLong("gt.active.data"); active = tag.getBoolean("gt.active");
     }
 }

@@ -39,10 +39,14 @@ public final class PocketToolItem extends GTToolItem {
     int index=java.util.Arrays.asList(MODES).indexOf(toolType());var next=new ItemStack(GTToolItems.get(MODES[(index+1)%MODES.length]));
 
 //? if >=1.21.1 {
-/*    next.applyComponents(stack.getComponents());StackData.update(next,t->t.remove("gt.material_enchantments.v2"));GTToolEnchantments.apply(next,level.registryAccess());next.set(net.minecraft.core.component.DataComponents.ATTRIBUTE_MODIFIERS,((GTToolItem)next.getItem()).getDefaultAttributeModifiers(next).withTooltip(false));
+/*    next.applyComponents(stack.getComponents());StackData.update(next,t->t.remove("gt.material_enchantments.v2"));
 *///?} else {
-    StackData.write(next,StackData.readOrEmpty(stack));StackData.remove(next,"gt.material_enchantments.v2");GTToolEnchantments.apply(next);
+    StackData.write(next,StackData.readOrEmpty(stack));StackData.remove(next,"gt.material_enchantments.v2");
 //?}
+    GTToolEnchantments.apply(next,level.registryAccess());
+//? if >=1.21.1 {
+/*    next.set(net.minecraft.core.component.DataComponents.ATTRIBUTE_MODIFIERS,((GTToolItem)next.getItem()).getDefaultAttributeModifiers(next).withTooltip(false));
+*///?}
 
     player.setItemInHand(context.getHand(),next);player.getInventory().setChanged();
    }

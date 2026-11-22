@@ -188,21 +188,13 @@ public final class SharedInventoryModelPack extends VirtualAssetPackResources {
             }
             boolean materialForm = item instanceof gregtech.engine.material.MaterialFormItem material
                     && !material.getPrefix().isAddon();
-//? if >=1.21.1 {
-            /*boolean fluidDisplay = item instanceof gregtech.platform.neoforge.fluid.FluidDisplayItem;
-*///?} else {
-            boolean fluidDisplay = item instanceof gregtech.content.item.FluidItem;
-//?}
+            boolean fluidDisplay = item instanceof gregtech.content.item.FluidDisplayItemLike;
             if (!id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) && !materialForm && !fluidDisplay) continue;
             if (staticOrVirtualItemModel(id)) continue;
             ResourceLocation parent = null;
             if (item instanceof gregtech.engine.material.MaterialFormItem material) {
                 parent = MaterialIcons.sharedModelLocation(MaterialIcons.resolveTextureSet(material.getMaterial()), material.getPrefix());
-//? if >=1.21.1 {
-            /*} else if (item instanceof gregtech.platform.neoforge.fluid.FluidDisplayItem) {
-*///?} else {
-            } else if (item instanceof gregtech.content.item.FluidItem) {
-//?}
+            } else if (item instanceof gregtech.content.item.FluidDisplayItemLike) {
                 parent = location("item/fluid_item");
             } else if (item instanceof CreativeTabIconItem icon) {
                 if (icon.materialPrefix() != null) {

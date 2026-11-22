@@ -87,7 +87,7 @@ public final class GTToolRepairRecipe extends CustomRecipe {
         }
         result.set(net.minecraft.core.component.DataComponents.ENCHANTMENTS, enchantments.toImmutable());
 *///?} else {
-        gregtech.engine.tool.GTToolEnchantments.apply(result);
+        gregtech.engine.tool.GTToolEnchantments.apply(result, lookup);
         var enchantments = net.minecraft.world.item.enchantment.EnchantmentHelper.getEnchantments(result);
         for (var tool : tools) net.minecraft.world.item.enchantment.EnchantmentHelper.getEnchantments(tool)
                 .forEach((enchantment, level) -> {

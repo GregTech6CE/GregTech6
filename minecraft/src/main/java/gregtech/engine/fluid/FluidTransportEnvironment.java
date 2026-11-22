@@ -1,4 +1,4 @@
-package gregtech.platform.neoforge.transport;
+package gregtech.engine.fluid;
 
 import gregtech.content.damage.GTDamageTypes;
 import gregtech.content.data.GregTechConstants;
@@ -7,16 +7,17 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.phys.AABB;
 
-/** NeoForge environment temperature and the port's lava/heat meltdown action. */
+/** Environment temperature and lava/heat meltdown action for fluid transport blocks. */
 public final class FluidTransportEnvironment {
     private FluidTransportEnvironment() {}
 
-    public static long environmentTemperature(net.minecraft.world.level.LevelReader level, BlockPos pos) {
+    public static long environmentTemperature(LevelReader level, BlockPos pos) {
         return level == null
                 ? GregTechConstants.DEF_ENV_TEMP
                 : GregTechConstants.C + Math.round(level.getBiome(pos).value().getBaseTemperature() * 20F);

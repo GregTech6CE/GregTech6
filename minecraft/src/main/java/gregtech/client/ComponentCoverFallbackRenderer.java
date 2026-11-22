@@ -51,12 +51,12 @@ public final class ComponentCoverFallbackRenderer {
         if (level == null || !level.hasChunkAt(packet.pos())) return;
         var owner = level.getBlockEntity(packet.pos());
 //? if >=1.21.1 {
-        /*if (owner != null && packet.entityType().equals(net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(
-                owner.getType()))) ComponentCoverFallback.read(owner, packet.tag(), level.registryAccess());
+        /*var packetType = packet.entityType();
 *///?} else {
-        if (owner != null && packet.type().equals(net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(
-                owner.getType()))) ComponentCoverFallback.read(owner, packet.tag());
+        var packetType = packet.type();
 //?}
+        if (owner != null && packetType.equals(net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(
+                owner.getType()))) ComponentCoverFallback.read(owner, packet.tag(), level.registryAccess());
     }
 
     @SubscribeEvent

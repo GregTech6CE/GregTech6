@@ -27,14 +27,13 @@ public class GTMachineBlockItem extends GTBlockItem {
     }
 
     @Override
-    protected void appendTooltip(ItemStack stack, @Nullable Level level,
-            @Nullable HolderLookup.Provider registries, List<Component> tooltip, TooltipFlag flag) {
-        if (getBlock() instanceof TankBlock tank)
-//? if >=1.21.1 {
-            /*TankTooltips.appendTank(tank.spec(), stack, registries, tooltip);
-*///?} else {
-            TankTooltips.appendTank(tank.spec(), stack, tooltip);
-//?}
+    protected void appendTooltip(
+            ItemStack stack,
+            @Nullable Level level,
+            @Nullable HolderLookup.Provider registries,
+            List<Component> tooltip,
+            TooltipFlag flag) {
+        if (getBlock() instanceof TankBlock tank) TankTooltips.appendTank(tank.spec(), stack, registries, tooltip);
         if (getBlock() instanceof FluidPipeBlock pipe) TankTooltips.appendPipe(pipe.spec(), tooltip);
         if (getBlock() instanceof ItemPipeBlock pipe) TankTooltips.appendItemPipe(pipe.spec(), tooltip);
     }

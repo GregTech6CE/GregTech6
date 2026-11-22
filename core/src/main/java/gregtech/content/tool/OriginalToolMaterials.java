@@ -110,6 +110,23 @@ public final class OriginalToolMaterials {
     public static boolean soft(GTMaterial material) {
         return material.has(MaterialProperty.WOOD) || inFamily(material, "Rubber") || inFamily(material, "Plastic");
     }
+    /** GT6 {@code Loader_Tools} representative head material for creative tabs and recipe display. */
+    public static GTMaterial displayHead(ToolDefinition type) {
+        String name = switch (type) {
+            case MAGNIFYING_GLASS -> "Glass";
+            case SOFT_HAMMER -> "Rubber";
+            case BUILDER_WAND -> "YellowSapphire";
+            case GEM_PICK -> "Amber";
+            case PICKAXE, SHOVEL, AXE -> "Bronze";
+            case HOE -> "Birch";
+            case PLOW -> "Spruce";
+            case FILE, CHISEL -> "Lead";
+            default -> "Steel";
+        };
+        GTMaterial preferred = GTMaterialRegistry.get(name);
+        return preferred.isValid() ? preferred : GTMaterialRegistry.get("Steel");
+    }
+
     /** AdvancedCraftingTool permits already formed heads; Loader_Tools gates forming them separately. */
     public static boolean acceptsAssemblyHead(ToolDefinition type, GTMaterial material) {
         if (material == null || !material.isValid()) return false;

@@ -1,9 +1,9 @@
 package gregtech.content.logistics;
 
 import gregtech.engine.inventory.BlockContents;
+import net.minecraft.core.HolderLookup;
 //? if >=1.21.1 {
 /*import gregtech.engine.transport.PipeConnections;
-import net.minecraft.core.HolderLookup;
 *///?} else {
 import gregtech.content.block.energy.ElectricWireBlock;
 //?}
@@ -29,13 +29,11 @@ public final class LogisticsCovers {
         this.owner = owner;
         this.host = host;
     }
-//? if >=1.21.1 {
 
-    /*public HolderLookup.Provider registries() {
-        return owner.getLevel().registryAccess();
+    @javax.annotation.Nullable
+    public HolderLookup.Provider registries() {
+        return owner.getLevel() == null ? null : owner.getLevel().registryAccess();
     }
-*///?} else {
-//?}
 
     public ItemStack get(Direction face) {
         return faces[face.ordinal()];

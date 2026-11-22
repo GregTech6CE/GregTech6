@@ -10,10 +10,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 
-//? if >=1.21.1 {
-//?} else {
-//?}
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;

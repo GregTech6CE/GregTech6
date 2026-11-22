@@ -164,8 +164,15 @@ public final class OriginCreativeContents {
             if (item instanceof gregtech.content.item.PanelItemView panel&&!panel.panelSpec().canonical())continue;
             var page=result.get(family(item));
             if (item instanceof GTToolItem tool) {
-                var type=tool.toolType(); var head=type==gregtech.engine.tool.GTToolType.GEM_PICK?gregtech.content.material.Materials.Diamond:gregtech.content.material.Materials.Steel;
-                page.add(GTToolItem.create(type,head,type.requiresHeadAssembly()?gregtech.content.material.generated.WoodMaterials.Wood:head));
+                var type = tool.toolType();
+                var head = gregtech.content.tool.OriginalToolMaterials.displayHead(type.definition());
+                var handle = type.requiresHeadAssembly()
+                        ? gregtech.content.tool.OriginalToolMaterials.defaultHandle(head)
+                        : head;
+                page.add(GTToolItem.create(
+                        type,
+                        head,
+                        handle == null ? gregtech.content.material.generated.WoodMaterials.Wood : handle));
             } else if (item instanceof ElectricToolItem electric) {
                 // Creative convenience: fully charged with a top-quality head so testing is not gated by charge or harvest quality.
                 page.add(electric.assembledCharged(gregtech.content.material.Materials.Adamantium,electric.getEnergyCapacity(new ItemStack(item),gregtech.content.data.GregTechTags.Energy.EU)));

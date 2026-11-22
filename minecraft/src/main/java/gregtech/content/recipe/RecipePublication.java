@@ -65,11 +65,7 @@ public final class RecipePublication {
         MachineRecipeOverlay.publishFurnace(working, access);
         manager.replaceRecipes(working.getRecipes());
         commitOverlay();
-//? if >=1.21.1 {
-        /*ShapelessRecipeTooltipIndex.rebuild(manager, access);
-*///?} else {
-        ShapelessRecipeTooltipIndex.rebuild(manager);
-//?}
+        ShapelessRecipeTooltipIndex.rebuild(manager, access);
         var snapshot = Collections.newSetFromMap(new IdentityHashMap<>());
         snapshot.addAll(manager.getRecipes());
         APPLIED.put(manager, snapshot);

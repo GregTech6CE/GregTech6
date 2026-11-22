@@ -197,15 +197,10 @@ public final class PanelCoverRenderer {
             var model = net.minecraft.client.Minecraft.getInstance()
                     .getItemRenderer()
                     .getModel(stack, host.coverOwner().getLevel(), null, 0);
+            var base = ArmRenderHelper.getSprite(
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", "block/machines/covers/base"));
             var vertices = buffers.getBuffer(RenderType.cutout());
-            CoverSurfaceRenderer.attachment(
-                    host.coverOwner(),
-                    side,
-                    pose,
-                    vertices,
-                    model.getParticleIcon(),
-                    light,
-                    net.minecraft.client.Minecraft.getInstance().getItemColors().getColor(stack, 0));
+            CoverSurfaceRenderer.attachment(host.coverOwner(), side, pose, vertices, base, light, -1);
             CoverSurfaceRenderer.draw(
                     owner,
                     pose,

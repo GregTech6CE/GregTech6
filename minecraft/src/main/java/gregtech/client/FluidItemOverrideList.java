@@ -1,13 +1,9 @@
 package gregtech.client;
 
 import gregtech.content.data.RegisteredFluids;
+import gregtech.content.item.FluidDisplayItemLike;
 import gregtech.platform.Mc;
 import gregtech.util.BoundedCache;
-//? if >=1.21.1 {
-/*import gregtech.platform.neoforge.fluid.FluidDisplayItem;
-*///?} else {
-import gregtech.content.item.FluidItem;
-//?}
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -41,21 +37,13 @@ public final class FluidItemOverrideList extends ItemOverrides {
     @Override
     public BakedModel resolve(@NotNull BakedModel original, @NotNull ItemStack stack,
                               @Nullable ClientLevel level, @Nullable LivingEntity entity, int seed) {
-//? if >=1.21.1 {
-        /*if (!(stack.getItem() instanceof FluidDisplayItem fluidItem)) {
-*///?} else {
-        if (!(stack.getItem() instanceof FluidItem fluidItem)) {
-//?}
+        if (!(stack.getItem() instanceof FluidDisplayItemLike fluidItem)) {
             return original;
         }
         RegisteredFluids.FluidEntry flEntry = fluidItem.fluidEntry();
         ResourceLocation texKey;
         if (gregtech.engine.fluid.FluidDisplayBinding.hasPayload(stack)) {
-//? if >=1.21.1 {
-            /*var actual=gregtech.engine.fluid.FluidDisplayBinding.resolveCurrent(stack);
-*///?} else {
-            var actual=gregtech.engine.fluid.FluidDisplayBinding.resolve(stack);
-//?}
+            var actual = gregtech.engine.fluid.FluidDisplayBinding.resolveCurrent(stack);
             texKey=actual.isEmpty()?resolveTextureKey(flEntry):IClientFluidTypeExtensions.of(actual.getFluid()).getStillTexture(actual);
         } else texKey=resolveTextureKey(flEntry);
         if (texKey == null) {

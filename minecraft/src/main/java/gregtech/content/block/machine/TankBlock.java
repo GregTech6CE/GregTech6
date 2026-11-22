@@ -1,12 +1,14 @@
 package gregtech.content.block.machine;
 
+import gregtech.client.TankTooltips;
+import gregtech.content.block.GTBlock;
+import gregtech.content.blockentity.machine.TankBlockEntity;
+import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTSounds;
 import gregtech.engine.machine.TankSpec;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
-import gregtech.content.blockentity.machine.TankBlockEntity;
-import gregtech.client.TankTooltips;
-import gregtech.content.registry.GTSounds;
-import gregtech.content.registry.GTBlockEntities;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -21,16 +23,13 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-import javax.annotation.Nullable;
-
-import gregtech.content.block.GTBlock;
 /** GT6 fluid container block — wood barrel, plastic canister, or metal drum. */
 public class TankBlock extends GTBlock implements EntityBlock {
     private final TankSpec spec;
 
     @Override
-    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (level.isClientSide) return InteractionResult.sidedSuccess(true);
         BlockEntity be = level.getBlockEntity(pos);
         if (!(be instanceof TankBlockEntity tank)) return InteractionResult.PASS;
@@ -40,9 +39,12 @@ public class TankBlock extends GTBlock implements EntityBlock {
         // Wrench / Monkey Wrench: toggle automatic output
         if (!player.isShiftKeyDown() && GTToolHelper.isMachineWrench(held)) {
             tank.toggleAutoOutput();
-            player.displayClientMessage(net.minecraft.network.chat.Component.translatable(tank.isAutoOutput()
-                    ? "tooltip.gt6ce.tank.info.auto_output"
-                    : "tooltip.gt6ce.tank.info.no_auto_output"), true);
+            player.displayClientMessage(
+                    net.minecraft.network.chat.Component.translatable(
+                            tank.isAutoOutput()
+                                    ? "tooltip.gt6ce.tank.info.auto_output"
+                                    : "tooltip.gt6ce.tank.info.no_auto_output"),
+                    true);
             level.playSound(null, pos, GTSounds.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
             GTToolHelper.damageForUse(held, 1, player);
             return InteractionResult.CONSUME;
@@ -70,7 +72,9 @@ public class TankBlock extends GTBlock implements EntityBlock {
         this.spec = spec;
     }
 
-    public TankSpec spec() { return spec; }
+    public TankSpec spec() {
+        return spec;
+    }
 
     @Nullable
     @Override
@@ -81,38 +85,35 @@ public class TankBlock extends GTBlock implements EntityBlock {
     @Nullable
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide) return null;
         if (type != GTBlockEntities.TANK.get()) return null;
         return (BlockEntityTicker<T>) (BlockEntityTicker<TankBlockEntity>) TankBlockEntity::serverTick;
     }
 
     @Override
-    public java.util.List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
-        var stack=new ItemStack(this);
-        if (builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof TankBlockEntity tank) {
-//? if >=1.21.1 {
-            /*var data = tank.saveItemData(builder.getLevel().registryAccess());
-*///?} else {
-            var data = tank.saveItemData();
-//?}
+    public java.util.List<ItemStack> getDrops(
+            BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
+        var stack = new ItemStack(this);
+        if (builder.getOptionalParameter(
+                        net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY)
+                instanceof TankBlockEntity tank) {
+            var data = tank.saveItemData(builder.getLevel().registryAccess());
             gregtech.engine.stack.BlockEntityData.write(stack, data);
         }
         return java.util.List.of(stack);
     }
 
     public static Properties defaultProperties(TankSpec spec) {
-        return Properties.of()
-                .strength(spec.hardness(), spec.blastResistance());
+        return Properties.of().strength(spec.hardness(), spec.blastResistance());
     }
 
     public static Properties woodProperties(TankSpec spec) {
-        return Properties.of()
-                .strength(2.0F, 3.0F);
+        return Properties.of().strength(2.0F, 3.0F);
     }
 
     public static Properties plasticProperties(TankSpec spec) {
-        return Properties.of()
-                .strength(3.0F, 5.0F);
+        return Properties.of().strength(3.0F, 5.0F);
     }
 }

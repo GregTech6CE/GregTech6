@@ -28,11 +28,7 @@ public final class PortableTankHandler implements IFluidHandlerItem {
         tank = new FluidTankGT(spec.capacity()).setMaxTemperature(spec.maxTemperature());
         var data = data();
         if (data.contains("gt.tank")) {
-//? if >=1.21.1 {
-            /*tank.readFromNBT(data.getCompound("gt.tank"), FluidDisplayBinding.currentLookup());
-*///?} else {
-            tank.readFromNBT(data.getCompound("gt.tank"));
-//?}
+            tank.readFromNBT(data.getCompound("gt.tank"), FluidDisplayBinding.currentLookup());
         }
         tank.setOnChanged(this::save);
     }
@@ -46,11 +42,7 @@ public final class PortableTankHandler implements IFluidHandlerItem {
         if (tank.isEmpty()) data.remove("gt.tank");
         else {
             var contents = new CompoundTag();
-//? if >=1.21.1 {
-            /*tank.writeToNBT(contents, FluidDisplayBinding.currentLookup());
-*///?} else {
-            tank.writeToNBT(contents);
-//?}
+            tank.writeToNBT(contents, FluidDisplayBinding.currentLookup());
             data.put("gt.tank", contents);
         }
 //? if >=1.21.1 {

@@ -46,10 +46,11 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
+import gregtech.engine.fluid.FluidContainerInteraction;
+import gregtech.engine.fluid.FluidTransportEnvironment;
 import net.minecraft.world.phys.AABB;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.capabilities.Capabilities;
-import gregtech.platform.neoforge.transport.FluidTransportEnvironment;
 
 
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -1229,10 +1230,12 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
                                                            Direction side) {
         if (level == null || level.isClientSide) return net.minecraft.world.InteractionResult.PASS;
 //? if >=1.21.1 {
-        /*if (!gregtech.platform.neoforge.transport.FluidContainerInteraction.use(player, hand, capabilityHandler(side)))
+        /*IFluidHandler face = capabilityHandler(side);
 *///?} else {
-        if (!gregtech.platform.forge.transport.FluidContainerInteraction.use(player, hand, faceHandler(side).orElseThrow(() -> new IllegalStateException("Missing pipe face handler"))))
+        IFluidHandler face = getCapability(ForgeCapabilities.FLUID_HANDLER, side)
+                .orElseThrow(() -> new IllegalStateException("Missing pipe face handler"));
 //?}
+        if (!FluidContainerInteraction.use(player, hand, face))
             return net.minecraft.world.InteractionResult.PASS;
         setChanged();
         return net.minecraft.world.InteractionResult.CONSUME;

@@ -560,13 +560,8 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
         tag.putInt("gt.efficiency", efficiency);
         tag.putInt("gt.barometer", barometer);
         tag.putBoolean("gt.state.str",structureOkay);
-//? if >=1.21.1 {
-        /*CompoundTag waterTag = new CompoundTag(); water.writeToNBT(waterTag,lookup); tag.put("gt.water", waterTag);
-        CompoundTag steamTag = new CompoundTag(); steam.writeToNBT(steamTag,lookup); tag.put("gt.steam", steamTag);
-*///?} else {
-        CompoundTag waterTag = new CompoundTag(); water.writeToNBT(waterTag); tag.put("gt.water", waterTag);
-        CompoundTag steamTag = new CompoundTag(); steam.writeToNBT(steamTag); tag.put("gt.steam", steamTag);
-//?}
+        CompoundTag waterTag = new CompoundTag(); water.writeToNBT(waterTag, lookup); tag.put("gt.water", waterTag);
+        CompoundTag steamTag = new CompoundTag(); steam.writeToNBT(steamTag, lookup); tag.put("gt.steam", steamTag);
     }
     @Override protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         super.loadData(tag, lookup);
@@ -575,13 +570,8 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
         cooldown = tag.contains("gt.cooldown") ? Math.max(0, Math.min(128, tag.getInt("gt.cooldown"))) : 128;
         efficiency = tag.contains("gt.efficiency")
                 ? gregtech.content.machine.OriginalFunctionalTooltipData.boilerEfficiency(tag.getInt("gt.efficiency")) : 10_000;
-//? if >=1.21.1 {
-        /*if (tag.contains("gt.water")) water.readFromNBT(tag.getCompound("gt.water"),lookup);
-        if (tag.contains("gt.steam")) steam.readFromNBT(tag.getCompound("gt.steam"),lookup);
-*///?} else {
-        if (tag.contains("gt.water")) water.readFromNBT(tag.getCompound("gt.water"));
-        if (tag.contains("gt.steam")) steam.readFromNBT(tag.getCompound("gt.steam"));
-//?}
+        if (tag.contains("gt.water")) water.readFromNBT(tag.getCompound("gt.water"), lookup);
+        if (tag.contains("gt.steam")) steam.readFromNBT(tag.getCompound("gt.steam"), lookup);
         water.setCapacity(WATER_CAPACITY);
         steam.setCapacity(variant.steamCapacity());
         barometer = gregtech.content.energy.BoilerHazards.pressure(steam.getAmount(), variant.steamCapacity());

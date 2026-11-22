@@ -1,20 +1,24 @@
 package gregtech.content.cover;
+
 import gregtech.platform.Mc;
-
 import net.minecraft.world.item.ItemStack;
-
-//? if >=1.21.1 {
-//?} else {
-//?}
 
 /** Interactive GT6 attachments. Controller/detector conditions remain in MachineCoverSpec. */
 public enum PanelCover {
-    MANUAL("manual_selector"), REDSTONE("redstone_selector"), BUTTONS("button_panel_selector"),
-    EMITTER("redstone_emitter"), PROGRESS("progress_sensor"), ENERGY("energy_sensor"),
-    ENERGY_DISPLAY("energy_display_cover"), STATUS("machine_status_display_cover"),
-    CONDUCTOR_IN("redstone_conductor_cover_accept"), CONDUCTOR_OUT("redstone_conductor_cover_emit"),
-    CONTROLLER("cover_controller"), SHUTTER("shutter_cover");
+    MANUAL("manual_selector"),
+    REDSTONE("redstone_selector"),
+    BUTTONS("button_panel_selector"),
+    EMITTER("redstone_emitter"),
+    PROGRESS("progress_sensor"),
+    ENERGY("energy_sensor"),
+    ENERGY_DISPLAY("energy_display_cover"),
+    STATUS("machine_status_display_cover"),
+    CONDUCTOR_IN("redstone_conductor_cover_accept"),
+    CONDUCTOR_OUT("redstone_conductor_cover_emit"),
+    CONTROLLER("cover_controller"),
+    SHUTTER("shutter_cover");
     public final String id;
+
     PanelCover(String id) {
         this.id = id;
     }
@@ -43,8 +47,7 @@ public enum PanelCover {
         if (stack.isEmpty()) return null;
         var key = Mc.itemId(stack.getItem());
         if (key != null && key.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE))
-            for (var cover : values())
-                if (cover.id.equals(key.getPath())) return cover;
+            for (var cover : values()) if (cover.id.equals(key.getPath())) return cover;
         return null;
     }
 }

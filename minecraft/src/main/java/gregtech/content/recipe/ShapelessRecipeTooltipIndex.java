@@ -28,20 +28,13 @@ public final class ShapelessRecipeTooltipIndex {
 
     private ShapelessRecipeTooltipIndex() {}
 
-//? if >=1.21.1 {
-    /*public static void rebuild(RecipeManager recipes, net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    public static void rebuild(RecipeManager recipes) {
-//?}
+    public static void rebuild(RecipeManager recipes,
+            @org.jetbrains.annotations.Nullable net.minecraft.core.HolderLookup.Provider lookup) {
         INPUT_COUNTS.clear();
         PrefixRegistry.ensurePrefixesLoaded();
         registerBuiltInPrefixChains();
         if (recipes != null) {
-//? if >=1.21.1 {
-            /*scanShapelessRecipes(recipes,lookup);
-*///?} else {
-            scanShapelessRecipes(recipes);
-//?}
+            scanShapelessRecipes(recipes, lookup);
         }
         INPUT_COUNTS.replaceAll((k, v) -> List.copyOf(new TreeSet<>(v)));
     }
@@ -76,11 +69,8 @@ public final class ShapelessRecipeTooltipIndex {
         }
     }
 
-//? if >=1.21.1 {
-    /*private static void scanShapelessRecipes(RecipeManager recipes, net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    private static void scanShapelessRecipes(RecipeManager recipes) {
-//?}
+    private static void scanShapelessRecipes(RecipeManager recipes,
+            @org.jetbrains.annotations.Nullable net.minecraft.core.HolderLookup.Provider lookup) {
         for (var recipe : recipes.getAllRecipesFor(RecipeType.CRAFTING)) {
 //? if >=1.21.1 {
             /*if (!(recipe.value() instanceof ShapelessRecipe shapeless)) {

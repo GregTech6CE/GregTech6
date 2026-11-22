@@ -66,4 +66,19 @@ final class ManualToolRecipeCatalogTest {
             assertTrue(ManualToolRecipeCatalog.headPrefix(type) != null, type + " resolves a head prefix");
         }
     }
+
+    @Test
+    void softHammerDisplaysRubberAndRejectsSteelAssembly() {
+        assertEquals(
+                gregtech.content.material.Materials.Rubber,
+                OriginalToolMaterials.displayHead(ToolDefinition.SOFT_HAMMER));
+        assertFalse(OriginalToolMaterials.acceptsAssemblyHead(
+                ToolDefinition.SOFT_HAMMER, gregtech.content.material.Materials.Steel));
+        assertTrue(OriginalToolMaterials.acceptsAssemblyHead(
+                ToolDefinition.SOFT_HAMMER, gregtech.content.material.Materials.Rubber));
+        assertEquals(
+                gregtech.content.material.Materials.Amber, OriginalToolMaterials.displayHead(ToolDefinition.GEM_PICK));
+        assertEquals(
+                gregtech.content.material.Materials.Bronze, OriginalToolMaterials.displayHead(ToolDefinition.PICKAXE));
+    }
 }

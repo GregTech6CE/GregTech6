@@ -1,27 +1,23 @@
 package gregtech.content.cover;
+
 import gregtech.engine.stack.StackData;
 import gregtech.platform.Mc;
-
 import net.minecraft.world.item.ItemStack;
-
-//? if >=1.21.1 {
-//?} else {
-//?}
 
 /** Source controller/detector conditions; independent of a particular machine implementation. */
 public enum MachineCoverSpec {
-    REDSTONE("redstone_machine_switch","redstoneswitch",0),
-    AUTO_REDSTONE("auto_redstone_machine_switch","autoredstoneswitch",0),
-    AUTOMATIC("automatic_machine_switch","autoswitch",0),
-    TIMER_1("auto_reboot_switch_1m","autotimerswitch/1200",1200),
-    TIMER_5("auto_reboot_switch_5m","autotimerswitch/6000",6000),
-    TIMER_10("auto_reboot_switch_10m","autotimerswitch/12000",12000),
-    TIMER_20("auto_reboot_switch_20m","autotimerswitch/24000",24000),
-    TIMER_30("auto_reboot_switch_30m","autotimerswitch/36000",36000),
-    POSSIBLE("activity_detector_possible","detectorrunningpossible",-1),
-    RUNNING("activity_detector_running","detectorrunningpassively",-1),
-    PROCESSING("activity_detector_processing","detectorrunningactively",-1),
-    SUCCESS("activity_detector_success","detectorrunningsuccessfully",-1);
+    REDSTONE("redstone_machine_switch", "redstoneswitch", 0),
+    AUTO_REDSTONE("auto_redstone_machine_switch", "autoredstoneswitch", 0),
+    AUTOMATIC("automatic_machine_switch", "autoswitch", 0),
+    TIMER_1("auto_reboot_switch_1m", "autotimerswitch/1200", 1200),
+    TIMER_5("auto_reboot_switch_5m", "autotimerswitch/6000", 6000),
+    TIMER_10("auto_reboot_switch_10m", "autotimerswitch/12000", 12000),
+    TIMER_20("auto_reboot_switch_20m", "autotimerswitch/24000", 24000),
+    TIMER_30("auto_reboot_switch_30m", "autotimerswitch/36000", 36000),
+    POSSIBLE("activity_detector_possible", "detectorrunningpossible", -1),
+    RUNNING("activity_detector_running", "detectorrunningpassively", -1),
+    PROCESSING("activity_detector_processing", "detectorrunningactively", -1),
+    SUCCESS("activity_detector_success", "detectorrunningsuccessfully", -1);
     public final String id, texture;
     public final int interval;
 
@@ -44,9 +40,9 @@ public enum MachineCoverSpec {
     public static MachineCoverSpec of(ItemStack stack) {
         if (stack.isEmpty()) return null;
         var key = Mc.itemId(stack.getItem());
-        if (key == null || !key.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return null;
-        for (var spec : values())
-            if (spec.id.equals(key.getPath())) return spec;
+        if (key == null || !key.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE))
+            return null;
+        for (var spec : values()) if (spec.id.equals(key.getPath())) return spec;
         return null;
     }
 

@@ -1,12 +1,7 @@
 package gregtech.client;
 import gregtech.engine.mod.GregTechIdentity;
 
-//? if >=1.21.1 {
-
-/*import gregtech.platform.neoforge.fluid.FluidDisplayItem;
-*///?} else {
-import gregtech.content.item.FluidItem;
-//?}
+import gregtech.content.item.FluidDisplayItemLike;
 import gregtech.content.registry.GTFluidItems;
 import gregtech.platform.Mc;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -20,6 +15,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
 /*import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.ChunkRenderTypeSet;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.model.data.ModelData;
@@ -27,6 +23,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 *///?} else {
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.client.ChunkRenderTypeSet;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.model.data.ModelData;
@@ -38,23 +35,16 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-//? if >=1.21.1 {
-/*/^*
- * Registers the shared fluid_item model and aliases all {@link FluidDisplayItem} models.
- * <p>
- * Each fluid item gets a thin wrapper whose {@link ItemOverrides} returns
- * {@link FluidItemOverrideList}. That list lazily resolves the correct fluid
- * sprite at <em>render time</em> (not bake time), so the atlas is always ready.
- ^/
-@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-*///?} else {
 /**
- * Registers the shared fluid_item model and aliases all {@link FluidItem} models.
+ * Registers the shared fluid_item model and aliases all {@link FluidDisplayItemLike} models.
  * <p>
  * Each fluid item gets a thin wrapper whose {@link ItemOverrides} returns
  * {@link FluidItemOverrideList}. That list lazily resolves the correct fluid
  * sprite at <em>render time</em> (not bake time), so the atlas is always ready.
  */
+//? if >=1.21.1 {
+/*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+*///?} else {
 @Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 //?}
 public final class FluidItemClientModels {
@@ -84,13 +74,8 @@ public final class FluidItemClientModels {
             }
         };
 
-//? if >=1.21.1 {
-        /*for (var entry : gregtech.platform.neoforge.fluid.FluidRegistries.allItems().toList()) {
-            if (!(entry.get() instanceof FluidDisplayItem)) {
-*///?} else {
         for (var entry : GTFluidItems.allEntries()) {
-            if (!(entry.get() instanceof FluidItem)) {
-//?}
+            if (!(entry.get() instanceof FluidDisplayItemLike)) {
                 continue;
             }
             ResourceLocation itemId = Mc.itemId(entry.get());
@@ -99,13 +84,13 @@ public final class FluidItemClientModels {
             }
             models.put(itemId, "inventory", wrapper);
         }
-//? if >=1.21.1 {
-    /*}
+    }
 
-    @SubscribeEvent
+//? if >=1.21.1 {
+    /*@SubscribeEvent
     public static void registerColors(net.neoforged.neoforge.client.event.RegisterColorHandlersEvent.Item event) {
-        for (var entry:gregtech.platform.neoforge.fluid.FluidRegistries.allItems().toList()) {
-            if (!(entry.get() instanceof FluidDisplayItem item)) continue;
+        for (var entry : GTFluidItems.allEntries()) {
+            if (!(entry.get() instanceof FluidDisplayItemLike item)) continue;
             event.register((stack,layer) -> {
                 if (layer!=0) return 0xFFFFFF;
                 if (gregtech.engine.fluid.FluidDisplayBinding.hasPayload(stack)) {
@@ -113,18 +98,18 @@ public final class FluidItemClientModels {
                     if (!actual.isEmpty()) return net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions.of(actual.getFluid()).getTintColor(actual);
                 }
                 return FluidAppearance.appearance(item.fluidEntry()).tint();
-            },item);
+            }, (net.minecraft.world.item.Item) item);
         }
     }
+*///?}
+
     @SubscribeEvent
-    public static void setup(net.neoforged.fml.event.lifecycle.FMLClientSetupEvent event) {
+    public static void setup(FMLClientSetupEvent event) {
         gregtech.engine.fluid.FluidDisplayBinding.setClientLookup(() -> {
             var client=net.minecraft.client.Minecraft.getInstance();
             if (client.level!=null) return client.level.registryAccess();
             return client.getConnection()==null?null:client.getConnection().registryAccess();
         });
-*///?} else {
-//?}
     }
 
     /** Every method delegates to {@code inner}; subclasses override just what they need. */

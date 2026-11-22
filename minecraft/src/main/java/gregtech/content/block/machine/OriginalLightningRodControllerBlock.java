@@ -70,10 +70,6 @@ public final class OriginalLightningRodControllerBlock extends GTBlock implement
                                       @Nullable LivingEntity placer, ItemStack stack) {
         var saved = gregtech.engine.stack.BlockEntityData.read(stack);
         if (saved != null && level.getBlockEntity(pos) instanceof LightningRodControllerBlockEntity rod)
-//? if >=1.21.1 {
-            /*rod.restorePersistentState(saved,level.registryAccess());
-*///?} else {
-            rod.load(saved);
-//?}
+            rod.restorePersistentState(saved, level.registryAccess());
     }
 }

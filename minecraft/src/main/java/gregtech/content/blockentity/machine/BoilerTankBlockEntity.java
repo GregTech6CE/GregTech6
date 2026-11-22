@@ -464,18 +464,10 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements gregte
         tag.putInt("gt.cooldown",cooldown);
         tag.putShort("gt.efficiency", efficiency);
         CompoundTag w = new CompoundTag();
-//? if >=1.21.1 {
-        /*waterTank.writeToNBT(w,lookup);
-*///?} else {
-        waterTank.writeToNBT(w);
-//?}
+        waterTank.writeToNBT(w, lookup);
         tag.put("gt.water", w);
         CompoundTag s = new CompoundTag();
-//? if >=1.21.1 {
-        /*steamTank.writeToNBT(s,lookup);
-*///?} else {
-        steamTank.writeToNBT(s);
-//?}
+        steamTank.writeToNBT(s, lookup);
         tag.put("gt.steam", s);
     }
 
@@ -486,13 +478,8 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements gregte
         cooldown=tag.contains("gt.cooldown")?Math.max(0,Math.min(128,tag.getInt("gt.cooldown"))):128;
         if (tag.contains("gt.efficiency")) efficiency = (short) gregtech.content.machine.OriginalFunctionalTooltipData.boilerEfficiency(tag.getShort("gt.efficiency"));
         else efficiency = 10000;
-//? if >=1.21.1 {
-        /*if (tag.contains("gt.water")) waterTank.readFromNBT(tag.getCompound("gt.water"),lookup);
-        if (tag.contains("gt.steam")) steamTank.readFromNBT(tag.getCompound("gt.steam"),lookup);
-*///?} else {
-        if (tag.contains("gt.water")) waterTank.readFromNBT(tag.getCompound("gt.water"));
-        if (tag.contains("gt.steam")) steamTank.readFromNBT(tag.getCompound("gt.steam"));
-//?}
+        if (tag.contains("gt.water")) waterTank.readFromNBT(tag.getCompound("gt.water"), lookup);
+        if (tag.contains("gt.steam")) steamTank.readFromNBT(tag.getCompound("gt.steam"), lookup);
         waterTank.setCapacity(Math.max(4000,waterTank.getAmount()));
         if (spec!=null)steamTank.setCapacity(spec.steamCapacity());
         efficiency=(short)Math.max(0,Math.min(10000,efficiency));

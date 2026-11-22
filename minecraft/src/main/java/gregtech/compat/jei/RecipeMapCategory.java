@@ -115,11 +115,8 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
             var point=layout.point(input,true,i);
             var fluidSlot=builder.addSlot(fluidRole,point.x(),point.y()).setSlotName(fluidRole.name()+"_fluid_"+i);
             for (var shown:input?recipe.viewerFluidInputAlternatives(i):java.util.List.of(fluid)) {
-//? if >=1.21.1 {
-            /*var display=FluidDisplayBinding.display(net.minecraft.client.Minecraft.getInstance().level.registryAccess(),shown);
-*///?} else {
-            var display=FluidDisplayBinding.display(shown);
-//?}
+            var level = net.minecraft.client.Minecraft.getInstance().level;
+            var display=FluidDisplayBinding.display(level == null ? null : level.registryAccess(), shown);
             if (input) {
                 var containers = gregtech.engine.fluid.FluidContainerDisplayBinding.containers(shown);
                 if (!containers.isEmpty()) builder.addInvisibleIngredients(fluidRole).addItemStacks(containers);

@@ -5,6 +5,7 @@ import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 import gregtech.content.data.RegisteredFluids;
 import gregtech.content.fluid.FluidDefinitions;
 import gregtech.content.registry.ContentRegistrar;
+import gregtech.content.registry.GTFluidItems;
 import gregtech.content.registry.GTFluids;
 import gregtech.content.registry.GTGasFluid;
 import gregtech.content.registry.RegisteredBlock;
@@ -47,11 +48,14 @@ public final class FluidRegistries {
             var entry = definition.getValue();
             if (entry.usesVanillaFluid()) {
                 String displayPath = RegisteredFluids.sanitizePath(entry.registryName());
-                if (paths.add(displayPath))
-                    ALL_ITEMS.add(registrar.item(
+                if (paths.add(displayPath)) {
+                    var item = registrar.item(
                             REGISTRY_NAMESPACE,
                             "fluid_item_" + displayPath,
-                            () -> new FluidDisplayItem(entry, new Item.Properties())));
+                            () -> new FluidDisplayItem(entry, new Item.Properties()));
+                    ALL_ITEMS.add(item);
+                    GTFluidItems.registerEntry(item);
+                }
                 continue;
             }
             String path = RegisteredFluids.sanitizePath(entry.registryName());
@@ -94,8 +98,10 @@ public final class FluidRegistries {
                                     ? new GTGasFluid.Flowing(properties(field, type, blockRef))
                                     : new BaseFlowingFluid.Flowing(properties(field, type, blockRef)));
             GTFluids.bindFluid(field, still, flowing, ResourceLocation.fromNamespaceAndPath(namespace, path), entry);
-            ALL_ITEMS.add(registrar.item(
-                    namespace, "fluid_item_" + path, () -> new FluidDisplayItem(entry, new Item.Properties())));
+            var item = registrar.item(
+                    namespace, "fluid_item_" + path, () -> new FluidDisplayItem(entry, new Item.Properties()));
+            ALL_ITEMS.add(item);
+            GTFluidItems.registerEntry(item);
         }
         RegisteredFluids.closeDefinitions();
     }

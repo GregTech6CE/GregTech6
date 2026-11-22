@@ -30,10 +30,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 
-//? if >=1.21.1 {
-//?} else {
-//?}
-
 /** GT6-style tinted log block with fireproof variant support. */
 public class WoodLogBlock extends RotatedPillarBlock {
     /**

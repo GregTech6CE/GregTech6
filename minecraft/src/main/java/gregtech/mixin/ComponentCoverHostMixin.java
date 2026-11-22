@@ -101,7 +101,7 @@ public abstract class ComponentCoverHostMixin implements FallbackCoverHost {
 //? if >=1.21.1 {
     /*private void gregtech$save(HolderLookup.Provider lookup,CallbackInfoReturnable<CompoundTag> cir){ComponentCoverFallback.write((BlockEntity)(Object)this,cir.getReturnValue(),lookup);}
 *///?} else {
-    private void gregtech$save(CallbackInfoReturnable<CompoundTag> cir){ComponentCoverFallback.write((BlockEntity)(Object)this,cir.getReturnValue());}
+    private void gregtech$save(CallbackInfoReturnable<CompoundTag> cir){ComponentCoverFallback.write((BlockEntity)(Object)this,cir.getReturnValue(),null);}
 //?}
     @Inject(method="loadStatic",at=@At("RETURN"),require=1)
 //? if >=1.21.1 {
@@ -109,9 +109,9 @@ public abstract class ComponentCoverHostMixin implements FallbackCoverHost {
     @Inject(method="loadWithComponents",at=@At("RETURN"),require=1)
     private void gregtech$reload(CompoundTag tag,HolderLookup.Provider lookup,CallbackInfo ci){ComponentCoverFallback.read((BlockEntity)(Object)this,tag,lookup);}
 *///?} else {
-    private static void gregtech$load(BlockPos pos,BlockState state,CompoundTag tag,CallbackInfoReturnable<BlockEntity> cir){ComponentCoverFallback.read(cir.getReturnValue(),tag);}
+    private static void gregtech$load(BlockPos pos,BlockState state,CompoundTag tag,CallbackInfoReturnable<BlockEntity> cir){ComponentCoverFallback.read(cir.getReturnValue(),tag,null);}
     @Inject(method="load",at=@At("RETURN"),require=1)
-    private void gregtech$reload(CompoundTag tag,CallbackInfo ci){ComponentCoverFallback.read((BlockEntity)(Object)this,tag);}
+    private void gregtech$reload(CompoundTag tag,CallbackInfo ci){ComponentCoverFallback.read((BlockEntity)(Object)this,tag,null);}
 //?}
     @Inject(method="clearRemoved",at=@At("RETURN"),require=1)
     private void gregtech$revive(CallbackInfo ci){

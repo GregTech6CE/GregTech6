@@ -46,13 +46,8 @@ import java.util.*;
 public final class GunToolItem extends GTToolItem {
  public GunToolItem(Properties properties,GTToolType type){super(properties,type);}
  public GunRules.Definition definition(){return GunRules.of(toolType().id());}
-//? if >=1.21.1 {
- /*public ItemStack ammunition(ItemStack gun,Level level){var lookup=level!=null?level.registryAccess():gregtech.engine.fluid.FluidDisplayBinding.currentLookup();return lookup==null?ItemStack.EMPTY:gregtech.engine.stack.NbtCompat.readItem(StackData.readOrEmpty(gun).getCompound("gt.ammo"),lookup);}
+ public ItemStack ammunition(ItemStack gun,Level level){var tag=StackData.read(gun);if (tag==null||!tag.contains("gt.ammo",net.minecraft.nbt.Tag.TAG_COMPOUND))return ItemStack.EMPTY;var lookup=level!=null?level.registryAccess():gregtech.engine.fluid.FluidDisplayBinding.currentLookup();return lookup==null?ItemStack.EMPTY:gregtech.engine.stack.NbtCompat.readItem(tag.getCompound("gt.ammo"),lookup);}
  private void magazine(ItemStack gun,ItemStack ammo,Level level){StackData.update(gun,t->{if (ammo.isEmpty())t.remove("gt.ammo");else t.put("gt.ammo",gregtech.engine.stack.NbtCompat.saveItem(ammo,level.registryAccess()));});}
-*///?} else {
- public ItemStack ammunition(ItemStack gun,Level level){var tag=StackData.read(gun);return tag==null?ItemStack.EMPTY:gregtech.engine.stack.NbtCompat.readItem(tag.getCompound("gt.ammo"),null);}
- private void magazine(ItemStack gun,ItemStack ammo,Level level){StackData.update(gun,t->{if (ammo.isEmpty())t.remove("gt.ammo");else t.put("gt.ammo",gregtech.engine.stack.NbtCompat.saveItem(ammo,null));});}
-//?}
  public boolean accepts(ItemStack stack){return stack.getItem() instanceof MaterialFormItem form&&form.getPrefix()==definition().ammunition()&&!form.getMaterial().getName().equals("Empty");}
  @Override public InteractionResult onItemUseFirst(ItemStack stack,UseOnContext context){var player=context.getPlayer();if (player==null)return InteractionResult.PASS;activate(context.getLevel(),player,context.getHand());return InteractionResult.sidedSuccess(context.getLevel().isClientSide);}
  @Override public InteractionResult useOn(UseOnContext context){var player=context.getPlayer();if (player==null)return InteractionResult.PASS;activate(context.getLevel(),player,context.getHand());return InteractionResult.sidedSuccess(context.getLevel().isClientSide);}

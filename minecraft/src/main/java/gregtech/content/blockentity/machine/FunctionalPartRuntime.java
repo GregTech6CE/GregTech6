@@ -298,7 +298,7 @@ public final class FunctionalPartRuntime {
         try {
             loadSlots(tag);
             loadTanks(tag);
-            if (tag.contains("gt.part_fields")) state.load(tag.getCompound("gt.part_fields"));
+            if (tag.contains("gt.part_fields")) state.load(null, tag.getCompound("gt.part_fields"));
         } finally {
             loading = false;
         }
@@ -324,7 +324,7 @@ public final class FunctionalPartRuntime {
         ListTag list = new ListTag();
         for (FluidTankGT tank : tanks) {
             CompoundTag saved = new CompoundTag();
-            tank.writeToNBT(saved);
+            tank.writeToNBT(saved, null);
             list.add(saved);
         }
         tag.put("gt.part_tanks", list);
@@ -334,7 +334,7 @@ public final class FunctionalPartRuntime {
         if (tanks.length == 0 || !tag.contains("gt.part_tanks")) return;
         ListTag list = tag.getList("gt.part_tanks", Tag.TAG_COMPOUND);
         for (int tank = 0; tank < tanks.length && tank < list.size(); tank++) {
-            tanks[tank].readFromNBT(list.getCompound(tank));
+            tanks[tank].readFromNBT(list.getCompound(tank), null);
             tanks[tank].setCapacity(tankRules.capacity());
         }
     }
@@ -617,11 +617,7 @@ public final class FunctionalPartRuntime {
             return tag;
         }
 
-//? if >=1.21.1 {
-/*        void load(net.minecraft.core.HolderLookup.Provider lookup, CompoundTag tag) {
-*///?} else {
-        void load(CompoundTag tag) {
-//?}
+        void load(@org.jetbrains.annotations.Nullable net.minecraft.core.HolderLookup.Provider lookup, CompoundTag tag) {
             ints.clear(); longs.clear(); bools.clear(); strings.clear(); storedItems.clear();
             readInts(tag.getCompound("i"));
             readLongs(tag.getCompound("l"));

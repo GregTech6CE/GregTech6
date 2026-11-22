@@ -209,13 +209,7 @@ if (!(context.getLevel().getBlockEntity(pos) instanceof SmeltingCrucibleBlockEnt
 
     @Override
     public void inventoryTick(ItemStack stack, Level level, net.minecraft.world.entity.Entity entity, int slot, boolean selected) {
-
-//? if >=1.21.1 {
-/*        if (!level.isClientSide) gregtech.engine.tool.GTToolEnchantments.apply(stack, level.registryAccess());
-*///?} else {
-        if (!level.isClientSide) gregtech.engine.tool.GTToolEnchantments.apply(stack);
-//?}
-
+        if (!level.isClientSide) gregtech.engine.tool.GTToolEnchantments.apply(stack, level.registryAccess());
         super.inventoryTick(stack, level, entity, slot, selected);
 
 //? if >=1.21.1 {

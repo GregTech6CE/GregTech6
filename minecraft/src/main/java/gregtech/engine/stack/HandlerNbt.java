@@ -15,7 +15,7 @@ public final class HandlerNbt {
 
     public static CompoundTag save(ItemStackHandler handler, HolderLookup.Provider lookup) {
 //? if >=1.21.1 {
-/*        return handler.serializeNBT(requireNonNull(lookup));
+/*        return handler.serializeNBT(java.util.Objects.requireNonNull(lookup, "handler codec needs the registry lookup"));
 *///?} else {
         return handler.serializeNBT();
 //?}
@@ -23,7 +23,7 @@ public final class HandlerNbt {
 
     public static void load(ItemStackHandler handler, CompoundTag tag, HolderLookup.Provider lookup) {
 //? if >=1.21.1 {
-/*        handler.deserializeNBT(requireNonNull(lookup), tag);
+/*        handler.deserializeNBT(java.util.Objects.requireNonNull(lookup, "handler codec needs the registry lookup"), tag);
 *///?} else {
         handler.deserializeNBT(tag);
 //?}
@@ -43,10 +43,4 @@ public final class HandlerNbt {
         tag.putInt("Size", handler.getSlots());
         load(handler, tag, lookup);
     }
-
-//? if >=1.21.1 {
-    /*private static HolderLookup.Provider requireNonNull(HolderLookup.Provider lookup) {
-        return java.util.Objects.requireNonNull(lookup, "handler codec needs the registry lookup");
-    }
-*///?}
 }

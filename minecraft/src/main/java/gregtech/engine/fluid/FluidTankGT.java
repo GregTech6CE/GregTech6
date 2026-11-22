@@ -255,30 +255,17 @@ public class FluidTankGT implements IFluidHandler {
     public static int bindInt(long value) {
         return LongFluidStorage.bindInt(value);
     }
-//? if >=1.21.1 {
-    /*public void writeToNBT(net.minecraft.nbt.CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    public void writeToNBT(net.minecraft.nbt.CompoundTag tag) {
-//?}
+    public void writeToNBT(net.minecraft.nbt.CompoundTag tag,
+            @org.jetbrains.annotations.Nullable net.minecraft.core.HolderLookup.Provider lookup) {
         tag.putLong("Amount", getAmount());
         tag.putLong("Capacity", baseCapacity());
-//? if >=1.21.1 {
-        /*if (!fluid.isEmpty()) tag.put("Fluid", fluid.save(lookup));
-*///?} else {
-        if (!fluid.isEmpty()) tag.put("Fluid", fluid.writeToNBT(new net.minecraft.nbt.CompoundTag()));
-//?}
+        if (!fluid.isEmpty()) tag.put("Fluid", gregtech.engine.stack.NbtCompat.saveFluid(fluid, lookup));
     }
-//? if >=1.21.1 {
-    /*public void readFromNBT(net.minecraft.nbt.CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    public void readFromNBT(net.minecraft.nbt.CompoundTag tag) {
-//?}
+
+    public void readFromNBT(net.minecraft.nbt.CompoundTag tag,
+            @org.jetbrains.annotations.Nullable net.minecraft.core.HolderLookup.Provider lookup) {
         storage.restore(tag.getLong("Amount"), tag.contains("Capacity") ? tag.getLong("Capacity") : null);
-//? if >=1.21.1 {
-        /*if (tag.contains("Fluid")) fluid = gregtech.engine.stack.NbtCompat.readFluid(tag.getCompound("Fluid"), lookup);
-*///?} else {
-        if (tag.contains("Fluid")) fluid = gregtech.engine.stack.NbtCompat.readFluid(tag.getCompound("Fluid"), null);
-//?}
+        if (tag.contains("Fluid")) fluid = gregtech.engine.stack.NbtCompat.readFluid(tag.getCompound("Fluid"), lookup);
         else fluid = FluidStack.EMPTY;
         // A removed or unknown fluid must not leave an amount without a fluid behind.
         if (fluid.isEmpty()) storage.setAmount(0);

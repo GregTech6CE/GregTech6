@@ -8,12 +8,9 @@ import gregtech.content.registry.GTFluids;
 import gregtech.engine.material.MaterialEquivalence;
 import gregtech.engine.material.MaterialViews;
 import gregtech.engine.material.VanillaUnificationDefinitions;
+import gregtech.content.item.FluidDisplayItemLike;
 import gregtech.platform.Mc;
-//? if >=1.21.1 {
-/*import gregtech.platform.neoforge.fluid.FluidDisplayItem;import net.minecraft.network.chat.Component;
-*///?} else {
-import gregtech.content.item.FluidItem;import net.minecraft.network.chat.Component;
-//?}
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.packs.*;
@@ -241,11 +238,7 @@ public final class MaterialTagPack extends AbstractPackResources {
                     add(tags,"forge","items","tools/"+toolKind,id.toString());
             // GT6 fluid containers: one item per fluid, so a material's fluid forms belong to that
             // material's tag (RegisteredFluids knows which material a fluid was created from).
-//? if >=1.21.1 {
-            /*if (item instanceof FluidDisplayItem fluidItem) {
-*///?} else {
-            if (item instanceof FluidItem fluidItem) {
-//?}
+            if (item instanceof FluidDisplayItemLike fluidItem) {
                 // GT6's fluids know their material: either as the declaration's materialKey (the molten
                 // and generated entries) or through the side binding created when a generated gas/liquid
                 // reuses a dedicated fluid (RegisteredFluids.BOUND_MATERIALS).

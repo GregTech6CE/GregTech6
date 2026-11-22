@@ -136,10 +136,6 @@ public final class OriginalBedrockDrillControllerBlock extends GTBlock implement
             @Nullable LivingEntity placer, ItemStack stack) {
         var saved = gregtech.engine.stack.BlockEntityData.read(stack);
         if (saved != null && level.getBlockEntity(pos) instanceof BedrockDrillControllerBlockEntity drill)
-//? if >=1.21.1 {
-        /*drill.restorePersistentState(saved, level.registryAccess());
-*///?} else {
-        drill.load(saved);
-//?}
+            drill.restorePersistentState(saved, level.registryAccess());
     }
 }

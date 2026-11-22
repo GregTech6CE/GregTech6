@@ -59,7 +59,7 @@ public class GarbageData extends SavedData {
 //? if >=1.21.1 {
         /*.computeIfAbsent(new SavedData.Factory<>(GarbageData::new, GarbageData::load, net.minecraft.util.datafix.DataFixTypes.LEVEL), NAME);
 *///?} else {
-                .computeIfAbsent(GarbageData::load, GarbageData::new, NAME);
+                .computeIfAbsent(tag -> GarbageData.load(tag, null), GarbageData::new, NAME);
 //?}
     }
 
@@ -179,11 +179,8 @@ public class GarbageData extends SavedData {
 
     // ── persistence ──────────────────────────────────────────────────────
 
-//? if >=1.21.1 {
-    /*public static GarbageData load(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    public static GarbageData load(CompoundTag tag) {
-//?}
+    public static GarbageData load(CompoundTag tag,
+            @org.jetbrains.annotations.Nullable net.minecraft.core.HolderLookup.Provider lookup) {
         GarbageData data = new GarbageData();
         for (Tag savedTag : tag.getList("Items", Tag.TAG_COMPOUND)) {
             // A save written before the cap existed can hold far more piles than MAX_ENTRIES; keep the

@@ -205,10 +205,6 @@ public final class LogisticsCoverInteraction {
     }
 
     private static net.minecraft.core.HolderLookup.Provider lookup(LogisticsCovers covers) {
-//? if >=1.21.1 {
-/*        return covers.registries();
-*///?} else {
-        return null;
-//?}
+        return covers.registries();
     }
 }

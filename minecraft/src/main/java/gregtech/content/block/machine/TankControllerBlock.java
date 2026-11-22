@@ -54,11 +54,7 @@ public class TankControllerBlock extends GTDirectionalBlock implements gregtech.
             return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
         if (level.getBlockEntity(pos) instanceof MultiblockTankControllerBlockEntity tank && tank.isStructureOk()) {
             if (level.isClientSide) return net.minecraft.world.InteractionResult.SUCCESS;
-//? if >=1.21.1 {
-            /*if (net.neoforged.neoforge.fluids.FluidUtil.interactWithFluidHandler(player, hand, tank.fluidHandler()))
-*///?} else {
-            if (net.minecraftforge.fluids.FluidUtil.interactWithFluidHandler(player, hand, tank.fluidHandler()))
-//?}
+            if (gregtech.engine.fluid.FluidContainerInteraction.use(player, hand, tank.fluidHandler()))
                 return net.minecraft.world.InteractionResult.CONSUME;
         }
         return net.minecraft.world.InteractionResult.PASS;
@@ -102,11 +98,7 @@ public class TankControllerBlock extends GTDirectionalBlock implements gregtech.
     @Override
     protected void appendTooltip(@NotNull ItemStack stack, @Nullable BlockGetter level,
             @Nullable HolderLookup.Provider registries, @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
-//? if >=1.21.1 {
-        /*gregtech.client.MultiblockTankTooltips.append(size, valveSpec, stack, registries, tooltip);
-*///?} else {
-        gregtech.client.MultiblockTankTooltips.append(size, valveSpec, stack, tooltip);
-//?}
+        gregtech.client.MultiblockTankTooltips.append(size, valveSpec, stack, registries, tooltip);
     }
 
     @Override

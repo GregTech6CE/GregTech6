@@ -7,10 +7,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 //?}
 import gregtech.engine.fluid.FluidDisplayBinding;
-//? if >=1.21.1 {
-//?} else {
-import gregtech.content.item.FluidItem;
-//?}
+import gregtech.content.item.FluidDisplayItemLike;
 import gregtech.content.registry.GTFluids;
 //? if >=1.21.1 {
 /*import com.mojang.serialization.MapCodec;
@@ -167,15 +164,8 @@ public final class CreosoteAxleRecipe extends ToolShapedRecipe {
         private static java.util.stream.Stream<ItemStack> examples() {
             return FiniteCraftingVessels.examples(required().getFluid()).stream();
         }
-//? if >=1.21.1 {
-        /*@Override public boolean test(ItemStack input) {
-            if (input == null || input.isEmpty()
-                    || input.getItem() instanceof gregtech.platform.neoforge.fluid.FluidDisplayItem
-*///?} else {
-
-        @Override public boolean test(@Nullable ItemStack input) {
-            if (input == null || input.isEmpty() || input.getItem() instanceof FluidItem
-//?}
+        @Override public boolean test(@org.jetbrains.annotations.Nullable ItemStack input) {
+            if (input == null || input.isEmpty() || input.getItem() instanceof FluidDisplayItemLike
                     || FluidDisplayBinding.hasPayload(input)) return false;
 //? if >=1.21.1 {
             /*var need = required();

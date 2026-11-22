@@ -2,6 +2,7 @@ package gregtech.platform.neoforge.fluid;
 
 import gregtech.api.material.*;
 import gregtech.content.data.RegisteredFluids;
+import gregtech.content.item.FluidDisplayItemLike;
 import gregtech.content.registry.GTFluidType;
 import gregtech.engine.material.*;
 import java.util.List;
@@ -13,7 +14,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 import org.jetbrains.annotations.NotNull;
 
 /** Native adapter for fluid display payloads, registered drinks and an inexhaustible source capability. */
-public final class FluidDisplayItem extends Item {
+public final class FluidDisplayItem extends Item implements FluidDisplayItemLike {
     private final RegisteredFluids.FluidEntry fluidEntry;
 
     public FluidDisplayItem(RegisteredFluids.FluidEntry fluidEntry, Properties properties) {
@@ -27,6 +28,7 @@ public final class FluidDisplayItem extends Item {
         return gregtech.engine.fluid.FluidDisplayInteraction.useFirst(stack, context);
     }
 
+    @Override
     public RegisteredFluids.FluidEntry fluidEntry() {
         return fluidEntry;
     }

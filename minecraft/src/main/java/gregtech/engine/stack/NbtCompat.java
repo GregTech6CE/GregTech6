@@ -25,7 +25,7 @@ public final class NbtCompat {
     /** Saved form of an item stack (empty stacks encode cleanly as an empty/air tag on both nodes). */
     public static Tag saveItem(ItemStack stack, HolderLookup.Provider lookup) {
 //? if >=1.21.1 {
-/*        return stack.saveOptional(provider(lookup));
+/*        return stack.saveOptional(java.util.Objects.requireNonNull(lookup, "stack codec needs the registry lookup"));
 *///?} else {
         return stack.save(new CompoundTag());
 //?}
@@ -37,7 +37,7 @@ public final class NbtCompat {
      */
     public static ItemStack readItem(CompoundTag tag, HolderLookup.Provider lookup) {
 //? if >=1.21.1 {
-/*        ItemStack stack = ItemStack.parseOptional(provider(lookup), tag);
+/*        ItemStack stack = ItemStack.parseOptional(java.util.Objects.requireNonNull(lookup, "stack codec needs the registry lookup"), tag);
         if (!stack.isEmpty() && tag.contains("tag"))
             stack.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
                     net.minecraft.world.item.component.CustomData.of(tag.getCompound("tag")));
@@ -50,7 +50,7 @@ public final class NbtCompat {
     /** Saved form of a fluid stack (empty stacks encode cleanly on both nodes). */
     public static Tag saveFluid(FluidStack stack, HolderLookup.Provider lookup) {
 //? if >=1.21.1 {
-/*        return stack.saveOptional(provider(lookup));
+/*        return stack.saveOptional(java.util.Objects.requireNonNull(lookup, "stack codec needs the registry lookup"));
 *///?} else {
         return stack.writeToNBT(new CompoundTag());
 //?}
@@ -58,7 +58,7 @@ public final class NbtCompat {
 
     public static FluidStack readFluid(CompoundTag tag, HolderLookup.Provider lookup) {
 //? if >=1.21.1 {
-/*        if (!tag.contains("FluidName")) return FluidStack.parseOptional(provider(lookup), tag);
+/*        if (!tag.contains("FluidName")) return FluidStack.parseOptional(java.util.Objects.requireNonNull(lookup, "stack codec needs the registry lookup"), tag);
         // Legacy Forge FluidName/Amount identity envelope.
         net.minecraft.resources.ResourceLocation id = net.minecraft.resources.ResourceLocation.tryParse(tag.getString("FluidName"));
         if (id == null || !net.minecraft.core.registries.BuiltInRegistries.FLUID.containsKey(id)) return FluidStack.EMPTY;
@@ -74,26 +74,18 @@ public final class NbtCompat {
     }
 
     public static void writeTank(FluidTankGT tank, CompoundTag tag, HolderLookup.Provider lookup) {
-//? if >=1.21.1 {
-/*        tank.writeToNBT(tag, provider(lookup));
-*///?} else {
-        tank.writeToNBT(tag);
-//?}
+        tank.writeToNBT(tag, lookup);
     }
 
     public static void readTank(FluidTankGT tank, CompoundTag tag, HolderLookup.Provider lookup) {
-//? if >=1.21.1 {
-/*        tank.readFromNBT(tag, provider(lookup));
-*///?} else {
-        tank.readFromNBT(tag);
-//?}
+        tank.readFromNBT(tag, lookup);
     }
 
     /** A block entity snapshot without metadata; 1.20.1 ignores the lookup. */
     public static CompoundTag saveWithoutMetadata(net.minecraft.world.level.block.entity.BlockEntity blockEntity,
             HolderLookup.Provider lookup) {
 //? if >=1.21.1 {
-/*        return blockEntity.saveWithoutMetadata(provider(lookup));
+/*        return blockEntity.saveWithoutMetadata(java.util.Objects.requireNonNull(lookup, "stack codec needs the registry lookup"));
 *///?} else {
         return blockEntity.saveWithoutMetadata();
 //?}
@@ -107,7 +99,7 @@ public final class NbtCompat {
     public static CompoundTag saveForBlockItem(net.minecraft.world.level.block.entity.BlockEntity blockEntity,
             HolderLookup.Provider lookup) {
 //? if >=1.21.1 {
-/*        return blockEntity.saveWithId(provider(lookup));
+/*        return blockEntity.saveWithId(java.util.Objects.requireNonNull(lookup, "stack codec needs the registry lookup"));
 *///?} else {
         return blockEntity.saveWithoutMetadata();
 //?}
@@ -117,7 +109,7 @@ public final class NbtCompat {
     public static CompoundTag getUpdateTag(net.minecraft.world.level.block.entity.BlockEntity blockEntity,
             HolderLookup.Provider lookup) {
 //? if >=1.21.1 {
-/*        return blockEntity.getUpdateTag(provider(lookup));
+/*        return blockEntity.getUpdateTag(java.util.Objects.requireNonNull(lookup, "stack codec needs the registry lookup"));
 *///?} else {
         return blockEntity.getUpdateTag();
 //?}
@@ -127,15 +119,9 @@ public final class NbtCompat {
     public static void loadBlockEntity(net.minecraft.world.level.block.entity.BlockEntity blockEntity,
             CompoundTag tag, HolderLookup.Provider lookup) {
 //? if >=1.21.1 {
-/*        blockEntity.loadCustomOnly(tag, provider(lookup));
+/*        blockEntity.loadCustomOnly(tag, java.util.Objects.requireNonNull(lookup, "stack codec needs the registry lookup"));
 *///?} else {
         blockEntity.load(tag);
 //?}
     }
-
-//? if >=1.21.1 {
-    /*private static HolderLookup.Provider provider(HolderLookup.Provider lookup) {
-        return java.util.Objects.requireNonNull(lookup, "stack codec needs the registry lookup");
-    }
-*///?}
 }

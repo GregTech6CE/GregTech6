@@ -206,9 +206,7 @@ public class LightningRodControllerBlockEntity extends GTEnergyBlockEntity imple
         energy = Math.max(0, Math.min(ENERGY_CAPACITY, tag.getLong("gt.energy")));
     }
 
-//? if >=1.21.1 {
-    /*public void restorePersistentState(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+    public void restorePersistentState(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         loadFromTag(tag, lookup);
     }
-*///?}
 }

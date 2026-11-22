@@ -379,11 +379,7 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
     protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         super.saveData(tag, lookup);
         CompoundTag storedFluidTag = new CompoundTag();
-//? if >=1.21.1 {
-        /*tank.writeToNBT(storedFluidTag, lookup);
-*///?} else {
-        tank.writeToNBT(storedFluidTag);
-//?}
+        tank.writeToNBT(storedFluidTag, lookup);
         tag.put("gt.tank", storedFluidTag);
         tag.putInt("gt.size", size);
     }
@@ -393,11 +389,7 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
         super.loadData(tag, lookup);
         setSize(size);
         // The placed valve owns size/capacity/proof flags; contents keep their source long amount.
-//? if >=1.21.1 {
-        /*gregtech.engine.fluid.MultiblockTankData.readContents(tank, tag, tank.baseCapacity(), lookup);
-*///?} else {
-        gregtech.engine.fluid.MultiblockTankData.readContents(tank, tag, tank.baseCapacity());
-//?}
+        gregtech.engine.fluid.MultiblockTankData.readContents(tank, tag, tank.baseCapacity(), lookup);
         tank.setOnChanged(this::setChanged);
     }
 }
