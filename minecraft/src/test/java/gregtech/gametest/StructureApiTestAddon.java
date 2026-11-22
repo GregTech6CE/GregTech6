@@ -25,6 +25,10 @@ public final class StructureApiTestAddon implements AddonMachineContributor, Beh
     @Override public String addonId() { return "gt6ce_api_test"; }
     @Override public Set<String> machineTypes() { return Set.of("structure_api_test", "ports_api_test", "ports_api_receiver"); }
 
+    @Override public List<CompressedGasTankDeclaration> compressedGasTanks() {
+        return List.of(new CompressedGasTankDeclaration("compressed_gas_api_test", "Iron", 8000, false, false, false));
+    }
+
     @Override public List<AddonMachine> addonMachines() {
         var coils = CellMatch.oneOf(CellMatch.part("steel_wall"), CellMatch.part("titanium_wall"));
         var layout = StructureLayout.pattern("api_test_shape").layer(0, "SABC").ignore('.')

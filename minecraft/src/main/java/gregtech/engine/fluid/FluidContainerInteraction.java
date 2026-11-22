@@ -59,6 +59,19 @@ public final class FluidContainerInteraction {
     }
 
     /**
+     * One-way pour from a held fluid container into {@code tank}, keeping stacked {@code copyWithCount(1)}
+     * and creative preservation semantics without exposing reverse draining.
+     */
+    public static boolean pour(Player player, InteractionHand hand, IFluidHandler tank) {
+        var held = player.getItemInHand(hand);
+        if (held.isEmpty()) return false;
+        var result = FluidUtil.tryEmptyContainer(held, tank, Integer.MAX_VALUE, player, true);
+        if (!result.isSuccess()) return false;
+        applyResult(player, hand, held, result.getResult(), true);
+        return true;
+    }
+
+    /**
      * Applies replacement container delivery and syncs {@link ServerPlayer} inventory slots immediately.
      * Creative mode preserves filled containers and keeps empty containers while unconditionally adding filled output.
      */

@@ -54,27 +54,9 @@ import net.minecraft.world.phys.BlockHitResult;
 
 
 //? if >=1.21.1 {
-/*import net.neoforged.neoforge.capabilities.Capabilities;
-*///?} else {
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-//?}
-
-//? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
-//?}
-
-//? if >=1.21.1 {
-/*import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-*///?} else {
-import net.minecraftforge.fluids.capability.IFluidHandler;
-//?}
-
-//? if >=1.21.1 {
-/*import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
-*///?} else {
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 //?}
 
 
@@ -178,28 +160,14 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements gregtech.
             if (result != InteractionResult.PASS) return result;
         }
         // Fluid injection from held fluid container (GT6: right-click machine with fluid cell)
-        if (!held.isEmpty() && be instanceof BasicMachineBlockEntity basicBe) {
-//? if >=1.21.1 {
-/*            IFluidHandlerItem fluidItem = held.getCapability(Capabilities.FluidHandler.ITEM);
-*///?} else {
-            IFluidHandlerItem fluidItem = held.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM)
-                    .resolve().orElse(null);
-//?}
-            if (fluidItem != null && basicBe.getTanksInput() != null && basicBe.getTanksInput().length > 0) {
-                if (!level.isClientSide) {
-                    FluidStack available = fluidItem.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE);
-                    if (!available.isEmpty()) {
-                        int accepted = basicBe.fill(available, IFluidHandler.FluidAction.SIMULATE);
-                        if (accepted > 0) {
-                            FluidStack drained = fluidItem.drain(accepted, IFluidHandler.FluidAction.EXECUTE);
-                            if (!drained.isEmpty()) {
-                                basicBe.fill(drained, IFluidHandler.FluidAction.EXECUTE);
-                                player.setItemInHand(hand, fluidItem.getContainer());
-                            }
-                        }
-                    }
-                }
-                return InteractionResult.sidedSuccess(level.isClientSide);
+        if (be instanceof BasicMachineBlockEntity basicBe
+                && basicBe.getTanksInput() != null
+                && basicBe.getTanksInput().length > 0
+                && gregtech.engine.fluid.FluidContainerInteraction.canInteract(player, hand)) {
+            if (level.isClientSide) return InteractionResult.SUCCESS;
+            if (gregtech.engine.fluid.FluidContainerInteraction.pour(player, hand, basicBe)) {
+                basicBe.setChanged();
+                return InteractionResult.CONSUME;
             }
         }
 

@@ -2,6 +2,8 @@ package gregtech.content.item;
 
 import gregtech.content.block.energy.ReactorCoreBlock;
 import gregtech.content.block.machine.AxialGeneratorBlock;
+import gregtech.content.block.machine.BasicMachineBlock;
+import gregtech.content.block.machine.BehaviorMachineBlock;
 import gregtech.content.block.machine.BurningBoxBlock;
 import gregtech.content.block.machine.CompressedGasTankBlock;
 import gregtech.content.block.machine.FluidPipeBlock;
@@ -57,7 +59,9 @@ final class PortableFluidItemUse {
                 || block instanceof AxialGeneratorBlock
                 || block instanceof OriginalLargeBoilerControllerBlock
                 || block instanceof LargeHeatExchangerControllerBlock
-                || block instanceof LargeGasTurbineControllerBlock) {
+                || block instanceof LargeGasTurbineControllerBlock
+                || block instanceof BasicMachineBlock
+                || block instanceof BehaviorMachineBlock) {
             return true;
         }
         return entity instanceof SmeltingCrucibleBlockEntity

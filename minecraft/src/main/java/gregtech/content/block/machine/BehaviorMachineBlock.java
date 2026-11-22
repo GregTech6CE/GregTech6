@@ -28,15 +28,9 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 //? if >=1.21.1 {
-/*import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
+/*import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 *///?} else {
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.network.NetworkHooks;
 //?}
 
@@ -58,15 +52,13 @@ public class BehaviorMachineBlock extends GTFacingMachineBlock implements gregte
         if (wrench != InteractionResult.PASS) return wrench;
         BlockEntity entity = level.getBlockEntity(pos);
         if (!(entity instanceof BehaviorMachineBlockEntity machine)) return InteractionResult.PASS;
-        ItemStack held = player.getItemInHand(hand);
-//? if >=1.21.1 {
-/*        IFluidHandlerItem fluidItem = held.getCapability(Capabilities.FluidHandler.ITEM);
-*///?} else {
-        IFluidHandlerItem fluidItem = held.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).resolve().orElse(null);
-//?}
-        if (fluidItem != null && machine.tanks() > 0) {
-            if (!level.isClientSide) pour(player, hand, machine, fluidItem, hit.getDirection());
-            return InteractionResult.sidedSuccess(level.isClientSide);
+        if (machine.tanks() > 0 && gregtech.engine.fluid.FluidContainerInteraction.canInteract(player, hand)) {
+            if (level.isClientSide) return InteractionResult.SUCCESS;
+            IFluidHandler sideHandler = machine.fluidHandler(hit.getDirection());
+            if (sideHandler != null && gregtech.engine.fluid.FluidContainerInteraction.pour(player, hand, sideHandler)) {
+                machine.setChanged();
+                return InteractionResult.CONSUME;
+            }
         }
         if (!level.isClientSide && machine.onUse(player, hand)) return InteractionResult.sidedSuccess(false);
         if (!level.isClientSide && player instanceof ServerPlayer server) {
@@ -148,20 +140,6 @@ public class BehaviorMachineBlock extends GTFacingMachineBlock implements gregte
         if (held == null || held.isEmpty()) return null;
         for (AddonTool tool : AddonTool.values()) if (AddonTools.matches(held, tool)) return tool;
         return null;
-    }
-
-    private static void pour(Player player, InteractionHand hand, BehaviorMachineBlockEntity machine,
-                             IFluidHandlerItem fluidItem, Direction side) {
-        IFluidHandler tanks = machine.fluidHandler(side);
-        if (tanks == null) return;
-        FluidStack available = fluidItem.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE);
-        if (available.isEmpty()) return;
-        int accepted = tanks.fill(available, IFluidHandler.FluidAction.SIMULATE);
-        if (accepted <= 0) return;
-        FluidStack drained = fluidItem.drain(accepted, IFluidHandler.FluidAction.EXECUTE);
-        if (drained.isEmpty()) return;
-        tanks.fill(drained, IFluidHandler.FluidAction.EXECUTE);
-        player.setItemInHand(hand, fluidItem.getContainer());
     }
 
     @Override
