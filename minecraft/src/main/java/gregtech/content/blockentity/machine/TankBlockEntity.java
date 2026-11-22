@@ -263,7 +263,8 @@ public class TankBlockEntity extends GTBlockEntity implements IFluidHandler, gre
 
     /** Use the platform transaction so replacement containers, stacks and creative mode stay consistent. */
     public InteractionResult handleUse(Player player, InteractionHand hand) {
-        if (level == null || level.isClientSide) return InteractionResult.PASS;
+        if (level == null) return InteractionResult.PASS;
+        if (level.isClientSide) return FluidContainerInteraction.clientResult(player, hand);
         if (!FluidContainerInteraction.use(player, hand, this))
             return InteractionResult.PASS;
         setChanged();

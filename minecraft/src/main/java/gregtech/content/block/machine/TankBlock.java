@@ -30,7 +30,6 @@ public class TankBlock extends GTBlock implements EntityBlock {
     @Override
     protected InteractionResult useBlock(
             BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (level.isClientSide) return InteractionResult.sidedSuccess(true);
         BlockEntity be = level.getBlockEntity(pos);
         if (!(be instanceof TankBlockEntity tank)) return InteractionResult.PASS;
 
@@ -38,6 +37,7 @@ public class TankBlock extends GTBlock implements EntityBlock {
 
         // Wrench / Monkey Wrench: toggle automatic output
         if (!player.isShiftKeyDown() && GTToolHelper.isMachineWrench(held)) {
+            if (level.isClientSide) return InteractionResult.SUCCESS;
             tank.toggleAutoOutput();
             player.displayClientMessage(
                     net.minecraft.network.chat.Component.translatable(
@@ -52,6 +52,7 @@ public class TankBlock extends GTBlock implements EntityBlock {
 
         // Soft Hammer: toggle states
         if (!player.isShiftKeyDown() && GTToolHelper.matchesTool(held, GTToolType.SOFT_HAMMER)) {
+            if (level.isClientSide) return InteractionResult.SUCCESS;
             tank.toggleSoftHammerState();
             level.playSound(null, pos, GTSounds.WRENCH.get(), SoundSource.BLOCKS, 0.5F, 1.0F);
             GTToolHelper.damageForUse(held, 1, player);
@@ -60,6 +61,7 @@ public class TankBlock extends GTBlock implements EntityBlock {
 
         // Magnifying Glass: show details
         if (!player.isShiftKeyDown() && GTToolHelper.matchesTool(held, GTToolType.MAGNIFYING_GLASS)) {
+            if (level.isClientSide) return InteractionResult.SUCCESS;
             TankTooltips.sendTankInfo(tank, player);
             return InteractionResult.CONSUME;
         }

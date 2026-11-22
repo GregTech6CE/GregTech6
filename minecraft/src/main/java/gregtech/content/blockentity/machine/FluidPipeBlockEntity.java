@@ -1228,7 +1228,8 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
     /** Container transactions use the clicked face, including its connection, filter and backflow rules. */
     public net.minecraft.world.InteractionResult handleUse(Player player, net.minecraft.world.InteractionHand hand,
                                                            Direction side) {
-        if (level == null || level.isClientSide) return net.minecraft.world.InteractionResult.PASS;
+        if (level == null) return net.minecraft.world.InteractionResult.PASS;
+        if (level.isClientSide) return FluidContainerInteraction.clientResult(player, hand);
 //? if >=1.21.1 {
         /*IFluidHandler face = capabilityHandler(side);
 *///?} else {

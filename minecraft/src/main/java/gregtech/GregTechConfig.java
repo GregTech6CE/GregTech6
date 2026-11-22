@@ -115,6 +115,7 @@ public final class GregTechConfig {
 
     /** Set only by runtime tests that need a mode different from the loaded config file. */
     private static FluidDistribution fluidDistributionOverride;
+    private static Boolean tanksRequireFluidToolsOverride;
 
     public enum Rule {
         STREETS("worldgen.center.streets", false),
@@ -192,7 +193,11 @@ public final class GregTechConfig {
             this.client = client;
         }
 
-        public boolean enabled() { return RULES.get(this).getAsBoolean(); }
+        public boolean enabled() {
+            if (this == TANKS_REQUIRE_FLUID_TOOLS && tanksRequireFluidToolsOverride != null)
+                return tanksRequireFluidToolsOverride;
+            return RULES.get(this).getAsBoolean();
+        }
     }
 
     public enum Number {
@@ -373,6 +378,11 @@ public final class GregTechConfig {
     /** Runtime tests only: pin the mode without rewriting the config file; {@code null} clears it. */
     public static void overrideFluidDistributionForTesting(FluidDistribution mode) {
         fluidDistributionOverride = mode;
+    }
+
+    /** Runtime tests only: override {@link Rule#TANKS_REQUIRE_FLUID_TOOLS} without rewriting config files. */
+    public static void overrideTanksRequireFluidToolsForTesting(Boolean enabled) {
+        tanksRequireFluidToolsOverride = enabled;
     }
 
     public static boolean explodeByOverload() {

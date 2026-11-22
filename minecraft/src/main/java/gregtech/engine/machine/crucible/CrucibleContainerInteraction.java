@@ -2,6 +2,7 @@ package gregtech.engine.machine.crucible;
 
 import gregtech.api.material.GTValues;
 import gregtech.content.material.Materials;
+import gregtech.engine.fluid.FluidContainerInteraction;
 import gregtech.engine.fluid.MoltenFluidHandler;
 import gregtech.engine.fluid.MoltenMaterialUnits;
 import gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity;
@@ -81,6 +82,7 @@ public static InteractionResult interact(SmeltingCrucibleBlockEntity crucible, P
         if (!player.getAbilities().instabuild)
             player.setItemInHand(hand, ItemUtils.createFilledResult(held, player,
                     new ItemStack(honey ? Items.GLASS_BOTTLE : Items.BUCKET)));
+        FluidContainerInteraction.syncInventory(player);
         return InteractionResult.CONSUME;
     }
 
@@ -92,20 +94,12 @@ public static InteractionResult interact(SmeltingCrucibleBlockEntity crucible, P
         var held = player.getItemInHand(hand);
         var filled = FluidUtil.tryFillContainer(held, blockHandler, Integer.MAX_VALUE, player, true);
         if (filled.isSuccess()) {
-            if (player.getAbilities().instabuild) {
-                // Creative keeps the empty bottle and always stows another filled one.
-                ItemStack result = filled.getResult();
-                if (!player.getInventory().add(result.copy())) player.drop(result.copy(), false);
-            } else {
-                player.setItemInHand(hand, ItemUtils.createFilledResult(held, player, filled.getResult()));
-            }
+            FluidContainerInteraction.applyResult(player, hand, held, filled.getResult(), false);
             return InteractionResult.CONSUME;
         }
         var emptied = FluidUtil.tryEmptyContainer(held, blockHandler, Integer.MAX_VALUE, player, true);
         if (emptied.isSuccess()) {
-            // Creative keeps the filled container, like a vanilla bucket; only survival swaps it out.
-            if (!player.getAbilities().instabuild)
-                player.setItemInHand(hand, ItemUtils.createFilledResult(held, player, emptied.getResult()));
+            FluidContainerInteraction.applyResult(player, hand, held, emptied.getResult(), true);
             return InteractionResult.CONSUME;
         }
         return InteractionResult.FAIL;

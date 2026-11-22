@@ -53,7 +53,8 @@ public class TankControllerBlock extends GTDirectionalBlock implements gregtech.
         if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit))
             return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
         if (level.getBlockEntity(pos) instanceof MultiblockTankControllerBlockEntity tank && tank.isStructureOk()) {
-            if (level.isClientSide) return net.minecraft.world.InteractionResult.SUCCESS;
+            if (level.isClientSide)
+                return gregtech.engine.fluid.FluidContainerInteraction.clientResult(player, hand);
             if (gregtech.engine.fluid.FluidContainerInteraction.use(player, hand, tank.fluidHandler()))
                 return net.minecraft.world.InteractionResult.CONSUME;
         }

@@ -42,10 +42,15 @@ public class FluidAttachmentBlock extends GTBlock implements gregtech.engine.too
         if (target == null) return InteractionResult.PASS;
         var handler = attachedHandler(level, targetPos, facing.getOpposite());
         if (handler == null) return InteractionResult.PASS;
-        if (level.isClientSide) return InteractionResult.SUCCESS;
+        if (level.isClientSide) {
+            if (player.getItemInHand(hand).isEmpty() && spec.shape().equals("tap"))
+                return InteractionResult.SUCCESS;
+            return gregtech.engine.fluid.FluidContainerInteraction.clientResult(player, hand);
+        }
         if (player.getItemInHand(hand).isEmpty() && spec.shape().equals("tap"))
             return pourBelow(level, pos, access(handler)) ? InteractionResult.CONSUME : InteractionResult.PASS;
-        return FluidUtil.interactWithFluidHandler(player, hand, access(handler)) ? InteractionResult.CONSUME : InteractionResult.PASS;
+        return gregtech.engine.fluid.FluidContainerInteraction.use(player, hand, access(handler))
+                ? InteractionResult.CONSUME : InteractionResult.PASS;
     }
 
 //? if >=1.21.1 {

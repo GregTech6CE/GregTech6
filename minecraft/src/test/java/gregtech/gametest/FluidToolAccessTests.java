@@ -362,6 +362,252 @@ public final class FluidToolAccessTests {
         helper.succeed();
     }
 
+    @GameTest(template = "test_empty", timeoutTicks = 40)
+    public static void creativeEmptyBucketDrainsTankAndPipeEvenWithExistingWaterBucket(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var drumPos = helper.absolutePos(new BlockPos(1, 1, 2));
+        var pipePos = helper.absolutePos(new BlockPos(3, 1, 2));
+        Block drumBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "drum_bronze"));
+        Block pipeBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "pipe_large_steel"));
+        level.setBlockAndUpdate(drumPos, drumBlock.defaultBlockState());
+        level.setBlockAndUpdate(
+                pipePos, pipeBlock.defaultBlockState().setValue(gregtech.content.block.machine.FluidPipeBlock.UP, true));
+
+        var drum = (TankBlockEntity) level.getBlockEntity(drumPos);
+        var pipe = (gregtech.content.blockentity.machine.FluidPipeBlockEntity) level.getBlockEntity(pipePos);
+        helper.assertTrue(drum != null && pipe != null, "Drum or pipe fixture is missing");
+        helper.assertTrue(
+                drum.fill(new FluidStack(Fluids.WATER, 2000), IFluidHandler.FluidAction.EXECUTE) == 2000
+                        && pipe.fill(new FluidStack(Fluids.WATER, 2000), IFluidHandler.FluidAction.EXECUTE) == 2000,
+                "Fixtures did not accept initial water");
+
+        var player = MultiblockBehaviorApiTests.menuPlayer(helper);
+        gregtech.GregTechConfig.overrideTanksRequireFluidToolsForTesting(false);
+        try {
+            player.initInventoryMenu();
+            player.getInventory().setItem(0, new ItemStack(net.minecraft.world.item.Items.WATER_BUCKET));
+            player.getInventory().selected = 1;
+            player.getInventory().setItem(1, new ItemStack(net.minecraft.world.item.Items.BUCKET));
+
+            var drumHit = new net.minecraft.world.phys.BlockHitResult(
+                    drumPos.getCenter(), Direction.UP, drumPos, false);
+            var drumRes = player.gameMode.useItemOn(
+                    player, level, player.getMainHandItem(), net.minecraft.world.InteractionHand.MAIN_HAND, drumHit);
+            helper.assertTrue(
+                    drumRes.consumesAction()
+                            && drum.getFluidInTank(0).getAmount() == 1000
+                            && player.getMainHandItem().is(net.minecraft.world.item.Items.BUCKET)
+                            && countItem(player, net.minecraft.world.item.Items.WATER_BUCKET) == 2,
+                    "Creative drum drain did not unconditionally deliver a second water bucket");
+
+            var pipeHit = new net.minecraft.world.phys.BlockHitResult(
+                    pipePos.getCenter(), Direction.UP, pipePos, false);
+            var pipeRes = player.gameMode.useItemOn(
+                    player, level, player.getMainHandItem(), net.minecraft.world.InteractionHand.MAIN_HAND, pipeHit);
+            helper.assertTrue(
+                    pipeRes.consumesAction()
+                            && pipe.getFluidInTank(0).getAmount() == 1000
+                            && player.getMainHandItem().is(net.minecraft.world.item.Items.BUCKET)
+                            && countItem(player, net.minecraft.world.item.Items.WATER_BUCKET) == 3,
+                    "Creative pipe drain did not unconditionally deliver a third water bucket");
+        } finally {
+            gregtech.GregTechConfig.overrideTanksRequireFluidToolsForTesting(null);
+            player.discard();
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 40)
+    public static void creativeStackedGlassBottlesExtractRepeatedlyIntoInventory(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var drumPos = helper.absolutePos(new BlockPos(1, 1, 2));
+        var pipePos = helper.absolutePos(new BlockPos(3, 1, 2));
+        Block drumBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "drum_bronze"));
+        Block pipeBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "pipe_large_steel"));
+        level.setBlockAndUpdate(drumPos, drumBlock.defaultBlockState());
+        level.setBlockAndUpdate(
+                pipePos, pipeBlock.defaultBlockState().setValue(gregtech.content.block.machine.FluidPipeBlock.UP, true));
+
+        var drum = (TankBlockEntity) level.getBlockEntity(drumPos);
+        var pipe = (gregtech.content.blockentity.machine.FluidPipeBlockEntity) level.getBlockEntity(pipePos);
+        helper.assertTrue(drum != null && pipe != null, "Drum or pipe fixture is missing");
+        drum.fill(new FluidStack(Fluids.WATER, 1000), IFluidHandler.FluidAction.EXECUTE);
+        pipe.fill(new FluidStack(Fluids.WATER, 1000), IFluidHandler.FluidAction.EXECUTE);
+
+        var player = MultiblockBehaviorApiTests.menuPlayer(helper);
+        gregtech.GregTechConfig.overrideTanksRequireFluidToolsForTesting(false);
+        try {
+            player.initInventoryMenu();
+            player.getInventory().setItem(0, new ItemStack(net.minecraft.world.item.Items.GLASS_BOTTLE, 4));
+            var drumHit = new net.minecraft.world.phys.BlockHitResult(
+                    drumPos.getCenter(), Direction.UP, drumPos, false);
+            var pipeHit = new net.minecraft.world.phys.BlockHitResult(
+                    pipePos.getCenter(), Direction.UP, pipePos, false);
+
+            helper.assertTrue(
+                    player.gameMode
+                                    .useItemOn(
+                                            player,
+                                            level,
+                                            player.getMainHandItem(),
+                                            net.minecraft.world.InteractionHand.MAIN_HAND,
+                                            drumHit)
+                                    .consumesAction()
+                            && player.gameMode
+                                    .useItemOn(
+                                            player,
+                                            level,
+                                            player.getMainHandItem(),
+                                            net.minecraft.world.InteractionHand.MAIN_HAND,
+                                            drumHit)
+                                    .consumesAction()
+                            && player.gameMode
+                                    .useItemOn(
+                                            player,
+                                            level,
+                                            player.getMainHandItem(),
+                                            net.minecraft.world.InteractionHand.MAIN_HAND,
+                                            pipeHit)
+                                    .consumesAction(),
+                    "Repeated creative glass bottle extractions failed");
+
+            helper.assertTrue(
+                    player.getMainHandItem().is(net.minecraft.world.item.Items.GLASS_BOTTLE)
+                            && player.getMainHandItem().getCount() == 4
+                            && drum.getFluidInTank(0).getAmount() == 500
+                            && pipe.getFluidInTank(0).getAmount() == 750
+                            && countWaterBottles(player) == 3,
+                    "Stacked creative glass bottles did not keep count 4 or deliver 3 water bottles");
+        } finally {
+            gregtech.GregTechConfig.overrideTanksRequireFluidToolsForTesting(null);
+            player.discard();
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 40)
+    public static void clientPredictionConsumesFluidContainersAndPassesOthers(GameTestHelper helper) {
+        var player = mockCreativePlayer(helper);
+        var hand = net.minecraft.world.InteractionHand.MAIN_HAND;
+
+        for (var item : java.util.List.of(
+                net.minecraft.world.item.Items.BUCKET,
+                net.minecraft.world.item.Items.WATER_BUCKET,
+                net.minecraft.world.item.Items.GLASS_BOTTLE)) {
+            player.setItemInHand(hand, new ItemStack(item));
+            helper.assertTrue(
+                    gregtech.engine.fluid.FluidContainerInteraction.canInteract(player, hand)
+                            && gregtech.engine.fluid.FluidContainerInteraction.clientResult(player, hand)
+                                    == net.minecraft.world.InteractionResult.SUCCESS,
+                    "Fluid container " + item + " must return SUCCESS on client prediction");
+        }
+
+        player.setItemInHand(hand, ItemStack.EMPTY);
+        helper.assertTrue(
+                !gregtech.engine.fluid.FluidContainerInteraction.canInteract(player, hand)
+                        && gregtech.engine.fluid.FluidContainerInteraction.clientResult(player, hand)
+                                == net.minecraft.world.InteractionResult.PASS,
+                "Empty hand must return PASS on client prediction");
+
+        player.setItemInHand(hand, new ItemStack(net.minecraft.world.item.Items.DIRT));
+        helper.assertTrue(
+                !gregtech.engine.fluid.FluidContainerInteraction.canInteract(player, hand)
+                        && gregtech.engine.fluid.FluidContainerInteraction.clientResult(player, hand)
+                                == net.minecraft.world.InteractionResult.PASS,
+                "Unrelated item must return PASS on client prediction");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 40)
+    public static void serverFluidContainerUseImmediatelySyncsInventoryMenuToRemote(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var drumPos = helper.absolutePos(new BlockPos(2, 1, 2));
+        Block drumBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "drum_bronze"));
+        level.setBlockAndUpdate(drumPos, drumBlock.defaultBlockState());
+        var drum = (TankBlockEntity) level.getBlockEntity(drumPos);
+        helper.assertTrue(drum != null, "The tank fixture did not create a TankBlockEntity");
+        drum.fill(new FluidStack(Fluids.WATER, 1000), IFluidHandler.FluidAction.EXECUTE);
+
+        var sent = new java.util.ArrayList<net.minecraft.network.protocol.Packet<?>>();
+        var profile = new com.mojang.authlib.GameProfile(java.util.UUID.randomUUID(), "sync-test");
+        var connection = new net.minecraft.network.Connection(net.minecraft.network.protocol.PacketFlow.SERVERBOUND);
+        new io.netty.channel.embedded.EmbeddedChannel(connection);
+//? if >=1.21.1 {
+        /*var player = new net.minecraft.server.level.ServerPlayer(level.getServer(), level, profile,
+                net.minecraft.server.level.ClientInformation.createDefault());
+        player.connection = new net.minecraft.server.network.ServerGamePacketListenerImpl(level.getServer(), connection, player,
+                net.minecraft.server.network.CommonListenerCookie.createInitial(profile, false)) {
+*///?} else {
+        var player = new net.minecraft.server.level.ServerPlayer(level.getServer(), level, profile);
+        player.connection = new net.minecraft.server.network.ServerGamePacketListenerImpl(level.getServer(), connection, player) {
+//?}
+            @Override public void send(net.minecraft.network.protocol.Packet<?> packet) { sent.add(packet); }
+            @Override public void send(net.minecraft.network.protocol.Packet<?> packet, net.minecraft.network.PacketSendListener listener) { sent.add(packet); }
+        };
+        gregtech.GregTechConfig.overrideTanksRequireFluidToolsForTesting(false);
+        try {
+            player.setGameMode(net.minecraft.world.level.GameType.CREATIVE);
+            player.initInventoryMenu();
+            player.getInventory().setItem(0, new ItemStack(net.minecraft.world.item.Items.WATER_BUCKET));
+            player.getInventory().selected = 1;
+            player.getInventory().setItem(1, new ItemStack(net.minecraft.world.item.Items.BUCKET));
+            player.inventoryMenu.broadcastChanges();
+            sent.clear();
+
+            var hit = new net.minecraft.world.phys.BlockHitResult(
+                    drumPos.getCenter(), Direction.UP, drumPos, false);
+            var res = player.gameMode.useItemOn(
+                    player, level, player.getMainHandItem(), net.minecraft.world.InteractionHand.MAIN_HAND, hit);
+            helper.assertTrue(res.consumesAction(), "useItemOn did not consume the container click");
+
+            boolean syncedWaterBucket = false;
+            for (var pkt : sent) {
+                if (pkt instanceof net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket slotPkt
+                        && slotPkt.getItem().is(net.minecraft.world.item.Items.WATER_BUCKET)) {
+                    syncedWaterBucket = true;
+                    break;
+                }
+                if (pkt instanceof net.minecraft.network.protocol.game.ClientboundContainerSetContentPacket contentPkt
+                        && contentPkt.getItems().stream()
+                                .anyMatch(s -> s.is(net.minecraft.world.item.Items.WATER_BUCKET))) {
+                    syncedWaterBucket = true;
+                    break;
+                }
+            }
+            helper.assertTrue(
+                    syncedWaterBucket && countItem(player, net.minecraft.world.item.Items.WATER_BUCKET) == 2,
+                    "Server useItemOn did not immediately flush the added water bucket to the remote client");
+
+            sent.clear();
+            player.inventoryMenu.broadcastChanges();
+            boolean extraSlotSync = sent.stream()
+                    .anyMatch(p -> p instanceof net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket);
+            helper.assertTrue(!extraSlotSync, "InventoryMenu still had unsynced slot diffs after immediate sync");
+        } finally {
+            gregtech.GregTechConfig.overrideTanksRequireFluidToolsForTesting(null);
+            player.discard();
+        }
+        helper.succeed();
+    }
+
+    private static int countItem(net.minecraft.world.entity.player.Player player, net.minecraft.world.item.Item item) {
+        int count = 0;
+        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+            var stack = player.getInventory().getItem(i);
+            if (stack.is(item)) count += stack.getCount();
+        }
+        return count;
+    }
+
+    private static int countWaterBottles(net.minecraft.world.entity.player.Player player) {
+        int count = 0;
+        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+            var stack = player.getInventory().getItem(i);
+            if (!gregtech.engine.fluid.PotionBottleHandler.contents(stack).isEmpty()) count += stack.getCount();
+        }
+        return count;
+    }
+
     private static net.minecraft.world.entity.player.Player mockCreativePlayer(GameTestHelper helper) {
 //? if >=1.21.1 {
 /*        var player = helper.makeMockPlayer(net.minecraft.world.level.GameType.CREATIVE);

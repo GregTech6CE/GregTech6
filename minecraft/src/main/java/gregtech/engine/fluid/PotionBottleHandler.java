@@ -75,7 +75,7 @@ public final class PotionBottleHandler implements IFluidHandlerItem {
         if (!stack.is(Items.POTION)) return FluidStack.EMPTY;
 //? if >=1.21.1 {
         /*var potion = stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).potion();
-        if (potion.isEmpty() || potion.get().value() != Potions.WATER) return FluidStack.EMPTY;
+        if (potion.isEmpty() || !potion.get().is(Potions.WATER)) return FluidStack.EMPTY;
 *///?} else {
         if (PotionUtils.getPotion(stack) != Potions.WATER) return FluidStack.EMPTY;
 //?}
