@@ -160,17 +160,7 @@ public final class WoodenBucketItem extends TechItem {
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
-        // Predict acceptance without changing the client tank or inventory. FluidUtil's
-        // interact method executes transfers; only the logical server may call it.
-        if (level.isClientSide) {
-            boolean accepted = FluidUtil.getFluidHandler(level, context.getClickedPos(), context.getClickedFace())
-                    .map(handler -> FluidUtil.tryFillContainer(stack, handler, Integer.MAX_VALUE, null, false).isSuccess()
-                            || FluidUtil.tryEmptyContainer(stack, handler, Integer.MAX_VALUE, null, false).isSuccess())
-                    .orElse(false);
-            return accepted ? InteractionResult.SUCCESS : InteractionResult.PASS;
-        }
-        return FluidUtil.interactWithFluidHandler(player, context.getHand(), level, context.getClickedPos(),
-                context.getClickedFace()) ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
+        return PortableFluidItemUse.onItemUseFirst(context);
     }
 
     @Override

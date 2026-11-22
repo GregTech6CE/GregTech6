@@ -44,11 +44,17 @@ public final class FluidContainerInteraction {
         }
         // FluidUtil's stow variants discard the filled container in creative mode, draining the tank without
         // returning anything. Use the non-stow transfer and apply unified creative/survival container delivery.
+        boolean emptying = filled;
         var result = filled
                 ? FluidUtil.tryEmptyContainer(held, tank, Integer.MAX_VALUE, player, true)
                 : FluidUtil.tryFillContainer(held, tank, Integer.MAX_VALUE, player, true);
+        if (!result.isSuccess() && filled) {
+            // Partially filled containers against output-only endpoints or full tanks fall back to filling.
+            emptying = false;
+            result = FluidUtil.tryFillContainer(held, tank, Integer.MAX_VALUE, player, true);
+        }
         if (!result.isSuccess()) return false;
-        applyResult(player, hand, held, result.getResult(), filled);
+        applyResult(player, hand, held, result.getResult(), emptying);
         return true;
     }
 

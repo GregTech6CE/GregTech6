@@ -101,9 +101,12 @@ public final class PortableFluidContainerItem extends GTBlockItem implements gre
     }
 
     @Override public InteractionResult useOn(UseOnContext context) {
-        // Fluid transfer is handled first by onItemUseFirst; normal use must remain available to drink.
-        if (drinkVessel() && context.getPlayer() != null && !context.getPlayer().isShiftKeyDown())
+        // Fluid transfer is handled first by block handlers or onItemUseFirst; normal use must remain available to drink
+        // and failed fluid interactions must not place non-drink vessels as blocks.
+        if (context.getPlayer() != null && !context.getPlayer().isShiftKeyDown()
+                && (drinkVessel() || PortableFluidItemUse.blocksAccidentalPlacement(context))) {
             return InteractionResult.PASS;
+        }
         return super.useOn(context);
     }
 
@@ -176,16 +179,7 @@ public final class PortableFluidContainerItem extends GTBlockItem implements gre
 
     @Override
     public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
-        var player = context.getPlayer();
-        if (player == null || !context.getLevel().mayInteract(player, context.getClickedPos())
-                || !player.mayUseItemAt(context.getClickedPos(), context.getClickedFace(), stack)) return InteractionResult.PASS;
-        if (player.isShiftKeyDown() || context.getLevel().isClientSide) return InteractionResult.PASS;
-        var target = context.getLevel().getBlockEntity(context.getClickedPos());
-        if (target instanceof gregtech.content.blockentity.machine.MoldBlockEntity
-                || target instanceof gregtech.content.blockentity.machine.MoldBasinBlockEntity)
-            return InteractionResult.PASS;
-        return FluidUtil.interactWithFluidHandler(player, context.getHand(), context.getLevel(),
-                context.getClickedPos(), context.getClickedFace()) ? InteractionResult.SUCCESS : InteractionResult.PASS;
+        return PortableFluidItemUse.onItemUseFirst(context);
     }
     @Override
     protected void appendTooltip(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
