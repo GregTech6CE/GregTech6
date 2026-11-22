@@ -62,9 +62,12 @@ public final class ProcessingToolBlock extends ShapedToolBlock implements Entity
         if (hand != InteractionHand.MAIN_HAND) return InteractionResult.PASS;
         var rotation = super.useBlock(state, level, pos, player, hand, hit);
         if (rotation.consumesAction()) return rotation;
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof ProcessingToolBlockEntity tool)
+        if (level.getBlockEntity(pos) instanceof ProcessingToolBlockEntity tool) {
+            if (level.isClientSide) return tool.clientResult(player, hand, hit.getDirection());
             tool.interact(player, hand, hit.getDirection());
-        return InteractionResult.sidedSuccess(level.isClientSide);
+            return InteractionResult.CONSUME;
+        }
+        return InteractionResult.PASS;
     }
 
     @Override

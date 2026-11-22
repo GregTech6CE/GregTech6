@@ -21,10 +21,9 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 //? if >=1.21.1 {
-/*import net.neoforged.neoforge.fluids.FluidUtil;
+/*
 *///?} else {
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.fluids.FluidUtil;
 //?}
 
 import javax.annotation.Nullable;
@@ -37,15 +36,19 @@ public final class OriginalBedrockDrillControllerBlock extends GTBlock implement
     protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hit) {
         if (!(level.getBlockEntity(pos) instanceof BedrockDrillControllerBlockEntity drill))
-        return InteractionResult.PASS;
-        if (level.isClientSide) return InteractionResult.SUCCESS;
+            return InteractionResult.PASS;
+        if (level.isClientSide) {
+            return player.getItemInHand(hand).isEmpty()
+                    ? InteractionResult.SUCCESS
+                    : gregtech.engine.fluid.FluidContainerInteraction.clientResult(player, hand);
+        }
 //? if >=1.21.1 {
         /*var tank = drill.fluidCapability(hit.getDirection());
 *///?} else {
         var tank = drill.getCapability(ForgeCapabilities.FLUID_HANDLER, hit.getDirection()).resolve().orElse(null);
 //?}
-        if (tank != null && FluidUtil.interactWithFluidHandler(player, hand, tank))
-        return InteractionResult.CONSUME;
+        if (tank != null && gregtech.engine.fluid.FluidContainerInteraction.use(player, hand, tank))
+            return InteractionResult.CONSUME;
         if (player.getItemInHand(hand).isEmpty()) {
 //? if >=1.21.1 {
             /*var inventory = drill.itemCapability(Direction.UP);

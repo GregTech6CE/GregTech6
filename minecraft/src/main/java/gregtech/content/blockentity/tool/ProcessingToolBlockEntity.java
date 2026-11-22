@@ -1,5 +1,6 @@
 package gregtech.content.blockentity.tool;
 
+import gregtech.engine.fluid.FluidContainerInteraction;
 import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.inventory.BlockContents;
 import gregtech.engine.recipe.*;
@@ -259,6 +260,20 @@ public final class ProcessingToolBlockEntity extends GTBlockEntity implements Bl
         items.setStackInSlot(slot, out);
     }
 
+    public net.minecraft.world.InteractionResult clientResult(Player player, InteractionHand hand, Direction side) {
+        var held = player.getItemInHand(hand);
+        if (FluidContainerInteraction.canInteract(player, hand)
+                || held.isEmpty()
+                || held.getItem() instanceof gregtech.content.item.ElectricToolItem
+                || gregtech.engine.tool.GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.PLUNGER)
+                || juicer
+                || (side == Direction.UP && !player.isShiftKeyDown())
+                || recipes.itemInputSlots > 0) {
+            return net.minecraft.world.InteractionResult.SUCCESS;
+        }
+        return net.minecraft.world.InteractionResult.PASS;
+    }
+
     public void interact(Player player, InteractionHand hand, Direction side) {
         if (level == null || level.isClientSide || !player.mayBuild() || !level.mayInteract(player, worldPosition)) return;
         var held = player.getItemInHand(hand);
@@ -273,10 +288,10 @@ public final class ProcessingToolBlockEntity extends GTBlockEntity implements Bl
             }
         }
         if (juicer) {
-            if (!juiceHeld(player, hand)) FluidUtil.interactWithFluidHandler(player, hand, manualFluids);
+            if (!juiceHeld(player, hand)) FluidContainerInteraction.use(player, hand, manualFluids);
             return;
         }
-        if (FluidUtil.interactWithFluidHandler(player, hand, manualFluids)) return;
+        if (FluidContainerInteraction.use(player, hand, manualFluids)) return;
         if (side == Direction.UP && !player.isShiftKeyDown() && process(player)) return;
         if (collectOutputs(player)) return;
         if (!held.isEmpty()) {

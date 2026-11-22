@@ -39,7 +39,14 @@ public final class PortableContainerBlock extends GTBlock implements EntityBlock
                 }
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
-            if (level.isClientSide) return InteractionResult.SUCCESS;
+            if (level.isClientSide) {
+                if (player.getItemInHand(hand).isEmpty()
+                        && vessel.contents().getItem() instanceof gregtech.content.item.PortableFluidContainerItem item
+                        && item.drinkVessel()) {
+                    return InteractionResult.SUCCESS;
+                }
+                return gregtech.engine.fluid.FluidContainerInteraction.clientResult(player, hand);
+            }
             if (vessel.interact(player, hand, hit.getDirection())) return InteractionResult.CONSUME;
         }
         return InteractionResult.PASS;

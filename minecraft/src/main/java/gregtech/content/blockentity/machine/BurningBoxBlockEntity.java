@@ -3,6 +3,7 @@ package gregtech.content.blockentity.machine;
 import gregtech.engine.energy.EnergyTransfer;
 import gregtech.api.machine.*;
 import gregtech.engine.machine.*;
+import gregtech.engine.fluid.FluidContainerInteraction;
 import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
@@ -32,7 +33,6 @@ import net.minecraft.world.phys.BlockHitResult;
 
 
 /*import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.items.ItemHandlerHelper;
 import net.neoforged.neoforge.items.ItemStackHandler;
 *///?} else {
@@ -40,7 +40,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 //?}
@@ -291,8 +290,20 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
     // ── Player interaction ───────────────────────────────────────────────────
 
     public InteractionResult handleUse(Player player, InteractionHand hand, BlockHitResult hit) {
-        if (level == null || level.isClientSide) return InteractionResult.SUCCESS;
+        if (level == null) return InteractionResult.PASS;
         ItemStack held = player.getItemInHand(hand);
+        if (level.isClientSide) {
+            if (held.is(Items.FLINT_AND_STEEL)) return InteractionResult.SUCCESS;
+            if (held.isEmpty() && hit.getDirection() == getFrontFacing()) return InteractionResult.SUCCESS;
+            if (fuelTank != null && FluidContainerInteraction.canInteract(player, hand))
+                return InteractionResult.SUCCESS;
+            if (inventory != null && inventory.getSlots() > 0 && hit.getDirection() == getFrontFacing()
+                    && fuelType == BurningBoxFuelType.FLUIDIZED_BED
+                    && recipeMap != null && recipeMap.containsInput(held)) {
+                return InteractionResult.SUCCESS;
+            }
+            return InteractionResult.PASS;
+        }
 
         // Flint and steel: ignite
         if (held.is(Items.FLINT_AND_STEEL)) {
@@ -328,9 +339,9 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
         }
 
         // Fluid container: fill/drain from tank
-        if (fuelTank != null) {
-            boolean result = FluidUtil.interactWithFluidHandler(player, hand, fuelTank);
-            if (result) { setChanged(); return InteractionResult.CONSUME; }
+        if (fuelTank != null && FluidContainerInteraction.use(player, hand, fuelTank)) {
+            setChanged();
+            return InteractionResult.CONSUME;
         }
 
         // Insert item fuel for FluidizedBed
@@ -370,8 +381,22 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
     }
 
     public InteractionResult handleToolUse(Player player, InteractionHand hand, BlockHitResult hit) {
-        if (level == null || level.isClientSide) return InteractionResult.SUCCESS;
+        if (level == null) return InteractionResult.PASS;
         ItemStack held = player.getItemInHand(hand);
+        if (level.isClientSide) {
+            if (GTToolHelper.matchesTool(held, GTToolType.WRENCH)
+                    || GTToolHelper.matchesTool(held, GTToolType.MONKEY_WRENCH)) {
+                return InteractionResult.SUCCESS;
+            }
+            if (fuelType == BurningBoxFuelType.FLUIDIZED_BED
+                    && hit.getDirection() == getFrontFacing()
+                    && (GTToolHelper.matchesTool(held, GTToolType.SHOVEL)
+                        || GTToolHelper.matchesTool(held, GTToolType.SPADE)
+                        || GTToolHelper.matchesTool(held, GTToolType.UNIVERSAL_SPADE))) {
+                return InteractionResult.SUCCESS;
+            }
+            return InteractionResult.PASS;
+        }
 
         // Wrench: rotate facing
         if (GTToolHelper.matchesTool(held, GTToolType.WRENCH)

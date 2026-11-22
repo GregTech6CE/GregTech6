@@ -2,6 +2,7 @@ package gregtech.content.block.machine;
 
 import gregtech.content.block.GTDirectionalBlock;
 import gregtech.content.blockentity.machine.LargeHeatExchangerControllerBlockEntity;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -13,9 +14,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 
-import javax.annotation.Nullable;
-
-public class LargeHeatExchangerControllerBlock extends GTDirectionalBlock implements gregtech.engine.multiblock.StructurePreviewSource, gregtech.engine.tool.ToolInteractionTarget {
+public class LargeHeatExchangerControllerBlock extends GTDirectionalBlock
+        implements gregtech.engine.multiblock.StructurePreviewSource, gregtech.engine.tool.ToolInteractionTarget {
 
     public LargeHeatExchangerControllerBlock(Properties properties) {
         super(properties);
@@ -23,20 +23,19 @@ public class LargeHeatExchangerControllerBlock extends GTDirectionalBlock implem
     }
 
     @Override
-    protected net.minecraft.world.InteractionResult useBlock(BlockState state, Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
+    protected net.minecraft.world.InteractionResult useBlock(
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            net.minecraft.world.entity.player.Player player,
+            net.minecraft.world.InteractionHand hand,
             net.minecraft.world.phys.BlockHitResult hit) {
         if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit))
-        return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
+            return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
         if (level.getBlockEntity(pos) instanceof LargeHeatExchangerControllerBlockEntity machine) {
-            if (level.isClientSide) return net.minecraft.world.InteractionResult.SUCCESS;
-//? if >=1.21.1 {
-            /*if (net.neoforged.neoforge.fluids.FluidUtil.interactWithFluidHandler(player, hand,
-                    machine)) return net.minecraft.world.InteractionResult.CONSUME;
-*///?} else {
-            if (net.minecraftforge.fluids.FluidUtil.interactWithFluidHandler(player, hand,
-                    machine)) return net.minecraft.world.InteractionResult.CONSUME;
-//?}
+            if (level.isClientSide) return gregtech.engine.fluid.FluidContainerInteraction.clientResult(player, hand);
+            if (gregtech.engine.fluid.FluidContainerInteraction.use(player, hand, machine))
+                return net.minecraft.world.InteractionResult.CONSUME;
         }
         return net.minecraft.world.InteractionResult.PASS;
     }
@@ -52,9 +51,11 @@ public class LargeHeatExchangerControllerBlock extends GTDirectionalBlock implem
     }
 
     @Override
-    public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, net.minecraft.world.item.ItemStack tool) {
+    public gregtech.engine.tool.ToolInteractionSpec toolInteraction(
+            BlockState state, net.minecraft.world.item.ItemStack tool) {
         return gregtech.engine.tool.GTToolHelper.isMachineWrench(tool)
-                ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING, MachineRotationType.BOTTOM) : null;
+                ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING, MachineRotationType.BOTTOM)
+                : null;
     }
 
     @Override
@@ -76,19 +77,25 @@ public class LargeHeatExchangerControllerBlock extends GTDirectionalBlock implem
     @Nullable
     @Override
     @SuppressWarnings("unchecked")
-
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        if (level.isClientSide || type != gregtech.content.registry.GTBlockEntities.LARGE_HEAT_EXCHANGER.get()) return null;
-        return (tickLevel, tickPos, tickState, blockEntity) -> LargeHeatExchangerControllerBlockEntity.serverTick(tickLevel, tickPos, tickState, (LargeHeatExchangerControllerBlockEntity) blockEntity);
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, BlockEntityType<T> type) {
+        if (level.isClientSide || type != gregtech.content.registry.GTBlockEntities.LARGE_HEAT_EXCHANGER.get())
+            return null;
+        return (tickLevel, tickPos, tickState, blockEntity) -> LargeHeatExchangerControllerBlockEntity.serverTick(
+                tickLevel, tickPos, tickState, (LargeHeatExchangerControllerBlockEntity) blockEntity);
     }
 
     @Override
-    public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState state,
-            net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
+    public java.util.List<net.minecraft.world.item.ItemStack> getDrops(
+            BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
         var stack = new net.minecraft.world.item.ItemStack(this);
-        if (builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof LargeHeatExchangerControllerBlockEntity machine) {
-            var data = gregtech.content.cover.ComponentCoverFallback.forItem(machine,
-                    gregtech.engine.stack.NbtCompat.saveForBlockItem(machine, builder.getLevel().registryAccess()));
+        if (builder.getOptionalParameter(
+                        net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY)
+                instanceof LargeHeatExchangerControllerBlockEntity machine) {
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(
+                    machine,
+                    gregtech.engine.stack.NbtCompat.saveForBlockItem(
+                            machine, builder.getLevel().registryAccess()));
             data.remove("gt.energy");
             data.remove("gt.active");
             data.remove("gt.active.data");
@@ -101,8 +108,11 @@ public class LargeHeatExchangerControllerBlock extends GTDirectionalBlock implem
     }
 
     @Override
-    protected void appendTooltip(net.minecraft.world.item.ItemStack stack, @Nullable net.minecraft.world.level.BlockGetter level,
-            java.util.List<net.minecraft.network.chat.Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {
+    protected void appendTooltip(
+            net.minecraft.world.item.ItemStack stack,
+            @Nullable net.minecraft.world.level.BlockGetter level,
+            java.util.List<net.minecraft.network.chat.Component> tooltip,
+            net.minecraft.world.item.TooltipFlag flag) {
         gregtech.client.UtilityControllerTooltips.heat(stack, tooltip);
     }
 }

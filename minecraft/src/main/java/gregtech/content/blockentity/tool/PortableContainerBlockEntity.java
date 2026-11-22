@@ -2,6 +2,7 @@ package gregtech.content.blockentity.tool;
 
 import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.engine.fluid.FluidContainerInteraction;
 import gregtech.engine.stack.NbtCompat;
 import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.*;
@@ -74,7 +75,7 @@ public final class PortableContainerBlockEntity extends GTBlockEntity {
         }
     };
     public boolean interact(Player player, InteractionHand hand, Direction side) {
-        if (FluidUtil.interactWithFluidHandler(player, hand, handler)) return true;
+        if (FluidContainerInteraction.use(player, hand, handler)) return true;
         if (!(contents().getItem() instanceof gregtech.content.item.PortableFluidContainerItem item) || !item.drinkVessel()) return false;
         if (item.shapeId().equals("jug") && side != Direction.UP) return false;
         var portion = handler.drain(250, IFluidHandler.FluidAction.SIMULATE);

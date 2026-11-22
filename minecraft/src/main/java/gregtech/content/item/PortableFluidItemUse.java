@@ -1,10 +1,19 @@
 package gregtech.content.item;
 
+import gregtech.content.block.energy.ReactorCoreBlock;
+import gregtech.content.block.machine.AxialGeneratorBlock;
+import gregtech.content.block.machine.BurningBoxBlock;
 import gregtech.content.block.machine.CompressedGasTankBlock;
 import gregtech.content.block.machine.FluidPipeBlock;
+import gregtech.content.block.machine.LargeGasTurbineControllerBlock;
+import gregtech.content.block.machine.LargeHeatExchangerControllerBlock;
+import gregtech.content.block.machine.OriginalBedrockDrillControllerBlock;
+import gregtech.content.block.machine.OriginalLargeBoilerControllerBlock;
 import gregtech.content.block.machine.TankBlock;
 import gregtech.content.block.machine.TankControllerBlock;
 import gregtech.content.block.tool.FluidAttachmentBlock;
+import gregtech.content.block.tool.PortableContainerBlock;
+import gregtech.content.block.tool.ProcessingToolBlock;
 import gregtech.content.blockentity.machine.MoldBasinBlockEntity;
 import gregtech.content.blockentity.machine.MoldBlockEntity;
 import gregtech.content.blockentity.machine.MultiblockPortBlockEntity;
@@ -39,7 +48,16 @@ final class PortableFluidItemUse {
                 || block instanceof TankBlock
                 || block instanceof CompressedGasTankBlock
                 || block instanceof TankControllerBlock
-                || block instanceof FluidPipeBlock) {
+                || block instanceof FluidPipeBlock
+                || block instanceof PortableContainerBlock
+                || block instanceof ProcessingToolBlock
+                || block instanceof BurningBoxBlock
+                || block instanceof ReactorCoreBlock
+                || block instanceof OriginalBedrockDrillControllerBlock
+                || block instanceof AxialGeneratorBlock
+                || block instanceof OriginalLargeBoilerControllerBlock
+                || block instanceof LargeHeatExchangerControllerBlock
+                || block instanceof LargeGasTurbineControllerBlock) {
             return true;
         }
         return entity instanceof SmeltingCrucibleBlockEntity

@@ -52,12 +52,9 @@ public abstract class AxialGeneratorBlock extends GTDirectionalBlock implements 
 *///?} else {
             if (machine instanceof net.minecraftforge.fluids.capability.IFluidHandler fluids) {
 //?}
-                if (level.isClientSide)return InteractionResult.SUCCESS;
-//? if >=1.21.1 {
-                /*if (net.neoforged.neoforge.fluids.FluidUtil.interactWithFluidHandler(player,hand,fluids))return InteractionResult.CONSUME;
-*///?} else {
-                if (net.minecraftforge.fluids.FluidUtil.interactWithFluidHandler(player,hand,fluids))return InteractionResult.CONSUME;
-//?}
+                if (level.isClientSide) return gregtech.engine.fluid.FluidContainerInteraction.clientResult(player, hand);
+                if (gregtech.engine.fluid.FluidContainerInteraction.use(player, hand, fluids))
+                    return InteractionResult.CONSUME;
             }
         }
         return InteractionResult.PASS;
