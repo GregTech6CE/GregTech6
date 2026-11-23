@@ -43,16 +43,12 @@ import net.neoforged.fml.common.EventBusSubscriber;
 *///?} else {
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.*;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 //?}
 import java.util.*;
 
 /** Original default-enabled mob drops, on the authoritative server drop collection. */
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
-*///?} else {
-@Mod.EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
-//?}
+@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
 public final class MobDropEvents {
     private MobDropEvents() {}
     public static MobDropRules.Kind kind(LivingEntity entity) {

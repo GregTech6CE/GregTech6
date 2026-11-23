@@ -1,5 +1,4 @@
 package gregtech.content.nuclear;
-import gregtech.engine.mod.GregTechIdentity;
 
 import gregtech.content.blockentity.energy.ReactorCoreBlockEntity;
 import net.minecraft.core.*;
@@ -11,16 +10,12 @@ import net.neoforged.fml.common.EventBusSubscriber;
 *///?} else {
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 //?}
 import java.util.*;
 
 /** Two-phase world-end exchange: every emission reads last cycle, independent of BE tick order. */
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
-*///?} else {
-@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID)
-//?}
+@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
 public final class ReactorNetwork {
 
     /**

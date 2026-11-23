@@ -8,15 +8,11 @@ import net.neoforged.fml.common.EventBusSubscriber;
 *///?} else {
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 //?}
 
 /** Forge hook for GT utility tools, which have no vanilla TieredItem equivalent. */
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
-*///?} else {
-@Mod.EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
-//?}
+@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
 public final class BlockHarvestEvents {
  @SubscribeEvent public static void harvest(PlayerEvent.HarvestCheck event) {
   if (event.getTargetBlock().getBlock() instanceof gregtech.content.block.machine.TankBlock){event.setCanHarvest(true);return;}

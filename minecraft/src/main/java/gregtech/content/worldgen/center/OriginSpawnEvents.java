@@ -10,15 +10,11 @@ import net.neoforged.fml.common.EventBusSubscriber;
 *///?} else {
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 //?}
 
 /** New-world spawn agrees with the original Nexus instead of vanilla's distant terrain search. */
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
-*///?} else {
-@Mod.EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
-//?}
+@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
 public final class OriginSpawnEvents {
 
     @SubscribeEvent

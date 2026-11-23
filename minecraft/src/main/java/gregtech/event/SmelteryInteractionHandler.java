@@ -1,5 +1,4 @@
 package gregtech.event;
-import gregtech.engine.mod.GregTechIdentity;
 
 
 import gregtech.engine.machine.GTMachineBlock;
@@ -32,17 +31,13 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 //?}
 
 /**
  * Handles interactions with smeltery components (mold, basin, faucet, crossing).
  */
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
-*///?} else {
-@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-//?}
+@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
 public final class SmelteryInteractionHandler {
     private SmelteryInteractionHandler() {}
 

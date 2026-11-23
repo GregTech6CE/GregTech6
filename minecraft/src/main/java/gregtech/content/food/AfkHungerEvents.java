@@ -8,7 +8,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 *///?} else {
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 //?}
 
 /**
@@ -18,11 +18,7 @@ import net.minecraftforge.fml.common.Mod;
  * <p>The branch used {@code player.tickCount}, not the level's game time, so it keeps the per-entity
  * tick phase; {@code general.AFK_Hunger} still gates the whole pass.
  */
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
-*///?} else {
-@Mod.EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
-//?}
+@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
 public final class AfkHungerEvents {
     private AfkHungerEvents() {}
 

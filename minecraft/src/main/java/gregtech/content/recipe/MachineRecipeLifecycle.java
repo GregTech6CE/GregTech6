@@ -1,5 +1,4 @@
 package gregtech.content.recipe;
-import gregtech.engine.mod.GregTechIdentity;
 
 import net.minecraft.server.MinecraftServer;
 //? if >=1.21.1 {
@@ -16,16 +15,12 @@ import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.event.server.ServerStoppedEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.server.ServerLifecycleHooks;
 //?}
 
 /** Applies the machine-recipe overlay after tags bind on the logical server. */
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
-*///?} else {
-@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID)
-//?}
+@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
 public final class MachineRecipeLifecycle {
     private MachineRecipeLifecycle() {}
 

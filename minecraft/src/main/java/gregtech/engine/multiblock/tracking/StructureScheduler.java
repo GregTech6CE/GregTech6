@@ -1,5 +1,4 @@
 package gregtech.engine.multiblock.tracking;
-import gregtech.engine.mod.GregTechIdentity;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
@@ -16,7 +15,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.level.ChunkEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.server.ServerLifecycleHooks;
 //?}
 
@@ -24,11 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** End-of-tick structure scans. Formed controllers that just changed are not subject to the cell budget. */
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
-*///?} else {
-@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID)
-//?}
+@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
 public final class StructureScheduler {
     public static final int CELLS_PER_TICK = 20_000;
     public static final int SAFETY_PERIOD = 600;

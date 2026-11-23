@@ -18,7 +18,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.minecraftforge.event.entity.item.ItemExpireEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 //?}
 
 /**
@@ -26,11 +26,7 @@ import net.minecraftforge.fml.common.Mod;
  * becomes its corresponding placeable pile when it would despawn. The original searches its
  * {@code CUBE_3} positions in this exact order and places only in an irrelevant block.
  */
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
-*///?} else {
-@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-//?}
+@EventBusSubscriber(modid = GregTechIdentity.MOD_ID)
 public final class PileItemExpireHandler {
     private static final BlockPos[] CUBE_3=java.util.Arrays.stream(gregtech.content.block.MaterialPileRules.EXPIRE_OFFSETS).map(v->new BlockPos(v[0],v[1],v[2])).toArray(BlockPos[]::new);
 

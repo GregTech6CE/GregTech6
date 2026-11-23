@@ -13,7 +13,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 //?}
 
 /**
@@ -50,11 +50,7 @@ import net.minecraftforge.fml.common.Mod;
  * {@link #breatheIn(LivingEntity, Fluid)}) so it can be driven without a world, following
  * {@code FoodStatEvents}, the other event class of this kind.
  */
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
-*///?} else {
-@Mod.EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
-//?}
+@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
 public final class BreathingGasEvents {
     /** GT6 {@code BlockBaseFluid} / {@code BlockWaterlike}: {@code SERVER_TIME % 20 == 0}. */
     public static final int DROWN_INTERVAL = WorldFluidEffects.DROWN_INTERVAL;

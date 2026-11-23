@@ -1,6 +1,5 @@
 package gregtech.content.recipe;
 
-import gregtech.engine.mod.GregTechIdentity;
 import net.minecraft.client.Minecraft;
 //? if >=1.21.1 {
 /*import net.neoforged.api.distmarker.Dist;
@@ -17,15 +16,11 @@ import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 //?}
 
 /** Rebuilds shapeless tooltip index when recipes reload (client + dedicated server). */
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
-*///?} else {
-@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID)
-//?}
+@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
 public final class ShapelessRecipeTooltipIndexLoader {
     private ShapelessRecipeTooltipIndexLoader() {}
 
@@ -41,11 +36,7 @@ public final class ShapelessRecipeTooltipIndexLoader {
         ShapelessRecipeTooltipIndex.rebuild(server.getRecipeManager(), server.registryAccess());
     }
 
-//? if >=1.21.1 {
-    /*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, value = Dist.CLIENT)
-*///?} else {
-    @Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, value = Dist.CLIENT)
-//?}
+    @EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, value = Dist.CLIENT)
     public static final class Client {
         private Client() {}
 

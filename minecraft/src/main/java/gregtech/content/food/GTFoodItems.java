@@ -17,7 +17,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 //?}
 
 import java.util.ArrayList;
@@ -53,11 +53,7 @@ import java.util.Map;
  * {@code PotionsGT} potion effects and the ENVM body-temperature/hydration numbers. Radiation is kept
  * separately in {@link gregtech.content.food.FoodStatisticRows}.
  */
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
-*///?} else {
-@Mod.EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
-//?}
+@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
 public final class GTFoodItems {
     /**
      * GT6 {@code FoodStat}'s food numbers: {@code aFoodLevel}/{@code aSaturation} (vanilla food data),

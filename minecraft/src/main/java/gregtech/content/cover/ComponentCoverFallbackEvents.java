@@ -28,14 +28,10 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.level.ChunkWatchEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 //?}
 
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid=gregtech.engine.mod.GregTechIdentity.MOD_ID)
-*///?} else {
-@Mod.EventBusSubscriber(modid=gregtech.engine.mod.GregTechIdentity.MOD_ID)
-//?}
+@EventBusSubscriber(modid=gregtech.engine.mod.GregTechIdentity.MOD_ID)
 public final class ComponentCoverFallbackEvents {
     private ComponentCoverFallbackEvents() {}
 //? if >=1.21.1 {

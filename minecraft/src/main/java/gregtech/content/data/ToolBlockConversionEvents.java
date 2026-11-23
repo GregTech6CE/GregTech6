@@ -18,7 +18,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 *///?} else {
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 //?}
 
 import java.util.ArrayList;
@@ -40,11 +40,7 @@ import java.util.List;
  * the converted drops are spawned in its place.
  * </p>
  */
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
-*///?} else {
-@Mod.EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
-//?}
+@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
 public final class ToolBlockConversionEvents {
     /** GT6 {@code getToolDamagePerBlockBreak} per tool. */
     private static final int HAMMER_BLOCK_BREAK = 25;

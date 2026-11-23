@@ -16,20 +16,15 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 //?}
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.WeakHashMap;
 
-//? if >=1.21.1 {
-/*/^* NeoForge1.21 equivalent of GT6's MOB_SPAWN_INHIBITORS list. ^/
-@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
-*///?} else {
-/** Forge 1.20 equivalent of GT6's MOB_SPAWN_INHIBITORS list. */
-@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-//?}
+/** NeoForge 1.21 / Forge 1.20 equivalent of GT6's MOB_SPAWN_INHIBITORS list. */
+@EventBusSubscriber(modid = GregTechIdentity.MOD_ID)
 public final class VonDaGraaggSpawnInhibitor {
     private static final WeakHashMap<ServerLevel, Set<BlockPos>> ACTIVE = new WeakHashMap<>();
 

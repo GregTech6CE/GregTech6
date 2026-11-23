@@ -14,7 +14,7 @@ import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.PistonEvent;
 *///?} else {
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.level.PistonEvent;
 //?}
@@ -24,11 +24,7 @@ import net.minecraftforge.event.level.PistonEvent;
  * hollow of a formed large crucible. The vessel's two cavity layers must stay air for the structure
  * to hold, so every path that bypasses the block's own use handlers is closed here instead.
  */
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid = GregTechIdentity.MOD_ID)
-*///?} else {
-@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-//?}
+@EventBusSubscriber(modid = GregTechIdentity.MOD_ID)
 public final class LargeCrucibleCavityEvents {
     private LargeCrucibleCavityEvents() {}
 

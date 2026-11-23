@@ -1,5 +1,4 @@
 package gregtech.content.recipe;
-import gregtech.engine.mod.GregTechIdentity;
 
 import gregtech.content.multiblock.StructureLayoutOverlayRuntime;
 import gregtech.network.PacketSyncStructureLayouts;
@@ -19,7 +18,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.server.ServerLifecycleHooks;
 //?}
 
@@ -27,11 +26,7 @@ import net.minecraftforge.server.ServerLifecycleHooks;
  * Applies addon structure layouts after tags bind, then sends them to clients.
  * A formed machine reads the layout again on its next structure check.
  */
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
-*///?} else {
-@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID)
-//?}
+@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
 public final class StructureLayoutLifecycle {
     private StructureLayoutLifecycle() {}
 

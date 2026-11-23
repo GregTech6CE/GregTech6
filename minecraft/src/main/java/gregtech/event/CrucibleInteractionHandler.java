@@ -1,5 +1,4 @@
 package gregtech.event;
-import gregtech.engine.mod.GregTechIdentity;
 
 import gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity;
 import net.minecraft.core.Direction;
@@ -14,7 +13,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 //?}
 
 /**
@@ -23,11 +22,7 @@ import net.minecraftforge.fml.common.Mod;
  * <p>
  * Mold and basin right-click pour is handled by {@link SmelteryInteractionHandler}.
  */
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
-*///?} else {
-@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-//?}
+@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
 public final class CrucibleInteractionHandler {
     private CrucibleInteractionHandler() {}
 

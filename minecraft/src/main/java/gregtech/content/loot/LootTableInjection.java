@@ -25,7 +25,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 *///?} else {
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 //?}
 import net.minecraft.world.item.ItemStack;
 
@@ -57,11 +57,7 @@ import java.util.Map;
  * {@code tech:loot_pouch}, {@code tech:seed_pouch} and {@code tech:dusty_guide_book} rows below hand
  * out.</p>
  */
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
-*///?} else {
-@Mod.EventBusSubscriber(modid = GregTech.MODID)
-//?}
+@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
 public final class LootTableInjection {
 
     /**
