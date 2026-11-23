@@ -206,11 +206,7 @@ public final class RecipePublishing {
         }
 
         private static boolean recipePath(String path) {
-//? if >=1.21.1 {
-            /*String root = "recipe";
-*///?} else {
-            String root = "recipes";
-//?}
+            String root = GeneratedRecipeJson.recipeRoot();
             return path.isEmpty() || path.equals(root) || path.startsWith(root + "/");
         }
 

@@ -1,21 +1,9 @@
 package gregtech.content.data;
 
-import com.google.gson.Gson;
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.content.data.generated.GTSensorRecipesGen;
+import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.platform.Mc;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-//? if >=1.21.1 {
-/*import net.minecraft.core.registries.BuiltInRegistries;
-*///?} else {
-//?}
-
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -24,6 +12,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 /**
  * Crafting recipes for the port's 20 sensor machines, taken from the original GT6 registrations
@@ -73,7 +66,6 @@ import java.util.TreeMap;
  * </p>
  */
 public final class SensorRecipePack {
-    private static final Gson GSON = new Gson();
     /** GT6's twenty sensor rows are registered against {@code aUtilMetal} with a null material. */
     private static final String DEFAULT_MATERIAL = "StainlessSteel";
     /** The single tiered key is {@code IL.SENSORS[1]} = LV, so the rows resolve at tier 1. */
@@ -120,21 +112,15 @@ public final class SensorRecipePack {
             Map<String, Object> recipe = buildRecipe(row, item);
             if (recipe == null) continue;
 
-            generated.put(ResourceLocation.fromNamespaceAndPath("gt6ce",
-//? if >=1.21.1 {
-                    /*"recipe/machines/sensors/" + row.blockId() + ".json"),
-*///?} else {
-                    "recipes/machines/sensors/" + row.blockId() + ".json"),
-//?}
-                    GSON.toJson(recipe).getBytes(StandardCharsets.UTF_8));
+            GeneratedRecipeJson.put(generated, "machines/sensors/" + row.blockId(), recipe);
             EMITTED.add(row.blockId());
         }
 
-//? if >=1.21.1 {
-        /*com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original sensor crafting datapack: {} emitted, {} not registered or unresolved",
-                EMITTED.size(), GTSensorRecipesGen.ROWS.size() - EMITTED.size());
-*///?} else {
-//?}
+        com.mojang.logging.LogUtils.getLogger()
+                .info(
+                        "[gregtech] Original sensor crafting datapack: {} emitted, {} not registered or unresolved",
+                        EMITTED.size(),
+                        GTSensorRecipesGen.ROWS.size() - EMITTED.size());
     }
 
     private static Map<String, Object> buildRecipe(GTSensorRecipesGen.Row row, Item resultItem) {
@@ -153,8 +139,7 @@ public final class SensorRecipePack {
         }
 
         GTMaterial material = GTMaterialRegistry.get(DEFAULT_MATERIAL);
-        Map<Character, Object> ingredients = MachineRecipeIngredients.resolveAll(usedKeys, material,
-                SENSOR_TIER);
+        Map<Character, Object> ingredients = MachineRecipeIngredients.resolveAll(usedKeys, material, SENSOR_TIER);
         if (ingredients.isEmpty()) return null;
         Map<String, Object> key = new HashMap<>();
         for (var pair : ingredients.entrySet()) {
@@ -169,13 +154,8 @@ public final class SensorRecipePack {
         recipe.put("pattern", pattern);
         recipe.put("key", key);
         recipe.put("allow_mirror", false);
-//? if >=1.21.1 {
-        /*recipe.put("result", Map.of("id", resultId.toString()));
-*///?} else {
-        recipe.put("result", Map.of("item", resultId.toString()));
-//?}
+        recipe.put("result", GeneratedRecipeJson.result(resultId.toString()));
         recipe.put("group", "gregtech_sensors");
         return recipe;
     }
-
 }

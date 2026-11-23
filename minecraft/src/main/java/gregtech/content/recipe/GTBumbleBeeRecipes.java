@@ -114,12 +114,9 @@ public final class GTBumbleBeeRecipes {
     /**
      * Installs the provider on the Bumblelyzer map; idempotent. Returns 1 once it is in place.
      *
-     * <p>Only the provider is installed here: {@code MachineRecipeMaps}'s own initializer calls this, and
-     * that initializer runs inside the mod constructor (phase B,
-     * {@code Loader_MultiTileEntities} -&gt; {@code GTBasicMachines} -&gt;
-     * {@code BasicMachineDefinitions} -&gt; {@code MachineRecipeMaps.byMachineName}), i.e. before Forge has
-     * filled the item and fluid registries. The display rows need real bee items and a honey fluid, so
-     * they are registered in common setup instead (node entry points call {@link #registerDisplayRows()}).</p>
+     * <p>Only the provider is installed here: it needs nothing but the map itself, so each node calls
+     * this from common setup right before {@link #registerDisplayRows()}. The display rows need real
+     * bee items and a honey fluid, which exist by then.</p>
      */
     public static synchronized int register() {
         if (registered) return 0;

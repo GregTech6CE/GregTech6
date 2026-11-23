@@ -431,12 +431,11 @@ public final class MaterialTagPack extends AbstractPackResources {
                 var values=tags.get(path);tags.computeIfAbsent(alt,k->new TreeSet<>()).addAll(values);
             }
         }
-//? if >=1.21.1 {
-        /*for (var path:new ArrayList<>(tags.keySet())) {
+        // NeoForge reads the c: namespace for common tags; the forge: spelling stays for older
+        // consumers. The mirror runs after the alias pass so alias tags get one as well.
+        for (var path:new ArrayList<>(tags.keySet())) {
             if (path.startsWith("forge:")) tags.computeIfAbsent("c:"+path.substring(6),k->new TreeSet<>()).addAll(tags.get(path));
         }
-*///?} else {
-//?}
         // Ingredient alternatives should expose the preferred item too, not cycle hidden GT copies.
         // Block tags stay intact so already placed legacy blocks keep their harvesting properties.
         tags.replaceAll((path, values) -> {
@@ -447,13 +446,8 @@ public final class MaterialTagPack extends AbstractPackResources {
             return canonical;
         });
         var gson=new com.google.gson.Gson(); var result=new HashMap<ResourceLocation,byte[]>();
-//? if >=1.21.1 {
-        /*tags.forEach((path,values)->result.put(ResourceLocation.parse(path),gson.toJson(Map.of("replace",false,"values",gregtech.content.recipe.RecipeInputGroups.tagValues(path,preferredIron(path,compatibleValues(path,values,aliases))))).getBytes(StandardCharsets.UTF_8)));
-        result.put(ResourceLocation.parse("gt6ce:tags/item/ammunition/feathers.json"),gson.toJson(Map.of(
-*///?} else {
-        tags.forEach((path,values)->result.put(ResourceLocation.parse(path),gson.toJson(Map.of("replace",false,"values",gregtech.content.recipe.RecipeInputGroups.tagValues(path,preferredIron(path,values)))).getBytes(StandardCharsets.UTF_8)));
-        result.put(ResourceLocation.parse("gt6ce:tags/items/ammunition/feathers.json"),gson.toJson(Map.of(
-//?}
+        tags.forEach((path,values)->result.put(ResourceLocation.parse(path),gson.toJson(Map.of("replace",false,"values",gregtech.content.recipe.RecipeInputGroups.tagValues(path,preferredIron(path,compatibleValues(path,values,aliases))))).getBytes(StandardCharsets.UTF_8)));
+        result.put(ResourceLocation.parse(tagPath("gt6ce:tags/items/ammunition/feathers.json")),gson.toJson(Map.of(
                 "replace",false,"values",List.of("minecraft:feather",
                         Map.of("id","#forge:feathers","required",false),
                         Map.of("id","#c:feathers","required",false)))).getBytes(StandardCharsets.UTF_8));
@@ -461,14 +455,14 @@ public final class MaterialTagPack extends AbstractPackResources {
         for (var id : result.keySet()) index.add(id);
         this.index = index;
         resources=Collections.unmodifiableMap(result); return resources;
-//? if >=1.21.1 {
-    /*}
+    }
 
-    /^* Legacy recipe tags accept native common additions; c tags retain their independent values. ^/
+    /** Legacy recipe tags accept native common additions; c tags retain their independent values. */
     private static List<Object> compatibleValues(String path, Set<String> values, Map<String,String> aliases) {
         var result = new ArrayList<Object>(values);
-        String prefix = path.startsWith("forge:tags/item/") ? "forge:tags/item/"
-                : path.startsWith("forge:tags/block/") ? "forge:tags/block/" : null;
+        String itemPrefix = tagPath("forge:tags/items/"), blockPrefix = tagPath("forge:tags/blocks/");
+        String prefix = path.startsWith(itemPrefix) ? itemPrefix
+                : path.startsWith(blockPrefix) ? blockPrefix : null;
         if (prefix == null) return result;
         String common = path.substring(prefix.length(), path.length() - ".json".length());
         result.add(Map.of("id", "#c:" + common, "required", false));
@@ -481,8 +475,6 @@ public final class MaterialTagPack extends AbstractPackResources {
             }
         }
         return result;
-*///?} else {
-//?}
     }
 
     private static Collection<?> preferredIron(String path, Collection<?> values) {
@@ -559,29 +551,30 @@ public final class MaterialTagPack extends AbstractPackResources {
         }
     }
     private static void add(Map<String,Set<String>> tags,String ns,String kind,String path,String value) {
-//? if >=1.21.1 {
-        /*// 1.21 registries use singular resource directories. Historical callers still
-        // supply plural Forge names; normalize before both leaf and parent creation.
-        kind = switch (kind) { case "items" -> "item"; case "blocks" -> "block"; case "fluids" -> "fluid"; default -> kind; };
-*///?} else {
-//?}
+        kind = tagKind(kind);
         addOne(tags,ns,kind,path,value);
-//? if >=1.21.1 {
-        /*// NeoForge 1.21.1 reads the c: namespace for common tags; keep forge: for older consumers.
+        // NeoForge reads the c: namespace for common tags; the forge: spelling stays for older consumers.
         if (ns.equals("forge")) addOne(tags,"c",kind,path,value);
-*///?}
     }
     /** Input domains have no all-material parent: it would be huge and unusable as an ingredient. */
     private static void addInputGroup(Map<String,Set<String>> tags,String kind,String path,String value) {
-//? if >=1.21.1 {
-        /*kind = switch (kind) { case "items" -> "item"; case "fluids" -> "fluid"; default -> kind; };
-*///?}
-        tags.computeIfAbsent("gt6ce:tags/"+kind+"/"+path+".json",k->new TreeSet<>()).add(value);
+        tags.computeIfAbsent("gt6ce:tags/"+tagKind(kind)+"/"+path+".json",k->new TreeSet<>()).add(value);
     }
     private static void addOne(Map<String,Set<String>> tags,String ns,String kind,String path,String value) {
         tags.computeIfAbsent(ns+":tags/"+kind+"/"+path+".json",k->new TreeSet<>()).add(value);
         int slash=path.indexOf('/');
         if (slash>0) tags.computeIfAbsent(ns+":tags/"+kind+"/"+path.substring(0,slash)+".json",k->new TreeSet<>()).add("#"+ns+":"+path);
+    }
+    /**
+     * 1.21 registries use singular resource directories. Historical callers still supply plural
+     * Forge names; normalize before both leaf and parent creation.
+     */
+    private static String tagKind(String kind) {
+//? if >=1.21.1 {
+        /*return switch (kind) { case "items" -> "item"; case "blocks" -> "block"; case "fluids" -> "fluid"; default -> kind; };
+*///?} else {
+        return kind;
+//?}
     }
     /** 1.21.1 stores tags under singular directories; callers keep the 1.20.1 plural spelling. */
     private static String tagPath(String path) {
@@ -615,10 +608,7 @@ public final class MaterialTagPack extends AbstractPackResources {
     @Override
     public Set<String> getNamespaces(PackType type) {
         if (type != PackType.SERVER_DATA) return Set.of();
-        var namespaces = new HashSet<>(Set.of("forge", "gt6ce", "minecraft"));
-//? if >=1.21.1 {
-        /*namespaces.add("c");
-*///?}
+        var namespaces = new HashSet<>(Set.of("forge", "gt6ce", "minecraft", "c"));
         for (var method : MaterialViews.catalog().specialProcesses().methods())
             namespaces.add(method.process().id().namespace());
         return Set.copyOf(namespaces);

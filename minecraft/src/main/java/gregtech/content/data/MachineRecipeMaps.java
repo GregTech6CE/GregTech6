@@ -129,15 +129,9 @@ public final class MachineRecipeMaps {
     // GT6 subclasses RecipeMap and overrides findRecipe() whenever a row depends on the identity of
     // the inputs rather than on a fixed table: the scanner, printer and replicator read the NBT a
     // scanner wrote onto a USB stick (wired from GregTech's phase-C loader list), and the Bumblelyzer
-    // scans whichever living bee sits in its input slots (RecipeMapBumblelyzer). The
-    // Bumblelyzer's provider is installed here, in the map's own initializer, so it is in place for
-    // every entry point - the loader list, the recipe-viewer index and the game tests alike.
-//? if >=1.21.1 {
-//?} else {
-    static {
-        gregtech.content.recipe.GTBumbleBeeRecipes.register();
-    }
-//?}
+    // scans whichever living bee sits in its input slots (RecipeMapBumblelyzer). The Bumblelyzer's
+    // provider is installed by each node's common setup (GTBumbleBeeRecipes.register()), so it is in
+    // place for every entry point - the loader list, the recipe-viewer index and the game tests alike.
 
     // ── Machine name → RecipeMap lookup ───────────────────────────────────
 

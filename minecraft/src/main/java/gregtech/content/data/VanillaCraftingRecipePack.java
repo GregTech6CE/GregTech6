@@ -39,33 +39,21 @@ public final class VanillaCraftingRecipePack {
                 json.put("allow_mirror", true);
             }
             var result = (Map<?, ?>) ingredient(row.result().startsWith("material:") ? row.result() : "item:" + row.result());
-//? if >=1.21.1 {
-            /*json.put("result", Map.of("id", result.get("item"), "count", row.count()));
-*///?} else {
-            json.put("result", Map.of("item", result.get("item"), "count", row.count()));
-//?}
+            json.put("result", GeneratedRecipeJson.result(String.valueOf(result.get("item")), row.count()));
             var id = ResourceLocation.parse(row.id());
             generated.put(
-                    ResourceLocation.fromNamespaceAndPath(id.getNamespace(), directory() + id.getPath() + ".json"),
+                    ResourceLocation.fromNamespaceAndPath(id.getNamespace(), GeneratedRecipeJson.recipePath(id.getPath())),
                     new Gson().toJson(json).getBytes(StandardCharsets.UTF_8));
         }
         gregtech.content.recipe.TorchCraftingRecipes.recipes().forEach((id, json) -> generated.put(
-                ResourceLocation.fromNamespaceAndPath(id.getNamespace(), directory() + id.getPath() + ".json"),
+                ResourceLocation.fromNamespaceAndPath(id.getNamespace(), GeneratedRecipeJson.recipePath(id.getPath())),
                 new Gson().toJson(json).getBytes(StandardCharsets.UTF_8)));
         gregtech.content.recipe.HandMaterialCraftingRecipes.recipes().forEach((id, json) -> generated.put(
-                ResourceLocation.fromNamespaceAndPath(id.getNamespace(), directory() + id.getPath() + ".json"),
+                ResourceLocation.fromNamespaceAndPath(id.getNamespace(), GeneratedRecipeJson.recipePath(id.getPath())),
                 new Gson().toJson(json).getBytes(StandardCharsets.UTF_8)));
         for (var recipeId : REPLACED_PLANK_RECIPES) disablePlanks(generated, recipeId);
         com.mojang.logging.LogUtils.getLogger()
                 .info("[gregtech] Original vanilla overrides: {} rows", generated.size() - before);
-    }
-
-    private static String directory() {
-//? if >=1.21.1 {
-        /*return "recipe/";
-*///?} else {
-        return "recipes/";
-//?}
     }
 
     /** A failing condition disables the vanilla recipe; the override layer makes this file win by id. */
@@ -79,13 +67,9 @@ public final class VanillaCraftingRecipePack {
         json.put("conditions", List.of(Map.of("type", "forge:false")));
 //?}
         json.put("ingredients", List.of(Map.of("item", "minecraft:barrier")));
-//? if >=1.21.1 {
-        /*json.put("result", Map.of("id", "minecraft:barrier", "count", 1));
-*///?} else {
-        json.put("result", Map.of("item", "minecraft:barrier"));
-//?}
+        json.put("result", GeneratedRecipeJson.result("minecraft:barrier"));
         generated.put(
-                ResourceLocation.fromNamespaceAndPath(id.getNamespace(), directory() + id.getPath() + ".json"),
+                ResourceLocation.fromNamespaceAndPath(id.getNamespace(), GeneratedRecipeJson.recipePath(id.getPath())),
                 new Gson().toJson(json).getBytes(StandardCharsets.UTF_8));
     }
 

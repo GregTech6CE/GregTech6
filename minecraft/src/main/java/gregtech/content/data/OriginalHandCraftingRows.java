@@ -362,13 +362,6 @@ public final class OriginalHandCraftingRows {
         return blocks(gregtech.content.block.machine.EngineBlock.class).stream().filter(holder->holder.get().engineType()==EngineType.ROTATION).toList();
     }
     private static boolean bound(java.util.function.Supplier<?> holder){return holder.get()!=null;}
-    private static String resultItemKey(){
-        //? if >=1.21.1 {
-        /*return "id";
-        *///?} else {
-        return "item";
-        //?}
-    }
     private static com.google.gson.JsonElement ingredientJson(Ingredient ingredient){
         //? if >=1.21.1 {
         /*return Ingredient.CODEC.encodeStart(JsonOps.INSTANCE,ingredient).getOrThrow();
@@ -1012,7 +1005,7 @@ public final class OriginalHandCraftingRows {
             json.put("type", creosote ? "gt6ce:creosote_axle" : "gt6ce:tool_shaped");
             json.put("category", "misc"); json.put("group", "gt.hand");
             json.put("pattern", pattern); json.put("key", keys); json.put("allow_mirror", false);
-            json.put("result", Map.of(resultItemKey(), holder.getId().toString(), "count", 1));
+            json.put("result", GeneratedRecipeJson.result(holder.getId().toString(), 1));
             var id = ResourceLocation.fromNamespaceAndPath("gt6ce", "recipe/hand/axle/" + spec.id() + ".json");
             if (data.putIfAbsent(id, new com.google.gson.Gson().toJson(json).getBytes(StandardCharsets.UTF_8)) != null)
                 throw new IllegalStateException("Duplicate axle recipe " + id);
@@ -1052,7 +1045,7 @@ public final class OriginalHandCraftingRows {
         json.addProperty("group", "gt.hand"); json.addProperty("allow_mirror", mirror);
         var rows = new com.google.gson.JsonArray(); for (String row : pattern) rows.add(row);
         json.add("pattern", rows); json.add("key", key);
-        var result = new JsonObject(); result.addProperty(resultItemKey(), BuiltInRegistries.ITEM.getKey(output.getItem()).toString());
+        var result = new JsonObject(); result.addProperty(GeneratedRecipeJson.resultKey(), BuiltInRegistries.ITEM.getKey(output.getItem()).toString());
         result.addProperty("count", output.getCount());
         // Tool outputs carry their head and handle materials; item identity alone loses both.
 //? if >=1.21.1 {

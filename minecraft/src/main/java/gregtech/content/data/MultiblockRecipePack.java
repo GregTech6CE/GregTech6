@@ -1,19 +1,9 @@
 package gregtech.content.data;
 
-import com.google.gson.Gson;
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.content.block.machine.BasicMachineBlock;
+import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.platform.Mc;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-//? if >=1.21.1 {
-/*import net.minecraft.core.registries.BuiltInRegistries;
-*///?} else {
-//?}
-
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -22,6 +12,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 
 /**
  * Crafting recipes for the multiblock machines and their structural parts, generated from the
@@ -33,7 +26,6 @@ import java.util.TreeMap;
  * </p>
  */
 public final class MultiblockRecipePack {
-    private static final Gson GSON = new Gson();
     /** Material used when a recipe is not bound to a machine spec. */
     private static final String DEFAULT_MATERIAL = "StainlessSteel";
 
@@ -67,26 +59,25 @@ public final class MultiblockRecipePack {
 
             GTMaterial material = materialOf(block);
             Map<Character, Object> ingredients = new TreeMap<>();
-            entry.recipe().keys().forEach((symbol, ingredient) ->
-                    ingredients.put(symbol, MachineRecipeIngredients.resolve(ingredient, material)));
+            entry.recipe()
+                    .keys()
+                    .forEach((symbol, ingredient) ->
+                            ingredients.put(symbol, MachineRecipeIngredients.resolve(ingredient, material)));
             Map<String, Object> recipe = buildRecipe(entry.recipe().rows(), ingredients, item);
             if (recipe == null) continue;
 
-            generated.put(ResourceLocation.fromNamespaceAndPath("gt6ce",
-//? if >=1.21.1 {
-                    /*"recipe/machines/multiblock/" + entry.blockId() + ".json"),
-*///?} else {
-                    "recipes/machines/multiblock/" + entry.blockId() + ".json"),
-//?}
-                    GSON.toJson(recipe).getBytes(StandardCharsets.UTF_8));
+            GeneratedRecipeJson.put(generated, "machines/multiblock/" + entry.blockId(), recipe);
             EMITTED.add(entry.blockId());
         }
 
-//? if >=1.21.1 {
-        /*com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original multiblock crafting datapack: {} emitted, {} not registered or unresolved", EMITTED.size(), MultiblockCraftingRecipes.ENTRIES.size()-EMITTED.size());
-*///?} else {
-//?}
-        for (var row : java.util.stream.Stream.concat(OriginalSurvivalRecipes.allRows().stream(), UtilityCraftingRows.ROWS.stream()).toList()) {
+        com.mojang.logging.LogUtils.getLogger()
+                .info(
+                        "[gregtech] Original multiblock crafting datapack: {} emitted, {} not registered or unresolved",
+                        EMITTED.size(),
+                        MultiblockCraftingRecipes.ENTRIES.size() - EMITTED.size());
+        for (var row : java.util.stream.Stream.concat(
+                        OriginalSurvivalRecipes.allRows().stream(), UtilityCraftingRows.ROWS.stream())
+                .toList()) {
             var blockId = ResourceLocation.fromNamespaceAndPath("gt6ce", row.id());
             Item item = Mc.item(blockId);
             if (item == null || item == net.minecraft.world.item.Items.AIR)
@@ -99,14 +90,10 @@ public final class MultiblockRecipePack {
             var ingredients = MachineRecipeIngredients.resolveAll(row.keys(), row.material(), 1);
             var recipe = buildRecipe(pattern, ingredients, item);
             if (recipe == null) throw new IllegalStateException("Unresolved original recipe " + row.id());
-//? if >=1.21.1 {
-            /*recipe.put("result", Map.of("id", row.id().contains(":") ? row.id() : "gt6ce:" + row.id(), "count", row.count()));
-            generated.put(ResourceLocation.fromNamespaceAndPath("gt6ce", "recipe/survival_repairs/" + row.id() + ".json"),
-*///?} else {
-            recipe.put("result", Map.of("item", row.id().contains(":") ? row.id() : "gt6ce:" + row.id(), "count", row.count()));
-            generated.put(ResourceLocation.fromNamespaceAndPath("gt6ce", "recipes/survival_repairs/" + row.id() + ".json"),
-//?}
-                    GSON.toJson(recipe).getBytes(StandardCharsets.UTF_8));
+            recipe.put(
+                    "result",
+                    GeneratedRecipeJson.result(row.id().contains(":") ? row.id() : "gt6ce:" + row.id(), row.count()));
+            GeneratedRecipeJson.put(generated, "survival_repairs/" + row.id(), recipe);
             EMITTED.add(row.id());
         }
 
@@ -128,54 +115,43 @@ public final class MultiblockRecipePack {
     }
 
     /** Original raw utilities return their clay before firing; only firing produces ceramic parts. */
-    private static void addClayUtilityRecipes(Map<ResourceLocation,byte[]> generated) {
-        for (var row:gregtech.content.recipe.ClayUtilityCatalog.ROWS) {
-            for (String type:List.of("smelting","blasting")) {
-                var firing=new HashMap<String,Object>();
-                firing.put("type","minecraft:"+type);
-                firing.put("ingredient",Map.of("item","gt6ce:"+row.raw()));
-//? if >=1.21.1 {
-                /*firing.put("result",Map.of("id","gt6ce:"+row.fired()));
-*///?} else {
-                firing.put("result","gt6ce:"+row.fired());
-//?}
-                firing.put("experience",0);
-                firing.put("cookingtime",type.equals("smelting")?200:100);
-                clayRecipe(generated,type+"_"+row.raw(),firing);
+    private static void addClayUtilityRecipes(Map<ResourceLocation, byte[]> generated) {
+        for (var row : gregtech.content.recipe.ClayUtilityCatalog.ROWS) {
+            for (String type : List.of("smelting", "blasting")) {
+                var firing = new HashMap<String, Object>();
+                firing.put("type", "minecraft:" + type);
+                firing.put("ingredient", Map.of("item", "gt6ce:" + row.raw()));
+                firing.put("result", GeneratedRecipeJson.result("gt6ce:" + row.fired()));
+                firing.put("experience", 0);
+                firing.put("cookingtime", type.equals("smelting") ? 200 : 100);
+                clayRecipe(generated, type + "_" + row.raw(), firing);
             }
-            var reclaim=new HashMap<String,Object>();
-            reclaim.put("type","minecraft:crafting_shapeless");
-            reclaim.put("ingredients",List.of(Map.of("item","gt6ce:"+row.raw())));
-//? if >=1.21.1 {
-            /*reclaim.put("result",Map.of("id","minecraft:clay_ball","count",row.clayBalls()));
-*///?} else {
-            reclaim.put("result",Map.of("item","minecraft:clay_ball","count",row.clayBalls()));
-//?}
-            clayRecipe(generated,"reclaim_"+row.raw(),reclaim);
+            var reclaim = new HashMap<String, Object>();
+            reclaim.put("type", "minecraft:crafting_shapeless");
+            reclaim.put("ingredients", List.of(Map.of("item", "gt6ce:" + row.raw())));
+            reclaim.put("result", GeneratedRecipeJson.result("minecraft:clay_ball", row.clayBalls()));
+            clayRecipe(generated, "reclaim_" + row.raw(), reclaim);
         }
         // MultiItemRandomTools also permits the vertically reversed crossing layout.
-        var crossing=new HashMap<String,Object>();
-        crossing.put("type","gt6ce:tool_shaped");
-        crossing.put("pattern",List.of(" C ","CCC","kCR"));
-        crossing.put("key",Map.of("C",Map.of("tag","gt6ce:clay_balls"),
-                "k",Map.of("item","gt6ce:tool_knife"),"R",Map.of("item","gt6ce:tool_rolling_pin")));
-        crossing.put("allow_mirror",false);
-//? if >=1.21.1 {
-        /*crossing.put("result",Map.of("id","gt6ce:clay_crossing"));
-*///?} else {
-        crossing.put("result",Map.of("item","gt6ce:clay_crossing"));
-//?}
-        clayRecipe(generated,"form_clay_crossing_flipped",crossing);
+        var crossing = new HashMap<String, Object>();
+        crossing.put("type", "gt6ce:tool_shaped");
+        crossing.put("pattern", List.of(" C ", "CCC", "kCR"));
+        crossing.put(
+                "key",
+                Map.of(
+                        "C",
+                        Map.of("tag", "gt6ce:clay_balls"),
+                        "k",
+                        Map.of("item", "gt6ce:tool_knife"),
+                        "R",
+                        Map.of("item", "gt6ce:tool_rolling_pin")));
+        crossing.put("allow_mirror", false);
+        crossing.put("result", GeneratedRecipeJson.result("gt6ce:clay_crossing"));
+        clayRecipe(generated, "form_clay_crossing_flipped", crossing);
     }
 
-    private static void clayRecipe(Map<ResourceLocation,byte[]> generated,String name,Map<String,Object> recipe) {
-//? if >=1.21.1 {
-        /*String folder="recipe/";
-*///?} else {
-        String folder="recipes/";
-//?}
-        generated.put(ResourceLocation.fromNamespaceAndPath("gt6ce",folder+"ceramic_utilities/"+name+".json"),
-                GSON.toJson(recipe).getBytes(StandardCharsets.UTF_8));
+    private static void clayRecipe(Map<ResourceLocation, byte[]> generated, String name, Map<String, Object> recipe) {
+        GeneratedRecipeJson.put(generated, "ceramic_utilities/" + name, recipe);
     }
 
     private static GTMaterial materialOf(Block block) {
@@ -202,13 +178,8 @@ public final class MultiblockRecipePack {
         recipe.put("key", key);
         // Multiblock recipes come from GT6's aRegistry.add(...) rows as well: CR.DEF_REV, no MIR.
         recipe.put("allow_mirror", false);
-//? if >=1.21.1 {
-        /*recipe.put("result", Map.of("id", resultId.toString()));
-*///?} else {
-        recipe.put("result", Map.of("item", resultId.toString()));
-//?}
+        recipe.put("result", GeneratedRecipeJson.result(resultId.toString()));
         recipe.put("group", "gregtech_multiblocks");
         return recipe;
     }
-
 }

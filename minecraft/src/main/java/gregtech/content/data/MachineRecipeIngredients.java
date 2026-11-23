@@ -8,26 +8,17 @@ import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.MaterialEquivalence;
 import gregtech.engine.prefix.BlockMaterialPrefix;
-//? if >=1.21.1 {
-/*import gregtech.engine.energy.WireMaterialLike;
-*///?} else {
-import gregtech.content.block.energy.ElectricWireBlock;
-//?}
+import gregtech.engine.energy.WireMaterialLike;
 import gregtech.content.block.machine.FluidPipeBlock;
 import gregtech.platform.Mc;
 import gregtech.content.registry.GTFluidPipes;
-import gregtech.content.registry.GTWires;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-//? if >=1.21.1 {
-/*import net.minecraft.core.registries.BuiltInRegistries;
-*///?} else {
-import net.minecraftforge.registries.ForgeRegistries;
-//?}
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -397,7 +388,7 @@ public final class MachineRecipeIngredients {
     private static Object partIngredient(int id, GTMaterial machineMaterial) {
         var block = gregtech.content.multiblock.LargeMachineParts.find(id);
         if (block != null && block.isPresent()) {
-            ResourceLocation key = ForgeRegistries.ITEMS.getKey(block.get().asItem());
+            ResourceLocation key = Mc.itemId(block.get().asItem());
             if (key != null) return Map.of("item", key.toString());
         }
         note("GT6 multiblock part " + id, "machine casing block");
@@ -499,24 +490,16 @@ public final class MachineRecipeIngredients {
         return result;
     }
 
-//? if >=1.21.1 {
-    /*private static synchronized void indexWires(){
-        if (wiresBySize!=null)return;Map<String,Map<GTMaterial,Item>> index=new HashMap<>();
-        for (var block:BuiltInRegistries.BLOCK)if (block instanceof WireMaterialLike wire){var spec=wire.spec();String key=(spec.insulated()?"cable_":"wire_")+String.format("%02d",spec.size());index.computeIfAbsent(key,k->new HashMap<>()).put(spec.material(),block.asItem());}
-        wiresBySize=index;
-*///?} else {
     private static synchronized void indexWires() {
         if (wiresBySize != null) return;
         Map<String, Map<GTMaterial, Item>> index = new HashMap<>();
-        for (var entry : GTWires.all()) {
-            if (!entry.isPresent()) continue;
-            ElectricWireBlock block = entry.get();
-            var spec = block.spec();
-            String key = (spec.insulated() ? "cable_" : "wire_") + String.format("%02d", spec.size());
+        for (var block : BuiltInRegistries.BLOCK) {
+            if (!(block instanceof WireMaterialLike wire)) continue;
+            var spec = wire.spec();
+            String key = (spec.insulated() ? "cable_" : "wire_") + String.format(Locale.ROOT, "%02d", spec.size());
             index.computeIfAbsent(key, k -> new HashMap<>()).put(spec.material(), block.asItem());
         }
         wiresBySize = index;
-//?}
     }
 
     private static MaterialPrefix prefix(String name) {

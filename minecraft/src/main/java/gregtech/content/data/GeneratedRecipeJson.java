@@ -14,17 +14,37 @@ public final class GeneratedRecipeJson {
 
     private GeneratedRecipeJson() {}
 
-    /** Emits a recipe JSON under {@code gt6ce:recipes/<path>.json} (1.20.1) or {@code gt6ce:recipe/<path>.json} (1.21.1). */
-    public static void put(Map<ResourceLocation, byte[]> generated, String path, Map<String, Object> recipe) {
-        generated.put(
-                ResourceLocation.fromNamespaceAndPath(
-                        "gt6ce",
+    /** Datapack directory holding recipe JSON; the 1.21 recipe format renamed it from {@code recipes}. */
+    public static String recipeRoot() {
 //? if >=1.21.1 {
-                        /*"recipe/" + path + ".json"),
+        /*return "recipe";
 *///?} else {
-                        "recipes/" + path + ".json"),
+        return "recipes";
 //?}
-                GSON.toJson(recipe).getBytes(StandardCharsets.UTF_8));
+    }
+
+    /** Key of the item id inside a recipe result object; the 1.21 result format renamed it from {@code item}. */
+    public static String resultKey() {
+//? if >=1.21.1 {
+        /*return "id";
+*///?} else {
+        return "item";
+//?}
+    }
+
+    /** Resource path of the generated recipe {@code path}, including the version-specific root. */
+    public static String recipePath(String path) {
+        return recipeRoot() + "/" + path + ".json";
+    }
+
+    /** {@code gt6ce} resource id of the generated recipe {@code path}. */
+    public static ResourceLocation recipeId(String path) {
+        return ResourceLocation.fromNamespaceAndPath("gt6ce", recipePath(path));
+    }
+
+    /** Emits a recipe JSON under {@code gt6ce:<recipe root>/<path>.json}. */
+    public static void put(Map<ResourceLocation, byte[]> generated, String path, Map<String, Object> recipe) {
+        generated.put(recipeId(path), GSON.toJson(recipe).getBytes(StandardCharsets.UTF_8));
     }
 
     public static Map<String, Object> item(String id) {
@@ -42,13 +62,14 @@ public final class GeneratedRecipeJson {
         throw new IllegalArgumentException("Unsupported ingredient spec: " + spec);
     }
 
+    /** A result object carrying only the item id, for the rows that leave the count at its default. */
+    public static Map<String, Object> result(String itemId) {
+        return Map.of(resultKey(), itemId);
+    }
+
     public static Map<String, Object> result(String itemId, int count) {
         var out = new LinkedHashMap<String, Object>();
-//? if >=1.21.1 {
-        /*out.put("id", itemId);
-*///?} else {
-        out.put("item", itemId);
-//?}
+        out.put(resultKey(), itemId);
         out.put("count", count);
         return out;
     }
@@ -119,11 +140,7 @@ public final class GeneratedRecipeJson {
         var json = new LinkedHashMap<String, Object>();
         json.put("type", "minecraft:smelting");
         json.put("ingredient", spec(ingredientSpec));
-//? if >=1.21.1 {
-        /*json.put("result", Map.of("id", resultId));
-*///?} else {
-        json.put("result", resultId);
-//?}
+        json.put("result", result(resultId));
         json.put("experience", experience);
         json.put("cookingtime", cookingTime);
         return json;
