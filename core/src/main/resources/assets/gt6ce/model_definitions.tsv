@@ -2302,7 +2302,6 @@ item/fluid_cell_wax_bee	gt6ce:block/machine/container/cell
 item/fluid_cell_wax_paraffin	gt6ce:block/machine/container/cell		
 item/fluid_cell_wax_plant	gt6ce:block/machine/container/cell		
 item/fluid_cup	gt6ce:block/machine/container/cup		
-item/fluid_filter	minecraft:item/generated		layer0=gt6ce:item/technological/fluid_filter
 item/fluid_funnel	gt6ce:block/tool/fluid_funnel		
 item/fluid_funnel_adamantium	gt6ce:block/tool/fluid_funnel		
 item/fluid_funnel_ceramic	gt6ce:block/tool/fluid_funnel		
@@ -2682,8 +2681,6 @@ item/item_barrel_wood_brass	gt6ce:block/machine/storage/item_barrel
 item/item_barrel_wood_bronze	gt6ce:block/machine/storage/item_barrel		
 item/item_barrel_wood_lead	gt6ce:block/machine/storage/item_barrel		
 item/item_barrel_wood_treated	gt6ce:block/machine/storage/item_barrel		
-item/item_filter	minecraft:item/generated		layer0=gt6ce:item/technological/item_filter
-item/item_retriever_cover	minecraft:item/generated		layer0=gt6ce:item/technological/item_retriever_cover
 item/juice	minecraft:item/generated		layer0=gt6ce:item/bottles/juice
 item/juicer	gt6ce:block/tool/juicer		
 item/jungle_bumblebee_dead	minecraft:item/generated		layer0=gt6ce:item/bumblebee/jungle_bumblebee;layer1=gt6ce:item/bumblebee/overlay_dead

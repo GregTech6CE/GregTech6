@@ -68,6 +68,12 @@ public final class ProceduralModels {
     private static final List<String> COMPASS_DIRECTIONS =
             List.of("nne", "ne", "nee", "e", "see", "se", "sse", "s", "ssw", "sw", "sww", "w", "nww", "nw", "nnw");
 
+    /** Filter covers whose inventory icons switch to their blacklist overlay when {@code gt.cover.inverted} is set. */
+    private static final Map<String, String> FILTER_COVER_FOLDERS = Map.of(
+            "item_filter", "filteritem",
+            "fluid_filter", "filterfluid",
+            "item_retriever_cover", "retrieveritem");
+
     private static final int BATTERY_MAX_SCALE = 9;
 
     /** Reactor core sizes, each a separate registry block with its own top sprite. */
@@ -205,6 +211,8 @@ public final class ProceduralModels {
         if (modelPath.startsWith("item/compass_") || modelPath.startsWith("item/compass/")) {
             return renderCompassModel(modelPath);
         }
+        String filterCover = renderFilterCoverModel(modelPath);
+        if (filterCover != null) return filterCover;
         if (SCAFFOLD_PATHS.contains(modelPath)) return scaffoldDesign1Json(compositeLoader, SCAFFOLD_ROD);
         return null;
     }
@@ -240,6 +248,7 @@ public final class ProceduralModels {
                 forEachReactorCoreModelPath(paths::add);
                 forEachBatteryModelPath(paths::add);
                 forEachCompassModelPath(paths::add);
+                forEachFilterCoverModelPath(paths::add);
                 paths.addAll(SCAFFOLD_PATHS);
                 current = Collections.unmodifiableSet(paths);
                 cachedModelPaths = current;
@@ -1016,6 +1025,44 @@ public final class ProceduralModels {
         if (!modelPath.startsWith("item/compass_")) return null;
         String mode = modelPath.substring("item/compass_".length());
         return COMPASS_MODES.contains(mode) ? compassItemJson(mode) : null;
+    }
+
+    // --------------------------------------------------------- filter covers
+
+    private static void forEachFilterCoverModelPath(Consumer<String> sink) {
+        for (String id : FILTER_COVER_FOLDERS.keySet()) {
+            sink.accept("item/" + id);
+            sink.accept("item/" + id + "_inverted");
+        }
+    }
+
+    private static @Nullable String renderFilterCoverModel(String modelPath) {
+        if (!modelPath.startsWith("item/")) return null;
+        String name = modelPath.substring("item/".length());
+        if (name.endsWith("_inverted")) {
+            String baseId = name.substring(0, name.length() - "_inverted".length());
+            String folder = FILTER_COVER_FOLDERS.get(baseId);
+            if (folder == null) return null;
+            return toJson(object(
+                    "parent",
+                    ITEM_PARENT,
+                    "textures",
+                    object(
+                            "layer0",
+                            "gt6ce:item/technological/blank_cover",
+                            "layer1",
+                            "gt6ce:block/machines/covers/" + folder + "/inverted")));
+        }
+        if (!FILTER_COVER_FOLDERS.containsKey(name)) return null;
+        List<Object> overrides = List.of(
+                object("predicate", object("gt6ce:cover_inverted", 1), "model", "gt6ce:item/" + name + "_inverted"));
+        return toJson(object(
+                "parent",
+                ITEM_PARENT,
+                "textures",
+                object("layer0", "gt6ce:item/technological/" + name),
+                "overrides",
+                overrides));
     }
 
     // -------------------------------------------------------------- scaffolds
