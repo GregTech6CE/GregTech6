@@ -269,17 +269,29 @@ final class BasicMachineCovers {
         return CoverUtilityBehaviors.fluidFilter(machine.getCover(side), level.registryAccess());
     }
 
-    boolean clickFilter(Direction side, ItemStack held, Level level) {
+    /**
+     * The right-click that stores a filter template. The client decides from the same rule
+     * without writing the cover, and the server re-syncs the machine only when the stored filter
+     * actually changed.
+     */
+    boolean clickFilter(Direction side, ItemStack held, Level level, BlockPos pos) {
         String id = coverId(side);
-        if (id == null || held == null || held.isEmpty()) return false;
+        if (level == null || id == null || held == null || held.isEmpty()) return false;
         ItemStack stack = machine.getCover(side);
         if (CoverUtilityBehaviors.FILTER_ITEM.equals(id)) {
-            return CoverUtilityBehaviors.setItemFilter(stack, held, level.registryAccess());
+            if (level.isClientSide)
+                return CoverUtilityBehaviors.canSetItemFilter(stack, held, level.registryAccess());
+            if (!CoverUtilityBehaviors.setItemFilter(stack, held, level.registryAccess())) return false;
+            syncCover(level, pos);
+            return true;
         }
         if (CoverUtilityBehaviors.FILTER_FLUID.equals(id)) {
             FluidStack fluid = gregtech.content.cover.UtilityCoverInteraction.sample(held);
-            if (fluid.isEmpty()) return false;
-            return CoverUtilityBehaviors.setFluidFilter(stack, fluid, level.registryAccess());
+            if (level.isClientSide)
+                return CoverUtilityBehaviors.canSetFluidFilter(stack, fluid, level.registryAccess());
+            if (!CoverUtilityBehaviors.setFluidFilter(stack, fluid, level.registryAccess())) return false;
+            syncCover(level, pos);
+            return true;
         }
         return false;
     }

@@ -300,36 +300,100 @@ public final class CoverUtilityBehaviors {
     }
 
     /**
+     * What a right-click with a held stack does to the cover's stored item filter.
+     *
+     * <p>{@code item_filter} treats a repeated click on the same item as a wildcard toggle, so a
+     * second click on a stored damage value starts ignoring damage and a third click stops again.
+     * {@code item_retriever_cover} has no wildcard setting: a repeat of the stored specimen is a
+     * no-op, and any other stack replaces the template.</p>
+     */
+    private enum ItemFilterChange {
+        /** The click leaves the cover untouched. */
+        NONE,
+        /** The stored template is replaced and wildcard is cleared. */
+        STORE,
+        /** The stored template stays equivalent and the wildcard flag flips. */
+        TOGGLE_WILDCARD
+    }
+
+    private static ItemFilterChange itemFilterChange(ItemStack cover, ItemStack held,
+            net.minecraft.core.HolderLookup.Provider lookup) {
+        if (cover == null || cover.isEmpty() || held == null || held.isEmpty()
+                || held.getItem() instanceof gregtech.content.item.FluidDisplayItemLike)
+            return ItemFilterChange.NONE;
+        ItemStack previous = itemFilter(cover, lookup);
+        if (previous.isEmpty()) return ItemFilterChange.STORE;
+        boolean previousWildcard = StackData.getBoolean(cover, "gt.filter.wildcard", false);
+        boolean sameItem = previous.getItem() == held.getItem();
+        boolean sameDamage = previous.getDamageValue() == held.getDamageValue();
+        if (FILTER_ITEM.equals(CoverItems.behavior(cover)))
+            return sameItem && (previousWildcard || sameDamage)
+                    ? ItemFilterChange.TOGGLE_WILDCARD : ItemFilterChange.STORE;
+        return sameItem && sameDamage && !previousWildcard
+                ? ItemFilterChange.NONE : ItemFilterChange.STORE;
+    }
+
+    /**
      * GT6 {@code CoverFilterItem} / {@code CoverFilterFluid}: right-clicking the cover
      * with a stack stores a template; item filters also toggle wildcard on repeated matches.
-     * This shared setter is currently reused by retrievers, which had a one-shot original setter.
      * The original never consumes the held stack, and neither does this.
      *
-     * @return whether a filter was stored
+     * @return whether the stored filter changed
      */
     public static boolean setItemFilter(ItemStack cover, ItemStack held, net.minecraft.core.HolderLookup.Provider lookup) {
-        if (cover == null || cover.isEmpty() || held == null || held.isEmpty()
-                || held.getItem() instanceof gregtech.content.item.FluidDisplayItemLike) return false;
+        ItemFilterChange change = itemFilterChange(cover, held, lookup);
+        if (change == ItemFilterChange.NONE) return false;
         CompoundTag tag = StackData.readOrEmpty(cover);
-        var previous = itemFilter(cover, lookup);
-        if (!previous.isEmpty() && (previous.getItem() != held.getItem()
-                || !tag.getBoolean("gt.filter.wildcard") && previous.getDamageValue() != held.getDamageValue())) return false;
-        if (!previous.isEmpty()) tag.putBoolean("gt.filter.wildcard", !tag.getBoolean("gt.filter.wildcard"));
-        else tag.putBoolean("gt.filter.wildcard", false);
-        var specimen = new ItemStack(held.getItem());
-        specimen.setDamageValue(held.getDamageValue());
-        tag.put(FILTER_ITEM_KEY, gregtech.engine.stack.NbtCompat.saveItem(specimen, lookup));
+        boolean wildcard = change == ItemFilterChange.TOGGLE_WILDCARD && !tag.getBoolean("gt.filter.wildcard");
+        tag.putBoolean("gt.filter.wildcard", wildcard);
+        tag.put(FILTER_ITEM_KEY, gregtech.engine.stack.NbtCompat.saveItem(specimen(held), lookup));
         StackData.write(cover,tag);
         return true;
     }
-    /** GT6 {@code CoverFilterFluid}: the same one-shot right-click rule for a fluid. */
+
+    /**
+     * Whether {@link #setItemFilter} would change the cover. Client-side clicks use this so that
+     * the client never writes cover data of its own.
+     */
+    public static boolean canSetItemFilter(ItemStack cover, ItemStack held,
+            net.minecraft.core.HolderLookup.Provider lookup) {
+        return itemFilterChange(cover, held, lookup) != ItemFilterChange.NONE;
+    }
+
+    /**
+     * The stored template: item identity and damage only, so a filter never keeps the tags or
+     * components of the stack that configured it.
+     */
+    private static ItemStack specimen(ItemStack held) {
+        ItemStack specimen = new ItemStack(held.getItem());
+        specimen.setDamageValue(held.getDamageValue());
+        return specimen;
+    }
+
+    /**
+     * GT6 {@code CoverFilterFluid}: right-clicking stores the fluid's identity; the same fluid
+     * again is a no-op, a different one replaces the sample.
+     */
     public static boolean setFluidFilter(ItemStack cover, FluidStack held, net.minecraft.core.HolderLookup.Provider lookup) {
-        if (cover == null || cover.isEmpty() || held == null || held.isEmpty()) return false;
+        if (!canSetFluidFilter(cover, held, lookup)) return false;
         CompoundTag tag = StackData.readOrEmpty(cover);
-        if (tag.contains(FILTER_FLUID_KEY)) return false;
         tag.put(FILTER_FLUID_KEY, gregtech.engine.stack.NbtCompat.saveFluid(held.copy(), lookup));
         StackData.write(cover,tag);
         return true;
+    }
+
+    /** Whether {@link #setFluidFilter} would change the cover; see {@link #canSetItemFilter}. */
+    public static boolean canSetFluidFilter(ItemStack cover, FluidStack held,
+            net.minecraft.core.HolderLookup.Provider lookup) {
+        if (cover == null || cover.isEmpty() || held == null || held.isEmpty()) return false;
+        FluidStack previous = fluidFilter(cover, lookup);
+        return previous.isEmpty() || previous.getFluid() != held.getFluid();
+    }
+
+    /** Whether {@code stack} is one of the standalone filter/retriever covers that carry whitelist/blacklist state. */
+    public static boolean isFilterCover(ItemStack stack) {
+        String id = CoverItems.behavior(stack);
+        return FILTER_ITEM.equals(id) || FILTER_FLUID.equals(id) || RETRIEVER_ITEM.equals(id);
     }
 
     /**
@@ -344,8 +408,9 @@ public final class CoverUtilityBehaviors {
     private static void toggleFilterMode(ItemStack cover) {
         CompoundTag tag = StackData.readOrEmpty(cover);
         boolean blacklist = !MachineCoverSpec.inverted(cover);
-        tag.putBoolean("gt.cover.inverted", blacklist);
-        StackData.write(cover,tag);
+        if (blacklist) tag.putBoolean("gt.cover.inverted", true);
+        else tag.remove("gt.cover.inverted");
+        StackData.write(cover, tag);
     }
 
     public enum FilterAction {

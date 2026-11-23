@@ -139,9 +139,12 @@ public final class LogisticsCovers {
         }
     }
 
+    /** The dropped stacks are detached like a crowbar removal: face values reset, filters kept. */
     public void dropAll() {
         for (int faceIndex = 0; faceIndex < faces.length; faceIndex++) {
-            if (!faces[faceIndex].isEmpty()) gregtech.content.cover.CoverDrops.dropCover(owner, faces[faceIndex]);
+            if (!faces[faceIndex].isEmpty())
+                gregtech.content.cover.CoverDrops.dropCover(owner,
+                        gregtech.content.cover.CoverStackData.detached(faces[faceIndex]));
             faces[faceIndex] = ItemStack.EMPTY;
             displaySignals[faceIndex] = 0;
             displayVisuals[faceIndex] = 0;

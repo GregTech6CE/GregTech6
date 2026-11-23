@@ -62,13 +62,17 @@ public final class LogisticsCoverInteraction {
                 && filter.getDamageValue() == candidate.getDamageValue());
     }
 
+    /** A filtered item bus keeps its template until another item replaces it. */
     public static boolean setItemFilter(LogisticsCovers covers, Direction face, ItemStack template) {
         ItemStack cover = covers.get(face);
         var type = LogisticsCoverType.of(cover);
-        if (template.isEmpty() || template.getItem() instanceof gregtech.content.item.FluidDisplayItemLike
+        if (template == null || template.isEmpty()
+                || template.getItem() instanceof gregtech.content.item.FluidDisplayItemLike
                 || type == null || !type.filtered()
-                || type.channel() != LogisticsCoverType.Channel.ITEM || !itemFilter(cover, lookup(covers)).isEmpty())
-            return false;
+                || type.channel() != LogisticsCoverType.Channel.ITEM) return false;
+        ItemStack previous = itemFilter(cover, lookup(covers));
+        if (!previous.isEmpty() && previous.is(template.getItem())
+                && previous.getDamageValue() == template.getDamageValue()) return false;
         StackData.update(cover,
                 tag -> tag.put(ITEM_FILTER, gregtech.engine.stack.NbtCompat.saveItem(
                         template.copyWithCount(1), lookup(covers))));
@@ -86,14 +90,15 @@ public final class LogisticsCoverInteraction {
         return true;
     }
 
-    /** A filtered fluid bus takes its sample only once; the soft hammer resets it. */
+    /** A filtered fluid bus keeps its sample until another fluid replaces it. */
     public static boolean setFluidFilter(LogisticsCovers covers, Direction face, FluidStack sample) {
         ItemStack cover = covers.get(face);
         var type = LogisticsCoverType.of(cover);
         if (sample == null || sample.isEmpty() || type == null || !type.filtered()
-                || type.channel() != LogisticsCoverType.Channel.FLUID
-                || StackData.readOrEmpty(cover).contains(FLUID_FILTER))
+                || type.channel() != LogisticsCoverType.Channel.FLUID)
             return false;
+        FluidStack previous = fluidFilter(cover, lookup(covers));
+        if (!previous.isEmpty() && previous.getFluid() == sample.getFluid()) return false;
         StackData.update(cover,
                 tag -> tag.put(FLUID_FILTER, gregtech.engine.stack.NbtCompat.saveFluid(
                         sample.copy(), lookup(covers))));
@@ -193,6 +198,9 @@ public final class LogisticsCoverInteraction {
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
         if (installedType.channel() == LogisticsCoverType.Channel.ITEM && installedType.filtered()) {
+            // Tools and cover items belong to their own handlers; a filter template is never a tool.
+            if (GTToolHelper.isInteractionTool(held) || gregtech.content.cover.CoverItems.isCover(held))
+                return InteractionResult.PASS;
             if (held.getItem() instanceof gregtech.content.item.FluidDisplayItemLike) return InteractionResult.PASS;
             if (!level.isClientSide) setItemFilter(covers, face, held);
             return InteractionResult.sidedSuccess(level.isClientSide);
