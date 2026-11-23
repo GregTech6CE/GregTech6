@@ -1,12 +1,9 @@
 package gregtech.content.item.behavior;
 
 import gregtech.api.material.MaterialProperty;
-import gregtech.engine.tool.GTToolHelper;
-//? if >=1.21.1 {
-/*import gregtech.content.item.behavior.ManualToolBehaviorAccess.Outcome;
-*///?} else {
 import gregtech.content.item.behavior.ItemBehaviors.Outcome;
-//?}
+import gregtech.engine.tool.GTToolHelper;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -15,8 +12,6 @@ import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-
-import javax.annotation.Nullable;
 
 /**
  * Flint-and-tinder attempts and shared native ignition dispatch.
@@ -55,10 +50,8 @@ public final class BehaviorFlintAndTinder {
      */
     public static int ignitionChance(long toolDurability, boolean flammable, int flintChance) {
         int bound = (int) Math.max(1L, Math.min(100L, flintChance));
-        if (toolDurability <= 1)
-            return 100;
-        if (flammable)
-            return (int) Math.max(1L, Math.min(100L, bound + (100L - bound) / 2));
+        if (toolDurability <= 1) return 100;
+        if (flammable) return (int) Math.max(1L, Math.min(100L, bound + (100L - bound) / 2));
         return bound;
     }
 
@@ -74,14 +67,19 @@ public final class BehaviorFlintAndTinder {
      * @param random      the level's random source ({@code RNGSUS} in the original)
      * @return GT6's boolean return — after the gate this is {@code true} even when the roll failed
      */
-    public static Outcome useOn(Level level, BlockPos pos, Direction side, @Nullable Player player, ItemStack stack,
-                                int flintChance, RandomSource random, float hitX, float hitY, float hitZ) {
-        if (level.isClientSide) return Outcome.refused(stack);                    // moved up
-//? if >=1.21.1 {
-        /*if (player != null && ManualToolBehaviorAccess.obstructed(level, pos, side)) return Outcome.refused(stack); //
-*///?} else {
-        if (player != null && ItemBehaviors.obstructed(level, pos, side)) return Outcome.refused(stack);
-//?}
+    public static Outcome useOn(
+            Level level,
+            BlockPos pos,
+            Direction side,
+            @Nullable Player player,
+            ItemStack stack,
+            int flintChance,
+            RandomSource random,
+            float hitX,
+            float hitY,
+            float hitZ) {
+        if (level.isClientSide) return Outcome.refused(stack); // moved up
+        if (player != null && ManualToolBehaviorAccess.obstructed(level, pos, side)) return Outcome.refused(stack);
 
         boolean flammable = GTToolHelper.getStatMaterial(stack).has(MaterialProperty.FLAMMABLE);
         int chance = ignitionChance(GTToolHelper.getStatMaterial(stack).getToolDurability(), flammable, flintChance);
@@ -105,24 +103,24 @@ public final class BehaviorFlintAndTinder {
      *
      * @return the ignition cost in GT6's 1/10000 units, {@code 0} when nothing reacted
      */
-    public static long ignite(Level level, BlockPos pos, Direction side, @Nullable Player player, ItemStack stack,
-                              float hitX, float hitY, float hitZ) {
+    public static long ignite(
+            Level level,
+            BlockPos pos,
+            Direction side,
+            @Nullable Player player,
+            ItemStack stack,
+            float hitX,
+            float hitY,
+            float hitZ) {
         boolean sneaking = player != null && player.isShiftKeyDown();
-//? if >=1.21.1 {
-        /*long cost = ManualToolBehaviorAccess.igniteToolClick(level, pos, side, player, stack, sneaking, hitX, hitY, hitZ);
-*///?} else {
-        long cost = ItemBehaviors.igniteToolClick(level, pos, side, player, stack, sneaking, hitX, hitY, hitZ);
-//?}
+        long cost =
+                ManualToolBehaviorAccess.igniteToolClick(level, pos, side, player, stack, sneaking, hitX, hitY, hitZ);
         if (cost > 0) return cost;
-//? if >=1.21.1 {
-        /*if (ManualToolBehaviorAccess.handlesIgniter(level, pos)) return 0L;
-        if (ManualToolBehaviorAccess.primeTnt(level, pos, player)) return ManualToolBehaviorAccess.TNT_COST;   // GT6 ToolCompat
-        if (ManualToolBehaviorAccess.lightVanillaFire(level, player, pos, side, stack)) return ManualToolBehaviorAccess.TNT_COST;
-*///?} else {
-        if (ItemBehaviors.handlesIgniter(level, pos)) return 0L;
-        if (ItemBehaviors.primeTnt(level, pos, player)) return ItemBehaviors.TNT_COST;   // GT6 ToolCompat
-        if (ItemBehaviors.lightVanillaFire(level, player, pos, side, stack)) return ItemBehaviors.TNT_COST;
-//?}
+        if (ManualToolBehaviorAccess.handlesIgniter(level, pos)) return 0L;
+        if (ManualToolBehaviorAccess.primeTnt(level, pos, player))
+            return ManualToolBehaviorAccess.TNT_COST; // GT6 ToolCompat
+        if (ManualToolBehaviorAccess.lightVanillaFire(level, player, pos, side, stack))
+            return ManualToolBehaviorAccess.TNT_COST;
         return 0L;
     }
 

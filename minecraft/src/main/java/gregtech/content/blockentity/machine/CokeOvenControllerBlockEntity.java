@@ -20,11 +20,7 @@
 package gregtech.content.blockentity.machine;
 
 import gregtech.content.multiblock.*;
-//? if >=1.21.1 {
-/*import gregtech.content.item.behavior.ManualToolBehaviorAccess;
-*///?} else {
-import gregtech.content.item.behavior.ItemBehaviors;
-//?}
+import gregtech.content.item.behavior.ManualToolBehaviorAccess;
 import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
@@ -40,11 +36,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import javax.annotation.Nullable;
 
 /** Original GT6 17000: fire bricks, ignition, TU recipes and 16 parallel operations. */
-//? if >=1.21.1 {
-/*public class CokeOvenControllerBlockEntity extends LargeRecipeMachineBlockEntity implements ManualToolBehaviorAccess.Ignitable {
-*///?} else {
-public class CokeOvenControllerBlockEntity extends LargeRecipeMachineBlockEntity implements ItemBehaviors.Ignitable {
-//?}
+public class CokeOvenControllerBlockEntity extends LargeRecipeMachineBlockEntity implements ManualToolBehaviorAccess.Ignitable {
     private int ignitionTicks;
     public boolean ignitionReady() { return ignitionTicks > 0; }
     private gregtech.engine.multiblock.StructureOutput fluidOutputTarget;

@@ -15,10 +15,8 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.registries.DeferredHolder;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.RegistryObject;
 //?}
 
 import java.util.HashMap;
@@ -241,14 +239,8 @@ public final class GeneratedRecipeResolver {
         // Lava declarations reuse the vanilla fluid; Loader_Fluids registers no still/flowing pair
         // for it, so the vanilla stack has to be returned here (same as GTFluids.stack).
         if (entry.isVanillaLava()) return new FluidStack(Fluids.LAVA, mb);
-//? if >=1.21.1 {
-        /*DeferredHolder<Fluid, ? extends Fluid> fluid = GTFluids.still(key);
-        if (fluid == null || !fluid.isBound()) return null;
-*///?} else {
-        RegistryObject<Fluid> fluid = GTFluids.still(key);
-        if (fluid == null || !fluid.isPresent()) return null;
-//?}
-        return new FluidStack(fluid.get(), mb);
+        Fluid fluid = GTFluids.stillFluid(key);
+        return fluid == null ? null : new FluidStack(fluid, mb);
     }
 
     /** Named registered fluid by field key, including the vanilla water/lava reuse. */

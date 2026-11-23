@@ -113,11 +113,7 @@ public final class BehaviorPlungerFluid {
      * @return whether the cost could be paid
      */
     public static boolean pay(ItemStack plunger, int costs, @Nullable Player player) {
-//? if >=1.21.1 {
-        /*if (ManualToolBehaviorAccess.creative(player)) return true; //
-*///?} else {
-        if (ItemBehaviors.creative(player)) return true;
-//?}
+        if (ManualToolBehaviorAccess.creative(player)) return true;
         if (!usable(plunger)) return false;
         GTToolHelper.damageForUse(plunger, costs, player);
         return true;

@@ -1,10 +1,6 @@
 package gregtech.content.item.behavior;
 
-//? if >=1.21.1 {
-/*import gregtech.content.item.behavior.ManualToolBehaviorAccess.Outcome;
-*///?} else {
 import gregtech.content.item.behavior.ItemBehaviors.Outcome;
-//?}
 import gregtech.engine.stack.StackData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -179,12 +175,7 @@ public final class BehaviorRemote {
         if (level.isClientSide) return Outcome.refused(stack);
         if (player == null) return Outcome.refused(stack);
         if (!player.isShiftKeyDown()) return Outcome.refused(stack);
-//? if >=1.21.1 {
-        /*if (!ManualToolBehaviorAccess.mayEdit(level, player, pos)) return Outcome.refused(stack);
-        //
-*///?} else {
-        if (!ItemBehaviors.mayEdit(level, player, pos)) return Outcome.refused(stack);
-//?}
+        if (!ManualToolBehaviorAccess.mayEdit(level, player, pos)) return Outcome.refused(stack);
 
         CompoundTag tag = StackData.readOrEmpty(stack);
         // UT.NBT.getNBT

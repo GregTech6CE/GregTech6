@@ -1,8 +1,8 @@
 package gregtech.content.item.behavior;
 
 import gregtech.content.block.tool.DynamiteBlock;
-import gregtech.content.tool.DynamiteSubstrates;
 import gregtech.content.item.ElectricToolItem;
+import gregtech.content.tool.DynamiteSubstrates;
 import gregtech.platform.Mc;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.BlockItem;
@@ -19,21 +19,22 @@ public final class BehaviorPlaceDynamite {
         var player = context.getPlayer();
         var support = context.getClickedPos();
         var target = support.relative(context.getClickedFace());
-        if (level.isClientSide || player == null || !level.hasChunkAt(target)
-//? if >=1.21.1 {
-                /*|| !ManualToolBehaviorAccess.mayEdit(level, player, support) || !ManualToolBehaviorAccess.mayEdit(level, player, target)
-*///?} else {
-                || !ItemBehaviors.mayEdit(level, player, support) || !ItemBehaviors.mayEdit(level, player, target)
-//?}
+        if (level.isClientSide
+                || player == null
+                || !level.hasChunkAt(target)
+                || !ManualToolBehaviorAccess.mayEdit(level, player, support)
+                || !ManualToolBehaviorAccess.mayEdit(level, player, target)
                 || !DynamiteSubstrates.canDrill(level, support)
                 || !player.isCreative() && !tool.hasEnergyForUse(drill)) return InteractionResult.PASS;
         for (int slot = player.getInventory().items.size() - 1; slot >= 0; slot--) {
             var inventoryStack = player.getInventory().items.get(slot);
-            if (!(inventoryStack.getItem() instanceof BlockItem item) || !(item.getBlock() instanceof DynamiteBlock)) continue;
+            if (!(inventoryStack.getItem() instanceof BlockItem item) || !(item.getBlock() instanceof DynamiteBlock))
+                continue;
             // Use a copy: neither failed placement nor the temporary SUNK tag can alter inventory NBT.
             var placed = inventoryStack.copy();
             gregtech.engine.stack.BlockStateData.with(placed, "sunk", "true");
-            var hit = new BlockHitResult(context.getClickLocation(), context.getClickedFace(), support, context.isInside());
+            var hit = new BlockHitResult(
+                    context.getClickLocation(), context.getClickedFace(), support, context.isInside());
             var placement = new UseOnContext(level, player, context.getHand(), placed, hit);
             // ItemStack.useOn retains Forge block-place snapshots and protection-event rollback.
             var result = placed.useOn(placement);
@@ -45,7 +46,7 @@ public final class BehaviorPlaceDynamite {
             for (int hotbar = 0; hotbar < 9; hotbar++) {
                 var remote = player.getInventory().items.get(hotbar);
                 if (net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "remote_activator")
-                        .equals(Mc.itemId(remote.getItem()))
+                                .equals(Mc.itemId(remote.getItem()))
                         && BehaviorRemote.addCoords(remote, level, target)) break;
             }
             player.getInventory().setChanged();

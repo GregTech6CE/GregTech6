@@ -1,7 +1,7 @@
 package gregtech.content.item.behavior;
 
 import gregtech.engine.stack.StackCompat;
-
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -14,8 +14,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-
-import javax.annotation.Nullable;
 
 /** Ordinary GT6 builder plane: material-quality reach and placement on the clicked face.
  * Multiblock building is dispatched by GTToolItem before this behavior.
@@ -30,29 +28,22 @@ public final class BehaviorBuilderWand {
      * @param side the clicked face; its axis is the one the plane does <em>not</em> walk
      * @return {@code acted} when at least one copy was placed, with the (possibly damaged) wand
      */
-//? if >=1.21.1 {
-    /*public static ManualToolBehaviorAccess.Outcome useOn(Level level, BlockPos pos, Direction side,
-*///?} else {
-    public static ItemBehaviors.Outcome useOn(Level level, BlockPos pos, Direction side,
-//?}
-                                              @Nullable Player player, ItemStack wand,
-                                              float hitX, float hitY, float hitZ) {
-//? if >=1.21.1 {
-        /*if (level.isClientSide() || player == null) return ManualToolBehaviorAccess.Outcome.refused(wand);
-        if (!level.hasChunkAt(pos) || !ManualToolBehaviorAccess.mayEdit(level, player, pos)) {
-            return ManualToolBehaviorAccess.Outcome.refused(wand);
-*///?} else {
+    public static ItemBehaviors.Outcome useOn(
+            Level level,
+            BlockPos pos,
+            Direction side,
+            @Nullable Player player,
+            ItemStack wand,
+            float hitX,
+            float hitY,
+            float hitZ) {
         if (level.isClientSide() || player == null) return ItemBehaviors.Outcome.refused(wand);
-        if (!level.hasChunkAt(pos) || !ItemBehaviors.mayEdit(level, player, pos)) {
+        if (!level.hasChunkAt(pos) || !ManualToolBehaviorAccess.mayEdit(level, player, pos)) {
             return ItemBehaviors.Outcome.refused(wand);
-//?}
         }
         BlockState clicked = level.getBlockState(pos);
-//? if >=1.21.1 {
-        /*if (clicked.isAir() || !gregtech.engine.tool.GTToolHelper.isUsable(wand)) return ManualToolBehaviorAccess.Outcome.refused(wand);
-*///?} else {
-        if (clicked.isAir() || !gregtech.engine.tool.GTToolHelper.isUsable(wand)) return ItemBehaviors.Outcome.refused(wand);
-//?}
+        if (clicked.isAir() || !gregtech.engine.tool.GTToolHelper.isUsable(wand))
+            return ItemBehaviors.Outcome.refused(wand);
 
         int reach = Math.max(0, gregtech.engine.tool.GTToolHelper.getHead(wand).getToolQuality() + 1);
         boolean placedAny = false;
@@ -65,36 +56,27 @@ public final class BehaviorBuilderWand {
                     // - only positions already holding the very same block (and meta) count.
                     if (!level.getBlockState(target).equals(clicked)) continue;
                     // - the position itself and the one the face points at must both be editable.
-//? if >=1.21.1 {
-                    /*if (!ManualToolBehaviorAccess.mayEdit(level, player, target)) continue;
+                    if (!ManualToolBehaviorAccess.mayEdit(level, player, target)) continue;
                     if (!ManualToolBehaviorAccess.mayEdit(level, player, target.relative(side))) continue;
-*///?} else {
-                    if (!ItemBehaviors.mayEdit(level, player, target)) continue;
-                    if (!ItemBehaviors.mayEdit(level, player, target.relative(side))) continue;
-//?}
 
                     if (!gregtech.engine.tool.GTToolHelper.isUsable(wand)) break placementLoop;
                     int sourceSlot = findSourceBlock(player, clicked);
-                    if (sourceSlot < 0) break;   // GT6 runs out of matching blocks and stops the plane
+                    if (sourceSlot < 0) break; // GT6 runs out of matching blocks and stops the plane
                     if (!place(level, player, target, side, sourceSlot, wand, hitX, hitY, hitZ)) continue;
-//? if >=1.21.1 {
-                    /*if (!ManualToolBehaviorAccess.creative(player)) {
-*///?} else {
-                    if (!ItemBehaviors.creative(player)) {
-//?}
-                        gregtech.engine.tool.GTToolHelper.damageForUse(wand, 1, player,
-                                player.getOffhandItem() == wand ? net.minecraft.world.entity.EquipmentSlot.OFFHAND
+                    if (!ManualToolBehaviorAccess.creative(player)) {
+                        gregtech.engine.tool.GTToolHelper.damageForUse(
+                                wand,
+                                1,
+                                player,
+                                player.getOffhandItem() == wand
+                                        ? net.minecraft.world.entity.EquipmentSlot.OFFHAND
                                         : net.minecraft.world.entity.EquipmentSlot.MAINHAND);
                     }
                     placedAny = true;
                 }
             }
         }
-//? if >=1.21.1 {
-        /*return placedAny ? ManualToolBehaviorAccess.Outcome.acted(wand) : ManualToolBehaviorAccess.Outcome.refused(wand);
-*///?} else {
         return placedAny ? ItemBehaviors.Outcome.acted(wand) : ItemBehaviors.Outcome.refused(wand);
-//?}
     }
 
     /** The loop bound for one axis: the clicked face's own axis never moves. */
@@ -121,9 +103,9 @@ public final class BehaviorBuilderWand {
             if (blockItem.getBlock() != clicked.getBlock()) continue;
             if (clicked.getBlock() instanceof gregtech.content.block.OreBlock
                     && (gregtech.content.block.OreBlock.stoneOfStack(candidate)
-                            != gregtech.content.block.OreBlock.stoneOf(clicked)
-                    || gregtech.content.block.OreBlock.isBrokenStack(candidate)
-                            != gregtech.content.block.OreBlock.isBroken(clicked))) continue;
+                                    != gregtech.content.block.OreBlock.stoneOf(clicked)
+                            || gregtech.content.block.OreBlock.isBrokenStack(candidate)
+                                    != gregtech.content.block.OreBlock.isBroken(clicked))) continue;
             return slot;
         }
         return -1;
@@ -136,16 +118,25 @@ public final class BehaviorBuilderWand {
     }
 
     /** The copied source owns the loader transaction, not the held wand. */
-    private static boolean place(Level level, Player player, BlockPos support, Direction side,
-                                 int sourceSlot, ItemStack wand, float hitX, float hitY, float hitZ) {
+    private static boolean place(
+            Level level,
+            Player player,
+            BlockPos support,
+            Direction side,
+            int sourceSlot,
+            ItemStack wand,
+            float hitX,
+            float hitY,
+            float hitZ) {
         ItemStack source = player.getInventory().getItem(sourceSlot);
         InteractionHand hand = player.getOffhandItem() == wand ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
         ItemStack copy = source.copy();
-        BlockHitResult hit = new BlockHitResult(new Vec3(support.getX() + hitX,
-                support.getY() + hitY, support.getZ() + hitZ), side, support, false);
+        BlockHitResult hit = new BlockHitResult(
+                new Vec3(support.getX() + hitX, support.getY() + hitY, support.getZ() + hitZ), side, support, false);
         var use = new net.minecraft.world.item.context.UseOnContext(level, player, hand, copy, hit);
         BlockPos destination = new BlockPlaceContext(use).getClickedPos();
-        if (!level.hasChunkAt(destination) || !ManualToolBehaviorAccess.mayEdit(level, player, destination)) return false;
+        if (!level.hasChunkAt(destination) || !ManualToolBehaviorAccess.mayEdit(level, player, destination))
+            return false;
         // ItemStack.useOn captures snapshots and returns only after cancellation/rollback.
         // Calling BlockItem.place directly would skip that boundary in onItemUseFirst.
         // Vanilla SolidBucketItem writes its container to the real context hand, even though
@@ -173,7 +164,8 @@ public final class BehaviorBuilderWand {
         if (!player.getAbilities().instabuild) {
             source.shrink(Math.max(0, source.getCount() - copy.getCount()));
             if (!returnedContainer.isEmpty()) {
-                if (source.isEmpty() && player.getInventory().getItem(sourceSlot).isEmpty()) {
+                if (source.isEmpty()
+                        && player.getInventory().getItem(sourceSlot).isEmpty()) {
                     player.getInventory().setItem(sourceSlot, returnedContainer);
                 } else if (!player.addItem(returnedContainer)) {
                     player.drop(returnedContainer, false);

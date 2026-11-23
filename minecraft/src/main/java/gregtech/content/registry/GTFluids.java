@@ -16,6 +16,7 @@ import net.minecraft.network.chat.Component;
 //?}
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.material.Fluid;
+import org.jetbrains.annotations.Nullable;
 //? if >=1.21.1 {
 /*import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.SoundActions;
@@ -129,6 +130,16 @@ public final class GTFluids {
         return entry!=null?entry.gas():stack.getFluid().getFluidType().isLighterThanAir();
 //?}
     }
+
+    /**
+     * The still fluid registered under {@code field}, or {@code null} when it is unregistered or
+     * not bound yet. Version-neutral form of the {@code still(...)} holder lookup.
+     */
+    public static @Nullable Fluid stillFluid(String field) {
+        var holder = still(field);
+        return isPresent(holder) ? holder.get() : null;
+    }
+
 //? if >=1.21.1 {
     /*public static String sanitizePath(String name) { return RegisteredFluids.sanitizePath(name); }
     public static DeferredHolder<Fluid, ? extends Fluid> still(String field) { return STILL.get(RegisteredFluids.canonicalField(field)); }

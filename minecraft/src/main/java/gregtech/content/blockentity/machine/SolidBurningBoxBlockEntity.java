@@ -41,11 +41,7 @@ import java.util.Collection;
  * Solid-fuel burning box (GT6 {@code MultiTileEntityGeneratorSolid}).
  * Emits HU from the top face; fuel and ashes use front-face click inventory (no GUI).
  */
-//? if >=1.21.1 {
-/*public class SolidBurningBoxBlockEntity extends GTFacingMachineBlockEntity implements gregtech.content.item.behavior.ManualToolBehaviorAccess.Ignitable,gregtech.engine.tool.PoweredToolTarget {
-*///?} else {
-public class SolidBurningBoxBlockEntity extends GTFacingMachineBlockEntity implements gregtech.content.item.behavior.ItemBehaviors.Ignitable,gregtech.engine.tool.PoweredToolTarget {
-//?}
+public class SolidBurningBoxBlockEntity extends GTFacingMachineBlockEntity implements gregtech.content.item.behavior.ManualToolBehaviorAccess.Ignitable,gregtech.engine.tool.PoweredToolTarget {
     public static final int SLOT_LIMIT = 64;
     private static final int FUEL_SLOT = 0;
     private static final int ASH_SLOT = 1;

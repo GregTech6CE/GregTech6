@@ -60,11 +60,7 @@ import static gregtech.content.data.FuelRecipeMaps.*;
  * Fluidized Bed — slot fuel (dust) + fluid calcite, FM.FluidBed RecipeMap, ash output.
  * All emit HU upward. Dense versions multiply output rate by 4x.</p>
  */
-//? if >=1.21.1 {
-/*public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements gregtech.content.item.behavior.ManualToolBehaviorAccess.Ignitable,gregtech.engine.tool.PoweredToolTarget {
-*///?} else {
-public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements gregtech.content.item.behavior.ItemBehaviors.Ignitable,gregtech.engine.tool.PoweredToolTarget {
-//?}
+public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements gregtech.content.item.behavior.ManualToolBehaviorAccess.Ignitable,gregtech.engine.tool.PoweredToolTarget {
 
     protected final BurningBoxFuelType fuelType;
     protected final MachineSpec spec;

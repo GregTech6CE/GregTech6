@@ -208,7 +208,7 @@ public final class BehaviorLighter {
         if (!(entity instanceof Creeper creeper)) return Outcome.refused(prepared);
         if (!spec.can().isUsed(prepared)) return Outcome.refused(prepared);
         creeper.ignite();
-        if (ItemBehaviors.creative(player)) return Outcome.acted(prepared); // skips the decrement
+        if (ManualToolBehaviorAccess.creative(player)) return Outcome.acted(prepared); // skips the decrement
         return Outcome.acted(spec.can().spent(prepared, 1L));
     }
 
@@ -217,7 +217,7 @@ public final class BehaviorLighter {
      * up, and {@code useUp} once none are left.
      */
     public static ItemStack consumeFuel(ItemStack stack, LighterSpec spec, long cost, @Nullable Player player) {
-        if (ItemBehaviors.creative(player)) return stack;
+        if (ManualToolBehaviorAccess.creative(player)) return stack;
         long units = gregtech.content.tool.ConsumableRules.ignitionUnits(cost); // UT.Code.units(..., T)
         return spec.can().spent(stack, Math.max(1L, units));
     }

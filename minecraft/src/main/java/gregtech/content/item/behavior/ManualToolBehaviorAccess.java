@@ -15,17 +15,6 @@ public final class ManualToolBehaviorAccess {
 
     private ManualToolBehaviorAccess() {}
 
-    public record Outcome(boolean acted, ItemStack stack) {
-
-        public static Outcome refused(ItemStack stack) {
-            return new Outcome(false, stack);
-        }
-
-        public static Outcome acted(ItemStack stack) {
-            return new Outcome(true, stack);
-        }
-    }
-
     /** GT6 {@code WD.obstructed} ({@code WD}) uses 1/8 and 1/4 pixel bands. */
     private static final double PX_P_2 = 0.125D, PX_N_2 = 0.875D, PX_P_4 = 0.25D, PX_N_4 = 0.75D;
 
@@ -93,6 +82,17 @@ public final class ManualToolBehaviorAccess {
         return player.mayBuild() && level.mayInteract(player, pos);
     }
 
+    /**
+     * A block (or block entity) that reacts to GT6's {@code TOOL_igniter}
+     * ({@code CS}), i.e. the port's half of {@code IBlockToolable.onToolClick}.
+     *
+     * <p>GT6's implementors are the fire boxes and fluid/gas generators
+     * ({@code MultiTileEntityGeneratorSolid}, {@code MultiTileEntityGeneratorLiquid},
+     * {@code MultiTileEntityGeneratorFluidBed}, {@code MultiTileEntityBasicMachine}), the
+     * dynamite ({@code MultiTileEntityDynamite}) and the mini portals
+     * ({@code MultiTileEntityMiniPortalNether} and its five siblings). None of them is a GT6
+     * random-tool item, so a block only has to implement this interface once.</p>
+     */
     public interface Ignitable {
 
         /**

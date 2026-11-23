@@ -123,7 +123,7 @@ public final class BehaviorSprayExtinguisher {
         boolean sneaking = player != null && player.isShiftKeyDown();
 
         // - the block's own TOOL_extinguisher reaction, only when the face is reachable.
-        if (!ItemBehaviors.obstructed(level, pos, side)) {
+        if (!ManualToolBehaviorAccess.obstructed(level, pos, side)) {
             Extinguishable target = level.getBlockEntity(pos) instanceof Extinguishable be ? be
                     : level.getBlockState(pos).getBlock() instanceof Extinguishable block ? block : null;
             if (target != null) {

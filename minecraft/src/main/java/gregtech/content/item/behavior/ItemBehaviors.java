@@ -60,7 +60,7 @@ import java.util.Optional;
  *       1.20.1 form;</li>
  *   <li>{@link Consumable} — the shared "empty / used / full + {@code gt.remaining}" shape GT6
  *       repeats in every tape, lighter and spray class;</li>
- *   <li>{@link Ignitable} plus {@link #igniteToolClick}, {@link #lightVanillaFire} and
+ *   <li>{@link ManualToolBehaviorAccess.Ignitable} plus {@link #igniteToolClick}, {@link #lightVanillaFire} and
  *       {@link #primeTnt} — GT6's {@code TOOL_igniter} click, i.e. {@code IBlockToolable.Util.
  *       onToolClick(TOOL_igniter,...)} together with the vanilla half of that tool kind
  *       ({@code ToolCompat}).</li>
@@ -269,11 +269,7 @@ public final class ItemBehaviors {
             return BehaviorWorldgenDebugger.useOn(level, pos, side, player, stack, hitX, hitY, hitZ);
         }
         if (id.equals("remote_activator")) {
-//? if >=1.21.1 {
-            /*var o=BehaviorRemote.useOn(level,pos,side,player,stack,hitX,hitY,hitZ);return new Outcome(o.acted(),o.stack());
-*///?} else {
             return BehaviorRemote.useOn(level, pos, side, player, stack, hitX, hitY, hitZ);
-//?}
         }
         return Outcome.refused(stack);
     }
@@ -288,11 +284,7 @@ public final class ItemBehaviors {
     public static Outcome useInAir(Level level, @Nullable Player player, ItemStack stack) {
         String id = itemId(stack);
         if (id == null) return Outcome.refused(stack);
-//? if >=1.21.1 {
-        /*if (id.equals("remote_activator")){var o=BehaviorRemote.useInAir(level,player,stack);return new Outcome(o.acted(),o.stack());}
-*///?} else {
         if (id.equals("remote_activator")) return BehaviorRemote.useInAir(level, player, stack);
-//?}
         return Outcome.refused(stack);
     }
 
@@ -561,66 +553,25 @@ public final class ItemBehaviors {
     }
 
     // ── GT6's TOOL_igniter click ─────────────────────────────────────────
-    /**
-     * A block (or block entity) that reacts to GT6's {@code TOOL_igniter}
-     * ({@code CS}), i.e. the port's half of {@code IBlockToolable.onToolClick}.
-     *
-     * <p>GT6's implementors are the fire boxes and fluid/gas generators
-     * ({@code MultiTileEntityGeneratorSolid}, {@code MultiTileEntityGeneratorLiquid},
-     * {@code MultiTileEntityGeneratorFluidBed}, {@code MultiTileEntityBasicMachine}), the
-     * dynamite ({@code MultiTileEntityDynamite}) and the mini portals
-     * ({@code MultiTileEntityMiniPortalNether} and its five siblings). None of them is a GT6
-     * random-tool item, so a block only has to implement this interface once.</p>
-     */
-    public interface Ignitable {
-        /**
-         * @param side     the clicked face, in GT6's own side order translated to {@link Direction}
-         * @param player   the player, or {@code null} for GT6's auto-tool igniter
-         * @param igniter  the stack that is igniting
-         * @param sneaking whether the player sneaks, which some GT6 machines use as a mode switch
-         * @return GT6's tool-click return value, i.e. the durability cost in 1/10000 units;
-         *         {@code 0} when this block does not react to the igniter
-         */
-        long onIgnite(Level level, BlockPos pos, Direction side, @Nullable Player player, ItemStack igniter,
-                      boolean sneaking, float hitX, float hitY, float hitZ);
-    }
 
     /**
      * GT6's {@code IBlockToolable.Util.onToolClick(TOOL_igniter, ...)} — ask the block to react, and
-     * report its durability cost.
-     *
-     * <p>The block entity is asked first and the block second, which is the resolution order
-     * {@code WD.te(..., aDelegator = T)} produces in every other behaviour of this package. The
-     * return value is handed back unchanged so a caller can apply GT6's own conversion
-     * ({@code Behavior_FlintAndTinder} uses {@code units(damage, 10000, 100, T)} for a tool,
-     * {@code Behavior_Lighter} uses {@code units(damage, 10000, 1, T)} for a fuel unit).</p>
+     * report its durability cost. The ignition boundary itself lives in
+     * {@link ManualToolBehaviorAccess#igniteToolClick}; this method stays as the layer's adapter.
      *
      * @return the cost in GT6's 1/10000 units, or {@code 0} when nothing reacted
      */
     public static long igniteToolClick(Level level, BlockPos pos, Direction side, @Nullable Player player,
                                        ItemStack igniter, boolean sneaking, float hitX, float hitY, float hitZ) {
-//? if >=1.21.1 {
-        /*return ManualToolBehaviorAccess.igniteToolClick(level,pos,side,player,igniter,sneaking,hitX,hitY,hitZ);
-*///?} else {
-        Ignitable target = level.getBlockEntity(pos) instanceof Ignitable be ? be
-                : level.getBlockState(pos).getBlock() instanceof Ignitable block ? block : null;
-        if (target == null) return 0L;
-        return target.onIgnite(level, pos, side, player, igniter, sneaking, hitX, hitY, hitZ);
-//?}
+        return ManualToolBehaviorAccess.igniteToolClick(level, pos, side, player, igniter, sneaking, hitX, hitY, hitZ);
     }
 
     /**
      * Whether the clicked block handles GT6's {@code TOOL_igniter} itself, i.e. would be an
-     * {@code IBlockToolable} in GT6. Every GT machine block is one, whether or not its
-     * {@code onIgnite} accepts this particular click.
-     *
-     * <p>{@code IBlockToolable.Util.onToolClick} never falls back to {@code ToolCompat} for such a
-     * block, so a zero return means "this block declined" rather than "no behaviour here".</p>
+     * {@code IBlockToolable} in GT6. See {@link ManualToolBehaviorAccess#handlesIgniter}.
      */
     public static boolean handlesIgniter(Level level, BlockPos pos) {
-        if (level.getBlockState(pos).getBlock() instanceof gregtech.engine.machine.GTMachineBlock) return true;
-        return level.getBlockEntity(pos) instanceof Ignitable
-                || level.getBlockState(pos).getBlock() instanceof Ignitable;
+        return ManualToolBehaviorAccess.handlesIgniter(level, pos);
     }
 
     /** GT6 {@code ToolCompat}: a TNT block ignited by a GT igniter costs one full unit. */

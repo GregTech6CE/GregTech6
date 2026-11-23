@@ -1,6 +1,7 @@
 package gregtech.content.recipe;
 
 import com.google.gson.*;
+import gregtech.content.data.GeneratedRecipeJson;
 import gregtech.engine.prefix.PrefixRegistry;
 import gregtech.content.transport.TransportCraftingCatalog;
 import gregtech.content.registry.GTItems;
@@ -56,11 +57,7 @@ public final class TransportCraftingInputs {
 //?}
             if (row.unpack())ingredients.add(encoded);else key.add(entry.getKey().toString(),encoded);
         }
-//? if >=1.21.1 {
-        /*var result=new JsonObject(); result.addProperty("id",row.output()); result.addProperty("count",row.count());
-*///?} else {
-        var result=new JsonObject(); result.addProperty("item",row.output()); result.addProperty("count",row.count());
-//?}
+        var result=GeneratedRecipeJson.resultJson(row.output(),row.count());
         var json=new JsonObject(); json.addProperty("type",row.unpack()?"gt6ce:tool_shapeless":"gt6ce:tool_shaped");
         json.addProperty("group","gt.hand");json.addProperty("allow_mirror",false);
         json.addProperty("require_empty_fluid_containers",row.empty());

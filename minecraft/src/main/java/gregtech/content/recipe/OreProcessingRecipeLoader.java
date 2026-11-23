@@ -18,7 +18,6 @@ import net.minecraft.world.level.material.Fluid;
 
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.RegistryObject;
 //?}
 
 import java.util.ArrayList;
@@ -560,16 +559,11 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         RegisteredFluids.FluidEntry entry = RegisteredFluids.get(field);
         if (entry == null) return null;
 
-//? if >=1.21.1 {
-        /*var fluidRO = GTFluids.still(field);
-        if (fluidRO == null || !fluidRO.isBound()) return null;
-*///?} else {
-        RegistryObject<Fluid> fluidRO = GTFluids.still(field);
-        if (fluidRO == null || !fluidRO.isPresent()) return null;
-//?}
+        Fluid fluid = GTFluids.stillFluid(field);
+        if (fluid == null) return null;
 
         // GT6 convention: 1 ingot-worth of material = 144 mB of fluid
-        return new FluidStack(fluidRO.get(), 144);
+        return new FluidStack(fluid, 144);
     }
 
     /** Legacy unsupported-context duration, intentionally not the reviewed source calculation. */

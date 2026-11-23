@@ -2,11 +2,10 @@ package gregtech.content.blockentity.tool;
 
 import gregtech.content.block.tool.DynamiteBlock;
 import gregtech.content.blockentity.GTBlockEntity;
+import gregtech.content.item.behavior.ManualToolBehaviorAccess;
 //? if >=1.21.1 {
-/*import gregtech.content.item.behavior.ManualToolBehaviorAccess;
-import gregtech.content.item.behavior.Extinguishable;
+/*import gregtech.content.item.behavior.Extinguishable;
 *///?} else {
-import gregtech.content.item.behavior.ItemBehaviors;
 import gregtech.content.item.behavior.BehaviorSprayExtinguisher;
 //?}
 import gregtech.content.registry.GTBlockEntities;
@@ -25,11 +24,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import javax.annotation.Nullable;
 
 /** GT6 MultiTileEntityDynamite: persisted fuse, ignition and defusing. */
+public final class DynamiteBlockEntity extends GTBlockEntity implements ManualToolBehaviorAccess.Ignitable,
 //? if >=1.21.1 {
-/*public final class DynamiteBlockEntity extends GTBlockEntity implements ManualToolBehaviorAccess.Ignitable,
-        Extinguishable {
+        /*Extinguishable {
 *///?} else {
-public final class DynamiteBlockEntity extends GTBlockEntity implements ItemBehaviors.Ignitable,
         BehaviorSprayExtinguisher.Extinguishable {
 //?}
     private int remaining;

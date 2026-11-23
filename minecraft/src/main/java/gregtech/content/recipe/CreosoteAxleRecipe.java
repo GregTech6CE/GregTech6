@@ -48,33 +48,24 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.Nullable;
 //?}
 
-//? if >=1.21.1 {
-/*/^* Original non-mirrored treated huge axle: drain a real 1000 mB vessel and retain its container. ^/
-public final class CreosoteAxleRecipe extends ToolShapedRecipe {
-    private final ShapedRecipe base;
-    public CreosoteAxleRecipe(ShapedRecipe base) { super(base, false); this.base = base; }
-*///?} else {
-import java.util.stream.Stream;
-//?}
-
-//? if >=1.21.1 {
-    /*public static final MapCodec<CreosoteAxleRecipe> CODEC = new ShapedRecipe.Serializer().codec()
-            .xmap(CreosoteAxleRecipe::new, recipe -> recipe.base);
-*///?} else {
 /**
  * GT6's huge treated-wood axle uses {@code OD.container1000creosote}. The normal GT fluid item is
  * an infinite display/source item, so this recipe accepts only a finite item fluid handler and
  * returns that same container after draining exactly 1000 mB.
  */
 public final class CreosoteAxleRecipe extends ToolShapedRecipe {
-    // Recipes are built after the Forge item/fluid registries bind. Do not construct the JEI
-    // example during Loader_Tools.run(), which registers the serializer before those registries.
+    // Recipes are built after the item/fluid registries bind. Do not construct the JEI example
+    // during Loader_Tools.run(), which registers the serializer before those registries.
     private static final class IngredientHolder {
         private static final ContainerIngredient VALUE = new ContainerIngredient();
     }
 
     public static ContainerIngredient creosote() { return IngredientHolder.VALUE; }
-//?}
+
+//? if >=1.21.1 {
+    /*public static final MapCodec<CreosoteAxleRecipe> CODEC = new ShapedRecipe.Serializer().codec()
+            .xmap(CreosoteAxleRecipe::new, recipe -> recipe);
+*///?}
     public static final RecipeSerializer<CreosoteAxleRecipe> SERIALIZER = new RecipeSerializer<>() {
 //? if >=1.21.1 {
         /*public MapCodec<CreosoteAxleRecipe> codec() { return CODEC; }
@@ -96,16 +87,6 @@ public final class CreosoteAxleRecipe extends ToolShapedRecipe {
 //?}
         }
     };
-//? if >=1.21.1 {
-    /*private static final ContainerIngredient CREOSOTE = new ContainerIngredient();
-    public static ContainerIngredient creosote() { return CREOSOTE; }
-    @Override public RecipeSerializer<?> getSerializer() { return SERIALIZER; }
-    @Override public NonNullList<ItemStack> getRemainingItems(CraftingInput input) {
-        var remains = super.getRemainingItems(input);
-        for (int slot = 0; slot < input.size(); slot++) {
-            var original = input.getItem(slot);
-*///?} else {
-
     public CreosoteAxleRecipe(ShapedRecipe base) {
         super(base, false);
     }
@@ -114,6 +95,12 @@ public final class CreosoteAxleRecipe extends ToolShapedRecipe {
         return SERIALIZER;
     }
 
+//? if >=1.21.1 {
+    /*@Override public NonNullList<ItemStack> getRemainingItems(CraftingInput input) {
+        var remains = super.getRemainingItems(input);
+        for (int slot = 0; slot < input.size(); slot++) {
+            var original = input.getItem(slot);
+*///?} else {
     @Override public NonNullList<ItemStack> getRemainingItems(CraftingContainer inventory) {
         NonNullList<ItemStack> remains = super.getRemainingItems(inventory);
         for (int slot = 0; slot < inventory.getContainerSize(); slot++) {
@@ -128,9 +115,8 @@ public final class CreosoteAxleRecipe extends ToolShapedRecipe {
     /*/^* No registry-bound example is constructed during serializer registration. ^/
     public static final class ContainerIngredient implements ICustomIngredient {
         public static final MapCodec<ContainerIngredient> CODEC = MapCodec.unit(CreosoteAxleRecipe::creosote);
-        private static FluidStack required() {
-            var holder = GTFluids.still("Oil_Creosote");
-            return holder != null && holder.isBound() ? new FluidStack(holder.get(), 1000) : FluidStack.EMPTY;
+        private static boolean sameFluid(FluidStack a, FluidStack b) {
+            return !a.isEmpty() && !b.isEmpty() && a.getFluid() == b.getFluid();
 *///?} else {
     public static void registerIngredient() {
         CraftingHelper.register(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("creosote_container_1000").toLowerCase()), ContainerIngredient.SERIALIZER);
@@ -148,16 +134,10 @@ public final class CreosoteAxleRecipe extends ToolShapedRecipe {
             super(examples().map(Ingredient.ItemValue::new));
 //?}
         }
-//? if >=1.21.1 {
-        /*private static boolean sameFluid(FluidStack a, FluidStack b) {
-            return !a.isEmpty() && !b.isEmpty() && a.getFluid() == b.getFluid();
-*///?} else {
 
         private static FluidStack required() {
-            var fluid = GTFluids.still("Oil_Creosote");
-            if (fluid == null || !fluid.isPresent()) return FluidStack.EMPTY;
-            return new FluidStack(fluid.get(), 1000);
-//?}
+            var fluid = GTFluids.stillFluid("Oil_Creosote");
+            return fluid == null ? FluidStack.EMPTY : new FluidStack(fluid, 1000);
         }
 
         /** Display every compatible native finite vessel, not just one representative cell. */

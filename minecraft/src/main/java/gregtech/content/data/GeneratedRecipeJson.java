@@ -1,6 +1,7 @@
 package gregtech.content.data;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -50,6 +51,11 @@ public final class GeneratedRecipeJson {
 //?}
         out.put("count", count);
         return out;
+    }
+
+    /** {@link #result} as the JSON tree that hand-built recipe rows carry in their {@code result} field. */
+    public static JsonObject resultJson(String itemId, int count) {
+        return GSON.toJsonTree(result(itemId, count)).getAsJsonObject();
     }
 
     public static Map<String, Object> shaped(

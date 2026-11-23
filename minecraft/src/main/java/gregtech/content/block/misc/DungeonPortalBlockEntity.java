@@ -24,11 +24,10 @@ import java.util.Set;
  * Legacy key data is retained for saves, but keys do not activate the source machine.
  */
 public class DungeonPortalBlockEntity extends gregtech.content.blockentity.EnergyRelayBlockEntity
+implements gregtech.content.item.behavior.ManualToolBehaviorAccess.Ignitable,
 //? if >=1.21.1 {
-/*implements gregtech.content.item.behavior.ManualToolBehaviorAccess.Ignitable,
-gregtech.content.item.behavior.Extinguishable {
+/*gregtech.content.item.behavior.Extinguishable {
 *///?} else {
-implements gregtech.content.item.behavior.ItemBehaviors.Ignitable,
 gregtech.content.item.behavior.BehaviorSprayExtinguisher.Extinguishable {
 //?}
 

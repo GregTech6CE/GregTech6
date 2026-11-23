@@ -1,9 +1,9 @@
 package gregtech.content.recipe;
+import com.google.gson.JsonElement;
 //? if >=1.21.1 {
 /*import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 *///?} else {
-
 import com.google.gson.JsonObject;
 //?}
 import gregtech.engine.stack.StackCompat;
@@ -21,85 +21,18 @@ import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-//? if >=1.21.1 {
-/*/^* Original mirror policy and GT tool wear, using native shaped recipe/component codecs. ^/
-public class ToolShapedRecipe implements CraftingRecipe, gregtech.engine.recipe.AutocraftableCraftingRecipe {
-    private final boolean autocraftable;
-    private final String constructionColor;
-
-    @Override
-    public boolean isAutocraftableByGT() {
-        return autocraftable;
-    }
-
-    private final ShapedRecipe base;
-    private final boolean allowMirror, requireEmptyFluidContainers;
-
-    public int getWidth() { return base.getWidth(); }
-    public int getHeight() { return base.getHeight(); }
-
-    public ToolShapedRecipe(ShapedRecipe base, boolean allowMirror) {
-        this(base, allowMirror, false);
-    }
-
-    public ToolShapedRecipe(ShapedRecipe base, boolean allowMirror, boolean requireEmptyFluidContainers) {
-        this(base, allowMirror, requireEmptyFluidContainers, true);
-    }
-
-    public ToolShapedRecipe(ShapedRecipe base, boolean allowMirror, boolean requireEmptyFluidContainers, boolean autocraftable) {
-        this(base, allowMirror, requireEmptyFluidContainers, autocraftable, "");
-    }
-
-    public ToolShapedRecipe(ShapedRecipe base, boolean allowMirror, boolean requireEmptyFluidContainers, boolean autocraftable,
-            String constructionColor) {
-        this.autocraftable = autocraftable;
-        base.getIngredients().replaceAll(CraftingTools::expand);
-        this.base = base;
-        this.allowMirror = allowMirror;
-        this.requireEmptyFluidContainers = requireEmptyFluidContainers;
-        this.constructionColor = constructionColor;
-        displayConstructionColor();
-    }
-
-    @Override
-    public boolean matches(CraftingInput input, Level level) {
-        if (!(allowMirror ? base.matches(input, level)
-                : matchesUnmirrored(input))) return false;
-        if (!constructionColor.isEmpty()) {
-            boolean color = false;
-            for (int i = 0; i < input.size(); i++)
-                if (coloredConstruction(input.getItem(i)))
-                    color |= constructionColor.equals(
-                            gregtech.content.block.misc.ColoredConstructionBlock.itemColor(input.getItem(i)).getName());
-            if (!color) return false;
-        }
-        return toolsUsable(input);
-    }
-
-    private static boolean coloredConstruction(ItemStack stack) {
-        return stack.getItem() instanceof net.minecraft.world.item.BlockItem item
-                && (item.getBlock() instanceof gregtech.content.block.misc.FixedConstructionColor
-                    || item.getBlock().defaultBlockState().hasProperty(gregtech.content.block.misc.ColoredConstructionBlock.COLOR));
-    }
-
-    private void displayConstructionColor() {
-        if (constructionColor.isEmpty()) return;
-        var dye = net.minecraft.world.item.DyeColor.byName(constructionColor, null);
-        if (dye == null) throw new IllegalArgumentException("Unknown construction color "+constructionColor);
-*///?} else {
 
 /** Normal shaped crafting, with usable GT tools returned with the specified GT6 durability cost. */
 public class ToolShapedRecipe extends ShapedRecipe implements gregtech.engine.recipe.AutocraftableCraftingRecipe {
     private final boolean autocraftable;
     private final String constructionColor;
+    private final boolean allowMirror;
+    private final boolean requireEmptyFluidContainers;
 
     @Override
     public boolean isAutocraftableByGT() {
         return autocraftable;
     }
-
-    private final boolean allowMirror;
-    private final boolean requireEmptyFluidContainers;
 
     public ToolShapedRecipe(ShapedRecipe base) {
         this(base, true);
@@ -119,34 +52,25 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.engine.re
 
     public ToolShapedRecipe(ShapedRecipe base, boolean allowMirror, boolean requireEmptyFluidContainers, boolean autocraftable,
             String constructionColor) {
-        this(base, allowMirror, requireEmptyFluidContainers, autocraftable, constructionColor, true);
+        this(base, allowMirror, requireEmptyFluidContainers, autocraftable, constructionColor,
+                !(base instanceof ToolShapedRecipe));
     }
 
+    /** {@code expandTools} stays off for a base that already carries expanded GT tool ingredients. */
     private ToolShapedRecipe(ShapedRecipe base, boolean allowMirror, boolean requireEmptyFluidContainers, boolean autocraftable,
             String constructionColor, boolean expandTools) {
+//? if >=1.21.1 {
+        /*super(base.getGroup(), base.category(), base.pattern, base.getResultItem(RegistryAccess.EMPTY), base.showNotification());
+*///?} else {
         super(base.getId(), base.getGroup(), base.category(), base.getWidth(), base.getHeight(), base.getIngredients(),
                 base.getResultItem(RegistryAccess.EMPTY));
+//?}
         if (expandTools) getIngredients().replaceAll(CraftingTools::expand);
         this.allowMirror = allowMirror;
         this.requireEmptyFluidContainers = requireEmptyFluidContainers;
         this.autocraftable = autocraftable;
         this.constructionColor = constructionColor;
         displayConstructionColor();
-    }
-
-    @Override
-    public boolean matches(CraftingContainer inventory, Level level) {
-        if (!(allowMirror ? super.matches(inventory, level)
-                : matchesUnmirrored(inventory))) return false;
-        if (!constructionColor.isEmpty()) {
-            boolean color = false;
-            for (int i = 0; i < inventory.getContainerSize(); i++)
-                if (coloredConstruction(inventory.getItem(i)))
-                    color |= constructionColor.equals(
-                            gregtech.content.block.misc.ColoredConstructionBlock.itemColor(inventory.getItem(i)).getName());
-            if (!color) return false;
-        }
-        return toolsUsable(inventory);
     }
 
     private static boolean coloredConstruction(ItemStack stack) {
@@ -159,15 +83,10 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.engine.re
         if (constructionColor.isEmpty()) return;
         var dye = net.minecraft.world.item.DyeColor.byName(constructionColor, null);
         if (dye == null) throw new IllegalArgumentException("Unknown construction color "+constructionColor);
-//?}
         // Do not resolve tag ingredients here: recipe parsing precedes native tag binding.
         // Peeking at all getItems() arrays would cache empty screw tags for this reload.
         getIngredients().replaceAll(ingredient -> {
-//? if >=1.21.1 {
-            /*var json = Ingredient.CODEC.encodeStart(com.mojang.serialization.JsonOps.INSTANCE, ingredient).getOrThrow();
-*///?} else {
-            var json = ingredient.toJson();
-//?}
+            var json = ingredientJson(ingredient);
             if (!json.isJsonObject() || !json.getAsJsonObject().has("item")) return ingredient;
             var item = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse(
                     json.getAsJsonObject().get("item").getAsString()));
@@ -176,13 +95,29 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.engine.re
                     ? Ingredient.of(gregtech.content.block.misc.ConcreteBlock.coloredItem(((net.minecraft.world.item.BlockItem) item).getBlock(),
                     dye)) : ingredient;
         });
-//? if >=1.21.1 {
-    /*}
-
-    public String constructionColor() {
-        return constructionColor;
     }
 
+//? if >=1.21.1 {
+    /*private static JsonElement ingredientJson(Ingredient ingredient) {
+        return Ingredient.CODEC.encodeStart(com.mojang.serialization.JsonOps.INSTANCE, ingredient).getOrThrow();
+    }
+
+    @Override
+    public boolean matches(CraftingInput input, Level level) {
+        if (!(allowMirror ? super.matches(input, level)
+                : matchesUnmirrored(input))) return false;
+        if (!constructionColor.isEmpty()) {
+            boolean color = false;
+            for (int i = 0; i < input.size(); i++)
+                if (coloredConstruction(input.getItem(i)))
+                    color |= constructionColor.equals(
+                            gregtech.content.block.misc.ColoredConstructionBlock.itemColor(input.getItem(i)).getName());
+            if (!color) return false;
+        }
+        return toolsUsable(input);
+    }
+
+    /^* Every GT tool in the grid has to be a usable tool of its own type. ^/
     protected boolean toolsUsable(CraftingInput input) {
         for (int i = 0; i < input.size(); i++) {
             var stack = input.getItem(i);
@@ -198,14 +133,14 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.engine.re
     }
 
     private boolean matchesUnmirrored(CraftingInput input) {
-        for (int left = 0; left <= input.width() - base.getWidth(); left++)
-            for (int top = 0; top <= input.height() - base.getHeight(); top++) {
+        for (int left = 0; left <= input.width() - getWidth(); left++)
+            for (int top = 0; top <= input.height() - getHeight(); top++) {
                 boolean ok = true;
                 for (int y = 0; y < input.height() && ok; y++)
                     for (int x = 0; x < input.width(); x++) {
                         int dx = x - left, dy = y - top;
-                        var ingredient = dx >= 0 && dy >= 0 && dx < base.getWidth() && dy < base.getHeight()
-                                ? base.getIngredients().get(dx + dy * base.getWidth()) : Ingredient.EMPTY;
+                        var ingredient = dx >= 0 && dy >= 0 && dx < getWidth() && dy < getHeight()
+                                ? getIngredients().get(dx + dy * getWidth()) : Ingredient.EMPTY;
                         if (!ingredient.test(input.getItem(x + y * input.width()))) {
                             ok = false;
                             break;
@@ -218,7 +153,7 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.engine.re
 
     @Override
     public NonNullList<ItemStack> getRemainingItems(CraftingInput input) {
-        var result = base.getRemainingItems(input);
+        var result = super.getRemainingItems(input);
         for (int i = 0; i < input.size(); i++) {
             var original = input.getItem(i);
             if (original.getItem() instanceof gregtech.content.item.ElectricToolItem electric) {
@@ -246,17 +181,17 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.engine.re
     private void drainFiniteIngredients(CraftingInput input, NonNullList<ItemStack> remains) {
         if (getIngredients().stream().noneMatch(i -> i.getCustomIngredient() instanceof FiniteBottleFillingRecipe.ContainerIngredient
                 || i.getCustomIngredient() instanceof QuarterFluidCraftingIngredient)) return;
-        for (int left = 0; left <= input.width() - base.getWidth(); left++)
-            for (int top = 0; top <= input.height() - base.getHeight(); top++)
+        for (int left = 0; left <= input.width() - getWidth(); left++)
+            for (int top = 0; top <= input.height() - getHeight(); top++)
                 for (int mirror = 0; mirror <= (allowMirror ? 1 : 0); mirror++) {
                     Ingredient[] mapped = new Ingredient[input.size()];
                     boolean matched = true;
                     for (int y = 0; y < input.height() && matched; y++)
                         for (int x = 0; x < input.width(); x++) {
                             int dx = x - left, dy = y - top;
-                            var ingredient = dx >= 0 && dy >= 0 && dx < base.getWidth() && dy < base.getHeight()
-                                    ? getIngredients().get((mirror == 1 ? base.getWidth() - 1 - dx : dx)
-                                            + dy * base.getWidth()) : Ingredient.EMPTY;
+                            var ingredient = dx >= 0 && dy >= 0 && dx < getWidth() && dy < getHeight()
+                                    ? getIngredients().get((mirror == 1 ? getWidth() - 1 - dx : dx)
+                                            + dy * getWidth()) : Ingredient.EMPTY;
                             int slot = x + y * input.width();
                             mapped[slot] = ingredient;
                             if (!ingredient.test(input.getItem(slot))) {
@@ -272,70 +207,25 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.engine.re
                             remains.set(slot, quarter.drainOne(input.getItem(slot)));
                     return;
                 }
+    }
 *///?} else {
-//?}
-    }
-//? if >=1.21.1 {
-    /*@Override
-    public ItemStack assemble(CraftingInput input, HolderLookup.Provider lookup) {
-        return base.assemble(input, lookup);
+    private static JsonElement ingredientJson(Ingredient ingredient) {
+        return ingredient.toJson();
     }
 
     @Override
-    public ItemStack getResultItem(HolderLookup.Provider lookup) {
-        return base.getResultItem(lookup);
-    }
-
-    @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return base.canCraftInDimensions(width, height);
-    }
-
-    @Override
-    public String getGroup() {
-        return base.getGroup();
-    }
-
-    @Override
-    public CraftingBookCategory category() {
-        return base.category();
-    }
-
-    @Override
-    public NonNullList<Ingredient> getIngredients() {
-        return base.getIngredients();
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
-        return SERIALIZER;
-    }
-
-    public boolean allowMirror() {
-        return allowMirror;
-    }
-
-    public static final MapCodec<ToolShapedRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            new ShapedRecipe.Serializer().codec().forGetter((ToolShapedRecipe recipe) -> recipe.base),
-            Codec.BOOL.optionalFieldOf("allow_mirror", false).forGetter((ToolShapedRecipe recipe) -> recipe.allowMirror),
-            Codec.BOOL.optionalFieldOf("require_empty_fluid_containers",
-                    false).forGetter((ToolShapedRecipe recipe) -> recipe.requireEmptyFluidContainers),
-            Codec.BOOL.optionalFieldOf("gregtech_autocraftable", true).forGetter((ToolShapedRecipe recipe) -> recipe.autocraftable),
-            Codec.STRING.optionalFieldOf("construction_color", "").forGetter((ToolShapedRecipe recipe) -> recipe.constructionColor)
-    ).apply(instance, ToolShapedRecipe::new));
-    public static final RecipeSerializer<ToolShapedRecipe> SERIALIZER = new RecipeSerializer<>() {
-
-        public MapCodec<ToolShapedRecipe> codec() {
-            return CODEC;
+    public boolean matches(CraftingContainer inventory, Level level) {
+        if (!(allowMirror ? super.matches(inventory, level)
+                : matchesUnmirrored(inventory))) return false;
+        if (!constructionColor.isEmpty()) {
+            boolean color = false;
+            for (int i = 0; i < inventory.getContainerSize(); i++)
+                if (coloredConstruction(inventory.getItem(i)))
+                    color |= constructionColor.equals(
+                            gregtech.content.block.misc.ColoredConstructionBlock.itemColor(inventory.getItem(i)).getName());
+            if (!color) return false;
         }
-
-        public StreamCodec<RegistryFriendlyByteBuf, ToolShapedRecipe> streamCodec() {
-            return ByteBufCodecs.fromCodecWithRegistries(CODEC.codec());
-        }
-    };
-*///?} else {
-    public String constructionColor() {
-        return constructionColor;
+        return toolsUsable(inventory);
     }
 
     /** Every GT tool in the grid has to be a usable tool of its own type. */
@@ -428,10 +318,10 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.engine.re
                     return;
                 }
     }
+//?}
 
-    @Override
-    public RecipeSerializer<?> getSerializer() {
-        return SERIALIZER;
+    public String constructionColor() {
+        return constructionColor;
     }
 
     /** GT6's {@code CR.MIR} for this row: false for every row the original did not opt in to. */
@@ -439,6 +329,33 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.engine.re
         return allowMirror;
     }
 
+    @Override
+    public RecipeSerializer<?> getSerializer() {
+        return SERIALIZER;
+    }
+
+//? if >=1.21.1 {
+    /*public static final MapCodec<ToolShapedRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            new ShapedRecipe.Serializer().codec().forGetter((ToolShapedRecipe recipe) -> recipe),
+            Codec.BOOL.optionalFieldOf("allow_mirror", false).forGetter((ToolShapedRecipe recipe) -> recipe.allowMirror),
+            Codec.BOOL.optionalFieldOf("require_empty_fluid_containers",
+                    false).forGetter((ToolShapedRecipe recipe) -> recipe.requireEmptyFluidContainers),
+            Codec.BOOL.optionalFieldOf("gregtech_autocraftable", true).forGetter((ToolShapedRecipe recipe) -> recipe.autocraftable),
+            Codec.STRING.optionalFieldOf("construction_color", "").forGetter((ToolShapedRecipe recipe) -> recipe.constructionColor)
+    ).apply(instance, ToolShapedRecipe::new));
+
+    public static final RecipeSerializer<ToolShapedRecipe> SERIALIZER = new RecipeSerializer<>() {
+        @Override
+        public MapCodec<ToolShapedRecipe> codec() {
+            return CODEC;
+        }
+
+        @Override
+        public StreamCodec<RegistryFriendlyByteBuf, ToolShapedRecipe> streamCodec() {
+            return ByteBufCodecs.fromCodecWithRegistries(CODEC.codec());
+        }
+    };
+*///?} else {
     public static final RecipeSerializer<ToolShapedRecipe> SERIALIZER = new RecipeSerializer<>() {
         private final ShapedRecipe.Serializer vanilla = new ShapedRecipe.Serializer();
 

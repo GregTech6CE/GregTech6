@@ -180,7 +180,7 @@ public final class BehaviorDuctTape {
             float hitZ) {
         if (level.isClientSide) return Outcome.refused(stack);
         if (stack.getCount() != 1) return Outcome.refused(stack);
-        if (!ItemBehaviors.mayEdit(level, player, pos)) return Outcome.refused(stack);
+        if (!ManualToolBehaviorAccess.mayEdit(level, player, pos)) return Outcome.refused(stack);
         Consumable can = consumableOf(stack);
         if (can == null) return Outcome.refused(stack);
 
@@ -233,7 +233,7 @@ public final class BehaviorDuctTape {
             float hitX,
             float hitY,
             float hitZ) {
-        if (ItemBehaviors.obstructed(level, pos, side)) return 0L;
+        if (ManualToolBehaviorAccess.obstructed(level, pos, side)) return 0L;
         if (target == null) return 0L;
         return Math.max(0L, target.onTape(level, pos, side, player, stack, uses, quality, sneaking, hitX, hitY, hitZ));
     }
