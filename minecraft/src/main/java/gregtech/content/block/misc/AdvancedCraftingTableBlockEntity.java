@@ -4,6 +4,7 @@ import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.engine.inventory.BlockContents;
 import gregtech.client.gui.HopperContainerMenu;
 import gregtech.engine.stack.StackCompat;
+import gregtech.engine.stack.NbtCompat;
 import gregtech.platform.Mc;
 import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
@@ -15,10 +16,16 @@ import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
 
 /*import net.neoforged.neoforge.items.*;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 *///?} else {
 import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.*;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 //?}
 import javax.annotation.Nullable;
 import java.util.*;
@@ -32,6 +39,8 @@ public class AdvancedCraftingTableBlockEntity extends GTBlockEntity implements B
     public static final int[] INPUTS = gregtech.content.storage.AdvancedCraftingRules.inputs();
     public static final int[] STORAGE = gregtech.content.storage.AdvancedCraftingRules.storage();
     private boolean blocked16, blocked36, filter16, filter36, flush, loading, capsValid = true;
+    private static final String RECOVERED_FLUIDS = "gt.crafting.refunds";
+    private final List<FluidTank> recoveredFluids = new ArrayList<>();
 
 //? if >=1.21.1 {
 //?} else {
@@ -207,7 +216,7 @@ public class AdvancedCraftingTableBlockEntity extends GTBlockEntity implements B
         cachedPlan = null;
         cachedPreview = ItemStack.EMPTY;
         ItemStack[] pattern = pattern(), after = new ItemStack[SIZE], used = new ItemStack[9];
-        var connected = new ConnectedCraftingInputs(level, worldPosition);
+        var connected = connectedInputs();
         int[] sources = new int[9];
         Arrays.fill(sources, -1);
 //? if >=1.21.1 {
@@ -293,6 +302,10 @@ public class AdvancedCraftingTableBlockEntity extends GTBlockEntity implements B
         return cachedPreview.copy();
     }
 
+    ConnectedCraftingInputs connectedInputs() {
+        return new ConnectedCraftingInputs(level, worldPosition, recoveredFluids);
+    }
+
     public ItemStack craftOutput() {
         Plan plan = plan();
         return plan == null ? ItemStack.EMPTY : plan.output.copy();
@@ -302,7 +315,12 @@ public class AdvancedCraftingTableBlockEntity extends GTBlockEntity implements B
         // Neighbours can change without changing this inventory, even within the current tick.
         cachedRevision = -1;
         Plan plan = plan();
-        if (plan == null || !plan.connected.commit()) return ItemStack.EMPTY;
+        if (plan == null) return ItemStack.EMPTY;
+        long before = revision;
+        boolean committed = plan.connected.commit(() -> revision == before && !isRemoved(), this::recoverItem, this::recoverFluid);
+        recoveredFluids.removeIf(FluidTank::isEmpty);
+        cachedRevision = -1;
+        if (!committed) return ItemStack.EMPTY;
         loading = true;
         try {
             for (int i = 0; i < SIZE; i++) inventory.setStackInSlot(i, plan.after[i].copy());
@@ -324,6 +342,33 @@ public class AdvancedCraftingTableBlockEntity extends GTBlockEntity implements B
     public boolean usableBy(Player player) {
         return !isRemoved() && level != null && level.getBlockEntity(worldPosition) == this && player.distanceToSqr(worldPosition.getX()+.5,
                 worldPosition.getY()+.5, worldPosition.getZ()+.5) <= 64;
+    }
+
+    private void recoverItem(ItemStack rest) {
+        for (int slot : STORAGE) {
+            rest = inventory.insertItem(slot, rest, false);
+            if (rest.isEmpty()) return;
+        }
+        BlockContents.drop(this, rest);
+    }
+
+    private void recoverFluid(FluidStack rest) {
+        setChanged();
+        for (var tank : recoveredFluids) {
+            rest.shrink(tank.fill(rest, IFluidHandler.FluidAction.EXECUTE));
+            if (rest.isEmpty()) return;
+        }
+        var tank = new FluidTank(Integer.MAX_VALUE);
+        tank.setFluid(rest.copy());
+        recoveredFluids.add(tank);
+    }
+
+    void saveRefunds(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        if (recoveredFluids.isEmpty()) return;
+        var list = new net.minecraft.nbt.ListTag();
+        for (var tank : recoveredFluids)
+            if (!tank.isEmpty()) list.add(NbtCompat.saveFluid(tank.getFluid(), lookup));
+        if (!list.isEmpty()) tag.put(RECOVERED_FLUIDS, list);
     }
 
     public HopperContainerMenu storageMenu(int id, Inventory player) {
@@ -482,6 +527,7 @@ public class AdvancedCraftingTableBlockEntity extends GTBlockEntity implements B
         super.saveData(tag, lookup);
         tag.put("Inventory", gregtech.engine.stack.HandlerNbt.save(inventory, lookup));
         tag.putInt("Modes", modes());
+        saveRefunds(tag, lookup);
     }
 
     @Override
@@ -498,6 +544,14 @@ public class AdvancedCraftingTableBlockEntity extends GTBlockEntity implements B
             loading = false;
         }
         int mode = tag.getInt("Modes");
+        recoveredFluids.clear();
+        for (var entry : tag.getList(RECOVERED_FLUIDS, 10)) {
+            var fluid = NbtCompat.readFluid((CompoundTag) entry, lookup);
+            if (fluid == null || fluid.isEmpty()) continue;
+            var tank = new FluidTank(Integer.MAX_VALUE);
+            tank.setFluid(fluid);
+            recoveredFluids.add(tank);
+        }
         blocked16 = (mode & 1) != 0;
         blocked36 = (mode & 2) != 0;
         filter16 = (mode & 4) != 0;

@@ -2,15 +2,22 @@ package gregtech.content.block.misc;
 
 import gregtech.api.material.*;
 import gregtech.content.block.GTHorizontalDirectionalBlock;
+import gregtech.engine.stack.BlockEntityData;
+import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
 /** GT6 Advanced Crafting Table — crafting with inventory cache and recipe memory. */
 public class AdvancedCraftingTableBlock extends GTHorizontalDirectionalBlock
@@ -94,6 +101,25 @@ public class AdvancedCraftingTableBlock extends GTHorizontalDirectionalBlock
                 ? gregtech.engine.tool.ToolInteractionSpec.facing(
                         FACING, gregtech.content.block.machine.MachineRotationType.HORIZONTAL)
                 : null;
+    }
+
+    @Override
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder context) {
+        var drops = super.getDrops(state, context);
+        if (!(context.getOptionalParameter(LootContextParams.BLOCK_ENTITY)
+                instanceof AdvancedCraftingTableBlockEntity table)) return drops;
+        var data = new CompoundTag();
+        table.saveRefunds(data, context.getLevel().registryAccess());
+        if (data.isEmpty()) return drops;
+        data.putString(
+                "id",
+                BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(table.getType()).toString());
+        for (var drop : drops) {
+            if (!drop.is(asItem())) continue;
+            BlockEntityData.update(drop, tag -> tag.merge(data));
+            break;
+        }
+        return drops;
     }
 
     @Override
