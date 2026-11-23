@@ -25,4 +25,11 @@ public record RegisteredItem<T extends Item>(ResourceLocation getId, Supplier<T>
         return new RegisteredItem<>(
                 ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE, path), GTItems.ITEMS.register(path, factory));
     }
+
+    /** A handle to an item registered elsewhere; {@link #isPresent()} guards {@link #get()}. */
+    @SuppressWarnings("unchecked")
+    public static <T extends Item> RegisteredItem<T> reference(String path) {
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE, path);
+        return new RegisteredItem<>(id, () -> (T) net.minecraft.core.registries.BuiltInRegistries.ITEM.get(id));
+    }
 }

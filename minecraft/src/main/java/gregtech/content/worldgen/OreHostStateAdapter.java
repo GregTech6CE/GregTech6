@@ -12,9 +12,11 @@ public final class OreHostStateAdapter {
 
     public static Optional<BlockState> adapt(BlockState selected, BlockState replaced) {
         if (!"gt6ce".equals(BuiltInRegistries.BLOCK.getKey(selected.getBlock()).getNamespace())
-                || !(selected.getBlock() instanceof OreBlock ore)) return Optional.of(selected);
+                || !(selected.getBlock() instanceof OreBlock)) return Optional.of(selected);
+        // GT6 WD.setOre/setSmallOre replace sand and gravel as well, so both normal and small
+        // ores can carry a sediment host.
         OreHostStone host = GTOreBlockResolver.stoneOf(replaced);
-        if (host == null && ore.isSmall()) host = GTOreBlockResolver.sedimentOf(replaced);
+        if (host == null) host = GTOreBlockResolver.sedimentOf(replaced);
         if (host == null) return Optional.empty();
         // Retaining the selected state preserves every existing property (including broken).
         return Optional.of(selected.setValue(OreBlock.STONE, host));

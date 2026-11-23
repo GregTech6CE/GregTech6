@@ -1,14 +1,11 @@
 package gregtech.content.blockentity.machine;
 
-//? if >=1.21.1 {
-/*import gregtech.engine.transport.PipeConnections;
-*///?} else {
-import gregtech.content.block.energy.ElectricWireBlock;
-//?}
 import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.logistics.LogisticsCoverHost;
 import gregtech.content.logistics.LogisticsCovers;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.engine.transport.PipeConnections;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -16,8 +13,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.state.BlockState;
-
-import javax.annotation.Nullable;
 
 /** Connections live in block state; installed covers are persisted and synchronized separately. */
 public final class LogisticsWireBlockEntity extends GTBlockEntity implements LogisticsCoverHost {
@@ -29,11 +24,7 @@ public final class LogisticsWireBlockEntity extends GTBlockEntity implements Log
 
     @Override
     public boolean canLogistics(Direction side) {
-//? if >=1.21.1 {
-        /*return !isRemoved() && (side == null || getBlockState().getValue(PipeConnections.propFor(side)));
-*///?} else {
-        return !isRemoved() && (side == null || getBlockState().getValue(ElectricWireBlock.propFor(side)));
-//?}
+        return !isRemoved() && (side == null || getBlockState().getValue(PipeConnections.propFor(side)));
     }
 
     @Override
@@ -57,13 +48,15 @@ public final class LogisticsWireBlockEntity extends GTBlockEntity implements Log
     protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         writeWithoutMetadata(tag, lookup);
     }
+
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }
+
     @Override
-    protected void handleDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet,
-            @Nullable HolderLookup.Provider lookup) {
+    protected void handleDataPacket(
+            Connection connection, ClientboundBlockEntityDataPacket packet, @Nullable HolderLookup.Provider lookup) {
         if (packet.getTag() != null) readUpdateTag(packet.getTag(), lookup);
     }
 }

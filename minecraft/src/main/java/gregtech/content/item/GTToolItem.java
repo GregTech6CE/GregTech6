@@ -14,8 +14,6 @@ import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
 import gregtech.client.GTToolTooltips;
 
-import gregtech.content.block.machine.HopperBlock;
-import gregtech.content.block.machine.QueueHopperBlock;
 import gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity;
 
 import gregtech.content.registry.GTToolItems;
@@ -170,25 +168,13 @@ if (!(context.getLevel().getBlockEntity(pos) instanceof SmeltingCrucibleBlockEnt
             return InteractionResult.PASS;
         }
         BlockState state = context.getLevel().getBlockState(context.getClickedPos());
-//? if >=1.21.1 {
-/*
-        if (state.getBlock() instanceof gregtech.engine.tool.ScrewdriverUseTarget) {
-
-*///?} else {
-        if (state.getBlock() instanceof HopperBlock || state.getBlock() instanceof QueueHopperBlock) {
-//?}
+        if (state.getBlock() instanceof gregtech.engine.tool.ScrewdriverUseTarget target) {
             Player player = context.getPlayer();
             InteractionHand hand = context.getHand();
             BlockHitResult hit = new BlockHitResult(
                     context.getClickLocation(), context.getClickedFace(),
                     context.getClickedPos(), context.isInside());
-
-//? if >=1.21.1 {
-/*            return ((gregtech.engine.tool.ScrewdriverUseTarget)state.getBlock()).useScrewdriver(state,context.getLevel(),context.getClickedPos(),player,hand,hit);
-*///?} else {
-            return state.use(context.getLevel(), player, hand, hit);
-//?}
-
+            return target.useScrewdriver(state, context.getLevel(), context.getClickedPos(), player, hand, hit);
         }
         return InteractionResult.PASS;
     }

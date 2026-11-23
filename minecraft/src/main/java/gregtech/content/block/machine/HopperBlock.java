@@ -1,16 +1,16 @@
 package gregtech.content.block.machine;
 
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
-import gregtech.engine.GTWaterloggable;
-import gregtech.engine.tool.ToolInteractionSpec;
-import gregtech.engine.tool.ToolInteractionTarget;
-import gregtech.engine.machine.HopperSpec;
-import gregtech.engine.tool.GTToolHelper;
 import gregtech.content.block.GTDirectionalBlock;
 import gregtech.content.blockentity.machine.HopperBlockEntity;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.engine.GTWaterloggable;
+import gregtech.engine.machine.HopperSpec;
+import gregtech.engine.tool.GTToolHelper;
+import gregtech.engine.tool.ToolInteractionSpec;
+import gregtech.engine.tool.ToolInteractionTarget;
+import java.util.EnumMap;
+import java.util.Map;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -26,59 +26,63 @@ import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import java.util.EnumMap;
-import java.util.Map;
-import javax.annotation.Nullable;
 
 /** GT6 hopper block ({@code MultiTileEntityHopper}). Parallel-slot inventory, 6-way facing output. */
-//? if >=1.21.1 {
-/*public class HopperBlock extends GTDirectionalBlock implements EntityBlock, ToolInteractionTarget, gregtech.engine.tool.ScrewdriverUseTarget, SimpleWaterloggedBlock {
-*///?} else {
-public class HopperBlock extends GTDirectionalBlock implements EntityBlock, ToolInteractionTarget {
-//?}
+public class HopperBlock extends GTDirectionalBlock
+        implements EntityBlock,
+                ToolInteractionTarget,
+                gregtech.engine.tool.ScrewdriverUseTarget,
+                SimpleWaterloggedBlock {
     // Bowl [0,10,0]-[16,16,16] + Funnel [4,4,4]-[12,10,12] + per-facing nozzle (4px high, none for UP)
-    private static final VoxelShape BOWL   = Shapes.box(0, 10 / 16.0D, 0, 1.0D, 1.0D, 1.0D);
-    private static final VoxelShape FUNNEL = Shapes.box(4 / 16.0D, 4 / 16.0D, 4 / 16.0D, 12 / 16.0D, 10 / 16.0D, 12 / 16.0D);
-    private static final VoxelShape NOZZLE_NORTH = Shapes.box(6 / 16.0D, 4 / 16.0D, 0, 10 / 16.0D, 8 / 16.0D, 4 / 16.0D);
-    private static final VoxelShape NOZZLE_SOUTH = Shapes.box(6 / 16.0D, 4 / 16.0D, 12 / 16.0D, 10 / 16.0D, 8 / 16.0D, 1.0D);
-    private static final VoxelShape NOZZLE_WEST  = Shapes.box(0, 4 / 16.0D, 6 / 16.0D, 4 / 16.0D, 8 / 16.0D, 10 / 16.0D);
-    private static final VoxelShape NOZZLE_EAST  = Shapes.box(12 / 16.0D, 4 / 16.0D, 6 / 16.0D, 1.0D, 8 / 16.0D, 10 / 16.0D);
-    private static final VoxelShape NOZZLE_DOWN  = Shapes.box(6 / 16.0D, 0, 6 / 16.0D, 10 / 16.0D, 4 / 16.0D, 10 / 16.0D);
-    private static final VoxelShape SHAPE_UP     = Shapes.or(BOWL, FUNNEL);
+    private static final VoxelShape BOWL = Shapes.box(0, 10 / 16.0D, 0, 1.0D, 1.0D, 1.0D);
+    private static final VoxelShape FUNNEL =
+            Shapes.box(4 / 16.0D, 4 / 16.0D, 4 / 16.0D, 12 / 16.0D, 10 / 16.0D, 12 / 16.0D);
+    private static final VoxelShape NOZZLE_NORTH =
+            Shapes.box(6 / 16.0D, 4 / 16.0D, 0, 10 / 16.0D, 8 / 16.0D, 4 / 16.0D);
+    private static final VoxelShape NOZZLE_SOUTH =
+            Shapes.box(6 / 16.0D, 4 / 16.0D, 12 / 16.0D, 10 / 16.0D, 8 / 16.0D, 1.0D);
+    private static final VoxelShape NOZZLE_WEST = Shapes.box(0, 4 / 16.0D, 6 / 16.0D, 4 / 16.0D, 8 / 16.0D, 10 / 16.0D);
+    private static final VoxelShape NOZZLE_EAST =
+            Shapes.box(12 / 16.0D, 4 / 16.0D, 6 / 16.0D, 1.0D, 8 / 16.0D, 10 / 16.0D);
+    private static final VoxelShape NOZZLE_DOWN =
+            Shapes.box(6 / 16.0D, 0, 6 / 16.0D, 10 / 16.0D, 4 / 16.0D, 10 / 16.0D);
+    private static final VoxelShape SHAPE_UP = Shapes.or(BOWL, FUNNEL);
     private static final Map<Direction, VoxelShape> SHAPES = new EnumMap<>(Direction.class);
+
     static {
         SHAPES.put(Direction.NORTH, Shapes.or(BOWL, FUNNEL, NOZZLE_NORTH));
         SHAPES.put(Direction.SOUTH, Shapes.or(BOWL, FUNNEL, NOZZLE_SOUTH));
-        SHAPES.put(Direction.WEST,  Shapes.or(BOWL, FUNNEL, NOZZLE_WEST));
-        SHAPES.put(Direction.EAST,  Shapes.or(BOWL, FUNNEL, NOZZLE_EAST));
-        SHAPES.put(Direction.DOWN,  Shapes.or(BOWL, FUNNEL, NOZZLE_DOWN));
-        SHAPES.put(Direction.UP,    SHAPE_UP);
+        SHAPES.put(Direction.WEST, Shapes.or(BOWL, FUNNEL, NOZZLE_WEST));
+        SHAPES.put(Direction.EAST, Shapes.or(BOWL, FUNNEL, NOZZLE_EAST));
+        SHAPES.put(Direction.DOWN, Shapes.or(BOWL, FUNNEL, NOZZLE_DOWN));
+        SHAPES.put(Direction.UP, SHAPE_UP);
     }
 
     private final HopperSpec spec;
 
-//? if >=1.21.1 {
-    /*@Override
-    public InteractionResult useScrewdriver(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    @Override
+    public InteractionResult useScrewdriver(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         return useBlock(state, level, pos, player, hand, hit);
     }
-*///?} else {
-//?}
 
     @Override
-    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack held = player.getItemInHand(hand);
 
         // Monkey wrench: toggle exact mode (original GT6: MultiTileEntityHopper)
@@ -96,8 +100,7 @@ public class HopperBlock extends GTDirectionalBlock implements EntityBlock, Tool
         }
 
         // Wrench: click a face to rotate the hopper front to that face
-        if (MachineRotationType.handleWrench(state, level, pos, player, hand, hit,
-                FACING, MachineRotationType.ALL)) {
+        if (MachineRotationType.handleWrench(state, level, pos, player, hand, hit, FACING, MachineRotationType.ALL)) {
             if (!level.isClientSide) {
                 BlockEntity be = level.getBlockEntity(pos);
                 if (be instanceof HopperBlockEntity hopper) {
@@ -149,15 +152,19 @@ public class HopperBlock extends GTDirectionalBlock implements EntityBlock, Tool
     public HopperBlock(HopperSpec spec, Properties properties) {
         super(properties);
         this.spec = spec;
-        registerDefaultState(defaultBlockState().setValue(FACING, Direction.DOWN).setValue(GTWaterloggable.WATERLOGGED, false));
+        registerDefaultState(
+                defaultBlockState().setValue(FACING, Direction.DOWN).setValue(GTWaterloggable.WATERLOGGED, false));
     }
 
-    public HopperSpec spec() { return spec; }
+    public HopperSpec spec() {
+        return spec;
+    }
 
     @Override
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return GTToolHelper.isMachineWrench(tool) && !GTToolHelper.isMonkeyWrench(tool)
-                ? ToolInteractionSpec.facing(FACING, MachineRotationType.ALL) : null;
+                ? ToolInteractionSpec.facing(FACING, MachineRotationType.ALL)
+                : null;
     }
 
     @Override
@@ -176,7 +183,8 @@ public class HopperBlock extends GTDirectionalBlock implements EntityBlock, Tool
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         // ClientShapeHooks is only classloaded behind the isClientSide check (dist safety).
-        if (level instanceof Level world && world.isClientSide()
+        if (level instanceof Level world
+                && world.isClientSide()
                 && gregtech.client.ClientShapeHooks.holdingMachineWrench()) {
             return Shapes.block();
         }
@@ -197,7 +205,8 @@ public class HopperBlock extends GTDirectionalBlock implements EntityBlock, Tool
     @Nullable
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide) return null;
         var expected = GTBlockEntities.HOPPER;
         if (expected != null && type == expected.get()) {
@@ -218,7 +227,8 @@ public class HopperBlock extends GTDirectionalBlock implements EntityBlock, Tool
     }
 
     @Override
-    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+    public void neighborChanged(
+            BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
         if (!level.isClientSide) {
             BlockEntity be = level.getBlockEntity(pos);
             if (be instanceof HopperBlockEntity hopper) {
@@ -241,17 +251,28 @@ public class HopperBlock extends GTDirectionalBlock implements EntityBlock, Tool
     }
 
     @Override
-    public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state,
-                              @Nullable BlockEntity blockEntity, ItemStack tool) {
+    public void playerDestroy(
+            Level level,
+            Player player,
+            BlockPos pos,
+            BlockState state,
+            @Nullable BlockEntity blockEntity,
+            ItemStack tool) {
         if (!level.isClientSide && GTToolHelper.isMachineWrench(tool)) {
             ItemStack machine = new ItemStack(this);
-                gregtech.content.cover.CoverDrops.capture(state,(net.minecraft.server.level.ServerLevel)level,blockEntity,java.util.List.of(machine));
+            gregtech.content.cover.CoverDrops.capture(
+                    state, (net.minecraft.server.level.ServerLevel) level, blockEntity, java.util.List.of(machine));
             if (!machine.isEmpty()) {
                 if (!player.getInventory().add(machine)) {
                     popResource(level, pos, machine);
                 } else if (player instanceof ServerPlayer) {
-                    level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS,
-                            0.2F, (player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.7F + 1.0F);
+                    level.playSound(
+                            null,
+                            pos,
+                            SoundEvents.ITEM_PICKUP,
+                            SoundSource.PLAYERS,
+                            0.2F,
+                            (player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.7F + 1.0F);
                 }
             }
             level.playSound(null, pos, gregtech.content.registry.GTSounds.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
@@ -289,8 +310,13 @@ public class HopperBlock extends GTDirectionalBlock implements EntityBlock, Tool
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
-            LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+    public BlockState updateShape(
+            BlockState state,
+            Direction side,
+            BlockState neighbor,
+            LevelAccessor level,
+            BlockPos pos,
+            BlockPos neighborPos) {
         GTWaterloggable.updateShape(state, level, pos);
         return super.updateShape(state, side, neighbor, level, pos, neighborPos);
     }

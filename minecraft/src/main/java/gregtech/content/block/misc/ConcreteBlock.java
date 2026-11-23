@@ -4,11 +4,7 @@ import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
 import gregtech.engine.material.MaterialEquivalence;
 import gregtech.content.data.MaterialPrefix;
-//? if >=1.21.1 {
-/*import gregtech.content.registry.GTConstructionBlocks;
-*///?} else {
-import gregtech.content.registry.GTDecorBlocks;
-//?}
+import gregtech.content.registry.GTConstructionBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
@@ -123,13 +119,8 @@ public class ConcreteBlock extends GTBlock {
         int slot = rodSlot(player);
         if (slot < 0) return InteractionResult.PASS;
         if (level.isClientSide) return InteractionResult.SUCCESS;
-//? if >=1.21.1 {
-        /*if (!level.setBlock(pos, FixedConstructionColor.recolor(GTConstructionBlocks.CONCRETE_REINFORCED.get().defaultBlockState(),
+        if (!level.setBlock(pos, FixedConstructionColor.recolor(GTConstructionBlocks.CONCRETE_REINFORCED.get().defaultBlockState(),
                 FixedConstructionColor.colorOf(state)), Block.UPDATE_ALL)) return InteractionResult.FAIL;
-*///?} else {
-        if (!level.setBlock(pos, FixedConstructionColor.recolor(GTDecorBlocks.CONCRETE_REINFORCED.get().defaultBlockState(),
-                FixedConstructionColor.colorOf(state)), Block.UPDATE_ALL)) return InteractionResult.FAIL;
-//?}
         if (!player.getAbilities().instabuild) player.getInventory().getItem(slot).shrink(1);
         GTToolHelper.damageForToolClickReturn(player.getItemInHand(hand), 10000, player,
                 hand == InteractionHand.OFF_HAND

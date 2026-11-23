@@ -6,11 +6,6 @@ import gregtech.content.block.tool.DynamiteBlock;
 import gregtech.content.block.tool.ShapedToolBlock;
 import gregtech.content.material.Materials;
 import gregtech.content.material.generated.OreMaterials;
-
-//? if >=1.21.1 {
-//?} else {
-import gregtech.content.registry.GTDecorBlocks;
-//?}
 import gregtech.content.registry.GTToolBlocks;
 import gregtech.content.worldgen.GTBedrockOreFeature;
 import gregtech.platform.Mc;
@@ -89,10 +84,20 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
      * {@code UT.Code.select(MT.Redstone, MT.Redstone, MT.S, MT.Fe2O3, MT.MnO2, MT.Apatite,...)}.
      */
     private static final GTMaterial[] VEIN_MATERIALS = {
-            Materials.Redstone, Materials.Redstone, Materials.Sulfur, Materials.Hematite,
-            Materials.Pyrolusite, Materials.Apatite, OreMaterials.Molybdenite, OreMaterials.Bauxite,
-            OreMaterials.Sphalerite, OreMaterials.Tetrahedrite, OreMaterials.Cassiterite,
-            OreMaterials.Garnierite, OreMaterials.Galena};
+        Materials.Redstone,
+        Materials.Redstone,
+        Materials.Sulfur,
+        Materials.Hematite,
+        Materials.Pyrolusite,
+        Materials.Apatite,
+        OreMaterials.Molybdenite,
+        OreMaterials.Bauxite,
+        OreMaterials.Sphalerite,
+        OreMaterials.Tetrahedrite,
+        OreMaterials.Cassiterite,
+        OreMaterials.Garnierite,
+        OreMaterials.Galena
+    };
 
     @Override
     public boolean generate(GTDungeonData data) {
@@ -114,8 +119,8 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
         boolean brass = data.next1in2();
 
         int floor = data.level.getMinBuildHeight();
-        int lowest = floor + 5 - data.y;        // GT6's world Y 5: one layer above the bedrock band
-        int chamberTop = floor + 4 - data.y;    // GT6's world Y 4
+        int lowest = floor + 5 - data.y; // GT6's world Y 5: one layer above the bedrock band
+        int chamberTop = floor + 4 - data.y; // GT6's world Y 4
         int chamberBottom = floor + 3 - data.y; // GT6's world Y 3
 
         // GT6's shaft: the whole cell from the layer under the room floor down to world Y 5
@@ -130,13 +135,13 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
                     if (x == 0 || x == 15 || z == 0 || z == 15) {
                         data.bricks(x, y, z);
                     } else if (z == 7 && x == 2 && data.connected(-1, 0)) {
-                        scaffold(data, x, y, z, Direction.EAST, brass);        // SIDE_X_POS
+                        scaffold(data, x, y, z, Direction.EAST, brass); // SIDE_X_POS
                     } else if (z == 7 && x == 13 && data.connected(1, 0)) {
-                        scaffold(data, x, y, z, Direction.WEST, brass);        // SIDE_X_NEG
+                        scaffold(data, x, y, z, Direction.WEST, brass); // SIDE_X_NEG
                     } else if (x == 7 && z == 2 && data.connected(0, -1)) {
-                        scaffold(data, x, y, z, Direction.SOUTH, brass);       // SIDE_Z_POS
+                        scaffold(data, x, y, z, Direction.SOUTH, brass); // SIDE_Z_POS
                     } else if (x == 7 && z == 13 && data.connected(0, 1)) {
-                        scaffold(data, x, y, z, Direction.NORTH, brass);       // SIDE_Z_NEG
+                        scaffold(data, x, y, z, Direction.NORTH, brass); // SIDE_Z_NEG
                     } else if (y == -1 && (x == 2 || x == 13 || z == 2 || z == 13)) {
                         data.bricks(x, y, z);
                     } else {
@@ -266,11 +271,9 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
      * The original GT6 metadata is the bar connection mask, so no orientation is lost.
      */
     private static void bars(GTDungeonData data, int x, int y, int z, boolean brass, int mask) {
-//? if >=1.21.1 {
-        /*BarsBlock block = brass ? (gregtech.content.block.misc.BarsBlock)DungeonBindings.block("bars_brass") : (gregtech.content.block.misc.BarsBlock)DungeonBindings.block("bars_steel");
-*///?} else {
-        BarsBlock block = brass ? GTDecorBlocks.BARS_BRASS.get() : GTDecorBlocks.BARS_STEEL.get();
-//?}
+        BarsBlock block = brass
+                ? (BarsBlock) DungeonBindings.block("bars_brass")
+                : (BarsBlock) DungeonBindings.block("bars_steel");
         data.set(x, y, z, block.defaultBlockState().setValue(BarsBlock.MASK, mask));
     }
 
@@ -281,9 +284,9 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
      * the same room roll now selects the corresponding material for both scaffold and bars.
      */
     private static void scaffold(GTDungeonData data, int x, int y, int z, Direction facing, boolean brass) {
-        BlockState state = gregtech.content.registry.GTManualStations.scaffold(brass
-                ? gregtech.content.material.Materials.Brass
-                : gregtech.content.material.Materials.Steel).defaultBlockState();
+        BlockState state = gregtech.content.registry.GTManualStations.scaffold(
+                        brass ? gregtech.content.material.Materials.Brass : gregtech.content.material.Materials.Steel)
+                .defaultBlockState();
         if (state != null) data.set(x, y, z, state.setValue(ShapedToolBlock.FACING, facing));
     }
 
@@ -293,15 +296,25 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
      * {@code NBT_MODE} is retained as SUNK; the first server tick checks whether the backing stone
      * still supports the embedded charge.
      */
-    private static void explosive(GTDungeonData data, int x, int y, int z,
-                                  gregtech.content.registry.RegisteredBlock<? extends DynamiteBlock> block) {
-        data.set(x, y, z, block.get().defaultBlockState().setValue(DirectionalBlock.FACING, Direction.UP).setValue(DynamiteBlock.SUNK, true));
+    private static void explosive(
+            GTDungeonData data,
+            int x,
+            int y,
+            int z,
+            gregtech.content.registry.RegisteredBlock<? extends DynamiteBlock> block) {
+        data.set(
+                x,
+                y,
+                z,
+                block.get()
+                        .defaultBlockState()
+                        .setValue(DirectionalBlock.FACING, Direction.UP)
+                        .setValue(DynamiteBlock.SUNK, true));
     }
 
     /** One of the port's blocks by registry name, or {@code null} when it is not registered. */
     private static BlockState port(String id) {
-        Block block = Mc.block(
-                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", id));
+        Block block = Mc.block(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", id));
         return block == null ? null : block.defaultBlockState();
     }
 }

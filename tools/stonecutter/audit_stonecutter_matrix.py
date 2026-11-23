@@ -117,7 +117,7 @@ MC_API_RE = re.compile(
     r"hurtAndBreak|onEquippedItemBroken|broadcastBreakEvent|"
     r"getAttributeModifiers|EquipmentSlotGroup|canBeDepleted|getUseDuration|"
     r"ImmutableMultimap|java\.util\.UUID|ATTACK_DAMAGE_MODIFIER|ATTACK_SPEED_MODIFIER|"
-    r"state\.use\(|ScrewdriverUseTarget|Blocks\.SHORT_GRASS|Blocks\.GRASS\b|Blocks\.CRAFTER|"
+    r"state\.use\(|Blocks\.SHORT_GRASS|Blocks\.GRASS\b|Blocks\.CRAFTER|"
     r"ColoredFallingBlock|TreeGrower|StructurePlacementType|"
     r"MobEffects|MobEffectInstance|getEffect\(\)|isInstantenous|FoodProperties|"
     r"saturationModifier|saturationMod|alwaysEdible|alwaysEat|getNutrition|nutrition\(|getSaturationModifier|"

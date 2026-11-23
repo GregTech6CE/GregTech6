@@ -1,22 +1,17 @@
 package gregtech.content.block.machine;
 
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import gregtech.content.block.GTBlock;
+import gregtech.content.blockentity.machine.LogisticsWireBlockEntity;
 import gregtech.content.cover.CoverConnections;
 import gregtech.content.logistics.LogisticsCoverHost;
+import gregtech.content.logistics.LogisticsHost;
 import gregtech.engine.GTWaterloggable;
 import gregtech.engine.tool.GTToolHelper;
-import gregtech.engine.tool.ToolInteractions;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
-//? if >=1.21.1 {
-/*import gregtech.engine.transport.PipeConnections;
-*///?} else {
-import gregtech.content.block.energy.ElectricWireBlock;
-//?}
-import gregtech.content.blockentity.machine.LogisticsWireBlockEntity;
-import gregtech.content.logistics.LogisticsHost;
+import gregtech.engine.tool.ToolInteractions;
+import gregtech.engine.transport.PipeConnections;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
@@ -29,25 +24,27 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import java.util.List;
-
-import gregtech.content.block.GTBlock;
 /** GT6 24901: six-way cuttable logistics connector, 6/16 block diameter. */
-public final class LogisticsWireBlock extends GTBlock implements EntityBlock, ToolInteractionTarget, SimpleWaterloggedBlock {
+public final class LogisticsWireBlock extends GTBlock
+        implements EntityBlock, ToolInteractionTarget, SimpleWaterloggedBlock {
     @Override
-    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (hand != InteractionHand.MAIN_HAND) return InteractionResult.PASS;
         if (level.getBlockEntity(pos) instanceof LogisticsWireBlockEntity wire) {
             var coverResult = gregtech.content.logistics.LogisticsCoverInteraction.use(
@@ -60,9 +57,10 @@ public final class LogisticsWireBlock extends GTBlock implements EntityBlock, To
         BooleanProperty property = propFor(side);
         boolean open = !state.getValue(property);
         BlockPos neighborPos = pos.relative(side);
-        if (!player.mayBuild() || !level.mayInteract(player, pos)
-                || !level.hasChunkAt(neighborPos) || !level.mayInteract(player, neighborPos))
-            return InteractionResult.FAIL;
+        if (!player.mayBuild()
+                || !level.mayInteract(player, pos)
+                || !level.hasChunkAt(neighborPos)
+                || !level.mayInteract(player, neighborPos)) return InteractionResult.FAIL;
         if (open && hasBlockingCover(level, pos, neighborPos, side)) return InteractionResult.FAIL;
         if (open && !canOpenToward(level, neighborPos, side.getOpposite())) return InteractionResult.FAIL;
         level.setBlockAndUpdate(pos, state.setValue(property, open));
@@ -104,38 +102,27 @@ public final class LogisticsWireBlock extends GTBlock implements EntityBlock, To
     }
 
     private static BooleanProperty propFor(Direction side) {
-//? if >=1.21.1 {
-        /*return PipeConnections.propFor(side);
-*///?} else {
-        return ElectricWireBlock.propFor(side);
-//?}
+        return PipeConnections.propFor(side);
     }
 
     @Override
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return GTToolHelper.isWireCutter(tool)
-                ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.LOGISTICS) : null;
+                ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.LOGISTICS)
+                : null;
     }
 
     public LogisticsWireBlock(Properties properties) {
         super(properties.noOcclusion());
         var initial = defaultBlockState();
-//? if >=1.21.1 {
-        /*for (var property : PipeConnections.CONNECTIONS) initial = initial.setValue(property, false);
-*///?} else {
-        for (var property : ElectricWireBlock.CONNECTIONS) initial = initial.setValue(property, false);
-//?}
+        for (var property : PipeConnections.CONNECTIONS) initial = initial.setValue(property, false);
         registerDefaultState(initial.setValue(GTWaterloggable.WATERLOGGED, false));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(GTWaterloggable.WATERLOGGED);
-//? if >=1.21.1 {
-        /*builder.add(PipeConnections.CONNECTIONS);
-*///?} else {
-        builder.add(ElectricWireBlock.CONNECTIONS);
-//?}
+        builder.add(PipeConnections.CONNECTIONS);
     }
 
     private @javax.annotation.Nullable Direction placementFace;
@@ -159,9 +146,10 @@ public final class LogisticsWireBlock extends GTBlock implements EntityBlock, To
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState next, boolean moving) {
-        if (!state.is(next.getBlock()) && !level.isClientSide
+        if (!state.is(next.getBlock())
+                && !level.isClientSide
                 && level.getBlockEntity(pos) instanceof LogisticsWireBlockEntity wire)
-        wire.logisticsCovers().dropAll();
+            wire.logisticsCovers().dropAll();
         super.onRemove(state, level, pos, next, moving);
     }
 
@@ -173,18 +161,26 @@ public final class LogisticsWireBlock extends GTBlock implements EntityBlock, To
     }
 
     @Override
-    public void setPlacedBy(Level level, BlockPos pos, BlockState state,
-            @javax.annotation.Nullable LivingEntity placer, ItemStack stack) {
+    public void setPlacedBy(
+            Level level,
+            BlockPos pos,
+            BlockState state,
+            @javax.annotation.Nullable LivingEntity placer,
+            ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
         if (level.isClientSide) return;
         Direction clickedFace = consumePlacementFace();
         Player player = placer instanceof Player p ? p : null;
-        connectOnPlace(level, pos, level.getBlockState(pos),
-                clickedFace == null ? null : clickedFace.getOpposite(), player);
+        connectOnPlace(
+                level, pos, level.getBlockState(pos), clickedFace == null ? null : clickedFace.getOpposite(), player);
     }
 
-    private static void connectOnPlace(Level level, BlockPos pos, BlockState state,
-            @javax.annotation.Nullable Direction placedSide, @javax.annotation.Nullable Player placer) {
+    private static void connectOnPlace(
+            Level level,
+            BlockPos pos,
+            BlockState state,
+            @javax.annotation.Nullable Direction placedSide,
+            @javax.annotation.Nullable Player placer) {
         if (!(state.getBlock() instanceof LogisticsWireBlock)) return;
         BlockState updatedState = state;
         for (Direction side : Direction.values()) {
@@ -204,7 +200,8 @@ public final class LogisticsWireBlock extends GTBlock implements EntityBlock, To
                         sp.connection.send(new ClientboundBlockUpdatePacket(level, neighborPos));
                 }
                 if (wantsConnect || connectedThere) updatedState = updatedState.setValue(property, true);
-            } else if (wantsConnect && !hasBlockingCover(level, pos, neighborPos, side)
+            } else if (wantsConnect
+                    && !hasBlockingCover(level, pos, neighborPos, side)
                     && canOpenToward(level, neighborPos, side.getOpposite())) {
                 // GT6 permits a free end in air or fluid, but refuses a solid that
                 // does not offer a logistics face (TileEntityBase09Connector.connect).
@@ -216,30 +213,32 @@ public final class LogisticsWireBlock extends GTBlock implements EntityBlock, To
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        if (context instanceof EntityCollisionContext entityContext && entityContext.getEntity() instanceof Player player
+        if (context instanceof EntityCollisionContext entityContext
+                && entityContext.getEntity() instanceof Player player
                 && GTToolHelper.isWireCutter(player.getMainHandItem())) return Shapes.block();
         var shape = Block.box(5, 5, 5, 11, 11, 11);
-//? if >=1.21.1 {
-        /*for (Direction side : Direction.values()) if (state.getValue(PipeConnections.propFor(side)))
-*///?} else {
-        for (Direction side : Direction.values()) if (state.getValue(ElectricWireBlock.propFor(side)))
-//?}
-            shape = Shapes.or(shape, Block.box(side == Direction.WEST ? 0 : 5,
-                    side == Direction.DOWN ? 0 : 5, side == Direction.NORTH ? 0 : 5,
-                    side == Direction.EAST ? 16 : 11, side == Direction.UP ? 16 : 11,
-                    side == Direction.SOUTH ? 16 : 11));
+        for (Direction side : Direction.values())
+            if (state.getValue(PipeConnections.propFor(side)))
+                shape = Shapes.or(
+                        shape,
+                        Block.box(
+                                side == Direction.WEST ? 0 : 5,
+                                side == Direction.DOWN ? 0 : 5,
+                                side == Direction.NORTH ? 0 : 5,
+                                side == Direction.EAST ? 16 : 11,
+                                side == Direction.UP ? 16 : 11,
+                                side == Direction.SOUTH ? 16 : 11));
         return shape;
     }
 
     @Override
-    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos,
-            CollisionContext context) {
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return getShape(state, level, pos, CollisionContext.empty());
     }
 
     @Override
-    public List<ItemStack> getDrops(BlockState state,
-            net.minecraft.world.level.storage.loot.LootParams.Builder context) {
+    public List<ItemStack> getDrops(
+            BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder context) {
         return List.of(new ItemStack(this));
     }
 
@@ -259,8 +258,13 @@ public final class LogisticsWireBlock extends GTBlock implements EntityBlock, To
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
-            LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+    public BlockState updateShape(
+            BlockState state,
+            Direction side,
+            BlockState neighbor,
+            LevelAccessor level,
+            BlockPos pos,
+            BlockPos neighborPos) {
         GTWaterloggable.updateShape(state, level, pos);
         return super.updateShape(state, side, neighbor, level, pos, neighborPos);
     }

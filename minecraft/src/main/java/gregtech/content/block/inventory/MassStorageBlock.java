@@ -1,11 +1,7 @@
 package gregtech.content.block.inventory;
 
-//? if >=1.21.1 {
-/*import gregtech.engine.inventory.MassStorageFace;
 import gregtech.api.material.GTMaterial;
-*///?} else {
-//?}
-import gregtech.content.block.GTBlock;
+import gregtech.engine.inventory.MassStorageFace;
 import gregtech.content.block.GTHorizontalDirectionalBlock;
 import gregtech.content.blockentity.inventory.MassStorageBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -36,11 +32,8 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-//? if >=1.21.1 {
-/*import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-*///?} else {
-//?}
 //? if >=1.21.1 {
 /*import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -50,34 +43,25 @@ import net.minecraft.world.phys.BlockHitResult;
 //? if >=1.21.1 {
 /*import java.util.ArrayList;
 *///?} else {
-
-import javax.annotation.Nullable;
 //?}
+import javax.annotation.Nullable;
 import java.util.List;
 
-//? if >=1.21.1 {
-/*/^* Bulk-storage front interaction, mode tools, tape packing and harvest; remaining tool gap: ALIGN-136. ^/
-public class MassStorageBlock extends GTBlock implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget {
-    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-    private final GTMaterial material;
-    public MassStorageBlock(GTMaterial material, Properties properties) {
-        super(properties); this.material = material;
-*///?} else {
 /** Bulk-storage front interaction, mode tools, tape packing and harvest; remaining tool gap: ALIGN-136. */
 public class MassStorageBlock extends GTHorizontalDirectionalBlock
         implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget {
+    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     @Nullable
-    private final gregtech.api.material.GTMaterial material;
+    private final GTMaterial material;
 
     public MassStorageBlock(Properties properties) {
         this(null, properties);
     }
 
-    public MassStorageBlock(@Nullable gregtech.api.material.GTMaterial material, Properties properties) {
+    public MassStorageBlock(@Nullable GTMaterial material, Properties properties) {
         super(properties);
         this.material = material;
-//?}
         registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
     }
 
@@ -144,9 +128,12 @@ public class MassStorageBlock extends GTHorizontalDirectionalBlock
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
+    /** GT6 casing material of this variant (drives the tint), null for the legacy block. */
+    @Nullable
+    public GTMaterial material() { return material; }
+
 //? if >=1.21.1 {
-    /*public GTMaterial material() { return material; }
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> builder) { builder.add(FACING); }
+    /*protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> builder) { builder.add(FACING); }
     public BlockState getStateForPlacement(BlockPlaceContext context) { return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite()); }
 
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) { return new MassStorageBlockEntity(pos, state); }
@@ -169,13 +156,7 @@ public class MassStorageBlock extends GTHorizontalDirectionalBlock
     }
 
     /^* Source creative pick retains the complete state, including untaped inventory and fractions. ^/
-*///?} else {
-
-    /** GT6 casing material of this variant (drives the tint), null for the legacy block. */
-    @Nullable
-    public gregtech.api.material.GTMaterial material() { return material; }
-
-//?}
+*///?}
     @Override
 //? if >=1.21.1 {
     /*public ItemStack getCloneItemStack(BlockState state, net.minecraft.world.phys.HitResult hit,

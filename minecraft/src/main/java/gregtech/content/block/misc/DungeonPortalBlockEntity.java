@@ -1,6 +1,11 @@
 package gregtech.content.block.misc;
 
 import gregtech.content.item.GTDungeonKeyItem;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.HolderLookup;
@@ -12,24 +17,14 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
-
 /** GT6 miniature cross-dimension relay (MultiTileEntityMiniPortal).
  * Items, fluids, FE and GT packets address the loaded opposite neighbour of the linked
  * portal; six sided redstone/comparator inboxes follow the original tick phases.
  * Legacy key data is retained for saves, but keys do not activate the source machine.
  */
 public class DungeonPortalBlockEntity extends gregtech.content.blockentity.EnergyRelayBlockEntity
-implements gregtech.content.item.behavior.ManualToolBehaviorAccess.Ignitable,
-//? if >=1.21.1 {
-/*gregtech.content.item.behavior.Extinguishable {
-*///?} else {
-gregtech.content.item.behavior.BehaviorSprayExtinguisher.Extinguishable {
-//?}
+        implements gregtech.content.item.behavior.ManualToolBehaviorAccess.Ignitable,
+                gregtech.content.item.behavior.Extinguishable {
 
     /** GT6's {@code NBT_KEY} ({@code CS}), legacy key data retained for old saves. */
     public static final String NBT_KEY = GTDungeonKeyItem.NBT_KEY;
@@ -47,7 +42,8 @@ gregtech.content.item.behavior.BehaviorSprayExtinguisher.Extinguishable {
 
     private long keyId;
     private boolean active;
-    private final gregtech.content.logistics.MiniPortalSignals signals = new gregtech.content.logistics.MiniPortalSignals();
+    private final gregtech.content.logistics.MiniPortalSignals signals =
+            new gregtech.content.logistics.MiniPortalSignals();
 
     public DungeonPortalBlockEntity(BlockPos pos, BlockState state) {
         super(gregtech.content.registry.GTBlockEntities.DUNGEON_PORTAL.get(), pos, state);
@@ -70,27 +66,43 @@ gregtech.content.item.behavior.BehaviorSprayExtinguisher.Extinguishable {
 
     /** MultiTileEntityMiniPortalNether: all GT igniters toggle; extinguishers close. */
     @Override
-    public long onIgnite(Level world, BlockPos pos, net.minecraft.core.Direction side,
+    public long onIgnite(
+            Level world,
+            BlockPos pos,
+            net.minecraft.core.Direction side,
             @Nullable net.minecraft.world.entity.player.Player player,
-            net.minecraft.world.item.ItemStack igniter, boolean sneaking,
-            float hitX, float hitY, float hitZ) {
-        if (world.isClientSide || !(getBlockState().getBlock() instanceof DungeonPortalBlock block)
+            net.minecraft.world.item.ItemStack igniter,
+            boolean sneaking,
+            float hitX,
+            float hitY,
+            float hitZ) {
+        if (world.isClientSide
+                || !(getBlockState().getBlock() instanceof DungeonPortalBlock block)
                 || block.target() != DungeonPortalBlock.Target.NETHER) return 0L;
         if (active) deactivate();
         else activate();
         var remote = linkedPortal();
-        if (remote != null && player != null) player.displayClientMessage(net.minecraft.network.chat.Component.literal(
-                "X: " + remote.worldPosition.getX() + "   Y: " + remote.worldPosition.getY()
-                        + "   Z: " + remote.worldPosition.getZ()), false);
+        if (remote != null && player != null)
+            player.displayClientMessage(
+                    net.minecraft.network.chat.Component.literal("X: " + remote.worldPosition.getX() + "   Y: "
+                            + remote.worldPosition.getY() + "   Z: " + remote.worldPosition.getZ()),
+                    false);
         return 10000L;
     }
 
     @Override
-    public long onExtinguish(Level world, BlockPos pos, net.minecraft.core.Direction side,
+    public long onExtinguish(
+            Level world,
+            BlockPos pos,
+            net.minecraft.core.Direction side,
             @Nullable net.minecraft.world.entity.player.Player player,
-            net.minecraft.world.item.ItemStack can, boolean sneaking,
-            float hitX, float hitY, float hitZ) {
-        if (world.isClientSide || !(getBlockState().getBlock() instanceof DungeonPortalBlock block)
+            net.minecraft.world.item.ItemStack can,
+            boolean sneaking,
+            float hitX,
+            float hitY,
+            float hitZ) {
+        if (world.isClientSide
+                || !(getBlockState().getBlock() instanceof DungeonPortalBlock block)
                 || block.target() != DungeonPortalBlock.Target.NETHER) return 0L;
         deactivate();
         return 10000L;
@@ -98,8 +110,10 @@ gregtech.content.item.behavior.BehaviorSprayExtinguisher.Extinguishable {
 
     /** GT6's {@code setPortalActive} ({@code MultiTileEntityMiniPortal}). */
     public boolean activate() {
-        if (active || !(getBlockState().getBlock() instanceof DungeonPortalBlock portal)
-                || level == null || portal.targetLevel(level) == null) return false;
+        if (active
+                || !(getBlockState().getBlock() instanceof DungeonPortalBlock portal)
+                || level == null
+                || portal.targetLevel(level) == null) return false;
         active = true;
         if (level != null && !level.isClientSide) {
             level.setBlock(worldPosition, getBlockState().setValue(DungeonPortalBlock.ACTIVE, true), 3);
@@ -126,7 +140,7 @@ gregtech.content.item.behavior.BehaviorSprayExtinguisher.Extinguishable {
     private void clearLinkedSignals() {
         var remote = linkedPortal();
         if (remote != null && level instanceof ServerLevel server)
-        remote.signals.disconnect(server.getServer().getTickCount());
+            remote.signals.disconnect(server.getServer().getTickCount());
     }
 
     @Override
@@ -159,7 +173,7 @@ gregtech.content.item.behavior.BehaviorSprayExtinguisher.Extinguishable {
     private void addToPortalList() {
         if (level instanceof ServerLevel server && active) {
             ACTIVE.computeIfAbsent(getBlockState().getBlock(), block -> new LinkedHashSet<>())
-            .add(GlobalPos.of(server.dimension(), worldPosition.immutable()));
+                    .add(GlobalPos.of(server.dimension(), worldPosition.immutable()));
         }
     }
 
@@ -183,8 +197,8 @@ gregtech.content.item.behavior.BehaviorSprayExtinguisher.Extinguishable {
      * chunk unloaded).</p>
      */
     @Nullable
-    private static GlobalPos findTarget(BlockPos origin, boolean fromOverworld, Block block, ServerLevel target,
-            int factor, int margin) {
+    private static GlobalPos findTarget(
+            BlockPos origin, boolean fromOverworld, Block block, ServerLevel target, int factor, int margin) {
         Set<GlobalPos> portals = ACTIVE.get(block);
         if (portals == null || portals.isEmpty()) return null;
         GlobalPos best = null;
@@ -195,23 +209,28 @@ gregtech.content.item.behavior.BehaviorSprayExtinguisher.Extinguishable {
             BlockPos pos = candidate.pos();
             if (!target.isLoaded(pos)) continue;
             boolean valid = target.getBlockEntity(pos) instanceof DungeonPortalBlockEntity portal
-                    && portal.isActive() && target.getBlockState(pos).is(block);
+                    && portal.isActive()
+                    && target.getBlockState(pos).is(block);
             if (!valid) {
                 iterator.remove();
                 continue;
             }
             // GT6's own arithmetic: this tile entity's coordinates against the target's, scaled by the
             // distance factor of whichever side this portal is on.
-            long dx = fromOverworld ? origin.getX() - (long) pos.getX() * factor
+            long dx = fromOverworld
+                    ? origin.getX() - (long) pos.getX() * factor
                     : pos.getX() - (long) origin.getX() * factor;
-            long dz = fromOverworld ? origin.getZ() - (long) pos.getZ() * factor
+            long dz = fromOverworld
+                    ? origin.getZ() - (long) pos.getZ() * factor
                     : pos.getZ() - (long) origin.getZ() * factor;
             long distance = dx * dx + dz * dz;
             if (distance < bestDistance) {
                 bestDistance = distance;
                 best = candidate;
-            } else if (distance == bestDistance && (best == null
-                    || Math.abs(pos.getY() - origin.getY()) < Math.abs(best.pos().getY() - origin.getY()))) {
+            } else if (distance == bestDistance
+                    && (best == null
+                            || Math.abs(pos.getY() - origin.getY())
+                                    < Math.abs(best.pos().getY() - origin.getY()))) {
                 best = candidate;
             }
         }
@@ -244,13 +263,22 @@ gregtech.content.item.behavior.BehaviorSprayExtinguisher.Extinguishable {
 
     @Nullable
     public DungeonPortalBlockEntity linkedPortal() {
-        if (!active || isRemoved() || !(level instanceof ServerLevel server)
+        if (!active
+                || isRemoved()
+                || !(level instanceof ServerLevel server)
                 || !(getBlockState().getBlock() instanceof DungeonPortalBlock block)) return null;
         ServerLevel remote = block.targetLevel(server);
         if (remote == null) return null;
-        GlobalPos pos = findTarget(worldPosition, server.dimension() == Level.OVERWORLD, block, remote,
-                block.distanceFactor(), block.margin());
-        return pos != null && remote.getBlockEntity(pos.pos()) instanceof DungeonPortalBlockEntity portal ? portal : null;
+        GlobalPos pos = findTarget(
+                worldPosition,
+                server.dimension() == Level.OVERWORLD,
+                block,
+                remote,
+                block.distanceFactor(),
+                block.margin());
+        return pos != null && remote.getBlockEntity(pos.pos()) instanceof DungeonPortalBlockEntity portal
+                ? portal
+                : null;
     }
 
     /**
@@ -260,15 +288,18 @@ gregtech.content.item.behavior.BehaviorSprayExtinguisher.Extinguishable {
      */
     public Component linkMessage() {
         if (!(getBlockState().getBlock() instanceof DungeonPortalBlock block)
-                || level == null || block.targetLevel(level) == null)
+                || level == null
+                || block.targetLevel(level) == null)
             return Component.translatable("message.gt6ce.portal.wrong_dimension");
         if (!active) return Component.translatable("message.gt6ce.portal.inactive");
         var remote = linkedPortal();
-        if (remote == null || remote.getLevel() == null)
-            return Component.translatable("message.gt6ce.portal.unlinked");
-        return Component.translatable("message.gt6ce.portal.linked",
+        if (remote == null || remote.getLevel() == null) return Component.translatable("message.gt6ce.portal.unlinked");
+        return Component.translatable(
+                "message.gt6ce.portal.linked",
                 dimensionName(remote.getLevel().dimension().location().toString()),
-                remote.getBlockPos().getX(), remote.getBlockPos().getY(), remote.getBlockPos().getZ());
+                remote.getBlockPos().getX(),
+                remote.getBlockPos().getY(),
+                remote.getBlockPos().getZ());
     }
 
     /** Only the overworld, the Nether and the End are known; other dimension ids are shown as they are. */
@@ -315,8 +346,10 @@ gregtech.content.item.behavior.BehaviorSprayExtinguisher.Extinguishable {
         else {
             signals.advance(tick);
             var remote = linkedPortal();
-            if (remote != null) for (var side : net.minecraft.core.Direction.values())
-                remote.signals.receive(tick, side.getOpposite().ordinal(), incoming(side, false), incoming(side, true));
+            if (remote != null)
+                for (var side : net.minecraft.core.Direction.values())
+                    remote.signals.receive(
+                            tick, side.getOpposite().ordinal(), incoming(side, false), incoming(side, true));
         }
         if (signals.consumeChanged()) {
             level.updateNeighborsAt(worldPosition, getBlockState().getBlock());
@@ -329,7 +362,8 @@ gregtech.content.item.behavior.BehaviorSprayExtinguisher.Extinguishable {
         super.onLoad();
         if (active) addToPortalList();
         if (level != null && !level.isClientSide && getBlockState().getValue(DungeonPortalBlock.ACTIVE) != active)
-            level.setBlock(worldPosition, getBlockState().setValue(DungeonPortalBlock.ACTIVE, active), Block.UPDATE_CLIENTS);
+            level.setBlock(
+                    worldPosition, getBlockState().setValue(DungeonPortalBlock.ACTIVE, active), Block.UPDATE_CLIENTS);
     }
 
     @Override

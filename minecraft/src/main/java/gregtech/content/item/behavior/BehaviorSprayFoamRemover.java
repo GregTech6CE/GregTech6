@@ -29,7 +29,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * <p>Both C-Foam blocks are foamable, and both answer {@code removeFoam} by setting the block to air
  * ({@code BlockCFoamFresh} for the wet one, {@code BlockCFoam} for the hardened one), so
  * the spray removes hardened foam too. The wet/hardened pair is in the port as
- * {@code gt6ce:cfoam_fresh} / {@code gt6ce:cfoam} ({@code CFoamBlock}, {@code GTDecorBlocks}).</p>
+ * {@code gt6ce:cfoam_fresh} / {@code gt6ce:cfoam} ({@code CFoamBlock}, {@code GTConstructionBlocks}).</p>
  *
  * <h2>Port limits</h2>
  *

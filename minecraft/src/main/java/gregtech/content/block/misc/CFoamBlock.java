@@ -1,13 +1,9 @@
 package gregtech.content.block.misc;
 
 import gregtech.content.registry.GTBlockEntities;
-
-//? if >=1.21.1 {
-/*import gregtech.content.registry.GTConstructionBlocks;
-*///?} else {
-import gregtech.content.registry.GTDecorBlocks;
-//?}
-
+import gregtech.content.registry.GTConstructionBlocks;
+import java.util.Collections;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
@@ -15,9 +11,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
-
-import java.util.Collections;
-import java.util.List;
 
 /**
  * GT6's construction foam ({@code MultiTileEntityCFoam} and the hardened {@code BlocksGT.CFoam}).
@@ -41,7 +34,9 @@ public class CFoamBlock extends ColoredConstructionBlock {
     }
 
     /** True for the still wet foam that dries over time. */
-    public boolean fresh() { return fresh; }
+    public boolean fresh() {
+        return fresh;
+    }
 
     @Override
     public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
@@ -57,13 +52,7 @@ public class CFoamBlock extends ColoredConstructionBlock {
 
     /** The hardened block this foam turns into (GT6's {@code BlocksGT.CFoam}). */
     public static Block hardened() {
-
-//? if >=1.21.1 {
-/*        return GTConstructionBlocks.CFOAM.get();
-*///?} else {
-        return GTDecorBlocks.CFOAM.get();
-//?}
-
+        return GTConstructionBlocks.CFOAM.get();
     }
 
     /** True when this block is the wet variant the port tracks with its block entity. */

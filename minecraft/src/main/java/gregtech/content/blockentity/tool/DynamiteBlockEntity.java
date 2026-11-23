@@ -2,13 +2,10 @@ package gregtech.content.blockentity.tool;
 
 import gregtech.content.block.tool.DynamiteBlock;
 import gregtech.content.blockentity.GTBlockEntity;
+import gregtech.content.item.behavior.Extinguishable;
 import gregtech.content.item.behavior.ManualToolBehaviorAccess;
-//? if >=1.21.1 {
-/*import gregtech.content.item.behavior.Extinguishable;
-*///?} else {
-import gregtech.content.item.behavior.BehaviorSprayExtinguisher;
-//?}
 import gregtech.content.registry.GTBlockEntities;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -21,20 +18,24 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.Nullable;
-
 /** GT6 MultiTileEntityDynamite: persisted fuse, ignition and defusing. */
-public final class DynamiteBlockEntity extends GTBlockEntity implements ManualToolBehaviorAccess.Ignitable,
-//? if >=1.21.1 {
-        /*Extinguishable {
-*///?} else {
-        BehaviorSprayExtinguisher.Extinguishable {
-//?}
+public final class DynamiteBlockEntity extends GTBlockEntity
+        implements ManualToolBehaviorAccess.Ignitable, Extinguishable {
     private int remaining;
     private boolean firstTick = true;
-    public DynamiteBlockEntity(BlockPos pos, BlockState state) { super(GTBlockEntities.DYNAMITE.get(), pos, state); }
-    public int remainingTicks() { return remaining; }
-    public void armRemote() { if (remaining == 0 || remaining > 20) setFuse(20); }
+
+    public DynamiteBlockEntity(BlockPos pos, BlockState state) {
+        super(GTBlockEntities.DYNAMITE.get(), pos, state);
+    }
+
+    public int remainingTicks() {
+        return remaining;
+    }
+
+    public void armRemote() {
+        if (remaining == 0 || remaining > 20) setFuse(20);
+    }
+
     private void setFuse(int ticks) {
         remaining = ticks;
         setChanged();
@@ -44,12 +45,13 @@ public final class DynamiteBlockEntity extends GTBlockEntity implements ManualTo
                 level.setBlock(worldPosition, state.setValue(DynamiteBlock.ARMED, ticks > 0), Block.UPDATE_ALL);
         }
     }
+
     public void serverTick() {
         if (level == null || level.isClientSide || !(getBlockState().getBlock() instanceof DynamiteBlock block)) return;
         if (firstTick) {
             firstTick = false;
             block.refreshSupport(level, worldPosition);
-            block.checkFuseInputs(level,worldPosition);
+            block.checkFuseInputs(level, worldPosition);
         }
         if (remaining > 0) {
             remaining--;
@@ -57,20 +59,50 @@ public final class DynamiteBlockEntity extends GTBlockEntity implements ManualTo
             if (remaining == 0) block.detonate(level, worldPosition);
         }
     }
-    @Override public long onIgnite(Level world, BlockPos pos, Direction side, Player player, ItemStack tool,
-                                    boolean sneaking, float x, float y, float z) {
+
+    @Override
+    public long onIgnite(
+            Level world,
+            BlockPos pos,
+            Direction side,
+            Player player,
+            ItemStack tool,
+            boolean sneaking,
+            float x,
+            float y,
+            float z) {
         if (world.isClientSide || remaining != 0) return 0;
         setFuse(100);
         world.playSound(null, pos, SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1, .5f);
         return 10000;
     }
-    @Override public long onExtinguish(Level world, BlockPos pos, Direction side, Player player, ItemStack tool,
-                                       boolean sneaking, float x, float y, float z) {
+
+    @Override
+    public long onExtinguish(
+            Level world,
+            BlockPos pos,
+            Direction side,
+            Player player,
+            ItemStack tool,
+            boolean sneaking,
+            float x,
+            float y,
+            float z) {
         if (world.isClientSide || remaining == 0) return 0;
         setFuse(0);
         world.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1, .5f);
         return 10000;
     }
-    @Override protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) { super.saveData(tag, lookup); tag.putInt("Fuse", remaining); }
-    @Override protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) { super.loadData(tag, lookup); remaining = Math.max(0, Math.min(100, tag.getInt("Fuse"))); }
+
+    @Override
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveData(tag, lookup);
+        tag.putInt("Fuse", remaining);
+    }
+
+    @Override
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadData(tag, lookup);
+        remaining = Math.max(0, Math.min(100, tag.getInt("Fuse")));
+    }
 }

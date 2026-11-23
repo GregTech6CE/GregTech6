@@ -6,10 +6,7 @@ import gregtech.engine.inventory.MassStorageMaterialForms;
 import gregtech.engine.stack.NbtCompat;
 import gregtech.engine.stack.StackCompat;
 
-//? if >=1.21.1 {
-//?} else {
 import gregtech.content.item.behavior.BehaviorDuctTape;
-//?}
 import gregtech.content.blockentity.GTBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -40,11 +37,7 @@ import java.util.List;
  * Tape packing, template reset, downward output and the original overflow allowance
  * retain their separate saved mode bits.
  */
-//? if >=1.21.1 {
-/*public class MassStorageBlockEntity extends GTBlockEntity implements gregtech.content.item.behavior.BehaviorDuctTape.Tapeable, gregtech.api.sensor.ProgressSensorSource, gregtech.api.sensor.WeightSensorSource {
-*///?} else {
 public class MassStorageBlockEntity extends GTBlockEntity implements BehaviorDuctTape.Tapeable, gregtech.api.sensor.ProgressSensorSource, gregtech.api.sensor.WeightSensorSource {
-//?}
     public static final long CAPACITY = gregtech.content.storage.OriginalStorageTooltipData.MASS_CAPACITY;
     private final gregtech.engine.inventory.BulkStorageState<ItemStack> storage =
             new gregtech.engine.inventory.BulkStorageState<>(CAPACITY, StackCompat::sameItem, stack -> stack.copyWithCount(1));

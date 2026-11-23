@@ -5,11 +5,7 @@ import gregtech.content.block.machine.ItemPipeBlock;
 import gregtech.content.blockentity.machine.LogisticsWireBlockEntity;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
-//? if >=1.21.1 {
-/*import gregtech.engine.transport.PipeConnections;
-*///?} else {
-import gregtech.content.block.energy.ElectricWireBlock;
-//?}
+import gregtech.engine.transport.PipeConnections;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -252,11 +248,7 @@ public final class PipePlacementTests {
     }
 
     private static net.minecraft.world.level.block.state.properties.BooleanProperty logisticsProp(Direction side) {
-//? if >=1.21.1 {
-        /*return PipeConnections.propFor(side);
-*///?} else {
-        return ElectricWireBlock.propFor(side);
-//?}
+        return PipeConnections.propFor(side);
     }
 
     /** Places {@code item} the way a player does: the item's own use-on path against {@code clicked}. */

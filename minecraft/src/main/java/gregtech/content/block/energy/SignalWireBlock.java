@@ -1,19 +1,15 @@
 package gregtech.content.block.energy;
 
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.item.context.BlockPlaceContext;
+import gregtech.api.material.GTMaterial;
+import gregtech.content.block.GTBlock;
+import gregtech.content.blockentity.energy.SignalWireBlockEntity;
+import gregtech.content.registry.GTSignalWires;
 import gregtech.engine.GTWaterloggable;
 import gregtech.engine.tool.GTToolHelper;
-import gregtech.engine.tool.ToolInteractions;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
-
-import gregtech.api.material.GTMaterial;
-
-import gregtech.content.blockentity.energy.SignalWireBlockEntity;
-
-import gregtech.content.registry.GTSignalWires;
-
+import gregtech.engine.tool.ToolInteractions;
+import java.util.List;
 import net.minecraft.core.*;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.*;
@@ -24,20 +20,16 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.*;
-import java.util.List;
 
-import gregtech.content.block.GTBlock;
 /** Six independent ports; the common cutter spec also drives the client face overlay. */
-//? if >=1.21.1 {
-/*public final class SignalWireBlock extends GTBlock implements EntityBlock, ToolInteractionTarget, SimpleWaterloggedBlock {
-*///?} else {
-public final class SignalWireBlock extends GTBlock implements EntityBlock, ToolInteractionTarget {
-//?}
+public final class SignalWireBlock extends GTBlock
+        implements EntityBlock, ToolInteractionTarget, SimpleWaterloggedBlock {
     @Override
-    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (ToolInteractions.use(state, level, pos, player, hand, hit))
             return InteractionResult.sidedSuccess(level.isClientSide);
         return InteractionResult.PASS;
@@ -45,7 +37,9 @@ public final class SignalWireBlock extends GTBlock implements EntityBlock, ToolI
 
     @Override
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
-        return GTToolHelper.isWireCutter(tool) ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.REDSTONE) : null;
+        return GTToolHelper.isWireCutter(tool)
+                ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.REDSTONE)
+                : null;
     }
 
     public static final IntegerProperty POWER = IntegerProperty.create("power", 0, 15);
@@ -81,7 +75,13 @@ public final class SignalWireBlock extends GTBlock implements EntityBlock, ToolI
 
     @Override
     public BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext context) {
-        return GTWaterloggable.getStateForPlacement(defaultBlockState().setValue(ElectricWireBlock.propFor(context.getClickedFace().getOpposite()), true), context);
+        return GTWaterloggable.getStateForPlacement(
+                defaultBlockState()
+                        .setValue(
+                                ElectricWireBlock.propFor(
+                                        context.getClickedFace().getOpposite()),
+                                true),
+                context);
     }
 
     @Override
@@ -96,11 +96,12 @@ public final class SignalWireBlock extends GTBlock implements EntityBlock, ToolI
     }
 
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, BlockEntityType<T> type) {
 
-        return !level.isClientSide && type == GTSignalWires.SIGNAL_WIRE.get() ? (tickLevel, tickPos, tickState,
-                wireEntity) -> ((SignalWireBlockEntity) wireEntity).tickNetwork() : null;
-
+        return !level.isClientSide && type == GTSignalWires.SIGNAL_WIRE.get()
+                ? (tickLevel, tickPos, tickState, wireEntity) -> ((SignalWireBlockEntity) wireEntity).tickNetwork()
+                : null;
     }
 
     /** Original placement: the clicked support port, then compatible neighbors already open toward us.
@@ -108,19 +109,24 @@ public final class SignalWireBlock extends GTBlock implements EntityBlock, ToolI
      * any item-restored covers exist. Ordinary neighbor updates never rewrite explicit ports.
      */
     @Override
-    public void setPlacedBy(Level level, BlockPos pos, BlockState state,
-                            net.minecraft.world.entity.LivingEntity placer, ItemStack stack) {
+    public void setPlacedBy(
+            Level level,
+            BlockPos pos,
+            BlockState state,
+            net.minecraft.world.entity.LivingEntity placer,
+            ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
         if (level.isClientSide || !(level.getBlockEntity(pos) instanceof SignalWireBlockEntity)) return;
         var requested = level.getBlockState(pos);
         if (!requested.is(this)) return;
-        for (var side : Direction.values()) if (requested.getValue(ElectricWireBlock.propFor(side))) {
-            if (!connectPlacedPort(level, pos, side, placer)) {
-                var current = level.getBlockState(pos);
-                if (current.is(this) && current.getValue(ElectricWireBlock.propFor(side)))
-                    level.setBlockAndUpdate(pos, current.setValue(ElectricWireBlock.propFor(side), false));
+        for (var side : Direction.values())
+            if (requested.getValue(ElectricWireBlock.propFor(side))) {
+                if (!connectPlacedPort(level, pos, side, placer)) {
+                    var current = level.getBlockState(pos);
+                    if (current.is(this) && current.getValue(ElectricWireBlock.propFor(side)))
+                        level.setBlockAndUpdate(pos, current.setValue(ElectricWireBlock.propFor(side), false));
+                }
             }
-        }
         for (var side : Direction.values()) {
             var neighbor = pos.relative(side);
             if (!level.hasChunkAt(neighbor)) continue;
@@ -131,12 +137,13 @@ public final class SignalWireBlock extends GTBlock implements EntityBlock, ToolI
         }
     }
 
-    private boolean connectPlacedPort(Level level, BlockPos pos, Direction side,
-                                      net.minecraft.world.entity.LivingEntity placer) {
+    private boolean connectPlacedPort(
+            Level level, BlockPos pos, Direction side, net.minecraft.world.entity.LivingEntity placer) {
         var neighbor = pos.relative(side);
         if (!level.hasChunkAt(neighbor) || !level.getBlockState(pos).is(this)) return false;
-        if (placer instanceof Player player && (!player.mayBuild() || !level.mayInteract(player, pos)
-                || !level.mayInteract(player, neighbor))) return false;
+        if (placer instanceof Player player
+                && (!player.mayBuild() || !level.mayInteract(player, pos) || !level.mayInteract(player, neighbor)))
+            return false;
         if (!gregtech.content.cover.CoverConnections.canConnect(level, pos, side)) return false;
         // Original redstone connectors permit ordinary blocks and nonmatching connector types
         // on the explicitly selected side; only matching signal wires receive reciprocal ports.
@@ -196,7 +203,8 @@ public final class SignalWireBlock extends GTBlock implements EntityBlock, ToolI
     }
 
     @Override
-    public List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
+    public List<ItemStack> getDrops(
+            BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
         return List.of(new ItemStack(this));
     }
 
@@ -216,7 +224,8 @@ public final class SignalWireBlock extends GTBlock implements EntityBlock, ToolI
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 
-        if (context instanceof EntityCollisionContext entityContext && entityContext.getEntity() instanceof Player playerHoldingTool
+        if (context instanceof EntityCollisionContext entityContext
+                && entityContext.getEntity() instanceof Player playerHoldingTool
                 && GTToolHelper.isWireCutter(playerHoldingTool.getMainHandItem())) return Shapes.block();
         return connectionShape(state, level, pos);
     }
@@ -228,7 +237,8 @@ public final class SignalWireBlock extends GTBlock implements EntityBlock, ToolI
         for (var side : Direction.values()) {
             if (!state.getValue(ElectricWireBlock.propFor(side))) continue;
             var neighbor = level.getBlockState(pos.relative(side));
-            double neighborHalf = neighbor.getBlock() instanceof SignalWireBlock wire ? wire.halfThickness()
+            double neighborHalf = neighbor.getBlock() instanceof SignalWireBlock wire
+                    ? wire.halfThickness()
                     : gregtech.engine.machine.PipeGeometry.NONE;
             double[] box = gregtech.engine.machine.PipeGeometry.localArmBox(side, half, neighborHalf);
             if (box != null) shape = Shapes.or(shape, gregtech.engine.machine.PipeGeometry.boxShape(box));
@@ -242,8 +252,13 @@ public final class SignalWireBlock extends GTBlock implements EntityBlock, ToolI
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
-            LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+    public BlockState updateShape(
+            BlockState state,
+            Direction side,
+            BlockState neighbor,
+            LevelAccessor level,
+            BlockPos pos,
+            BlockPos neighborPos) {
         GTWaterloggable.updateShape(state, level, pos);
         // Ports are explicit and outlive the neighbor, so the state never changes
         // when it goes away; the client model still needs the new neighbor size.

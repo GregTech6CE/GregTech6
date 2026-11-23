@@ -1,13 +1,9 @@
 package gregtech.content.logistics;
 
-import net.minecraft.core.HolderLookup;
-//? if >=1.21.1 {
-/*import gregtech.engine.transport.PipeConnections;
-*///?} else {
-import gregtech.content.block.energy.ElectricWireBlock;
-//?}
 import gregtech.content.block.machine.LogisticsWireBlock;
+import gregtech.engine.transport.PipeConnections;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -59,45 +55,36 @@ public final class LogisticsCovers {
         displayVisuals[index] = visual;
         changed();
         if (signalChanged && owner.getLevel() != null && !owner.getLevel().isClientSide)
-            owner.getLevel().updateNeighborsAt(owner.getBlockPos(), owner.getBlockState().getBlock());
+            owner.getLevel()
+                    .updateNeighborsAt(
+                            owner.getBlockPos(), owner.getBlockState().getBlock());
     }
 
     public boolean attach(Direction face, ItemStack held) {
-        if (LogisticsCoverType.of(held) == null || !host.canLogistics(null) || !get(face).isEmpty()) return false;
-        if (owner instanceof gregtech.content.cover.PanelCoverHost panels && !panels.getCover(face).isEmpty()) return false;
+        if (LogisticsCoverType.of(held) == null
+                || !host.canLogistics(null)
+                || !get(face).isEmpty()) return false;
+        if (owner instanceof gregtech.content.cover.PanelCoverHost panels
+                && !panels.getCover(face).isEmpty()) return false;
         faces[face.ordinal()] = held.copyWithCount(1);
         displaySignals[face.ordinal()] = 0;
         displayVisuals[face.ordinal()] = 0;
         // GT6 AbstractCoverAttachmentLogistics.onCoverPlaced disconnects the covered connector face.
         var state = owner.getBlockState();
-        if (owner.getLevel() != null && state.getBlock() instanceof LogisticsWireBlock
-//? if >=1.21.1 {
-                /*&& state.getValue(PipeConnections.propFor(face))) {
-*///?} else {
-                && state.getValue(ElectricWireBlock.propFor(face))) {
-//?}
+        if (owner.getLevel() != null
+                && state.getBlock() instanceof LogisticsWireBlock
+                && state.getValue(PipeConnections.propFor(face))) {
             var neighborPos = owner.getBlockPos().relative(face);
             if (owner.getLevel().hasChunkAt(neighborPos)) {
                 var neighbor = owner.getLevel().getBlockState(neighborPos);
                 if (neighbor.getBlock() instanceof LogisticsWireBlock
-//? if >=1.21.1 {
-                        /*&& neighbor.getValue(PipeConnections.propFor(face.getOpposite())))
-*///?} else {
-                        && neighbor.getValue(ElectricWireBlock.propFor(face.getOpposite())))
-//?}
-                owner.getLevel().setBlockAndUpdate(neighborPos,
-//? if >=1.21.1 {
-                        /*neighbor.setValue(PipeConnections.propFor(face.getOpposite()), false));
-*///?} else {
-                        neighbor.setValue(ElectricWireBlock.propFor(face.getOpposite()), false));
-//?}
+                        && neighbor.getValue(PipeConnections.propFor(face.getOpposite())))
+                    owner.getLevel()
+                            .setBlockAndUpdate(
+                                    neighborPos, neighbor.setValue(PipeConnections.propFor(face.getOpposite()), false));
             }
-            owner.getLevel().setBlockAndUpdate(owner.getBlockPos(),
-//? if >=1.21.1 {
-                    /*state.setValue(PipeConnections.propFor(face), false));
-*///?} else {
-                    state.setValue(ElectricWireBlock.propFor(face), false));
-//?}
+            owner.getLevel()
+                    .setBlockAndUpdate(owner.getBlockPos(), state.setValue(PipeConnections.propFor(face), false));
         }
         changed();
         return true;
@@ -145,17 +132,16 @@ public final class LogisticsCovers {
         for (int faceIndex = 0; faceIndex < faces.length; faceIndex++) {
             var type = LogisticsCoverType.of(faces[faceIndex]);
             boolean display = type != null && type.role() == LogisticsCoverType.Role.DISPLAY;
-            displaySignals[faceIndex] = (byte) (display ? Math.max(0, Math.min(15,
-                    tag.getByte(NBT_PREFIX + faceIndex + ".signal"))) : 0);
-            displayVisuals[faceIndex] = (byte) (display ? Math.max(0, Math.min(10,
-                    tag.getByte(NBT_PREFIX + faceIndex + ".visual"))) : 0);
+            displaySignals[faceIndex] =
+                    (byte) (display ? Math.max(0, Math.min(15, tag.getByte(NBT_PREFIX + faceIndex + ".signal"))) : 0);
+            displayVisuals[faceIndex] =
+                    (byte) (display ? Math.max(0, Math.min(10, tag.getByte(NBT_PREFIX + faceIndex + ".visual"))) : 0);
         }
     }
 
     public void dropAll() {
         for (int faceIndex = 0; faceIndex < faces.length; faceIndex++) {
-            if (!faces[faceIndex].isEmpty())
-                gregtech.content.cover.CoverDrops.dropCover(owner, faces[faceIndex]);
+            if (!faces[faceIndex].isEmpty()) gregtech.content.cover.CoverDrops.dropCover(owner, faces[faceIndex]);
             faces[faceIndex] = ItemStack.EMPTY;
             displaySignals[faceIndex] = 0;
             displayVisuals[faceIndex] = 0;
