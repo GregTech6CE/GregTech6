@@ -250,6 +250,20 @@ public final class MaterialReloadTests {
         helper.assertFalse(ItemMaterialRegistry.canRecover(tape.used()), "a spent tape roll has no recoverable material");
         assertTapeRepack(helper, tape);
         assertLaminatorReplacement(helper, cable);
+        assertFilterCoverCompositions(helper);
+    }
+
+    /**
+     * The filter covers keep the composition of their real crafting recipes: their 1×1 self-loop reset
+     * recipes must not replace it with an empty one.
+     */
+    private static void assertFilterCoverCompositions(GameTestHelper helper) {
+        for (String path : List.of("item_filter", "fluid_filter", "item_retriever_cover")) {
+            var composition = ItemMaterialRegistry.get(new ItemStack(item(path)));
+            helper.assertTrue(
+                    composition.isPresent() && !composition.get().components().isEmpty(),
+                    path + " lost its crafting composition to its reset recipe");
+        }
     }
 
     private static void assertAmount(GameTestHelper helper, ItemStack stack, String material, long expected) {

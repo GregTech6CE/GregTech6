@@ -48,8 +48,8 @@ final class VirtualResourcesIntegrityTest {
     private static final int MAX_STATIC_JSON = 450;
     private static final int EXPECTED_STATIC_MODELS = 319;
     private static final int EXPECTED_STATIC_BLOCKSTATES = 100;
-    private static final int EXPECTED_VIRTUAL_MODELS = 6608;
-    private static final int EXPECTED_MODEL_TSV_ROWS = 4378;
+    private static final int EXPECTED_VIRTUAL_MODELS = 6611;
+    private static final int EXPECTED_MODEL_TSV_ROWS = 4375;
     private static final int EXPECTED_VIRTUAL_BLOCKSTATES = 2180;
     private static final int EXPECTED_BLOCKSTATE_TSV_ROWS = 1245;
     private static final int EXPECTED_BLOCKSTATE_KINDS = 6;
@@ -508,6 +508,32 @@ final class VirtualResourcesIntegrityTest {
             assertTrue(
                     shippedTextures.contains("textures/item/technological/" + id + ".png"),
                     "Missing shipped technological icon: " + id);
+        }
+
+        for (var entry : Map.of(
+                        "item_filter", "filteritem",
+                        "fluid_filter", "filterfluid",
+                        "item_retriever_cover", "retrieveritem")
+                .entrySet()) {
+            String id = entry.getKey();
+            String folder = entry.getValue();
+            Map<String, Object> baseModel = JsonMaps.object(neoforgeVirtual.get("item/" + id));
+            @SuppressWarnings("unchecked")
+            List<Object> overrides = (List<Object>) baseModel.get("overrides");
+            assertNotNull(overrides, "Missing cover_inverted override on item/" + id);
+            assertEquals(1, overrides.size(), "Expected single blacklist override on item/" + id);
+            @SuppressWarnings("unchecked")
+            Map<String, Object> first = (Map<String, Object>) overrides.get(0);
+            @SuppressWarnings("unchecked")
+            Map<String, Object> predicate = (Map<String, Object>) first.get("predicate");
+            assertEquals(1, ((Number) predicate.get("gt6ce:cover_inverted")).intValue());
+            assertEquals("gt6ce:item/" + id + "_inverted", first.get("model"));
+
+            Map<String, Object> invertedModel = JsonMaps.object(neoforgeVirtual.get("item/" + id + "_inverted"));
+            @SuppressWarnings("unchecked")
+            Map<String, Object> invertedTextures = (Map<String, Object>) invertedModel.get("textures");
+            assertEquals("gt6ce:item/technological/blank_cover", invertedTextures.get("layer0"));
+            assertEquals("gt6ce:block/machines/covers/" + folder + "/inverted", invertedTextures.get("layer1"));
         }
 
         List<String> expectedBlockCovers = new ArrayList<>(List.of(
