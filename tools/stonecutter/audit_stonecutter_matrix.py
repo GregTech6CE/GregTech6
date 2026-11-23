@@ -91,31 +91,55 @@ LOADER_API_RE = re.compile(
     r"IEnergyStorage|IClientItemExtensions|RegisterColorHandlersEvent|"
     r"ModelEvent|ChunkRenderTypeSet|BakedModel|ModelBakery|NetworkHooks|"
     r"CustomPacketPayload|SimpleChannel|PayloadRegistrar|IPlantable|"
-    r"PlantType|FakePlayer|ServerLifecycleHooks|initializeClient"
+    r"PlantType|FakePlayer|ServerLifecycleHooks|initializeClient|"
+    r"DeferredHolder|RegistryObject|ICustomIngredient|AbstractIngredient|"
+    r"IIngredientSerializer|IngredientType|BaseFlowingFluid|ForgeFlowingFluid|"
+    r"IShearable|IForgeShearable|gameRestart|worldRestart|MobSpawnEvent|"
+    r"LevelTickEvent|ItemExpireEvent|addAlias|neoforge:conditions|"
+    r"neoforge:composite|forge:composite|forge:false|"
+    r"serializeNBT|deserializeNBT|invalidateCapabilities|"
+    r"fluidAccessKnown|blockedFluidMask|contentsChanged"
 )
 
 MC_API_RE = re.compile(
     r"net\.minecraft\.|com\.mojang\.|HolderLookup|CustomData|DataComponent|DataComponents|ContainerHelper|"
-    r"SavedData|fromNamespaceAndPath|BuiltInRegistries|RecipeHolder|CraftingInput|"
+    r"SavedData|fromNamespaceAndPath|BuiltInRegistries|RecipeHolder|CraftingInput|CraftingContainer|"
+    r"asCraftInput|RecipeManager|PlaceRecipe|addItemToSlot|placeRecipe|"
+    r"OriginalCraftingJson|RuntimeRecipeLifecycle|"
     r"StreamCodec|\bCodec\b|\bMapCodec\b|getCloneItemStack|getDrops|"
     r"playerWillDestroy|getExpDrop|isPathfindable|GuiGraphics|\bScreen\b|"
     r"AbstractContainerScreen|ModelResourceLocation|ParticleOptions|LootTable|"
-    r"Enchantment|parseOptional|isSameItemSame|isSameFluidSame|BlockEntityData|"
+    r"Enchantment|EnchantmentHelper|Registries\.ENCHANTMENT|ItemEnchantments|"
+    r"WrittenBookContent|SignText|loadWithComponents|createSerializationContext|"
+    r"parseOptional|isSameItemSame|isSameFluidSame|BlockEntityData|"
     r"BlockStateData|ItemStack|FluidStack|ResourceLocation|TagKey|CompoundTag|"
+    r"applyComponents|setTag|getTag\(|getComponentsPatch\(\)(?!\.isEmpty\(\))|equals\([^)]*getComponentsPatch|"
+    r"hurtAndBreak|onEquippedItemBroken|broadcastBreakEvent|"
+    r"getAttributeModifiers|EquipmentSlotGroup|canBeDepleted|getUseDuration|"
+    r"ImmutableMultimap|java\.util\.UUID|ATTACK_DAMAGE_MODIFIER|ATTACK_SPEED_MODIFIER|"
+    r"state\.use\(|ScrewdriverUseTarget|Blocks\.SHORT_GRASS|Blocks\.GRASS\b|Blocks\.CRAFTER|"
+    r"ColoredFallingBlock|TreeGrower|StructurePlacementType|"
+    r"MobEffects|MobEffectInstance|getEffect\(\)|isInstantenous|FoodProperties|"
+    r"saturationModifier|saturationMod|alwaysEdible|alwaysEat|getNutrition|nutrition\(|getSaturationModifier|"
+    r"igniteForSeconds|setSecondsOnFire|getPotted|getContent|AbstractArrow|"
+    r"ArmorItem|BucketItem|FluidTank|NativeMachineTankData|gt6ce:zpm_module|"
+    r"tags/items|tags/item|\"recipe/\"|\"recipes/\"|c:glass_blocks|c:leathers|"
     r"AbstractPackResources|readMetaAndCreate|BlockEntityWithoutLevelRenderer|"
     r"FallingBlock|SandBlock|TransparentBlock|GlassBlock|MenuProvider|"
     r"FriendlyByteBuf|RegistryFriendlyByteBuf|ServerLevel|LevelReader|"
     r"TooltipFlag|TooltipContext|InteractionResult|ItemInteractionResult|"
-    r"BlockState|BlockPos|FluidState|ItemLike|Entity|LivingEntity|Player|"
-    r"DamageSource|FoodProperties|MobEffect|SoundEvent|CreativeModeTab|"
+    r"BlockState|BlockPos|FluidState|ItemLike|\bEntity\b|LivingEntity|Player|"
+    r"DamageSource|MobEffect|SoundEvent|CreativeModeTab|"
     r"Structure|PlacementModifier|Biome|LootContext|LootParams|RecipeSerializer|"
     r"Ingredient|Criterion|Advancement|StateDefinition|ClientboundBlockEntityDataPacket|"
-    r"BlockBehaviour|TreeGrower|AbstractTreeGrower|PoseStack|VertexConsumer|"
+    r"BlockBehaviour|AbstractTreeGrower|PoseStack|VertexConsumer|ps\.last\(|RenderType|"
     r"QuadBakingVertexConsumer|OverlayTexture|BakedQuad|TextureAtlasSprite|"
     r"SpriteContents|MultiBufferSource|Tesselator|BufferBuilder|VertexFormat|"
     r"LightTexture|ItemTransforms|IoSupplier|FastColor|Matrix4f|Matrix3f|"
     r"PackLocationInfo|PackSelectionConfig|PackSource|PackType|addVertex|endVertex|"
-    r"overlayCoords|\buv2\b|\bFont\b|BlockEntity|MenuType|AbstractContainerMenu"
+    r"overlayCoords|\buv2\b|\bFont\b|\bBlockEntity\b|MenuType|AbstractContainerMenu|"
+    r"RenderSystem|GameRenderer|\.getU\(|\.getV\(|ModelPart|FaceBakery|bakeQuad|"
+    r"renderBackground|mouseScrolled|getRenderBoundingBox"
 )
 
 CLIENT_API_RE = re.compile(
@@ -123,14 +147,41 @@ CLIENT_API_RE = re.compile(
     r"ItemColor|BlockColor|IClientItemExtensions|initializeClient|ModelEvent|"
     r"RegisterColorHandlersEvent|ClientPackFacade|BakedModelMap|ClientModelEvents|"
     r"readMetaAndCreate|AbstractPackResources|BlockEntityWithoutLevelRenderer|"
-    r"RenderType|ItemBlockRenderTypes|EntityRenderers|MenuScreens|RegisterMenuScreensEvent"
+    r"RenderType|ItemBlockRenderTypes|EntityRenderers|MenuScreens|RegisterMenuScreensEvent|"
+    r"RenderSystem|GameRenderer|TextureAtlasSprite|\.getU\(|\.getV\(|"
+    r"VertexConsumer|ps\.last\(|ModelPart|FaceBakery|bakeQuad|renderBackground|"
+    r"mouseScrolled|getRenderBoundingBox"
 )
 
 VANILLA_PROVIDER_METHOD_RE = re.compile(
     r"\b(?:saveAdditional|loadAdditional|getUpdateTag|handleUpdateTag|"
     r"onDataPacket|getUpdatePacket|saveWithoutMetadata|loadStatic|"
     r"appendHoverText|ContainerHelper|SavedData|serializeNBT|deserializeNBT|"
-    r"parseOptional|saveWithFullMetadata|save|createMenu|decode|encode)\b"
+    r"parseOptional|saveWithFullMetadata|save|createMenu|decode|encode|"
+    r"assemble|getResultItem|getRemainingItems|getDrops|getUseDuration|"
+    r"EnchantmentHelper|ItemEnchantments|WrittenBookContent|SignText|"
+    r"loadWithComponents|createSerializationContext|NativeMachineTankData|"
+    r"FluidTank|readFromNBT|loadFluidStackFromNBT|WRITTEN_BOOK_CONTENT|"
+    r"DataComponents)\b|"
+    r"Registries\.ENCHANTMENT|\benchant\("
+)
+
+RECIPE_SERIALIZER_EXCEPTION_RE = re.compile(
+    r"\b(?:RecipeSerializer|fromJson|fromNetwork|toNetwork|streamCodec|"
+    r"MapCodec|StreamCodec|MapLike|DynamicOps)\b"
+)
+
+CUSTOM_INGREDIENT_RE = re.compile(
+    r"\b(?:ICustomIngredient|AbstractIngredient|IIngredientSerializer|IngredientType)\b"
+)
+
+LEGACY_SAVE_MIGRATION_RE = re.compile(
+    r"\bOreBlockEntity\b|\.addAlias\s*\(|registerLegacyWoodAliases"
+)
+
+LOADER_DATA_SCHEMA_RE = re.compile(
+    r"neoforge:conditions|\"forge:false\"|neoforge:composite|forge:composite|"
+    r"\bPACK_FORMAT\b"
 )
 
 
@@ -570,6 +621,27 @@ def _classify_block(
     if is_pure_loader_package_rename(th_str, el_str):
         reason = "pure-loader-1to1-import" if imp_only else "pure-loader-1to1-fqcn"
         return "LOADER", "FLOOR_KEEP", "Floor", reason
+    if CUSTOM_INGREDIENT_RE.search(both_str):
+        return "LOADER", "FLOOR_KEEP", "Floor", "custom-ingredient-api"
+    if LEGACY_SAVE_MIGRATION_RE.search(both_str):
+        origin = "LOADER" if ".addAlias" in both_str else "MC_VERSION"
+        return origin, "FLOOR_KEEP", "Floor", "legacy-save-migration"
+    if LOADER_DATA_SCHEMA_RE.search(both_str):
+        origin = "LOADER" if ("neoforge:" in both_str or "forge:" in both_str) else "MC_VERSION"
+        return origin, "FLOOR_KEEP", "Floor", "loader-data-schema"
+    if "/recipe/" in ctx.rel_path and (
+        RECIPE_SERIALIZER_EXCEPTION_RE.search(both_str)
+        or (
+            imp_only
+            and ("JsonObject" in both_str or "JsonElement" in both_str or "JsonSyntaxException" in both_str or "java.util.stream.Stream" in both_str)
+            and "RecipeSerializer" in ctx.text
+        )
+        or (
+            ("super(" in both_str or "new BlastingRecipe(" in both_str or "new SmeltingRecipe(" in both_str)
+            and not re.search(r"\bclass\s+(?:ToolShapedRecipe|CreosoteAxleRecipe)\b", both_str)
+        )
+    ):
+        return "MC_VERSION", "FLOOR_KEEP", "Floor", "recipe-serialization-exception"
 
     # 3. Wave 1 Thin Base Classes -> BASE_CLASS / FACADE (non-BE caller) / FOLLOW_BODY
     if ctx.class_name not in BE_UTILITY_CLASSES and (
@@ -618,13 +690,62 @@ def _classify_block(
         ("HolderLookup.Provider" in th_str) != ("HolderLookup.Provider" in el_str)
     ) or (
         ("registryAccess()" in th_str) != ("registryAccess()" in el_str)
+    ) or (
+        bool(re.search(r",\s*lookup\s*\)", th_str)) != bool(re.search(r",\s*lookup\s*\)", el_str))
     )
     if (
         has_provider_arg_diff
-        and not VANILLA_PROVIDER_METHOD_RE.search(both_str)
+        and (
+            "function.save(" in both_str
+            or "function.load(" in both_str
+            or not VANILLA_PROVIDER_METHOD_RE.search(both_str)
+        )
         and not imp_only
     ):
         return "SELF_DEFECT", "REMOVE", "Wave 2b", "internal-provider-signature"
+
+    # Check facade-body & MC/Loader API before gt-internal-import-split and class-declaration-split.
+    if ctx.class_name in BE_UTILITY_CLASSES and ("getComponentsPatch" in both_str or "hasTag" in both_str):
+        return "MC_VERSION", "FACADE", "Wave 3", "facade-implementation"
+    if ctx.class_name == "ClientPackFacade":
+        return "LOADER", "FACADE", "Wave 3", "facade-implementation"
+    if CAP_RE.search(ctx.text) and (
+        re.search(r"\}\);\s*\}?$", both_str.strip())
+        or "javax.annotation.Nonnull" in both_str
+        or "taken.isEmpty()" in both_str
+        or "available.isEmpty()" in both_str
+    ):
+        return "LOADER", "FLOOR_KEEP", "Floor", "capability-api"
+    if "ItemExpireEvent" in ctx.text and "setCanceled" in both_str:
+        return "LOADER", "FACADE", "Wave 3", "api-facade-or-follow"
+    if "FluidType" in ctx.text and "initializeClient" in ctx.text and "java.util.function.Consumer" in both_str:
+        return "LOADER", "FOLLOW_BODY", "Wave 3", "api-facade-or-follow"
+    if "GTRadiationProtection.MATERIAL" in both_str or ("SandBlock" in ctx.text and "super(" in both_str):
+        return "MC_VERSION", "FACADE", "Wave 3", "api-facade-or-follow"
+    if "StructurePlacementType" in ctx.text and "validate(" in both_str:
+        return "MC_VERSION", "FACADE", "Wave 3", "api-facade-or-follow"
+    if "RecipeHolder" in ctx.text and (
+        re.search(r"\b(?:holder|entry|recipe|row|cache\.anchor)\.(?:id|value|getId)\(\)", both_str)
+        or "rewritten.add(holder)" in both_str
+        or "200)));" in both_str
+    ):
+        return "MC_VERSION", "FACADE", "Wave 3", "api-facade-or-follow"
+    if "CraftingInput" in ctx.text and (
+        "grid.size()" in both_str or "grid.width()" in both_str or "CraftingFormPosition" in both_str
+    ):
+        return "MC_VERSION", "FACADE", "Wave 3", "api-facade-or-follow"
+    if "OriginalCraftingJson" in ctx.text and "ToolShapelessRecipe" in both_str and "/recipe/" in ctx.rel_path:
+        return "MC_VERSION", "FACADE", "Wave 3", "api-facade-or-follow"
+
+    if (LOADER_API_RE.search(both_str) and "RegisteredBlock.wrap" not in both_str) or (
+        MC_API_RE.search(both_str) and 'folder="recipe/"' not in both_str
+    ):
+        origin = "LOADER" if LOADER_API_RE.search(both_str) else "MC_VERSION"
+        disposition = "FOLLOW_BODY" if imp_only else "FACADE"
+        is_client = "/client/" in ctx.rel_path or bool(CLIENT_API_RE.search(both_str))
+        wave = "Wave 4" if is_client else "Wave 3"
+        reason = "client-unification" if is_client else "api-facade-or-follow"
+        return origin, disposition, wave, reason
 
     if imp_only and "import gregtech." in both_str:
         return "SELF_DEFECT", "REMOVE", "Wave 2c", "gt-internal-import-split"
@@ -635,16 +756,7 @@ def _classify_block(
     ):
         return "SELF_DEFECT", "REMOVE", "Wave 2c", "class-declaration-split"
 
-    if not LOADER_API_RE.search(both_str) and not MC_API_RE.search(both_str):
-        return "SELF_DEFECT", "REMOVE", "Wave 2c", "internal-logic-or-structure-split"
-
-    # 5. Wave 3 (Facades) vs Wave 4 (Client unification)
-    origin = "LOADER" if LOADER_API_RE.search(both_str) else "MC_VERSION"
-    disposition = "FOLLOW_BODY" if imp_only else "FACADE"
-    is_client = "/client/" in ctx.rel_path or bool(CLIENT_API_RE.search(both_str))
-    wave = "Wave 4" if is_client else "Wave 3"
-    reason = "client-unification" if is_client else "api-facade-or-follow"
-    return origin, disposition, wave, reason
+    return "SELF_DEFECT", "REMOVE", "Wave 2c", "internal-logic-or-structure-split"
 
 
 def scan_node_subclasses(repo_root: Path, wave1a_classes: set[str]) -> dict[str, Any]:
