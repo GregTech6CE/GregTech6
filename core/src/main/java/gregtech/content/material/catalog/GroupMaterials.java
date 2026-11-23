@@ -169,7 +169,7 @@ public final class GroupMaterials {
                 .properties(MaterialProperty.HIDDEN)
                 .localName("AnyClay")
                 .group()
-                .members("Clay")
+                .members("Clay", "ClayBrown", "ClayRed", "Bentonite", "Palygorskite", "Kaolinite")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyCoal/Carbon")
                 .displayName("AnyCoal/Carbon")

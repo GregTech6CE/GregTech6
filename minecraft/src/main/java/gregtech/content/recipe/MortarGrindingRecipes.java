@@ -92,16 +92,12 @@ public final class MortarGrindingRecipes {
     public static int register() {
         if (registered) throw new IllegalStateException("Mortar grinding recipes registered twice");
         registered = true;
-        for (var entry : java.util.Map.of(
-                        net.minecraft.world.item.Items.CLAY_BALL, 1, net.minecraft.world.item.Items.CLAY, 4)
-                .entrySet()) {
-            var input = new ItemStack(entry.getKey());
-            var output = OM.dust(GTMaterialRegistry.get("Clay"), entry.getValue() * GTValues.U);
-            var recipe = MachineRecipeMaps.Mortar.register(RecipeBuilder.of(16, 16L * entry.getValue())
-                    .optimize(true)
-                    .itemInputs(input)
-                    .itemOutputs(output));
-            if (recipe != null) ENTRIES.add(new Entry("vanilla_clay", MachineRecipeMaps.Mortar, recipe));
+        // MultiItemFood mortarizes each clay into its own dust, without applying pulverization targets.
+        DiggableRecipes.clayBalls().forEach((material, ball) -> clay(ball, material, 1));
+        clay(new ItemStack(net.minecraft.world.item.Items.CLAY), GTMaterialRegistry.get("Clay"), 4);
+        for (var variant : DiggableRecipes.packable()) {
+            if (variant.material() == null) continue;
+            clay(new ItemStack(Mc.item(Mc.gregtechId(variant.block()))), variant.material(), 4);
         }
 
         for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
@@ -127,6 +123,24 @@ public final class MortarGrindingRecipes {
                         SKIPPED.size(),
                         SKIPPED);
         return ENTRIES.size();
+    }
+
+    private static void clay(ItemStack input, GTMaterial material, int units) {
+        var output = OM.dust(material, units * GTValues.U);
+        var builder = RecipeBuilder.of(16, 16L * units)
+                .optimize(true)
+                .itemInputs(input)
+                .itemOutputs(output);
+        String source = Mc.itemId(input.getItem()).toString();
+        var recipe = MachineRecipeMaps.Mortar.register(builder);
+        if (recipe != null) ENTRIES.add(new Entry(source, MachineRecipeMaps.Mortar, recipe));
+        // Explicit GT6 costs take precedence over generic vanilla composition recovery.
+        var shredding = RecoveryRecipePublisher.explicit(builder.build(), "clay-grinding")
+                .withMaterialRecovery()
+                .withPriority(1)
+                .withSource("recovery:clay-grinding");
+        recipe = RecoveryRecipePublisher.publish(MachineRecipeMaps.Shredder, shredding);
+        if (recipe != null) ENTRIES.add(new Entry(source, MachineRecipeMaps.Shredder, recipe));
     }
 
     private static void grind(GTMaterial material, String prefixName) {

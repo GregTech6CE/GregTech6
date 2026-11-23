@@ -71,6 +71,7 @@ public final class MaterialTagPack extends AbstractPackResources {
         gregtech.content.recipe.MaterialUnitInputTags.tags((path,id)->addInputGroup(tags,"items",path,id));
         var copperMaterials=MaterialGroups.members(MaterialGroups.Cu).stream().map(m->m.resolve()).collect(java.util.stream.Collectors.toSet());
         var ironMaterials=MaterialGroups.members(MaterialGroups.Iron).stream().map(m->m.resolve()).collect(java.util.stream.Collectors.toSet());
+        var clayMaterials=MaterialGroups.members(MaterialGroups.Clay);
         // Per-material tag: every form of one material (gear, rod, ingot, dust, block, fluid, unit...)
         // shares "gt6ce:material/<material>", which is what recipe filtering and pack scripts want.
         // Per-form tags drop the "items" directory from their name: the tag is
@@ -134,6 +135,11 @@ public final class MaterialTagPack extends AbstractPackResources {
                 add(tags,"minecraft","items","music_discs",id.toString());
             var form=registeredForm(item);
             if (form!=null) {
+                // Clay-family dusts share crafting inputs without changing their material identity.
+                if (form.prefix()==MaterialPrefix.dust && clayMaterials.contains(form.material().resolve())) {
+                    add(tags,"forge","items","dusts/clay",id.toString());
+                    add(tags,"gt6ce","items","dust/clay",id.toString());
+                }
                 if (gregtech.content.recipe.TechnologyIngredients.pistonIngot(form.prefix(), form.material()))
                     add(tags,"gt6ce","items","technology/piston_ingots",id.toString());
                 if (gregtech.content.recipe.TechnologyIngredients.craftingRedstone(form.prefix(), form.material()))
