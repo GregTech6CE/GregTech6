@@ -42,14 +42,19 @@ public class FluidAttachmentBlock extends GTBlock implements gregtech.engine.too
         if (target == null) return InteractionResult.PASS;
         var handler = attachedHandler(level, targetPos, facing.getOpposite());
         if (handler == null) return InteractionResult.PASS;
+        var held = player.getItemInHand(hand);
         if (level.isClientSide) {
-            if (player.getItemInHand(hand).isEmpty() && spec.shape().equals("tap"))
-                return InteractionResult.SUCCESS;
+            // A display item only fills through filling shapes, and only in creative mode.
+            if (held.getItem() instanceof gregtech.content.item.FluidDisplayItemLike)
+                return player.getAbilities().instabuild && spec.fillsTarget()
+                        ? InteractionResult.SUCCESS : InteractionResult.PASS;
+            if (held.isEmpty() && spec.shape().equals("tap")) return InteractionResult.SUCCESS;
             return gregtech.engine.fluid.FluidContainerInteraction.clientResult(player, hand);
         }
-        if (player.getItemInHand(hand).isEmpty() && spec.shape().equals("tap"))
-            return pourBelow(level, pos, access(handler)) ? InteractionResult.CONSUME : InteractionResult.PASS;
-        return gregtech.engine.fluid.FluidContainerInteraction.use(player, hand, access(handler))
+        var tankAccess = access(handler);
+        if (held.isEmpty() && spec.shape().equals("tap"))
+            return pourBelow(level, pos, tankAccess) ? InteractionResult.CONSUME : InteractionResult.PASS;
+        return gregtech.engine.fluid.FluidContainerInteraction.use(player, hand, tankAccess)
                 ? InteractionResult.CONSUME : InteractionResult.PASS;
     }
 

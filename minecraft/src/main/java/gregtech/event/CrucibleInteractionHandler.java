@@ -37,7 +37,8 @@ public final class CrucibleInteractionHandler {
         var level = event.getLevel();
         BlockEntity blockEntity = level.getBlockEntity(event.getPos());
         var state = level.getBlockState(event.getPos());
-        boolean container = gregtech.engine.machine.crucible.CrucibleContainerInteraction.handles(event.getItemStack());
+        boolean container = gregtech.engine.machine.crucible.CrucibleContainerInteraction.handles(
+                event.getEntity(), event.getItemStack());
         // Any face that opens into the vessel accepts containers: the mouth itself, the four inner
         // walls, and the large crucible's wall parts. Outer faces stay free for block placement.
         var hit = event.getHitVec();

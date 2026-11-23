@@ -19,6 +19,14 @@ public final class UtilityCoverInteraction {
     private UtilityCoverInteraction(){}
     /** Samples without draining the held item; material-container fallback is currently ID-based. */
     public static FluidStack sample(ItemStack held) {
+        // A display item samples read-only at a fixed amount; its creative payload is unbounded.
+        if (held.getItem() instanceof gregtech.content.item.FluidDisplayItemLike) {
+            var display = gregtech.engine.fluid.FluidDisplayBinding.resolveCurrent(held);
+            if (display.isEmpty()) return FluidStack.EMPTY;
+            var fixed = display.copy();
+            fixed.setAmount(1000);
+            return fixed;
+        }
         var container = StackCompat.fluidHandler(held);
         if (container != null) {
             var fluid = container.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE);

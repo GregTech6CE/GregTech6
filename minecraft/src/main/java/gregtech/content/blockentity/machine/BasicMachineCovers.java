@@ -19,13 +19,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 //? if >=1.21.1 {
-/*import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+/*import net.neoforged.neoforge.fluids.FluidStack;
 *///?} else {
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 //?}
 
 /** Cover lifecycle, controller inputs and redstone outputs of a basic machine. */
@@ -281,13 +277,8 @@ final class BasicMachineCovers {
             return CoverUtilityBehaviors.setItemFilter(stack, held, level.registryAccess());
         }
         if (CoverUtilityBehaviors.FILTER_FLUID.equals(id)) {
-//? if >=1.21.1 {
-/*            var container = held.getCapability(Capabilities.FluidHandler.ITEM);
-*///?} else {
-            var container = held.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).resolve().orElse(null);
-//?}
-            if (container == null) return false;
-            FluidStack fluid = container.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE);
+            FluidStack fluid = gregtech.content.cover.UtilityCoverInteraction.sample(held);
+            if (fluid.isEmpty()) return false;
             return CoverUtilityBehaviors.setFluidFilter(stack, fluid, level.registryAccess());
         }
         return false;

@@ -9,6 +9,7 @@ import gregtech.content.tool.WoodenBucketCatalog;
 import gregtech.content.tool.WoodenBucketCatalog.Band;
 import gregtech.content.tool.WoodenBucketCatalog.Content;
 import gregtech.content.registry.GTFluids;
+import gregtech.engine.fluid.FluidContainerInteraction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -152,9 +153,11 @@ public final class WoodenBucketItem extends TechItem {
                 if (!level.setBlockAndUpdate(context.getClickedPos(), fillCauldron
                         ? Blocks.WATER_CAULDRON.defaultBlockState().setValue(LayeredCauldronBlock.LEVEL, 3)
                         : Blocks.CAULDRON.defaultBlockState())) return InteractionResult.PASS;
-                ItemStack next = variant(stack, fillCauldron ? WoodenBucketCatalog.empty() : WoodenBucketCatalog.water());
-                if (!player.isCreative() || drainCauldron)
-                    player.setItemInHand(context.getHand(), ItemUtils.createFilledResult(stack, player, next));
+                ItemStack next = variant(
+                        stack, fillCauldron ? WoodenBucketCatalog.empty() : WoodenBucketCatalog.water());
+                player.setItemInHand(
+                        context.getHand(), FluidContainerInteraction.exchangeContainer(stack, player, next));
+                FluidContainerInteraction.syncInventory(player);
                 level.playSound(null, context.getClickedPos(), fillCauldron ? SoundEvents.BUCKET_EMPTY
                         : SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1, 1);
             }
@@ -178,8 +181,8 @@ public final class WoodenBucketItem extends TechItem {
                 : FluidUtil.tryPlaceFluid(player, level, hand, pos.relative(hit.getDirection()),
                         held.copyWithCount(1), new FluidStack(containedFluid(held), 1000));
         if (!result.isSuccess()) return InteractionResultHolder.fail(held);
-        ItemStack next = player.isCreative() && !content.empty() ? held
-                : ItemUtils.createFilledResult(held, player, result.getResult());
+        ItemStack next = FluidContainerInteraction.exchangeContainer(held, player, result.getResult());
+        FluidContainerInteraction.syncInventory(player);
         return InteractionResultHolder.success(next);
     }
 
@@ -187,7 +190,9 @@ public final class WoodenBucketItem extends TechItem {
     public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
         if (!content.empty() || !(target instanceof Cow cow) || cow.isBaby()) return InteractionResult.PASS;
         if (!player.level().isClientSide) {
-            player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, variant(stack, WoodenBucketCatalog.milk())));
+            ItemStack milk = variant(stack, WoodenBucketCatalog.milk());
+            player.setItemInHand(hand, FluidContainerInteraction.exchangeContainer(stack, player, milk));
+            FluidContainerInteraction.syncInventory(player);
             player.level().playSound(null, target.blockPosition(), SoundEvents.COW_MILK, SoundSource.PLAYERS, 1, 1);
         }
         return InteractionResult.sidedSuccess(player.level().isClientSide);

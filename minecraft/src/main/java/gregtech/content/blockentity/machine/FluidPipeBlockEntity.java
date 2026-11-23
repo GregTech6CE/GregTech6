@@ -426,13 +426,8 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
             return CoverUtilityBehaviors.setItemFilter(stack, held,level.registryAccess());
         }
         if (CoverUtilityBehaviors.FILTER_FLUID.equals(id)) {
-//? if >=1.21.1 {
-            /*var container = held.getCapability(Capabilities.FluidHandler.ITEM);
-*///?} else {
-            var container = held.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).resolve().orElse(null);
-//?}
-            if (container == null) return false;
-            FluidStack fluid = container.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE);
+            FluidStack fluid = gregtech.content.cover.UtilityCoverInteraction.sample(held);
+            if (fluid.isEmpty()) return false;
             return CoverUtilityBehaviors.setFluidFilter(stack, fluid,level.registryAccess());
         }
         return false;
