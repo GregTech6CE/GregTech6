@@ -12,7 +12,7 @@
 - [幻觉物品](illusion.md)：重构期凭空产生、原 GT6 不存在的注册项及其清理。
 - [流体管道分布模式](fluid-distribution.md)：新增的 `BALANCED`/`SHARED` 配置与空闲调度开关。
 - [流体物理参数](fluid-physics.md)：GT 流体运动缩放与坠落伤害的移植决策，含高温液体的已知简化。
-- [工具交互行为](tool-interactions.md)：交互工具判定、plunger 抽取顺序、igniter 的 `PASS`、封面工具守卫、拆解覆盖板进背包、流体容器的创造/生存语义与展示物品边界。
+- [工具交互行为](tool-interactions.md)：交互工具判定、plunger 抽取顺序、igniter 的 `PASS`、封面工具守卫、拆解覆盖板进背包、流体容器的创造/生存语义、展示物品边界及筛选覆盖板直接覆写与掉落剥离。
 - [大型坩埚空腔与覆盖板边界](large-crucible.md)：已成型大坩埚两层空腔的防打火与防外部置入、仅限外侧面与底层（含控制器）底面贴板及既有覆盖板时机边界。
 - [药水系统移除](potion-removal.md)：移除整套药水系统的决策，含流体、配方表、饮用条目与下游联动；已执行，清理项并入[流体移除](fluid-removal.md)与[物品移除](item-removal.md)。
 - [营养系统移除](nutrition-removal.md)：移除五项食物统计、其伤害类型与配置，保留辐射；停注 13 条闭环饮料流体与 `Tea_Ice`，保留瓶装物品。
