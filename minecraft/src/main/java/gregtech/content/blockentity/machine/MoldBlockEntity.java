@@ -9,6 +9,7 @@ import gregtech.engine.machine.ITileEntityMold;
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.prefix.BlockMaterialPrefix;
+import gregtech.engine.stack.NbtCompat;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.block.machine.MoldBlock;
 import gregtech.content.data.GregTechConstants;
@@ -663,20 +664,12 @@ public class MoldBlockEntity extends gregtech.content.blockentity.GTEnergyBlockE
         contentSolidified = tag.getBoolean(NBT_CONTENT_SOLIDIFIED);
         if (tag.contains("gt.mold.has_solid")) {
             if (tag.getBoolean("gt.mold.has_solid") && tag.contains(NBT_SOLID_OUTPUT)) {
-//? if >=1.21.1 {
-                /*solidOutput = ItemStack.parseOptional(lookup,tag.getCompound(NBT_SOLID_OUTPUT));
-*///?} else {
-                solidOutput = ItemStack.of(tag.getCompound(NBT_SOLID_OUTPUT));
-//?}
+                solidOutput = NbtCompat.readItem(tag.getCompound(NBT_SOLID_OUTPUT), lookup);
             } else {
                 solidOutput = ItemStack.EMPTY;
             }
         } else if (tag.contains(NBT_SOLID_OUTPUT)) {
-//? if >=1.21.1 {
-            /*solidOutput = ItemStack.parseOptional(lookup,tag.getCompound(NBT_SOLID_OUTPUT));
-*///?} else {
-            solidOutput = ItemStack.of(tag.getCompound(NBT_SOLID_OUTPUT));
-//?}
+            solidOutput = NbtCompat.readItem(tag.getCompound(NBT_SOLID_OUTPUT), lookup);
         } else {
             solidOutput = ItemStack.EMPTY;
         }
@@ -746,20 +739,12 @@ public class MoldBlockEntity extends gregtech.content.blockentity.GTEnergyBlockE
         if (tag.contains(NBT_CONTENT_SOLIDIFIED)) contentSolidified = tag.getBoolean(NBT_CONTENT_SOLIDIFIED);
         if (tag.contains("gt.mold.has_solid")) {
             if (tag.getBoolean("gt.mold.has_solid") && tag.contains(NBT_SOLID_OUTPUT)) {
-//? if >=1.21.1 {
-                /*solidOutput = ItemStack.parseOptional(lookup,tag.getCompound(NBT_SOLID_OUTPUT));
-*///?} else {
-                solidOutput = ItemStack.of(tag.getCompound(NBT_SOLID_OUTPUT));
-//?}
+                solidOutput = NbtCompat.readItem(tag.getCompound(NBT_SOLID_OUTPUT), lookup);
             } else {
                 solidOutput = ItemStack.EMPTY;
             }
         } else if (tag.contains(NBT_SOLID_OUTPUT)) {
-//? if >=1.21.1 {
-            /*solidOutput = ItemStack.parseOptional(lookup,tag.getCompound(NBT_SOLID_OUTPUT));
-*///?} else {
-            solidOutput = ItemStack.of(tag.getCompound(NBT_SOLID_OUTPUT));
-//?}
+            solidOutput = NbtCompat.readItem(tag.getCompound(NBT_SOLID_OUTPUT), lookup);
         }
     }
 

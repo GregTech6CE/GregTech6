@@ -11,6 +11,7 @@ import gregtech.content.registry.GTItems;
 import gregtech.engine.machine.CrucibleSpec;
 import gregtech.engine.machine.InitialSmelteryDefinitions;
 import gregtech.engine.machine.crucible.*;
+import gregtech.engine.stack.HandlerNbt;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.util.GTEntityHelper;
 import java.util.ArrayList;
@@ -865,11 +866,7 @@ public class SmeltingCrucibleBlockEntity extends gregtech.content.blockentity.GT
             long amount = entry.getLong("amount");
             if (material.isValid() && amount > 0) content.add(CrucibleMaterialStack.of(material, amount));
         }
-//? if >=1.21.1 {
-        /*if (tag.contains("gt.cache")) cache.deserializeNBT(lookup, tag.getCompound("gt.cache"));
-*///?} else {
-        if (tag.contains("gt.cache")) cache.deserializeNBT(tag.getCompound("gt.cache"));
-//?}
+        if (tag.contains("gt.cache")) HandlerNbt.load(cache, tag.getCompound("gt.cache"), lookup);
         updateDisplayState();
     }
 

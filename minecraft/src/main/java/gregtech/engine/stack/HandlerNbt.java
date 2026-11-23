@@ -23,7 +23,26 @@ public final class HandlerNbt {
 
     public static void load(ItemStackHandler handler, CompoundTag tag, HolderLookup.Provider lookup) {
 //? if >=1.21.1 {
-/*        handler.deserializeNBT(java.util.Objects.requireNonNull(lookup, "handler codec needs the registry lookup"), tag);
+/*        java.util.Objects.requireNonNull(lookup, "handler codec needs the registry lookup");
+        // The native handler calls ItemStack.parse directly. Upgrade only historical rows, retaining
+        // its slot sizing, bounds checks and onLoad hook (including subclass overrides).
+        var rows = tag.getList("Items", Tag.TAG_COMPOUND);
+        var upgraded = tag;
+        for (int i = rows.size() - 1; i >= 0; i--) {
+            var row = rows.getCompound(i);
+            if (!NbtCompat.needsItemUpgrade(row)) continue;
+            if (upgraded == tag) upgraded = tag.copy();
+            var upgradedRows = upgraded.getList("Items", Tag.TAG_COMPOUND);
+            var stack = NbtCompat.readItem(row, lookup);
+            if (stack.isEmpty()) {
+                upgradedRows.remove(i);
+            } else {
+                var saved = new CompoundTag();
+                saved.putInt("Slot", row.getInt("Slot"));
+                upgradedRows.set(i, stack.save(lookup, saved));
+            }
+        }
+        handler.deserializeNBT(lookup, upgraded);
 *///?} else {
         handler.deserializeNBT(tag);
 //?}

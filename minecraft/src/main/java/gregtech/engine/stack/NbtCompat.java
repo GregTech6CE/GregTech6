@@ -6,7 +6,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
-/*import net.neoforged.neoforge.fluids.FluidStack;
+/*import com.mojang.serialization.Dynamic;
+import net.minecraft.SharedConstants;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.util.datafix.DataFixers;
+import net.minecraft.util.datafix.fixes.References;
+import net.minecraft.world.item.component.CustomData;
+import net.neoforged.neoforge.fluids.FluidStack;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
 //?}
@@ -32,20 +39,46 @@ public final class NbtCompat {
     }
 
     /**
-     * Reads an item stack. A legacy 1.20-style {@code tag} compound inside a 1.21 tag is restored as
-     * custom data, so cover and filter contents survive the version change.
+     * Reads stacks in GT-owned NBT fields, which vanilla's chunk fixer does not visit.
      */
     public static ItemStack readItem(CompoundTag tag, HolderLookup.Provider lookup) {
 //? if >=1.21.1 {
-/*        ItemStack stack = ItemStack.parseOptional(java.util.Objects.requireNonNull(lookup, "stack codec needs the registry lookup"), tag);
-        if (!stack.isEmpty() && tag.contains("tag"))
-            stack.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
-                    net.minecraft.world.item.component.CustomData.of(tag.getCompound("tag")));
+/*        java.util.Objects.requireNonNull(lookup, "stack codec needs the registry lookup");
+        if (hasLegacyCount(tag)) {
+            int count = tag.getInt("Count");
+            if (count <= 0) return ItemStack.EMPTY;
+            if (!tag.contains("components")) {
+                // 3465 is the data version of the Forge 1.20.1 node. Fix vanilla components as well as the count.
+                var fixed = DataFixers.getDataFixer().update(References.ITEM_STACK, new Dynamic<>(NbtOps.INSTANCE, tag.copy()),
+                        3465, SharedConstants.getCurrentVersion().getDataVersion().getVersion());
+                return ItemStack.parseOptional(lookup, (CompoundTag) fixed.getValue());
+            }
+            tag = tag.copy();
+            tag.putInt("count", count);
+        }
+        ItemStack stack = ItemStack.parseOptional(lookup, tag);
+        if (!stack.isEmpty() && tag.contains("tag", Tag.TAG_COMPOUND)) {
+            // Older cover/filter snapshots may already use the modern envelope but still carry a legacy tag.
+            var merged = tag.getCompound("tag").copy();
+            var current = stack.get(DataComponents.CUSTOM_DATA);
+            if (current != null) merged.merge(current.copyTag());
+            stack.set(DataComponents.CUSTOM_DATA, CustomData.of(merged));
+        }
         return stack;
 *///?} else {
         return ItemStack.of(tag);
 //?}
     }
+
+//? if >=1.21.1 {
+    /*static boolean needsItemUpgrade(CompoundTag tag) {
+        return hasLegacyCount(tag) || tag.contains("tag", Tag.TAG_COMPOUND);
+    }
+
+    private static boolean hasLegacyCount(CompoundTag tag) {
+        return tag.contains("Count", Tag.TAG_ANY_NUMERIC) && !tag.contains("count");
+    }
+*///?}
 
     /** Saved form of a fluid stack (empty stacks encode cleanly on both nodes). */
     public static Tag saveFluid(FluidStack stack, HolderLookup.Provider lookup) {

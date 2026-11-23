@@ -7,6 +7,7 @@ import gregtech.api.addon.machine.PartSlots;
 import gregtech.api.addon.machine.PartTankRules;
 import gregtech.api.addon.machine.PartTanks;
 import gregtech.engine.fluid.FluidTankGT;
+import gregtech.engine.stack.NbtCompat;
 import gregtech.engine.addon.LayoutPartHosts;
 import gregtech.api.addon.platform.BehaviorState;
 import gregtech.api.addon.platform.MachineBehavior;
@@ -260,13 +261,6 @@ public final class FunctionalPartRuntime {
         tag.put("gt.part_slots", list);
     }
 
-    private void loadSlots(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        if (slots == null || !tag.contains("gt.part_slots")) return;
-        ListTag list = tag.getList("gt.part_slots", Tag.TAG_COMPOUND);
-        for (int slot = 0; slot < items.getSlots() && slot < list.size(); slot++)
-            items.setStackInSlot(slot, ItemStack.parseOptional(lookup, list.getCompound(slot)));
-    }
-
     private void saveTanks(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         if (tanks.length == 0) return;
         ListTag list = new ListTag();
@@ -296,7 +290,7 @@ public final class FunctionalPartRuntime {
     public void load(CompoundTag tag) {
         loading = true;
         try {
-            loadSlots(tag);
+            loadSlots(tag, null);
             loadTanks(tag);
             if (tag.contains("gt.part_fields")) state.load(null, tag.getCompound("gt.part_fields"));
         } finally {
@@ -310,13 +304,6 @@ public final class FunctionalPartRuntime {
         for (int slot = 0; slot < items.getSlots(); slot++)
             list.add(items.getStackInSlot(slot).save(new CompoundTag()));
         tag.put("gt.part_slots", list);
-    }
-
-    private void loadSlots(CompoundTag tag) {
-        if (slots == null || !tag.contains("gt.part_slots")) return;
-        ListTag list = tag.getList("gt.part_slots", Tag.TAG_COMPOUND);
-        for (int slot = 0; slot < items.getSlots() && slot < list.size(); slot++)
-            items.setStackInSlot(slot, ItemStack.of(list.getCompound(slot)));
     }
 
     private void saveTanks(CompoundTag tag) {
@@ -339,6 +326,13 @@ public final class FunctionalPartRuntime {
         }
     }
 //?}
+
+    private void loadSlots(CompoundTag tag, @Nullable net.minecraft.core.HolderLookup.Provider lookup) {
+        if (slots == null || !tag.contains("gt.part_slots")) return;
+        ListTag list = tag.getList("gt.part_slots", Tag.TAG_COMPOUND);
+        for (int slot = 0; slot < items.getSlots() && slot < list.size(); slot++)
+            items.setStackInSlot(slot, NbtCompat.readItem(list.getCompound(slot), lookup));
+    }
 
 //? if >=1.21.1 {
 /*    private final class Slots extends net.neoforged.neoforge.items.ItemStackHandler {
@@ -626,11 +620,7 @@ public final class FunctionalPartRuntime {
             CompoundTag itemTag = tag.getCompound("t");
             for (String key : itemTag.getAllKeys()) {
                 if (!fieldNames.contains(key)) continue;
-//? if >=1.21.1 {
-/*                ItemStack stack = ItemStack.parseOptional(lookup, itemTag.getCompound(key));
-*///?} else {
-                ItemStack stack = ItemStack.of(itemTag.getCompound(key));
-//?}
+                ItemStack stack = NbtCompat.readItem(itemTag.getCompound(key), lookup);
                 if (!stack.isEmpty()) storedItems.put(key, stack);
             }
         }
