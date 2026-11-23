@@ -377,18 +377,10 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity
     }
 
     private void saveFunction(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
-//? if >=1.21.1 {
-        /*if (function != null) function.save(tag, lookup);
-*///?} else {
-        if (function != null) function.save(tag);
-//?}
+        if (function != null) function.save(tag, lookup);
     }
     private void loadFunction(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
-//? if >=1.21.1 {
-        /*if (function != null) function.load(tag, lookup);
-*///?} else {
-        if (function != null) function.load(tag);
-//?}
+        if (function != null) function.load(tag, lookup);
     }
 
     private void loadEnergy(CompoundTag tag) {

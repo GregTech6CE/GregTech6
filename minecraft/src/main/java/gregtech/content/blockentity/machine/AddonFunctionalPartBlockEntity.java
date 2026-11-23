@@ -166,18 +166,10 @@ public class AddonFunctionalPartBlockEntity extends MultiblockPortBlockEntity
     }
 
     private void saveFunction(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
-//? if >=1.21.1 {
-        /*function.save(tag, lookup);
-*///?} else {
-        function.save(tag);
-//?}
+        function.save(tag, lookup);
     }
 
     private void loadFunction(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
-//? if >=1.21.1 {
-        /*function.load(tag, lookup);
-*///?} else {
-        function.load(tag);
-//?}
+        function.load(tag, lookup);
     }
 }

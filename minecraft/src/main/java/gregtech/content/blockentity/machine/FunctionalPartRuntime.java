@@ -234,13 +234,13 @@ public final class FunctionalPartRuntime {
     }
 
 //? if >=1.21.1 {
-/*    public void save(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+/*    public void save(CompoundTag tag, @Nullable net.minecraft.core.HolderLookup.Provider lookup) {
         saveSlots(tag, lookup);
         saveTanks(tag, lookup);
         tag.put("gt.part_fields", state.save(lookup));
     }
 
-    public void load(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    public void load(CompoundTag tag, @Nullable net.minecraft.core.HolderLookup.Provider lookup) {
         loading = true;
         try {
             loadSlots(tag, lookup);
@@ -281,18 +281,18 @@ public final class FunctionalPartRuntime {
         }
     }
 *///?} else {
-    public void save(CompoundTag tag) {
+    public void save(CompoundTag tag, @Nullable net.minecraft.core.HolderLookup.Provider lookup) {
         saveSlots(tag);
         saveTanks(tag);
         tag.put("gt.part_fields", state.save());
     }
 
-    public void load(CompoundTag tag) {
+    public void load(CompoundTag tag, @Nullable net.minecraft.core.HolderLookup.Provider lookup) {
         loading = true;
         try {
-            loadSlots(tag, null);
+            loadSlots(tag, lookup);
             loadTanks(tag);
-            if (tag.contains("gt.part_fields")) state.load(null, tag.getCompound("gt.part_fields"));
+            if (tag.contains("gt.part_fields")) state.load(lookup, tag.getCompound("gt.part_fields"));
         } finally {
             loading = false;
         }
