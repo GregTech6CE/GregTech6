@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "_comment": "GT6 MultiItemTechnological:135",
+  "ingredients": [
+    {
+      "item": "gt6ce:item_retriever_cover"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:item_retriever_cover"
+  }
+}

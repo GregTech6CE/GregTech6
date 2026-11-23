@@ -104,6 +104,7 @@ public final class CraftingItemCompositions {
             // Spike conversions only change placement mode. Tape repacking supplies its own remaining-use calculation.
             if (recipe instanceof SpikeConversionRecipe || recipe instanceof TapeRepackRecipe
                     || id.getNamespace().equals("gt6ce") && (path.startsWith("logistics/logistics_cycle_")
+                            || (path.startsWith("logistics/") && path.endsWith("_reset"))
                             || path.equals("hand_components/integrated_circuit_0_from_any"))) continue;
             if (recipe instanceof CraftingRecipe crafting) {
                 boolean tools = crafting.getClass() == ToolShapedRecipe.class || crafting instanceof ToolShapelessRecipe;
