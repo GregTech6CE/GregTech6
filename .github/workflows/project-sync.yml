@@ -1,0 +1,30 @@
+name: project-sync
+
+# 业务仓薄壳：只把事件转发给组织级可复用工作流。
+# 不 checkout、不执行 PR 代码，也只透传 PROJECT_SYNC_TOKEN 一个 secret。
+#
+# 部署要求：
+# - 复制到业务仓 `.github/workflows/project-sync.yml`，必须落在默认分支才生效；
+# - `PROJECT_SYNC_TOKEN` 由组织 secret 白名单下发（或业务仓自建同名 Secret），无需逐仓创建。
+on:
+  issues:
+    types: [opened, reopened, labeled, unlabeled, assigned, unassigned, closed]
+  pull_request_target:
+    types: [opened, reopened, converted_to_draft, ready_for_review, review_requested, review_request_removed, closed]
+  pull_request_review:
+    types: [submitted]
+
+permissions: {}
+
+jobs:
+  sync:
+    if: >-
+      github.event_name != 'pull_request_review' ||
+      (github.event.review.state == 'changes_requested' &&
+       github.event.pull_request.head.repo.full_name == github.repository)
+    uses: GregTech6CE/.github/.github/workflows/project-sync-reusable.yml@master
+    with:
+      project_number: 1
+    secrets:
+      # 显式透传单个 secret；禁止改成 secrets: inherit。
+      PROJECT_SYNC_TOKEN: ${{ secrets.PROJECT_SYNC_TOKEN }}
