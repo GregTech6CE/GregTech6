@@ -36,8 +36,10 @@ public final class MineralWorldgenRules {
         };
     }
 
-    public static int distanceSquared(int x, int z, int minX, int minZ) {
-        return (x - minX) * (x - minX) + (z - minZ) * (z - minZ);
+    public static long distanceSquared(int x, int z, int minX, int minZ) {
+        long dx = (long) x - minX;
+        long dz = (long) z - minZ;
+        return dx * dx + dz * dz;
     }
 
     public static long bedrockWeight(int chance) {

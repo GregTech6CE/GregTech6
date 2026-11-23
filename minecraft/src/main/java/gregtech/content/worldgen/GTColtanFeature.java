@@ -71,7 +71,7 @@ public class GTColtanFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     /** GT6's squared distance from a chunk's origin corner to the field centre. */
-    public static int distanceSquared(BlockPos centre, int minX, int minZ) {
+    public static long distanceSquared(BlockPos centre, int minX, int minZ) {
         return MineralWorldgenRules.distanceSquared(centre.getX(), centre.getZ(), minX, minZ);
     }
 
@@ -90,7 +90,7 @@ public class GTColtanFeature extends Feature<NoneFeatureConfiguration> {
      * @return true when at least one ore was placed
      */
     public boolean placeField(WorldGenLevel level, RandomSource random, int minX, int minZ, BlockPos centre) {
-        int distance = distanceSquared(centre, minX, minZ);
+        long distance = distanceSquared(centre, minX, minZ);
         if (distance > RANGE * RANGE) return false;
         boolean placed = scatter(level, random, minX, minZ, true);
         // Second loop — full blocks near the centre, on top of the small ores above.
