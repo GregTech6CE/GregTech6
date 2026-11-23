@@ -1064,7 +1064,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     public FluidStack coverFluidFilter(Direction side) { return covers.fluidFilter(side, level); }
 
     public boolean clickFilterCover(Direction side, ItemStack held) {
-        return covers.clickFilter(side, held, level);
+        return covers.clickFilter(side, held, level, worldPosition);
     }
 
     public boolean configureFilterCover(Direction side, FilterAction action) {

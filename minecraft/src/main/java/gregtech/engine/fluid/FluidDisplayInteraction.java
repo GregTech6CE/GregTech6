@@ -5,7 +5,6 @@ import gregtech.content.cover.CoverItems;
 import gregtech.content.cover.CoverUtilityBehaviors;
 import gregtech.content.cover.PanelCoverHost;
 import gregtech.content.logistics.LogisticsCoverHost;
-import gregtech.content.logistics.LogisticsCoverInteraction;
 import gregtech.content.logistics.LogisticsCoverType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -90,13 +89,16 @@ public final class FluidDisplayInteraction {
         return filled;
     }
 
+    /**
+     * An attached filter cover owns the face, whether or not it already stores a template: the
+     * click then overwrites the template instead of filling the tank or pipe behind the cover.
+     */
     private static boolean passesToFilterCover(Level level, BlockPos pos, Direction face) {
         var entity = level.getBlockEntity(pos);
         if (entity instanceof PanelCoverHost host) {
             var installed = host.getCover(face);
             var id = CoverItems.behavior(installed);
-            if (CoverUtilityBehaviors.FILTER_FLUID.equals(id)
-                    && CoverUtilityBehaviors.fluidFilter(installed, level.registryAccess()).isEmpty()) return true;
+            if (CoverUtilityBehaviors.FILTER_FLUID.equals(id)) return true;
             if (CoverUtilityBehaviors.FILTER_ITEM.equals(id) || CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id))
                 return true;
         }
@@ -104,9 +106,7 @@ public final class FluidDisplayInteraction {
             var installed = host.logisticsCovers().get(face);
             var type = LogisticsCoverType.of(installed);
             if (type != null && type.filtered()) {
-                if (type.channel() == LogisticsCoverType.Channel.FLUID
-                        && LogisticsCoverInteraction.fluidFilter(installed, level.registryAccess()).isEmpty())
-                    return true;
+                if (type.channel() == LogisticsCoverType.Channel.FLUID) return true;
                 if (type.channel() == LogisticsCoverType.Channel.ITEM) return true;
             }
         }

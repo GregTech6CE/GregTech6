@@ -99,11 +99,15 @@ public final class CoverStore {
         return panels().removed(side, cover);
     }
 
-    /** Covers are separate drops; the harvested host never carries their state. */
+    /**
+     * Covers are separate drops; the harvested host never carries their state. The dropped stack
+     * is detached exactly like a crowbar removal, so face values do not survive the break while
+     * the filter templates do.
+     */
     public void drop() {
         if (covers == null) return;
         for (int i = 0; i < covers.length; i++) {
-            CoverDrops.dropCover(host.coverOwner(), covers[i]);
+            CoverDrops.dropCover(host.coverOwner(), CoverStackData.detached(covers[i]));
             covers[i] = ItemStack.EMPTY;
         }
         hasCovers = false;

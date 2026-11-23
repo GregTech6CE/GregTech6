@@ -88,10 +88,17 @@ public final class UtilityCoverInteraction {
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
             // 两节点统一调 3 参：1.20 经 CoverUtilityBehaviors 的 provider 适配器忽略 lookup。
-            if (!host.consumesTool(held)){
+            // The magnifying glass belongs to the panel path, which still has to describe the cover.
+            if (GTToolHelper.isMagnifyingGlass(held)) return InteractionResult.PASS;
+            if (!host.consumesTool(held)&&!GTToolHelper.isInteractionTool(held)&&!CoverItems.isCover(held)){
                 if (item && held.getItem() instanceof gregtech.content.item.FluidDisplayItemLike)
                     return InteractionResult.PASS;
-                if (!level.isClientSide){if (item)CoverUtilityBehaviors.setItemFilter(installed,held,level.registryAccess());else CoverUtilityBehaviors.setFluidFilter(installed,sample(held),level.registryAccess());host.panels().changed();}
+                if (!level.isClientSide){
+                    boolean changed=item
+                            ?CoverUtilityBehaviors.setItemFilter(installed,held,level.registryAccess())
+                            :CoverUtilityBehaviors.setFluidFilter(installed,sample(held),level.registryAccess());
+                    if (changed)host.panels().changed();
+                }
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
         }

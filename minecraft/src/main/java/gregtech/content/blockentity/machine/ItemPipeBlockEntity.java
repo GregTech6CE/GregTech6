@@ -239,7 +239,8 @@ public class ItemPipeBlockEntity extends GTBlockEntity
         if (PanelCoverHost.blockConsumesTool(this, tool)) return true;
         return GTToolHelper.matchesTool(tool, GTToolType.CROWBAR)
                 || GTToolHelper.isScrewdriver(tool)
-                || GTToolHelper.isSoftHammer(tool);
+                || GTToolHelper.isSoftHammer(tool)
+                || GTToolHelper.isMagnifyingGlass(tool);
     }
 
     /** Item filters reject pipe-to-pipe faces without disconnecting existing pipe links. */
@@ -353,17 +354,25 @@ public class ItemPipeBlockEntity extends GTBlockEntity
      * {@link ItemPipeBlock}'s.
      *
      * <p>GT6's right-click on an item filter ({@code CoverFilterItem}) and on the retriever
-     * ({@code CoverRetrieverItem}): the held stack becomes the filter, once. The fluid half of
+     * ({@code CoverRetrieverItem}): the held stack becomes the filter. The fluid half of
      * the machine's method is deliberately absent — an item pipe cannot host a fluid filter
      * ({@code CoverFilterFluid} asks a tank, and {@code FluidPipeBlockEntity} is its host).</p>
+     *
+     * <p>The client decides from the same rule without writing the cover, and the server
+     * re-syncs the host only when the stored filter actually changed.</p>
      *
      * @return whether a filter was stored
      */
     public boolean clickFilterCover(Direction side, ItemStack held) {
         String id = coverIdOf(side);
-        if (id == null || held == null || held.isEmpty()) return false;
+        if (level == null || id == null || held == null || held.isEmpty()) return false;
         if (CoverUtilityBehaviors.FILTER_ITEM.equals(id) || CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id)) {
-            return CoverUtilityBehaviors.setItemFilter(getCover(side), held, level.registryAccess());
+            ItemStack cover = getCover(side);
+            if (level.isClientSide)
+                return CoverUtilityBehaviors.canSetItemFilter(cover, held, level.registryAccess());
+            if (!CoverUtilityBehaviors.setItemFilter(cover, held, level.registryAccess())) return false;
+            syncCovers();
+            return true;
         }
         return false;
     }

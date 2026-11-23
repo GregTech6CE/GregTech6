@@ -149,7 +149,8 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements gregtech.
                         && utilityBe.configureFilterCover(side, FilterAction.CLEAR)) {
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }
-                if (!utilityBe.consumesTool(held) && !isCoverItem(held) && utilityBe.clickFilterCover(side, held)) {
+                if (!utilityBe.consumesTool(held) && !GTToolHelper.isInteractionTool(held)
+                        && !isCoverItem(held) && utilityBe.clickFilterCover(side, held)) {
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }
             }

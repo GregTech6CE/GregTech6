@@ -9,12 +9,13 @@ import net.minecraft.world.item.ItemStack;
 public final class CoverStackData {
     private CoverStackData() {}
 
-    /** GT6 AbstractCoverDefault.getCoverItem retains cover NBT (including filter templates).
-     * Face visuals/values belong to the host and reset on removal, not to the dropped item. */
+    /** GT6 AbstractCoverDefault.getCoverItem retains filter NBT without visuals; CE also keeps
+     * {@code gt.cover.inverted} on filter covers so blacklist mode survives removal and reattachment. */
     public static ItemStack detached(ItemStack stack) {
         if (stack.isEmpty()) return ItemStack.EMPTY;
         var result = stack.copyWithCount(1);
         var tag = StackData.readOrEmpty(result);
+        boolean keepInverted = CoverUtilityBehaviors.isFilterCover(result) && tag.getBoolean("gt.cover.inverted");
         for (String key : new String[] {
             ComponentCoverRuntime.VISUAL,
             ComponentCoverRuntime.SLOT,
@@ -26,6 +27,7 @@ public final class CoverStackData {
             PanelCoverRuntime.RESET,
             PanelCoverRuntime.COUNTDOWN
         }) tag.remove(key);
+        if (keepInverted) tag.putBoolean("gt.cover.inverted", true);
         StackData.write(result, tag);
         return result;
     }

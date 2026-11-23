@@ -414,21 +414,30 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
      * {@link FluidPipeBlock}'s.
      *
      * <p>GT6's right-click on a filter cover ({@code CoverFilterItem},
-     * {@code CoverFilterFluid}): the held stack becomes the filter, once.</p>
+     * {@code CoverFilterFluid}): the held stack becomes the filter. The client decides from the
+     * same rule without writing the cover, and the server re-syncs the pipe only when the stored
+     * filter actually changed.</p>
      *
      * @return whether a filter was stored
      */
     public boolean clickFilterCover(Direction side, ItemStack held) {
         String id = coverIdOf(side);
-        if (id == null || held == null || held.isEmpty()) return false;
+        if (level == null || id == null || held == null || held.isEmpty()) return false;
         ItemStack stack = getCover(side);
         if (CoverUtilityBehaviors.FILTER_ITEM.equals(id)) {
-            return CoverUtilityBehaviors.setItemFilter(stack, held,level.registryAccess());
+            if (level.isClientSide)
+                return CoverUtilityBehaviors.canSetItemFilter(stack, held, level.registryAccess());
+            if (!CoverUtilityBehaviors.setItemFilter(stack, held, level.registryAccess())) return false;
+            syncCovers();
+            return true;
         }
         if (CoverUtilityBehaviors.FILTER_FLUID.equals(id)) {
             FluidStack fluid = gregtech.content.cover.UtilityCoverInteraction.sample(held);
-            if (fluid.isEmpty()) return false;
-            return CoverUtilityBehaviors.setFluidFilter(stack, fluid,level.registryAccess());
+            if (level.isClientSide)
+                return CoverUtilityBehaviors.canSetFluidFilter(stack, fluid, level.registryAccess());
+            if (!CoverUtilityBehaviors.setFluidFilter(stack, fluid, level.registryAccess())) return false;
+            syncCovers();
+            return true;
         }
         return false;
     }
