@@ -14,9 +14,11 @@ final class EmiCatalogRepair {
         var field = Class.forName("dev.emi.emi.registry.EmiStackList").getField("stacks");
         var entries = (java.util.List<EmiStack>) field.get(null);
         var representedFluids = new java.util.HashSet<net.minecraft.world.level.material.Fluid>();
+        var genericDisplay = gregtech.content.registry.GTFluidItems.generic();
         for (var stack : entries) {
             var item = stack.getItemStack();
-            if (!(item.getItem() instanceof gregtech.content.item.FluidDisplayItemLike)) continue;
+            if (!(item.getItem() instanceof gregtech.content.item.FluidDisplayItemLike)
+                    || item.getItem() == genericDisplay) continue;
             var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolveCurrent(item);
             if (!fluid.isEmpty()) representedFluids.add(fluid.getFluid());
         }

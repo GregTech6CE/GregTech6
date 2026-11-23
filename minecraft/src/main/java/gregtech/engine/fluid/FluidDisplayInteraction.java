@@ -1,10 +1,18 @@
 package gregtech.engine.fluid;
 
 import gregtech.content.block.tool.FluidAttachmentBlock;
+import gregtech.content.cover.CoverItems;
+import gregtech.content.cover.CoverUtilityBehaviors;
+import gregtech.content.cover.PanelCoverHost;
+import gregtech.content.logistics.LogisticsCoverHost;
+import gregtech.content.logistics.LogisticsCoverInteraction;
+import gregtech.content.logistics.LogisticsCoverType;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.capabilities.Capabilities;
@@ -16,25 +24,26 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 //?}
 
-/** Original ItemFluidDisplay first-use: creative source, server consumption even on no-op. */
+/** Original ItemFluidDisplay first-use: inexhaustible fluid source, server consumption even on no-op. */
 public final class FluidDisplayInteraction {
     private FluidDisplayInteraction() {}
 
     /**
      * GT6 ItemFluidDisplay tries each face of the clicked target, stopping at the first
-     * successful fill. Never drain or replace the display carrier. Survival clicks fall through
-     * to the cover path so a filter cover can sample the display item read-only; every other
-     * container interaction already rejects display items outside creative mode.
+     * successful fill. Never drain or replace the display carrier; works in both Creative and
+     * Survival once held. Filter covers on the clicked face take precedence so fluid filters can
+     * still sample the display item and item filters can explicitly reject it.
      */
     public static InteractionResult useFirst(ItemStack stack, UseOnContext context) {
         var level = context.getLevel();
         if (level.isClientSide) return InteractionResult.PASS;
         var player = context.getPlayer();
         var pos = context.getClickedPos();
-        if (player == null || !player.getAbilities().instabuild) return InteractionResult.PASS;
+        if (player == null) return InteractionResult.PASS;
         if (!level.hasChunkAt(pos) || !level.mayInteract(player, pos)
                 || !player.mayUseItemAt(pos, context.getClickedFace(), stack))
             return InteractionResult.CONSUME;
+        if (passesToFilterCover(level, pos, context.getClickedFace())) return InteractionResult.PASS;
         var fluid = FluidDisplayBinding.resolve(level.registryAccess(), stack);
         if (fluid.isEmpty()) return InteractionResult.CONSUME;
         // Preserve the actual native identity and NBT/components, not merely the carrier's field.
@@ -79,5 +88,28 @@ public final class FluidDisplayInteraction {
             if (accepted < portion.getAmount()) break;
         }
         return filled;
+    }
+
+    private static boolean passesToFilterCover(Level level, BlockPos pos, Direction face) {
+        var entity = level.getBlockEntity(pos);
+        if (entity instanceof PanelCoverHost host) {
+            var installed = host.getCover(face);
+            var id = CoverItems.behavior(installed);
+            if (CoverUtilityBehaviors.FILTER_FLUID.equals(id)
+                    && CoverUtilityBehaviors.fluidFilter(installed, level.registryAccess()).isEmpty()) return true;
+            if (CoverUtilityBehaviors.FILTER_ITEM.equals(id) || CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id))
+                return true;
+        }
+        if (entity instanceof LogisticsCoverHost host) {
+            var installed = host.logisticsCovers().get(face);
+            var type = LogisticsCoverType.of(installed);
+            if (type != null && type.filtered()) {
+                if (type.channel() == LogisticsCoverType.Channel.FLUID
+                        && LogisticsCoverInteraction.fluidFilter(installed, level.registryAccess()).isEmpty())
+                    return true;
+                if (type.channel() == LogisticsCoverType.Channel.ITEM) return true;
+            }
+        }
+        return false;
     }
 }

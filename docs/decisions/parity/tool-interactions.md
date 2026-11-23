@@ -10,7 +10,7 @@
 | 封面工具守卫 | 封面过滤器的工具判断用 `PanelCoverHost.consumesTool`，由宿主按实际工具动作决定；静态列表会漏 igniter/plunger、多 soldering_iron。 | 原版静态列表跨宿主近似；CE 改为宿主守卫，见 `UtilityCoverInteraction.use`。 |
 | 胶带合卷 | 合并四卷旧胶带的剩余用量，结果最多一整卷。 | 成分随剩余用量缩放，合卷后的可回收材料受输入约束。见[物品成分解析](../material-system/item-composition.md#从当前配方反推成分)。 |
 | 拆解覆盖板回收 | 拆除机器、管道或线缆时，覆盖板不随原版 NBT 打包进宿主方块物品，而是拆分单独掉落；使用扳手、活动扳手等可自动收集工具拆解时，覆盖板同样优先尝试插入玩家背包，满则溢出掉落。 | 保持宿主物品干净、避免重复或非法跨宿主附板，同时保留原版扳手拆解自动入包的收集体验；见 `CoverDrops.dropCover` 与 `CoverCollectDropMixin`。 |
-| 流体容器与展示物品 | 常规流体容器（`FluidContainerInteraction`、`CrucibleContainerInteraction`、`WoodenBucketItem`）在创造模式与生存模式按同一套存量消耗与置换规则处理；`FluidDisplayItemLike`（含通用载体 `gt6ce:fluid_display`，流体身份存于 `gt.display_fluid` 载荷）只在创造模式作为无限灌液源，可灌入储罐、管道、机器与 `FluidAttachmentBlock` 的 `fluid_funnel`/`cap_nozzle`，`tap`/`nozzle` 仍只抽不放。生存模式手持展示物品只允许流体滤网盖板只读取样（固定 1000 mB），不产液也不可饮用。 | 原版 `ItemFluidDisplay` 的创造无限源语义；生存若允许灌液会变成无消耗燃料与流体来源，故按宿主类型分流，见 `FluidDisplayInteraction.useFirst` 与 `UtilityCoverInteraction.sample`。 |
+| 流体容器与展示物品 | 常规流体容器（`FluidContainerInteraction`、`CrucibleContainerInteraction`、`WoodenBucketItem`）在创造模式与生存模式按同一套存量消耗与置换规则处理；`FluidDisplayItemLike`（含通用载体 `gt6ce:fluid_display`，流体身份存于 `gt.display_fluid` 载荷）作为创造物品保留创造获取门槛（EMI 仅在作弊模式从原生流体代理提取 `gt6ce:fluid_display`，并在索引中隐藏 `gt6ce:fluid_display` 与 `fluid_item_lava` 以防重复），但一旦持有即允许在创造与生存模式灌入储罐、管道、机器、坩埚及 `fluid_funnel`/`cap_nozzle` 且不消耗自身；`tap`/`nozzle` 仍只抽不放，展示物品在任何模式下均禁止饮用。流体滤网盖板按固定 1000 mB 只读取样，物体滤网与吸取盖板拒绝展示物品。 | 常规容器两模式同语义避免创造凭空复制容器与流体；`FluidDisplayItemLike` 作为可由管理端统管回收的创造灌液工具，允许生存手持用于布设或测试产液，同时保留不可饮用与不进物体筛选的边界。 |
 
 ## 与 Stonecutter 分支的关系
 

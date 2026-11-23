@@ -6121,7 +6121,7 @@
   "gt6ce.fluid_display.castable": " (Might able to cast into Molds)",
   "gt6ce.fluid_display.conducting": "This is a Power Conducting Fluid",
   "gt6ce.fluid_display.cooking_oil": "Usable as Cooking Oil in a GT Oven to duplicate Meat and Fish",
-  "gt6ce.fluid_display.creative_fill": "Rightclick Blocks to fill their Tanks with this Fluid!",
+  "gt6ce.fluid_display.creative_fill": "Right-click to fill containers",
   "gt6ce.fluid_display.density_equal": "Density: %s ; As dense as Air (typically still moves down)",
   "gt6ce.fluid_display.density_heavier": "Density: %s ; Heavier than Air (typically moves down)",
   "gt6ce.fluid_display.density_lighter": "Density: %s ; Lighter than Air (typically moves up)",

@@ -34,19 +34,18 @@ import java.util.List;
 public final class CrucibleContainerInteraction {
     private CrucibleContainerInteraction() {}
 
-    /** Display items are a creative-only editing tool, so the player-agnostic check never claims them. */
+    /** Recognizes real containers as well as creative fluid display carriers. */
     public static boolean handles(ItemStack stack) {
-        if (stack.getItem() instanceof FluidDisplayItemLike) return false;
-        return stack.is(Items.WATER_BUCKET) || stack.is(Items.LAVA_BUCKET) || stack.is(Items.BUCKET)
+        return stack.getItem() instanceof FluidDisplayItemLike
+                || stack.is(Items.WATER_BUCKET) || stack.is(Items.LAVA_BUCKET) || stack.is(Items.BUCKET)
                 || stack.is(Items.HONEY_BOTTLE) || stack.is(Items.MILK_BUCKET)
                 || stack.is(Items.POWDER_SNOW_BUCKET) || stack.getItem() instanceof MobBucketItem
                 || FluidUtil.getFluidHandler(stack).isPresent();
     }
 
-    /** Player-aware variant: only creative mode may use a fluid display item as a container. */
+    /** Player-aware variant kept for callers; display carriers pour in both Creative and Survival. */
     public static boolean handles(Player player, ItemStack stack) {
-        if (!(stack.getItem() instanceof FluidDisplayItemLike)) return handles(stack);
-        return player != null && player.getAbilities().instabuild;
+        return handles(stack);
     }
 
 public static InteractionResult interact(SmeltingCrucibleBlockEntity crucible, Player player,
@@ -100,7 +99,6 @@ public static InteractionResult interact(SmeltingCrucibleBlockEntity crucible, P
     private static InteractionResult transfer(Player player, InteractionHand hand, IFluidHandler blockHandler) {
         var held = player.getItemInHand(hand);
         if (held.getItem() instanceof FluidDisplayItemLike) {
-            if (!player.getAbilities().instabuild) return InteractionResult.PASS;
             var poured = FluidUtil.tryEmptyContainer(held, blockHandler, Integer.MAX_VALUE, player, true);
             if (!poured.isSuccess()) return InteractionResult.FAIL;
             FluidContainerInteraction.applyResult(player, hand, held, poured.getResult(), true);

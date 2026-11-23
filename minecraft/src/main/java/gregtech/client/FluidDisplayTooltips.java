@@ -25,8 +25,7 @@ public final class FluidDisplayTooltips {
 
     @SubscribeEvent
     public static void onItemTooltip(ItemTooltipEvent event) {
-        if (event.getEntity() != null && event.getEntity().getAbilities().instabuild
-                && event.getItemStack().getItem() instanceof gregtech.content.item.FluidDisplayItemLike) {
+        if (event.getItemStack().getItem() instanceof gregtech.content.item.FluidDisplayItemLike) {
             event.getToolTip().add(Component.translatable(OriginalFluidDisplayRules.PREFIX + "creative_fill")
                     .withStyle(ChatFormatting.AQUA));
         }

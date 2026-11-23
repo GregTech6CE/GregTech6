@@ -85,10 +85,13 @@ public final class GregTechEMIPlugin implements EmiPlugin {
         // Native fluid proxies carry a creative payload only in cheat mode; never filter them out.
         registry.removeEmiStacks(stack -> !(stack instanceof NativeFluidEmiStack)
                 && !gregtech.content.item.CatalogVisibility.visible(stack.getItemStack()));
-        // The dedicated lava display item duplicates the native lava entry of the repair pass.
+        // Dedicated lava display and the generic fluid_display carrier duplicate native fluids in EMI's item list.
         var lavaDisplayId = ResourceLocation.fromNamespaceAndPath(
                 gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE, "fluid_item_lava");
-        registry.removeEmiStacks(stack -> lavaDisplayId.equals(stack.getId()));
+        var genericDisplayId = ResourceLocation.fromNamespaceAndPath(
+                gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE, "fluid_display");
+        registry.removeEmiStacks(stack -> !(stack instanceof NativeFluidEmiStack)
+                && (lavaDisplayId.equals(stack.getId()) || genericDisplayId.equals(stack.getId())));
         // EMI builds repair entries from canBeDepleted() alone, so GT tools would still show a dead recipe.
         registry.removeRecipes(GregTechEMIPlugin::repairedGtTool);
         for (var item : gregtech.engine.recipe.UsbRecipeDisplayBinding.sticks())

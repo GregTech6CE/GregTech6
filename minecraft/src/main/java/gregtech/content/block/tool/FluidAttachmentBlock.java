@@ -44,10 +44,9 @@ public class FluidAttachmentBlock extends GTBlock implements gregtech.engine.too
         if (handler == null) return InteractionResult.PASS;
         var held = player.getItemInHand(hand);
         if (level.isClientSide) {
-            // A display item only fills through filling shapes, and only in creative mode.
+            // A display item only fills through filling shapes, regardless of game mode.
             if (held.getItem() instanceof gregtech.content.item.FluidDisplayItemLike)
-                return player.getAbilities().instabuild && spec.fillsTarget()
-                        ? InteractionResult.SUCCESS : InteractionResult.PASS;
+                return spec.fillsTarget() ? InteractionResult.SUCCESS : InteractionResult.PASS;
             if (held.isEmpty() && spec.shape().equals("tap")) return InteractionResult.SUCCESS;
             return gregtech.engine.fluid.FluidContainerInteraction.clientResult(player, hand);
         }

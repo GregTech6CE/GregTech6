@@ -89,6 +89,8 @@ public final class UtilityCoverInteraction {
             }
             // 两节点统一调 3 参：1.20 经 CoverUtilityBehaviors 的 provider 适配器忽略 lookup。
             if (!host.consumesTool(held)){
+                if (item && held.getItem() instanceof gregtech.content.item.FluidDisplayItemLike)
+                    return InteractionResult.PASS;
                 if (!level.isClientSide){if (item)CoverUtilityBehaviors.setItemFilter(installed,held,level.registryAccess());else CoverUtilityBehaviors.setFluidFilter(installed,sample(held),level.registryAccess());host.panels().changed();}
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }

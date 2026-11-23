@@ -21,7 +21,6 @@ public final class FluidContainerInteraction {
     /** Client-safe container check; does not rely on unsynced client tank contents. */
     public static boolean canInteract(Player player, InteractionHand hand) {
         var held = player.getItemInHand(hand);
-        if (held.getItem() instanceof FluidDisplayItemLike && !player.getAbilities().instabuild) return false;
         return !held.isEmpty() && FluidUtil.getFluidHandler(held.copyWithCount(1)).isPresent();
     }
 
@@ -33,9 +32,7 @@ public final class FluidContainerInteraction {
     public static boolean use(Player player, InteractionHand hand, IFluidHandler tank) {
         var held = player.getItemInHand(hand);
         if (held.isEmpty()) return false;
-        // Display items are a creative-only editing tool and never drain a tank in survival.
         boolean display = held.getItem() instanceof FluidDisplayItemLike;
-        if (display && !player.getAbilities().instabuild) return false;
         // Probe one item: stacked containers are processed one at a time.
         var item = FluidUtil.getFluidHandler(held.copyWithCount(1)).orElse(null);
         if (item == null) return false;
@@ -70,7 +67,6 @@ public final class FluidContainerInteraction {
     public static boolean pour(Player player, InteractionHand hand, IFluidHandler tank) {
         var held = player.getItemInHand(hand);
         if (held.isEmpty()) return false;
-        if (held.getItem() instanceof FluidDisplayItemLike && !player.getAbilities().instabuild) return false;
         var result = FluidUtil.tryEmptyContainer(held, tank, Integer.MAX_VALUE, player, true);
         if (!result.isSuccess()) return false;
         applyResult(player, hand, held, result.getResult(), true);
@@ -94,13 +90,13 @@ public final class FluidContainerInteraction {
 
     /**
      * Applies replacement container delivery and syncs {@link ServerPlayer} inventory slots immediately.
-     * Every real container exchanges like a survival bucket. A display item is a fluid stand-in rather
-     * than a vessel, so creative mode keeps it untouched and survival mode never reaches this point.
+     * Every real container exchanges like a survival bucket. A display item is a creative fluid
+     * stand-in rather than a finite vessel, so holding players keep it untouched in any mode.
      */
     public static void applyResult(
             Player player, InteractionHand hand, ItemStack held, ItemStack result, boolean emptyingContainer) {
         if (held.getItem() instanceof FluidDisplayItemLike) {
-            if (player.getAbilities().instabuild) syncInventory(player);
+            syncInventory(player);
             return;
         }
         player.setItemInHand(hand, exchangeContainer(held, player, result));

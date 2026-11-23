@@ -22135,7 +22135,7 @@
   "gt6ce.fluid_display.castable": "（可能可以浇铸到模具中）",
   "gt6ce.fluid_display.conducting": "这种流体可以传导能量",
   "gt6ce.fluid_display.cooking_oil": "可在 GT 烤箱中用作食用油，使肉和鱼的产量翻倍",
-  "gt6ce.fluid_display.creative_fill": "右键方块，将其储罐填满这种流体！",
+  "gt6ce.fluid_display.creative_fill": "右键可以填满容器",
   "gt6ce.fluid_display.density_equal": "密度：%s；与空气相同（通常仍然向下流动）",
   "gt6ce.fluid_display.density_heavier": "密度：%s；比空气重（通常向下流动）",
   "gt6ce.fluid_display.density_lighter": "密度：%s；比空气轻（通常向上流动）",

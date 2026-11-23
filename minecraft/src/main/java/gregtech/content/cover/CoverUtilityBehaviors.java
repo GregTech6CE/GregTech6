@@ -308,7 +308,8 @@ public final class CoverUtilityBehaviors {
      * @return whether a filter was stored
      */
     public static boolean setItemFilter(ItemStack cover, ItemStack held, net.minecraft.core.HolderLookup.Provider lookup) {
-        if (cover == null || cover.isEmpty() || held == null || held.isEmpty()) return false;
+        if (cover == null || cover.isEmpty() || held == null || held.isEmpty()
+                || held.getItem() instanceof gregtech.content.item.FluidDisplayItemLike) return false;
         CompoundTag tag = StackData.readOrEmpty(cover);
         var previous = itemFilter(cover, lookup);
         if (!previous.isEmpty() && (previous.getItem() != held.getItem()

@@ -65,7 +65,8 @@ public final class LogisticsCoverInteraction {
     public static boolean setItemFilter(LogisticsCovers covers, Direction face, ItemStack template) {
         ItemStack cover = covers.get(face);
         var type = LogisticsCoverType.of(cover);
-        if (template.isEmpty() || type == null || !type.filtered()
+        if (template.isEmpty() || template.getItem() instanceof gregtech.content.item.FluidDisplayItemLike
+                || type == null || !type.filtered()
                 || type.channel() != LogisticsCoverType.Channel.ITEM || !itemFilter(cover, lookup(covers)).isEmpty())
             return false;
         StackData.update(cover,
@@ -192,6 +193,7 @@ public final class LogisticsCoverInteraction {
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
         if (installedType.channel() == LogisticsCoverType.Channel.ITEM && installedType.filtered()) {
+            if (held.getItem() instanceof gregtech.content.item.FluidDisplayItemLike) return InteractionResult.PASS;
             if (!level.isClientSide) setItemFilter(covers, face, held);
             return InteractionResult.sidedSuccess(level.isClientSide);
         }

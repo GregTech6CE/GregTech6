@@ -36,8 +36,7 @@ public final class TankContainerInteractionHandler {
         if (!GregTechConfig.Rule.TANKS_REQUIRE_FLUID_TOOLS.enabled() || event.getEntity().isSpectator()) return;
         var held = event.getItemStack();
         // Fluid display items are a direct editing tool, not a survival bucket or vessel.
-        if (held.getItem() instanceof gregtech.content.item.FluidDisplayItemLike
-                && event.getEntity().getAbilities().instabuild) return;
+        if (held.getItem() instanceof gregtech.content.item.FluidDisplayItemLike) return;
         if (held.isEmpty() || !tank(event.getLevel().getBlockEntity(event.getPos()))
                 || !FluidUtil.getFluidHandler(held.copyWithCount(1)).isPresent()) return;
         if (event.getEntity().isShiftKeyDown() && held.getItem() instanceof BlockItem) {
