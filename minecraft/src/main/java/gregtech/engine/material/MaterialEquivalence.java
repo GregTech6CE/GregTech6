@@ -1,46 +1,66 @@
 package gregtech.engine.material;
 
 import gregtech.api.material.*;
-
 import gregtech.content.data.MaterialPrefix;
 import gregtech.engine.stack.StackData;
+import java.util.*;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.resources.ResourceLocation;
-import java.util.*;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 /** Only equal material forms may substitute. Generic tags (all ingots/ores) never imply equality. */
 public final class MaterialEquivalence {
     public record Form(MaterialPrefix prefix, GTMaterial material) {}
-    private static final Map<String,String> COMMON = Map.ofEntries(
-        Map.entry("ingot","ingots"),Map.entry("nugget","nuggets"),Map.entry("dust","dusts"),
-        Map.entry("dustSmall","small_dusts"),Map.entry("dustTiny","tiny_dusts"),Map.entry("gem","gems"),
-        Map.entry("plate","plates"),Map.entry("stick","rods"),Map.entry("stickLong","long_rods"),
-        Map.entry("gearGt","gears"),Map.entry("ring","rings"),Map.entry("bolt","bolts"),Map.entry("screw","screws"),
-        Map.entry("gearGtSmall","small_gears"),Map.entry("foil","foils"),Map.entry("wireGt01","wires"),
-        Map.entry("oreRaw","raw_materials"),
-        Map.entry("ore","ores"),Map.entry("rawOreChunk","raw_ore_chunks"));
+
+    private static final Map<String, String> COMMON = Map.ofEntries(
+            Map.entry("ingot", "ingots"),
+            Map.entry("nugget", "nuggets"),
+            Map.entry("dust", "dusts"),
+            Map.entry("dustSmall", "small_dusts"),
+            Map.entry("dustTiny", "tiny_dusts"),
+            Map.entry("gem", "gems"),
+            Map.entry("plate", "plates"),
+            Map.entry("stick", "rods"),
+            Map.entry("stickLong", "long_rods"),
+            Map.entry("gearGt", "gears"),
+            Map.entry("ring", "rings"),
+            Map.entry("bolt", "bolts"),
+            Map.entry("screw", "screws"),
+            Map.entry("gearGtSmall", "small_gears"),
+            Map.entry("foil", "foils"),
+            Map.entry("wireGt01", "wires"),
+            Map.entry("oreRaw", "raw_materials"),
+            Map.entry("ore", "ores"),
+            Map.entry("rawOreChunk", "raw_ore_chunks"));
+
     private MaterialEquivalence() {}
+
     public static Form form(ItemStack stack) {
-        var data=ItemMaterialRegistry.get(stack).orElse(null);
-        if (data==null||data.prefix()==null||data.components().size()!=1||data.amount()!=data.prefix().getMaterialWeight()) return null;
-        return new Form(data.prefix(),data.material().resolve());
+        var data = ItemMaterialRegistry.get(stack).orElse(null);
+        if (data == null
+                || data.prefix() == null
+                || data.components().size() != 1
+                || data.amount() != data.prefix().getMaterialWeight()) return null;
+        return new Form(data.prefix(), data.material().resolve());
     }
+
     public static String materialName(GTMaterial m) {
         if (m.getName().equals("NetherQuartz")) return "quartz";
         if (m.getName().equals("Tungstensteel")) return "tungsten_steel";
-        return m.getName().replaceAll("([a-z0-9])([A-Z])","$1_$2").toLowerCase(Locale.ROOT);
+        return m.getName().replaceAll("([a-z0-9])([A-Z])", "$1_$2").toLowerCase(Locale.ROOT);
     }
     /** One tag path plus the alias spellings {@link #hasForgeTag} also accepts, cached per Form. */
     private record TagForms(String path, String alias, String alternate) {
         static final TagForms NONE = new TagForms(null, null, null);
 
         static TagForms of(String path) {
-            return new TagForms(path,
-                    path.replace("/aluminium", "/aluminum").replace("/quartz", "/nether_quartz")
+            return new TagForms(
+                    path,
+                    path.replace("/aluminium", "/aluminum")
+                            .replace("/quartz", "/nether_quartz")
                             .replace("/sulfur", "/sulphur"),
                     MaterialTagAliases.alternatePath(path));
         }
@@ -50,6 +70,7 @@ public final class MaterialEquivalence {
     private static final Map<String, TagForms> PATH_TAGS = new java.util.concurrent.ConcurrentHashMap<>();
     /** Tag identities only; membership stays a live read of the candidate stack. */
     private static final Map<String, List<TagKey<Item>>> TAG_KEYS = new java.util.concurrent.ConcurrentHashMap<>();
+
     private static final Map<String, TagKey<Item>> FORGE_TAGS = new java.util.concurrent.ConcurrentHashMap<>();
     private static final Map<String, TagKey<Item>> COMMON_TAGS = new java.util.concurrent.ConcurrentHashMap<>();
 
@@ -70,9 +91,9 @@ public final class MaterialEquivalence {
     /** Check the canonical Forge form tag and the established alternate material spellings. */
     public static boolean hasForgeTag(ItemStack candidate, String path) {
         var forms = pathForms(path);
-        if (tagged(candidate,forms.path()))return true;
-        return (!forms.alias().equals(forms.path())&&tagged(candidate,forms.alias()))
-                ||(forms.alternate()!=null&&tagged(candidate,forms.alternate()));
+        if (tagged(candidate, forms.path())) return true;
+        return (!forms.alias().equals(forms.path()) && tagged(candidate, forms.alias()))
+                || (forms.alternate() != null && tagged(candidate, forms.alternate()));
     }
     /**
      * Tags {@link #hasForgeTag(ItemStack, String)} may test for this form. The recipe lookup index
@@ -113,21 +134,17 @@ public final class MaterialEquivalence {
     }
 
     private static TagKey<Item> forgeTag(String path) {
-        return FORGE_TAGS.computeIfAbsent(path,
-                p -> ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", p)));
+        return FORGE_TAGS.computeIfAbsent(
+                path, p -> ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", p)));
     }
 
     private static TagKey<Item> commonTag(String path) {
-        return COMMON_TAGS.computeIfAbsent(path,
-                p -> ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", p)));
+        return COMMON_TAGS.computeIfAbsent(path, p -> ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", p)));
     }
 
+    /** The tag pack mirrors every {@code forge:} form tag into the {@code c:} namespace on both nodes. */
     private static boolean tagged(ItemStack candidate, String path) {
-//? if >=1.21.1 {
-        /*return candidate.is(forgeTag(path)) || candidate.is(commonTag(path));
-*///?} else {
-        return candidate.is(forgeTag(path));
-//?}
+        return candidate.is(forgeTag(path)) || candidate.is(commonTag(path));
     }
     /** Modern vanilla raw metals have their own recipes, not GT6 oreRaw substitutions. */
     private static boolean vanillaRaw(ItemStack stack) {
@@ -140,25 +157,30 @@ public final class MaterialEquivalence {
                 || item == net.minecraft.world.item.Items.RAW_GOLD_BLOCK;
     }
     /** Every accepting branch here must have a matching key in {@code RecipeInputs.requireKeys}. */
-    public static boolean matches(ItemStack required,ItemStack available) {
+    public static boolean matches(ItemStack required, ItemStack available) {
         // Common raw_materials tags do not erase the distinct ore/raw and block quantities.
         if (required.getItem() != available.getItem() && (vanillaRaw(required) || vanillaRaw(available))) return false;
-        if (StackData.hasAnyData(required) || StackData.hasAnyData(available) || required.isDamaged() || available.isDamaged()) return false;
+        if (StackData.hasAnyData(required)
+                || StackData.hasAnyData(available)
+                || required.isDamaged()
+                || available.isDamaged()) return false;
         var canonicalRequired = MaterialUnification.canonical(required);
         var canonicalAvailable = MaterialUnification.canonical(available);
         if (canonicalRequired.getItem() == canonicalAvailable.getItem()
-                && (canonicalRequired.getItem() != required.getItem() || canonicalAvailable.getItem() != available.getItem())) return true;
-        var expected=form(required); if (expected==null) return false;
-        var actual=form(available);
-        if (actual!=null) {
-            if (expected.prefix()==actual.prefix()&&expected.material()==actual.material()) return true;
+                && (canonicalRequired.getItem() != required.getItem()
+                        || canonicalAvailable.getItem() != available.getItem())) return true;
+        var expected = form(required);
+        if (expected == null) return false;
+        var actual = form(available);
+        if (actual != null) {
+            if (expected.prefix() == actual.prefix() && expected.material() == actual.material()) return true;
             // A secondary registration makes one vanilla item supply more than one form.
-            var id=BuiltInRegistries.ITEM.getKey(available.getItem());
+            var id = BuiltInRegistries.ITEM.getKey(available.getItem());
             return id.getNamespace().equals("minecraft")
                     && VanillaUnificationDefinitions.extraPrefixes(id.getPath()).contains(expected.prefix())
-                    && expected.material()==actual.material();
+                    && expected.material() == actual.material();
         }
-        String path=tagPath(expected);
-        return path!=null&&hasForgeTag(available,path);
+        String path = tagPath(expected);
+        return path != null && hasForgeTag(available, path);
     }
 }

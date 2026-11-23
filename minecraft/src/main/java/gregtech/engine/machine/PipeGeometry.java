@@ -1,20 +1,12 @@
 package gregtech.engine.machine;
 
-
-//? if >=1.21.1 {
-//?} else {
-import gregtech.content.block.energy.ElectricWireBlock;
-//?}
+import gregtech.content.block.energy.SignalWireBlock;
 import gregtech.content.block.machine.FluidPipeBlock;
-
-//? if >=1.21.1 {
-//?} else {
 import gregtech.content.block.machine.ItemPipeBlock;
-//?}
+import gregtech.engine.energy.WireMaterialLike;
+import javax.annotation.Nullable;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
-
-import javax.annotation.Nullable;
 
 /**
  * Shared connection-arm geometry for pipes/wires (GT6 rules), in 1/16 px units.
@@ -38,7 +30,9 @@ public final class PipeGeometry {
     private PipeGeometry() {}
 
     /** Inventory connectors are a straight north/south segment with two exposed ends. */
-    public static boolean itemConnected(Direction side) { return side.getAxis() == Direction.Axis.Z; }
+    public static boolean itemConnected(Direction side) {
+        return side.getAxis() == Direction.Axis.Z;
+    }
 
     // ── Virtual pipe neighbors ───────────────────────────────────────────────
     // Machines with GT6 pipe connectors (steam engines: tiny on the water
@@ -46,12 +40,18 @@ public final class PipeGeometry {
     // Encoded below NONE so the value still travels through one double/float.
 
     /** Encode a virtual connector size (px half-thickness). */
-    public static double virtual(double half) { return PipeConnectionGeometry.virtual(half); }
+    public static double virtual(double half) {
+        return PipeConnectionGeometry.virtual(half);
+    }
 
-    public static boolean isVirtual(double n) { return PipeConnectionGeometry.isVirtual(n); }
+    public static boolean isVirtual(double n) {
+        return PipeConnectionGeometry.isVirtual(n);
+    }
 
     /** Decode {@link #virtual}. */
-    public static double virtualSize(double n) { return PipeConnectionGeometry.virtualSize(n); }
+    public static double virtualSize(double n) {
+        return PipeConnectionGeometry.virtualSize(n);
+    }
 
     /**
      * Arm cuboid toward {@code dir}: {x0, y0, z0, x1, y1, z1} in px (may extend
@@ -60,15 +60,21 @@ public final class PipeGeometry {
      */
     @Nullable
     public static double[] armBox(Direction dir, double half, double neighborHalf) {
-        return PipeConnectionGeometry.renderArm(dir.getAxis().ordinal(),
-                dir.getAxisDirection() == Direction.AxisDirection.POSITIVE, half, neighborHalf);
+        return PipeConnectionGeometry.renderArm(
+                dir.getAxis().ordinal(),
+                dir.getAxisDirection() == Direction.AxisDirection.POSITIVE,
+                half,
+                neighborHalf);
     }
 
     /** One cell's part of a connection; used by both collision and selection queries. */
     @Nullable
     public static double[] localArmBox(Direction dir, double half, double neighborHalf) {
-        return PipeConnectionGeometry.localArm(dir.getAxis().ordinal(),
-                dir.getAxisDirection() == Direction.AxisDirection.POSITIVE, half, neighborHalf);
+        return PipeConnectionGeometry.localArm(
+                dir.getAxis().ordinal(),
+                dir.getAxisDirection() == Direction.AxisDirection.POSITIVE,
+                half,
+                neighborHalf);
     }
 
     /** Whether the arm toward this neighbor carries an end cap at the boundary. */
@@ -84,8 +90,11 @@ public final class PipeGeometry {
      */
     @Nullable
     public static double[] stubBox(Direction dir, double half, double neighborHalf) {
-        return PipeConnectionGeometry.virtualStub(dir.getAxis().ordinal(),
-                dir.getAxisDirection() == Direction.AxisDirection.POSITIVE, half, neighborHalf);
+        return PipeConnectionGeometry.virtualStub(
+                dir.getAxis().ordinal(),
+                dir.getAxisDirection() == Direction.AxisDirection.POSITIVE,
+                half,
+                neighborHalf);
     }
 
     /**
@@ -99,7 +108,8 @@ public final class PipeGeometry {
         double half = pipeHalfOf(state);
         if (half != NONE) return half;
         return state.getBlock() instanceof FluidConnectorGeometry connector
-                ? connector.fluidConnectorHalf(state, direction.getOpposite()) : NONE;
+                ? connector.fluidConnectorHalf(state, direction.getOpposite())
+                : NONE;
     }
 
     /** A machine socket exposes its original attachment width to adjoining pipe geometry. */
@@ -114,35 +124,21 @@ public final class PipeGeometry {
     }
 
     /** Half-thickness of a pipe-family neighbor (fluid/item pipes connect to each other). */
-//? if >=1.21.1 {
-    /*public static double pipeHalfOf(BlockState state){
-        if (state.getBlock() instanceof FluidPipeBlock pipe)return Math.max(1,pipe.spec().diameter()*8);
-        if (state.getBlock() instanceof gregtech.engine.inventory.PipeFormLike pipe){
-            String size=pipe.pipeSizeName().replace("RESTRICTIVE_","");
-            for (var candidate:PipeSpec.PipeSize.values())if (candidate.name().equals(size))return Math.max(1,candidate.diameter()*8);
-*///?} else {
     public static double pipeHalfOf(BlockState state) {
         if (state.getBlock() instanceof FluidPipeBlock pipe) {
             return Math.max(1.0, pipe.spec().diameter() * 8.0);
         }
         if (state.getBlock() instanceof ItemPipeBlock pipe) {
             return Math.max(1.0, pipe.spec().diameter() * 8.0);
-//?}
         }
         return NONE;
     }
 
     /** Half-thickness of a wire-family neighbor. */
-//? if >=1.21.1 {
-    /*public static double wireHalfOf(BlockState state){if (state.getBlock() instanceof gregtech.content.block.energy.SignalWireBlock wire)return wire.halfThickness();return state.getBlock() instanceof gregtech.engine.energy.WireMaterialLike wire?wire.spec().halfThickness():NONE;}
-*///?} else {
     public static double wireHalfOf(BlockState state) {
-        if (state.getBlock() instanceof ElectricWireBlock wire) {
-            return wire.spec().halfThickness();
-        }
-        return NONE;
+        if (state.getBlock() instanceof SignalWireBlock wire) return wire.halfThickness();
+        return state.getBlock() instanceof WireMaterialLike wire ? wire.spec().halfThickness() : NONE;
     }
-//?}
 
     /** Half-thickness of an axle-family neighbor. */
     public static double axleHalfOf(BlockState state) {
@@ -150,5 +146,7 @@ public final class PipeGeometry {
     }
 
     /** An axle-family neighbor exposes its half-thickness to adjoining pipe geometry. */
-    public interface AxleConnectorGeometry { double axleHalfThickness(); }
+    public interface AxleConnectorGeometry {
+        double axleHalfThickness();
+    }
 }

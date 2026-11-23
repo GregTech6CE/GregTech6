@@ -27,11 +27,7 @@ public final class FluidContainerDisplayBinding {
         if (buckets == null) buckets = java.util.stream.StreamSupport.stream(BuiltInRegistries.ITEM.spliterator(), false)
                 .filter(BucketItem.class::isInstance).map(BucketItem.class::cast).toList();
         for (BucketItem bucket : buckets) {
-//? if >=1.21.1 {
-            /*var stored = bucket.content;
-*///?} else {
-            var stored = bucket.getFluid();
-//?}
+            var stored = fluidOf(bucket);
             if (stored != net.minecraft.world.level.material.Fluids.EMPTY && stored.isSame(fluid)) result.add(new ItemStack(bucket));
         }
         var content = WoodenBucketItem.contentOf(fluid);
@@ -42,6 +38,15 @@ public final class FluidContainerDisplayBinding {
             if (item != Items.AIR) result.add(new ItemStack(item));
         }
         return List.copyOf(result);
+    }
+
+    /** The fluid a vanilla bucket carries: a public field on 1.21.1, an accessor on 1.20.1. */
+    private static net.minecraft.world.level.material.Fluid fluidOf(BucketItem bucket) {
+//? if >=1.21.1 {
+        /*return bucket.content;
+*///?} else {
+        return bucket.getFluid();
+//?}
     }
 
     public static List<ItemStack> bucketVariants(ItemStack empty) {

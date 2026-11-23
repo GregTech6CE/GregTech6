@@ -44,17 +44,13 @@ public final class GTToolEnchantments {
     }
 
     public static void applyCurrent(ItemStack stack) {
-        var lookup = currentLookup();
-//? if >=1.21.1 {
-        /*if (lookup != null) apply(stack, lookup);
-*///?} else {
-        apply(stack, lookup);
-//?}
+        apply(stack, currentLookup());
     }
 
+    /** Enchantment holders resolve against the active data pack, so a detached lookup is a no-op. */
     public static void apply(ItemStack stack, @Nullable HolderLookup.Provider lookup) {
 //? if >=1.21.1 {
-        /*if (stack.isEmpty()) return;
+        /*if (stack.isEmpty() || lookup == null) return;
         var data = StackData.readOrEmpty(stack);
         if (!data.contains(GTToolHelper.ROOT)) return;
         var registry = lookup.lookupOrThrow(Registries.ENCHANTMENT);

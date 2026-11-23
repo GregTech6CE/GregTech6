@@ -156,11 +156,7 @@ public final class MobDropEvents {
     // ST.set(..., checkNBT=false) keeps source stack metadata during item replacement.
     private static ItemStack preservingMetadata(ItemStack source, ItemStack target, int count) {
         var result = target.copyWithCount(count);
-//? if >=1.21.1 {
-        /*result.applyComponents(source.getComponentsPatch());
-*///?} else {
-        if (source.hasTag()) result.setTag(source.getTag().copy());
-//?}
+        gregtech.engine.stack.StackData.copyAll(source, result);
         return result;
     }
     public static ItemStack resolved(MobDropRules.Drop drop) {

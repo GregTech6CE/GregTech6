@@ -2,33 +2,35 @@ package gregtech.engine.inventory;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
+import gregtech.content.block.MaterialBlockLike;
+import gregtech.content.block.energy.ElectricWireBlock;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTItems;
+import gregtech.content.registry.GTWires;
 import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.material.MaterialEquivalence;
 import gregtech.engine.stack.StackData;
-import gregtech.content.block.MaterialBlockLike;
-//? if >=1.21.1 {
-/*import gregtech.engine.energy.WireMaterialLike;
-*///?} else {
-import gregtech.content.block.energy.ElectricWireBlock;
-//?}
-import gregtech.content.data.MaterialPrefix;
-import gregtech.content.registry.GTItems;
-
-//? if >=1.21.1 {
-//?} else {
-import gregtech.content.registry.GTWires;
-//?}
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /** The deliberately narrow GT6 Mass Storage form families, not every form of one material. */
 public final class MassStorageMaterialForms {
-    private enum Family { DUST, INGOT, WIRE, GEM, PLATE, GEM_PLATE, CRUSHED,
-        CRUSHED_PURIFIED, CRUSHED_CENTRIFUGED, RAW, VANILLA_RAW }
+    private enum Family {
+        DUST,
+        INGOT,
+        WIRE,
+        GEM,
+        PLATE,
+        GEM_PLATE,
+        CRUSHED,
+        CRUSHED_PURIFIED,
+        CRUSHED_CENTRIFUGED,
+        RAW,
+        VANILLA_RAW
+    }
 
     private record Form(Family family, GTMaterial material, long units) {}
 
@@ -40,14 +42,16 @@ public final class MassStorageMaterialForms {
     }
 
     private static long compatibleUnits(ItemStack template, ItemStack candidate, boolean ignoreNbt) {
-        if (template.isEmpty() || candidate.isEmpty()
+        if (template.isEmpty()
+                || candidate.isEmpty()
                 || (!ignoreNbt && (StackData.hasAnyData(template) || StackData.hasAnyData(candidate)))
-                || template.isDamaged() || candidate.isDamaged()) return 0;
+                || template.isDamaged()
+                || candidate.isDamaged()) return 0;
         Form stored = form(template);
         if (stored == null) return 0;
         Form offered = form(candidate);
-        if (offered != null) return stored.family == offered.family
-                && stored.material == offered.material ? offered.units : 0;
+        if (offered != null)
+            return stored.family == offered.family && stored.material == offered.material ? offered.units : 0;
         return taggedUnits(stored, candidate);
     }
 
@@ -69,28 +73,23 @@ public final class MassStorageMaterialForms {
         if (form == null || units <= 0) return List.of();
         List<ItemStack> drops = new ArrayList<>();
         if (form.family == Family.WIRE) {
-//? if >=1.21.1 {
-            /*for (var registered : net.minecraft.core.registries.BuiltInRegistries.BLOCK) {
-                if (registered instanceof WireMaterialLike wire && wire.spec() != null && wire.spec().size() == 1
-*///?} else {
             for (var registered : GTWires.allWires()) {
                 ElectricWireBlock wire = registered.get();
-                if (wire.spec() != null && wire.spec().size() == 1
-//?}
+                if (wire.spec() != null
+                        && wire.spec().size() == 1
                         && wire.spec().material().resolve() == form.material) {
-//? if >=1.21.1 {
-                    /*appendPartial(drops, template, new ItemStack(registered), units);
-*///?} else {
                     appendPartial(drops, template, new ItemStack(wire), units);
-//?}
                     break;
                 }
             }
             return drops;
         }
         if (form.family == Family.VANILLA_RAW) {
-            for (var raw : new net.minecraft.world.item.Item[]{net.minecraft.world.item.Items.RAW_COPPER,
-                    net.minecraft.world.item.Items.RAW_IRON, net.minecraft.world.item.Items.RAW_GOLD}) {
+            for (var raw : new net.minecraft.world.item.Item[] {
+                net.minecraft.world.item.Items.RAW_COPPER,
+                net.minecraft.world.item.Items.RAW_IRON,
+                net.minecraft.world.item.Items.RAW_GOLD
+            }) {
                 var candidate = new ItemStack(raw);
                 if (compatibleUnits(template, candidate) > 0) {
                     appendPartial(drops, template, candidate, units);
@@ -100,26 +99,30 @@ public final class MassStorageMaterialForms {
             return drops;
         }
         MaterialPrefix[] candidates = switch (form.family) {
-            case DUST -> new MaterialPrefix[]{MaterialPrefix.dust, MaterialPrefix.dustSmall,
-                    MaterialPrefix.dustTiny, MaterialPrefix.dustDiv72};
+            case DUST ->
+                new MaterialPrefix[] {
+                    MaterialPrefix.dust, MaterialPrefix.dustSmall, MaterialPrefix.dustTiny, MaterialPrefix.dustDiv72
+                };
             // OM.ingot chooses the 1/4-unit chunk before nuggets only when it
             // leaves no more residue than 1/9-unit nuggets. For example 1/4 U
             // must become one chunk, while 8/9 U must become eight nuggets.
-            case INGOT -> units % GTValues.U == 0
-                    ? new MaterialPrefix[]{MaterialPrefix.ingot, MaterialPrefix.chunkGt,
-                            MaterialPrefix.nugget}
-                    : units % GTValues.U4 <= units % GTValues.U9
-                    ? new MaterialPrefix[]{MaterialPrefix.chunkGt, MaterialPrefix.nugget,
-                            MaterialPrefix.ingot}
-                    : new MaterialPrefix[]{MaterialPrefix.nugget, MaterialPrefix.chunkGt,
-                            MaterialPrefix.ingot};
-            case GEM -> new MaterialPrefix[]{MaterialPrefix.gem};
-            case PLATE -> new MaterialPrefix[]{MaterialPrefix.plate};
-            case GEM_PLATE -> new MaterialPrefix[]{MaterialPrefix.plateGem};
-            case CRUSHED -> new MaterialPrefix[]{MaterialPrefix.crushedTiny};
-            case CRUSHED_PURIFIED -> new MaterialPrefix[]{MaterialPrefix.crushedPurifiedTiny};
-            case CRUSHED_CENTRIFUGED -> new MaterialPrefix[]{MaterialPrefix.crushedCentrifugedTiny};
-            case RAW -> new MaterialPrefix[]{MaterialPrefix.oreRaw};
+            case INGOT ->
+                units % GTValues.U == 0
+                        ? new MaterialPrefix[] {MaterialPrefix.ingot, MaterialPrefix.chunkGt, MaterialPrefix.nugget}
+                        : units % GTValues.U4 <= units % GTValues.U9
+                                ? new MaterialPrefix[] {
+                                    MaterialPrefix.chunkGt, MaterialPrefix.nugget, MaterialPrefix.ingot
+                                }
+                                : new MaterialPrefix[] {
+                                    MaterialPrefix.nugget, MaterialPrefix.chunkGt, MaterialPrefix.ingot
+                                };
+            case GEM -> new MaterialPrefix[] {MaterialPrefix.gem};
+            case PLATE -> new MaterialPrefix[] {MaterialPrefix.plate};
+            case GEM_PLATE -> new MaterialPrefix[] {MaterialPrefix.plateGem};
+            case CRUSHED -> new MaterialPrefix[] {MaterialPrefix.crushedTiny};
+            case CRUSHED_PURIFIED -> new MaterialPrefix[] {MaterialPrefix.crushedPurifiedTiny};
+            case CRUSHED_CENTRIFUGED -> new MaterialPrefix[] {MaterialPrefix.crushedCentrifugedTiny};
+            case RAW -> new MaterialPrefix[] {MaterialPrefix.oreRaw};
             case WIRE, VANILLA_RAW -> throw new IllegalStateException("special family handled above");
         };
         long remaining = units;
@@ -130,8 +133,7 @@ public final class MassStorageMaterialForms {
         return drops;
     }
 
-    private static long appendPartial(List<ItemStack> drops, ItemStack template,
-                                      ItemStack candidate, long remaining) {
+    private static long appendPartial(List<ItemStack> drops, ItemStack template, ItemStack candidate, long remaining) {
         long perItem = compatibleUnits(template, candidate);
         if (candidate.isEmpty() || perItem <= 0 || remaining < perItem) return 0;
         long count = remaining / perItem;
@@ -147,10 +149,10 @@ public final class MassStorageMaterialForms {
 
     /** Dump reservations ignore NBT as GT6's ItemStackSet does, but keep family boundaries. */
     public static boolean reserves(ItemStack template, ItemStack candidate) {
-        return !template.isEmpty() && !candidate.isEmpty()
-                && (template.is(candidate.getItem())
-                    && template.getDamageValue() == candidate.getDamageValue()
-                    || compatibleUnits(template, candidate, true) > 0);
+        return !template.isEmpty()
+                && !candidate.isEmpty()
+                && (template.is(candidate.getItem()) && template.getDamageValue() == candidate.getDamageValue()
+                        || compatibleUnits(template, candidate, true) > 0);
     }
 
     private static Form form(ItemStack stack) {
@@ -159,29 +161,38 @@ public final class MassStorageMaterialForms {
                 || stack.is(net.minecraft.world.item.Items.RAW_IRON)
                 || stack.is(net.minecraft.world.item.Items.RAW_GOLD)) {
             var data = ItemMaterialRegistry.base(stack.getItem()).orElse(null);
-            return data == null || data.components().size() != 1 ? null
+            return data == null || data.components().size() != 1
+                    ? null
                     : new Form(Family.VANILLA_RAW, data.material().resolve(), GTValues.U);
         }
         if (stack.getItem() instanceof gregtech.engine.material.MaterialFormItem item)
-            return form(item.getPrefix().getName(), item.getMaterial().resolve(),
+            return form(
+                    item.getPrefix().getName(),
+                    item.getMaterial().resolve(),
                     item.getPrefix().getMaterialWeight());
         if (stack.getItem() instanceof BlockItem blockItem) {
             var block = blockItem.getBlock();
             if (block instanceof MaterialBlockLike materialBlock)
-                return form(materialBlock.prefix().getName(), materialBlock.material().resolve(),
+                return form(
+                        materialBlock.prefix().getName(),
+                        materialBlock.material().resolve(),
                         materialBlock.prefix().getMaterialWeight());
-//? if >=1.21.1 {
-            /*if (block instanceof WireMaterialLike wire && wire.spec() != null
-*///?} else {
-            if (block instanceof ElectricWireBlock wire && wire.spec() != null
-//?}
-                    && !wire.spec().insulated() && wire.spec().size() >= 1 && wire.spec().size() <= 16)
-                return new Form(Family.WIRE, wire.spec().material().resolve(), wire.spec().materialAmount());
+            if (block instanceof ElectricWireBlock wire
+                    && wire.spec() != null
+                    && !wire.spec().insulated()
+                    && wire.spec().size() >= 1
+                    && wire.spec().size() <= 16)
+                return new Form(
+                        Family.WIRE,
+                        wire.spec().material().resolve(),
+                        wire.spec().materialAmount());
             Form vanillaBlock = vanillaBlock(block, stack);
             if (vanillaBlock != null) return vanillaBlock;
         }
         var data = ItemMaterialRegistry.base(stack.getItem()).orElse(null);
-        if (data == null || data.prefix() == null || data.components().size() != 1
+        if (data == null
+                || data.prefix() == null
+                || data.components().size() != 1
                 || data.amount() != data.prefix().getMaterialWeight()) return null;
         return form(data.prefix().getName(), data.material().resolve(), data.amount());
     }
@@ -189,13 +200,17 @@ public final class MassStorageMaterialForms {
     private static Form vanillaBlock(net.minecraft.world.level.block.Block block, ItemStack stack) {
         Family family;
         long units = GTValues.U * 9;
-        if (block == Blocks.IRON_BLOCK || block == Blocks.GOLD_BLOCK
-                || block == Blocks.COPPER_BLOCK || block == Blocks.NETHERITE_BLOCK) family = Family.INGOT;
-        else if (block == Blocks.DIAMOND_BLOCK || block == Blocks.EMERALD_BLOCK
-                || block == Blocks.LAPIS_BLOCK || block == Blocks.COAL_BLOCK) family = Family.GEM;
+        if (block == Blocks.IRON_BLOCK
+                || block == Blocks.GOLD_BLOCK
+                || block == Blocks.COPPER_BLOCK
+                || block == Blocks.NETHERITE_BLOCK) family = Family.INGOT;
+        else if (block == Blocks.DIAMOND_BLOCK
+                || block == Blocks.EMERALD_BLOCK
+                || block == Blocks.LAPIS_BLOCK
+                || block == Blocks.COAL_BLOCK) family = Family.GEM;
         else if (block == Blocks.REDSTONE_BLOCK) family = Family.DUST;
-        else if (block == Blocks.RAW_IRON_BLOCK || block == Blocks.RAW_GOLD_BLOCK
-                || block == Blocks.RAW_COPPER_BLOCK) family = Family.VANILLA_RAW;
+        else if (block == Blocks.RAW_IRON_BLOCK || block == Blocks.RAW_GOLD_BLOCK || block == Blocks.RAW_COPPER_BLOCK)
+            family = Family.VANILLA_RAW;
         else return null;
         var data = ItemMaterialRegistry.base(stack.getItem()).orElse(null);
         if (data == null || data.components().size() != 1) return null;
@@ -208,11 +223,12 @@ public final class MassStorageMaterialForms {
         // GT6 OP.wireGt01..16 are one WIRE_BASED family. In this port they are
         // normally physical ElectricWireBlock items, but retain the prefix path
         // for material bindings supplied by another registration.
-        if (prefix.length() == 8 && prefix.startsWith("wireGt")
-                && Character.isDigit(prefix.charAt(6)) && Character.isDigit(prefix.charAt(7))) {
+        if (prefix.length() == 8
+                && prefix.startsWith("wireGt")
+                && Character.isDigit(prefix.charAt(6))
+                && Character.isDigit(prefix.charAt(7))) {
             int size = (prefix.charAt(6) - '0') * 10 + prefix.charAt(7) - '0';
-            return size >= 1 && size <= 16
-                    ? new Form(Family.WIRE, material, size * GTValues.U2) : null;
+            return size >= 1 && size <= 16 ? new Form(Family.WIRE, material, size * GTValues.U2) : null;
         }
         Family family = switch (prefix) {
             case "dust", "dustSmall", "dustTiny", "dustDiv72", "blockDust" -> Family.DUST;
@@ -238,11 +254,16 @@ public final class MassStorageMaterialForms {
         // gt6ce:material/<name> and forge:storage_blocks tags are ambiguous.
         String material = MaterialEquivalence.materialName(stored.material);
         return switch (stored.family) {
-            case DUST -> tagged(candidate, "dusts", material) ? GTValues.U
-                    : tagged(candidate, "small_dusts", material) ? GTValues.U4
-                    : tagged(candidate, "tiny_dusts", material) ? GTValues.U9 : 0;
-            case INGOT -> tagged(candidate, "ingots", material) ? GTValues.U
-                    : tagged(candidate, "nuggets", material) ? GTValues.U9 : 0;
+            case DUST ->
+                tagged(candidate, "dusts", material)
+                        ? GTValues.U
+                        : tagged(candidate, "small_dusts", material)
+                                ? GTValues.U4
+                                : tagged(candidate, "tiny_dusts", material) ? GTValues.U9 : 0;
+            case INGOT ->
+                tagged(candidate, "ingots", material)
+                        ? GTValues.U
+                        : tagged(candidate, "nuggets", material) ? GTValues.U9 : 0;
             case GEM -> tagged(candidate, "gems", material) ? GTValues.U : 0;
             case PLATE -> tagged(candidate, "plates", material) ? GTValues.U : 0;
             case RAW -> tagged(candidate, "raw_materials", material) ? GTValues.U : 0;

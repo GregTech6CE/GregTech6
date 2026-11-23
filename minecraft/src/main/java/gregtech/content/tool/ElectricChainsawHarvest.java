@@ -67,11 +67,7 @@ public final class ElectricChainsawHarvest {
 //?}
             if (DEFAULT_SHEARING.get(block.getClass())) {
                 var shears=new ItemStack(net.minecraft.world.item.Items.SHEARS);
-//? if >=1.21.1 {
-                /*shears.applyComponents(stack.getComponentsPatch());
-*///?} else {
-                if (stack.hasTag()) shears.setTag(stack.getTag().copy());
-//?}
+                gregtech.engine.stack.StackData.copyAll(stack, shears);
                 drops=Block.getDrops(state,level,pos,null,player,shears);
             } else {
 //? if >=1.21.1 {

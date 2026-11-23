@@ -53,11 +53,7 @@ public final class VisualDocumentData {
     public static ItemStack printedPages(ItemStack book, boolean many) {
         var output = new ItemStack(BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",
                 many ? "many_printed_pages" : "printed_pages")));
-//? if >=1.21.1 {
-        /*output.applyComponents(book.getComponentsPatch());
-*///?} else {
-        gregtech.engine.stack.StackData.write(output, gregtech.engine.stack.StackData.read(book));
-//?}
+        gregtech.engine.stack.StackData.copyAll(book, output);
         return output;
     }
 

@@ -1,15 +1,9 @@
 package gregtech.content.tool;
 
-//? if >=1.21.1 {
-//?} else {
 import gregtech.content.block.GTGrassBlock;
-//?}
 import gregtech.content.block.RockOreBlock;
 import gregtech.content.block.OreBlock;
-//? if >=1.21.1 {
-//?} else {
 import gregtech.content.block.misc.DiggableBlock;
-//?}
 import gregtech.content.block.stone.GTStoneBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -32,12 +26,8 @@ public final class DynamiteSubstrates {
         // Test that state before any whole-block whitelist can admit it.
         if (block instanceof OreBlock)
             return !OreBlock.isBedrockOre(state) && state.getDestroySpeed(level, pos) >= 0;
-//? if >=1.21.1 {
-        /*boolean explicit = state.is(DRILLABLE) || block instanceof RockOreBlock;
-*///?} else {
         boolean explicit = state.is(DRILLABLE) || block instanceof GTGrassBlock
                 || block instanceof DiggableBlock || block instanceof RockOreBlock;
-//?}
         if (state.getDestroySpeed(level, pos) < 0 && !explicit) return false;
         // GT6 rejects processed stone variants even when an addon puts them in the whitelist.
         if (block instanceof GTStoneBlock stone) return stone.variant().meta() < 3;

@@ -3,6 +3,7 @@ package gregtech.content.recipe;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
+import gregtech.engine.stack.StackData;
 import gregtech.content.bumble.BumbleBeeType;
 import gregtech.content.bumble.GTBumbleSpecies;
 import gregtech.content.material.Materials;
@@ -225,11 +226,7 @@ public final class GTBumbleBeeRecipes {
         if (plate.isEmpty()) return null;
         ItemStack output = BumbleBeeType.stack(species, type.scannedVariant(), null, 1);
         if (output.isEmpty()) return null;
-//? if >=1.21.1 {
-        /*output.applyComponents(bee.getComponentsPatch());
-*///?} else {
-        if (bee.hasTag()) output.setTag(bee.getTag().copy());
-//?}
+        StackData.copyAll(bee, output);
         FluidStack consumed = honey.copy();
         consumed.setAmount(HONEY_MB);
         return new Recipe(

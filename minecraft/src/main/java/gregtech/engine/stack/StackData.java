@@ -65,6 +65,19 @@ public final class StackData {
 //?}
     }
 
+    /**
+     * Copies everything {@code from} carries onto {@code to}: on 1.21.1 the whole component patch
+     * (damage, custom name, enchantments, custom data), on 1.20.1 the whole tag, which holds the
+     * same values. {@code to} keeps its own item defaults for everything {@code from} does not set.
+     */
+    public static void copyAll(ItemStack from, ItemStack to) {
+//? if >=1.21.1 {
+        /*to.applyComponents(from.getComponentsPatch());
+*///?} else {
+        if (from.hasTag()) to.setTag(from.getTag().copy());
+//?}
+    }
+
     public static void update(ItemStack stack, Consumer<CompoundTag> action) {
         var tag = readOrEmpty(stack);
         action.accept(tag);

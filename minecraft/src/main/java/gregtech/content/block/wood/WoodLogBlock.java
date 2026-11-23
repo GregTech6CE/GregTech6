@@ -54,6 +54,7 @@ public class WoodLogBlock extends RotatedPillarBlock {
     public InteractionResult use(BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack stack = player.getItemInHand(hand);
+        EquipmentSlot slot = hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND;
         boolean gtAxe = GTToolHelper.matchesTool(stack, GTToolType.AXE)
                 || GTToolHelper.matchesTool(stack, GTToolType.DOUBLE_AXE);
         boolean gtSawOrKnife = GTToolHelper.matchesTool(stack, GTToolType.SAW)
@@ -65,7 +66,6 @@ public class WoodLogBlock extends RotatedPillarBlock {
                     .setValue(WoodStrippedLogBlock.AXIS, state.getValue(AXIS));
             if (!level.setBlock(pos, stripped, 3)) return InteractionResult.FAIL;
             level.playSound(null, pos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0F, 1.0F);
-            EquipmentSlot slot = hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND;
             if (plainAxe) {
 //? if >=1.21.1 {
                 /*stack.hurtAndBreak(1, player, slot);
@@ -88,11 +88,7 @@ public class WoodLogBlock extends RotatedPillarBlock {
         }
         if (level.isClientSide) return InteractionResult.SUCCESS;
         level.setBlock(pos, hole.defaultBlockState().setValue(TreeHoleBlock.FACING, side), 3);
-//? if >=1.21.1 {
-        /*if (!player.isCreative()) GTToolHelper.damageForToolClickReturn(stack,1000L,player);
-*///?} else {
-        if (!player.isCreative()) stack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(hand));
-//?}
+        if (!player.isCreative()) GTToolHelper.damageForToolClickReturn(stack, 1000L, player, slot);
         return InteractionResult.CONSUME;
     }
 
