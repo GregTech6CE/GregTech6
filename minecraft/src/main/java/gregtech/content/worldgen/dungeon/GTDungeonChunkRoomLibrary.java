@@ -1,9 +1,5 @@
 package gregtech.content.worldgen.dungeon;
 
-//? if >=1.21.1 {
-/*import gregtech.content.registry.*;
-*///?} else {
-//?}
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -67,20 +63,23 @@ public class GTDungeonChunkRoomLibrary extends GTDungeonChunkRoomEmpty {
 
     /** GT6's {@code Blocks.planks} metas 0..5, in GT6's order (the six vanilla woods). */
     private static final Block[] PLANKS = {
-            Blocks.OAK_PLANKS, Blocks.SPRUCE_PLANKS, Blocks.BIRCH_PLANKS,
-            Blocks.JUNGLE_PLANKS, Blocks.ACACIA_PLANKS, Blocks.DARK_OAK_PLANKS};
+        Blocks.OAK_PLANKS, Blocks.SPRUCE_PLANKS, Blocks.BIRCH_PLANKS,
+        Blocks.JUNGLE_PLANKS, Blocks.ACACIA_PLANKS, Blocks.DARK_OAK_PLANKS
+    };
 
     /** The same six woods as slabs; GT6 uses them upside down ({@code tSlab = tPlank + 8}). */
     private static final Block[] SLABS = {
-            Blocks.OAK_SLAB, Blocks.SPRUCE_SLAB, Blocks.BIRCH_SLAB,
-            Blocks.JUNGLE_SLAB, Blocks.ACACIA_SLAB, Blocks.DARK_OAK_SLAB};
+        Blocks.OAK_SLAB, Blocks.SPRUCE_SLAB, Blocks.BIRCH_SLAB,
+        Blocks.JUNGLE_SLAB, Blocks.ACACIA_SLAB, Blocks.DARK_OAK_SLAB
+    };
 
     /** Vanilla's sixteen carpets in GT6's dye order (GT6 uses {@code Blocks.carpet} meta mColorInversed). */
     private static final Block[] CARPETS = {
-            Blocks.WHITE_CARPET, Blocks.ORANGE_CARPET, Blocks.MAGENTA_CARPET, Blocks.LIGHT_BLUE_CARPET,
-            Blocks.YELLOW_CARPET, Blocks.LIME_CARPET, Blocks.PINK_CARPET, Blocks.GRAY_CARPET,
-            Blocks.LIGHT_GRAY_CARPET, Blocks.CYAN_CARPET, Blocks.PURPLE_CARPET, Blocks.BLUE_CARPET,
-            Blocks.BROWN_CARPET, Blocks.GREEN_CARPET, Blocks.RED_CARPET, Blocks.BLACK_CARPET};
+        Blocks.WHITE_CARPET, Blocks.ORANGE_CARPET, Blocks.MAGENTA_CARPET, Blocks.LIGHT_BLUE_CARPET,
+        Blocks.YELLOW_CARPET, Blocks.LIME_CARPET, Blocks.PINK_CARPET, Blocks.GRAY_CARPET,
+        Blocks.LIGHT_GRAY_CARPET, Blocks.CYAN_CARPET, Blocks.PURPLE_CARPET, Blocks.BLUE_CARPET,
+        Blocks.BROWN_CARPET, Blocks.GREEN_CARPET, Blocks.RED_CARPET, Blocks.BLACK_CARPET
+    };
 
     /**
      * The 24 shelves of a shelf row in GT6's write order, as {x, z} pairs. GT6 walks
@@ -88,10 +87,11 @@ public class GTDungeonChunkRoomLibrary extends GTDungeonChunkRoomEmpty {
      * {@code next(24)} is the one that gets the dungeon key.
      */
     private static final int[][] SHELF_ORDER = {
-            {2, 1}, {3, 1}, {4, 1}, {11, 1}, {12, 1}, {13, 1},
-            {14, 2}, {14, 3}, {14, 4}, {14, 11}, {14, 12}, {14, 13},
-            {2, 14}, {3, 14}, {4, 14}, {11, 14}, {12, 14}, {13, 14},
-            {1, 2}, {1, 3}, {1, 4}, {1, 11}, {1, 12}, {1, 13}};
+        {2, 1}, {3, 1}, {4, 1}, {11, 1}, {12, 1}, {13, 1},
+        {14, 2}, {14, 3}, {14, 4}, {14, 11}, {14, 12}, {14, 13},
+        {2, 14}, {3, 14}, {4, 14}, {11, 14}, {12, 14}, {13, 14},
+        {1, 2}, {1, 3}, {1, 4}, {1, 11}, {1, 12}, {1, 13}
+    };
 
     @Override
     public boolean generate(GTDungeonData data) {
@@ -122,8 +122,7 @@ public class GTDungeonChunkRoomLibrary extends GTDungeonChunkRoomEmpty {
                 if (tX == 1 || tX == 14 || tZ == 1 || tZ == 14) {
                     data.set(tX, 6, tZ, planks);
                     data.set(tX, 5, tZ, topSlab);
-                } else if ((tX == 3 || tX == 6 || tX == 9 || tX == 12)
-                        && (tZ == 3 || tZ == 6 || tZ == 9 || tZ == 12)) {
+                } else if ((tX == 3 || tX == 6 || tX == 9 || tX == 12) && (tZ == 3 || tZ == 6 || tZ == 9 || tZ == 12)) {
                     // the +1 redstone brick above the lamp stays inside the hall's own ceiling.
                     data.lamp(tX, 6, tZ, +1);
                 } else {
@@ -210,14 +209,13 @@ public class GTDungeonChunkRoomLibrary extends GTDungeonChunkRoomEmpty {
                 // shelf whose running index reached zero, i.e. to the shelfIndex-th one of this order.
                 for (int index = 0; index < SHELF_ORDER.length; index++) {
                     int[] at = SHELF_ORDER[index];
-                    data.shelf(at[0], tY, at[1], SHELF_LOOT,
-                            index == shelfIndex ? key : ItemStack.EMPTY, keySlot);
+                    data.shelf(at[0], tY, at[1], SHELF_LOOT, index == shelfIndex ? key : ItemStack.EMPTY, keySlot);
                 }
             }
         }
 
         // the furniture of the hall, one of four layouts. GT6's Hexxit hexorium blocks (its
-        //) are not ported, which leaves GT6's potion-filled cup in every case.
+        // ) are not ported, which leaves GT6's potion-filled cup in every case.
         switch (data.next(4)) {
             case 0 -> {
                 data.set(3, 1, 3, Blocks.ENCHANTING_TABLE.defaultBlockState());

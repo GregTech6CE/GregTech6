@@ -142,11 +142,7 @@ public class BottleItem extends GTItem {
         }
         if (!player.getAbilities().instabuild) {
             stack.shrink(1);
-//? if >=1.21.1 {
-            /*gregtech.content.food.GTFoodItems.deliverContainer(player,emptyBottle());
-*///?} else {
             gregtech.content.food.GTFoodItems.deliverContainer(player, emptyBottle());
-//?}
         }
         return stack;
     }

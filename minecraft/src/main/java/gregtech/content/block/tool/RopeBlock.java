@@ -67,11 +67,7 @@ public class RopeBlock extends GTHorizontalDirectionalBlock implements SimpleWat
         if (!placed.canSurvive(level, cursor)) return InteractionResult.PASS;
         if (!level.isClientSide) {
             level.setBlockAndUpdate(cursor, placed);
-//? if >=1.21.1 {
-            /*level.playSound(null, cursor, getSoundType(placed, level, cursor, player).getPlaceSound(),
-*///?} else {
             level.playSound(null, cursor, soundType.getPlaceSound(),
-//?}
                     net.minecraft.sounds.SoundSource.BLOCKS, 1.0F, 1.0F);
             if (!player.getAbilities().instabuild) held.shrink(1);
         }

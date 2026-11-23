@@ -1,8 +1,4 @@
 package gregtech.client;
-//? if >=1.21.1 {
-/*import gregtech.content.registry.GTConstructionBlocks;
-*///?} else {
-//?}
 import gregtech.content.block.misc.*;
 //? if >=1.21.1 {
 /*import net.neoforged.fml.common.EventBusSubscriber;

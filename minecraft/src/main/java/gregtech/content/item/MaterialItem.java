@@ -56,21 +56,12 @@ public class MaterialItem extends GTItem implements gregtech.engine.material.Mat
     /** Resolves prefix from the registered item type, never from stack NBT. */
 //?}
     public static MaterialPrefix getPrefix(ItemStack stack) {
-//? if >=1.21.1 {
-        /*return stack.getItem() instanceof gregtech.engine.material.MaterialFormItem item ? item.getPrefix() : null;
-*///?} else {
-        return stack.getItem() instanceof gregtech.engine.material.MaterialFormItem materialItem ? materialItem.getPrefix() : null;
-//?}
+        return stack.getItem() instanceof gregtech.engine.material.MaterialFormItem item ? item.getPrefix() : null;
     }
 
     public static boolean isMaterialItem(ItemStack stack, MaterialPrefix prefix, GTMaterial material) {
-//? if >=1.21.1 {
-        /*return stack.getItem() instanceof gregtech.engine.material.MaterialFormItem item
+        return stack.getItem() instanceof gregtech.engine.material.MaterialFormItem item
                 && item.getPrefix() == prefix && item.getMaterial().resolve() == material.resolve();
-*///?} else {
-        if (!(stack.getItem() instanceof gregtech.engine.material.MaterialFormItem materialItem)) return false;
-        return materialItem.getPrefix() == prefix && materialItem.getMaterial().resolve() == material.resolve();
-//?}
     }
 
     /** PrefixItemProjectile consumes ammunition used in a living-entity melee attack. */
@@ -118,11 +109,7 @@ public class MaterialItem extends GTItem implements gregtech.engine.material.Mat
     @Override
     public String getDescriptionId() {
         if (prefix.isAddon()) return "item." + prefix.itemNamespace() + "." + prefix.getRegistryName();
-//? if >=1.21.1 {
-        /*return "item.gt6ce." + prefix.getRegistryName();
-*///?} else {
         return "item." + GregTechIdentity.REGISTRY_NAMESPACE + "." + prefix.getRegistryName();
-//?}
     }
 
     @Override

@@ -139,11 +139,7 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
         be.tickServer();
     }
 
-//? if >=1.21.1 {
-    /*protected void tickServer() {
-*///?} else {
     private void tickServer() {
-//?}
         long rate = spec.outputRate();
         if (burning) {
             if (energy >= rate) {

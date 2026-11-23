@@ -1,9 +1,5 @@
 package gregtech.content.worldgen.dungeon;
 
-//? if >=1.21.1 {
-/*import gregtech.content.registry.*;
-*///?} else {
-//?}
 import net.minecraft.world.level.block.Blocks;
 
 /**
@@ -71,7 +67,7 @@ public class GTDungeonChunkCorridor3 extends GTDungeonChunkCorridor {
                 case 1:
                     // Breakable wall, more likely when dungeon key #3 exists.
                     if (!data.generatedKeys[2]) return true;
-                    // GT6 falls through into case 2 here.
+                // GT6 falls through into case 2 here.
                 case 2:
                     // Breakable wall with the safe at the unused end.
                     for (int y = 0; y <= 4; y++) for (int z = 5; z <= 10; z++) data.cobbles(13, y, z);
@@ -115,7 +111,7 @@ public class GTDungeonChunkCorridor3 extends GTDungeonChunkCorridor {
                 case 1:
                     // Breakable wall, more likely when dungeon key #3 exists.
                     if (!data.generatedKeys[2]) return true;
-                    // GT6 falls through into case 2 here.
+                // GT6 falls through into case 2 here.
                 case 2:
                     // Breakable wall with the safe at the unused end.
                     for (int y = 0; y <= 4; y++) for (int z = 5; z <= 10; z++) data.cobbles(2, y, z);
@@ -159,7 +155,7 @@ public class GTDungeonChunkCorridor3 extends GTDungeonChunkCorridor {
                 case 1:
                     // Breakable wall, more likely when dungeon key #3 exists.
                     if (!data.generatedKeys[2]) return true;
-                    // GT6 falls through into case 2 here.
+                // GT6 falls through into case 2 here.
                 case 2:
                     // Breakable wall with the safe at the unused end.
                     for (int y = 0; y <= 4; y++) for (int x = 5; x <= 10; x++) data.cobbles(x, y, 13);
@@ -203,7 +199,7 @@ public class GTDungeonChunkCorridor3 extends GTDungeonChunkCorridor {
                 case 1:
                     // Breakable wall, more likely when dungeon key #3 exists.
                     if (!data.generatedKeys[2]) return true;
-                    // GT6 falls through into case 2 here.
+                // GT6 falls through into case 2 here.
                 case 2:
                     // Breakable wall with the safe at the unused end.
                     for (int y = 0; y <= 4; y++) for (int x = 5; x <= 10; x++) data.cobbles(x, y, 2);

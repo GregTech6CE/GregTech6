@@ -2,6 +2,7 @@ package gregtech.engine.recipe;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.MaterialEquivalence;
+import gregtech.engine.stack.StackData;
 import java.util.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -95,11 +96,7 @@ final class MaterialUnitRecipeIndex {
             }
             if (!otherInputs) continue;
             var key = new Key(rule, stack.getItem());
-//? if >=1.21.1 {
-            /*boolean cacheable = stack.getComponentsPatch().isEmpty();
-*///?} else {
-            boolean cacheable = !stack.hasTag();
-//?}
+            boolean cacheable = !StackData.hasAnyData(stack);
             Recipe row = cacheable ? batches.get(key) : null;
             if (row == null) {
                 row = rule.resolve(stack);

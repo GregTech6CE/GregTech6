@@ -2,6 +2,7 @@ package gregtech.engine.material;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.content.block.MaterialBlockLike;
+import gregtech.engine.stack.StackData;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -37,7 +38,10 @@ public final class MaterialUnification {
 
     private static Item requestedTarget(ItemStack stack) {
         if (stack.getItem() instanceof BlockItem item && item.getBlock() instanceof MaterialBlockLike block) {
-            if (!BuiltInRegistries.ITEM.getKey(item).getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return null;
+            if (!BuiltInRegistries.ITEM
+                    .getKey(item)
+                    .getNamespace()
+                    .equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return null;
             String name = block.material().resolve().getName();
             return VANILLA_BLOCK_TARGETS.get(block.prefix().getName() + "/" + name);
         }
@@ -126,29 +130,30 @@ public final class MaterialUnification {
 
     /** The explicitly replaced GT entries, shared by creative tabs, JEI and EMI. */
     public static boolean hiddenDuplicate(ItemStack stack) {
-        if (stack == null || stack.isEmpty()
-                || !BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return false;
+        if (stack == null
+                || stack.isEmpty()
+                || !BuiltInRegistries.ITEM
+                        .getKey(stack.getItem())
+                        .getNamespace()
+                        .equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return false;
         Item target = requestedTarget(stack);
         return target != null && target != stack.getItem();
     }
 
     /** Its item mappings are requirement keys in {@code RecipeInputs.requireKeys}; change both together. */
     public static ItemStack canonical(ItemStack stack) {
-//? if >=1.21.1 {
-        /*if (stack == null || stack.isEmpty() || !stack.getComponentsPatch().isEmpty() || stack.isDamaged()) return stack;
-*///?} else {
-        if (stack == null || stack.isEmpty() || stack.hasTag() || stack.isDamaged()) return stack;
-//?}
+        if (stack == null || stack.isEmpty() || StackData.hasAnyData(stack) || stack.isDamaged()) return stack;
         Item target = requestedTarget(stack);
         if (target != null) return target == stack.getItem() ? stack : new ItemStack(target, stack.getCount());
         if (target == null) {
             var form = MaterialEquivalence.form(stack);
-            if (form != null) target = switch (form.prefix().getName() + "/" + form.material().getName()) {
-                case "gem/Emerald" -> Items.EMERALD;
-                case "gem/NetherQuartz" -> Items.QUARTZ;
-                case "stick/Wood" -> Items.STICK;
-                default -> null;
-            };
+            if (form != null)
+                target = switch (form.prefix().getName() + "/" + form.material().getName()) {
+                    case "gem/Emerald" -> Items.EMERALD;
+                    case "gem/NetherQuartz" -> Items.QUARTZ;
+                    case "stick/Wood" -> Items.STICK;
+                    default -> null;
+                };
         }
         if (target == null || target == stack.getItem()) return stack;
         // Block forms have a separately verified 9U mapping; item forms must agree with vanilla data.
@@ -163,7 +168,9 @@ public final class MaterialUnification {
         // The target may supply the expected form as a secondary registration (glass pane).
         var id = BuiltInRegistries.ITEM.getKey(result.getItem());
         return id.getNamespace().equals("minecraft")
-                && VanillaUnificationDefinitions.extraPrefixes(id.getPath()).contains(expected.prefix())
-                ? result : stack;
+                        && VanillaUnificationDefinitions.extraPrefixes(id.getPath())
+                                .contains(expected.prefix())
+                ? result
+                : stack;
     }
 }

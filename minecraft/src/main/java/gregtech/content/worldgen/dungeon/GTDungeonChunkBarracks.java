@@ -1,12 +1,8 @@
 package gregtech.content.worldgen.dungeon;
 
-//? if >=1.21.1 {
-/*import gregtech.content.registry.*;
-*///?} else {
-//?}
 import gregtech.content.blockentity.RockBlockEntity;
-import gregtech.content.worldgen.GTRockPlacement;
 import gregtech.content.data.generated.GT6Materials;
+import gregtech.content.worldgen.GTRockPlacement;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
@@ -60,10 +56,11 @@ public class GTDungeonChunkBarracks extends GTDungeonChunkRoomEmpty {
 
     /** Vanilla's sixteen carpets in GT6's dye order (white..black), for GT6's {@code Blocks.carpet} meta. */
     private static final Block[] CARPET = {
-            Blocks.WHITE_CARPET, Blocks.ORANGE_CARPET, Blocks.MAGENTA_CARPET, Blocks.LIGHT_BLUE_CARPET,
-            Blocks.YELLOW_CARPET, Blocks.LIME_CARPET, Blocks.PINK_CARPET, Blocks.GRAY_CARPET,
-            Blocks.LIGHT_GRAY_CARPET, Blocks.CYAN_CARPET, Blocks.PURPLE_CARPET, Blocks.BLUE_CARPET,
-            Blocks.BROWN_CARPET, Blocks.GREEN_CARPET, Blocks.RED_CARPET, Blocks.BLACK_CARPET};
+        Blocks.WHITE_CARPET, Blocks.ORANGE_CARPET, Blocks.MAGENTA_CARPET, Blocks.LIGHT_BLUE_CARPET,
+        Blocks.YELLOW_CARPET, Blocks.LIME_CARPET, Blocks.PINK_CARPET, Blocks.GRAY_CARPET,
+        Blocks.LIGHT_GRAY_CARPET, Blocks.CYAN_CARPET, Blocks.PURPLE_CARPET, Blocks.BLUE_CARPET,
+        Blocks.BROWN_CARPET, Blocks.GREEN_CARPET, Blocks.RED_CARPET, Blocks.BLACK_CARPET
+    };
 
     /**
      * GT6's {@code tLoots} as 1.20.1 loot tables, in GT6's own order: stronghold library, stronghold
@@ -72,9 +69,10 @@ public class GTDungeonChunkBarracks extends GTDungeonChunkRoomEmpty {
      * {@code chests/spawn_bonus_chest} (the port already injects GT content into it).
      */
     private static final String[] LOOT = {
-            "chests/stronghold_library", "chests/stronghold_corridor", "chests/stronghold_crossing",
-            "chests/desert_pyramid", "chests/jungle_temple", "chests/village_weaponsmith",
-            "chests/abandoned_mineshaft", "chests/simple_dungeon", "chests/spawn_bonus_chest"};
+        "chests/stronghold_library", "chests/stronghold_corridor", "chests/stronghold_crossing",
+        "chests/desert_pyramid", "chests/jungle_temple", "chests/village_weaponsmith",
+        "chests/abandoned_mineshaft", "chests/simple_dungeon", "chests/spawn_bonus_chest"
+    };
 
     @Override
     public boolean generate(GTDungeonData data) {
@@ -249,7 +247,8 @@ public class GTDungeonChunkBarracks extends GTDungeonChunkRoomEmpty {
 
     /** - one half of an iron door, from GT6's 1.7.10 metadata. */
     private static BlockState door(Direction facing, DoorHingeSide hinge, DoubleBlockHalf half) {
-        return Blocks.IRON_DOOR.defaultBlockState()
+        return Blocks.IRON_DOOR
+                .defaultBlockState()
                 .setValue(DoorBlock.FACING, facing)
                 .setValue(DoorBlock.HINGE, hinge)
                 .setValue(DoorBlock.HALF, half);
@@ -257,14 +256,16 @@ public class GTDungeonChunkBarracks extends GTDungeonChunkRoomEmpty {
 
     /** - a stone button on the wall it points away from. */
     private static BlockState button(Direction facing) {
-        return Blocks.STONE_BUTTON.defaultBlockState()
+        return Blocks.STONE_BUTTON
+                .defaultBlockState()
                 .setValue(FaceAttachedHorizontalDirectionalBlock.FACE, AttachFace.WALL)
                 .setValue(FaceAttachedHorizontalDirectionalBlock.FACING, facing);
     }
 
     /** - one half of a bed; the facing runs from the foot towards the head. */
     private static BlockState bed(Direction facing, BedPart part) {
-        return Blocks.RED_BED.defaultBlockState()
+        return Blocks.RED_BED
+                .defaultBlockState()
                 .setValue(BedBlock.FACING, facing)
                 .setValue(BedBlock.PART, part);
     }

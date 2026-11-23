@@ -1,38 +1,31 @@
 package gregtech.client;
-import gregtech.engine.mod.GregTechIdentity;
-
-import gregtech.api.material.MaterialComponent;
-import gregtech.engine.material.MaterialPresentation;
-
-
-
 
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
-import gregtech.engine.material.ItemMaterialRegistry;
-import gregtech.engine.material.MaterialChemistry;
-import gregtech.engine.machine.FurnaceFuelValue;
+import gregtech.api.material.MaterialComponent;
 import gregtech.api.material.MaterialProperty;
 import gregtech.api.mod.ModData;
-import gregtech.engine.prefix.BlockMaterialPrefix;
-import gregtech.content.data.MaterialPrefix;
 import gregtech.content.block.BlockMaterialWeights;
 import gregtech.content.block.stone.StoneMaterialWeights;
 import gregtech.content.block.stone.StoneVariant;
 import gregtech.content.data.GregTechConstants;
+import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.ModReferences;
 import gregtech.content.recipe.ShapelessRecipeTooltipIndex;
+import gregtech.engine.machine.FurnaceFuelValue;
+import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.material.MaterialChemistry;
+import gregtech.engine.material.MaterialPresentation;
+import gregtech.engine.mod.GregTechIdentity;
+import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.platform.Mc;
+import java.util.List;
+import java.util.Locale;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
-import java.util.Locale;
 
 /**
  * GregTech-style material item tooltips (mirrors GT6 {@code GT_API_Proxy_Client} material section).
@@ -40,33 +33,47 @@ import java.util.Locale;
 public final class MaterialTooltips {
     private MaterialTooltips() {}
 
-    public static void append(ItemStack stack, GTMaterial material, MaterialPrefix prefix,
-                              List<Component> tooltip, TooltipFlag flag) {
+    public static void append(
+            ItemStack stack, GTMaterial material, MaterialPrefix prefix, List<Component> tooltip, TooltipFlag flag) {
         append(stack, material, prefix.getMaterialWeight(), prefix, tooltip, flag);
     }
 
-    public static void appendBlock(ItemStack stack, GTMaterial material, BlockMaterialPrefix prefix,
-                                   List<Component> tooltip, TooltipFlag flag) {
+    public static void appendBlock(
+            ItemStack stack,
+            GTMaterial material,
+            BlockMaterialPrefix prefix,
+            List<Component> tooltip,
+            TooltipFlag flag) {
         appendWithMaterials(stack, material, BlockMaterialWeights.contained(material, prefix), null, tooltip, flag);
     }
 
     /** Decorative stone blocks ({@link gregtech.content.block.stone.GTStoneBlock}). */
-    public static void appendStoneBlock(ItemStack stack, GTMaterial material, StoneVariant variant, boolean slab,
-                                        List<Component> tooltip, TooltipFlag flag) {
-        appendWithMaterials(stack, material, StoneMaterialWeights.contained(material, variant, slab), null, tooltip, flag);
+    public static void appendStoneBlock(
+            ItemStack stack,
+            GTMaterial material,
+            StoneVariant variant,
+            boolean slab,
+            List<Component> tooltip,
+            TooltipFlag flag) {
+        appendWithMaterials(
+                stack, material, StoneMaterialWeights.contained(material, variant, slab), null, tooltip, flag);
     }
 
-    private static void appendWithMaterials(ItemStack stack, GTMaterial material,
-                                            List<MaterialComponent> materials,
-                                            @Nullable MaterialPrefix prefix,
-                                            List<Component> tooltip, TooltipFlag flag) {
+    private static void appendWithMaterials(
+            ItemStack stack,
+            GTMaterial material,
+            List<MaterialComponent> materials,
+            @Nullable MaterialPrefix prefix,
+            List<Component> tooltip,
+            TooltipFlag flag) {
         GTMaterial mat = material.resolve();
         if (mat.getId() <= 0) {
             return;
         }
 
         if (mat.hasToolStats() && prefix != null) {
-            tooltip.add(Component.literal(String.format(Locale.ROOT,
+            tooltip.add(Component.literal(String.format(
+                            Locale.ROOT,
                             "Q: %d - S: %s - D: %d",
                             mat.getToolQuality(),
                             formatSpeed(mat.getToolSpeed()),
@@ -74,16 +81,19 @@ public final class MaterialTooltips {
                     .withStyle(ChatFormatting.BLUE));
         }
 
-        if (prefix != null && java.util.Arrays.stream(gregtech.engine.tool.GTToolType.values())
-                .anyMatch(type -> type.headPrefix() == prefix && type.requiresHeadAssembly())) {
+        if (prefix != null
+                && java.util.Arrays.stream(gregtech.engine.tool.GTToolType.values())
+                        .anyMatch(type -> type.headPrefix() == prefix && type.requiresHeadAssembly())) {
             var handle = gregtech.content.tool.OriginalToolMaterials.requiredHandleMaterial(mat);
-            if (handle != null) tooltip.add(Component.translatable("gt.lang.needs.handle")
-                    .append(MaterialPresentation.name(handle))
-                    .withStyle(ChatFormatting.YELLOW));
+            if (handle != null)
+                tooltip.add(Component.translatable("gt.lang.needs.handle")
+                        .append(MaterialPresentation.name(handle))
+                        .withStyle(ChatFormatting.YELLOW));
         }
 
         if (mat == gregtech.content.material.generated.OreMaterials.Pyrite) {
-            tooltip.add(Component.translatable("tooltip.gt6ce.pyrite.fools_gold").withStyle(ChatFormatting.YELLOW));
+            tooltip.add(
+                    Component.translatable("tooltip.gt6ce.pyrite.fools_gold").withStyle(ChatFormatting.YELLOW));
         }
 
         appendFuelValue(FurnaceFuelValue.getBurnValue(stack), tooltip);
@@ -98,18 +108,18 @@ public final class MaterialTooltips {
             List<Integer> shapeless = ShapelessRecipeTooltipIndex.inputAmounts(prefix, mat);
             if (!shapeless.isEmpty()) {
 
-                tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".shapeless_recipes")
-
-                        .append(Component.literal(shapeless.toString()).withStyle(ChatFormatting.WHITE))
-                        .withStyle(ChatFormatting.AQUA));
+                tooltip.add(
+                        Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".shapeless_recipes")
+                                .append(Component.literal(shapeless.toString()).withStyle(ChatFormatting.WHITE))
+                                .withStyle(ChatFormatting.AQUA));
             }
         }
 
         if (gregtech.GregTechConfig.materialDetails() && flag.isAdvanced()) {
 
-            tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".contained_materials")
-
-                    .withStyle(ChatFormatting.DARK_AQUA));
+            tooltip.add(
+                    Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".contained_materials")
+                            .withStyle(ChatFormatting.DARK_AQUA));
             for (MaterialComponent weighted : materials) {
                 if (weighted.material().isValid()) {
                     tooltip.add(containedMaterialLine(weighted.material(), weighted.amount()));
@@ -118,24 +128,37 @@ public final class MaterialTooltips {
         } else if (gregtech.GregTechConfig.materialDetails()) {
 
             tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".f3h_hint")
-
                     .withStyle(ChatFormatting.DARK_GRAY));
         }
 
-        if (flag.isAdvanced() && prefix!=null) {
-            var form = new gregtech.engine.material.MaterialEquivalence.Form(prefix,mat);
+        if (flag.isAdvanced() && prefix != null) {
+            var form = new gregtech.engine.material.MaterialEquivalence.Form(prefix, mat);
             String tag = gregtech.engine.material.MaterialEquivalence.tagPath(form);
-            if (tag!=null) tooltip.add(Component.translatable("tooltip.gt6ce.material_tag","forge:"+tag).withStyle(ChatFormatting.DARK_GRAY));
-            GTMaterial target = prefix==MaterialPrefix.oreRaw ? mat.getTargetCrushingMaterial() : mat.getTargetPulverMaterial();
-            if (target.resolve()!=mat) tooltip.add(Component.translatable(prefix==MaterialPrefix.oreRaw ? "tooltip.gt6ce.crushing_result" : "tooltip.gt6ce.pulver_result",MaterialPresentation.name(target)).withStyle(ChatFormatting.GRAY));
+            if (tag != null)
+                tooltip.add(Component.translatable("tooltip.gt6ce.material_tag", "forge:" + tag)
+                        .withStyle(ChatFormatting.DARK_GRAY));
+            GTMaterial target =
+                    prefix == MaterialPrefix.oreRaw ? mat.getTargetCrushingMaterial() : mat.getTargetPulverMaterial();
+            if (target.resolve() != mat)
+                tooltip.add(Component.translatable(
+                                prefix == MaterialPrefix.oreRaw
+                                        ? "tooltip.gt6ce.crushing_result"
+                                        : "tooltip.gt6ce.pulver_result",
+                                MaterialPresentation.name(target))
+                        .withStyle(ChatFormatting.GRAY));
         }
         appendSourceModTooltip(tooltip, mat);
     }
 
-    private static void append(ItemStack stack, GTMaterial material, long materialAmount,
-                               @Nullable MaterialPrefix prefix, List<Component> tooltip, TooltipFlag flag) {
-        appendWithMaterials(stack, material,
-                MaterialChemistry.prefixMaterialWeights(material, prefix), prefix, tooltip, flag);
+    private static void append(
+            ItemStack stack,
+            GTMaterial material,
+            long materialAmount,
+            @Nullable MaterialPrefix prefix,
+            List<Component> tooltip,
+            TooltipFlag flag) {
+        appendWithMaterials(
+                stack, material, MaterialChemistry.prefixMaterialWeights(material, prefix), prefix, tooltip, flag);
     }
 
     public static void appendSourceModTooltip(List<Component> tooltip, GTMaterial mat) {
@@ -143,61 +166,55 @@ public final class MaterialTooltips {
         if (source == null || source == ModReferences.UNKNOWN) {
 
             tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".material_from_gt")
-
                     .withStyle(ChatFormatting.BLUE));
             return;
         }
         if (source == ModReferences.MC) {
 
             tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".vanilla_material")
-
                     .withStyle(ChatFormatting.BLUE));
             return;
         }
         if ((source == ModReferences.GT || source == ModReferences.GAPI) && isPeriodicTableElement(mat)) {
 
-            tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".material_from_periodic_table")
-
+            tooltip.add(Component.translatable(
+                            "tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".material_from_periodic_table")
                     .withStyle(ChatFormatting.BLUE));
             return;
         }
         if (source == ModReferences.GT || source == ModReferences.GAPI) {
 
             tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".material_from_gt")
-
                     .withStyle(ChatFormatting.BLUE));
             return;
         }
         var owners = gregtech.engine.addon.AddonMaterials.owners(mat);
         if (owners.size() > 1) {
-//? if >=1.21.1 {
-/*            tooltip.add(Component.translatable("tooltip.gt6ce.material_from_addons", String.join(", ", owners))
+            tooltip.add(Component.translatable(
+                            "tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".material_from_addons",
+                            String.join(", ", owners))
                     .withStyle(ChatFormatting.BLUE));
-*///?} else {
-            tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".material_from_addons",
-                    String.join(", ", owners)).withStyle(ChatFormatting.BLUE));
-//?}
             return;
         }
         String sourceKey = gregtech.engine.material.GTMaterialRegistry.isCoreMaterial(mat)
-// Version-specific branch.
+                // Version-specific branch.
                 ? "tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".material_from_mod"
                 : "tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".material_from_addon";
-        tooltip.add(Component.translatable(sourceKey, source.name)
-                .withStyle(ChatFormatting.BLUE));
+        tooltip.add(Component.translatable(sourceKey, source.name).withStyle(ChatFormatting.BLUE));
     }
 
     private static boolean isPeriodicTableElement(GTMaterial mat) {
         return GTMaterialRegistry.isPeriodicTableElement(mat);
     }
 
-    public static void appendForeign(ItemStack stack, gregtech.engine.material.ItemComposition data,
-                                     List<Component> tooltip, TooltipFlag flag) {
+    public static void appendForeign(
+            ItemStack stack, gregtech.engine.material.ItemComposition data, List<Component> tooltip, TooltipFlag flag) {
         appendRecoveryState(stack, tooltip, flag);
         var form = gregtech.engine.material.MaterialEquivalence.form(stack);
-        if (form!=null) {
+        if (form != null) {
             var weights = data.components().stream()
-                    .flatMap(component -> MaterialChemistry.materialWeights(component.material(), component.amount()).stream())
+                    .flatMap(component ->
+                            MaterialChemistry.materialWeights(component.material(), component.amount()).stream())
                     .toList();
             appendWithMaterials(stack, form.material(), weights, form.prefix(), tooltip, flag);
             return;
@@ -206,7 +223,8 @@ public final class MaterialTooltips {
         if (mat.getId() <= 0) {
             if (data.components().isEmpty()) return;
             if (gregtech.GregTechConfig.materialDetails() && flag.isAdvanced()) {
-                tooltip.add(Component.translatable("tooltip.gt6ce.contained_materials").withStyle(ChatFormatting.DARK_AQUA));
+                tooltip.add(Component.translatable("tooltip.gt6ce.contained_materials")
+                        .withStyle(ChatFormatting.DARK_AQUA));
                 for (var component : data.components())
                     for (var weighted : MaterialChemistry.materialWeights(component.material(), component.amount()))
                         tooltip.add(containedMaterialLine(weighted.material(), weighted.amount()));
@@ -225,31 +243,34 @@ public final class MaterialTooltips {
         }
         if (gregtech.GregTechConfig.materialDetails() && flag.isAdvanced()) {
 
-            tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".contained_materials")
-
-                    .withStyle(ChatFormatting.DARK_AQUA));
-            for (var component : data.components()) for (MaterialComponent weighted : MaterialChemistry.materialWeights(component.material(), component.amount())) {
-                if (weighted.material().isValid()) {
-                    tooltip.add(containedMaterialLine(weighted.material(), weighted.amount()));
+            tooltip.add(
+                    Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".contained_materials")
+                            .withStyle(ChatFormatting.DARK_AQUA));
+            for (var component : data.components())
+                for (MaterialComponent weighted :
+                        MaterialChemistry.materialWeights(component.material(), component.amount())) {
+                    if (weighted.material().isValid()) {
+                        tooltip.add(containedMaterialLine(weighted.material(), weighted.amount()));
+                    }
                 }
-            }
         } else if (gregtech.GregTechConfig.materialDetails()) {
 
             tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".f3h_hint")
-
                     .withStyle(ChatFormatting.DARK_GRAY));
         }
 
-
-        tooltip.add(Component.translatable(Mc.itemId(stack.getItem()).getNamespace().equals("minecraft") ? "tooltip.gt6ce.vanilla_material" : "tooltip.gt6ce.foreign_material")
-
+        tooltip.add(Component.translatable(
+                        Mc.itemId(stack.getItem()).getNamespace().equals("minecraft")
+                                ? "tooltip.gt6ce.vanilla_material"
+                                : "tooltip.gt6ce.foreign_material")
                 .withStyle(ChatFormatting.BLUE));
     }
 
     private static void appendRecoveryState(ItemStack stack, List<Component> tooltip, TooltipFlag flag) {
         if (!flag.isAdvanced()) return;
         if (stack.isDamaged())
-            tooltip.add(Component.translatable("tooltip.gt6ce.composition_scaled_damage").withStyle(ChatFormatting.GRAY));
+            tooltip.add(Component.translatable("tooltip.gt6ce.composition_scaled_damage")
+                    .withStyle(ChatFormatting.GRAY));
         var rejection = gregtech.engine.material.ItemMaterialRegistry.recoveryRejection(stack);
         String key = switch (rejection) {
             case NO_COMPOSITION, NO_COMPONENTS -> "tooltip.gt6ce.composition_nonmaterial";
@@ -315,7 +336,8 @@ public final class MaterialTooltips {
     /** Shared Q/S/D line for pipes, tanks, and blocks. Called by {@link TankTooltips}. */
     public static void appendToolStats(GTMaterial mat, List<Component> tooltip) {
         if (!mat.hasToolStats()) return;
-        tooltip.add(Component.literal(String.format(Locale.ROOT,
+        tooltip.add(Component.literal(String.format(
+                        Locale.ROOT,
                         "Q: %d - S: %s - D: %d",
                         mat.getToolQuality(),
                         formatSpeed(mat.getToolSpeed()),
@@ -330,8 +352,8 @@ public final class MaterialTooltips {
         return String.format(Locale.ROOT, "%s", speed);
     }
 
-    public static void appendFuelTooltip(GTMaterial material, @Nullable MaterialPrefix prefix, long amount,
-                                         List<Component> tooltip) {
+    public static void appendFuelTooltip(
+            GTMaterial material, @Nullable MaterialPrefix prefix, long amount, List<Component> tooltip) {
         appendFuelValue(FurnaceFuelValue.getBurnValue(material, prefix, amount), tooltip);
     }
 
@@ -341,9 +363,7 @@ public final class MaterialTooltips {
         }
         long heat = burnValue * GregTechConstants.EU_PER_FURNACE_TICK;
         tooltip.add(Component.empty()
-
                 .append(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".fuel_value.label")
-
                         .withStyle(ChatFormatting.RED))
                 .append(Component.literal(Long.toString(burnValue)).withStyle(ChatFormatting.WHITE))
                 .append(Component.literal(" (" + heat + " ").withStyle(ChatFormatting.WHITE))
@@ -355,7 +375,6 @@ public final class MaterialTooltips {
         if (material.resolve().has(MaterialProperty.FLAMMABLE)) {
 
             tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".flammable")
-
                     .withStyle(ChatFormatting.RED));
         }
     }

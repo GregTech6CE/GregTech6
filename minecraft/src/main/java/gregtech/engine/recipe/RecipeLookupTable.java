@@ -1,6 +1,7 @@
 package gregtech.engine.recipe;
 
 import gregtech.engine.stack.StackCompat;
+import gregtech.engine.stack.StackData;
 
 import com.mojang.logging.LogUtils;
 import java.util.*;
@@ -510,11 +511,7 @@ final class RecipeLookupTable extends AbstractCollection<Recipe> {
     }
 
     private static boolean plain(ItemStack stack) {
-//? if >=1.21.1 {
-        /*return stack.getComponentsPatch().isEmpty() && !stack.isDamaged();
-*///?} else {
-        return !stack.hasTag() && !stack.isDamaged();
-//?}
+        return !StackData.hasAnyData(stack) && !stack.isDamaged();
     }
 
     private static boolean empty(ItemStack stack) { return stack == null || stack.isEmpty(); }

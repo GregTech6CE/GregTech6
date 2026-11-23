@@ -3,6 +3,7 @@ package gregtech.engine.material;
 import gregtech.api.material.*;
 
 import gregtech.content.data.MaterialPrefix;
+import gregtech.engine.stack.StackData;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -142,11 +143,7 @@ public final class MaterialEquivalence {
     public static boolean matches(ItemStack required,ItemStack available) {
         // Common raw_materials tags do not erase the distinct ore/raw and block quantities.
         if (required.getItem() != available.getItem() && (vanillaRaw(required) || vanillaRaw(available))) return false;
-//? if >=1.21.1 {
-        /*if (!required.getComponentsPatch().isEmpty()||!available.getComponentsPatch().isEmpty()||required.isDamaged()||available.isDamaged()) return false;
-*///?} else {
-        if (required.hasTag()||available.hasTag()||required.isDamaged()||available.isDamaged()) return false;
-//?}
+        if (StackData.hasAnyData(required) || StackData.hasAnyData(available) || required.isDamaged() || available.isDamaged()) return false;
         var canonicalRequired = MaterialUnification.canonical(required);
         var canonicalAvailable = MaterialUnification.canonical(available);
         if (canonicalRequired.getItem() == canonicalAvailable.getItem()

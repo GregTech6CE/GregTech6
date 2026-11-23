@@ -133,11 +133,7 @@ public final class MaterialArrowEntity extends AbstractArrow {
 
     @Override
     public void shoot(double x, double y, double z, float speed, float spread) {
-//? if >=1.21.1 {
-        /*float multiplier = getPickupItem().getItem() instanceof MaterialFormItem form
-*///?} else {
-        float multiplier = ammo.getItem() instanceof MaterialFormItem form
-//?}
+        float multiplier = getPickupItem().getItem() instanceof MaterialFormItem form
                 ? MaterialArrowRules.speedMultiplier(form.getPrefix()) : 1.0F;
         super.shoot(x, y, z, speed * multiplier, spread);
     }

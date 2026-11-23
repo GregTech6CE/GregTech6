@@ -14,6 +14,7 @@ import gregtech.content.registry.GTFluids;
 import gregtech.engine.material.MaterialFormItem;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
+import gregtech.engine.stack.StackData;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
@@ -220,11 +221,7 @@ public final class RecipeDump {
             json.addProperty("host", gregtech.content.block.OreBlock.stoneOfStack(stack).id());
         }
 
-//? if >=1.21.1 {
-/*        if (!stack.getComponentsPatch().isEmpty()) json.addProperty("components", true);
-*///?} else {
-        if (stack.hasTag()) json.addProperty("nbt", true);
-//?}
+        if (StackData.hasAnyData(stack)) json.addProperty("components", true);
         return json;
     }
 

@@ -1,9 +1,5 @@
 package gregtech.content.worldgen.dungeon;
 
-//? if >=1.21.1 {
-/*import gregtech.content.registry.*;
-*///?} else {
-//?}
 import gregtech.content.block.wood.WoodSpecies;
 import gregtech.content.registry.GTWoods;
 import gregtech.platform.Mc;
@@ -84,18 +80,19 @@ public class GTDungeonChunkRoomFarmCrop extends GTDungeonChunkRoomEmpty {
     public static final String TAG_FARM_CROP = "gt.dungeon.farm.crop";
 
     /** GT6's {@code tCrops} list as 1.20.1 crops, in GT6's order (see the javadoc). */
-    private static final Block[] CROPS = {
-            Blocks.CARROTS, Blocks.POTATOES, Blocks.WHEAT, Blocks.BEETROOTS};
+    private static final Block[] CROPS = {Blocks.CARROTS, Blocks.POTATOES, Blocks.WHEAT, Blocks.BEETROOTS};
 
     /** The six vanilla saplings of GT6's {@code Blocks.sapling} meta 0..5. */
     private static final Block[] SAPLINGS = {
-            Blocks.OAK_SAPLING, Blocks.SPRUCE_SAPLING, Blocks.BIRCH_SAPLING,
-            Blocks.JUNGLE_SAPLING, Blocks.ACACIA_SAPLING, Blocks.DARK_OAK_SAPLING};
+        Blocks.OAK_SAPLING, Blocks.SPRUCE_SAPLING, Blocks.BIRCH_SAPLING,
+        Blocks.JUNGLE_SAPLING, Blocks.ACACIA_SAPLING, Blocks.DARK_OAK_SAPLING
+    };
 
     /** GT6 BlockTreeSaplingAB metadata 0..7, in its constructor's order. */
     private static final WoodSpecies[] SAPLINGS_AB = {
-            WoodSpecies.RUBBER, WoodSpecies.MAPLE, WoodSpecies.WILLOW, WoodSpecies.BLUE_MAHOE,
-            WoodSpecies.HAZEL, WoodSpecies.CINNAMON, WoodSpecies.COCONUT, WoodSpecies.RAINBOWOOD};
+        WoodSpecies.RUBBER, WoodSpecies.MAPLE, WoodSpecies.WILLOW, WoodSpecies.BLUE_MAHOE,
+        WoodSpecies.HAZEL, WoodSpecies.CINNAMON, WoodSpecies.COCONUT, WoodSpecies.RAINBOWOOD
+    };
 
     /** GT6 BlockTreeSaplingCD has maxMeta() == 1: Blue Spruce only. */
     private static final WoodSpecies[] SAPLINGS_CD = {WoodSpecies.BLUE_SPRUCE};
@@ -108,8 +105,7 @@ public class GTDungeonChunkRoomFarmCrop extends GTDungeonChunkRoomEmpty {
      * cannot support the plants written one block above it.</p>
      */
     private static void planter(GTDungeonData data, int x, int y, int z) {
-        Block block = Mc.block(
-                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "plant_pot"));
+        Block block = Mc.block(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "plant_pot"));
         data.set(x, y, z, (block == null ? Blocks.FLOWER_POT : block).defaultBlockState());
     }
 
@@ -188,13 +184,20 @@ public class GTDungeonChunkRoomFarmCrop extends GTDungeonChunkRoomEmpty {
                                 int melonAge = data.next(8);
                                 int pumpkinAge = data.next(8);
                                 boolean melon = data.next(2) == 0;
-                                data.set(tX, 2, tZ, (melon ? Blocks.MELON_STEM : Blocks.PUMPKIN_STEM)
-                                        .defaultBlockState()
-                                        .setValue(BlockStateProperties.AGE_7, melon ? melonAge : pumpkinAge));
+                                data.set(
+                                        tX,
+                                        2,
+                                        tZ,
+                                        (melon ? Blocks.MELON_STEM : Blocks.PUMPKIN_STEM)
+                                                .defaultBlockState()
+                                                .setValue(BlockStateProperties.AGE_7, melon ? melonAge : pumpkinAge));
                             } else {
                                 // - a whole melon or pumpkin, chosen by a roll of two.
-                                data.set(tX, 2, tZ, (data.next(2) == 0 ? Blocks.MELON : Blocks.PUMPKIN)
-                                        .defaultBlockState());
+                                data.set(
+                                        tX,
+                                        2,
+                                        tZ,
+                                        (data.next(2) == 0 ? Blocks.MELON : Blocks.PUMPKIN).defaultBlockState());
                             }
                         } else {
                             // - a random crop with a random growth stage.
@@ -341,12 +344,17 @@ public class GTDungeonChunkRoomFarmCrop extends GTDungeonChunkRoomEmpty {
      * writes the log first and rolls the cocoa's growth stage while building the cocoa's 1.7.10 metadata,
      * which is why the roll sits between the two writes here as well.
      */
-    private static void cocoaPair(GTDungeonData data, int logX, int logZ, int cocoaX, int cocoaZ,
-                                  Direction cocoaFacing) {
+    private static void cocoaPair(
+            GTDungeonData data, int logX, int logZ, int cocoaX, int cocoaZ, Direction cocoaFacing) {
         data.set(logX, 3, logZ, Blocks.JUNGLE_LOG.defaultBlockState());
-        data.set(cocoaX, 3, cocoaZ, Blocks.COCOA.defaultBlockState()
-                .setValue(CocoaBlock.FACING, cocoaFacing)
-                .setValue(CocoaBlock.AGE, data.next(3)));
+        data.set(
+                cocoaX,
+                3,
+                cocoaZ,
+                Blocks.COCOA
+                        .defaultBlockState()
+                        .setValue(CocoaBlock.FACING, cocoaFacing)
+                        .setValue(CocoaBlock.AGE, data.next(3)));
     }
 
     /** GT6's tall plant: the lower half at {@code y}, the upper one at {@code y + 1}. */

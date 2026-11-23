@@ -55,11 +55,7 @@ public final class OreClientModels {
         int mapped = 0;
         int states = 0;
         for (var entry : GTBlocks.allEntries()) {
-//? if >=1.21.1 {
-            /*if (!entry.isBound() || !(entry.get() instanceof OreBlock ore)) continue;
-*///?} else {
             if (!entry.isPresent() || !(entry.get() instanceof OreBlock ore)) continue;
-//?}
             ResourceLocation blockId = Mc.blockId(ore);
             if (blockId == null) continue;
 

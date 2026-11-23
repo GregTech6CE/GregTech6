@@ -1,15 +1,10 @@
 package gregtech.content.worldgen.dungeon;
 
-//? if >=1.21.1 {
-/*import gregtech.content.registry.*;
-*///?} else {
-//?}
 import gregtech.content.block.stone.StoneType;
+import java.util.List;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.WorldGenLevel;
-
-import java.util.List;
 
 /**
  * The dungeon's gate and layout, ported from GT6's {@code WorldgenDungeonGT}
@@ -40,6 +35,7 @@ public final class GTDungeonLayout {
 
     /** GT6's registration values ({@code Loader_Worldgen}). */
     public static final int PROBABILITY = 100;
+
     public static final int MIN_SIZE = 3, MAX_SIZE = 7;
     public static final int MIN_Y = 20, MAX_Y = 20;
     public static final int ROOM_CHANCE = 6;
@@ -68,8 +64,10 @@ public final class GTDungeonLayout {
      */
     public static DungeonLayoutRules.Settings settings() {
         return new DungeonLayoutRules.Settings(
-                gregtech.GregTechConfig.Number.DUNGEON_MIN_SIZE.value(), gregtech.GregTechConfig.Number.DUNGEON_MAX_SIZE.value(),
-                gregtech.GregTechConfig.Number.DUNGEON_MIN_Y.value(), gregtech.GregTechConfig.Number.DUNGEON_MAX_Y.value(),
+                gregtech.GregTechConfig.Number.DUNGEON_MIN_SIZE.value(),
+                gregtech.GregTechConfig.Number.DUNGEON_MAX_SIZE.value(),
+                gregtech.GregTechConfig.Number.DUNGEON_MIN_Y.value(),
+                gregtech.GregTechConfig.Number.DUNGEON_MAX_Y.value(),
                 gregtech.GregTechConfig.Number.DUNGEON_ROOM_CHANCE.value());
     }
 
@@ -84,7 +82,9 @@ public final class GTDungeonLayout {
      * half a layout away from it. The anchors are the coordinates whose absolute value is
      * {@code ANCHOR_OFFSET} modulo {@link #GRID_PERIOD}.
      */
-    private static int nearestAnchor(int chunk) {return DungeonLayoutRules.nearestAnchor(chunk, settings());}
+    private static int nearestAnchor(int chunk) {
+        return DungeonLayoutRules.nearestAnchor(chunk, settings());
+    }
 
     /**
      * GT6's anchor test on one axis ({@code WorldgenDungeonGT}):
@@ -94,10 +94,14 @@ public final class GTDungeonLayout {
      * as its structure chunks, so {@code /locate structure gt6ce:gt_dungeon} answers with the same
      * anchors the feature builds a dungeon from. Public because it is that shared rule.
      */
-    public static boolean isAnchor(int chunk) {return DungeonLayoutRules.isAnchor(chunk, settings());}
+    public static boolean isAnchor(int chunk) {
+        return DungeonLayoutRules.isAnchor(chunk, settings());
+    }
 
     /** The grid region of one axis, in vanilla's own {@code floorDiv} sense (region {@code 0} starts at 0). */
-    public static int regionOf(int chunk) {return DungeonLayoutRules.regionOf(chunk, settings());}
+    public static int regionOf(int chunk) {
+        return DungeonLayoutRules.regionOf(chunk, settings());
+    }
 
     /**
      * The anchor {@link #isAnchor} accepts inside the given grid region. Chunk 0 lies on the border of
@@ -106,7 +110,9 @@ public final class GTDungeonLayout {
      * ({@code GRID_PERIOD - ANCHOR_OFFSET}, so region {@code -1} holds -5), which is what
      * {@code abs(chunk) % GRID_PERIOD} means.
      */
-    public static int anchorOfRegion(int region) {return DungeonLayoutRules.anchorOfRegion(region, settings());}
+    public static int anchorOfRegion(int region) {
+        return DungeonLayoutRules.anchorOfRegion(region, settings());
+    }
 
     /** The seed the whole dungeon hangs off: the world seed plus the anchor position. */
     public static long seedFor(WorldGenLevel level, ChunkPos anchor) {
@@ -120,7 +126,7 @@ public final class GTDungeonLayout {
      * structure exists exactly where the cell generator builds a dungeon.
      */
     public static long seedFor(long worldSeed, ChunkPos anchor) {
-        return DungeonLayoutRules.seed(worldSeed,anchor.x,anchor.z);
+        return DungeonLayoutRules.seed(worldSeed, anchor.x, anchor.z);
     }
 
     /**
@@ -157,26 +163,33 @@ public final class GTDungeonLayout {
     /** GT6's anchor-based spawn clearance ({@code WorldgenDungeonGT}). */
     public static boolean passesAnchorClearance(ChunkPos anchor) {
         int minX = anchor.getMinBlockX(), minZ = anchor.getMinBlockZ();
-        return DungeonLayoutRules.clearance(minX,minZ, settings());
+        return DungeonLayoutRules.clearance(minX, minZ, settings());
     }
 
     /** GT6's {@code mMinY + aRandom.nextInt(Math.max(1, mMaxY - mMinY))}. */
-    public static int offsetY(RandomSource random) {return DungeonLayoutRules.offsetY(random::nextInt, settings());}
+    public static int offsetY(RandomSource random) {
+        return DungeonLayoutRules.offsetY(random::nextInt, settings());
+    }
 
     /** The dungeon's Y level in the 1.18+ world (see {@code GTWorldgenScale}). */
     public static int y(WorldGenLevel level, int offsetY) {
-        return Math.max(level.getMinBuildHeight() + 5, Math.min(level.getMaxBuildHeight() - 32,
-                gregtech.content.worldgen.GTWorldgenScale.remapY(level, offsetY)));
+        return Math.max(
+                level.getMinBuildHeight() + 5,
+                Math.min(
+                        level.getMaxBuildHeight() - 32,
+                        gregtech.content.worldgen.GTWorldgenScale.remapY(level, offsetY)));
     }
 
     /** The two rock types GT6 rolls for the dungeon ({@code BlocksGT.stones[rnd]}). */
     public static StoneType[] rocks(RandomSource random) {
         StoneType[] all = StoneType.values();
-        return new StoneType[]{all[random.nextInt(all.length)], all[random.nextInt(all.length)]};
+        return new StoneType[] {all[random.nextInt(all.length)], all[random.nextInt(all.length)]};
     }
 
     /** The size of the layout in cells, exactly GT6's {@code 2 + mMinSize + rnd(1 + mMaxSize - mMinSize)}. */
-    public static int size(RandomSource random) {return DungeonLayoutRules.size(random::nextInt, settings());}
+    public static int size(RandomSource random) {
+        return DungeonLayoutRules.size(random::nextInt, settings());
+    }
 
     /**
      * GT6's layout algorithm ({@code WorldgenDungeonGT}): pick two "important" cells
@@ -188,18 +201,22 @@ public final class GTDungeonLayout {
      * {@link #BARRACKS} / {@link #ENTRANCE} = the important rooms. The returned array is indexed
      * {@code [i][j]} with {@code i} along X and {@code j} along Z.</p>
      */
-    public static byte[][] layout(RandomSource random) {return DungeonLayoutRules.layout(random::nextInt, settings());}
+    public static byte[][] layout(RandomSource random) {
+        return DungeonLayoutRules.layout(random::nextInt, settings());
+    }
 
     /** One of GT6's two cleanup passes over the corridor cells. */
 
-
     /** GT6's per-cell connection count: how many of the four horizontal neighbours are dungeon cells. */
-    public static int connectionCount(byte[][] cells, int i, int j) {return DungeonLayoutRules.connectionCount(cells,i,j);}
+    public static int connectionCount(byte[][] cells, int i, int j) {
+        return DungeonLayoutRules.connectionCount(cells, i, j);
+    }
 
     // Mob-farm outer platforms can occupy the layout's empty border cells. Outside the
     // layout is empty space, not a fifth neighbour or an index into another dungeon.
 
-
     /** Every cell of a layout, in GT6's own iteration order (row-major over i then j). */
-    public static List<int[]> cells(byte[][] cells) {return DungeonLayoutRules.cells(cells);}
+    public static List<int[]> cells(byte[][] cells) {
+        return DungeonLayoutRules.cells(cells);
+    }
 }

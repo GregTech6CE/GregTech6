@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import net.minecraft.SharedConstants;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.AbstractPackResources;
@@ -179,11 +180,9 @@ public final class RecipePublishing {
         @Override
         public IoSupplier<InputStream> getRootResource(String... path) {
             if (path.length != 1 || !path[0].equals("pack.mcmeta")) return null;
-//? if >=1.21.1 {
-            /*return () -> new ByteArrayInputStream(("{\"pack\":{\"pack_format\":48,\"description\":\""
-*///?} else {
-            return () -> new ByteArrayInputStream(("{\"pack\":{\"pack_format\":15,\"description\":\""
-//?}
+            return () -> new ByteArrayInputStream(("{\"pack\":{\"pack_format\":"
+                    + SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA)
+                    + ",\"description\":\""
                     + description + "\"}}")
                     .getBytes(StandardCharsets.UTF_8));
         }

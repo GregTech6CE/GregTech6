@@ -17,31 +17,24 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.registries.ForgeRegistries;
 //?}
 import org.slf4j.Logger;
-//? if >=1.21.1 {
-/*import org.slf4j.LoggerFactory;
-
+import org.slf4j.LoggerFactory;
 import java.lang.StackWalker.Option;
-*///?} else {
-//?}
 import java.util.stream.Stream;
 
 /**
  * Platform shim. NeoForge has a class with the same name and the same methods.
- * Each method keeps the behavior of the Forge call it replaces.
+ * Each method keeps the behavior of the Forge call it replaces, except {@link #logger()} which
+ * uses per-class SLF4J loggers on both loaders.
  */
 public final class Mc {
     private Mc() {}
 
 
-    /** 1.20.1 returns the mod logger; 1.21.1 names the logger after the calling class. */
+    /** Names the logger after the calling class. */
     public static Logger logger() {
-//? if >=1.21.1 {
-/*        Class<?> caller = StackWalker.getInstance(Option.RETAIN_CLASS_REFERENCE)
+        Class<?> caller = StackWalker.getInstance(Option.RETAIN_CLASS_REFERENCE)
                 .walk(frames -> frames.skip(1).findFirst().orElseThrow().getDeclaringClass());
         return LoggerFactory.getLogger(caller);
-*///?} else {
-        return GregTech.LOGGER;
-//?}
     }
 
     /** The Forge path is lowercased by {@code GregTech.id}; the NeoForge path is not. */

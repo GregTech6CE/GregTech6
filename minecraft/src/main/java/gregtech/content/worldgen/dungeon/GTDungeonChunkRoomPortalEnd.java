@@ -1,9 +1,5 @@
 package gregtech.content.worldgen.dungeon;
 
-//? if >=1.21.1 {
-/*import gregtech.content.registry.*;
-*///?} else {
-//?}
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EndPortalFrameBlock;
@@ -71,8 +67,11 @@ public class GTDungeonChunkRoomPortalEnd extends GTDungeonChunkRoomEmpty {
         // branch overwrites this floor again below, exactly like it does with the mod installed.
         for (int tX = 1; tX < 15; tX++) {
             for (int tZ = 1; tZ < 15; tZ++) {
-                data.set(tX, 0, tZ, pillar(tX, tZ) ? Blocks.GLOWSTONE.defaultBlockState()
-                        : Blocks.END_STONE.defaultBlockState());
+                data.set(
+                        tX,
+                        0,
+                        tZ,
+                        pillar(tX, tZ) ? Blocks.GLOWSTONE.defaultBlockState() : Blocks.END_STONE.defaultBlockState());
             }
         }
 
@@ -145,7 +144,8 @@ public class GTDungeonChunkRoomPortalEnd extends GTDungeonChunkRoomEmpty {
 
     /** One of GT6's end portal frames: the 1.7.10 metadata 4..7 as a 1.20.1 frame with its eye. */
     private static BlockState frame(Direction facing) {
-        return Blocks.END_PORTAL_FRAME.defaultBlockState()
+        return Blocks.END_PORTAL_FRAME
+                .defaultBlockState()
                 .setValue(EndPortalFrameBlock.FACING, facing)
                 .setValue(EndPortalFrameBlock.HAS_EYE, true);
     }

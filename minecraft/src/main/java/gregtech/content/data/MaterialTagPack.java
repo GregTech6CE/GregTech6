@@ -10,6 +10,7 @@ import gregtech.engine.material.MaterialViews;
 import gregtech.engine.material.VanillaUnificationDefinitions;
 import gregtech.content.item.FluidDisplayItemLike;
 import gregtech.platform.Mc;
+import net.minecraft.SharedConstants;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -594,11 +595,9 @@ public final class MaterialTagPack extends AbstractPackResources {
     }
     public IoSupplier<InputStream> getRootResource(String... path) {
         if (path.length!=1||!path[0].equals("pack.mcmeta"))return null;
-//? if >=1.21.1 {
-        /*return ()->new ByteArrayInputStream("{\"pack\":{\"pack_format\":48,\"description\":\"GregTech material tags\"}}".getBytes(StandardCharsets.UTF_8));
-*///?} else {
-        return ()->new ByteArrayInputStream("{\"pack\":{\"pack_format\":15,\"description\":\"GregTech material tags\"}}".getBytes(StandardCharsets.UTF_8));
-//?}
+        return ()->new ByteArrayInputStream(("{\"pack\":{\"pack_format\":"
+                + SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA)
+                + ",\"description\":\"GregTech material tags\"}}").getBytes(StandardCharsets.UTF_8));
     }
     public IoSupplier<InputStream> getResource(PackType type,ResourceLocation id) {
         if (type!=PackType.SERVER_DATA)return null; var bytes=data().get(id);

@@ -16,13 +16,10 @@ import gregtech.content.registry.GTDungeonBlocks;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.SharedDecorBlocks;
 
-//? if >=1.21.1 {
-/*import gregtech.content.registry.*;
-*///?} else {
 import gregtech.content.registry.GTBookShelves;
 import gregtech.content.registry.GTMetalChests;
 import gregtech.content.registry.GTSafes;
-//?}
+import gregtech.content.registry.GTTanks;
 
 import gregtech.content.registry.GTLasers;
 import gregtech.content.worldgen.GTSurfaceFlora;
@@ -448,11 +445,7 @@ public final class GTDungeonData {
     public static Block container(String id) {
         Block block = Mc.block(
                 ResourceLocation.fromNamespaceAndPath("gt6ce", id));
-//? if >=1.21.1 {
-        /*return block == null ? DungeonBindings.block("wood_barrel") : block;
-*///?} else {
-        return block == null ? gregtech.content.registry.GTTanks.WOOD_BARREL.get() : block;
-//?}
+        return block == null ? GTTanks.WOOD_BARREL.get() : block;
     }
 
     /**

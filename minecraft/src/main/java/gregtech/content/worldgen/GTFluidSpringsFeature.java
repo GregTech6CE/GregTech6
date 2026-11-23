@@ -2,11 +2,7 @@ package gregtech.content.worldgen;
 
 import gregtech.content.block.OreBlock;
 import gregtech.platform.Mc;
-//? if >=1.21.1 {
-/*import gregtech.content.registry.GTFluidSprings;
-*///?} else {
-import gregtech.content.registry.GTDecorBlocks;
-//?}
+import gregtech.content.registry.GTFluidSprings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -186,11 +182,7 @@ public class GTFluidSpringsFeature extends Feature<NoneFeatureConfiguration> {
 
     /** The spring block a placed spring uses (kept for the tests and tools). */
     public static Block springBlock() {
-//? if >=1.21.1 {
-        /*return GTFluidSprings.FLUID_SPRING.get();
-*///?} else {
-        return GTDecorBlocks.FLUID_SPRING.get();
-//?}
+        return GTFluidSprings.FLUID_SPRING.get();
     }
 
     /** Registry key of the configured feature (data file {@code worldgen/configured_feature/gt_fluid_springs.json}). */

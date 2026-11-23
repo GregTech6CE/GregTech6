@@ -9,6 +9,7 @@ import gregtech.content.block.energy.ElectricWireBlock;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.material.ExternalMaterialForms;
 import gregtech.engine.prefix.PrefixRegistry;
+import gregtech.engine.stack.StackData;
 import java.util.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -43,27 +44,25 @@ public final class ItemMaterialForms {
         if (known != null && (known.complete() || !ItemMaterialRegistry.explicitClosed())) return known;
         synchronized (ItemMaterialForms.class) {
             boolean complete = ItemMaterialRegistry.explicitClosed();
-            if (nativeIndex == null || (complete && !nativeIndex.complete()))
-                nativeIndex = buildNativeIndex(complete);
+            if (nativeIndex == null || (complete && !nativeIndex.complete())) nativeIndex = buildNativeIndex(complete);
             return nativeIndex;
         }
     }
 
     private static NativeIndex buildNativeIndex(boolean complete) {
         var materials = new HashMap<String, String>();
-        for (var material : GTMaterialRegistry.allMaterials()) if (material.isValid()) {
-            String name = material.resolve().getName();
-            String canonical = MaterialEquivalence.materialName(material);
-            materials.put(canonical, name);
-            materials.put(material.getName().toLowerCase(Locale.ROOT), name);
-            String alternate = MaterialTagAliases.alternate(canonical);
-            if (alternate != null) materials.put(alternate, name);
-        }
+        for (var material : GTMaterialRegistry.allMaterials())
+            if (material.isValid()) {
+                String name = material.resolve().getName();
+                String canonical = MaterialEquivalence.materialName(material);
+                materials.put(canonical, name);
+                materials.put(material.getName().toLowerCase(Locale.ROOT), name);
+                String alternate = MaterialTagAliases.alternate(canonical);
+                if (alternate != null) materials.put(alternate, name);
+            }
         var prefixes = new HashMap<String, String>();
-        for (String prefix : ItemMaterialForm.STANDARD_ORES)
-            prefixes.put(MaterialPrefix.camelToSnake(prefix), prefix);
-        for (String prefix : ItemMaterialForm.DENSE_ORES)
-            prefixes.put(MaterialPrefix.camelToSnake(prefix), prefix);
+        for (String prefix : ItemMaterialForm.STANDARD_ORES) prefixes.put(MaterialPrefix.camelToSnake(prefix), prefix);
+        for (String prefix : ItemMaterialForm.DENSE_ORES) prefixes.put(MaterialPrefix.camelToSnake(prefix), prefix);
         for (var prefix : List.of("blockRaw", "blockDust", "blockIngot", "blockGem", "blockPlate", "blockPlateGem"))
             prefixes.put(MaterialPrefix.camelToSnake(prefix), prefix);
         // Both the source spelling and the port's identical renamed form tags are accepted.
@@ -73,18 +72,20 @@ public final class ItemMaterialForms {
             if (!sourceName.equals(prefix.getName()))
                 prefixes.putIfAbsent(MaterialPrefix.camelToSnake(sourceName), sourceName);
         }
-        for (int size = 1; size <= 16; size++) prefixes.put(String.format(Locale.ROOT, "wire_%02d", size),
-                String.format(Locale.ROOT, "wireGt%02d", size));
+        for (int size = 1; size <= 16; size++)
+            prefixes.put(String.format(Locale.ROOT, "wire_%02d", size), String.format(Locale.ROOT, "wireGt%02d", size));
         var forms = new IdentityHashMap<Item, ItemMaterialForm>();
         var extras = new IdentityHashMap<Item, List<ItemMaterialForm>>();
         var targets = new HashMap<ItemMaterialForm, Item>();
         for (var definition : VanillaUnificationDefinitions.entries()) {
-            String prefix = definition.prefix() == null ? null : definition.prefix().getName();
+            String prefix =
+                    definition.prefix() == null ? null : definition.prefix().getName();
             String path = definition.itemPath();
             if (prefix == null) {
                 // Modern raw metals are not GT6 native ore chunks or their storage blocks.
                 if (Set.of("raw_iron", "raw_gold", "raw_copper").contains(path)) prefix = "rawVanilla";
-                else if (Set.of("raw_iron_block", "raw_gold_block", "raw_copper_block").contains(path)) prefix = "blockRawVanilla";
+                else if (Set.of("raw_iron_block", "raw_gold_block", "raw_copper_block")
+                        .contains(path)) prefix = "blockRawVanilla";
                 else if (path.endsWith("_ore") || path.equals("ancient_debris"))
                     prefix = VanillaUnificationDefinitions.vanillaOreForm(path);
             }
@@ -112,13 +113,18 @@ public final class ItemMaterialForms {
         // Real plank blocks are registered outside VanillaUnificationDefinitions. Prefer them to
         // generic plate forms, deterministically choosing vanilla before an equivalent mod block.
         var planks = new ArrayList<Item>(BuiltInRegistries.ITEM.stream()
-                .filter(item -> item instanceof BlockItem).toList());
-        planks.sort(Comparator.comparing((Item item) -> !BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("minecraft"))
+                .filter(item -> item instanceof BlockItem)
+                .toList());
+        planks.sort(Comparator.comparing((Item item) ->
+                        !BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("minecraft"))
                 .thenComparing(item -> BuiltInRegistries.ITEM.getKey(item).toString()));
         for (var item : planks) {
             var data = ItemMaterialRegistry.explicit(item).orElse(null);
-            if (data == null || data.prefix() != MaterialPrefix.plate || data.components().size() != 1
-                    || data.amount() != GTValues.U || !data.material().has(MaterialProperty.WOOD)) continue;
+            if (data == null
+                    || data.prefix() != MaterialPrefix.plate
+                    || data.components().size() != 1
+                    || data.amount() != GTValues.U
+                    || !data.material().has(MaterialProperty.WOOD)) continue;
             var form = new ItemMaterialForm("plate", data.material().resolve().getName());
             forms.put(item, form);
             targets.putIfAbsent(form, item);
@@ -135,7 +141,9 @@ public final class ItemMaterialForms {
                 if (item != Items.AIR) tagCandidates.add(item);
             } else {
                 primaryForms.put(item, form);
-                primaryAliases.computeIfAbsent(form, unused -> new ArrayList<>()).add(item);
+                primaryAliases
+                        .computeIfAbsent(form, unused -> new ArrayList<>())
+                        .add(item);
             }
         }
         primaryAliases.replaceAll((form, values) -> List.copyOf(values));
@@ -146,9 +154,18 @@ public final class ItemMaterialForms {
             list.add(item);
             aliases.put(form, List.copyOf(list));
         }));
-        return new NativeIndex(complete, Map.copyOf(materials), Map.copyOf(prefixes), Map.copyOf(forms), Map.copyOf(extras),
-                Map.copyOf(targets), Map.copyOf(primaryForms), Map.copyOf(primaryAliases), Map.copyOf(aliases),
-                Map.copyOf(itemOrder), List.copyOf(tagCandidates));
+        return new NativeIndex(
+                complete,
+                Map.copyOf(materials),
+                Map.copyOf(prefixes),
+                Map.copyOf(forms),
+                Map.copyOf(extras),
+                Map.copyOf(targets),
+                Map.copyOf(primaryForms),
+                Map.copyOf(primaryAliases),
+                Map.copyOf(aliases),
+                Map.copyOf(itemOrder),
+                List.copyOf(tagCandidates));
     }
 
     /** Rebuild only aliases that may change when new tags and tag compositions are bound. */
@@ -192,7 +209,8 @@ public final class ItemMaterialForms {
         return stack(aliases(), prefix, material, count);
     }
 
-    public static ItemStack stack(Map<ItemMaterialForm, List<Item>> aliases, String prefix, GTMaterial material, int count) {
+    public static ItemStack stack(
+            Map<ItemMaterialForm, List<Item>> aliases, String prefix, GTMaterial material, int count) {
         var items = aliases.get(new ItemMaterialForm(prefix, material.resolve().getName()));
         return items == null || items.isEmpty() ? ItemStack.EMPTY : new ItemStack(items.get(0), count);
     }
@@ -207,16 +225,21 @@ public final class ItemMaterialForms {
             var block = item.getBlock();
             if (block instanceof OreBlock ore) {
                 var host = OreBlock.stoneOfStack(stack);
-                String prefix = host.isBedrock() ? "oreBedrock" : host.isSediment() ? "oreDust" : ore.prefix().getName();
+                String prefix = host.isBedrock()
+                        ? "oreBedrock"
+                        : host.isSediment() ? "oreDust" : ore.prefix().getName();
                 return new ItemMaterialForm(prefix, ore.material().resolve().getName());
             }
             if (block instanceof MaterialBlockLike material) {
                 String prefix = material.prefix().getName();
                 if (prefix.equals("blockSolid") && MaterialUnification.hiddenDuplicate(stack)) prefix = "blockIngot";
-                return new ItemMaterialForm(prefix, material.material().resolve().getName());
+                return new ItemMaterialForm(
+                        prefix, material.material().resolve().getName());
             }
             if (block instanceof ElectricWireBlock wire && !wire.spec().insulated())
-                return new ItemMaterialForm(String.format(Locale.ROOT, "wireGt%02d", wire.spec().size()), wire.spec().material().resolve().getName());
+                return new ItemMaterialForm(
+                        String.format(Locale.ROOT, "wireGt%02d", wire.spec().size()),
+                        wire.spec().material().resolve().getName());
         }
         var known = vanilla.get(stack.getItem());
         if (known != null) return known;
@@ -225,7 +248,8 @@ public final class ItemMaterialForms {
                 || declared.prefix() == null
                 || declared.components().size() != 1
                 || declared.amount() != declared.prefix().getMaterialWeight()) return null;
-        return new ItemMaterialForm(declared.prefix().getName(), declared.material().resolve().getName());
+        return new ItemMaterialForm(
+                declared.prefix().getName(), declared.material().resolve().getName());
     }
 
     public static ItemMaterialForm form(ItemStack stack) {
@@ -235,11 +259,7 @@ public final class ItemMaterialForms {
 
     public static ItemMaterialForm plainForm(ItemStack stack) {
         if (stack.isEmpty() || stack.isDamaged()) return form(stack);
-//? if >=1.21.1 {
-        /*if (!stack.getComponentsPatch().isEmpty()) return form(stack);
-*///?} else {
-        if (stack.hasTag()) return form(stack);
-//?}
+        if (StackData.hasAnyData(stack)) return form(stack);
         var index = nativeIndex();
         if (!index.complete()) return form(stack);
         var nativeForm = index.primaryForms().get(stack.getItem());
@@ -251,7 +271,9 @@ public final class ItemMaterialForms {
     private static ItemMaterialForm tagged(ItemStack stack) {
         var composition = ItemMaterialRegistry.base(stack.getItem()).orElse(null);
         if (composition != null && composition.prefix() != null)
-            return new ItemMaterialForm(composition.prefix().getName(), composition.material().resolve().getName());
+            return new ItemMaterialForm(
+                    composition.prefix().getName(),
+                    composition.material().resolve().getName());
         return compositionTagForm(taggedForms(stack));
     }
 
@@ -301,12 +323,9 @@ public final class ItemMaterialForms {
         var extras = nativeIndex().extraForms().get(stack.getItem());
         return extras != null && extras.contains(expected);
     }
+
     public static ItemStack canonical(ItemStack output) {
-//? if >=1.21.1 {
-        /*if (output.isEmpty() || !output.getComponentsPatch().isEmpty() || output.isDamaged()) return output;
-*///?} else {
-        if (output.isEmpty() || output.hasTag() || output.isDamaged()) return output;
-//?}
+        if (output.isEmpty() || StackData.hasAnyData(output) || output.isDamaged()) return output;
         var index = nativeIndex();
         var form = direct(output, index.vanilla());
         // Ordinary recipe outputs need not have a material form; Map.copyOf rejects null keys.

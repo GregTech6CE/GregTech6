@@ -433,11 +433,7 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
     private static Block container(String id) {
         Block block = Mc.block(
                 ResourceLocation.fromNamespaceAndPath("gt6ce", id));
-//? if >=1.21.1 {
-        /*return block == null ? DungeonBindings.block("wood_barrel") : block;
-*///?} else {
         return block == null ? GTTanks.WOOD_BARREL.get() : block;
-//?}
     }
 
     /** One of the port's simple tool blocks by registry name, or {@code null} when it is missing. */

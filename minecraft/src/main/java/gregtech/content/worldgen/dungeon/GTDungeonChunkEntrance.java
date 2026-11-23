@@ -1,9 +1,5 @@
 package gregtech.content.worldgen.dungeon;
 
-//? if >=1.21.1 {
-/*import gregtech.content.registry.*;
-*///?} else {
-//?}
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Blocks;
@@ -401,8 +397,10 @@ public class GTDungeonChunkEntrance extends GTDungeonChunkPillar {
     private static boolean easyReplace(BlockState state) {
         return state.isAir()
                 || state.getBlock() instanceof net.minecraft.world.level.block.BushBlock
-                || state.is(Blocks.SNOW) || state.is(Blocks.SNOW_BLOCK)
-                || state.is(Blocks.FIRE) || state.is(Blocks.SOUL_FIRE)
+                || state.is(Blocks.SNOW)
+                || state.is(Blocks.SNOW_BLOCK)
+                || state.is(Blocks.FIRE)
+                || state.is(Blocks.SOUL_FIRE)
                 || state.is(BlockTags.LEAVES)
                 || state.is(BlockTags.LOGS);
     }

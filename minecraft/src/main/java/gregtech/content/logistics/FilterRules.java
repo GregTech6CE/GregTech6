@@ -27,24 +27,12 @@ public final class FilterRules {
             return "";
         if (candidateStack.getItem() instanceof gregtech.engine.material.MaterialFormItem formItem)
             return formItem.getPrefix().getName();
-//? if >=1.21.1 {
-        /*if (candidateStack.getItem() instanceof gregtech.engine.inventory.ContainerShapeLike formItem
+        if (candidateStack.getItem() instanceof gregtech.engine.inventory.ContainerShapeLike formItem
                 && formItem.shapeId().equals("cell"))
             return "capcellcon";
         if (candidateStack.getItem() instanceof BlockItem formItem
                 && formItem.getBlock() instanceof gregtech.engine.inventory.PipeFormLike pipeForm)
             return pipePrefix(pipeForm.pipeSizeName());
-*///?} else {
-        if (candidateStack.getItem() instanceof gregtech.content.item.PortableFluidContainerItem formItem
-                && formItem.spec().shapeId().equals("cell"))
-            return "capcellcon";
-        if (candidateStack.getItem() instanceof BlockItem formItem
-                && formItem.getBlock() instanceof gregtech.content.block.machine.FluidPipeBlock pipeForm)
-            return pipePrefix(pipeForm.spec().size().name());
-        if (candidateStack.getItem() instanceof BlockItem formItem
-                && formItem.getBlock() instanceof gregtech.content.block.machine.ItemPipeBlock pipeForm)
-            return pipePrefix(pipeForm.spec().size().name());
-//?}
         if (candidateStack.getItem() instanceof BlockItem formItem
                 && formItem.getBlock() instanceof gregtech.content.block.MaterialBlockLike materialBlock)
             return materialBlock.prefix().getName();

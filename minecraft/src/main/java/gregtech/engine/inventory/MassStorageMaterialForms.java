@@ -4,6 +4,7 @@ import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.material.MaterialEquivalence;
+import gregtech.engine.stack.StackData;
 import gregtech.content.block.MaterialBlockLike;
 //? if >=1.21.1 {
 /*import gregtech.engine.energy.WireMaterialLike;
@@ -40,11 +41,7 @@ public final class MassStorageMaterialForms {
 
     private static long compatibleUnits(ItemStack template, ItemStack candidate, boolean ignoreNbt) {
         if (template.isEmpty() || candidate.isEmpty()
-//? if >=1.21.1 {
-                /*|| (!ignoreNbt && (!template.getComponentsPatch().isEmpty() || !candidate.getComponentsPatch().isEmpty()))
-*///?} else {
-                || (!ignoreNbt && (template.hasTag() || candidate.hasTag()))
-//?}
+                || (!ignoreNbt && (StackData.hasAnyData(template) || StackData.hasAnyData(candidate)))
                 || template.isDamaged() || candidate.isDamaged()) return 0;
         Form stored = form(template);
         if (stored == null) return 0;

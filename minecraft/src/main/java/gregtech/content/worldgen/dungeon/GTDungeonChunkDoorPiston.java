@@ -1,9 +1,5 @@
 package gregtech.content.worldgen.dungeon;
 
-//? if >=1.21.1 {
-/*import gregtech.content.registry.*;
-*///?} else {
-//?}
 import gregtech.content.registry.GTManualStations;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Blocks;
@@ -423,8 +419,11 @@ public class GTDungeonChunkDoorPiston implements GTDungeonChunk {
      * leans towards, away from the block it is mounted on - GT6's metadata 1 (east) to 4 (north).
      */
     private static void torch(GTDungeonData data, int x, int y, int z, Direction points) {
-        data.set(x, y, z, Blocks.REDSTONE_WALL_TORCH.defaultBlockState()
-                .setValue(RedstoneWallTorchBlock.FACING, points));
+        data.set(
+                x,
+                y,
+                z,
+                Blocks.REDSTONE_WALL_TORCH.defaultBlockState().setValue(RedstoneWallTorchBlock.FACING, points));
     }
 
     /**
@@ -433,7 +432,13 @@ public class GTDungeonChunkDoorPiston implements GTDungeonChunk {
      * stores the direction it points away from that wall, so the two are opposites.
      */
     private static void crank(GTDungeonData data, int x, int y, int z, Direction mountedOn) {
-        data.set(x, y, z, GTManualStations.CRANK.get().defaultBlockState()
-                .setValue(DirectionalBlock.FACING, mountedOn.getOpposite()));
+        data.set(
+                x,
+                y,
+                z,
+                GTManualStations.CRANK
+                        .get()
+                        .defaultBlockState()
+                        .setValue(DirectionalBlock.FACING, mountedOn.getOpposite()));
     }
 }

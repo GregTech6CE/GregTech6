@@ -1,10 +1,5 @@
 package gregtech.content.worldgen.dungeon;
 
-//? if >=1.21.1 {
-
-/*import gregtech.content.registry.*;
-*///?} else {
-//?}
 import gregtech.content.book.GTBooks;
 import gregtech.platform.Mc;
 import net.minecraft.core.Direction;
@@ -60,8 +55,11 @@ public class GTDungeonChunkRoomPortalNether extends GTDungeonChunkRoomPortal {
         // the netherrack floor with glowstone at its four by four lamp positions.
         for (int tX = 1; tX < 15; tX++) {
             for (int tZ = 1; tZ < 15; tZ++) {
-                data.set(tX, 0, tZ, pillar(tX, tZ) ? Blocks.GLOWSTONE.defaultBlockState()
-                        : Blocks.NETHERRACK.defaultBlockState());
+                data.set(
+                        tX,
+                        0,
+                        tZ,
+                        pillar(tX, tZ) ? Blocks.GLOWSTONE.defaultBlockState() : Blocks.NETHERRACK.defaultBlockState());
             }
         }
 
@@ -70,8 +68,13 @@ public class GTDungeonChunkRoomPortalNether extends GTDungeonChunkRoomPortal {
         int wartMeta = data.next(3);
         for (int tX = 1; tX < 15; tX++) {
             for (int tZ = 1; tZ < 15; tZ++) {
-                data.set(tX, 7, tZ, pillar(tX, tZ) ? Blocks.SHROOMLIGHT.defaultBlockState()
-                        : Blocks.NETHER_WART_BLOCK.defaultBlockState());
+                data.set(
+                        tX,
+                        7,
+                        tZ,
+                        pillar(tX, tZ)
+                                ? Blocks.SHROOMLIGHT.defaultBlockState()
+                                : Blocks.NETHER_WART_BLOCK.defaultBlockState());
                 data.tiles(tX, 8, tZ);
             }
         }
@@ -190,9 +193,9 @@ public class GTDungeonChunkRoomPortalNether extends GTDungeonChunkRoomPortal {
         for (int y = 1; y <= 5; y++) {
             for (int i = low; i <= high; i++) {
                 if (y != 1 && y != 5 && i != low && i != high) continue;
-                if (alongZ) data.obsidian(fixed, y, i); else data.obsidian(i, y, fixed);
+                if (alongZ) data.obsidian(fixed, y, i);
+                else data.obsidian(i, y, fixed);
             }
         }
     }
-
 }

@@ -3,6 +3,7 @@ package gregtech.content.recipe.generated;
 import gregtech.content.recipe.SourceCentrifugeOptionalBindings;
 import gregtech.content.recipe.SourceCentrifugeOptionalBindings.*;
 import gregtech.engine.material.MaterialEquivalence;
+import gregtech.engine.stack.StackData;
 import java.util.*;
 import java.util.function.Function;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -76,11 +77,7 @@ final class SourceCentrifugeOptionalItemOutputs {
     private static ItemStack copyAmountOne(ItemStack stack){ItemStack copy=stack.copy();copy.setCount(1);return copy;}
     private static boolean plainNamedStack(ItemStack stack){
         if (stack==null||stack.isEmpty()||stack.isDamaged())return false;
-//? if >=1.21.1 {
-        /*if (!stack.getComponentsPatch().isEmpty())return false;*/
-//?} else {
-        if (stack.hasTag())return false;
-//?}
+        if (StackData.hasAnyData(stack))return false;
         // Original IL.get applies OM unification. A related explicit native material form
         // requires a reviewed target policy; defer rather than forcibly choosing the named item.
         return MaterialEquivalence.form(stack)==null;

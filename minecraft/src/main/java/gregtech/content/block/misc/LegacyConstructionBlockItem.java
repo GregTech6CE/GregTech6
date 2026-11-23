@@ -1,5 +1,6 @@
 package gregtech.content.block.misc;
 
+import gregtech.engine.stack.StackData;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -49,11 +50,7 @@ public abstract class LegacyConstructionBlockItem extends BlockItem {
 
     private static boolean plainPalette(ItemStack stack) {
         if (!legacyPalette(stack)) return false;
-//? if >=1.21.1 {
-        /*return stack.getComponentsPatch().isEmpty();
-*///?} else {
-        return !stack.hasTag();
-//?}
+        return !StackData.hasAnyData(stack);
     }
 
     /** Normalized offered identity; {@code RecipeInputs.offerKeys} mirrors this normalization. */

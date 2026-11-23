@@ -1,11 +1,6 @@
 package gregtech.content.worldgen.dungeon;
 
 import gregtech.content.data.CrateMaterialTables;
-
-//? if >=1.21.1 {
-/*import gregtech.content.registry.*;
-*///?} else {
-//?}
 import gregtech.content.registry.GTFluids;
 
 /**
@@ -55,10 +50,10 @@ import gregtech.content.registry.GTFluids;
  *       the four quadrants and leaves the quadrant empty for the mods it does not have.
  *       The port has neither mod, so it rolls {@code next(7)} and leaves cases 5 and 6 empty, which is
  *       exactly what GT6 does without them.</li>
-     *   <li><b>Piles.</b> GT6's {@code ingots_or_plates} ({@code DungeonData}) rolls the ingot's
-     *       material and stack size, the plate's material and stack size and then picks plate or ingot with
-     *       {@code next1in2()}; the port passes the room's original metal list to
-     *       {@link GTDungeonData#ingotsOrPlates(int, int, int, int, String...)}.</li>
+ *   <li><b>Piles.</b> GT6's {@code ingots_or_plates} ({@code DungeonData}) rolls the ingot's
+ *       material and stack size, the plate's material and stack size and then picks plate or ingot with
+ *       {@code next1in2()}; the port passes the room's original metal list to
+ *       {@link GTDungeonData#ingotsOrPlates(int, int, int, int, String...)}.</li>
  * </ul>
  *
  * <p>Kept from GT6: the coordinates (the four quadrants of local 1..3 and 12..14, in GT6's
@@ -86,10 +81,10 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
 
         // the four fluid tank walls on the sides that have no neighbour cell. GT6 tests
         // mRoomLayout[mRoomX±1][mRoomZ] / [mRoomX][mRoomZ±1] == 0, which is the port's !connected(...).
-        if (!data.connected(1, 0)) fluidWall(data, 12, 6, 3, 4);    // the +X wall
-        if (!data.connected(-1, 0)) fluidWall(data, 1, 6, 3, 4);    // the -X wall
-        if (!data.connected(0, 1)) fluidWall(data, 6, 12, 4, 3);    // the +Z wall
-        if (!data.connected(0, -1)) fluidWall(data, 6, 1, 4, 3);    // the -Z wall
+        if (!data.connected(1, 0)) fluidWall(data, 12, 6, 3, 4); // the +X wall
+        if (!data.connected(-1, 0)) fluidWall(data, 1, 6, 3, 4); // the -X wall
+        if (!data.connected(0, 1)) fluidWall(data, 6, 12, 4, 3); // the +Z wall
+        if (!data.connected(0, -1)) fluidWall(data, 6, 1, 4, 3); // the -Z wall
 
         // the crate variants and the four quadrants (start/end are GT6's tStart/tEnd).
         int[] start = {1, 12}, end = {3, 14};
@@ -218,12 +213,12 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
      * and the two extents - and the roll order (i outer, j inner) is GT6's.</p>
      */
     private static void fluidWall(GTDungeonData data, int baseX, int baseZ, int countI, int countJ) {
-        if (!data.next1in2()) return;                                 // half the walls stay bare rock
-        int type = data.next(CONTAINERS.length);                       // tIDs[tType]
+        if (!data.next1in2()) return; // half the walls stay bare rock
+        int type = data.next(CONTAINERS.length); // tIDs[tType]
         for (int i = 0; i < countI; i++) {
             for (int j = 0; j < countJ; j++) {
                 int x = baseX + i, z = baseZ + j;
-                if (data.next1in2()) {                                 // - a column of tanks
+                if (data.next1in2()) { // - a column of tanks
                     for (int k = 0; k < 4; k++) {
                         String field = data.select(FLUIDS[type], x, 1 + k, z);
                         var fluid = switch (field) {
@@ -233,11 +228,11 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
                         data.tank(x, 1 + k, z, GTDungeonData.container(CONTAINERS[type]), fluid);
                         if (data.next2in3()) break;
                     }
-                } else if (data.next1in2()) {                          // - one gas cylinder
+                } else if (data.next1in2()) { // - one gas cylinder
                     switch (data.next(3)) {
-                        case 0 -> gasCylinder(data, x, z, false, PROPANE);   // 32055
-                        case 1 -> gasCylinder(data, x, z, true, OXYGEN);     // 32056
-                        default -> gasCylinder(data, x, z, true, HELIUM);    // 32056
+                        case 0 -> gasCylinder(data, x, z, false, PROPANE); // 32055
+                        case 1 -> gasCylinder(data, x, z, true, OXYGEN); // 32056
+                        default -> gasCylinder(data, x, z, true, HELIUM); // 32056
                     }
                 }
             }
@@ -251,23 +246,27 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
      * one block per material with no paint channel, like the workshop's own cylinders (documented there).
      */
     private static void gasCylinder(GTDungeonData data, int x, int z, boolean stainless, String fluid) {
-        data.tank(x, 1, z, GTDungeonData.container(stainless
-                        ? "fluid_barometer_gas_cylinder_stainless_steel"
-                        : "fluid_barometer_gas_cylinder"),
+        data.tank(
+                x,
+                1,
+                z,
+                GTDungeonData.container(
+                        stainless ? "fluid_barometer_gas_cylinder_stainless_steel" : "fluid_barometer_gas_cylinder"),
                 GTFluids.stack(fluid, 8000));
     }
 
     /** GT6's three tank families: the container, its fluid list and its amount. */
     private static final String[] CONTAINERS = {"wood_barrel_treated", "wood_barrel_ironwood", "drum_bronze"};
+
     private static final int[] AMOUNTS = {16000, 32000, 64000};
     private static final String[][] FLUIDS = {
-            // - Wooden Barrel 32714, 16000 mB (GT6's FL.lube is the port's Lubricant).
-            {"Oil_Creosote", "Oil_Seed", "Lubricant", "Glue", "Latex", "Water", "Purple_Drink"},
-            // - Ironwood Barrel 32734, 32000 mB; the last two slots fall back to water.
-            {"Oil_Creosote", "Oil_Seed", "Lubricant", "Glue", "Latex", "Holywater", "Purple_Drink"},
-            // - Bronze Drum 32102, 64000 mB; normal oil twice, then the five special oils.
-            {"Oil_Normal", "Oil_Normal", "Oil_Soulsand", "Oil_Light", "Oil_Medium", "Oil_Heavy",
-                    "Oil_ExtraHeavy"}};
+        // - Wooden Barrel 32714, 16000 mB (GT6's FL.lube is the port's Lubricant).
+        {"Oil_Creosote", "Oil_Seed", "Lubricant", "Glue", "Latex", "Water", "Purple_Drink"},
+        // - Ironwood Barrel 32734, 32000 mB; the last two slots fall back to water.
+        {"Oil_Creosote", "Oil_Seed", "Lubricant", "Glue", "Latex", "Holywater", "Purple_Drink"},
+        // - Bronze Drum 32102, 64000 mB; normal oil twice, then the five special oils.
+        {"Oil_Normal", "Oil_Normal", "Oil_Soulsand", "Oil_Light", "Oil_Medium", "Oil_Heavy", "Oil_ExtraHeavy"}
+    };
 
     private static final String PROPANE = "Propane";
     private static final String OXYGEN = "Oxygen";

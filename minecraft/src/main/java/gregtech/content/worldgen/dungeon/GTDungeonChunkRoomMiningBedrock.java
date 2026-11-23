@@ -1,9 +1,5 @@
 package gregtech.content.worldgen.dungeon;
 
-//? if >=1.21.1 {
-/*import gregtech.content.registry.*;
-*///?} else {
-//?}
 import gregtech.api.material.GTMaterial;
 import gregtech.content.block.misc.BarsBlock;
 import gregtech.content.block.tool.DynamiteBlock;

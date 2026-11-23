@@ -1,17 +1,12 @@
 package gregtech.content.worldgen.dungeon;
 
-//? if >=1.21.1 {
-/*import gregtech.content.registry.*;
-*///?} else {
-//?}
 import gregtech.content.worldgen.GTDungeonGenerator;
-import net.minecraft.util.RandomSource;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import net.minecraft.util.RandomSource;
 
 /**
  * The dungeon-wide decisions GT6 kept in one mutable {@code DungeonData} while writing all its cells.
@@ -49,13 +44,13 @@ public final class GTDungeonSharedState {
             for (int j = 1; j < layout[i].length - 1; j++) {
                 if (layout[i][j] <= 0) continue;
                 GTDungeonChunk chosen = chooseRoom(layout, dungeonSeed, i, j, claimedTags);
-                RandomSource workshopRoll = RandomSource.create(
-                        GTDungeonGenerator.cellSeed(dungeonSeed ^ WORKSHOP_KEY_SALT, i, j));
+                RandomSource workshopRoll =
+                        RandomSource.create(GTDungeonGenerator.cellSeed(dungeonSeed ^ WORKSHOP_KEY_SALT, i, j));
                 int workshopKey = workshopRoll.nextInt(GTDungeonGenerator.KEY_COUNT * 2);
                 int workshopSlot = workshopRoll.nextInt(18);
                 int[] libraryKeys = libraryKeys(dungeonSeed, i, j);
-                states[i][j] = new CellState(chosen, Set.copyOf(claimedTags),
-                        generatedKeys.clone(), workshopKey, workshopSlot, libraryKeys);
+                states[i][j] = new CellState(
+                        chosen, Set.copyOf(claimedTags), generatedKeys.clone(), workshopKey, workshopSlot, libraryKeys);
                 String tag = tagFor(chosen);
                 if (tag != null) {
                     claimedTags.add(tag);
@@ -74,21 +69,19 @@ public final class GTDungeonSharedState {
         for (int i = 1; i < layout.length - 1; i++) {
             for (int j = 1; j < layout[i].length - 1; j++) {
                 if (layout[i][j] >= 0) continue;
-                states[i][j] = new CellState(null, Set.copyOf(claimedTags),
-                        generatedKeys.clone(), -1, -1, new int[0]);
+                states[i][j] = new CellState(null, Set.copyOf(claimedTags), generatedKeys.clone(), -1, -1, new int[0]);
                 if (layout[i][j] == GTDungeonLayout.BARRACKS) {
-                    for (int key : new int[]{0, 1, 3, 4}) generatedKeys[key] = true;
+                    for (int key : new int[] {0, 1, 3, 4}) generatedKeys[key] = true;
                 }
             }
         }
         return new GTDungeonSharedState(states);
     }
 
-    private static GTDungeonChunk chooseRoom(byte[][] layout, long seed, int i, int j,
-                                              Set<String> claimedTags) {
+    private static GTDungeonChunk chooseRoom(byte[][] layout, long seed, int i, int j, Set<String> claimedTags) {
         int connections = GTDungeonLayout.connectionCount(layout, i, j);
-        List<GTDungeonChunk> candidates = new ArrayList<>(connections == 1
-                ? GTDungeonGenerator.DEAD_END : GTDungeonGenerator.ROOMS);
+        List<GTDungeonChunk> candidates =
+                new ArrayList<>(connections == 1 ? GTDungeonGenerator.DEAD_END : GTDungeonGenerator.ROOMS);
         RandomSource random = RandomSource.create(GTDungeonGenerator.cellSeed(seed, i, j));
         Collections.shuffle(candidates, new java.util.Random(random.nextLong()));
         for (GTDungeonChunk candidate : candidates) {
@@ -127,8 +120,13 @@ public final class GTDungeonSharedState {
         private final int workshopSlot;
         private final int[] libraryKeys;
 
-        private CellState(GTDungeonChunk chosenRoom, Set<String> tagsBefore, boolean[] keysBefore,
-                          int workshopKey, int workshopSlot, int[] libraryKeys) {
+        private CellState(
+                GTDungeonChunk chosenRoom,
+                Set<String> tagsBefore,
+                boolean[] keysBefore,
+                int workshopKey,
+                int workshopSlot,
+                int[] libraryKeys) {
             this.chosenRoom = chosenRoom;
             this.tagsBefore = tagsBefore;
             this.keysBefore = keysBefore;
@@ -137,11 +135,28 @@ public final class GTDungeonSharedState {
             this.libraryKeys = libraryKeys;
         }
 
-        public GTDungeonChunk chosenRoom() { return chosenRoom; }
-        public Set<String> tagsBefore() { return tagsBefore; }
-        public boolean[] keysBefore() { return keysBefore.clone(); }
-        public int workshopKey() { return workshopKey; }
-        public int workshopSlot() { return workshopSlot; }
-        public int libraryKey(int row) { return libraryKeys[(row - 1) - (row > 3 ? 1 : 0)]; }
+        public GTDungeonChunk chosenRoom() {
+            return chosenRoom;
+        }
+
+        public Set<String> tagsBefore() {
+            return tagsBefore;
+        }
+
+        public boolean[] keysBefore() {
+            return keysBefore.clone();
+        }
+
+        public int workshopKey() {
+            return workshopKey;
+        }
+
+        public int workshopSlot() {
+            return workshopSlot;
+        }
+
+        public int libraryKey(int row) {
+            return libraryKeys[(row - 1) - (row > 3 ? 1 : 0)];
+        }
     }
 }

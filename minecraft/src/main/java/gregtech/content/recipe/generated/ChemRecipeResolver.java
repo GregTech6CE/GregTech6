@@ -29,6 +29,7 @@ import gregtech.engine.recipe.chem.ChemOutcome;
 import gregtech.engine.recipe.chem.ChemRecipe;
 import gregtech.engine.recipe.chem.ChemResult;
 import gregtech.engine.recipe.chem.MaterialFluidBinding;
+import gregtech.engine.stack.StackData;
 import gregtech.util.OM;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -352,11 +353,7 @@ public final class ChemRecipeResolver {
 
     private static boolean plainSingle(ItemStack stack) {
         boolean plain = stack.getCount() == 1 && !stack.isDamaged();
-//? if >=1.21.1 {
-        /*plain &= stack.getComponentsPatch().isEmpty();*/
-//?} else {
-        plain &= !stack.hasTag();
-//?}
+        plain &= !StackData.hasAnyData(stack);
         return plain;
     }
 

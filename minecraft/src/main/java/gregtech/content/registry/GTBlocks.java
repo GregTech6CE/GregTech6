@@ -14,11 +14,9 @@ import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.registries.DeferredRegister;
 import net.minecraft.core.registries.Registries;
-import net.neoforged.neoforge.registries.DeferredHolder;
 *///?} else {
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 //?}
 
 import java.util.Collection;
@@ -76,31 +74,19 @@ public final class GTBlocks {
     private static final Map<String, RegisteredBlock<? extends Block>> STONE_SLABS_BY_ID = new HashMap<>();
 
     /** Ground pebble carrying a material (GT6 surface rocks — vein indicators). */
-//? if >=1.21.1 {
-    /*public static final DeferredHolder<Block, Block> ROCK = BLOCKS.register("rock", () ->
-*///?} else {
-    public static final RegistryObject<Block> ROCK = BLOCKS.register("rock", () ->
-//?}
+    public static final RegisteredBlock<Block> ROCK = RegisteredBlock.wrap("rock", BLOCKS.register("rock", () ->
             new gregtech.content.block.RockBlock(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of()
-                    .strength(0.25f, 0f).noCollission().noOcclusion().sound(net.minecraft.world.level.block.SoundType.STONE)));
+                    .strength(0.25f, 0f).noCollission().noOcclusion().sound(net.minecraft.world.level.block.SoundType.STONE))));
 
     /** Twigs on the forest floor (GT6 WorldgenSticks) — drop vanilla sticks. */
-//? if >=1.21.1 {
-    /*public static final DeferredHolder<Block, Block> TWIGS = BLOCKS.register("twigs", () ->
-*///?} else {
-    public static final RegistryObject<Block> TWIGS = BLOCKS.register("twigs", () ->
-//?}
+    public static final RegisteredBlock<Block> TWIGS = RegisteredBlock.wrap("twigs", BLOCKS.register("twigs", () ->
             new gregtech.content.block.TwigBlock(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of()
-                    .instabreak().noCollission().noOcclusion().sound(net.minecraft.world.level.block.SoundType.WOOD)));
+                    .instabreak().noCollission().noOcclusion().sound(net.minecraft.world.level.block.SoundType.WOOD))));
 
     /** Sticks put down by hand (GT6 multi-tile 32073) — picking one up returns the ordinary stick. */
-//? if >=1.21.1 {
-    /*public static final DeferredHolder<Block, Block> PLACED_TWIGS = BLOCKS.register("placed_twigs", () ->
-*///?} else {
-    public static final RegistryObject<Block> PLACED_TWIGS = BLOCKS.register("placed_twigs", () ->
-//?}
+    public static final RegisteredBlock<Block> PLACED_TWIGS = RegisteredBlock.wrap("placed_twigs", BLOCKS.register("placed_twigs", () ->
             new gregtech.content.block.TwigBlock(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of()
-                    .instabreak().noCollission().noOcclusion().sound(net.minecraft.world.level.block.SoundType.WOOD), true));
+                    .instabreak().noCollission().noOcclusion().sound(net.minecraft.world.level.block.SoundType.WOOD), true)));
 
     private GTBlocks() {}
 

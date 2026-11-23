@@ -1,10 +1,5 @@
 package gregtech.content.damage;
 
-
-//? if >=1.21.1 {
-//?} else {
-import gregtech.content.nuclear.ReactorRadiation;
-//?}
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -28,7 +23,7 @@ import net.minecraft.world.item.ItemStack;
  * insects, gas) and answers "protected?" by testing all four armour slots against it, plus a
  * hard-coded immunity list per hazard (a blaze cannot be boiled, an iron golem cannot be poisoned).
  * In 1.20.1 the sets become item tags, which is also how the port already ships its lead hazard suit
- * ({@code gt6ce:radiation_protection}, see {@link ReactorRadiation#PROTECTION}).
+ * ({@code gt6ce:radiation_protection}, see {@link #RADIATION}).
  *
  * <p>All six original Loader_Tools suits populate the corresponding shared tags. Protection
  * requires four equipped pieces in the hazard set; universal pieces belong to every set.
@@ -49,14 +44,11 @@ public final class GTHazmat {
     /** Gas protection (GT6 {@code ArmorsGT.HAZMATS_GAS}) - also GT6's "can breathe gases" test. */
     public static final TagKey<Item> GAS = tag("hazmat_gas");
     /** Radioactive protection (GT6 {@code ArmorsGT.HAZMATS_RADIOACTIVE}); the port's lead suit. */
-//? if >=1.21.1 {
-    /*public static final TagKey<Item> RADIATION = tag("radiation_protection");
-*///?} else {
-    public static final TagKey<Item> RADIATION = ReactorRadiation.PROTECTION;
-//?}
+    public static final TagKey<Item> RADIATION = tag("radiation_protection");
 
     private static final EquipmentSlot[] ARMOR_SLOTS = {
-            EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
+        EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET
+    };
 
     private GTHazmat() {}
 
@@ -95,14 +87,20 @@ public final class GTHazmat {
      * fire to begin with (wither, blaze, zombie pigman, magma cube, ghast).
      */
     public static boolean isHeatProtected(LivingEntity entity) {
-        return isCreative(entity) || entity instanceof WitherBoss || entity instanceof Blaze
-                || entity instanceof ZombifiedPiglin || entity instanceof MagmaCube || entity instanceof Ghast
+        return isCreative(entity)
+                || entity instanceof WitherBoss
+                || entity instanceof Blaze
+                || entity instanceof ZombifiedPiglin
+                || entity instanceof MagmaCube
+                || entity instanceof Ghast
                 || isWearingFull(entity, HEAT);
     }
 
     /** GT6 {@code isWearingFullBioHazmat}: creative, a full bio set, or a wither/iron golem. */
     public static boolean isBioProtected(LivingEntity entity) {
-        return isCreative(entity) || entity instanceof WitherBoss || entity instanceof IronGolem
+        return isCreative(entity)
+                || entity instanceof WitherBoss
+                || entity instanceof IronGolem
                 || isWearingFull(entity, BIO);
     }
 
@@ -113,13 +111,17 @@ public final class GTHazmat {
 
     /** GT6 {@code isWearingFullInsectHazmat}: creative, a full insect set, or a wither/iron golem. */
     public static boolean isInsectProtected(LivingEntity entity) {
-        return isCreative(entity) || entity instanceof WitherBoss || entity instanceof IronGolem
+        return isCreative(entity)
+                || entity instanceof WitherBoss
+                || entity instanceof IronGolem
                 || isWearingFull(entity, INSECT);
     }
 
     /** GT6 {@code isWearingFullRadioHazmat}: creative, a full radioactive set, or a wither/iron golem. */
     public static boolean isRadioProtected(LivingEntity entity) {
-        return isCreative(entity) || entity instanceof WitherBoss || entity instanceof IronGolem
+        return isCreative(entity)
+                || entity instanceof WitherBoss
+                || entity instanceof IronGolem
                 || isWearingFull(entity, RADIATION);
     }
 
@@ -130,7 +132,9 @@ public final class GTHazmat {
 
     /** GT6 {@code isWearingFullGasHazmat}: creative, a full gas set, or a wither/iron golem. */
     public static boolean isGasProtected(LivingEntity entity) {
-        return isCreative(entity) || entity instanceof WitherBoss || entity instanceof IronGolem
+        return isCreative(entity)
+                || entity instanceof WitherBoss
+                || entity instanceof IronGolem
                 || isWearingFull(entity, GAS);
     }
 

@@ -11,6 +11,7 @@ import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.engine.stack.StackCompat;
+import gregtech.engine.stack.StackData;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -191,11 +192,7 @@ public final class BuiltinEventCentrifugeRecipes {
     }
     private static boolean plain(ItemStack stack) {
         if (stack == null || stack.isEmpty() || stack.getCount() != 1 || stack.isDamaged()) return false;
-//? if >=1.21.1 {
-        /*return stack.getComponentsPatch().isEmpty();*/
-//?} else {
-        return !stack.hasTag();
-//?}
+        return !StackData.hasAnyData(stack);
     }
 
     /** Complete native provider list, not an arbitrary tag/ID guess. A present but unreviewed

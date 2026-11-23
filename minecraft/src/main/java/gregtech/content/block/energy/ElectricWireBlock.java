@@ -1,29 +1,32 @@
 package gregtech.content.block.energy;
 
+import gregtech.client.WireTooltips;
+import gregtech.content.block.GTBlock;
+import gregtech.content.blockentity.energy.ElectricWireBlockEntity;
+import gregtech.engine.GTWaterloggable;
+import gregtech.engine.energy.WireSpec;
 import gregtech.engine.tool.GTToolHelper;
-import gregtech.engine.tool.ToolInteractions;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
-import gregtech.engine.energy.WireSpec;
-
-import gregtech.content.blockentity.energy.ElectricWireBlockEntity;
+import gregtech.engine.tool.ToolInteractions;
 import gregtech.util.GTEntityHelper;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
-import gregtech.client.WireTooltips;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import gregtech.engine.GTWaterloggable;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
@@ -37,35 +40,29 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import javax.annotation.Nullable;
-import java.util.EnumMap;
-import java.util.Map;
 
-import gregtech.content.block.GTBlock;
 /** GT6 electric wire block with pipe-style 6-way BooleanProperty connections and dynamic thickness. */
-//? if >=1.21.1 {
-/*public class ElectricWireBlock extends GTBlock implements EntityBlock, SimpleWaterloggedBlock, gregtech.engine.energy.WireMaterialLike, ToolInteractionTarget {
-*///?} else {
-public class ElectricWireBlock extends GTBlock implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget, gregtech.engine.energy.WireMaterialLike {
-//?}
+public class ElectricWireBlock extends GTBlock
+        implements EntityBlock, SimpleWaterloggedBlock, gregtech.engine.energy.WireMaterialLike, ToolInteractionTarget {
     @Override
-    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (ToolInteractions.use(state, level, pos, player, hand, hit)) {
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
         return InteractionResult.PASS;
     }
 
-    public static final BooleanProperty UP    = BooleanProperty.create("up");
-    public static final BooleanProperty DOWN  = BooleanProperty.create("down");
+    public static final BooleanProperty UP = BooleanProperty.create("up");
+    public static final BooleanProperty DOWN = BooleanProperty.create("down");
     public static final BooleanProperty NORTH = BooleanProperty.create("north");
     public static final BooleanProperty SOUTH = BooleanProperty.create("south");
-    public static final BooleanProperty WEST  = BooleanProperty.create("west");
-    public static final BooleanProperty EAST  = BooleanProperty.create("east");
+    public static final BooleanProperty WEST = BooleanProperty.create("west");
+    public static final BooleanProperty EAST = BooleanProperty.create("east");
     public static final BooleanProperty[] CONNECTIONS = {DOWN, UP, NORTH, SOUTH, WEST, EAST};
 
     private static final Map<Direction, BooleanProperty> DIR_TO_PROP = new EnumMap<>(Direction.class);
+
     static {
         DIR_TO_PROP.put(Direction.DOWN, DOWN);
         DIR_TO_PROP.put(Direction.UP, UP);
@@ -86,10 +83,16 @@ public class ElectricWireBlock extends GTBlock implements EntityBlock, SimpleWat
         registerDefaultState(def.setValue(GTWaterloggable.WATERLOGGED, false));
     }
 
-    public WireSpec spec() { return spec; }
-    public static BooleanProperty propFor(Direction dir) { return DIR_TO_PROP.get(dir); }
+    public WireSpec spec() {
+        return spec;
+    }
 
-    @Nullable Direction consumePlacementFace() {
+    public static BooleanProperty propFor(Direction dir) {
+        return DIR_TO_PROP.get(dir);
+    }
+
+    @Nullable
+    Direction consumePlacementFace() {
         Direction f = placementFace;
         placementFace = null;
         return f;
@@ -98,8 +101,8 @@ public class ElectricWireBlock extends GTBlock implements EntityBlock, SimpleWat
     @Override
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return GTToolHelper.isWireCutter(tool)
-                ? ToolInteractionSpec.connections(
-                    ToolInteractionSpec.ConnectionKind.ELECTRIC) : null;
+                ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.ELECTRIC)
+                : null;
     }
 
     @Override
@@ -125,7 +128,7 @@ public class ElectricWireBlock extends GTBlock implements EntityBlock, SimpleWat
         if (ctx instanceof EntityCollisionContext entityCtx
                 && entityCtx.getEntity() instanceof Player player
                 && (GTToolHelper.isWireCutter(player.getMainHandItem())
-                    || GTToolHelper.isWireCutter(player.getOffhandItem()))) {
+                        || GTToolHelper.isWireCutter(player.getOffhandItem()))) {
             return Shapes.block();
         }
         return shapeFor(state, level, pos);
@@ -144,8 +147,7 @@ public class ElectricWireBlock extends GTBlock implements EntityBlock, SimpleWat
         VoxelShape shape = Shapes.box(min, min, min, max, max, max);
         for (Direction dir : Direction.values()) {
             if (!state.getValue(propFor(dir))) continue;
-            double n = gregtech.engine.machine.PipeGeometry.wireHalfOf(
-                    level.getBlockState(pos.relative(dir)));
+            double n = gregtech.engine.machine.PipeGeometry.wireHalfOf(level.getBlockState(pos.relative(dir)));
             double[] box = gregtech.engine.machine.PipeGeometry.localArmBox(dir, half, n);
             if (box != null) shape = Shapes.or(shape, gregtech.engine.machine.PipeGeometry.boxShape(box));
         }
@@ -188,8 +190,8 @@ public class ElectricWireBlock extends GTBlock implements EntityBlock, SimpleWat
     }
 
     @Override
-    public void setPlacedBy(Level level, BlockPos pos, BlockState state,
-                            @Nullable LivingEntity placer, ItemStack stack) {
+    public void setPlacedBy(
+            Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
         if (level.isClientSide) return;
         Direction face = consumePlacementFace();
@@ -222,5 +224,4 @@ public class ElectricWireBlock extends GTBlock implements EntityBlock, SimpleWat
         }
         return state;
     }
-
 }

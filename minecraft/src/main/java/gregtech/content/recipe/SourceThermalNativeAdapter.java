@@ -21,6 +21,7 @@ import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.engine.stack.StackCompat;
+import gregtech.engine.stack.StackData;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluids;
@@ -259,11 +260,7 @@ final class SourceThermalNativeAdapter {
   private long validatedUnits(GTMaterial material,ItemStack stack,Set<MaterialPrefix> allowed){
    if (stack.isEmpty()||stack.isDamaged()||ItemMaterialRegistry.hasStoredContents(stack)
        ||!BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE))return -1;
-//? if >=1.21.1 {
-   /*if (!stack.getComponentsPatch().isEmpty())return -1;
-*///?} else {
-   if (stack.hasTag())return -1;
-//?}
+   if (StackData.hasAnyData(stack))return -1;
    if (!(stack.getItem() instanceof MaterialFormItem form)||form.getMaterial().resolve()!=material)return -1;
    if (!allowed.contains(form.getPrefix())
        ||GTItems.getStack(form.getPrefix(),material,stack.getCount()).getItem()!=stack.getItem())return -1;

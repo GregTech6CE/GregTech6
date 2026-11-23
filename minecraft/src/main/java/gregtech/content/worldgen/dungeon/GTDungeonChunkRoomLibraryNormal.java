@@ -1,13 +1,9 @@
 package gregtech.content.worldgen.dungeon;
 
-//? if >=1.21.1 {
-/*import gregtech.content.registry.*;
-*///?} else {
-//?}
+import gregtech.content.registry.GTWoods;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.SlabType;
-import gregtech.content.registry.GTWoods;
 
 /**
  * Port of GT6's {@code DungeonChunkRoomLibraryNormal}
