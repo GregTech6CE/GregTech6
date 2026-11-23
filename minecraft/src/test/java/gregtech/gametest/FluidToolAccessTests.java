@@ -322,10 +322,10 @@ public final class FluidToolAccessTests {
                         creative, net.minecraft.world.InteractionHand.MAIN_HAND, tank),
                 "Creative water bucket did not fill the tank");
         helper.assertTrue(
-                creative.getMainHandItem().is(net.minecraft.world.item.Items.WATER_BUCKET)
-                        && !creative.getInventory().contains(new ItemStack(net.minecraft.world.item.Items.BUCKET))
+                creative.getMainHandItem().is(net.minecraft.world.item.Items.BUCKET)
+                        && countItem(creative, net.minecraft.world.item.Items.WATER_BUCKET) == 0
                         && tank.getFluidInTank(0).getAmount() == 1000,
-                "Creative fill did not preserve the water bucket or fill 1000 mB");
+                "Creative fill did not swap to an empty bucket or fill 1000 mB");
 
         creative.setItemInHand(
                 net.minecraft.world.InteractionHand.MAIN_HAND,
@@ -335,10 +335,10 @@ public final class FluidToolAccessTests {
                         creative, net.minecraft.world.InteractionHand.MAIN_HAND, tank),
                 "Creative empty bucket did not drain the tank");
         helper.assertTrue(
-                creative.getMainHandItem().is(net.minecraft.world.item.Items.BUCKET)
-                        && creative.getInventory().contains(new ItemStack(net.minecraft.world.item.Items.WATER_BUCKET))
+                creative.getMainHandItem().is(net.minecraft.world.item.Items.WATER_BUCKET)
+                        && countItem(creative, net.minecraft.world.item.Items.BUCKET) == 0
                         && tank.getFluidInTank(0).isEmpty(),
-                "Creative drain did not keep the empty bucket, stow a water bucket, and empty the tank");
+                "Creative drain did not swap to a water bucket and empty the tank");
 
         creative.setItemInHand(
                 net.minecraft.world.InteractionHand.MAIN_HAND,
@@ -389,7 +389,7 @@ public final class FluidToolAccessTests {
             player.initInventoryMenu();
             player.getInventory().setItem(0, new ItemStack(net.minecraft.world.item.Items.WATER_BUCKET));
             player.getInventory().selected = 1;
-            player.getInventory().setItem(1, new ItemStack(net.minecraft.world.item.Items.BUCKET));
+            player.getInventory().setItem(1, new ItemStack(net.minecraft.world.item.Items.BUCKET, 2));
 
             var drumHit = new net.minecraft.world.phys.BlockHitResult(
                     drumPos.getCenter(), Direction.UP, drumPos, false);
@@ -399,8 +399,9 @@ public final class FluidToolAccessTests {
                     drumRes.consumesAction()
                             && drum.getFluidInTank(0).getAmount() == 1000
                             && player.getMainHandItem().is(net.minecraft.world.item.Items.BUCKET)
+                            && player.getMainHandItem().getCount() == 1
                             && countItem(player, net.minecraft.world.item.Items.WATER_BUCKET) == 2,
-                    "Creative drum drain did not unconditionally deliver a second water bucket");
+                    "Creative drum drain did not shrink stacked bucket and deliver a second water bucket");
 
             var pipeHit = new net.minecraft.world.phys.BlockHitResult(
                     pipePos.getCenter(), Direction.UP, pipePos, false);
@@ -409,9 +410,10 @@ public final class FluidToolAccessTests {
             helper.assertTrue(
                     pipeRes.consumesAction()
                             && pipe.getFluidInTank(0).getAmount() == 1000
-                            && player.getMainHandItem().is(net.minecraft.world.item.Items.BUCKET)
+                            && player.getMainHandItem().is(net.minecraft.world.item.Items.WATER_BUCKET)
+                            && countItem(player, net.minecraft.world.item.Items.BUCKET) == 0
                             && countItem(player, net.minecraft.world.item.Items.WATER_BUCKET) == 3,
-                    "Creative pipe drain did not unconditionally deliver a third water bucket");
+                    "Creative pipe drain did not swap last bucket to water bucket");
         } finally {
             gregtech.GregTechConfig.overrideTanksRequireFluidToolsForTesting(null);
             player.discard();
@@ -475,11 +477,11 @@ public final class FluidToolAccessTests {
 
             helper.assertTrue(
                     player.getMainHandItem().is(net.minecraft.world.item.Items.GLASS_BOTTLE)
-                            && player.getMainHandItem().getCount() == 4
+                            && player.getMainHandItem().getCount() == 1
                             && drum.getFluidInTank(0).getAmount() == 500
                             && pipe.getFluidInTank(0).getAmount() == 750
                             && countWaterBottles(player) == 3,
-                    "Stacked creative glass bottles did not keep count 4 or deliver 3 water bottles");
+                    "Stacked creative glass bottles did not consume 3 bottles to count 1 and deliver 3 water bottles");
         } finally {
             gregtech.GregTechConfig.overrideTanksRequireFluidToolsForTesting(null);
             player.discard();
@@ -657,7 +659,7 @@ public final class FluidToolAccessTests {
                             && level.getBlockState(tapPos.north()).isAir(),
                     "Full measuring pot unexpectedly mutated tap or placed block");
 
-            // 3. Creative partial measuring pot clicking tap keeps partial hand item and adds topped-up pot.
+            // 3. Creative partial measuring pot clicking tap tops up directly in hand (no creative cloning).
             player.setGameMode(net.minecraft.world.level.GameType.CREATIVE);
             player.getInventory().clearContent();
             player.getInventory().setItem(0, containerWithFluid(new ItemStack(measuringPot), Fluids.WATER, 1000));
@@ -667,10 +669,10 @@ public final class FluidToolAccessTests {
                     player, level, player.getMainHandItem(), net.minecraft.world.InteractionHand.MAIN_HAND, tapHit);
             helper.assertTrue(
                     creativeTapRes.consumesAction()
-                            && containedFluid(player.getMainHandItem()).getAmount() == 400
+                            && containedFluid(player.getMainHandItem()).getAmount() == 1000
                             && drum.getFluidInTank(0).getAmount() == 800
                             && countFilledContainerAmount(player, measuringPot, 1000) == 2,
-                    "Creative partial measuring pot tap fallback did not preserve template and add topped-up pot");
+                    "Creative partial measuring pot tap fallback did not swap hand container directly to 1000 mB");
 
             // 4. Survival & Creative partial gas cylinder on nozzle_steel (default rule=true).
             drum.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.EXECUTE);
@@ -719,10 +721,10 @@ public final class FluidToolAccessTests {
                     player, level, player.getMainHandItem(), net.minecraft.world.InteractionHand.MAIN_HAND, gasHit);
             helper.assertTrue(
                     creativeGasRes.consumesAction()
-                            && containedFluid(player.getMainHandItem()).getAmount() == 1000
+                            && containedFluid(player.getMainHandItem()).getAmount() == 6000
                             && gasTank.getFluidInTank(0).isEmpty()
                             && countFilledContainerAmount(player, gasCylinder, 6000) == 1,
-                    "Creative partial gas cylinder on CompressedGasTankBlock did not preserve template and add filled cylinder");
+                    "Creative partial gas cylinder on CompressedGasTankBlock did not swap hand item to 6000 mB");
         } finally {
             gregtech.GregTechConfig.overrideTanksRequireFluidToolsForTesting(null);
             player.discard();
@@ -778,9 +780,9 @@ public final class FluidToolAccessTests {
                     player, level, player.getMainHandItem(), net.minecraft.world.InteractionHand.MAIN_HAND, funnelHit);
             helper.assertTrue(
                     funnelCreatRes.consumesAction()
-                            && containedFluid(player.getMainHandItem()).getAmount() == 400
+                            && containedFluid(player.getMainHandItem()).isEmpty()
                             && drum.getFluidInTank(0).getAmount() == 800,
-                    "Creative partial pot did not pour without losing hand container on funnel");
+                    "Creative partial pot did not empty hand container into funnel");
 
             // 2. Full bidirectional drum (rule=false) & PortableTankHandler: partial container falls back to fill.
             gregtech.GregTechConfig.overrideTanksRequireFluidToolsForTesting(false);
@@ -808,10 +810,10 @@ public final class FluidToolAccessTests {
                     player, level, player.getMainHandItem(), net.minecraft.world.InteractionHand.MAIN_HAND, drumHit);
             helper.assertTrue(
                     portableTankCreatRes.consumesAction()
-                            && containedFluid(player.getMainHandItem()).getAmount() == 500
+                            && containedFluid(player.getMainHandItem()).getAmount() == fullCap
                             && drum.getFluidInTank(0).getAmount() == 500
                             && countFilledContainerAmount(player, portableTankItem, fullCap) == 1,
-                    "Creative partial PortableTankHandler did not fall back to top up from full drum");
+                    "Creative partial PortableTankHandler did not swap hand container to full via full drum");
 
             // 3. Nearly-full drum (200 mB space left): filled-first pours 200 mB before any fallback.
             drum.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.EXECUTE);
@@ -838,10 +840,10 @@ public final class FluidToolAccessTests {
                     player, level, player.getMainHandItem(), net.minecraft.world.InteractionHand.MAIN_HAND, pipeHit);
             helper.assertTrue(
                     pipeCreatRes.consumesAction()
-                            && containedFluid(player.getMainHandItem()).getAmount() == 400
+                            && containedFluid(player.getMainHandItem()).getAmount() == 1000
                             && pipe.getFluidInTank(0).getAmount() == pipeCap - 600
                             && countFilledContainerAmount(player, measuringPot, 1000) == 1,
-                    "Creative partial measuring pot on full FluidPipeBlock failed item-to-block handoff");
+                    "Creative partial measuring pot on full FluidPipeBlock failed to swap hand item to 1000 mB");
         } finally {
             gregtech.GregTechConfig.overrideTanksRequireFluidToolsForTesting(null);
             player.discard();
@@ -884,17 +886,17 @@ public final class FluidToolAccessTests {
             player.initInventoryMenu();
             var tapHit = new net.minecraft.world.phys.BlockHitResult(tapPos.getCenter(), Direction.NORTH, tapPos, false);
 
-            // Creative empty wooden bucket on tap keeps empty bucket and adds water wooden bucket.
+            // Creative empty wooden bucket on tap swaps directly to water wooden bucket (no cloning).
             player.setGameMode(net.minecraft.world.level.GameType.CREATIVE);
             player.getInventory().setItem(0, new ItemStack(emptyWoodItem));
             var creativeTapRes = player.gameMode.useItemOn(
                     player, level, player.getMainHandItem(), net.minecraft.world.InteractionHand.MAIN_HAND, tapHit);
             helper.assertTrue(
                     creativeTapRes.consumesAction()
-                            && player.getMainHandItem().is(emptyWoodItem)
-                            && countItem(player, waterWoodItem) == 1
+                            && player.getMainHandItem().is(waterWoodItem)
+                            && countItem(player, emptyWoodItem) == 0
                             && drum.getFluidInTank(0).getAmount() == 1000,
-                    "Creative wooden bucket tap extract lost product or failed");
+                    "Creative wooden bucket tap extract did not swap directly to water wooden bucket");
 
             // Survival empty wooden bucket swaps to water wooden bucket.
             player.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
@@ -964,8 +966,8 @@ public final class FluidToolAccessTests {
             player.initInventoryMenu();
             player.setGameMode(net.minecraft.world.level.GameType.CREATIVE);
 
-            // 1. Migrated BurningBoxBlockEntity + PortableContainerBlockEntity creative extraction.
-            player.getInventory().setItem(0, new ItemStack(net.minecraft.world.item.Items.BUCKET));
+            // 1. Migrated BurningBoxBlockEntity + PortableContainerBlockEntity creative extraction matches survival.
+            player.getInventory().setItem(0, new ItemStack(net.minecraft.world.item.Items.BUCKET, 2));
             var burningHit = new net.minecraft.world.phys.BlockHitResult(
                     burningPos.getCenter(), Direction.UP, burningPos, false);
             var burningRes = player.gameMode.useItemOn(
@@ -974,8 +976,9 @@ public final class FluidToolAccessTests {
                     burningRes.consumesAction()
                             && burningCap.getFluidInTank(0).isEmpty()
                             && player.getMainHandItem().is(net.minecraft.world.item.Items.BUCKET)
+                            && player.getMainHandItem().getCount() == 1
                             && countItem(player, net.minecraft.world.item.Items.WATER_BUCKET) == 1,
-                    "Migrated BurningBox did not preserve creative empty bucket and deliver water bucket");
+                    "Migrated BurningBox did not shrink stacked creative bucket and deliver water bucket");
 
             var potHit = new net.minecraft.world.phys.BlockHitResult(potPos.getCenter(), Direction.UP, potPos, false);
             var potRes = player.gameMode.useItemOn(
@@ -983,8 +986,10 @@ public final class FluidToolAccessTests {
             helper.assertTrue(
                     potRes.consumesAction()
                             && potCap.getFluidInTank(0).isEmpty()
+                            && player.getMainHandItem().is(net.minecraft.world.item.Items.WATER_BUCKET)
+                            && countItem(player, net.minecraft.world.item.Items.BUCKET) == 0
                             && countItem(player, net.minecraft.world.item.Items.WATER_BUCKET) == 2,
-                    "Migrated PortableContainer did not deliver second creative water bucket");
+                    "Migrated PortableContainer did not swap last creative bucket to second water bucket");
 
             // Unformed LargeBoiler passes cleanly without eating held bucket.
             var boilerHit = new net.minecraft.world.phys.BlockHitResult(
@@ -992,10 +997,11 @@ public final class FluidToolAccessTests {
             var boilerRes = player.gameMode.useItemOn(
                     player, level, player.getMainHandItem(), net.minecraft.world.InteractionHand.MAIN_HAND, boilerHit);
             helper.assertTrue(
-                    !boilerRes.consumesAction() && player.getMainHandItem().is(net.minecraft.world.item.Items.BUCKET),
+                    !boilerRes.consumesAction()
+                            && player.getMainHandItem().is(net.minecraft.world.item.Items.WATER_BUCKET),
                     "Unformed LargeBoiler unexpectedly consumed bucket");
 
-            // 2. BasicMachineBlock & BehaviorMachineBlock creative preservation + stacked survival pour + one-way GUI.
+            // 2. BasicMachineBlock & BehaviorMachineBlock creative pour matches survival + one-way GUI.
             var behaviorHit = new net.minecraft.world.phys.BlockHitResult(
                     behaviorPos.getCenter(), Direction.UP, behaviorPos, false);
             player.setGameMode(net.minecraft.world.level.GameType.CREATIVE);
@@ -1005,9 +1011,9 @@ public final class FluidToolAccessTests {
                     player, level, player.getMainHandItem(), net.minecraft.world.InteractionHand.MAIN_HAND, behaviorHit);
             helper.assertTrue(
                     creativeBehavRes.consumesAction()
-                            && player.getMainHandItem().is(net.minecraft.world.item.Items.WATER_BUCKET)
+                            && player.getMainHandItem().is(net.minecraft.world.item.Items.BUCKET)
                             && behavior.fluidHandler(Direction.UP).getFluidInTank(0).getAmount() == 1000,
-                    "Creative BehaviorMachineBlock pour did not preserve water bucket");
+                    "Creative BehaviorMachineBlock pour did not swap water bucket to empty bucket");
 
             var behavior2Pos = behaviorPos.south();
             level.setBlockAndUpdate(behavior2Pos, behaviorBlock.defaultBlockState());
@@ -1064,6 +1070,286 @@ public final class FluidToolAccessTests {
                     "Empty bucket on BehaviorMachineBlock drained input or failed to open GUI");
         } finally {
             player.closeContainer();
+            player.discard();
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 40)
+    public static void genericFluidDisplayResolvesWaterLavaAndCreativeCatalog(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var lookup = level.registryAccess();
+        var generic = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "fluid_display"));
+        helper.assertTrue(
+                generic instanceof gregtech.content.item.FluidDisplayItemLike
+                        && generic == gregtech.content.registry.GTFluidItems.generic(),
+                "gt6ce:fluid_display is not registered as the generic FluidDisplayItemLike carrier");
+
+        var bare = new ItemStack(generic);
+        helper.assertTrue(
+                !gregtech.content.item.CatalogVisibility.visible(bare),
+                "Bare gt6ce:fluid_display shell must remain hidden from CatalogVisibility");
+
+        var waterDisplay = gregtech.engine.fluid.FluidDisplayBinding.display(
+                lookup, new FluidStack(Fluids.WATER, 1000));
+        var lavaDisplay = gregtech.engine.fluid.FluidDisplayBinding.display(
+                lookup, new FluidStack(Fluids.LAVA, 1000));
+        var flowingWaterDisplay = gregtech.engine.fluid.FluidDisplayBinding.display(
+                lookup, new FluidStack(Fluids.FLOWING_WATER, 1000));
+        helper.assertTrue(
+                waterDisplay.is(generic)
+                        && lavaDisplay.is(generic)
+                        && flowingWaterDisplay.is(generic),
+                "Vanilla water/lava/fallback fluids did not resolve onto gt6ce:fluid_display");
+
+        var resolvedWater = gregtech.engine.fluid.FluidDisplayBinding.resolve(lookup, waterDisplay);
+        var resolvedLava = gregtech.engine.fluid.FluidDisplayBinding.resolve(lookup, lavaDisplay);
+        var nitrogen = GTFluids.stack("Nitrogen", 1000);
+        helper.assertTrue(nitrogen != null, "Nitrogen test fluid missing");
+        var nitrogenDisplay = gregtech.engine.fluid.FluidDisplayBinding.display(lookup, nitrogen);
+        helper.assertTrue(
+                resolvedWater.getFluid() == Fluids.WATER
+                        && resolvedLava.getFluid() == Fluids.LAVA
+                        && gregtech.content.item.CatalogVisibility.visible(waterDisplay)
+                        && BuiltInRegistries.ITEM.getKey(nitrogenDisplay.getItem())
+                                .getPath()
+                                .equals("fluid_item_nitrogen"),
+                "Payload resolution or dedicated GT fluid_item_* lookup failed");
+
+        var fluidsPage = gregtech.bootstrap.registration.OriginCreativeContents.contents("fluids");
+        var techPage = gregtech.bootstrap.registration.OriginCreativeContents.contents("technology");
+        boolean hasBareInCatalog = fluidsPage.stream()
+                        .anyMatch(s -> s.is(generic) && !gregtech.engine.fluid.FluidDisplayBinding.hasPayload(s))
+                || techPage.stream().anyMatch(s -> s.is(generic));
+        boolean hasWaterInFluids = fluidsPage.stream()
+                .anyMatch(s -> s.is(generic)
+                        && gregtech.engine.fluid.FluidDisplayBinding.resolve(lookup, s).getFluid() == Fluids.WATER);
+        helper.assertTrue(
+                !hasBareInCatalog && hasWaterInFluids,
+                "Creative fluids tab must contain water-loaded gt6ce:fluid_display and never bare shell");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 40)
+    public static void creativeFluidDisplayFillsAttachmentsAndCrucibleWithoutConsuming(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var lookup = level.registryAccess();
+        var drumPos = helper.absolutePos(new BlockPos(1, 1, 2));
+        var tapPos = drumPos.north();
+        var funnelPos = drumPos.east();
+        var gasDrumPos = helper.absolutePos(new BlockPos(3, 1, 2));
+        var nozzlePos = gasDrumPos.north();
+        var cruciblePos = helper.absolutePos(new BlockPos(5, 1, 2));
+
+        Block drumBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "drum_bronze"));
+        Block tapBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "tap_ceramic"));
+        Block funnelBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "fluid_funnel"));
+        Block capNozzleBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "cap_nozzle"));
+        Block crucibleBlock = BuiltInRegistries.BLOCK.stream()
+                .filter(b -> b instanceof gregtech.content.block.machine.SmeltingCrucibleBlock)
+                .findFirst()
+                .orElseThrow();
+
+        level.setBlockAndUpdate(drumPos, drumBlock.defaultBlockState());
+        level.setBlockAndUpdate(tapPos, tapBlock.defaultBlockState().setValue(FluidAttachmentBlock.FACING, Direction.SOUTH));
+        level.setBlockAndUpdate(funnelPos, funnelBlock.defaultBlockState().setValue(FluidAttachmentBlock.FACING, Direction.WEST));
+        level.setBlockAndUpdate(gasDrumPos, drumBlock.defaultBlockState());
+        level.setBlockAndUpdate(nozzlePos, capNozzleBlock.defaultBlockState().setValue(FluidAttachmentBlock.FACING, Direction.SOUTH));
+        level.setBlockAndUpdate(cruciblePos, crucibleBlock.defaultBlockState());
+
+        var drum = (TankBlockEntity) level.getBlockEntity(drumPos);
+        var gasDrum = (TankBlockEntity) level.getBlockEntity(gasDrumPos);
+        var crucible = (gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity) level.getBlockEntity(cruciblePos);
+        helper.assertTrue(drum != null && gasDrum != null && crucible != null, "Attachment/crucible fixture missing");
+
+        var waterDisplay = gregtech.engine.fluid.FluidDisplayBinding.display(
+                lookup, new FluidStack(Fluids.WATER, 1000));
+        var nitrogen = GTFluids.stack("Nitrogen", 1000);
+        helper.assertTrue(nitrogen != null, "Nitrogen fluid missing");
+        var nitrogenDisplay = gregtech.engine.fluid.FluidDisplayBinding.display(lookup, nitrogen);
+        var lavaDisplay = gregtech.engine.fluid.FluidDisplayBinding.display(
+                lookup, new FluidStack(Fluids.LAVA, 1000));
+
+        var player = MultiblockBehaviorApiTests.menuPlayer(helper);
+        try {
+            player.initInventoryMenu();
+            player.setGameMode(net.minecraft.world.level.GameType.CREATIVE);
+
+            // Tap must never accept creative display fills; fluid_funnel fills full tank and preserves carrier.
+            player.getInventory().setItem(0, waterDisplay.copy());
+            var tapHit = new net.minecraft.world.phys.BlockHitResult(tapPos.getCenter(), Direction.NORTH, tapPos, false);
+            player.gameMode.useItemOn(
+                    player, level, player.getMainHandItem(), net.minecraft.world.InteractionHand.MAIN_HAND, tapHit);
+            helper.assertTrue(drum.getFluidInTank(0).isEmpty(), "Creative display carrier unexpectedly filled tap");
+
+            var funnelHit = new net.minecraft.world.phys.BlockHitResult(
+                    funnelPos.getCenter(), Direction.EAST, funnelPos, false);
+            var funnelRes = player.gameMode.useItemOn(
+                    player, level, player.getMainHandItem(), net.minecraft.world.InteractionHand.MAIN_HAND, funnelHit);
+            helper.assertTrue(
+                    funnelRes.consumesAction()
+                            && drum.getFluidInTank(0).getAmount() == drum.getTankCapacity(0)
+                            && player.getMainHandItem().is(waterDisplay.getItem())
+                            && gregtech.engine.fluid.FluidDisplayBinding
+                                            .resolve(lookup, player.getMainHandItem())
+                                            .getFluid()
+                                    == Fluids.WATER,
+                    "Creative display carrier failed to fill tank through fluid_funnel");
+
+            // cap_nozzle rejects liquid water and fills full tank with gas Nitrogen.
+            var capNozzleHit = new net.minecraft.world.phys.BlockHitResult(
+                    nozzlePos.getCenter(), Direction.NORTH, nozzlePos, false);
+            player.gameMode.useItemOn(
+                    player, level, player.getMainHandItem(), net.minecraft.world.InteractionHand.MAIN_HAND, capNozzleHit);
+            helper.assertTrue(gasDrum.getFluidInTank(0).isEmpty(), "cap_nozzle accepted liquid water");
+
+            player.getInventory().setItem(0, nitrogenDisplay.copy());
+            var capGasRes = player.gameMode.useItemOn(
+                    player, level, player.getMainHandItem(), net.minecraft.world.InteractionHand.MAIN_HAND, capNozzleHit);
+            helper.assertTrue(
+                    capGasRes.consumesAction()
+                            && gasDrum.getFluidInTank(0).getAmount() == gasDrum.getTankCapacity(0)
+                            && gasDrum.getFluidInTank(0).getFluid() == nitrogen.getFluid()
+                            && player.getMainHandItem().is(nitrogenDisplay.getItem())
+                            && gregtech.engine.fluid.FluidDisplayBinding
+                                            .resolve(lookup, player.getMainHandItem())
+                                            .getFluid()
+                                    == nitrogen.getFluid(),
+                    "Creative display carrier failed to fill gas through cap_nozzle");
+
+            // Creative regular water bucket on crucible swaps cleanly to empty bucket (survival parity),
+            // whereas creative lava display carrier fills crucible without consuming itself.
+            var crucibleHit = new net.minecraft.world.phys.BlockHitResult(
+                    cruciblePos.getCenter(), Direction.UP, cruciblePos, false);
+            player.getInventory().setItem(0, new ItemStack(net.minecraft.world.item.Items.WATER_BUCKET));
+            var bucketCrucibleRes = player.gameMode.useItemOn(
+                    player, level, player.getMainHandItem(), net.minecraft.world.InteractionHand.MAIN_HAND, crucibleHit);
+            helper.assertTrue(
+                    bucketCrucibleRes.consumesAction()
+                            && player.getMainHandItem().is(net.minecraft.world.item.Items.BUCKET),
+                    "Creative water bucket on crucible did not swap to empty bucket");
+
+            player.getInventory().setItem(0, lavaDisplay.copy());
+            var lavaCrucibleRes = player.gameMode.useItemOn(
+                    player, level, player.getMainHandItem(), net.minecraft.world.InteractionHand.MAIN_HAND, crucibleHit);
+            helper.assertTrue(
+                    lavaCrucibleRes.consumesAction()
+                            && player.getMainHandItem().is(lavaDisplay.getItem())
+                            && gregtech.engine.fluid.FluidDisplayBinding
+                                            .resolve(lookup, player.getMainHandItem())
+                                            .getFluid()
+                                    == Fluids.LAVA
+                            && !crucible.moltenFluidHandler().getFluidInTank(0).isEmpty(),
+                    "Creative lava display carrier failed to pour into crucible cleanly");
+        } finally {
+            player.discard();
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 40)
+    public static void survivalFluidDisplayBlocksGenerationDrinkingAndAllowsCoverSampling(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var lookup = level.registryAccess();
+        var drumPos = helper.absolutePos(new BlockPos(1, 1, 2));
+        var funnelPos = drumPos.north();
+        var barePipePos = helper.absolutePos(new BlockPos(2, 1, 2));
+        var coveredPipePos = helper.absolutePos(new BlockPos(3, 1, 2));
+        var mixerPos = helper.absolutePos(new BlockPos(4, 1, 2));
+        var cruciblePos = helper.absolutePos(new BlockPos(5, 1, 2));
+
+        Block drumBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "drum_bronze"));
+        Block funnelBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "fluid_funnel"));
+        Block pipeBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "pipe_large_steel"));
+        Block mixerBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "mixer_bronze"));
+        Block crucibleBlock = BuiltInRegistries.BLOCK.stream()
+                .filter(b -> b instanceof gregtech.content.block.machine.SmeltingCrucibleBlock)
+                .findFirst()
+                .orElseThrow();
+
+        level.setBlockAndUpdate(drumPos, drumBlock.defaultBlockState());
+        level.setBlockAndUpdate(funnelPos, funnelBlock.defaultBlockState().setValue(FluidAttachmentBlock.FACING, Direction.SOUTH));
+        level.setBlockAndUpdate(barePipePos, pipeBlock.defaultBlockState());
+        level.setBlockAndUpdate(coveredPipePos, pipeBlock.defaultBlockState());
+        level.setBlockAndUpdate(mixerPos, mixerBlock.defaultBlockState());
+        level.setBlockAndUpdate(cruciblePos, crucibleBlock.defaultBlockState());
+
+        var drum = (TankBlockEntity) level.getBlockEntity(drumPos);
+        var barePipe = (gregtech.content.blockentity.machine.FluidPipeBlockEntity) level.getBlockEntity(barePipePos);
+        var coveredPipe = (gregtech.content.blockentity.machine.FluidPipeBlockEntity) level.getBlockEntity(coveredPipePos);
+        var mixer = (BasicMachineBlockEntity) level.getBlockEntity(mixerPos);
+        var crucible = (gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity) level.getBlockEntity(cruciblePos);
+        helper.assertTrue(
+                drum != null && barePipe != null && coveredPipe != null && mixer != null && crucible != null,
+                "Survival display fixture incomplete");
+
+        var filterCoverItem = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "fluid_filter"));
+        helper.assertTrue(
+                coveredPipe.attachCover(Direction.UP, new ItemStack(filterCoverItem)),
+                "Failed to attach fluid_filter cover");
+
+        var waterDisplay = gregtech.engine.fluid.FluidDisplayBinding.display(
+                lookup, new FluidStack(Fluids.WATER, 1000));
+        var drinkDisplayItem = gregtech.content.registry.GTFluidItems.allEntries().stream()
+                .filter(gregtech.content.registry.RegisteredItem::isPresent)
+                .map(gregtech.content.registry.RegisteredItem::get)
+                .filter(item -> item instanceof gregtech.content.item.FluidDisplayItemLike display
+                        && gregtech.content.food.GTDrinks.rowFor(
+                                        gregtech.content.food.GTDrinks.fluidOf(display.fluidEntry()))
+                                != null)
+                .findFirst()
+                .orElseThrow();
+
+        var player = MultiblockBehaviorApiTests.menuPlayer(helper);
+        gregtech.GregTechConfig.overrideTanksRequireFluidToolsForTesting(false);
+        try {
+            player.initInventoryMenu();
+            player.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
+
+            // 1. Survival right-click must NOT produce fluids on funnel, drum, bare pipe, mixer, or crucible.
+            player.getInventory().setItem(0, waterDisplay.copy());
+            for (BlockPos target : java.util.List.of(funnelPos, drumPos, barePipePos, mixerPos, cruciblePos)) {
+                var hit = new net.minecraft.world.phys.BlockHitResult(target.getCenter(), Direction.UP, target, false);
+                player.gameMode.useItemOn(
+                        player, level, player.getMainHandItem(), net.minecraft.world.InteractionHand.MAIN_HAND, hit);
+            }
+            helper.assertTrue(
+                    drum.getFluidInTank(0).isEmpty()
+                            && barePipe.getFluidInTank(0).isEmpty()
+                            && mixer.getTanksInput()[0].isEmpty()
+                            && crucible.moltenFluidHandler().getFluidInTank(0).isEmpty(),
+                    "Survival display carrier illegally produced fluid into a block");
+
+            // 2. Survival air-use with drink display item must pass without drinking or producing glass bottles.
+            player.getInventory().setItem(0, new ItemStack(drinkDisplayItem));
+            var drinkRes = player.getMainHandItem().use(level, player, net.minecraft.world.InteractionHand.MAIN_HAND);
+            helper.assertTrue(
+                    drinkRes.getResult() == net.minecraft.world.InteractionResult.PASS
+                            && player.getMainHandItem().is(drinkDisplayItem)
+                            && countItem(player, net.minecraft.world.item.Items.GLASS_BOTTLE) == 0,
+                    "FluidDisplayItemLike unexpectedly allowed drinking on right-click");
+
+            // 3. Survival right-click on fluid_filter cover samples nominal 1000 mB fluid without filling pipe.
+            player.getInventory().setItem(0, waterDisplay.copy());
+            var sampled = gregtech.content.cover.UtilityCoverInteraction.sample(waterDisplay);
+            helper.assertTrue(
+                    sampled.getFluid() == Fluids.WATER && sampled.getAmount() == 1000,
+                    "UtilityCoverInteraction.sample did not normalize display carrier to 1000 mB");
+            var coverHit = new net.minecraft.world.phys.BlockHitResult(
+                    coveredPipePos.getCenter(), Direction.UP, coveredPipePos, false);
+            var coverRes = player.gameMode.useItemOn(
+                    player, level, player.getMainHandItem(), net.minecraft.world.InteractionHand.MAIN_HAND, coverHit);
+            var storedFilter = gregtech.content.cover.CoverUtilityBehaviors.fluidFilter(
+                    coveredPipe.getCover(Direction.UP), lookup);
+            helper.assertTrue(
+                    coverRes.consumesAction()
+                            && storedFilter.getFluid() == Fluids.WATER
+                            && storedFilter.getAmount() == 1000
+                            && coveredPipe.getFluidInTank(0).isEmpty(),
+                    "Survival display click on fluid_filter cover failed to sample or leaked into pipe tank");
+        } finally {
+            player.closeContainer();
+            gregtech.GregTechConfig.overrideTanksRequireFluidToolsForTesting(null);
             player.discard();
         }
         helper.succeed();
