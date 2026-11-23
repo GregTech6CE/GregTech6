@@ -94,7 +94,7 @@ public final class MaterialClientModels {
         for (var entry : GTItems.allEntries()) {
             if (entry.get() instanceof gregtech.content.item.EnergyCrystalItem) continue;
             MaterialFormItem item = (MaterialFormItem) entry.get();
-            event.register(ItemColorARGB.opaque((stack, layer) -> layer == 0 ? item.getTintColor() : 0xFFFFFF), entry.get());
+            event.register((stack, layer) -> 0xFF000000 | (layer == 0 ? item.getTintColor() : 0xFFFFFF), entry.get());
         }
     }
 *///?}

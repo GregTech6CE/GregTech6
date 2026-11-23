@@ -5,11 +5,6 @@ import gregtech.engine.stack.StackCompat;
 import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.data.MachineRecipeMaps;
 
-//? if >=1.21.1 {
-/**///?} else {
-import gregtech.network.GTPackets;
-//?}
-
 import gregtech.network.PacketSyncFluids;
 import gregtech.content.registry.GTMenuTypes;
 
@@ -31,11 +26,9 @@ import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
-import net.neoforged.neoforge.network.PacketDistributor;
 *///?} else {
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.network.PacketDistributor;
 //?}
 
 
@@ -288,14 +281,7 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu implements 
     }
 
     protected void sendFluidUpdate(PacketSyncFluids packet) {
-        if (viewer instanceof ServerPlayer player)
-
-//? if >=1.21.1 {
-/*            PacketDistributor.sendToPlayer(player,packet);
-*///?} else {
-            GTPackets.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), packet);
-//?}
-
+        if (viewer instanceof ServerPlayer player) PacketSyncFluids.send(player, packet);
     }
 
 

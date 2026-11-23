@@ -40,19 +40,11 @@ public final class GTToolClient {
     public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
         event.register((stack, tintIndex) -> {
             if (!GTToolHelper.isTool(stack)) {
-//? if >=1.21.1 {
-                /*return 0xFFFFFFFF;
-*///?} else {
-                return 0xFFFFFF;
-//?}
+                return 0xFFFFFFFF;
             }
             int headColor = 0xFF000000 | (GTToolHelper.getHead(stack).getColor() & 0xFFFFFF);
             if (tintIndex == ToolIconSets.OVERLAY_TINT) {
-//? if >=1.21.1 {
-                /*return 0xFFFFFFFF;
-*///?} else {
-                return 0xFFFFFF;
-//?}
+                return 0xFFFFFFFF;
             }
             GTToolType type = ((GTToolItem)stack.getItem()).toolType();
             if (type.definition().isGun())return tintIndex==0?headColor:tintIndex==1?0xFF000000|(GTToolHelper.getHandle(stack).getColor()&0xFFFFFF):0xFFFFFFFF;
@@ -63,18 +55,10 @@ public final class GTToolClient {
                 if (tintIndex == 1) {
                     return headColor;
                 }
-//? if >=1.21.1 {
-                /*return 0xFFFFFFFF;
-*///?} else {
-                return 0xFFFFFF;
-//?}
+                return 0xFFFFFFFF;
             }
             if (type.isHeadless()) {
-//? if >=1.21.1 {
-                /*return tintIndex == 0 ? headColor : 0xFFFFFFFF;
-*///?} else {
-                return tintIndex == 0 ? headColor : 0xFFFFFF;
-//?}
+                return tintIndex == 0 ? headColor : 0xFFFFFFFF;
             }
             if (tintIndex == 0) {
                 return 0xFF000000 | (GTToolHelper.getHandle(stack).getColor() & 0xFFFFFF);
@@ -82,11 +66,7 @@ public final class GTToolClient {
             if (tintIndex == 1) {
                 return headColor;
             }
-//? if >=1.21.1 {
-            /*return 0xFFFFFFFF;
-*///?} else {
-            return 0xFFFFFF;
-//?}
+            return 0xFFFFFFFF;
         }, GTToolItems.all().values().stream().map(holder -> holder.get()).toArray(net.minecraft.world.item.Item[]::new));
     }
 }

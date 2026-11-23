@@ -66,12 +66,7 @@ public class PartScreen extends MachineContainerScreen<PartMenu> {
         super.render(graphics, mouseX, mouseY, partialTick);
         renderTooltip(graphics, mouseX, mouseY);
         for (Hover hover : hovers) {
-//? if >=1.21.1 {
-/*            if (hover.contains(mouseX, mouseY))
-                graphics.renderTooltip(font, hover.lines, java.util.Optional.empty(), mouseX, mouseY);
-*///?} else {
             if (hover.contains(mouseX, mouseY)) graphics.renderComponentTooltip(font, hover.lines, mouseX, mouseY);
-//?}
         }
     }
 
@@ -96,14 +91,8 @@ public class PartScreen extends MachineContainerScreen<PartMenu> {
             int drawn = 0;
             while (drawn < filled) {
                 int height = Math.min(16, filled - drawn);
-//? if >=1.21.1 {
-/*                graphics.blit(left + 1, bottom - drawn - height, 0, BehaviorMachineGui.TANK_WIDTH - 2, height,
+                graphics.blit(left + 1, bottom - drawn - height, 0, BehaviorMachineGui.TANK_WIDTH - 2, height,
                         sprite, red, green, blue, 1.0F);
-*///?} else {
-                graphics.setColor(red, green, blue, 1.0F);
-                graphics.blit(left + 1, bottom - drawn - height, 0, BehaviorMachineGui.TANK_WIDTH - 2, height, sprite);
-                graphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
-//?}
                 drawn += height;
             }
         }

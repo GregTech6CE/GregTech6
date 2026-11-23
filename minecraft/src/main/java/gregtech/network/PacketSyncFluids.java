@@ -61,4 +61,10 @@ public record PacketSyncFluids(int containerId, int slotIndex, FluidStack fluid,
                 && menu.slots.get(slotIndex) instanceof SlotFluid slot) slot.setFluid(fluid, amount, capacity);
     }
 //?}
+
+//? if >=1.21.1 {
+    /*public static void send(net.minecraft.server.level.ServerPlayer player,PacketSyncFluids packet){net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(player,packet);}
+*///?} else {
+    public static void send(net.minecraft.server.level.ServerPlayer player,PacketSyncFluids packet){GTPackets.CHANNEL.send(net.minecraftforge.network.PacketDistributor.PLAYER.with(()->player),packet);}
+//?}
 }

@@ -36,12 +36,7 @@ public final class OriginConstructionClient {
     @SubscribeEvent public static void items(RegisterColorHandlersEvent.Item event) {
         var items = java.util.Arrays.stream(blocks()).map(net.minecraft.world.level.block.Block::asItem)
                 .toArray(net.minecraft.world.item.Item[]::new);
-//? if >=1.21.1 {
-        /*event.register(ItemColorARGB.opaque((stack, index) -> index == 0
+        event.register((stack, index) -> 0xFF000000 | (index == 0
                 ? ConcreteBlock.tint(ColoredConstructionBlock.itemColor(stack)) : 0xFFFFFF), items);
-*///?} else {
-        event.register((stack, index) -> index == 0
-                ? ConcreteBlock.tint(ColoredConstructionBlock.itemColor(stack)) : 0xFFFFFF, items);
-//?}
     }
 }

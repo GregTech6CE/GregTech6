@@ -23,10 +23,6 @@ import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
 import java.util.List;
-//? if >=1.21.1 {
-/*import java.util.Optional;
-*///?} else {
-//?}
 
 /** Draws a behavior machine from its declaration and the addon's GUI sheet. */
 public class BehaviorMachineScreen extends BehaviorMachineHostScreen implements FluidRecipeScreen {
@@ -76,12 +72,7 @@ public class BehaviorMachineScreen extends BehaviorMachineHostScreen implements 
         super.render(graphics, mouseX, mouseY, partialTick);
         renderTooltip(graphics, mouseX, mouseY);
         for (Hover hover : hovers) {
-//? if >=1.21.1 {
-/*            if (hover.contains(mouseX, mouseY))
-                graphics.renderTooltip(font, hover.lines, Optional.empty(), mouseX, mouseY);
-*///?} else {
             if (hover.contains(mouseX, mouseY)) graphics.renderComponentTooltip(font, hover.lines, mouseX, mouseY);
-//?}
         }
     }
 
@@ -131,32 +122,18 @@ public class BehaviorMachineScreen extends BehaviorMachineHostScreen implements 
         int filled = scaled(amount, slot.capacity(), BehaviorMachineGui.TANK_HEIGHT - 2);
         if (filled > 0 && !fluid.isEmpty()) {
             IClientFluidTypeExtensions extensions = IClientFluidTypeExtensions.of(fluid.getFluid());
-//? if >=1.21.1 {
-/*            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS)
+            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS)
                     .apply(extensions.getStillTexture(fluid));
             int tint = extensions.getTintColor(fluid);
             float red = ((tint >> 16) & 0xFF) / 255.0F;
             float green = ((tint >> 8) & 0xFF) / 255.0F;
             float blue = (tint & 0xFF) / 255.0F;
-*///?} else {
-            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(extensions.getStillTexture());
-            int tint = extensions.getTintColor();
-            graphics.setColor(((tint >> 16) & 0xFF) / 255.0F, ((tint >> 8) & 0xFF) / 255.0F, (tint & 0xFF) / 255.0F, 1.0F);
-//?}
             int bottom = top + BehaviorMachineGui.TANK_HEIGHT - 1;
             for (int drawn = 0; drawn < filled; drawn += 16) {
                 int height = Math.min(16, filled - drawn);
-//? if >=1.21.1 {
-/*                graphics.blit(left + 1, bottom - drawn - height, 0, BehaviorMachineGui.TANK_WIDTH - 2, height,
+                graphics.blit(left + 1, bottom - drawn - height, 0, BehaviorMachineGui.TANK_WIDTH - 2, height,
                         sprite, red, green, blue, 1.0F);
-*///?} else {
-                graphics.blit(left + 1, bottom - drawn - height, 0, BehaviorMachineGui.TANK_WIDTH - 2, height, sprite);
-//?}
             }
-//? if >=1.21.1 {
-/**///?} else {
-            graphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
-//?}
         }
         blit(graphics, left, top, BehaviorMachineGui.UV_TANK_MARKS_U, BehaviorMachineGui.UV_TANK_V,
                 BehaviorMachineGui.TANK_WIDTH, BehaviorMachineGui.TANK_HEIGHT);

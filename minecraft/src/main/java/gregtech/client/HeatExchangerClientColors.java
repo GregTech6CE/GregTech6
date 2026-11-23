@@ -20,11 +20,7 @@ public final class HeatExchangerClientColors {
     }
     @SubscribeEvent public static void items(RegisterColorHandlersEvent.Item event) {
         for (var entry : GTHeatExchangers.all()) {
-//? if >=1.21.1 {
-            /*event.register(ItemColorARGB.opaque((stack, layer) -> layer == 0 ? entry.get().spec().material().getColor() : 0xffffff), entry.get().asItem());
-*///?} else {
-            event.register((stack, layer) -> layer == 0 ? entry.get().spec().material().getColor() : 0xffffff, entry.get().asItem());
-//?}
+            event.register((stack, layer) -> 0xFF000000 | (layer == 0 ? entry.get().spec().material().getColor() : 0xffffff), entry.get().asItem());
         }
     }
 }

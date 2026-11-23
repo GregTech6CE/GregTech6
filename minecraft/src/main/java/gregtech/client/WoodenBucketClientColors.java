@@ -29,24 +29,10 @@ public final class WoodenBucketClientColors {
                 .filter(WoodenBucketItem.class::isInstance)
                 .toArray(Item[]::new);
         if (buckets.length == 0) return;
-        //? if >=1.21.1 {
-        /*event.register(
-                ItemColorARGB.opaque((stack, layer) -> {
-                    if (stack.getItem() instanceof WoodenBucketItem bucket) {
-                        return WoodenBucketVisuals.tintRgb(bucket.band(), bucket.content(), layer);
-                    }
-                    return 0xFFFFFF;
-                }),
-                buckets);
-        *///?} else {
         event.register(
-                (stack, layer) -> {
-                    if (stack.getItem() instanceof WoodenBucketItem bucket) {
-                        return WoodenBucketVisuals.tintRgb(bucket.band(), bucket.content(), layer);
-                    }
-                    return 0xFFFFFF;
-                },
+                (stack, layer) -> 0xFF000000 | (stack.getItem() instanceof WoodenBucketItem bucket
+                        ? WoodenBucketVisuals.tintRgb(bucket.band(), bucket.content(), layer)
+                        : 0xFFFFFF),
                 buckets);
-        //?}
     }
 }

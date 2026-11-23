@@ -50,11 +50,7 @@ public final class ComponentCoverFallbackRenderer {
         var level = Minecraft.getInstance().level;
         if (level == null || !level.hasChunkAt(packet.pos())) return;
         var owner = level.getBlockEntity(packet.pos());
-//? if >=1.21.1 {
-        /*var packetType = packet.entityType();
-*///?} else {
-        var packetType = packet.type();
-//?}
+        var packetType = packet.entityTypeId();
         if (owner != null && packetType.equals(net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(
                 owner.getType()))) ComponentCoverFallback.read(owner, packet.tag(), level.registryAccess());
     }

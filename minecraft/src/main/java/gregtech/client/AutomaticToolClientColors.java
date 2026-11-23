@@ -48,10 +48,6 @@ public final class AutomaticToolClientColors {
         for (var block : blocks()) event.register((state, level, pos, layer) -> rgb(block, layer), block);
     }
     @SubscribeEvent public static void items(RegisterColorHandlersEvent.Item event) {
-//? if >=1.21.1 {
-        /*for (var block : blocks()) event.register(ItemColorARGB.opaque((stack, layer) -> rgb(block, layer)), block.asItem());
-*///?} else {
-        for (var block : blocks()) event.register((stack, layer) -> rgb(block, layer), block.asItem());
-//?}
+        for (var block : blocks()) event.register((stack, layer) -> 0xFF000000 | rgb(block, layer), block.asItem());
     }
 }

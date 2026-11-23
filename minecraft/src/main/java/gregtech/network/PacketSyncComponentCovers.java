@@ -41,6 +41,12 @@ public record PacketSyncComponentCovers(BlockPos pos,ResourceLocation entityType
 public record PacketSyncComponentCovers(BlockPos pos,ResourceLocation type,CompoundTag tag) {
 //?}
     public PacketSyncComponentCovers{pos=pos.immutable();tag=tag.copy();}
+    /** Registry id of the owner block entity type; the record component is named per version. */
+//? if >=1.21.1 {
+    /*public ResourceLocation entityTypeId(){return entityType;}
+*///?} else {
+    public ResourceLocation entityTypeId(){return type;}
+//?}
     public static PacketSyncComponentCovers of(BlockEntity owner,CompoundTag tag){return new PacketSyncComponentCovers(owner.getBlockPos(),net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(owner.getType()),tag);}
 //? if >=1.21.1 {
     /*private static void encode(RegistryFriendlyByteBuf buf,PacketSyncComponentCovers packet){buf.writeBlockPos(packet.pos);buf.writeResourceLocation(packet.entityType);buf.writeNbt(packet.tag);}

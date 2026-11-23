@@ -17,11 +17,7 @@ public final class LongDistanceClientColors {
     private LongDistanceClientColors(){}
     private static int rgb(Block block,int layer){
         int value=layer!=0?0xffffff:block instanceof LongDistEndpointBlock endpoint?endpoint.material().getColor():((LongDistanceTransformerBlock)block).material().getColor();
-//? if >=1.21.1 {
-        /*return 0xff000000|value;
-*///?} else {
-        return value;
-//?}
+        return 0xFF000000|value;
     }
     private static java.util.List<Block> endpoints(){return net.minecraft.core.registries.BuiltInRegistries.BLOCK.stream().filter(block->block instanceof LongDistEndpointBlock||block instanceof LongDistanceTransformerBlock).toList();}
     @SubscribeEvent public static void blocks(RegisterColorHandlersEvent.Block event){for (var block:endpoints())event.register((state,level,pos,layer)->rgb(block,layer),block);}

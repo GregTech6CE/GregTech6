@@ -33,19 +33,11 @@ public final class StorageCrystalClientColors {
     }
     @SubscribeEvent public static void items(RegisterColorHandlersEvent.Item event) {
         for (var holder : GTItemBarrels.ALL) {
-//? if >=1.21.1 {
-            /*event.register(ItemColorARGB.opaque((stack, layer) -> layer == 0 ? holder.get().material().getColor() : 0xFFFFFF), holder.get().asItem());
-*///?} else {
-            event.register((stack, layer) -> layer == 0 ? holder.get().material().getColor() : 0xFFFFFF, holder.get().asItem());
-//?}
+            event.register((stack, layer) -> 0xFF000000 | (layer == 0 ? holder.get().material().getColor() : 0xFFFFFF), holder.get().asItem());
         }
         for (String id : new String[]{"ender_garbage_dump", "ender_garbage_bin"}) {
             var item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
-//? if >=1.21.1 {
-            /*event.register(ItemColorARGB.opaque((stack, layer) -> layer == 0 ? Materials.Steel.getColor() : 0xFFFFFF), item);
-*///?} else {
-            event.register((stack, layer) -> layer == 0 ? Materials.Steel.getColor() : 0xFFFFFF, item);
-//?}
+            event.register((stack, layer) -> 0xFF000000 | (layer == 0 ? Materials.Steel.getColor() : 0xFFFFFF), item);
         }
     }
 }

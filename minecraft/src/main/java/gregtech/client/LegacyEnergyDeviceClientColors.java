@@ -22,14 +22,8 @@ public final class LegacyEnergyDeviceClientColors {
             event.register((state, level, pos, layer) -> layer == 0 ? entry.get().spec().color() : 0xFFFFFF, entry.get());
     }
     @SubscribeEvent public static void items(RegisterColorHandlersEvent.Item event) {
-//? if >=1.21.1 {
-        /*event.register(ItemColorARGB.opaque((stack, layer) -> layer == 0 ? 0x808080 : 0xFFFFFF), GTLegacyEnergyDevices.MAGIC_FIELD_ABSORBER.get().asItem());
+        event.register((stack, layer) -> 0xFF000000 | (layer == 0 ? 0x808080 : 0xFFFFFF), GTLegacyEnergyDevices.MAGIC_FIELD_ABSORBER.get().asItem());
         for (var entry : GTLegacyEnergyDevices.POWER_CELLS)
-            event.register(ItemColorARGB.opaque((stack, layer) -> layer == 0 ? entry.get().spec().color() : 0xFFFFFF), entry.get().asItem());
-*///?} else {
-        event.register((stack, layer) -> layer == 0 ? 0x808080 : 0xFFFFFF, GTLegacyEnergyDevices.MAGIC_FIELD_ABSORBER.get().asItem());
-        for (var entry : GTLegacyEnergyDevices.POWER_CELLS)
-            event.register((stack, layer) -> layer == 0 ? entry.get().spec().color() : 0xFFFFFF, entry.get().asItem());
-//?}
+            event.register((stack, layer) -> 0xFF000000 | (layer == 0 ? entry.get().spec().color() : 0xFFFFFF), entry.get().asItem());
     }
 }

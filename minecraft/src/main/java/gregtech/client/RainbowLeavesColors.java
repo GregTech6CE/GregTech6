@@ -47,18 +47,10 @@ public final class RainbowLeavesColors {
             event.register((state, level, pos, tint) -> tint == 0 ? color(pos) : 0xffffff, opaque);
     }
     @SubscribeEvent public static void items(RegisterColorHandlersEvent.Item event) {
-//? if >=1.21.1 {
-        /*event.register(ItemColorARGB.opaque((stack, tint) -> tint == 0 ? color(null) : 0xffffff),
+        event.register((stack, tint) -> 0xFF000000 | (tint == 0 ? color(null) : 0xffffff),
                 GTWoods.leaves(WoodSpecies.RAINBOWOOD).asItem());
         var opaque = opaqueLeaves();
         if (opaque != null)
-            event.register(ItemColorARGB.opaque((stack, tint) -> tint == 0 ? color(null) : 0xffffff), opaque.asItem());
-*///?} else {
-        event.register((stack, tint) -> tint == 0 ? color(null) : 0xffffff,
-                GTWoods.leaves(WoodSpecies.RAINBOWOOD).asItem());
-        var opaque = opaqueLeaves();
-        if (opaque != null)
-            event.register((stack, tint) -> tint == 0 ? color(null) : 0xffffff, opaque.asItem());
-//?}
+            event.register((stack, tint) -> 0xFF000000 | (tint == 0 ? color(null) : 0xffffff), opaque.asItem());
     }
 }
