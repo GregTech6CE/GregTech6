@@ -103,6 +103,15 @@ public final class FluidRegistries {
             ALL_ITEMS.add(item);
             GTFluidItems.registerEntry(item);
         }
+        // Generic carrier for fluids without a dedicated item (vanilla and third-party alike). The
+        // sentinel entry carries no material key and is not vanilla lava, so it never joins the
+        // material fluid tags.
+        var genericItem = registrar.item(
+                REGISTRY_NAMESPACE,
+                "fluid_display",
+                () -> new FluidDisplayItem(new RegisteredFluids.FluidEntry("fluid_display"), new Item.Properties()));
+        ALL_ITEMS.add(genericItem);
+        GTFluidItems.registerGeneric(genericItem);
         RegisteredFluids.closeDefinitions();
     }
 

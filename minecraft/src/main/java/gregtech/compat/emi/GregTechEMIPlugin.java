@@ -22,6 +22,7 @@ public final class GregTechEMIPlugin implements EmiPlugin {
     @Override
     public void initialize(dev.emi.emi.api.EmiInitRegistry registry) {
         registry.addIngredientSerializer(FluidDisplayEmiStack.class, new FluidDisplayEmiStack.Serializer());
+        registry.addIngredientSerializer(NativeFluidEmiStack.class, new NativeFluidEmiStack.Serializer());
     }
 
     /** The client overlay calls this before EMI re-registers, so this pass reads the live maps. */
@@ -81,7 +82,13 @@ public final class GregTechEMIPlugin implements EmiPlugin {
                 registry.addWorkstation(
                         dev.emi.emi.api.recipe.VanillaEmiRecipeCategories.CRAFTING, EmiStack.of(new ItemStack(table)));
         EmiCatalogRepair.apply();
-        registry.removeEmiStacks(stack -> !gregtech.content.item.CatalogVisibility.visible(stack.getItemStack()));
+        // Native fluid proxies carry a creative payload only in cheat mode; never filter them out.
+        registry.removeEmiStacks(stack -> !(stack instanceof NativeFluidEmiStack)
+                && !gregtech.content.item.CatalogVisibility.visible(stack.getItemStack()));
+        // The dedicated lava display item duplicates the native lava entry of the repair pass.
+        var lavaDisplayId = ResourceLocation.fromNamespaceAndPath(
+                gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE, "fluid_item_lava");
+        registry.removeEmiStacks(stack -> lavaDisplayId.equals(stack.getId()));
         // EMI builds repair entries from canBeDepleted() alone, so GT tools would still show a dead recipe.
         registry.removeRecipes(GregTechEMIPlugin::repairedGtTool);
         for (var item : gregtech.engine.recipe.UsbRecipeDisplayBinding.sticks())

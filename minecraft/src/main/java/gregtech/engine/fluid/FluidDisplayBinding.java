@@ -49,25 +49,38 @@ public final class FluidDisplayBinding {
         return tag != null && tag.contains(TAG, 10);
     }
 
+    /**
+     * Wraps an arbitrary fluid into a display stack. Only a fluid with its own {@code fluid_item_*}
+     * carrier keeps that item; everything else (vanilla water/lava and third-party fluids) falls
+     * back to the generic carrier so a foreign fluid never borrows an unrelated GT fluid item.
+     */
     public static ItemStack display(@Nullable HolderLookup.Provider lookup, FluidStack fluid) {
         if (fluid.isEmpty()) return ItemStack.EMPTY;
 //? if >=1.21.1 {
-        /*var fluidId = BuiltInRegistries.FLUID.getKey(fluid.getFluid());
+        /*// The payload is saved against this lookup; without one the fluid cannot be encoded.
+        if (lookup == null) return ItemStack.EMPTY;
+        var fluidId = BuiltInRegistries.FLUID.getKey(fluid.getFluid());
         net.minecraft.world.item.Item carrierItem = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(
-                fluid.getFluid() == Fluids.WATER || fluid.getFluid() == Fluids.LAVA
-                        ? "gt6ce" : fluidId.getNamespace(), "fluid_item_" + fluidId.getPath()));
-        if (!(carrierItem instanceof FluidDisplayItemLike))
-            for (var handle : GTFluidItems.allEntries()) {
-                if (!(handle.get() instanceof FluidDisplayItemLike)) continue;
-                carrierItem = handle.get();
-                break;
-            }
+                fluidId.getNamespace(), "fluid_item_" + fluidId.getPath()));
+        if (!(carrierItem instanceof FluidDisplayItemLike)) {
+            carrierItem = GTFluidItems.generic();
+            if (carrierItem == null)
+                for (var handle : GTFluidItems.allEntries()) {
+                    if (!(handle.get() instanceof FluidDisplayItemLike)) continue;
+                    carrierItem = handle.get();
+                    break;
+                }
+        }
         if (!(carrierItem instanceof FluidDisplayItemLike)) return ItemStack.EMPTY;
         var displayStack = new ItemStack(carrierItem);
         StackData.update(displayStack, tag -> tag.put(TAG, NbtCompat.saveFluid(fluid, lookup)));
         return displayStack;
 *///?} else {
-        var carrierItem = GTFluidItems.forFluid(fluid.getFluid());
+        var fluidKey = net.minecraftforge.registries.ForgeRegistries.FLUIDS.getKey(fluid.getFluid());
+        net.minecraft.world.item.Item carrierItem = fluidKey != null && !"minecraft".equals(fluidKey.getNamespace())
+                ? GTFluidItems.forFluid(fluid.getFluid())
+                : null;
+        if (carrierItem == null) carrierItem = GTFluidItems.generic();
         if (carrierItem == null) carrierItem = GTFluidItems.getFirst();
         if (carrierItem == null) return ItemStack.EMPTY;
         var stack = new ItemStack(carrierItem);

@@ -153,6 +153,13 @@ public record FluidBootstrap() implements InitializationStep {
         }
 
         GregTech.LOGGER.info("Registered {} GT6 fluids", count);
+        // Generic carrier for fluids without a dedicated item (vanilla and third-party alike). It
+        // stays out of the field/fluid lookup maps so getFirst() keeps returning a real fluid item.
+        var genericItem = registrar.item(
+                GregTech.NAMESPACE,
+                "fluid_display",
+                () -> new FluidItem(new RegisteredFluids.FluidEntry("fluid_display"), new Item.Properties()));
+        GTFluidItems.registerGeneric(genericItem);
         RegisteredFluids.closeDefinitions();
     }
 }

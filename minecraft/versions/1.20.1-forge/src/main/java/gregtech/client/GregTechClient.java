@@ -9,7 +9,7 @@ import gregtech.content.block.energy.ElectricWireBlock;
 import gregtech.content.block.machine.*;
 import gregtech.content.blockentity.machine.KineticSteamEngineBlockEntity;
 import gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity;
-import gregtech.content.item.FluidItem;
+import gregtech.content.item.FluidDisplayItemLike;
 import gregtech.content.registry.*;
 import gregtech.engine.fluid.FluidRenderLayers;
 import gregtech.engine.machine.EngineType;
@@ -365,8 +365,8 @@ public final class GregTechClient {
         GTFluidItems.allEntries().stream()
                 .filter(gregtech.content.registry.RegisteredItem::isPresent)
                 .map(gregtech.content.registry.RegisteredItem::get)
-                .filter(item -> item instanceof FluidItem)
-                .map(item -> (FluidItem) item)
+                .filter(item -> item instanceof FluidDisplayItemLike)
+                .map(item -> (FluidDisplayItemLike) item)
                 .forEach(fluidItem -> {
                     event.register(
                             (stack, t) -> {
@@ -381,7 +381,7 @@ public final class GregTechClient {
                                 return FluidAppearance.appearance(fluidItem.fluidEntry())
                                         .tint();
                             },
-                            fluidItem);
+                            (net.minecraft.world.item.Item) fluidItem);
                 });
     }
 

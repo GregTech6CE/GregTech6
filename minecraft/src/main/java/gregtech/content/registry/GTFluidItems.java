@@ -26,6 +26,23 @@ public final class GTFluidItems {
     public static java.util.Collection<RegisteredItem<? extends Item>> allEntries() {
         return java.util.List.copyOf(ALL_ENTRIES);
     }
+
+    private static RegisteredItem<? extends Item> GENERIC;
+
+    /**
+     * Registers the version-independent carrier that displays fluids without a dedicated item.
+     * It is an entry like any other, so model and tint packs pick it up automatically.
+     */
+    public static void registerGeneric(RegisteredItem<? extends Item> ro) {
+        GENERIC = ro;
+        registerEntry(ro);
+    }
+
+    /** @return the generic carrier, or {@code null} before registration */
+    @org.jetbrains.annotations.Nullable
+    public static Item generic() {
+        return GENERIC != null && GENERIC.isPresent() ? GENERIC.get() : null;
+    }
 //? if >=1.21.1 {
  /*private GTFluidItems(){}
  public static Item get(String field){var entry=RegisteredFluids.get(field);if (entry==null)return null;var item=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(GTFluids.namespace(entry),"fluid_item_"+RegisteredFluids.sanitizePath(entry.registryName())));return item==Items.AIR?null:item;}

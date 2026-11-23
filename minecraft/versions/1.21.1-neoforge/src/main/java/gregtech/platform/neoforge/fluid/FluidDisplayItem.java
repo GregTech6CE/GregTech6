@@ -50,28 +50,13 @@ public final class FluidDisplayItem extends Item implements FluidDisplayItemLike
         return GTFluidType.describe(fluidEntry, path);
     }
 
-    /**
-     * Uses the carrier's registered drink entry; this action does not resolve display payloads.
-     * For a noncreative player, consumes one carrier and attempts to add an empty bottle.
-     */
+    /** Display carriers are not drinks: using one never consumes the stack or a bottle. */
     @Override
     public net.minecraft.world.InteractionResultHolder<ItemStack> use(
             net.minecraft.world.level.Level level,
             net.minecraft.world.entity.player.Player player,
             net.minecraft.world.InteractionHand hand) {
-        ItemStack stack = player.getItemInHand(hand);
-        net.minecraft.world.level.material.Fluid fluid = gregtech.content.food.GTDrinks.fluidOf(fluidEntry);
-        if (gregtech.content.food.GTDrinks.rowFor(fluid) == null) {
-            return net.minecraft.world.InteractionResultHolder.pass(stack);
-        }
-        if (!level.isClientSide) {
-            gregtech.content.food.GTDrinks.drink(player, new FluidStack(fluid, 250));
-            if (!player.getAbilities().instabuild) {
-                stack.shrink(1);
-                player.getInventory().add(new ItemStack(net.minecraft.world.item.Items.GLASS_BOTTLE));
-            }
-        }
-        return net.minecraft.world.InteractionResultHolder.consume(stack);
+        return net.minecraft.world.InteractionResultHolder.pass(player.getItemInHand(hand));
     }
 
     @Override

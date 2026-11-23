@@ -8,6 +8,11 @@ import gregtech.content.block.MaterialBlockLike;
 import gregtech.content.item.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.*;
+//? if >=1.21.1 {
+/*import net.neoforged.neoforge.fluids.FluidStack;
+*///?} else {
+import net.minecraftforge.fluids.FluidStack;
+//?}
 import java.util.*;
 
 /** Loader boundary: source categories/order with native stacks, colors and charged variants. */
@@ -31,6 +36,8 @@ public final class OriginCreativeContents {
 
         // Fluid display items are node-specific classes; both nodes register them as fluid_item_<path>.
         if (id.startsWith("fluid_item_")) return "fluids";
+        // The generic carrier only ever shows up as a payload-carrying stack.
+        if (id.equals("fluid_display")) return "fluids";
 
         if (item instanceof BlockItem b) {
             var block=b.getBlock(); String type=block.getClass().getSimpleName();
@@ -187,6 +194,12 @@ public final class OriginCreativeContents {
             } else if (BuiltInRegistries.ITEM.getKey(item).getPath().equals("zpm_module"))page.add(gregtech.content.energy.ZpmEnergy.charged());
             else page.add(new ItemStack(item));
         }
+        // Creative convenience: the fluids page leads with a payload-carrying water carrier. The bare
+        // shell itself stays hidden by CatalogVisibility.
+        var water = gregtech.engine.fluid.FluidDisplayBinding.display(
+                gregtech.engine.fluid.FluidDisplayBinding.currentLookup(),
+                new FluidStack(net.minecraft.world.level.material.Fluids.WATER, 1000));
+        if (!water.isEmpty()) result.get("fluids").add(0, water);
         result.replaceAll((family,stacks)->List.copyOf(stacks));pages=Collections.unmodifiableMap(result);
 //? if >=1.21.1 {
         /*pagesEnchantmentRegistry = enchantmentRegistry;

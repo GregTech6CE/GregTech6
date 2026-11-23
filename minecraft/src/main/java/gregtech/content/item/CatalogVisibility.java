@@ -48,6 +48,9 @@ public final class CatalogVisibility {
                         || gregtech.content.block.OreBlock.stoneOfStack(stack)
                                 != gregtech.content.block.OreHostStone.STONE)) return false;
         if (!id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return true;
+        // The generic carrier is a bare shell: only a payload-carrying stack (e.g. creative water) is listed.
+        if (id.getPath().equals("fluid_display") && !gregtech.engine.fluid.FluidDisplayBinding.hasPayload(stack))
+            return false;
         if (!Rule.BUMBLEBEES.enabled() && gregtech.content.bumble.BumbleBeeType.speciesOf(stack) != null) return false;
         if (item instanceof FluidDisplayItemLike fluid)
             return !Rule.FLUID_DISPLAY.enabled()

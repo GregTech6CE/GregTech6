@@ -48,8 +48,31 @@ public final class CreativeTabBootstrap {
                 return;
             }
         }
-        for (var stack : OriginCreativeContents.contents(event.getTabKey().location().getPath()))
-            event.accept(stack.copyWithCount(1));
+        var page = OriginCreativeContents.contents(event.getTabKey().location().getPath());
+        // The cached page can predate a usable registry lookup, so the fluids tab resolves its water
+        // entry against the event's own lookup instead of losing it.
+        if ("fluids".equals(event.getTabKey().location().getPath())
+                && (page.isEmpty()
+                        || !gregtech.engine.fluid.FluidDisplayBinding.hasPayload(page.iterator().next()))) {
+            var water = waterDisplay(event);
+            if (!water.isEmpty()) event.accept(water.copyWithCount(1));
+        }
+        for (var stack : page) event.accept(stack.copyWithCount(1));
+    }
+
+    /** Water carrier resolved against the tab event's own registry lookup. */
+    private static ItemStack waterDisplay(BuildCreativeModeTabContentsEvent event) {
+//? if >=1.21.1 {
+        /*return gregtech.engine.fluid.FluidDisplayBinding.display(
+                event.getParameters().holders(),
+                new net.neoforged.neoforge.fluids.FluidStack(
+                        net.minecraft.world.level.material.Fluids.WATER, 1000));
+*///?} else {
+        return gregtech.engine.fluid.FluidDisplayBinding.display(
+                null,
+                new net.minecraftforge.fluids.FluidStack(
+                        net.minecraft.world.level.material.Fluids.WATER, 1000));
+//?}
     }
 
     private static void populatePrefix(BuildCreativeModeTabContentsEvent event, MaterialPrefix prefix) {
