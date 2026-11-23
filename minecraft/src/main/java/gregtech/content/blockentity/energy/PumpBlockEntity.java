@@ -13,6 +13,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 //? if >=1.21.1 {
@@ -220,6 +221,8 @@ public class PumpBlockEntity extends GTEnergyBlockEntity {
             if (!level.hasChunkAt(fluidPos)) continue;
 
             BlockState checkState = level.getBlockState(fluidPos);
+            // Waterlogged blocks also expose a source fluid; only a fluid block can be replaced with air.
+            if (!(checkState.getBlock() instanceof LiquidBlock)) continue;
             FluidState fluidState = checkState.getFluidState();
 
             if (!fluidState.isEmpty() && fluidState.isSource()) {
