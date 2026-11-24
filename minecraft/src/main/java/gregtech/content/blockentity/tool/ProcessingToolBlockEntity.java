@@ -8,6 +8,7 @@ import gregtech.content.block.tool.ProcessingToolBlock;
 import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.tool.OpenVesselRules;
 import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.*;
 import net.minecraft.nbt.*;
@@ -202,31 +203,40 @@ public final class ProcessingToolBlockEntity extends GTBlockEntity implements Bl
                 && electric.toolName().equals("Mixer") && electric.isPoweredUsable(stack) && process(player, stack);
     }
 
+    private record Batch(Recipe recipe, RecipeInputs.Remaining remaining) {}
+
+    @Nullable
+    private Batch planBatch(List<ItemStack> items, List<FluidStack> fluids) {
+        Recipe recipe = recipes.findStaticRecipe(items, fluids,
+                row -> OpenVesselRules.recipePower(row.energyPerTick) && canOutput(row));
+        if (recipe == null) return null;
+        var remaining = RecipeInputs.consume(recipe, items, fluids, 1);
+        return remaining == null ? null : new Batch(recipe, remaining);
+    }
+
     private boolean process(Player player, ItemStack powered) {
         if (juicer || level == null || level.isClientSide) return false;
-        for (var recipe : recipes.recipeRows) {
-            if (!recipe.enabled || recipe.fakeRecipe || !gregtech.content.tool.OpenVesselRules.recipePower(recipe.energyPerTick)) continue;
-            var remaining = RecipeInputs.consume(recipe, inputItems(), inputFluids(), 1);
-            if (remaining == null || !canOutput(recipe)) continue;
-            for (int i = 0; i < remaining.items().size(); i++) items.setStackInSlot(i, remaining.items().get(i));
-            for (int i = 0; i < inputs.length; i++) inputs[i].setFluid(remaining.fluids().get(i));
-            for (int i = 0; i < recipe.itemOutputs.length; i++) {
-                var out = recipe.itemOutputs[i];
-                long count = recipe.rollOutputCount(i, 1, level.random::nextInt);
-                if (count > 0) mergeOutput(i, out.copyWithCount((int) count));
-            }
-            for (int i = 0; i < recipe.fluidOutputs.length; i++) outputs[i].fill(recipe.fluidOutputs[i], IFluidHandler.FluidAction.EXECUTE);
-            if (powered.getItem() instanceof gregtech.content.item.ElectricToolItem electric) {
-                long total = Math.max(1, Math.abs(recipe.energyPerTick) * (long) recipe.durationTicks);
-                electric.consumeInteractionEnergy(powered, Math.max(1, (total + 3) / 4), player);
-            } else if (player != null) {
-                double divisor = gregtech.content.tool.OpenVesselRules.exhaustionDivisor(juicer, recipes == MachineRecipeMaps.Bath);
-                player.causeFoodExhaustion((float) Math.min(Float.MAX_VALUE, Math.abs((double) recipe.energyPerTick) * recipe.durationTicks / divisor));
-            }
-            changed();
-            return true;
+        var batch = planBatch(inputItems(), inputFluids());
+        if (batch == null) return false;
+        var recipe = batch.recipe();
+        var remaining = batch.remaining();
+        for (int i = 0; i < remaining.items().size(); i++) items.setStackInSlot(i, remaining.items().get(i));
+        for (int i = 0; i < inputs.length; i++) inputs[i].setFluid(remaining.fluids().get(i));
+        for (int i = 0; i < recipe.itemOutputs.length; i++) {
+            var out = recipe.itemOutputs[i];
+            long count = recipe.rollOutputCount(i, 1, level.random::nextInt);
+            if (count > 0) mergeOutput(i, out.copyWithCount((int) count));
         }
-        return false;
+        for (int i = 0; i < recipe.fluidOutputs.length; i++) outputs[i].fill(recipe.fluidOutputs[i], IFluidHandler.FluidAction.EXECUTE);
+        if (powered.getItem() instanceof gregtech.content.item.ElectricToolItem electric) {
+            long total = Math.max(1, Math.abs(recipe.energyPerTick) * (long) recipe.durationTicks);
+            electric.consumeInteractionEnergy(powered, Math.max(1, (total + 3) / 4), player);
+        } else if (player != null) {
+            double divisor = OpenVesselRules.exhaustionDivisor(juicer, recipes == MachineRecipeMaps.Bath);
+            player.causeFoodExhaustion((float) Math.min(Float.MAX_VALUE, Math.abs((double) recipe.energyPerTick) * recipe.durationTicks / divisor));
+        }
+        changed();
+        return true;
     }
 
     private boolean canOutput(Recipe recipe) {
@@ -313,28 +323,25 @@ public final class ProcessingToolBlockEntity extends GTBlockEntity implements Bl
     private boolean juiceHeld(Player player, InteractionHand hand) {
         var held = player.getItemInHand(hand);
         if (held.isEmpty()) return false;
-        for (var recipe : recipes.recipeRows) {
-            if (!recipe.enabled || recipe.fakeRecipe || !gregtech.content.tool.OpenVesselRules.recipePower(recipe.energyPerTick)) continue;
-            var remaining = RecipeInputs.consume(recipe, List.of(held), List.of(), 1);
-            if (remaining == null || !canOutput(recipe)) continue;
-            if (!player.getAbilities().instabuild) player.setItemInHand(hand, remaining.items().get(0));
-            for (int i = 0; i < recipe.itemOutputs.length; i++) {
-                long count = recipe.rollOutputCount(i, 1, level.random::nextInt);
-                while (count > 0) {
-                    int amount = (int) Math.min(count, recipe.itemOutputs[i].getMaxStackSize());
-                    give(player, recipe.itemOutputs[i].copyWithCount(amount));
-                    count -= amount;
-                }
+        var batch = planBatch(List.of(held), List.of());
+        if (batch == null) return false;
+        var recipe = batch.recipe();
+        if (!player.getAbilities().instabuild) player.setItemInHand(hand, batch.remaining().items().get(0));
+        for (int i = 0; i < recipe.itemOutputs.length; i++) {
+            long count = recipe.rollOutputCount(i, 1, level.random::nextInt);
+            while (count > 0) {
+                int amount = (int) Math.min(count, recipe.itemOutputs[i].getMaxStackSize());
+                give(player, recipe.itemOutputs[i].copyWithCount(amount));
+                count -= amount;
             }
-            for (int i = 0; i < recipe.fluidOutputs.length; i++)
-                if (recipe.fluidOutputs[i] != null) outputs[i].fill(recipe.fluidOutputs[i], IFluidHandler.FluidAction.EXECUTE);
-            player.causeFoodExhaustion((float) Math.min(Float.MAX_VALUE, Math.abs((double) recipe.energyPerTick) * recipe.durationTicks / 10000));
-            level.playSound(null, worldPosition, net.minecraft.sounds.SoundEvents.SLIME_SQUISH,
-                    net.minecraft.sounds.SoundSource.BLOCKS, .5F, 1F);
-            changed();
-            return true;
         }
-        return false;
+        for (int i = 0; i < recipe.fluidOutputs.length; i++)
+            if (recipe.fluidOutputs[i] != null) outputs[i].fill(recipe.fluidOutputs[i], IFluidHandler.FluidAction.EXECUTE);
+        player.causeFoodExhaustion((float) Math.min(Float.MAX_VALUE, Math.abs((double) recipe.energyPerTick) * recipe.durationTicks / 10000));
+        level.playSound(null, worldPosition, net.minecraft.sounds.SoundEvents.SLIME_SQUISH,
+                net.minecraft.sounds.SoundSource.BLOCKS, .5F, 1F);
+        changed();
+        return true;
     }
 
     private boolean collectOutputs(Player player) {

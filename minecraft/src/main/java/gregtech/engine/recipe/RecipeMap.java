@@ -16,6 +16,7 @@ import net.minecraftforge.fluids.FluidStack;
 import org.slf4j.Logger;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 /**
  * GT6 RecipeMap — recipe registry keyed by unique internal name.
@@ -696,21 +697,12 @@ public class RecipeMap {
         for (var fluid : fluids) inputFluids.add(fluid == null ? FluidStack.EMPTY : fluid);
         var matcher = new RecipeInputs.Matcher(inputItems, inputFluids);
         boolean emptyOutputs = !needsOutputs || allOutputSlotsEmpty(items, inputSlotCount, outputSlotCount);
-        // The exact-item pass keeps its stage precedence; within a stage the explicit priority wins
-        // and the original publication order breaks ties, so a row's answer no longer depends on the
-        // backing collection's iteration order.
-        var candidates = lookupTable.candidates(inputItems, inputFluids);
-        // Both candidate stages already apply exactItems to every static row; the cached candidate
-        // lists keep that split for the same input identities, so the check is not repeated here.
-        Recipe best = bestStaticMatch(candidates.exact(), matcher, inputItems, needsOutputs, emptyOutputs);
-        if (best != null) return best;
-        // Material aliases, legacy colour alternatives and tag-derived forms retain the full fallback.
-        best = bestStaticMatch(candidates.alternatives(), matcher, inputItems, needsOutputs, emptyOutputs);
+        Recipe best = findStaticRecipe(inputItems, inputFluids, matcher, emptyOutputs, row -> true);
         if (best != null) return best;
         // GT6's subclass overrides run only when the table had no answer, exactly like GT6's
         // `if (rRecipe != null) return rRecipe;` guards at the top of those findRecipe() bodies.
         if (dynamicRecipes != null || addonDynamicRecipes.length != 0) {
-            Recipe dynamic = firstMatchingDynamicRecipe(matcher, inputItems, inputFluids, needsOutputs, emptyOutputs);
+            Recipe dynamic = firstMatchingDynamicRecipe(matcher, inputItems, inputFluids, emptyOutputs);
             if (dynamic != null) return dynamic;
         }
         if (contextRecipes != null && level != null) {
@@ -723,6 +715,21 @@ public class RecipeMap {
         return null;
     }
 
+    /** Selects a registered row for a device that checks its own power and output limits. */
+    @javax.annotation.Nullable
+    public Recipe findStaticRecipe(List<ItemStack> items, List<FluidStack> fluids, Predicate<Recipe> canRun) {
+        return findStaticRecipe(items, fluids, new RecipeInputs.Matcher(items, fluids), true, canRun);
+    }
+
+    @javax.annotation.Nullable
+    private Recipe findStaticRecipe(List<ItemStack> items, List<FluidStack> fluids, RecipeInputs.Matcher matcher,
+                                    boolean emptyOutputs, Predicate<Recipe> canRun) {
+        var candidates = lookupTable.candidates(items, fluids);
+        Recipe exact = bestStaticMatch(candidates.exact(), matcher, items, emptyOutputs, canRun);
+        if (exact != null) return exact;
+        return bestStaticMatch(candidates.alternatives(), matcher, items, emptyOutputs, canRun);
+    }
+
     /**
      * The row a machine should use from one lookup stage: highest explicit priority first, then the
      * earliest publication. Only rows the machine can actually run are considered, so a disabled,
@@ -730,7 +737,7 @@ public class RecipeMap {
      */
     @javax.annotation.Nullable
     private Recipe bestStaticMatch(List<Recipe> stage, RecipeInputs.Matcher matcher, List<ItemStack> inputs,
-                                   boolean needsOutputs, boolean emptyOutputs) {
+                                   boolean emptyOutputs, Predicate<Recipe> canRun) {
         if (stage.isEmpty()) return null;
         // Explicit priority first; equal priorities keep the row published first. The matcher then
         // runs in that order and the first usable row answers, so ordinary content (one priority
@@ -741,12 +748,10 @@ public class RecipeMap {
             ordered.sort(RecipeMap::compareSelectionOrder);
         }
         for (Recipe candidate : ordered) {
-            if (!candidate.enabled || candidate.fakeRecipe || !supportsFluidPresence(candidate)) continue;
-            if (needsOutputs && candidate.needsEmptyOutput && !emptyOutputs) continue;
-            if (!matcher.matches(candidate, 1)) continue;
-            if (!candidate.hasRuntimeResolver()) return candidate;
-            Recipe resolved = candidate.resolveRuntime(inputs);
-            if (resolved != null) return resolved;
+            if (!usableRecipe(candidate, matcher, emptyOutputs)) continue;
+            Recipe row = candidate.hasRuntimeResolver() ? candidate.resolveRuntime(inputs) : candidate;
+            if (row != candidate && !usableRecipe(row, matcher, emptyOutputs)) continue;
+            if (canRun.test(row)) return row;
         }
         return null;
     }
@@ -782,23 +787,21 @@ public class RecipeMap {
      */
     @javax.annotation.Nullable
     private Recipe firstMatchingDynamicRecipe(RecipeInputs.Matcher matcher, List<ItemStack> inputItems,
-                                              List<FluidStack> inputFluids, boolean needsOutputs,
-                                              boolean emptyOutputs) {
+                                              List<FluidStack> inputFluids, boolean emptyOutputs) {
         if (dynamicRecipes != null) {
             Recipe recipe = dynamicRecipes.find(inputItems, inputFluids);
-            if (usableDynamicRecipe(recipe, matcher, needsOutputs, emptyOutputs)) return recipe;
+            if (usableRecipe(recipe, matcher, emptyOutputs)) return recipe;
         }
         for (int i = 0; i < addonDynamicRecipes.length; i++) {
             Recipe recipe = addonDynamicRecipes[i].find(inputItems, inputFluids);
-            if (usableDynamicRecipe(recipe, matcher, needsOutputs, emptyOutputs)) return recipe;
+            if (usableRecipe(recipe, matcher, emptyOutputs)) return recipe;
         }
         return null;
     }
 
-    private boolean usableDynamicRecipe(Recipe recipe, RecipeInputs.Matcher matcher,
-                                        boolean needsOutputs, boolean emptyOutputs) {
+    private boolean usableRecipe(Recipe recipe, RecipeInputs.Matcher matcher, boolean emptyOutputs) {
         return recipe != null && recipe.enabled && !recipe.fakeRecipe && supportsFluidPresence(recipe)
-                && (!needsOutputs || !recipe.needsEmptyOutput || emptyOutputs)
+                && (!recipe.needsEmptyOutput || emptyOutputs)
                 && matcher.matches(recipe, 1);
     }
 
