@@ -194,12 +194,7 @@ public final class GTOtherRecipes {
         row(SOURCE, "Bath", 0, 32, 38).item(vanilla("paper", 3)).kept(selector(3)).fluid(nativeFluid("Glue", 250)).out(form("plateTriple", "Paper", 1)).add(rows);
         row(SOURCE, "Bath", 0, 48, 39).item(vanilla("paper", 4)).kept(selector(4)).fluid(nativeFluid("Glue", 375)).out(form("plateQuadruple", "Paper", 1)).add(rows);
         row(SOURCE, "Bath", 0, 64, 40).item(vanilla("paper", 5)).kept(selector(5)).fluid(nativeFluid("Glue", 500)).out(form("plateQuintuple", "Paper", 1)).add(rows);
-        for (GTMaterial clay : group(MaterialGroups.Clay)) {
-            row(SOURCE + "41/" + clay.getName(), "Mixer", 16, 16)
-                    .item(dust("Redstone", U(1))).item(dust("Basalz", U(1, 9)))
-                    .item(dust(clay.getName(), U(1))).item(dust("Obsidian", U(1)))
-                    .out(dust("Petrotheum", U(2))).add(rows);
-        }
+        row(SOURCE, "Mixer", 16, 16, 41).item(dust("Redstone", thousandths(1000))).item(dust("Basalz", U(1, 9))).item(dust("Clay", thousandths(1000))).item(dust("Obsidian", thousandths(1000))).out(dust("Petrotheum", thousandths(2000))).add(rows);
         row(SOURCE, "Mixer", 16, 64, 42).item(tech("clay_ball_white", 2)).item(dust("SiO2", thousandths(1000))).item(dust("PotassiumFeldspar", thousandths(1000))).out(dust("Porcelain", thousandths(4000))).add(rows);
         row(SOURCE, "Mixer", 16, 64, 43).item(dust("Kaolinite", thousandths(2000))).item(dust("SiO2", thousandths(1000))).item(dust("PotassiumFeldspar", thousandths(1000))).out(dust("Porcelain", thousandths(4000))).add(rows);
         row(SOURCE, "Mixer", 16, 16, 44).item(dust("Kaolinite", thousandths(500))).item(dust("SiO2", thousandths(250))).item(dust("PotassiumFeldspar", thousandths(250))).out(dust("Porcelain", thousandths(1000))).add(rows);
