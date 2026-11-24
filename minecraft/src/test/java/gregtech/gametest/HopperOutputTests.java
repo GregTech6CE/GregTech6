@@ -1,6 +1,7 @@
 package gregtech.gametest;
 
 import gregtech.content.blockentity.machine.HopperBlockEntity;
+import gregtech.content.blockentity.machine.QueueHopperBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -133,6 +134,37 @@ public final class HopperOutputTests {
         helper.assertTrue(droppedCount(helper, hopper) == droppedBefore,
                 "no item entity is spawned for the lone item");
         helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 130)
+    public static void queueHopperDrainsAfterOutletReopens(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var pos = at(helper, 1, 2, 1);
+        var outlet = pos.below();
+        var block = BuiltInRegistries.BLOCK.get(id("queue_hopper_lead"));
+        level.setBlockAndUpdate(outlet, Blocks.STONE.defaultBlockState());
+        level.setBlockAndUpdate(pos.above(), Blocks.STONE.defaultBlockState());
+        level.setBlockAndUpdate(pos, block.defaultBlockState().setValue(DirectionalBlock.FACING, Direction.DOWN));
+        var hopper = (QueueHopperBlockEntity) level.getBlockEntity(pos);
+        int last = hopper.getSlots() - 1;
+        helper.assertTrue(hopper.insertItem(0, new ItemStack(Items.DIAMOND), false).isEmpty(), "queue accepts diamond");
+
+        helper.runAtTickTime(14, () -> {
+            helper.assertTrue(hopper.getStackInSlot(last).is(Items.DIAMOND), "diamond reaches blocked outlet");
+            helper.assertTrue(hopper.insertItem(0, new ItemStack(Items.EMERALD), false).isEmpty(), "queue accepts emerald");
+        });
+        helper.runAtTickTime(30, () -> {
+            helper.assertTrue(hopper.getStackInSlot(last - 1).is(Items.EMERALD), "emerald queues behind diamond");
+            level.setBlockAndUpdate(outlet, Blocks.BARREL.defaultBlockState());
+        });
+        helper.runAtTickTime(110, () -> {
+            var barrel = (Container) level.getBlockEntity(outlet);
+            helper.assertTrue(barrel.getItem(0).is(Items.DIAMOND), "diamond reaches barrel first");
+            helper.assertTrue(barrel.getItem(1).is(Items.EMERALD), "emerald reaches barrel without fresh input");
+            helper.assertTrue(hopper.getStackInSlot(last - 1).isEmpty() && hopper.getStackInSlot(last).isEmpty(),
+                    "both queue slots are empty");
+            helper.succeed();
+        });
     }
 
     private static HopperBlockEntity placeHopper(GameTestHelper helper, int x, int y, int z, Direction facing) {

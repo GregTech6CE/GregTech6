@@ -126,12 +126,11 @@ public class QueueHopperBlockEntity extends GTBlockEntity
 
     private void tickServer() {
         int tMovedItems = 0;
-        boolean processed = false;
         if (mCheck > 0) {
             mCheck--;
         } else if ((mCheck == 0 || inventoryChanged || blockUpdated || level.getGameTime() % 20 == 0)
                 && !hasRedstoneIncomingFromNonRail()) {
-            processed = true;
+            blockUpdated = false;
             Direction facing = getFacing();
             int last = lastSlot();
 
@@ -167,6 +166,7 @@ public class QueueHopperBlockEntity extends GTBlockEntity
 
             // Phase 3: Cascade shift — continuously move items toward output end
             if (inventoryChanged) {
+                inventoryChanged = false;
                 int oMovedItems = -1;
                 while (oMovedItems != tMovedItems) {
                     oMovedItems = tMovedItems;
@@ -213,8 +213,6 @@ public class QueueHopperBlockEntity extends GTBlockEntity
                 notifyAdjacentInventoryUpdatables(facing);
             }
         }
-        // Retain work notifications until the cooldown/redstone gate permits processing.
-        if (processed) { inventoryChanged = false; blockUpdated = false; }
         if (tMovedItems > 0) setChanged();
 
         // Suction: idle check every 20t, switch to every-tick active while items present
@@ -319,6 +317,7 @@ public class QueueHopperBlockEntity extends GTBlockEntity
         if (accepted > 0) {
             stack.shrink(accepted);
             if (stack.isEmpty()) inventory.set(slot, ItemStack.EMPTY);
+            inventoryChanged = true;
             setChanged();
         }
         return accepted;
@@ -343,6 +342,7 @@ public class QueueHopperBlockEntity extends GTBlockEntity
         if (stack.isEmpty()) inventory.set(last, ItemStack.EMPTY);
         BlockPos targetPos = worldPosition.relative(facing);
         spawnItemEntity(dropStack, targetPos);
+        inventoryChanged = true;
         setChanged();
         return toDrop;
     }
