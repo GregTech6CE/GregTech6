@@ -1,25 +1,16 @@
 package gregtech.content.logistics;
 
+import gregtech.engine.stack.StackCompat;
 import net.minecraft.world.item.*;
 
-/**
- * Logistics template adapter: an untagged template ignores stack data, not registry identity.
- * This is not the original item-retriever cover's metadata-only set matching.
- */
+/** Matches a filter block's ghost templates and resolves ore dictionary prefixes. */
 public final class FilterRules {
     private FilterRules() {
     }
 
-    public static boolean itemMatches(ItemStack templateStack, ItemStack candidateStack) {
-//? if >=1.21.1 {
-        /*return FilterPolicy.matches(!templateStack.isEmpty() && !candidateStack.isEmpty(),
-                templateStack.is(candidateStack.getItem()), templateStack.getComponentsPatch().isEmpty(),
-                ItemStack.isSameItemSameComponents(templateStack, candidateStack));
-*///?} else {
-        return FilterPolicy.matches(!templateStack.isEmpty() && !candidateStack.isEmpty(),
-                templateStack.is(candidateStack.getItem()), !templateStack.hasTag(),
-                ItemStack.isSameItemSameTags(templateStack, candidateStack));
-//?}
+    public static boolean itemMatches(ItemStack template, ItemStack candidate, boolean ignoreItemData) {
+        if (template.isEmpty() || candidate.isEmpty()) return false;
+        return ignoreItemData ? ItemStack.isSameItem(template, candidate) : StackCompat.sameItem(template, candidate);
     }
 
     public static String prefix(ItemStack candidateStack) {

@@ -363,7 +363,7 @@ public class ItemPipeBlockEntity extends GTBlockEntity
         String id = coverIdOf(side);
         if (id == null || held == null || held.isEmpty()) return false;
         if (CoverUtilityBehaviors.FILTER_ITEM.equals(id) || CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id)) {
-            return CoverUtilityBehaviors.setItemFilter(getCover(side), held, level.registryAccess());
+            return CoverUtilityBehaviors.clickItemFilter(this, side, held);
         }
         return false;
     }

@@ -1,10 +1,13 @@
 package gregtech.content.block.misc;
 
 import gregtech.content.blockentity.CapabilityRelayBlockEntity;
-import gregtech.engine.fluid.FluidDisplayBinding;
-import gregtech.engine.stack.NbtCompat;
+import gregtech.content.logistics.FilterPolicy;
+import gregtech.content.logistics.FilterRules;
 import gregtech.content.logistics.LogisticsItemFilter;
 import gregtech.content.logistics.LogisticsSemiFilteredItem;
+import gregtech.engine.fluid.FluidDisplayBinding;
+import gregtech.engine.stack.NbtCompat;
+import java.util.BitSet;
 import net.minecraft.core.*;
 import net.minecraft.nbt.*;
 import net.minecraft.network.chat.Component;
@@ -24,7 +27,8 @@ import javax.annotation.Nullable;
 /** Ghost templates select cargo; front-side capability operations bypass template selection. */
 public class FilterBlockEntity extends CapabilityRelayBlockEntity implements MenuProvider, LogisticsSemiFilteredItem {
     private boolean blacklist;
-    private final SimpleContainer templates = new SimpleContainer(gregtech.content.logistics.FilterPolicy.TEMPLATES) {
+    private final BitSet ignoreItemData = new BitSet(FilterPolicy.TEMPLATES);
+    private final SimpleContainer templates = new SimpleContainer(FilterPolicy.TEMPLATES) {
 
         @Override
         public void setChanged() {
@@ -51,8 +55,27 @@ public class FilterBlockEntity extends CapabilityRelayBlockEntity implements Men
     }
 
     public void setTemplate(int slot, ItemStack stack) {
-        if (slot >= 0 && slot < gregtech.content.logistics.FilterPolicy.TEMPLATES) templates.setItem(slot,
-                prefixMode() && slot != 0 ? ItemStack.EMPTY : stack.copyWithCount(1));
+        setTemplate(slot, stack, false);
+    }
+
+    private void setTemplate(int slot, ItemStack stack, boolean ignoreData) {
+        if (!FilterPolicy.validSlot(slot)) return;
+        ignoreItemData.set(slot, ignoreData && !stack.isEmpty() && supportsItemMatchModes());
+        templates.setItem(slot, prefixMode() && slot != 0 ? ItemStack.EMPTY : stack.copyWithCount(1));
+    }
+
+    public boolean supportsItemMatchModes() {
+        return supportsItems() && !prefixMode();
+    }
+
+    public boolean ignoresItemData(int slot) {
+        return FilterPolicy.validSlot(slot) && ignoreItemData.get(slot);
+    }
+
+    public void toggleItemMatchMode(int slot) {
+        if (!FilterPolicy.validSlot(slot) || templates.getItem(slot).isEmpty() || !supportsItemMatchModes()) return;
+        ignoreItemData.flip(slot);
+        setChanged();
     }
 
     public boolean prefixMode() {
@@ -61,25 +84,23 @@ public class FilterBlockEntity extends CapabilityRelayBlockEntity implements Men
 
     public void clearFilter() {
         blacklist = false;
+        ignoreItemData.clear();
         templates.clearContent();
         setChanged();
     }
 
     public String selectedPrefix() {
-        return gregtech.content.logistics.FilterRules.prefix(templates.getItem(0));
+        return FilterRules.prefix(templates.getItem(0));
     }
 
     @Override
     public LogisticsItemFilter logisticsItemFilter() {
-        if (blacklist) return null;
+        if (blacklist || !supportsItems()) return null;
         if (prefixMode()) {
             String prefix = selectedPrefix();
             return prefix.isEmpty() ? null : LogisticsItemFilter.prefix(prefix);
         }
-        var selected = new java.util.ArrayList<ItemStack>(gregtech.content.logistics.FilterPolicy.TEMPLATES);
-        for (int templateSlot = 0; templateSlot < gregtech.content.logistics.FilterPolicy.TEMPLATES; templateSlot++) selected.add(
-                templates.getItem(templateSlot));
-        return LogisticsItemFilter.items(selected);
+        return LogisticsItemFilter.items(templates, ignoreItemData);
     }
 
     private String kind() {
@@ -92,7 +113,7 @@ public class FilterBlockEntity extends CapabilityRelayBlockEntity implements Men
     }
 
     @Override
-    protected boolean supportsFluids() {
+    public boolean supportsFluids() {
         return kind().equals("fluids") || kind().equals("items_fluids") || prefixMode();
     }
 
@@ -118,12 +139,12 @@ public class FilterBlockEntity extends CapabilityRelayBlockEntity implements Men
         if (stack.isEmpty()) return false;
         if (prefixMode()) {
             var selected = selectedPrefix();
-            return !selected.isEmpty() && (blacklist != selected.equals(gregtech.content.logistics.FilterRules.prefix(stack)));
+            return !selected.isEmpty() && (blacklist != selected.equals(FilterRules.prefix(stack)));
         }
         boolean found = false;
-        for (int templateSlot = 0; templateSlot < gregtech.content.logistics.FilterPolicy.TEMPLATES && !found; templateSlot++)
-            found = gregtech.content.logistics.FilterRules.itemMatches(templates.getItem(templateSlot), stack);
-        return gregtech.content.logistics.FilterPolicy.allows(blacklist, found);
+        for (int slot = 0; slot < FilterPolicy.TEMPLATES && !found; slot++)
+            found = FilterRules.itemMatches(templates.getItem(slot), stack, ignoresItemData(slot));
+        return FilterPolicy.allows(blacklist, found);
     }
 
     @Override
@@ -131,13 +152,13 @@ public class FilterBlockEntity extends CapabilityRelayBlockEntity implements Men
         if (stack.isEmpty()) return false;
         if (prefixMode()) return true;
         boolean found = false;
-        for (int templateSlot = 0; templateSlot < gregtech.content.logistics.FilterPolicy.TEMPLATES && !found; templateSlot++) {
+        for (int templateSlot = 0; templateSlot < FilterPolicy.TEMPLATES && !found; templateSlot++) {
             var template = templates.getItem(templateSlot);
             var fluid = level == null ? FluidStack.EMPTY : FluidDisplayBinding.resolve(level.registryAccess(), template);
             if (fluid.isEmpty()) fluid = FluidUtil.getFluidContained(template).orElse(FluidStack.EMPTY);
             found = !fluid.isEmpty() && fluid.getFluid() == stack.getFluid();
         }
-        return gregtech.content.logistics.FilterPolicy.allows(blacklist, found);
+        return FilterPolicy.allows(blacklist, found);
     }
 
     @Override
@@ -155,10 +176,11 @@ public class FilterBlockEntity extends CapabilityRelayBlockEntity implements Men
         super.saveData(tag, lookup);
         tag.putBoolean("gt.blacklist", blacklist);
         var list = new ListTag();
-        for (int templateSlot = 0; templateSlot < gregtech.content.logistics.FilterPolicy.TEMPLATES; templateSlot++)
+        for (int templateSlot = 0; templateSlot < FilterPolicy.TEMPLATES; templateSlot++)
             if (!templates.getItem(templateSlot).isEmpty()) {
                 var entry = (CompoundTag) NbtCompat.saveItem(templates.getItem(templateSlot), lookup);
                 entry.putInt("Slot", templateSlot);
+                if (ignoresItemData(templateSlot)) entry.putBoolean("IgnoreItemData", true);
                 list.add(entry);
             }
         tag.put("gt.filter_templates", list);
@@ -168,14 +190,15 @@ public class FilterBlockEntity extends CapabilityRelayBlockEntity implements Men
     protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         super.loadData(tag, lookup);
         blacklist = tag.getBoolean("gt.blacklist");
+        ignoreItemData.clear();
         templates.clearContent();
         for (var entry : tag.getList("gt.filter_templates", 10)) {
             var entryData = (CompoundTag) entry;
             var templateStack = NbtCompat.readItem(entryData, lookup);
             if (prefixMode()) {
-                if (selectedPrefix().isEmpty() && !gregtech.content.logistics.FilterRules.prefix(templateStack).isEmpty()) setTemplate(0,
+                if (selectedPrefix().isEmpty() && !FilterRules.prefix(templateStack).isEmpty()) setTemplate(0,
                         templateStack);
-            } else setTemplate(entryData.getInt("Slot"), templateStack);
+            } else setTemplate(entryData.getInt("Slot"), templateStack, entryData.getBoolean("IgnoreItemData"));
         }
     }
 }

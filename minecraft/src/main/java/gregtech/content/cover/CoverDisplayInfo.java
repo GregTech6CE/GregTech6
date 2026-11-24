@@ -53,7 +53,7 @@ public final class CoverDisplayInfo {
             if (level != null) {
                 if (itemFilter) {
                     var item = CoverUtilityBehaviors.itemFilter(stack, level.registryAccess());
-                    if (!item.isEmpty()) target = item;
+                    if (!item.isEmpty()) target = logistics == null ? new ItemStack(item.getItem()) : item;
                 } else {
                     var fluid = CoverUtilityBehaviors.fluidFilter(stack, level.registryAccess());
                     if (!fluid.isEmpty()) target = fluid;
@@ -67,9 +67,7 @@ public final class CoverDisplayInfo {
                                 MachineCoverSpec.inverted(stack)
                                         ? "gt6ce.filter.blacklist"
                                         : "gt6ce.filter.whitelist")));
-                add(lines, "filter_nbt");
-                if (itemFilter && CoverStackData.readOrEmpty(stack).getBoolean("gt.filter.wildcard"))
-                    add(lines, "filter_wildcard");
+                add(lines, itemFilter ? "filter_item_type" : "filter_nbt");
             }
         }
         var panel = PanelCover.of(stack);

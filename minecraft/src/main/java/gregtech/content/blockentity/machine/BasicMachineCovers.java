@@ -274,7 +274,7 @@ final class BasicMachineCovers {
         if (id == null || held == null || held.isEmpty()) return false;
         ItemStack stack = machine.getCover(side);
         if (CoverUtilityBehaviors.FILTER_ITEM.equals(id)) {
-            return CoverUtilityBehaviors.setItemFilter(stack, held, level.registryAccess());
+            return CoverUtilityBehaviors.clickItemFilter(machine, side, held);
         }
         if (CoverUtilityBehaviors.FILTER_FLUID.equals(id)) {
             FluidStack fluid = gregtech.content.cover.UtilityCoverInteraction.sample(held);

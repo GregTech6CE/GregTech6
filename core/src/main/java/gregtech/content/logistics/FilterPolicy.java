@@ -1,6 +1,6 @@
 package gregtech.content.logistics;
 
-/** Logistics template policy; single-item cover filters have separate matching rules. */
+/** Slot bounds and whitelist/blacklist policy for logistics filter blocks. */
 public final class FilterPolicy {
     private FilterPolicy() {}
 
@@ -12,10 +12,5 @@ public final class FilterPolicy {
 
     public static boolean allows(boolean blacklist, boolean found) {
         return blacklist != found;
-    }
-
-    /** sameMetadata is the native stack tag/component comparison, not just item damage. */
-    public static boolean matches(boolean present, boolean sameItem, boolean untagged, boolean sameMetadata) {
-        return present && sameItem && (untagged || sameMetadata);
     }
 }

@@ -36,9 +36,8 @@ import net.minecraftforge.items.IItemHandler;
 //?}
 
 /** Native interactions and utility cover behavior derived from GT6's cover classes.
- * Item filters compare item identity and damage, ignoring tags/components; repeated matching clicks
- * toggle all damage variants. Workbench menus validate the actual cover host rather than a vanilla
- * crafting-table block. Placement restrictions are enforced by PanelCoverRuntime.
+ * The item filter and retriever match the registered item. Workbench menus validate the cover host.
+ * Placement restrictions are enforced by PanelCoverRuntime.
  */
 public final class CoverUtilityBehaviors {
 
@@ -167,7 +166,7 @@ public final class CoverUtilityBehaviors {
      * repeated-stack selection and pipe accounting still differ.
      *
      * @param target the port's receiving handler (the host's own slots)
-     * @param filter source ItemStackSet semantics: item/metadata (including wildcard), ignoring extra NBT
+     * @param filter item type to select, or an empty stack to pull any item
      * @param blacklist inverted-filter mode
      * @param tickCounter host-local cover clock
      * @param pending requests an attempt outside the periodic phase; callers clear it on success
@@ -190,20 +189,12 @@ public final class CoverUtilityBehaviors {
 //?}
         if (source == null) return false;
 
-        boolean present = !filter.isEmpty();
         boolean moved = false;
         int budget = RETRIEVER_MAX_MOVE;
         for (int slot = 0; slot < source.getSlots() && budget > 0; slot++) {
             ItemStack stack = source.getStackInSlot(slot);
             if (stack.isEmpty()) continue;
-            // CoverRetrieverItem passes a null filter set when no template is installed.
-            // ST.move/ItemStackSet match item and metadata, never the logistics NBT policy.
-            if (present) {
-                boolean matches = filter.getItem() == stack.getItem()
-                        && (filter.getDamageValue() == Short.MAX_VALUE
-                        || filter.getDamageValue() == stack.getDamageValue());
-                if (matches == blacklist) continue;
-            }
+            if (!filter.isEmpty() && stack.is(filter.getItem()) == blacklist) continue;
             ItemStack simulated = source.extractItem(slot, Math.min(budget, stack.getCount()), true);
             if (simulated.isEmpty()) continue;
             int accepted = simulated.getCount() - insert(target, simulated.copy(), true).getCount();
@@ -255,10 +246,7 @@ public final class CoverUtilityBehaviors {
         if (candidate == null || candidate.isEmpty()) return !blacklist;
         ItemStack filter = itemFilter(cover, lookup);
         if (filter.isEmpty()) return blacklist;
-        boolean matches = filter.getItem() == candidate.getItem()
-                && (StackData.getBoolean(cover, "gt.filter.wildcard", false)
-                        || filter.getDamageValue() == candidate.getDamageValue());
-        return matches != blacklist;
+        return candidate.is(filter.getItem()) != blacklist;
     }
 
     /**
@@ -299,29 +287,33 @@ public final class CoverUtilityBehaviors {
         return stored == null ? FluidStack.EMPTY : stored;
     }
 
-    /**
-     * GT6 {@code CoverFilterItem} / {@code CoverFilterFluid}: right-clicking the cover
-     * with a stack stores a template; item filters also toggle wildcard on repeated matches.
-     * This shared setter is currently reused by retrievers, which had a one-shot original setter.
-     * The original never consumes the held stack, and neither does this.
-     *
-     * @return whether a filter was stored
-     */
+    private static boolean canSetItemFilter(ItemStack cover, ItemStack held, net.minecraft.core.HolderLookup.Provider lookup) {
+        return cover != null && !cover.isEmpty() && held != null && !held.isEmpty()
+                && !(held.getItem() instanceof gregtech.content.item.FluidDisplayItemLike)
+                && itemFilter(cover, lookup).isEmpty();
+    }
+
+    /** Stores a single item type until the player clears the sample with a soft hammer. */
     public static boolean setItemFilter(ItemStack cover, ItemStack held, net.minecraft.core.HolderLookup.Provider lookup) {
-        if (cover == null || cover.isEmpty() || held == null || held.isEmpty()
-                || held.getItem() instanceof gregtech.content.item.FluidDisplayItemLike) return false;
+        if (!canSetItemFilter(cover, held, lookup)) return false;
         CompoundTag tag = StackData.readOrEmpty(cover);
-        var previous = itemFilter(cover, lookup);
-        if (!previous.isEmpty() && (previous.getItem() != held.getItem()
-                || !tag.getBoolean("gt.filter.wildcard") && previous.getDamageValue() != held.getDamageValue())) return false;
-        if (!previous.isEmpty()) tag.putBoolean("gt.filter.wildcard", !tag.getBoolean("gt.filter.wildcard"));
-        else tag.putBoolean("gt.filter.wildcard", false);
-        var specimen = new ItemStack(held.getItem());
-        specimen.setDamageValue(held.getDamageValue());
-        tag.put(FILTER_ITEM_KEY, gregtech.engine.stack.NbtCompat.saveItem(specimen, lookup));
+        tag.remove("gt.filter.wildcard");
+        tag.put(FILTER_ITEM_KEY, gregtech.engine.stack.NbtCompat.saveItem(new ItemStack(held.getItem()), lookup));
         StackData.write(cover,tag);
         return true;
     }
+
+    /** Predicts the click on the client and synchronizes a changed template from the server. */
+    public static boolean clickItemFilter(PanelCoverHost host, Direction side, ItemStack held) {
+        var level = host.coverOwner().getLevel();
+        if (level == null) return false;
+        ItemStack cover = host.getCover(side);
+        if (level.isClientSide) return canSetItemFilter(cover, held, level.registryAccess());
+        if (!setItemFilter(cover, held, level.registryAccess())) return false;
+        host.panels().changed();
+        return true;
+    }
+
     /** GT6 {@code CoverFilterFluid}: the same one-shot right-click rule for a fluid. */
     public static boolean setFluidFilter(ItemStack cover, FluidStack held, net.minecraft.core.HolderLookup.Provider lookup) {
         if (cover == null || cover.isEmpty() || held == null || held.isEmpty()) return false;

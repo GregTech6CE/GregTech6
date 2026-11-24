@@ -1,6 +1,7 @@
 package gregtech.client.gui;
 
 import gregtech.content.block.misc.FilterBlockEntity;
+import gregtech.content.logistics.FilterRules;
 import gregtech.content.registry.GTMenuTypes;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.*;
@@ -9,6 +10,10 @@ import net.minecraft.world.item.ItemStack;
 
 /** Ghost slots cannot be extracted, dragged, shift-clicked or swapped into player inventory. */
 public class FilterMenu extends AbstractContainerMenu {
+    private static final int BLACKLIST = 0;
+    private static final int ITEM_MODES = 1;
+    private static final int FLUIDS = 2;
+    private static final int FIRST_SLOT_MODE = 3;
     private final FilterBlockEntity filter;
     private final boolean prefixMode;
     private final int templateSlots;
@@ -35,18 +40,24 @@ public class FilterMenu extends AbstractContainerMenu {
         templates = filter == null
                 ? new SimpleContainer(gregtech.content.logistics.FilterPolicy.TEMPLATES)
                 : filter.templates();
+        int dataSize = FIRST_SLOT_MODE + (prefixMode ? 0 : templateSlots);
         data = filter == null
-                ? new SimpleContainerData(1)
+                ? new SimpleContainerData(dataSize)
                 : new ContainerData() {
 
                     public int get(int key) {
-                        return filter.blacklist() ? 1 : 0;
+                        return switch (key) {
+                            case BLACKLIST -> filter.blacklist() ? 1 : 0;
+                            case ITEM_MODES -> filter.supportsItemMatchModes() ? 1 : 0;
+                            case FLUIDS -> filter.supportsFluids() ? 1 : 0;
+                            default -> filter.ignoresItemData(key - FIRST_SLOT_MODE) ? 1 : 0;
+                        };
                     }
 
                     public void set(int key, int value) {}
 
                     public int getCount() {
-                        return 1;
+                        return dataSize;
                     }
                 };
         addDataSlots(data);
@@ -75,13 +86,35 @@ public class FilterMenu extends AbstractContainerMenu {
     }
 
     public boolean blacklist() {
-        return data.get(0) != 0;
+        return data.get(BLACKLIST) != 0;
+    }
+
+    public int templateSlots() {
+        return templateSlots;
+    }
+
+    public boolean supportsItemMatchModes() {
+        return data.get(ITEM_MODES) != 0;
+    }
+
+    public boolean supportsFluids() {
+        return data.get(FLUIDS) != 0;
+    }
+
+    public boolean ignoresItemData(int slot) {
+        return supportsItemMatchModes() && slot >= 0 && slot < templateSlots && data.get(FIRST_SLOT_MODE + slot) != 0;
     }
 
     @Override
     public void clicked(int slot, int button, ClickType type, Player player) {
         if (slot >= 0 && slot < templateSlots) {
-            if (type == ClickType.PICKUP) setGhost(slot, button == 1 ? ItemStack.EMPTY : getCarried());
+            if (!stillValid(player)) return;
+            if (type == ClickType.PICKUP) {
+                setGhost(slot, button == 1 ? ItemStack.EMPTY : getCarried());
+            } else if (type == ClickType.QUICK_MOVE && button == 1 && getCarried().isEmpty()
+                    && supportsItemMatchModes() && !templates.getItem(slot).isEmpty() && filter != null) {
+                filter.toggleItemMatchMode(slot);
+            }
             broadcastChanges();
             return;
         }
@@ -91,7 +124,7 @@ public class FilterMenu extends AbstractContainerMenu {
     private void setGhost(int slot, ItemStack stack) {
         if (prefixMode
                 && !stack.isEmpty()
-                && gregtech.content.logistics.FilterRules.prefix(stack).isEmpty()) return;
+                && FilterRules.prefix(stack).isEmpty()) return;
         if (filter != null) filter.setTemplate(slot, stack);
         else templates.setItem(slot, stack.copyWithCount(1));
     }

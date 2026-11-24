@@ -423,7 +423,7 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
         if (id == null || held == null || held.isEmpty()) return false;
         ItemStack stack = getCover(side);
         if (CoverUtilityBehaviors.FILTER_ITEM.equals(id)) {
-            return CoverUtilityBehaviors.setItemFilter(stack, held,level.registryAccess());
+            return CoverUtilityBehaviors.clickItemFilter(this, side, held);
         }
         if (CoverUtilityBehaviors.FILTER_FLUID.equals(id)) {
             FluidStack fluid = gregtech.content.cover.UtilityCoverInteraction.sample(held);
