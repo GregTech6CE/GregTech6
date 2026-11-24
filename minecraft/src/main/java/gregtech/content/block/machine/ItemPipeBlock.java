@@ -116,10 +116,7 @@ public class ItemPipeBlock extends GTBlock
                         && coverHost.configureFilterCover(hit.getDirection(), FilterAction.CLEAR)) {
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }
-                if (!CoverItems.isCover(held)
-                        && !coverHost.consumesTool(held)
-                        && !GTToolHelper.isInteractionTool(held)
-                        && coverHost.clickFilterCover(hit.getDirection(), held)) {
+                if (!coverHost.consumesTool(held) && coverHost.clickFilterCover(hit.getDirection(), held)) {
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }
             }
