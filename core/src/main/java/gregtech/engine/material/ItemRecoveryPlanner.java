@@ -190,42 +190,38 @@ public final class ItemRecoveryPlanner {
                 }
                 duration = source == null ? 0 : duration(inputUnits, facts.staticShredderWork(source));
             }
+            var dustForms = facts.dustForms();
+            long smallestDust = dropDustRemainder
+                    ? dustForms.stream().mapToLong(DustForm::weight).min().orElse(0)
+                    : 0;
             for (var entry : targetUnits.entrySet()) {
-                if (remainingSlots <= 0) return rejected(ShredderRejection.OUTPUT_LIMIT);
-                var dust = planDust(entry.getValue(), remainingSlots, facts.dustForms());
-                if (!dust.complete()) {
-                    if (dropDustRemainder && !dust.piles().isEmpty()) {
-                        outputs.add(new ShredderOutput(entry.getKey(), dust));
-                        if (dust.remainderUnits() > 0)
-                            skippedComponents.add(new SkippedComponent(
-                                    entry.getKey().getName(),
-                                    dust.remainderUnits(),
-                                    ShredderRejection.UNREPRESENTABLE_AMOUNT));
-                        remainingSlots -= dust.stackCount();
-                        if (!staticPrefix)
-                            duration = Math.addExact(
-                                    duration, duration(entry.getValue(), facts.dynamicShredderWork(entry.getKey())));
-                        continue;
-                    }
-                    if (dust.remainderUnits() > 0)
-                        skippedComponents.add(new SkippedComponent(
-                                entry.getKey().getName(),
-                                dust.remainderUnits(),
-                                ShredderRejection.UNREPRESENTABLE_AMOUNT));
-                    return rejected(
-                            dust.stackCount() >= remainingSlots
-                                    ? ShredderRejection.OUTPUT_LIMIT
-                                    : ShredderRejection.UNREPRESENTABLE_AMOUNT,
-                            skippedComponents);
+                long amount = entry.getValue();
+                DustPlan dust;
+                if (dropDustRemainder && amount < smallestDust) {
+                    // GT6's damaged Shredder skips this material even when all output slots are full.
+                    dust = new DustPlan(List.of(), 0, amount);
+                } else {
+                    if (remainingSlots <= 0) return rejected(ShredderRejection.OUTPUT_LIMIT);
+                    dust = planDust(amount, remainingSlots, dustForms);
                 }
-                if (dust.piles().isEmpty()) continue;
-                outputs.add(new ShredderOutput(entry.getKey(), dust));
-                remainingSlots -= dust.stackCount();
+                if (!dust.complete()) {
+                    skippedComponents.add(new SkippedComponent(
+                            entry.getKey().getName(), dust.remainderUnits(), ShredderRejection.UNREPRESENTABLE_AMOUNT));
+                    if (!dropDustRemainder || dust.remainderUnits() >= smallestDust)
+                        return rejected(
+                                dust.stackCount() >= remainingSlots
+                                        ? ShredderRejection.OUTPUT_LIMIT
+                                        : ShredderRejection.UNREPRESENTABLE_AMOUNT,
+                                skippedComponents);
+                }
+                if (!dust.piles().isEmpty()) {
+                    outputs.add(new ShredderOutput(entry.getKey(), dust));
+                    remainingSlots -= dust.stackCount();
+                }
                 if (!staticPrefix)
-                    duration = Math.addExact(
-                            duration, duration(entry.getValue(), facts.dynamicShredderWork(entry.getKey())));
+                    duration = Math.addExact(duration, duration(amount, facts.dynamicShredderWork(entry.getKey())));
             }
-            if (outputs.isEmpty()) return rejected(ShredderRejection.NO_COMPONENTS, skippedComponents);
+            if (outputs.isEmpty()) return rejected(ShredderRejection.UNREPRESENTABLE_AMOUNT, skippedComponents);
             return new ShredderPlan(outputs, Math.max(1, duration), ShredderRejection.NONE, skippedComponents);
         } catch (ArithmeticException overflow) {
             return rejected(ShredderRejection.OVERFLOW);
