@@ -1,71 +1,81 @@
 import org.gradle.api.Action
 import org.gradle.api.Task
 import org.gradle.api.tasks.Sync
+import java.nio.file.FileVisitResult
 import java.nio.file.Files
+import java.nio.file.LinkOption
+import java.nio.file.Path
+import java.nio.file.SimpleFileVisitor
 import java.nio.file.StandardCopyOption
+import java.nio.file.attribute.BasicFileAttributes
 
-// Stonecutter's generate task is a plain Sync: whenever one shared source changes it
-// rewrites the complete generated tree, which is thousands of files. On a large tree that
-// copy dominates the edit-build cycle. Keep the task, its declared inputs and outputs and
-// the Sync contract, but replace the copy action with an incremental sync that only writes
-// files whose prepared source changed. A manifest records the source stamps already
-// materialized so unchanged files are skipped without reading their contents.
-def syncStonecutter = { Sync task, File manifestFile ->
-    File destination = task.destinationDir
-    // Later source roots win, matching the Sync's INCLUDE duplicates strategy: the prepared
-    // cache is listed after the raw source tree, so its processed files replace the originals.
-    Map<String, File> effective = new LinkedHashMap<>()
+// Gradle decides when to run the Sync. When it runs, check actual bytes so a changed
+// prepared source or a damaged output is repaired without rewriting the rest of the tree.
+def syncStonecutter = { Sync task ->
+    Path destination = task.destinationDir.toPath().toAbsolutePath().normalize()
+    Map<Path, Path> files = new LinkedHashMap<>()
+    Set<Path> directories = new LinkedHashSet<>()
+    // The prepared sources follow the raw roots and win duplicate paths.
     task.source.visit { details ->
-        if (!details.directory) effective.put(details.relativePath.pathString, details.file)
-    }
-
-    Map<String, String> previous = [:]
-    if (manifestFile.isFile()) {
-        manifestFile.eachLine('UTF-8') { line ->
-            int split = line.indexOf('\t')
-            if (split > 0) previous[line.substring(0, split)] = line.substring(split + 1)
-        }
-    }
-
-    int copied = 0
-    int removed = 0
-    Map<String, String> current = new LinkedHashMap<>()
-    effective.each { String path, File source ->
-        String stamp = "${source.length()}\t${source.lastModified()}"
-        current[path] = stamp
-        File target = new File(destination, path)
-        if (previous[path] == stamp && target.isFile() && target.length() == source.length()) return
-        target.parentFile?.mkdirs()
-        Files.copy(source.toPath(), target.toPath(),
-                StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES)
-        copied++
-    }
-
-    // Sync semantics: outputs whose source disappeared must not survive.
-    if (destination.isDirectory()) {
-        destination.eachFileRecurse { File file ->
-            if (!file.isFile()) return
-            String path = destination.toPath().relativize(file.toPath()).toString().replace('\\', '/')
-            if (!effective.containsKey(path)) {
-                file.delete()
-                removed++
+        Path target = destination.resolve(details.relativePath.pathString)
+        if (details.directory) {
+            if (task.includeEmptyDirs) directories.add(target)
+        } else {
+            files.put(target, details.file.toPath())
+            Path parent = target.parent
+            while (parent != destination && directories.add(parent)) {
+                parent = parent.parent
             }
         }
     }
 
-    manifestFile.parentFile?.mkdirs()
-    manifestFile.withWriter('UTF-8') { writer ->
-        current.each { String path, String stamp -> writer.write("${path}\t${stamp}\n") }
+    // A build directory can itself be on a linked drive. Anchor the destination at its
+    // resolved parent, but never traverse links (including Windows junctions) inside it.
+    Files.createDirectories(destination.parent)
+    Path expectedRoot = destination.parent.toRealPath().resolve(destination.fileName)
+    if (Files.exists(destination, LinkOption.NOFOLLOW_LINKS)) {
+        Files.walkFileTree(destination, new SimpleFileVisitor<Path>() {
+            @Override
+            FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
+                if (dir.toRealPath() != expectedRoot.resolve(destination.relativize(dir))) {
+                    Files.delete(dir)
+                    return FileVisitResult.SKIP_SUBTREE
+                }
+                return FileVisitResult.CONTINUE
+            }
+
+            @Override
+            FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+                if (!attrs.isRegularFile() || !files.containsKey(file)) Files.delete(file)
+                return FileVisitResult.CONTINUE
+            }
+
+            @Override
+            FileVisitResult postVisitDirectory(Path dir, IOException failure) {
+                if (failure != null) throw failure
+                if (dir != destination && !directories.contains(dir)) Files.delete(dir)
+                return FileVisitResult.CONTINUE
+            }
+        })
     }
-    task.logger.lifecycle("Stonecutter sync ${task.name}: ${copied} copied, ${removed} removed, ${effective.size()} total.")
+
+    Files.createDirectories(destination)
+    directories.each { Files.createDirectories(it) }
+    int copied = 0
+    files.each { Path target, Path source ->
+        if (Files.isRegularFile(target, LinkOption.NOFOLLOW_LINKS)
+                && Files.mismatch(source, target) == -1L) return
+        Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES)
+        copied++
+    }
+    task.logger.lifecycle("Stonecutter sync ${task.name}: ${copied} copied, ${files.size()} total.")
 }
 
 tasks.withType(Sync).matching { it.name.startsWith('stonecutterGenerate') }.configureEach { Sync task ->
-    def manifestFile = task.project.layout.buildDirectory.file("tmp/stonecutter-sync/${task.name}.txt")
     task.setActions([new Action<Task>() {
         @Override
         void execute(Task ignored) {
-            syncStonecutter(task, manifestFile.get().asFile)
+            syncStonecutter(task)
         }
     }])
 }
