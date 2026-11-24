@@ -1,7 +1,11 @@
 package gregtech.gametest;
 
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.blockentity.tool.ProcessingToolBlockEntity;
+import gregtech.content.recipe.RecipeMapSpec;
+import gregtech.engine.machine.BasicMachineSpec;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeMap;
 import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -99,6 +103,45 @@ public final class MachineRecipeExecutionTests {
 
     private static ItemStack dye(DyeColor color) {
         return new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("minecraft", color.getName() + "_dye")));
+    }
+
+    @GameTest(template = "test_empty")
+    public static void machineKeepsInputsWithoutOutputPorts(GameTestHelper helper) {
+        var machine = (BasicMachineBlockEntity) place(helper, "compressor_bronze");
+        var spec = machine.spec();
+        helper.assertTrue(machine.getTanksOutput().length == 0, "Expected a compressor without an output tank");
+        var row = new Recipe(new ItemStack[]{new ItemStack(Items.ECHO_SHARD)}, new ItemStack[]{new ItemStack(Items.DIAMOND)},
+                null, null, new FluidStack[]{new FluidStack(Fluids.WATER, 1)}, 1, 1, 0).withPriority(20);
+        assertRefusedWithoutConsumption(helper, machine, row);
+
+        var noItemSlots = new RecipeMap(RecipeMapSpec.builder("gt.test.recipe.no_item_output", "Test", "textures/gui/test")
+                .items(1, 0, 1).fluids(0, 1, 0).build());
+        try {
+            machine.setSpec(new BasicMachineSpec(spec.id(), spec.namespace(), spec.machineName(), spec.casing(), noItemSlots,
+                    spec.energy(), spec.processing(), spec.layout(), spec.auxiliaryEnergy()));
+            assertRefusedWithoutConsumption(helper, machine, row);
+        } finally {
+            machine.setSpec(spec);
+            RecipeMap.unregister(noItemSlots);
+        }
+        helper.succeed();
+    }
+
+    private static void assertRefusedWithoutConsumption(GameTestHelper helper, BasicMachineBlockEntity machine, Recipe row) {
+        var map = machine.recipeMap();
+        try {
+            helper.assertTrue(map.addRecipe(row) == row, "Fixture row was rejected");
+            var items = machine.autoIOInventory().items();
+            items.setStackInSlot(0, new ItemStack(Items.ECHO_SHARD));
+            helper.assertTrue(machine.doInject(machine.spec().energyTag(), null, machine.spec().energyInMax(), 1, true) == 1,
+                    "Compressor did not accept its rated energy packet");
+            BasicMachineBlockEntity.serverTick(helper.getLevel(), machine.getBlockPos(), machine.getBlockState(), machine);
+            helper.assertTrue(items.getStackInSlot(0).is(Items.ECHO_SHARD) && machine.recipeDetails() == null
+                    && machine.inspectionPendingFluids().isEmpty() && machine.inspectionPendingItemCount() == 0,
+                    "Machine started a batch that cannot deliver all its products");
+        } finally {
+            map.removeAll(List.of(row));
+        }
     }
 
     private static BlockEntity place(GameTestHelper helper, String id) {

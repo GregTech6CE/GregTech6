@@ -492,7 +492,7 @@ public final class RecipeProcessor {
 
         // Items: simulate the output section using the same slot rules as MachineWorkOutputs#flush.
         int firstOutput = map.itemInputSlots;
-        if (recipe.itemOutputs.length > 0 && firstOutput < inventory.items().getSlots()) {
+        if (recipe.itemOutputs.length > 0) {
             var present = new ItemStack[inventory.items().getSlots()];
             for (int i = firstOutput; i < inventory.items().getSlots(); i++)
                 present[i] = inventory.items().getStackInSlot(i).copy();
@@ -501,7 +501,7 @@ public final class RecipeProcessor {
         }
 
         // Fluids: free capacity of the output tanks, filled the same way flush() does.
-        if (recipe.fluidOutputs.length > 0 && inventory.tanksOutput().length > 0) {
+        if (recipe.fluidOutputs.length > 0) {
             if (config.limitFluidOutputAccumulation() && fluidOutputBackedUp(recipe)) return 0;
             maxParallel = Math.min(maxParallel,
                     FluidOutputs.of(recipe.fluidOutputs).largestFitting(inventory.tanksOutput(), maxParallel));
