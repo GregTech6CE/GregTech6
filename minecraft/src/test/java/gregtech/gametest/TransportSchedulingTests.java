@@ -19,6 +19,8 @@ import gregtech.content.transport.energy.ElectricNetwork;
 import gregtech.content.transport.energy.ElectricNetworks;
 import gregtech.engine.fluid.FluidHazard;
 import gregtech.engine.fluid.FluidHazards;
+import gregtech.engine.stack.NbtCompat;
+import gregtech.engine.stack.StackCompat;
 import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -26,6 +28,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.AfterBatch;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -210,6 +213,47 @@ public final class TransportSchedulingTests {
     @AfterBatch(batch = BALANCED_BATCH)
     public static void restoreFluidDistribution(ServerLevel level) {
         GregTechConfig.overrideFluidDistributionForTesting(null);
+    }
+
+    @GameTest(template = "test_empty", batch = "shared_fluid_pipes", timeoutTicks = 20)
+    public static void sharedPoolDrainKeepsEachFluidIdentity(GameTestHelper helper) {
+        var block = (FluidPipeBlock) BuiltInRegistries.BLOCK.get(id("pipe_quadruple_bronze"));
+        var first = placeHorizontalPipe(helper, block, 0, 2, 2);
+        var second = placeHorizontalPipe(helper, block, 1, 2, 2);
+        int amount = 100;
+        var water = new FluidStack(Fluids.WATER, amount);
+        var lava = new FluidStack(Fluids.LAVA, amount);
+        var tag = new CompoundTag();
+        tag.putString("FluidName", "minecraft:water");
+        tag.putInt("Amount", amount);
+        var data = new CompoundTag();
+        data.putBoolean("marked", true);
+        tag.put("Tag", data);
+        var marked = NbtCompat.readFluid(tag, helper.getLevel().registryAccess());
+
+        try {
+            GregTechConfig.overrideFluidDistributionForTesting(GregTechConfig.FluidDistribution.LOCAL);
+            var execute = IFluidHandler.FluidAction.EXECUTE;
+            helper.assertTrue(first.fill(water, execute) == amount && first.fill(marked, execute) == amount
+                            && first.fill(lava, execute) == amount && second.fill(water, execute) == amount,
+                    "both pipes hold the fixture fluids");
+            GregTechConfig.overrideFluidDistributionForTesting(GregTechConfig.FluidDistribution.SHARED);
+            var preview = first.drain(4 * amount, IFluidHandler.FluidAction.SIMULATE);
+            helper.assertTrue(StackCompat.sameFluid(water, preview) && preview.getAmount() == 2 * amount
+                            && first.getFluidInTank(0).getAmount() == amount && second.getFluidInTank(0).getAmount() == amount,
+                    "simulation counts only plain water from both pipes and consumes none");
+            var drained = first.drain(4 * amount, execute);
+            helper.assertTrue(StackCompat.sameFluid(water, drained) && drained.getAmount() == 2 * amount
+                            && first.getFluidInTank(0).isEmpty() && second.getFluidInTank(0).isEmpty(),
+                    "the quantity drain collects all plain water across both pipes");
+            var remaining = first.getFluidInTank(1);
+            helper.assertTrue(StackCompat.sameFluid(marked, remaining) && remaining.getAmount() == amount
+                            && first.getFluidInTank(2).getFluid() == Fluids.LAVA && first.getFluidInTank(2).getAmount() == amount,
+                    "water with different data and lava remain intact");
+        } finally {
+            GregTechConfig.overrideFluidDistributionForTesting(null);
+        }
+        helper.succeed();
     }
 
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 120)

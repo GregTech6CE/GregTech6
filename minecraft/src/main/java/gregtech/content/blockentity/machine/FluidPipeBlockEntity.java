@@ -1013,7 +1013,7 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
             FluidPipeBlockEntity pipe = network.pipe(i);
             if (pipe.isPoolExcluded()) continue;
             for (FluidTankGT tank : pipe.tanks) {
-                if (tank.isEmpty()) continue;
+                if (tank.isEmpty() || (!result.isEmpty() && !tank.contains(result))) continue;
                 FluidStack drained = tank.drain(remaining, action);
                 if (drained.isEmpty()) continue;
                 result = merge(result, drained);
