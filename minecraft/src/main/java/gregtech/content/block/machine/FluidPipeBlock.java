@@ -117,9 +117,7 @@ public class FluidPipeBlock extends GTBlock
                         && coverHost.configureFilterCover(hit.getDirection(), FilterAction.CLEAR)) {
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }
-                if (!CoverItems.isCover(held) && !coverHost.consumesTool(held)
-                        && !GTToolHelper.isInteractionTool(held)
-                        && coverHost.clickFilterCover(hit.getDirection(), held)) {
+                if (!coverHost.consumesTool(held) && coverHost.clickFilterCover(hit.getDirection(), held)) {
                     if (!level.isClientSide) gregtech.content.transport.fluid.FluidPipeTickPhases.wakeAround(coverHost);
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }

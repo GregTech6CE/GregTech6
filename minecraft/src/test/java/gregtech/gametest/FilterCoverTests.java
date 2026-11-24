@@ -67,14 +67,21 @@ public final class FilterCoverTests {
     private static final String INVERTED_KEY = "gt.cover.inverted";
     private static final String LOGISTICS_VALUE_KEY = "gt.logistics.value";
 
-    /** Tools a filter cover must never store as its template. */
-    private static final List<GTToolType> GUARDED_TOOLS = List.of(
+    /** Tools consumed by filter covers or machine/pipe hosts that must never become the filter template. */
+    private static final List<GTToolType> COVER_HOST_GUARDED_TOOLS = List.of(
             GTToolType.SOFT_HAMMER,
             GTToolType.SCREWDRIVER,
             GTToolType.MAGNIFYING_GLASS,
             GTToolType.CROWBAR,
-            GTToolType.WIRE_CUTTER,
             GTToolType.WRENCH);
+
+    /** Tools consumed by logistics buses or logistics wires that must never become the filter template. */
+    private static final List<GTToolType> LOGISTICS_GUARDED_TOOLS = List.of(
+            GTToolType.SOFT_HAMMER,
+            GTToolType.SCREWDRIVER,
+            GTToolType.MAGNIFYING_GLASS,
+            GTToolType.CROWBAR,
+            GTToolType.WIRE_CUTTER);
 
     private FilterCoverTests() {}
 
@@ -207,6 +214,7 @@ public final class FilterCoverTests {
                 player,
                 machinePos,
                 Direction.UP,
+                COVER_HOST_GUARDED_TOOLS,
                 () -> {
                     machine.removeCover(Direction.UP);
                     machine.attachCover(Direction.UP, new ItemStack(item("item_filter")));
@@ -219,6 +227,7 @@ public final class FilterCoverTests {
                 player,
                 pipePos,
                 Direction.UP,
+                COVER_HOST_GUARDED_TOOLS,
                 () -> {
                     pipe.removeCover(Direction.UP);
                     pipe.attachCover(Direction.UP, new ItemStack(item("item_filter")));
@@ -226,6 +235,17 @@ public final class FilterCoverTests {
                             pipe.getCover(Direction.UP), new ItemStack(Items.IRON_INGOT), lookup);
                 },
                 () -> storedItem(pipe.getCover(Direction.UP), lookup));
+        for (var allowedTool : List.of(GTToolType.PICKAXE, GTToolType.WIRE_CUTTER)) {
+            var toolStack = GTToolHelper.displayTool(allowedTool);
+            helper.assertTrue(
+                    click(player, machinePos, Direction.UP, toolStack)
+                            && storedItem(machine.getCover(Direction.UP), lookup).is(toolStack.getItem()),
+                    allowedTool + " was blocked from becoming the machine item filter");
+            helper.assertTrue(
+                    click(player, pipePos, Direction.UP, toolStack)
+                            && storedItem(pipe.getCover(Direction.UP), lookup).is(toolStack.getItem()),
+                    allowedTool + " was blocked from becoming the item pipe filter");
+        }
         helper.succeed();
     }
 
@@ -270,6 +290,7 @@ public final class FilterCoverTests {
                 player,
                 pipePos,
                 Direction.UP,
+                COVER_HOST_GUARDED_TOOLS,
                 () -> {
                     pipe.removeCover(Direction.UP);
                     pipe.attachCover(Direction.UP, new ItemStack(item("item_retriever_cover")));
@@ -277,6 +298,13 @@ public final class FilterCoverTests {
                             pipe.getCover(Direction.UP), new ItemStack(Items.IRON_INGOT), lookup);
                 },
                 () -> storedItem(pipe.getCover(Direction.UP), lookup));
+        for (var allowedTool : List.of(GTToolType.PICKAXE, GTToolType.WIRE_CUTTER)) {
+            var toolStack = GTToolHelper.displayTool(allowedTool);
+            helper.assertTrue(
+                    click(player, pipePos, Direction.UP, toolStack)
+                            && storedItem(pipe.getCover(Direction.UP), lookup).is(toolStack.getItem()),
+                    allowedTool + " was blocked from becoming the retriever filter");
+        }
         helper.succeed();
     }
 
@@ -313,8 +341,7 @@ public final class FilterCoverTests {
                 "a lava bucket did not overwrite the pipe filter");
         helper.assertTrue(pipe.getFluidInTank(0).isEmpty(), "the lava sample leaked into the pipe tank");
 
-        // The same fluid again is a no-op for the filter; the click then reaches the pipe's own
-        // fluid handling, so only the stored sample is asserted here.
+        // Repeating the same fluid leaves the filter unchanged and still blocks pouring into the pipe.
         click(player, pipePos, Direction.UP, lavaDisplay);
         helper.assertTrue(
                 isFluid(storedFluid(pipe.getCover(Direction.UP), lookup), Fluids.LAVA),
@@ -403,6 +430,7 @@ public final class FilterCoverTests {
                 player,
                 itemWirePos,
                 Direction.UP,
+                LOGISTICS_GUARDED_TOOLS,
                 () -> {
                     itemWire.logisticsCovers().remove(Direction.UP);
                     itemWire.logisticsCovers()
@@ -411,6 +439,11 @@ public final class FilterCoverTests {
                             itemWire.logisticsCovers(), Direction.UP, new ItemStack(Items.IRON_INGOT));
                 },
                 () -> logisticsItem(itemWire, Direction.UP, lookup));
+        var pickaxe = GTToolHelper.displayTool(GTToolType.PICKAXE);
+        helper.assertTrue(
+                click(player, itemWirePos, Direction.UP, pickaxe)
+                        && logisticsItem(itemWire, Direction.UP, lookup).is(pickaxe.getItem()),
+                "non-consumed GT pickaxe was blocked from becoming the logistics bus filter");
 
         click(player, fluidWirePos, Direction.UP, new ItemStack(Items.WATER_BUCKET));
         helper.assertTrue(
@@ -580,6 +613,112 @@ public final class FilterCoverTests {
         helper.succeed();
     }
 
+    @GameTest(template = "test_empty", timeoutTicks = 100)
+    public static void renamedCoversAndCoverSampleUseItemOnPath(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var lookup = level.registryAccess();
+
+        // Renamed covers carry custom name data without gt.cover.inverted custom data; reading state must not throw.
+        for (String path : List.of("item_filter", "fluid_filter", "item_retriever_cover")) {
+            var renamed = new ItemStack(item(path));
+            gregtech.platform.Mc.setCustomName(renamed, net.minecraft.network.chat.Component.literal("Renamed"));
+            helper.assertFalse(
+                    gregtech.content.cover.MachineCoverSpec.inverted(renamed),
+                    path + " with only custom name resolved as inverted");
+            helper.assertFalse(
+                    gregtech.content.cover.MachineCoverSpec.strong(renamed),
+                    path + " with only custom name resolved as strong");
+        }
+
+        var wirePos = place(helper, 1, 2, "logistics_wire");
+        var machinePos = place(helper, 3, 2, "mixer_bronze");
+        var itemPipePos = place(helper, 5, 2, "item_pipe_medium_brass");
+        var fluidPipePos = place(helper, 1, 4, "pipe_large_steel");
+        var wire = (LogisticsWireBlockEntity) level.getBlockEntity(wirePos);
+        var machine = (BasicMachineBlockEntity) level.getBlockEntity(machinePos);
+        var itemPipe = (ItemPipeBlockEntity) level.getBlockEntity(itemPipePos);
+        var fluidPipe = (FluidPipeBlockEntity) level.getBlockEntity(fluidPipePos);
+        helper.assertTrue(
+                wire != null && machine != null && itemPipe != null && fluidPipe != null,
+                "the useItemOn fixture is incomplete");
+        helper.assertTrue(
+                wire.logisticsCovers().attach(Direction.UP, new ItemStack(item("filtered_logistics_import_bus_item")))
+                        && machine.attachCover(Direction.UP, new ItemStack(item("item_filter")))
+                        && itemPipe.attachCover(Direction.UP, new ItemStack(item("item_filter")))
+                        && fluidPipe.attachCover(Direction.UP, new ItemStack(item("fluid_filter"))),
+                "failed to attach covers for useItemOn fixture");
+
+        var profile = new com.mojang.authlib.GameProfile(java.util.UUID.randomUUID(), "filter-cover-test");
+        var connection = new net.minecraft.network.Connection(net.minecraft.network.protocol.PacketFlow.SERVERBOUND);
+        new io.netty.channel.embedded.EmbeddedChannel(connection);
+//? if >=1.21.1 {
+        /*var player = new net.minecraft.server.level.ServerPlayer(level.getServer(), level, profile,
+                net.minecraft.server.level.ClientInformation.createDefault());
+        player.connection = new net.minecraft.server.network.ServerGamePacketListenerImpl(
+                level.getServer(), connection, player,
+                net.minecraft.server.network.CommonListenerCookie.createInitial(profile, false)) {
+            @Override public void send(net.minecraft.network.protocol.Packet<?> packet) {}
+        };
+*///?} else {
+        var player = new net.minecraft.server.level.ServerPlayer(level.getServer(), level, profile);
+        player.connection = new net.minecraft.server.network.ServerGamePacketListenerImpl(
+                level.getServer(), connection, player) {
+            @Override public void send(net.minecraft.network.protocol.Packet<?> packet) {}
+        };
+//?}
+        try {
+            player.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
+            player.setShiftKeyDown(false);
+            player.initInventoryMenu();
+
+            // Standing clicks with items that double as covers (repeater, redstone torch) must configure templates.
+            for (var sample : List.of(Items.REPEATER, Items.REDSTONE_TORCH)) {
+                var stack = new ItemStack(sample);
+                helper.assertTrue(
+                        useItemOn(player, wirePos, Direction.UP, stack.copy()).consumesAction()
+                                && logisticsItem(wire, Direction.UP, lookup).is(sample),
+                        "filtered logistics bus rejected cover-capable item " + sample);
+                helper.assertTrue(
+                        useItemOn(player, machinePos, Direction.UP, stack.copy()).consumesAction()
+                                && storedItem(machine.getCover(Direction.UP), lookup).is(sample),
+                        "machine item_filter rejected cover-capable item " + sample);
+                helper.assertTrue(
+                        useItemOn(player, itemPipePos, Direction.UP, stack.copy()).consumesAction()
+                                && storedItem(itemPipe.getCover(Direction.UP), lookup).is(sample),
+                        "item pipe item_filter rejected cover-capable item " + sample);
+            }
+
+            // Repeating the same fluid container on fluid_filter keeps intercepting consistently without pouring.
+            var waterBucket = new ItemStack(Items.WATER_BUCKET);
+            helper.assertTrue(
+                    useItemOn(player, fluidPipePos, Direction.UP, waterBucket).consumesAction()
+                            && isFluid(storedFluid(fluidPipe.getCover(Direction.UP), lookup), Fluids.WATER)
+                            && fluidPipe.getFluidInTank(0).isEmpty(),
+                    "first water bucket click did not store sample cleanly");
+            helper.assertTrue(
+                    useItemOn(player, fluidPipePos, Direction.UP, waterBucket).consumesAction()
+                            && isFluid(storedFluid(fluidPipe.getCover(Direction.UP), lookup), Fluids.WATER)
+                            && fluidPipe.getFluidInTank(0).isEmpty()
+                            && player.getMainHandItem().is(Items.WATER_BUCKET),
+                    "repeated water bucket click leaked into the pipe behind fluid_filter");
+        } finally {
+            player.discard();
+        }
+        helper.succeed();
+    }
+
+    private static net.minecraft.world.InteractionResult useItemOn(
+            net.minecraft.server.level.ServerPlayer player, BlockPos pos, Direction face, ItemStack held) {
+        player.setItemInHand(InteractionHand.MAIN_HAND, held);
+        var hit = new BlockHitResult(
+                Vec3.atCenterOf(pos)
+                        .add(face.getStepX() * 0.5D, face.getStepY() * 0.5D, face.getStepZ() * 0.5D),
+                face,
+                pos,
+                false);
+        return player.gameMode.useItemOn(player, player.level(), held, InteractionHand.MAIN_HAND, hit);
+    }
+
     // ── Shared fixtures ─────────────────────────────────────────────────────────
 
     /** Places a GT block at a relative test position and returns its absolute position. */
@@ -624,8 +763,8 @@ public final class FilterCoverTests {
      * the cover and a soft-hammer click clears the filter.</p>
      */
     private static void assertToolsNeverBecomeTheFilter(GameTestHelper helper, Player player, BlockPos pos,
-            Direction face, Runnable reinstall, Supplier<ItemStack> filter) {
-        for (var type : GUARDED_TOOLS) {
+            Direction face, List<GTToolType> guardedTools, Runnable reinstall, Supplier<ItemStack> filter) {
+        for (var type : guardedTools) {
             reinstall.run();
             helper.assertTrue(
                     filter.get().is(Items.IRON_INGOT),

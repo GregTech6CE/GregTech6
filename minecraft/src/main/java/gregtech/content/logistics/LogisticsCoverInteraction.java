@@ -197,10 +197,8 @@ public final class LogisticsCoverInteraction {
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
+        if (installedType.filtered() && hostConsumesTool(owner, held)) return InteractionResult.PASS;
         if (installedType.channel() == LogisticsCoverType.Channel.ITEM && installedType.filtered()) {
-            // Tools and cover items belong to their own handlers; a filter template is never a tool.
-            if (GTToolHelper.isInteractionTool(held) || gregtech.content.cover.CoverItems.isCover(held))
-                return InteractionResult.PASS;
             if (held.getItem() instanceof gregtech.content.item.FluidDisplayItemLike) return InteractionResult.PASS;
             if (!level.isClientSide) setItemFilter(covers, face, held);
             return InteractionResult.sidedSuccess(level.isClientSide);
@@ -212,6 +210,13 @@ public final class LogisticsCoverInteraction {
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
         return InteractionResult.PASS;
+    }
+
+    private static boolean hostConsumesTool(BlockEntity owner, ItemStack held) {
+        if (owner instanceof gregtech.content.cover.PanelCoverHost panelHost) return panelHost.consumesTool(held);
+        var state = owner.getBlockState();
+        return state.getBlock() instanceof gregtech.engine.tool.ToolInteractionTarget target
+                && target.toolInteraction(state, held) != null;
     }
 
     private static net.minecraft.core.HolderLookup.Provider lookup(LogisticsCovers covers) {

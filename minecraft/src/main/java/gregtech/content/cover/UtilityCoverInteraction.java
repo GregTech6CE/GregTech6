@@ -90,7 +90,7 @@ public final class UtilityCoverInteraction {
             // 两节点统一调 3 参：1.20 经 CoverUtilityBehaviors 的 provider 适配器忽略 lookup。
             // The magnifying glass belongs to the panel path, which still has to describe the cover.
             if (GTToolHelper.isMagnifyingGlass(held)) return InteractionResult.PASS;
-            if (!host.consumesTool(held)&&!GTToolHelper.isInteractionTool(held)&&!CoverItems.isCover(held)){
+            if (!host.consumesTool(held)){
                 if (item && held.getItem() instanceof gregtech.content.item.FluidDisplayItemLike)
                     return InteractionResult.PASS;
                 if (!level.isClientSide){

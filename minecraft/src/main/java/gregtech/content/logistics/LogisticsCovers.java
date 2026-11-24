@@ -143,8 +143,8 @@ public final class LogisticsCovers {
     public void dropAll() {
         for (int faceIndex = 0; faceIndex < faces.length; faceIndex++) {
             if (!faces[faceIndex].isEmpty())
-                gregtech.content.cover.CoverDrops.dropCover(owner,
-                        gregtech.content.cover.CoverStackData.detached(faces[faceIndex]));
+                gregtech.content.cover.CoverDrops.dropCover(
+                        owner, gregtech.content.cover.CoverStackData.detached(faces[faceIndex]));
             faces[faceIndex] = ItemStack.EMPTY;
             displaySignals[faceIndex] = 0;
             displayVisuals[faceIndex] = 0;
