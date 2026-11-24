@@ -33,6 +33,8 @@ public final class ClayProcessingRecipeTests {
     public static void clayBallsAndBlocksKeepTheirDustAndBrickRecipes(GameTestHelper helper) {
         assertGrinding(helper, new ItemStack(Items.CLAY_BALL), "Clay", 1);
         assertGrinding(helper, new ItemStack(Items.CLAY), "Clay", 4);
+        assertSingleVisibleShredder(helper, new ItemStack(Items.CLAY_BALL));
+        assertSingleVisibleShredder(helper, new ItemStack(Items.CLAY));
         for (String[] variant : new String[][] {
             {"brown", "ClayBrown"},
             {"red", "ClayRed"},
@@ -44,6 +46,8 @@ public final class ClayProcessingRecipeTests {
             var block = new ItemStack(Mc.item(Mc.gregtechId("clay_" + variant[0])));
             assertGrinding(helper, ball, variant[1], 1);
             assertGrinding(helper, block, variant[1], 4);
+            assertSingleVisibleShredder(helper, ball);
+            assertSingleVisibleShredder(helper, block);
             var furnace = MachineRecipeMaps.Furnace.findRecipe(List.of(ball), List.of(), true, 1, 1);
             helper.assertTrue(
                     furnace != null
@@ -106,6 +110,21 @@ public final class ClayProcessingRecipeTests {
         var expected = GTItems.getStack(MaterialPrefix.dust, GTMaterialRegistry.get(material), count);
         assertGrinding(helper, MachineRecipeMaps.Mortar, input, expected, count);
         assertGrinding(helper, MachineRecipeMaps.Shredder, input, expected, count);
+    }
+
+    private static void assertSingleVisibleShredder(GameTestHelper helper, ItemStack input) {
+        long visible = 0;
+        for (var recipe : MachineRecipeMaps.Shredder.allRecipes())
+            if (recipe.enabled && !recipe.hidden && soleInput(recipe, input)) visible++;
+        helper.assertTrue(
+                visible == 1,
+                Mc.itemId(input.getItem()) + " must have one visible shredder recipe, found " + visible);
+    }
+
+    private static boolean soleInput(gregtech.engine.recipe.Recipe recipe, ItemStack input) {
+        return recipe.itemInputs.length == 1
+                && recipe.itemInputs[0].is(input.getItem())
+                && recipe.itemInputs[0].getCount() == 1;
     }
 
     private static void assertGrinding(

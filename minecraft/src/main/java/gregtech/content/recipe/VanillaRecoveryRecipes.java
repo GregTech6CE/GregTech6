@@ -14,6 +14,7 @@ import gregtech.platform.Mc;
 import java.util.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 /** GT6 RecipeMapShredder decomposition for vanilla and explicitly audited native compositions. */
 public final class VanillaRecoveryRecipes {
@@ -91,6 +92,12 @@ public final class VanillaRecoveryRecipes {
         if (data.prefix() != null
                 && (data.prefix().getName().startsWith("dust") || data.prefix() == MaterialPrefix.oreRaw)) {
             skip(skipped, "existing-recovery-family");
+            return;
+        }
+        // Explicit GT6 grinding owns these inputs. Its duration and priority differ, so publishing
+        // this generic row would leave a second visible Shredder recipe.
+        if (item == Items.CLAY_BALL || item == Items.CLAY) {
+            skip(skipped, "explicit-clay-grinding");
             return;
         }
         var plan = MaterialRecoveryRules.planShredder(data, MachineRecipeMaps.Shredder.itemOutputSlots);
