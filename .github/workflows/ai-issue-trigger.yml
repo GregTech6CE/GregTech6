@@ -1,0 +1,53 @@
+name: AI Issue Trigger
+
+# 业务仓触发层：只做事件过滤与参数透传，执行与写回由组织级
+# `GregTech6CE/.github/.github/workflows/ai-issue-runner.yml` 完成。
+#
+# 本文件决定"谁可以唤起分析"；执行层决定"能做什么、能写什么"。
+# 凭据由本仓可用的 secret 提供，经 `secrets: inherit` 传给执行层，本文件不读取任何值。
+on:
+  issues:
+    types: [opened]
+  issue_comment:
+    types: [created]
+  workflow_dispatch:
+    inputs:
+      issue:
+        description: issue 编号
+        required: true
+        type: string
+      dry_run:
+        description: 为 true 时只跑 fetch/gate/analysis、不发评论
+        required: false
+        default: "false"
+        type: string
+      force:
+        description: 为 true 时无视 bot:v1 标记与 7 天窗口
+        required: false
+        default: "false"
+        type: string
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  analyse:
+    if: |
+      (vars.BOT_ENABLED != 'false') &&
+      (github.event_name == 'workflow_dispatch' ||
+       (github.event_name == 'issues' && github.event.issue.user.type != 'Bot') ||
+       (github.event_name == 'issue_comment' &&
+        github.event.comment.user.type != 'Bot' &&
+        contains(github.event.comment.body, vars.GT6CE_BOT_MENTION || '@gt6ce-bot') &&
+        (github.event.comment.author_association == 'OWNER' ||
+         github.event.comment.author_association == 'MEMBER' ||
+         github.event.comment.author_association == 'COLLABORATOR')))
+    uses: GregTech6CE/.github/.github/workflows/ai-issue-runner.yml@master
+    with:
+      issue: ${{ github.event.issue.number || inputs.issue }}
+      event: ${{ github.event_name == 'workflow_dispatch' && 'issues' || github.event_name }}
+      comment_id: ${{ github.event.comment.id || '' }}
+      dry_run: ${{ inputs.dry_run || 'false' }}
+      force: ${{ inputs.force || 'false' }}
+    secrets: inherit
