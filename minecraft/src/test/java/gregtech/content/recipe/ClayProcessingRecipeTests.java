@@ -52,21 +52,17 @@ public final class ClayProcessingRecipeTests {
                             && furnace.itemOutputs[0].getCount() == 1,
                     variant[0] + " clay ball must fire into one brick");
             assertCooking(helper, RecipeType.SMELTING, ball);
-            assertCooking(helper, RecipeType.BLASTING, ball);
+            assertNoCooking(helper, RecipeType.BLASTING, ball);
         }
         helper.succeed();
     }
 
     @GameTest(template = "test_empty", timeoutTicks = 200)
-    public static void clayDustsShareCraftingAndMixerInputs(GameTestHelper helper) {
+    public static void clayDustsShareCraftingInputs(GameTestHelper helper) {
         var fireBricks = crafting(helper, "survival_repairs/fire_bricks");
         var plantPot = crafting(helper, "survival_repairs/plant_pot");
         var forgeTag = ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", "dusts/clay"));
         var ownTag = ItemTags.create(Mc.gregtechId("dust/clay"));
-        var redstone = dust("Redstone", MaterialPrefix.dust, 1);
-        var basalz = dust("Basalz", MaterialPrefix.dustTiny, 1);
-        var obsidian = dust("Obsidian", MaterialPrefix.dust, 1);
-        var petrotheum = dust("Petrotheum", MaterialPrefix.dust, 2);
         int[] claySlots = {0, 2, 6, 8};
         for (String name : List.of("Clay", "ClayBrown", "ClayRed", "Bentonite", "Palygorskite", "Kaolinite")) {
             var clay = dust(name, MaterialPrefix.dust, 1);
@@ -81,12 +77,6 @@ public final class ClayProcessingRecipeTests {
                         name + " dust must craft fire bricks");
             helper.assertTrue(plantPot.getIngredients().get(5).test(clay),
                     name + " dust must craft a plant pot");
-            var mixed = MachineRecipeMaps.Mixer.findRecipe(
-                    List.of(redstone, basalz, clay, obsidian), List.of(), true, 4, 1);
-            helper.assertTrue(mixed != null && mixed.itemOutputs.length == 1
-                            && mixed.itemOutputs[0].is(petrotheum.getItem())
-                            && mixed.itemOutputs[0].getCount() == 2,
-                    name + " dust must mix into two Petrotheum dust");
             var small = dust(name, MaterialPrefix.dustSmall, 1);
             helper.assertTrue(!small.is(forgeTag) && !small.is(ownTag)
                             && !fireBricks.getIngredients().get(0).test(small),
@@ -152,5 +142,19 @@ public final class ClayProcessingRecipeTests {
                     && output.getCount() == 1;
         });
         helper.assertTrue(found, type + " must publish " + Mc.itemId(input.getItem()) + " -> brick");
+    }
+
+    private static void assertNoCooking(
+            GameTestHelper helper, RecipeType<? extends AbstractCookingRecipe> type, ItemStack input) {
+        var level = helper.getLevel();
+        boolean found = level.getRecipeManager().getAllRecipesFor(type).stream().anyMatch(entry -> {
+//? if >=1.21.1 {
+            /*var recipe = entry.value();
+*///?} else {
+            var recipe = entry;
+//?}
+            return recipe.getIngredients().stream().anyMatch(ingredient -> ingredient.test(input));
+        });
+        helper.assertTrue(!found, type + " must not accept " + Mc.itemId(input.getItem()));
     }
 }

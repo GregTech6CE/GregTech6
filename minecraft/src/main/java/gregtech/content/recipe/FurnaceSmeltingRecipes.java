@@ -241,13 +241,13 @@ public final class FurnaceSmeltingRecipes {
                 }
             }
         }
-        // MultiItemFood's colored balls are unprefixed items; they fire in furnaces and blast furnaces.
+        // MultiItemFood's colored balls are unprefixed items. They fire in the GT furnace and the
+        // mirrored vanilla furnace; no cooking metadata keeps them out of the blast furnace.
         DiggableRecipes.clayBalls().forEach((material, ball) -> {
             if (ball.is(Items.CLAY_BALL)) return;
             ItemStack brick = new ItemStack(Items.BRICK);
             if (MachineRecipeMaps.addSmelting(ball, brick)) {
                 ENTRIES.add(new Entry("clay_ball", material, ball, brick));
-                COOKING.put(ball.getItem(), new CookingData(0, false));
             }
         });
     }
