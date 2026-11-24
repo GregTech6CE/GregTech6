@@ -32,26 +32,16 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
-//? if >=1.21.1 {
-/*import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-*///?} else {
-//?}
 import net.minecraft.world.phys.BlockHitResult;
-//? if >=1.21.1 {
-/*import java.util.ArrayList;
-*///?} else {
-//?}
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
 /** Bulk-storage front interaction, mode tools, tape packing and harvest; remaining tool gap: ALIGN-136. */
 public class MassStorageBlock extends GTHorizontalDirectionalBlock
         implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget {
-    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-
     @Nullable
     private final GTMaterial material;
 
@@ -132,13 +122,26 @@ public class MassStorageBlock extends GTHorizontalDirectionalBlock
     @Nullable
     public GTMaterial material() { return material; }
 
-//? if >=1.21.1 {
-    /*protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> builder) { builder.add(FACING); }
-    public BlockState getStateForPlacement(BlockPlaceContext context) { return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite()); }
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING);
+    }
 
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) { return new MassStorageBlockEntity(pos, state); }
-    private ItemStack shell(BlockState state, MassStorageBlockEntity storage) {
-        ItemStack shell = new ItemStack(this); CompoundTag tag = new CompoundTag();
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new MassStorageBlockEntity(pos, state);
+    }
+
+//? if >=1.21.1 {
+    /*private ItemStack shell(BlockState state, MassStorageBlockEntity storage) {
+        ItemStack shell = new ItemStack(this);
+        CompoundTag tag = new CompoundTag();
         if (storage.isPacked()) {
             tag = gregtech.engine.stack.NbtCompat.getUpdateTag(storage, storage.getLevel().registryAccess());
             tag.remove("gt.partial_units");
@@ -149,40 +152,30 @@ public class MassStorageBlock extends GTHorizontalDirectionalBlock
         }
         return shell;
     }
+
+    @Override
     protected List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         BlockEntity entity = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
         if (!(entity instanceof MassStorageBlockEntity storage)) return List.of(new ItemStack(this));
-        var drops = new ArrayList<ItemStack>(); drops.add(shell(state, storage)); drops.addAll(storage.looseDrops()); return drops;
+        var drops = new ArrayList<ItemStack>();
+        drops.add(shell(state, storage));
+        drops.addAll(storage.looseDrops());
+        return drops;
     }
 
     /^* Source creative pick retains the complete state, including untaped inventory and fractions. ^/
-*///?}
     @Override
-//? if >=1.21.1 {
-    /*public ItemStack getCloneItemStack(BlockState state, net.minecraft.world.phys.HitResult hit,
+    public ItemStack getCloneItemStack(BlockState state, net.minecraft.world.phys.HitResult hit,
             net.minecraft.world.level.LevelReader level, BlockPos pos, Player player) {
         var stack = new ItemStack(state.getBlock());
         if (level.getBlockEntity(pos) instanceof MassStorageBlockEntity storage) {
             var data = gregtech.engine.stack.NbtCompat.getUpdateTag(storage, level.registryAccess());
             data.putString("id", BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(storage.getType()).toString());
             stack.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(data));
+        }
+        return stack;
+    }
 *///?} else {
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
-    }
-
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        BlockState base = defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
-        return base;
-    }
-
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new MassStorageBlockEntity(pos, state);
-    }
-
     private static ItemStack packed(BlockState state, @Nullable BlockEntity be) {
         ItemStack stack = new ItemStack(state.getBlock());
         if (be instanceof MassStorageBlockEntity storage)
@@ -207,18 +200,15 @@ public class MassStorageBlock extends GTHorizontalDirectionalBlock
             net.minecraft.nbt.CompoundTag tag = new net.minecraft.nbt.CompoundTag();
             tag.putInt("gt.mode", storage.mode() & 7);
             stack.addTagElement("BlockEntityTag", tag);
-//?}
         }
         return stack;
     }
 
-//? if >=1.21.1 {
-//?} else {
-    public List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
-        BlockEntity be = builder.getOptionalParameter(
-                net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY);
+    @Override
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
+        BlockEntity be = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
         if (!(be instanceof MassStorageBlockEntity storage)) return List.of(new ItemStack(state.getBlock()));
-        List<ItemStack> drops = new java.util.ArrayList<>();
+        List<ItemStack> drops = new ArrayList<>();
         drops.add(storage.isPacked() ? packedForHarvest(state, storage) : emptyShell(state, storage));
         drops.addAll(storage.looseDrops());
         return drops;
