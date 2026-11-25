@@ -107,11 +107,7 @@ public class LargeCrucibleControllerBlock extends GTBlock
             net.minecraft.world.level.Level level, net.minecraft.core.BlockPos pos,
             net.minecraft.world.level.block.state.BlockState next, boolean moving) {
         if (!state.is(next.getBlock()) && !level.isClientSide
-//? if >=1.21.1 {
-                /*&& level.getBlockEntity(pos) instanceof LargeCrucibleControllerBlockEntity contents) {
-*///?} else {
-                && level.getBlockEntity(pos) instanceof gregtech.engine.inventory.BlockContents contents) {
-//?}
+                && level.getBlockEntity(pos) instanceof LargeCrucibleControllerBlockEntity contents) {
             contents.dropContents();
             level.updateNeighbourForOutputSignal(pos, this);
         }

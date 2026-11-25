@@ -17,6 +17,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -25,6 +26,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
@@ -166,16 +168,11 @@ public class MassStorageBlock extends GTHorizontalDirectionalBlock
 
     /** Source creative pick retains the complete state, including untaped inventory and fractions. */
     @Override
-//? if >=1.21.1 {
-    /*public ItemStack getCloneItemStack(BlockState state, net.minecraft.world.phys.HitResult hit,
-            net.minecraft.world.level.LevelReader level, BlockPos pos, Player player) {
-        return packedClone(level.getBlockEntity(pos), level.registryAccess());
+    protected ItemStack onGetCloneItemStack(BlockState state, @Nullable HitResult target,
+            BlockGetter level, BlockPos pos, @Nullable Player player) {
+        return packedClone(level.getBlockEntity(pos),
+                level instanceof LevelReader reader ? reader.registryAccess() : null);
     }
-*///?} else {
-    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
-        return packedClone(level.getBlockEntity(pos), null);
-    }
-//?}
 
     @Override
     protected void appendTooltip(ItemStack stack, @javax.annotation.Nullable BlockGetter level,

@@ -17,6 +17,7 @@ import gregtech.engine.machine.MachineDirections;
 import gregtech.engine.machine.MachineEnergyPort;
 import gregtech.engine.machine.MachineInventory;
 import gregtech.engine.machine.MachineItemHandler;
+import gregtech.engine.multiblock.BoundMachinePort;
 import gregtech.content.cover.CoverUtilityBehaviors.FilterAction;
 import gregtech.content.cover.MachineCoverSpec;
 import gregtech.engine.recipe.Recipe;
@@ -389,11 +390,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             if (!level.hasChunkAt(adj)) continue;
             BlockEntity be = level.getBlockEntity(adj);
 
-//? if >=1.21.1 {
-/*            if (be instanceof gregtech.engine.multiblock.BoundMachinePort part && part.isBoundTo(worldPosition)) continue;
-*///?} else {
-            if (be instanceof MultiblockPortBlockEntity part && part.isBoundTo(worldPosition)) continue;
-//?}
+            if (be instanceof BoundMachinePort part && part.isBoundTo(worldPosition)) continue;
 
             IEnergyBlock source = EnergyBlockViews.view(be);
             if (source == null) continue;
@@ -416,11 +413,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             BlockPos adj = pos.relative(absDir);
             if (!level.hasChunkAt(adj)) continue;
             BlockEntity be = level.getBlockEntity(adj);
-//? if >=1.21.1 {
-/*            if (be instanceof gregtech.engine.multiblock.BoundMachinePort part && part.isBoundTo(worldPosition)) continue;
-*///?} else {
-            if (be instanceof MultiblockPortBlockEntity part && part.isBoundTo(worldPosition)) continue;
-//?}
+            if (be instanceof BoundMachinePort part && part.isBoundTo(worldPosition)) continue;
             IEnergyBlock source = EnergyBlockViews.view(be);
             if (source == null || !source.isEnergyEmittingTo(auxTag, absDir.getOpposite(), false)) continue;
             long offered = source.getEnergyOffered(auxTag, absDir.getOpposite(), auxSize);
