@@ -260,8 +260,7 @@ public final class ItemBehaviors {
             return Outcome.acted(stack);
         }
         // the debug pair (MultiItemRandomTools) and the Remote Activator's bind half.
-        // Both debug items are deliberately exempt from the build-permission gate, exactly like GT6's
-        // (Behavior_Chunk_Remover and Behavior_Worldgen_Debugger check only `isRemote`).
+        // The worldgen debug wand checks creative mode and operator permission itself.
         if (id.equals("chunk_eraser")) {
             return BehaviorChunkEraser.useOn(level, pos, side, player, stack, hitX, hitY, hitZ);
         }
