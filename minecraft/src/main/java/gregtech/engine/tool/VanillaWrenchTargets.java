@@ -1,6 +1,5 @@
 package gregtech.engine.tool;
 
-import gregtech.content.block.machine.MachineRotationType;
 import javax.annotation.Nullable;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.BarrelBlock;

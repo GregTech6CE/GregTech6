@@ -59,7 +59,7 @@ public final class GregLanternBlock extends GTHorizontalDirectionalBlock
     public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return gregtech.engine.tool.GTToolHelper.isMachineWrench(tool)
                 ? gregtech.engine.tool.ToolInteractionSpec.facing(
-                        FACING, gregtech.content.block.machine.MachineRotationType.HORIZONTAL)
+                        FACING, gregtech.engine.tool.MachineRotationType.HORIZONTAL)
                 : null;
     }
 

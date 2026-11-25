@@ -7,7 +7,7 @@ import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
 import gregtech.engine.tool.ToolInteractions;
-import gregtech.content.block.machine.MachineRotationType;
+import gregtech.engine.tool.MachineRotationType;
 import gregtech.content.material.Materials;
 import gregtech.content.damage.GTDamageTypes;
 import net.minecraft.core.BlockPos;

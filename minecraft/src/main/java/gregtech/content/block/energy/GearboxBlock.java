@@ -1,7 +1,6 @@
 package gregtech.content.block.energy;
 
 import gregtech.content.block.GTBlock;
-import gregtech.content.block.machine.MachineRotationType;
 import gregtech.content.blockentity.energy.GearboxBlockEntity;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.item.MaterialItem;
@@ -9,6 +8,7 @@ import gregtech.content.registry.GTGearboxes;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.energy.GearboxSpec;
 import gregtech.engine.tool.GTToolHelper;
+import gregtech.engine.tool.MachineRotationType;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
 import gregtech.engine.tool.ToolInteractions;

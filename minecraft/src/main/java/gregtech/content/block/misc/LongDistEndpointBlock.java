@@ -98,8 +98,7 @@ public class LongDistEndpointBlock extends GTDirectionalBlock
     public gregtech.engine.tool.ToolInteractionSpec toolInteraction(
             BlockState state, net.minecraft.world.item.ItemStack tool) {
         return gregtech.engine.tool.GTToolHelper.matchesTool(tool, gregtech.engine.tool.GTToolType.WRENCH)
-                ? gregtech.engine.tool.ToolInteractionSpec.facing(
-                        FACING, gregtech.content.block.machine.MachineRotationType.ALL)
+                ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING, gregtech.engine.tool.MachineRotationType.ALL)
                 : null;
     }
 

@@ -93,7 +93,7 @@ public class BottleCrateBlock extends GTHorizontalDirectionalBlock implements En
 
     @Override public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state,ItemStack tool) {
         return gregtech.engine.tool.GTToolHelper.isMachineWrench(tool)
-                ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING,gregtech.content.block.machine.MachineRotationType.HORIZONTAL) : null;
+                ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING,gregtech.engine.tool.MachineRotationType.HORIZONTAL) : null;
     }
     @Override public int getFlammability(BlockState state,BlockGetter level,BlockPos pos,Direction face) { return metal() ? 0 : 150; }
     @Override public int getFireSpreadSpeed(BlockState state,BlockGetter level,BlockPos pos,Direction face) { return metal() ? 0 : 150; }

@@ -4,6 +4,7 @@ import gregtech.content.block.GTDirectionalBlock;
 import gregtech.content.blockentity.machine.LogisticsCoreControllerBlockEntity;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.engine.tool.GTToolHelper;
+import gregtech.engine.tool.MachineRotationType;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
 import gregtech.engine.tool.ToolInteractions;

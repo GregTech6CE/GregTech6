@@ -1,6 +1,5 @@
 package gregtech.engine.tool;
 
-import gregtech.content.block.machine.MachineRotationType;
 import gregtech.engine.energy.AxleConnectionRules;
 import gregtech.engine.transport.PipeConnections;
 import java.util.function.Function;

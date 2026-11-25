@@ -123,8 +123,7 @@ public class SensorBlock extends GTDirectionalBlock implements EntityBlock, greg
     @Override
     public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return gregtech.engine.tool.GTToolHelper.matchesTool(tool, gregtech.engine.tool.GTToolType.WRENCH)
-                ? gregtech.engine.tool.ToolInteractionSpec.facing(
-                        FACING, gregtech.content.block.machine.MachineRotationType.ALL)
+                ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING, gregtech.engine.tool.MachineRotationType.ALL)
                 : null;
     }
 

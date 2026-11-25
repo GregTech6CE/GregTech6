@@ -1,5 +1,6 @@
 package gregtech.content.block.machine;
 
+import gregtech.engine.tool.MachineRotationType;
 import gregtech.engine.tool.ToolInteractions;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;

@@ -159,8 +159,8 @@ public class EnergyNodeBlock extends GTDirectionalBlock implements EntityBlock, 
         if (reservesMonkeyWrench && GTToolHelper.isMonkeyWrench(tool)) return null;
         return !fixed && GTToolHelper.isMachineWrench(tool)
                 ? ToolInteractionSpec.facing(FACING, spec.deviceType() == DeviceType.SOLAR
-                    ? gregtech.content.block.machine.MachineRotationType.BOTTOM_HORIZONTAL
-                    : gregtech.content.block.machine.MachineRotationType.ALL) : null;
+                    ? gregtech.engine.tool.MachineRotationType.BOTTOM_HORIZONTAL
+                    : gregtech.engine.tool.MachineRotationType.ALL) : null;
     }
 
     @Override

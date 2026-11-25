@@ -2,6 +2,7 @@ package gregtech.content.block.machine;
 
 import gregtech.content.block.GTDirectionalBlock;
 import gregtech.content.blockentity.machine.LargeHeatExchangerControllerBlockEntity;
+import gregtech.engine.tool.MachineRotationType;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

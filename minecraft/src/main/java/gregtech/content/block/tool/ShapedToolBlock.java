@@ -1,7 +1,7 @@
 package gregtech.content.block.tool;
 
 import gregtech.engine.tool.*;
-import gregtech.content.block.machine.MachineRotationType;
+import gregtech.engine.tool.MachineRotationType;
 import gregtech.content.tool.OriginalToolShapes;
 import net.minecraft.core.*;
 import net.minecraft.world.*;

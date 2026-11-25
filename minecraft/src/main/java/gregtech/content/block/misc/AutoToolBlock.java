@@ -1,8 +1,8 @@
 package gregtech.content.block.misc;
 
 import gregtech.content.block.GTDirectionalBlock;
-import gregtech.content.block.machine.MachineRotationType;
 import gregtech.engine.tool.*;
+import gregtech.engine.tool.MachineRotationType;
 import net.minecraft.core.*;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;

@@ -1,5 +1,6 @@
 package gregtech.content.block.machine;
 
+import gregtech.engine.tool.MachineRotationType;
 import gregtech.content.multiblock.AxialGeneratorDefinitions;
 import gregtech.content.blockentity.machine.AxialGeneratorBlockEntity;
 import net.minecraft.core.*;

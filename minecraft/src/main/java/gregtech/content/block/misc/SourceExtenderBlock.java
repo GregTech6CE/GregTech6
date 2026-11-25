@@ -124,9 +124,9 @@ public final class SourceExtenderBlock extends GTDirectionalBlock implements Ent
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         if (spec.bridge) return null;
         if (GTToolHelper.isMonkeyWrench(tool))
-            return ToolInteractionSpec.facing(SECONDARY, gregtech.content.block.machine.MachineRotationType.ALL);
+            return ToolInteractionSpec.facing(SECONDARY, gregtech.engine.tool.MachineRotationType.ALL);
         return GTToolHelper.isMachineWrench(tool)
-                ? ToolInteractionSpec.facing(FACING, gregtech.content.block.machine.MachineRotationType.ALL)
+                ? ToolInteractionSpec.facing(FACING, gregtech.engine.tool.MachineRotationType.ALL)
                 : null;
     }
 

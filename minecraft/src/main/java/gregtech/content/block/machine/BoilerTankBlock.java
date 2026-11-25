@@ -1,5 +1,6 @@
 package gregtech.content.block.machine;
 
+import gregtech.engine.tool.MachineRotationType;
 import gregtech.engine.machine.BoilerSpec;
 import gregtech.content.blockentity.machine.BoilerTankBlockEntity;
 import gregtech.content.registry.GTBlockEntities;

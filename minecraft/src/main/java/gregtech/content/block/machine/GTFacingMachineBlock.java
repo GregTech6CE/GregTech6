@@ -5,6 +5,7 @@ import gregtech.engine.machine.GTMachineBlock;
 import gregtech.engine.machine.MachineSpec;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
+import gregtech.engine.tool.MachineRotationType;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
 import javax.annotation.Nullable;

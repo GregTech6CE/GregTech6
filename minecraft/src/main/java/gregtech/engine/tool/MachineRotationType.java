@@ -1,9 +1,5 @@
-package gregtech.content.block.machine;
+package gregtech.engine.tool;
 
-import gregtech.engine.tool.GTToolHelper;
-import gregtech.engine.tool.ToolInteractionSpec;
-import gregtech.engine.tool.ToolInteractionTarget;
-import gregtech.engine.tool.ToolInteractions;
 import gregtech.util.GTPlacementCode;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

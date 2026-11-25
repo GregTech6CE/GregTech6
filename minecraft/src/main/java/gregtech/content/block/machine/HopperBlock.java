@@ -6,6 +6,7 @@ import gregtech.content.registry.GTBlockEntities;
 import gregtech.engine.GTWaterloggable;
 import gregtech.engine.machine.HopperSpec;
 import gregtech.engine.tool.GTToolHelper;
+import gregtech.engine.tool.MachineRotationType;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
 import java.util.EnumMap;

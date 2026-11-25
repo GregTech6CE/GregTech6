@@ -1,10 +1,10 @@
 package gregtech.content.block.energy;
 
 import gregtech.content.block.GTBlock;
-import gregtech.content.block.machine.MachineRotationType;
 import gregtech.content.blockentity.energy.MagicFieldAbsorberBlockEntity;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.engine.tool.*;
+import gregtech.engine.tool.MachineRotationType;
 import java.util.List;
 import net.minecraft.core.*;
 import net.minecraft.network.chat.Component;

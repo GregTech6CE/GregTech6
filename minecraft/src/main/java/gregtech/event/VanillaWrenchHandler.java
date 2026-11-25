@@ -1,6 +1,6 @@
 package gregtech.event;
 
-import gregtech.content.block.machine.MachineRotationType;
+import gregtech.engine.tool.MachineRotationType;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;

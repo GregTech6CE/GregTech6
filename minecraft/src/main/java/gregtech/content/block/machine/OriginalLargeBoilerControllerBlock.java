@@ -1,5 +1,6 @@
 package gregtech.content.block.machine;
 
+import gregtech.engine.tool.MachineRotationType;
 import gregtech.content.block.GTHorizontalDirectionalBlock;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.ToolInteractionSpec;

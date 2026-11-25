@@ -1,5 +1,6 @@
 package gregtech.content.block.machine;
 
+import gregtech.engine.tool.MachineRotationType;
 import gregtech.content.block.GTDirectionalBlock;
 import gregtech.content.blockentity.machine.MultiblockTankControllerBlockEntity;
 import gregtech.content.multiblock.TankValveParameters;

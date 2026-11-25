@@ -1,7 +1,7 @@
 package gregtech.content.nuclear;
 
-import gregtech.content.block.machine.MachineRotationType;
 import gregtech.engine.tool.*;
+import gregtech.engine.tool.MachineRotationType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;

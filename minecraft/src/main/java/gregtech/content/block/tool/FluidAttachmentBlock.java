@@ -110,8 +110,8 @@ public class FluidAttachmentBlock extends GTBlock implements gregtech.engine.too
     @Override
     public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, net.minecraft.world.item.ItemStack tool) {
         return gregtech.engine.tool.GTToolHelper.isMachineWrench(tool) ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING,
-                spec.shape().equals("fluid_funnel") ? gregtech.content.block.machine.MachineRotationType.ALL
-                        : gregtech.content.block.machine.MachineRotationType.HORIZONTAL) : null;
+                spec.shape().equals("fluid_funnel") ? gregtech.engine.tool.MachineRotationType.ALL
+                        : gregtech.engine.tool.MachineRotationType.HORIZONTAL) : null;
     }
 
     public FluidAttachmentSpec spec() {

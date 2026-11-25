@@ -13,7 +13,7 @@ import gregtech.engine.tool.GTToolType;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
 import gregtech.engine.tool.ToolInteractions;
-import gregtech.content.block.machine.MachineRotationType;
+import gregtech.engine.tool.MachineRotationType;
 import gregtech.content.registry.GTBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

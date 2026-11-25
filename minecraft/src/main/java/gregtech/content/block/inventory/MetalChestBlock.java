@@ -92,7 +92,7 @@ public class MetalChestBlock extends GTHorizontalDirectionalBlock
     @Override
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return GTToolHelper.isMachineWrench(tool)
-                ? ToolInteractionSpec.facing(FACING, gregtech.content.block.machine.MachineRotationType.HORIZONTAL)
+                ? ToolInteractionSpec.facing(FACING, gregtech.engine.tool.MachineRotationType.HORIZONTAL)
                 : null;
     }
 

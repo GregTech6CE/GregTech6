@@ -1,12 +1,12 @@
 package gregtech.content.block.tool;
 
 import gregtech.content.block.GTDirectionalBlock;
-import gregtech.content.block.machine.MachineRotationType;
 import gregtech.content.blockentity.tool.AdvancedButtonBlockEntity;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.engine.GTWaterloggable;
 import gregtech.engine.stack.StackData;
 import gregtech.engine.tool.GTToolHelper;
+import gregtech.engine.tool.MachineRotationType;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
 import gregtech.engine.tool.ToolInteractions;

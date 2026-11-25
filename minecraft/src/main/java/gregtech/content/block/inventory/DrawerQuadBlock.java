@@ -121,8 +121,7 @@ public class DrawerQuadBlock extends GTDirectionalBlock
     @Override
     public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return gregtech.engine.tool.GTToolHelper.isMachineWrench(tool)
-                ? gregtech.engine.tool.ToolInteractionSpec.facing(
-                        FACING, gregtech.content.block.machine.MachineRotationType.ALL)
+                ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING, gregtech.engine.tool.MachineRotationType.ALL)
                 : null;
     }
 

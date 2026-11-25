@@ -84,7 +84,7 @@ public class ManualToolBlock extends GTHorizontalDirectionalBlock implements Ent
     @Override
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return kind == ManualToolBlockEntity.Kind.GRINDSTONE && GTToolHelper.isMachineWrench(tool)
-                ? ToolInteractionSpec.facing(FACING, gregtech.content.block.machine.MachineRotationType.HORIZONTAL) : null;
+                ? ToolInteractionSpec.facing(FACING, gregtech.engine.tool.MachineRotationType.HORIZONTAL) : null;
     }
 
     public int tint(int index) {

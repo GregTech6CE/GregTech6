@@ -85,7 +85,7 @@ public class FilterBlock extends GTDirectionalBlock implements net.minecraft.wor
         var property = gregtech.engine.tool.GTToolHelper.isMonkeyWrench(tool) ? SECONDARY
                 : gregtech.engine.tool.GTToolHelper.isMachineWrench(tool) ? FACING : null;
         return property == null ? null : gregtech.engine.tool.ToolInteractionSpec.facing(property,
-                gregtech.content.block.machine.MachineRotationType.ALL);
+                gregtech.engine.tool.MachineRotationType.ALL);
     }
 
     @Override
