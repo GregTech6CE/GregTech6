@@ -64,8 +64,11 @@ final class BatteryBoxNode implements MachineControl {
     }
 
     long inject(GregTechTags.Tag type, @Nullable Direction side, long size, long amount, boolean execute) {
-        if (size == Long.MIN_VALUE || size == 0 || amount <= 0
-                || !host.isEnergyAcceptingFrom(type, side, false) || !energy.canReceive()) return 0;
+        if (size == Long.MIN_VALUE
+                || size == 0
+                || amount <= 0
+                || !host.isEnergyAcceptingFrom(type, side, false)
+                || !energy.canReceive()) return 0;
         long packet = Math.abs(size);
         if (packet > host.getEnergySizeInputMax(type, side)) {
             if (execute) overload(packet);
