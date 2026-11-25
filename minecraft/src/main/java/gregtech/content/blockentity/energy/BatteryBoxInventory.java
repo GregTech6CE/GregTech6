@@ -78,6 +78,10 @@ final class BatteryBoxInventory implements IItemHandlerModifiable {
         if (slot < 0 || slot >= batteries.size()) throw new IndexOutOfBoundsException("Battery slot " + slot);
     }
 
+    private boolean available() {
+        return !detached && !host.isRemoved();
+    }
+
     @Override
     public int getSlots() {
         return batteries.size();
@@ -86,7 +90,7 @@ final class BatteryBoxInventory implements IItemHandlerModifiable {
     @Override
     public ItemStack getStackInSlot(int slot) {
         checkSlot(slot);
-        return detached ? ItemStack.EMPTY : batteries.get(slot);
+        return available() ? batteries.get(slot) : ItemStack.EMPTY;
     }
 
     @Override
@@ -103,7 +107,7 @@ final class BatteryBoxInventory implements IItemHandlerModifiable {
     @Override
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
         checkSlot(slot);
-        if (detached || amount <= 0 || batteries.get(slot).isEmpty()) return ItemStack.EMPTY;
+        if (!available() || amount <= 0 || batteries.get(slot).isEmpty()) return ItemStack.EMPTY;
         var result = batteries.get(slot).copy();
         if (!simulate) {
             batteries.set(slot, ItemStack.EMPTY);
@@ -115,7 +119,7 @@ final class BatteryBoxInventory implements IItemHandlerModifiable {
     @Override
     public void setStackInSlot(int slot, ItemStack stack) {
         checkSlot(slot);
-        if (detached) return;
+        if (!available()) return;
         if (!stack.isEmpty() && !isItemValid(slot, stack)) throw new IllegalArgumentException("Not an energy item");
         batteries.set(slot, stack.isEmpty() ? ItemStack.EMPTY : stack.copyWithCount(1));
         host.setChanged();
@@ -130,7 +134,7 @@ final class BatteryBoxInventory implements IItemHandlerModifiable {
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
         checkSlot(slot);
-        return !detached && BatteryBoxEnergy.accepts(stack, energyType);
+        return available() && BatteryBoxEnergy.accepts(stack, energyType);
     }
 
     MenuProvider menu() {
@@ -141,7 +145,7 @@ final class BatteryBoxInventory implements IItemHandlerModifiable {
                     public boolean stillValid(Player viewer) {
                         var level = host.getLevel();
                         var pos = host.getBlockPos();
-                        return !detached && !host.isRemoved() && level != null && viewer.level() == level
+                        return available() && level != null && viewer.level() == level
                                 && viewer.distanceToSqr(pos.getCenter()) <= 64
                                 && level.hasChunkAt(pos) && level.getBlockEntity(pos) == host;
                     }
@@ -153,7 +157,7 @@ final class BatteryBoxInventory implements IItemHandlerModifiable {
         return new IItemHandler() {
             // Native battery automation checks shutters and component direction. Item filters are separate.
             private boolean allowsTransfer(boolean insert) {
-                return !detached && !host.panels().shuttered(side)
+                return available() && !host.panels().shuttered(side)
                         && ComponentCoverRuntime.allowsItem(host.getCover(side), insert);
             }
 
@@ -184,13 +188,14 @@ final class BatteryBoxInventory implements IItemHandlerModifiable {
 
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
-                return !detached && !host.panels().shuttered(side) && BatteryBoxInventory.this.isItemValid(slot, stack);
+                return BatteryBoxInventory.this.isItemValid(slot, stack) && !host.panels().shuttered(side);
             }
         };
     }
 
 //? if >=1.21.1 {
-    /*IItemHandler capability(@Nullable Direction side) {
+    /*@Nullable IItemHandler capability(@Nullable Direction side) {
+        if (!available()) return null;
         return side == null ? this : sided(side);
     }
 *///?} else {
@@ -198,7 +203,7 @@ final class BatteryBoxInventory implements IItemHandlerModifiable {
     @Nullable private EnumMap<Direction, LazyOptional<IItemHandler>> sidedCapabilities;
 
     LazyOptional<IItemHandler> capability(@Nullable Direction side) {
-        if (detached) return LazyOptional.empty();
+        if (!available()) return LazyOptional.empty();
         if (side != null) {
             if (sidedCapabilities == null) sidedCapabilities = new EnumMap<>(Direction.class);
             return sidedCapabilities.computeIfAbsent(side, face -> LazyOptional.of(() -> sided(face)));

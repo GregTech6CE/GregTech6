@@ -154,7 +154,7 @@ final class SteamTurbineNode implements MachineControl {
     }
 
     boolean exposesInlet(@Nullable Direction side) {
-        return !detached && side != host.facing();
+        return !detached && !host.isRemoved() && side != host.facing();
     }
 
     private IFluidHandler coveredInlet(Direction side) {
@@ -222,16 +222,16 @@ final class SteamTurbineNode implements MachineControl {
 
         @Override
         public boolean isFluidValid(int tank, FluidStack fluid) {
-            return !detached && isSteam(fluid);
+            return exposesInlet(side) && isSteam(fluid);
         }
 
         @Override
         public int fill(FluidStack fluid, FluidAction action) {
-            if (detached) return 0;
+            if (!exposesInlet(side)) return 0;
             int filled = 0;
-            if (!host.isRemoved() && !host.converterStopped
+            if (!host.converterStopped
                     && (side == null || side == host.facing().getOpposite())
-                    && isFluidValid(0, fluid)) {
+                    && isSteam(fluid)) {
                 filled = steamTank.fill(fluid, action);
             }
             if (action.execute() && host.getLevel() != null) {
@@ -252,12 +252,18 @@ final class SteamTurbineNode implements MachineControl {
     }
 
     @Override
+    public boolean available() {
+        return !detached && !host.isRemoved();
+    }
+
+    @Override
     public boolean enabled() {
         return !host.converterStopped;
     }
 
     @Override
     public boolean setEnabled(boolean enabled) {
+        if (!available()) return false;
         host.converterStopped = !enabled;
         host.setChanged();
         return enabled;
@@ -303,10 +309,8 @@ final class SteamTurbineNode implements MachineControl {
         legacyRotor = tag.contains("gt.rotor")
                 ? NbtCompat.readItem(tag.getCompound("gt.rotor"), lookup)
                 : ItemStack.EMPTY;
-        if (tag.contains("gt.steam")) {
-            NbtCompat.readTank(steamTank, tag.getCompound("gt.steam"), lookup);
-            steamTank.setCapacity(host.spec().inputRate() * 4);
-        }
+        NbtCompat.readTank(steamTank, tag.getCompound("gt.steam"), lookup);
+        steamTank.setCapacity(host.spec().inputRate() * 4);
     }
 
     void dropContents() {

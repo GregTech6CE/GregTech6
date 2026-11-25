@@ -95,7 +95,7 @@ abstract class BufferedEnergyNode extends EnergyDeviceBehavior implements Machin
 
     @Override
     public boolean available() {
-        return !host.isRemoved();
+        return isCurrent();
     }
 
     @Override
@@ -110,6 +110,7 @@ abstract class BufferedEnergyNode extends EnergyDeviceBehavior implements Machin
 
     @Override
     public boolean setEnabled(boolean enabled) {
+        if (!available()) return false;
         host.converterStopped = !enabled;
         host.setChanged();
         return enabled;

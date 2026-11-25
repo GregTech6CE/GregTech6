@@ -146,6 +146,11 @@ final class SolarPanelNode extends EnergyDeviceBehavior implements MachineContro
     }
 
     @Override
+    public boolean available() {
+        return isCurrent();
+    }
+
+    @Override
     public boolean supportsProgress() {
         return false;
     }
@@ -157,6 +162,7 @@ final class SolarPanelNode extends EnergyDeviceBehavior implements MachineContro
 
     @Override
     public boolean setEnabled(boolean enabled) {
+        if (!available()) return false;
         energy.enabled(enabled);
         host.setChanged();
         return enabled;

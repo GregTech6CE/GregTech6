@@ -27,7 +27,7 @@ final class ForgeEnergyNodeAdapter {
     }
 
     boolean exposes(@Nullable Direction side) {
-        if (host.spec() == null || host.spec().inType() != GregTechTags.Energy.RF) return false;
+        if (host.isRemoved() || host.spec() == null || host.spec().inType() != GregTechTags.Energy.RF) return false;
         if (side == null) return true;
         if (side == host.facing()) return false;
         boolean hasRearOutput = host.isMagnet() || host.isOriginalCooler();
@@ -36,11 +36,11 @@ final class ForgeEnergyNodeAdapter {
 
 //? if >=1.21.1 {
     /*IEnergyStorage capability(@Nullable Direction side) {
-        return (host.isMagnet() || host.hasOriginalConverter()) && side != null ? new Port(side) : unsided;
+        return side == null ? unsided : new Port(side);
     }
 *///?} else {
     LazyOptional<IEnergyStorage> capability(@Nullable Direction side) {
-        if ((host.isMagnet() || host.hasOriginalConverter()) && side != null) {
+        if (side != null) {
             return sidedCapabilities.computeIfAbsent(side, face -> LazyOptional.of(() -> new Port(face)));
         }
         if (unsidedCapability == null || !unsidedCapability.isPresent()) {
@@ -94,7 +94,7 @@ final class ForgeEnergyNodeAdapter {
 
         @Override
         public int receiveEnergy(int maxReceive, boolean simulate) {
-            if (side != null && !host.isEnergyAcceptingFrom(GregTechTags.Energy.RF, side, false)) return 0;
+            if (maxReceive <= 0 || !canReceive()) return 0;
             if (host.hasOriginalConverter()) {
                 return (int) host.doEnergyInjection(GregTechTags.Energy.RF, null, 1, maxReceive, !simulate);
             }
@@ -116,12 +116,12 @@ final class ForgeEnergyNodeAdapter {
 
         @Override
         public int getEnergyStored() {
-            return (int) Math.min(Integer.MAX_VALUE, host.bufferedInput);
+            return exposes(side) ? (int) Math.min(Integer.MAX_VALUE, host.bufferedInput) : 0;
         }
 
         @Override
         public int getMaxEnergyStored() {
-            return (int) Math.min(Integer.MAX_VALUE, host.capacity());
+            return exposes(side) ? (int) Math.min(Integer.MAX_VALUE, host.capacity()) : 0;
         }
 
         @Override
@@ -131,8 +131,10 @@ final class ForgeEnergyNodeAdapter {
 
         @Override
         public boolean canReceive() {
-            if (side != null) return host.isEnergyAcceptingFrom(GregTechTags.Energy.RF, side, false);
-            return !host.hasOriginalConverter() || !host.converterStopped;
+            if (!exposes(side)) return false;
+            // Generic RF buffers accept on every exposed face, independently of GT packet controls.
+            return !(host.hasOriginalConverter() || host.isMagnet())
+                    || host.isEnergyAcceptingFrom(GregTechTags.Energy.RF, side, false);
         }
     }
 }

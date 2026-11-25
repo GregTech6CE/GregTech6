@@ -182,7 +182,7 @@ class OriginalConverterNode extends EnergyDeviceBehavior implements MachineContr
     AdjacentEnergyControl adjacentEnergyControl() {
         return enabled -> {
             // Manual and adjacent requests share the stopped state. Stored energy still drains normally.
-            if (!host.isRemoved()
+            if (available()
                     && (host.getLevel() == null || !host.getLevel().isClientSide)
                     && host.converterStopped == enabled) {
                 host.converterStopped = !enabled;
@@ -194,7 +194,8 @@ class OriginalConverterNode extends EnergyDeviceBehavior implements MachineContr
 
     @Override
     public boolean available() {
-        return !host.isRemoved();
+        // A retained converter control can still address a retuned converter.
+        return !host.isRemoved() && host.originalConverter() != null;
     }
 
     @Override
@@ -216,6 +217,7 @@ class OriginalConverterNode extends EnergyDeviceBehavior implements MachineContr
 
     @Override
     public int setMode(int value) {
+        if (!available()) return 0;
         var current = host.originalConverter();
         if (current != null && supportsMode()) current.state.mode(value);
         host.setChanged();
@@ -229,6 +231,7 @@ class OriginalConverterNode extends EnergyDeviceBehavior implements MachineContr
 
     @Override
     public boolean setEnabled(boolean enabled) {
+        if (!available()) return false;
         host.converterStopped = !enabled;
         host.setChanged();
         return enabled;

@@ -2,6 +2,7 @@ package gregtech.gametest;
 
 import gregtech.content.block.energy.EnergyNodeBlock;
 import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
+import gregtech.content.cover.PanelCoverRuntime;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.energy.ChemicalBatterySpec;
@@ -12,6 +13,8 @@ import gregtech.content.registry.GTItems;
 import gregtech.engine.energy.EnergyNodeSpec;
 import gregtech.engine.inventory.NativeItemInventories;
 import gregtech.engine.stack.NbtCompat;
+import gregtech.engine.tool.GTToolHelper;
+import gregtech.engine.tool.GTToolType;
 import gregtech.platform.Mc;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
@@ -20,11 +23,14 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -75,19 +81,57 @@ public final class EnergyDeviceBehaviorTests {
                 "the box exposes its energy state and both inventory ports");
         var cell = new ItemStack(GTChemicalBatteries.item(ChemicalBatterySpec.Chemistry.LEAD_ACID, 1));
         helper.assertTrue(unsided.insertItem(0, cell, false).isEmpty(), "the inventory accepts a battery");
-        node.setSpec(energyBlock("electric_motor_lv").spec());
-        try {
-            helper.assertTrue(node.batteryEnergy() == null && NativeItemInventories.at(level, pos, null) == null
-                            && NativeItemInventories.at(level, pos, Direction.SOUTH) == null,
-                    "the rebound motor no longer exposes the battery box");
-            helper.assertTrue(rear.extractItem(0, 1, false).isEmpty()
-                            && unsided.insertItem(1, cell, false).getCount() == 1,
-                    "retained ports cannot extract or insert into the retired inventory");
-            helper.assertTrue(countDrops(node, cell) == 1, "rebinding releases the installed battery");
-        } finally {
-            level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-        }
+        var control = node.machineControl(null);
+        control.setMode(3);
+        node.setSpec(node.spec());
+        helper.assertTrue(NativeItemInventories.at(level, pos, null) == unsided
+                        && unsided.getStackInSlot(0).is(cell.getItem()) && node.machineControl(null).mode() == 3
+                        && countDrops(node, cell) == 0,
+                "binding the same box spec keeps the inventory, mode and live handler");
+
+        node.setSpec(energyBlock("battery_box_mv").spec());
+        var current = NativeItemInventories.at(level, pos, null);
+        helper.assertTrue(current != null && current != unsided && current.getStackInSlot(0).isEmpty(),
+                "changing the battery box tier installs a fresh inventory");
+        helper.assertTrue(rear.extractItem(0, 1, false).isEmpty()
+                        && unsided.insertItem(1, cell, false).getCount() == 1,
+                "retained ports cannot extract or insert into the retired inventory");
+        helper.assertTrue(!control.available() && control.setMode(7) == 0 && node.machineControl(null).mode() == 0,
+                "a retired battery control cannot change the replacement box");
+        helper.assertTrue(countDrops(node, cell) == 1, "rebinding releases the installed battery");
         helper.succeed();
+    }
+
+    @GameTest(template = "test_empty")
+    public static void placedNodeRejectsIncompatibleSpecs(GameTestHelper helper) {
+        var node = placeNode(helper, "battery_box_lv");
+        var box = node.spec();
+        var cell = new ItemStack(GTChemicalBatteries.item(ChemicalBatterySpec.Chemistry.LEAD_ACID, 1));
+        helper.assertTrue(node.installBattery(cell), "the box accepts a battery before a rejected binding");
+        try {
+            helper.assertTrue(rejectsSpec(node, energyBlock("electric_motor_lv").spec()),
+                    "a placed box cannot take on motor behavior");
+            helper.assertTrue(rejectsSpec(node, energyBlock("energy_storage_lv").spec()),
+                    "a four-slot box cannot take a sixteen-slot spec that would lose items on reload");
+            helper.assertTrue(node.spec() == box && node.isBatteryBox()
+                            && node.batteryInventory().getStackInSlot(0).is(cell.getItem()),
+                    "a rejected replacement leaves the original box and its contents intact");
+        } finally {
+            if (node.spec() != box) {
+                helper.getLevel().setBlockAndUpdate(node.getBlockPos(), Blocks.AIR.defaultBlockState());
+            }
+        }
+        EnergyNodeBlockEntity.serverTick(helper.getLevel(), node.getBlockPos(), node.getBlockState(), node);
+        helper.succeed();
+    }
+
+    private static boolean rejectsSpec(EnergyNodeBlockEntity node, EnergyNodeSpec spec) {
+        try {
+            node.setSpec(spec);
+            return false;
+        } catch (IllegalArgumentException expected) {
+            return true;
+        }
     }
 
     @GameTest(template = "test_empty")
@@ -105,18 +149,63 @@ public final class EnergyDeviceBehaviorTests {
         helper.assertTrue(rear != null && rear.fill(steam, IFluidHandler.FluidAction.SIMULATE) == 1
                         && unsided != null && unsided.fill(steam, IFluidHandler.FluidAction.SIMULATE) == 1,
                 "both turbine inlets accept steam before rebinding");
-        node.setSpec(energyBlock("electric_motor_lv").spec());
-        try {
-            helper.assertTrue(fluidPort(node, Direction.SOUTH) == null && fluidPort(node, null) == null,
-                    "the rebound motor exposes no fluid ports");
-            helper.assertTrue(rear.fill(steam, IFluidHandler.FluidAction.EXECUTE) == 0
-                            && unsided.fill(steam, IFluidHandler.FluidAction.EXECUTE) == 0,
-                    "retained inlets cannot fill the retired turbine");
-            helper.assertTrue(countDrops(node, legacyRotor) == 1, "rebinding releases the old rotor");
-        } finally {
-            node.getLevel().setBlockAndUpdate(node.getBlockPos(), Blocks.AIR.defaultBlockState());
-        }
+        node.setSpec(energyBlock("steam_turbine_steel").spec());
+        var current = fluidPort(node, Direction.SOUTH);
+        helper.assertTrue(current != null && current.fill(steam, IFluidHandler.FluidAction.SIMULATE) == 1,
+                "the replacement turbine exposes its own inlet");
+        helper.assertTrue(rear.fill(steam, IFluidHandler.FluidAction.EXECUTE) == 0
+                        && unsided.fill(steam, IFluidHandler.FluidAction.EXECUTE) == 0,
+                "retained inlets cannot fill the retired turbine");
+        helper.assertTrue(countDrops(node, legacyRotor) == 1, "rebinding releases the old rotor");
         helper.succeed();
+    }
+
+    @GameTest(template = "test_empty")
+    public static void motorAppliesSelectorBeforePublishingConvertedStatus(GameTestHelper helper) {
+        var node = placeNode(helper, "electric_motor_lv");
+        helper.assertTrue(node.attachCover(Direction.WEST, cover("integrated_circuit_12"))
+                        && node.attachCover(Direction.UP, cover("machine_status_display_cover")),
+                "the motor accepts a fixed selector and a status panel");
+        long rate = node.spec().inputRate();
+        helper.assertTrue(node.doEnergyInjection(node.spec().inType(), Direction.SOUTH, rate, 1, true) == 1,
+                "the motor receives a rated input packet");
+        EnergyNodeBlockEntity.serverTick(helper.getLevel(), node.getBlockPos(), node.getBlockState(), node);
+        helper.assertTrue(node.machineControl(null).mode() == 12 && node.stored() == rate / 2,
+                "conversion uses the selector mode from the same tick");
+        helper.assertTrue((PanelCoverRuntime.value(node.getCover(Direction.UP)) & 2) != 0,
+                "the status panel observes the running state produced by that conversion");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty")
+    public static void motorToolTakesPrecedenceOverSelectorButtons(GameTestHelper helper) {
+        var node = placeNode(helper, "electric_motor_lv");
+        var side = Direction.SOUTH;
+        helper.assertTrue(node.attachCover(side, cover("button_panel_selector")),
+                "the motor accepts a button panel");
+//? if >=1.21.1 {
+        /*var player = helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+*///?} else {
+        var player = helper.makeMockPlayer();
+//?}
+        var tool = GTToolHelper.displayTool(GTToolType.MONKEY_WRENCH);
+        player.setItemInHand(InteractionHand.MAIN_HAND, tool);
+        var pos = node.getBlockPos();
+        var level = helper.getLevel();
+        var hit = new BlockHitResult(Vec3.atCenterOf(pos).add(0, 0, .5), side, pos, false);
+        var state = node.getBlockState();
+//? if >=1.21.1 {
+        /*boolean used = state.useItemOn(tool, level, player, InteractionHand.MAIN_HAND, hit).consumesAction();
+*///?} else {
+        boolean used = state.use(level, player, InteractionHand.MAIN_HAND, hit).consumesAction();
+//?}
+        helper.assertTrue(used && node.motorCounterClockwise() && node.machineControl(null).mode() == 0,
+                "the monkey wrench reverses the motor while leaving the cover selector unchanged");
+        helper.succeed();
+    }
+
+    private static ItemStack cover(String id) {
+        return new ItemStack(BuiltInRegistries.ITEM.get(Mc.gregtechId(id)));
     }
 
     @GameTest(template = "test_empty")

@@ -25,6 +25,10 @@ abstract class EnergyDeviceBehavior {
         this.host = host;
     }
 
+    final boolean isCurrent() {
+        return host.isCurrent(this);
+    }
+
     static EnergyDeviceBehavior create(EnergyNodeBlockEntity host, EnergyNodeSpec spec) {
         return switch (spec.deviceType()) {
             case MOTOR, DYNAMO, HEATER -> new OriginalConverterNode(host, spec);
@@ -43,6 +47,8 @@ abstract class EnergyDeviceBehavior {
                 };
         };
     }
+
+    void onBound() {}
 
     void onLoad() {}
 

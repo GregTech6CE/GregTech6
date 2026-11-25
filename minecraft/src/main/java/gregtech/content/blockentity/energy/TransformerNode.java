@@ -63,7 +63,12 @@ abstract class TransformerNode extends BufferedEnergyNode {
 
         Electric(EnergyNodeBlockEntity host) {
             super(host);
-            electricControl = new ElectricTransformerControl(host::setChanged);
+            electricControl = new ElectricTransformerControl(host::setChanged, this::isCurrent);
+        }
+
+        @Override
+        void onBound() {
+            electricControl.select(inverted());
         }
 
         @Override

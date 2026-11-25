@@ -42,7 +42,7 @@ final class BatteryBoxNode extends EnergyDeviceBehavior implements MachineContro
 
     @Override
     void loadState(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
-        super.loadState(tag, lookup);
+        host.bufferedInput = 0;
         energy.load(tag);
         inventory.load(tag, lookup);
     }
@@ -169,6 +169,11 @@ final class BatteryBoxNode extends EnergyDeviceBehavior implements MachineContro
     }
 
     @Override
+    public boolean available() {
+        return isCurrent();
+    }
+
+    @Override
     public boolean supportsMode() {
         return true;
     }
@@ -180,6 +185,7 @@ final class BatteryBoxNode extends EnergyDeviceBehavior implements MachineContro
 
     @Override
     public int setMode(int mode) {
+        if (!available()) return 0;
         energy.mode(mode);
         host.setChanged();
         return energy.mode();
@@ -192,6 +198,7 @@ final class BatteryBoxNode extends EnergyDeviceBehavior implements MachineContro
 
     @Override
     public boolean setEnabled(boolean enabled) {
+        if (!available()) return false;
         energy.enabled(enabled);
         host.setChanged();
         return enabled;

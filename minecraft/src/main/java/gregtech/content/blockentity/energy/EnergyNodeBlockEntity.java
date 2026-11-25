@@ -24,6 +24,7 @@ import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
 import java.util.Collection;
 import java.util.EnumMap;
+import java.util.Objects;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -87,11 +88,34 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
         }
     }
 
+    /** An attached node may tune its existing device. Its block still supplies the spec on reload. */
     public void setSpec(EnergyNodeSpec spec) {
+        Objects.requireNonNull(spec, "Energy node spec");
+        var previousSpec = this.spec;
+        if (spec.equals(previousSpec)) return;
+        boolean compatible = previousSpec != null
+                && previousSpec.deviceType() == spec.deviceType()
+                && previousSpec.kind() == spec.kind()
+                && previousSpec.inType() == spec.inType()
+                && previousSpec.outType() == spec.outType()
+                && previousSpec.batterySlots() == spec.batterySlots();
+        if (level != null && !compatible) {
+            throw new IllegalArgumentException(
+                    "Cannot change the device family, energy types or slot layout of an attached energy node");
+        }
+
         var next = EnergyDeviceBehavior.create(this, spec);
         var previous = behavior;
+        if (!compatible) {
+            bufferedInput = 0;
+            converterStopped = false;
+            inverted = false;
+            overloadCount = 0;
+            lastSyncedBuffer = -1;
+        }
         this.spec = spec;
         behavior = next;
+        next.onBound();
         if (previous == null) return;
 
         previous.detach();
@@ -115,6 +139,10 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
     @Override
     public EnergyNodeSpec spec() {
         return spec;
+    }
+
+    boolean isCurrent(EnergyDeviceBehavior candidate) {
+        return behavior == candidate && !isRemoved();
     }
 
     Direction facing() {
