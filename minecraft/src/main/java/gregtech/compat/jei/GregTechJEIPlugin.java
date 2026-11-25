@@ -160,7 +160,7 @@ public final class GregTechJEIPlugin implements IModPlugin {
         for (var entry : gregtech.content.registry.GTFluidItems.allEntries()) if (entry.isPresent())
             registration.registerSubtypeInterpreter(entry.get(), (stack, context) -> {
                 var level = net.minecraft.client.Minecraft.getInstance().level;
-                return gregtech.engine.fluid.FluidDisplayBinding.subtype(level == null ? null : level.registryAccess(), stack);
+                return gregtech.engine.fluid.FluidDisplayBinding.subtype(stack, level == null ? null : level.registryAccess());
             });
 
     }

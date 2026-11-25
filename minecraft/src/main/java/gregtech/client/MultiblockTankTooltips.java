@@ -21,21 +21,15 @@ public final class MultiblockTankTooltips {
             int size,
             TankValveParameters spec,
             ItemStack stack,
-            @org.jetbrains.annotations.Nullable net.minecraft.core.HolderLookup.Provider lookup,
-            List<Component> lines) {
+            List<Component> lines,
+            @org.jetbrains.annotations.Nullable net.minecraft.core.HolderLookup.Provider lookup) {
         add(lines, "gt.lang.structure", ChatFormatting.AQUA).append(":");
         for (var key : OriginalTankTooltipData.structureKeys(size)) add(lines, key, ChatFormatting.WHITE);
         long capacity = spec.capacity();
         var tank = new FluidTankGT(capacity);
         var data = CommonBlockTooltips.blockData(stack);
         MultiblockTankData.readContents(
-                tank,
-                data,
-                capacity,
-                lookup == null
-                        ? net.minecraft.core.RegistryAccess.fromRegistryOfRegistries(
-                                net.minecraft.core.registries.BuiltInRegistries.REGISTRY)
-                        : lookup);
+                tank, data, capacity, gregtech.engine.stack.RegistryContext.orCurrent(lookup));
         var fluid = tank.getFluidLong();
         if (fluid.isEmpty()) {
             add(lines, "gt.lang.pipe.stats.capacity", ChatFormatting.AQUA)

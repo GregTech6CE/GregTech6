@@ -42,7 +42,7 @@ public class FluidItem extends Item implements FluidDisplayItemLike {
     @Override
     public Component getName(ItemStack stack) {
         if (gregtech.engine.fluid.FluidDisplayBinding.hasPayload(stack)) {
-            var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolve(null, stack);
+            var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolve(stack, null);
             if (!fluid.isEmpty()) {
                 // entryForFluid, not FluidStack#getDisplayName: the display name does not carry the
                 // GT6 metadata. Resolve the GT6 entry of the fluid the payload actually carries.
@@ -67,7 +67,7 @@ public class FluidItem extends Item implements FluidDisplayItemLike {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-        var actual = gregtech.engine.fluid.FluidDisplayBinding.resolve(null, stack);
+        var actual = gregtech.engine.fluid.FluidDisplayBinding.resolve(stack, null);
         long amount = gregtech.engine.fluid.FluidDisplayBinding.hasPayload(stack) ? actual.getAmount() : 0;
         tooltip.addAll(GTFluidType.describeTooltip(actual, amount, flag.isAdvanced()));
     }
@@ -76,7 +76,7 @@ public class FluidItem extends Item implements FluidDisplayItemLike {
     public boolean isFoil(ItemStack stack) {
         var entry = fluidEntry;
         if (gregtech.engine.fluid.FluidDisplayBinding.hasPayload(stack)) {
-            var actual = gregtech.engine.fluid.FluidDisplayBinding.resolve(null, stack);
+            var actual = gregtech.engine.fluid.FluidDisplayBinding.resolve(stack, null);
             entry = actual.isEmpty() ? null : gregtech.content.registry.GTFluids.entryForFluid(actual.getFluid());
             if (entry == null) return false;
         }
@@ -114,12 +114,12 @@ public class FluidItem extends Item implements FluidDisplayItemLike {
         }
 
         private Fluid resolveFluid() {
-            var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolve(null, container);
+            var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolve(container, null);
             return fluid.isEmpty() ? null : fluid.getFluid();
         }
 
         private FluidStack contents(int amount) {
-            var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolve(null, container);
+            var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolve(container, null);
             if (!fluid.isEmpty()) fluid.setAmount(amount);
             return fluid;
         }
@@ -163,7 +163,7 @@ public class FluidItem extends Item implements FluidDisplayItemLike {
         public FluidStack drain(FluidStack resource, FluidAction action) {
             Fluid resolvedFluid = resolveFluid();
             if (resolvedFluid == null
-                    || !gregtech.engine.fluid.FluidDisplayBinding.resolve(null, container)
+                    || !gregtech.engine.fluid.FluidDisplayBinding.resolve(container, null)
                             .isFluidEqual(resource)) return FluidStack.EMPTY;
             return drain(resource.getAmount(), action);
         }

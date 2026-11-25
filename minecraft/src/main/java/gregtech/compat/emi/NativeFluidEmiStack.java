@@ -61,7 +61,7 @@ final class NativeFluidEmiStack extends EmiStack {
         var stack = new net.minecraftforge.fluids.FluidStack(key, 1000, fluid.getNbt());
 //?}
         return gregtech.engine.fluid.FluidDisplayBinding.display(
-                gregtech.engine.stack.RegistryContext.current(), stack);
+                stack, gregtech.engine.stack.RegistryContext.current());
     }
 
     @Override public List<ClientTooltipComponent> getTooltip() {

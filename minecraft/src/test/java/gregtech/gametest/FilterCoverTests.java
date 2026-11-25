@@ -929,7 +929,7 @@ public final class FilterCoverTests {
 
     /** A creative fluid display carrier holding 1000 mB of {@code fluid}. */
     private static ItemStack display(HolderLookup.Provider lookup, net.minecraft.world.level.material.Fluid fluid) {
-        return gregtech.engine.fluid.FluidDisplayBinding.display(lookup, new FluidStack(fluid, 1000));
+        return gregtech.engine.fluid.FluidDisplayBinding.display(new FluidStack(fluid, 1000), lookup);
     }
 
     private static boolean isFluid(FluidStack stack, net.minecraft.world.level.material.Fluid fluid) {

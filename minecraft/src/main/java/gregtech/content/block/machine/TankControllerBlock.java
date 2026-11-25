@@ -100,7 +100,7 @@ public class TankControllerBlock extends GTDirectionalBlock implements gregtech.
     @Override
     protected void appendTooltip(@NotNull ItemStack stack, @Nullable BlockGetter level,
             @Nullable HolderLookup.Provider registries, @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
-        gregtech.client.MultiblockTankTooltips.append(size, valveSpec, stack, registries, tooltip);
+        gregtech.client.MultiblockTankTooltips.append(size, valveSpec, stack, tooltip, registries);
     }
 
     @Override

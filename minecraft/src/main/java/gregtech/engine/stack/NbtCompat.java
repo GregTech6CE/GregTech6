@@ -1,21 +1,33 @@
 package gregtech.engine.stack;
 
+import com.mojang.serialization.DynamicOps;
 import gregtech.engine.fluid.FluidTankGT;
+import java.util.Objects;
+import java.util.function.BiFunction;
+import java.util.function.Supplier;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
+import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.saveddata.SavedData;
+import net.minecraft.world.level.storage.DimensionDataStorage;
+import org.jetbrains.annotations.Nullable;
 //? if >=1.21.1 {
 /*import com.mojang.serialization.Dynamic;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.nbt.NbtOps;
+import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.util.datafix.DataFixers;
 import net.minecraft.util.datafix.fixes.References;
 import net.minecraft.world.item.component.CustomData;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 //?}
 
 /**
@@ -110,15 +122,95 @@ public final class NbtCompat {
         tank.writeToNBT(tag, lookup);
     }
 
-    public static void readTank(FluidTankGT tank, CompoundTag tag, HolderLookup.Provider lookup) {
+    public static void readTank(FluidTankGT tank, CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         tank.readFromNBT(tag, lookup);
+    }
+
+    /** Writes a loader {@link FluidTank} into {@code tag}; 1.20.1 ignores the lookup. */
+    public static CompoundTag writeTank(
+            FluidTank tank, CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+//? if >=1.21.1 {
+/*        return tank.writeToNBT(Objects.requireNonNull(lookup, "tank codec needs the registry lookup"), tag);
+*///?} else {
+        return tank.writeToNBT(tag);
+//?}
+    }
+
+    /** Restores a loader {@link FluidTank} from {@code tag}, supporting legacy nested {@code Fluid} envelopes. */
+    public static void readTank(FluidTank tank, CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+//? if >=1.21.1 {
+/*        Objects.requireNonNull(lookup, "tank codec needs the registry lookup");
+        var fluid = readFluid(tag.contains("Fluid") ? tag.getCompound("Fluid") : tag, lookup);
+        long amount = tag.contains("Fluid") && tag.contains("Amount") ? tag.getLong("Amount") : fluid.getAmount();
+        if (!fluid.isEmpty()) fluid.setAmount((int) Math.max(0, Math.min(tank.getCapacity(), amount)));
+        tank.setFluid(fluid);
+*///?} else {
+        if (tag.contains("Fluid")) {
+            var fluid = FluidStack.loadFluidStackFromNBT(tag.getCompound("Fluid"));
+            if (fluid.isEmpty()) {
+                tank.setFluid(FluidStack.EMPTY);
+                return;
+            }
+            long amount = tag.contains("Amount") ? tag.getLong("Amount") : fluid.getAmount();
+            fluid.setAmount((int) Math.max(0, Math.min(tank.getCapacity(), amount)));
+            tank.setFluid(fluid);
+        } else {
+            tank.readFromNBT(tag);
+        }
+//?}
+    }
+
+    /** Saves {@link NonNullList} items via {@link ContainerHelper}; 1.20.1 ignores the lookup. */
+    public static CompoundTag saveAllItems(
+            CompoundTag tag, NonNullList<ItemStack> items, @Nullable HolderLookup.Provider lookup) {
+//? if >=1.21.1 {
+/*        return ContainerHelper.saveAllItems(
+                tag, items, Objects.requireNonNull(lookup, "container codec needs the registry lookup"));
+*///?} else {
+        return ContainerHelper.saveAllItems(tag, items);
+//?}
+    }
+
+    /** Loads {@link NonNullList} items via {@link ContainerHelper}; 1.20.1 ignores the lookup. */
+    public static void loadAllItems(
+            CompoundTag tag, NonNullList<ItemStack> items, @Nullable HolderLookup.Provider lookup) {
+//? if >=1.21.1 {
+/*        ContainerHelper.loadAllItems(
+                tag, items, Objects.requireNonNull(lookup, "container codec needs the registry lookup"));
+*///?} else {
+        ContainerHelper.loadAllItems(tag, items);
+//?}
+    }
+
+    /** Loads or creates a level {@link SavedData} entry across the two storage signatures. */
+    public static <T extends SavedData> T computeSavedData(
+            DimensionDataStorage storage,
+            Supplier<T> constructor,
+            BiFunction<CompoundTag, HolderLookup.Provider, T> deserializer,
+            String name) {
+//? if >=1.21.1 {
+/*        return storage.computeIfAbsent(
+                new SavedData.Factory<>(constructor, deserializer, DataFixTypes.LEVEL), name);
+*///?} else {
+        return storage.computeIfAbsent(tag -> deserializer.apply(tag, null), constructor, name);
+//?}
+    }
+
+    /** NBT {@link DynamicOps} bound to {@code lookup} on 1.21.1, or plain {@link NbtOps#INSTANCE} on 1.20.1. */
+    public static DynamicOps<Tag> nbtOps(@Nullable HolderLookup.Provider lookup) {
+//? if >=1.21.1 {
+/*        return Objects.requireNonNull(lookup, "nbt ops needs the registry lookup")
+                .createSerializationContext(NbtOps.INSTANCE);
+*///?} else {
+        return NbtOps.INSTANCE;
+//?}
     }
 
     /** A block entity snapshot without metadata; 1.20.1 ignores the lookup. */
     public static CompoundTag saveWithoutMetadata(net.minecraft.world.level.block.entity.BlockEntity blockEntity,
-            HolderLookup.Provider lookup) {
+            @Nullable HolderLookup.Provider lookup) {
 //? if >=1.21.1 {
-/*        return blockEntity.saveWithoutMetadata(java.util.Objects.requireNonNull(lookup, "stack codec needs the registry lookup"));
+/*        return blockEntity.saveWithoutMetadata(Objects.requireNonNull(lookup, "stack codec needs the registry lookup"));
 *///?} else {
         return blockEntity.saveWithoutMetadata();
 //?}
@@ -130,9 +222,9 @@ public final class NbtCompat {
      * keeps empty shells clean without it.
      */
     public static CompoundTag saveForBlockItem(net.minecraft.world.level.block.entity.BlockEntity blockEntity,
-            HolderLookup.Provider lookup) {
+            @Nullable HolderLookup.Provider lookup) {
 //? if >=1.21.1 {
-/*        return blockEntity.saveWithId(java.util.Objects.requireNonNull(lookup, "stack codec needs the registry lookup"));
+/*        return blockEntity.saveWithId(Objects.requireNonNull(lookup, "stack codec needs the registry lookup"));
 *///?} else {
         return blockEntity.saveWithoutMetadata();
 //?}
@@ -140,9 +232,9 @@ public final class NbtCompat {
 
     /** Reads client update tag from a block entity; 1.20.1 ignores the lookup. */
     public static CompoundTag getUpdateTag(net.minecraft.world.level.block.entity.BlockEntity blockEntity,
-            HolderLookup.Provider lookup) {
+            @Nullable HolderLookup.Provider lookup) {
 //? if >=1.21.1 {
-/*        return blockEntity.getUpdateTag(java.util.Objects.requireNonNull(lookup, "stack codec needs the registry lookup"));
+/*        return blockEntity.getUpdateTag(Objects.requireNonNull(lookup, "stack codec needs the registry lookup"));
 *///?} else {
         return blockEntity.getUpdateTag();
 //?}
@@ -150,9 +242,19 @@ public final class NbtCompat {
 
     /** Loads serialized custom block entity data from {@code tag}; 1.20.1 ignores the lookup. */
     public static void loadBlockEntity(net.minecraft.world.level.block.entity.BlockEntity blockEntity,
-            CompoundTag tag, HolderLookup.Provider lookup) {
+            CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
 //? if >=1.21.1 {
-/*        blockEntity.loadCustomOnly(tag, java.util.Objects.requireNonNull(lookup, "stack codec needs the registry lookup"));
+/*        blockEntity.loadCustomOnly(tag, Objects.requireNonNull(lookup, "stack codec needs the registry lookup"));
+*///?} else {
+        blockEntity.load(tag);
+//?}
+    }
+
+    /** Loads full block entity state including components from {@code tag}; 1.20.1 delegates to {@code load}. */
+    public static void loadBlockEntityWithComponents(net.minecraft.world.level.block.entity.BlockEntity blockEntity,
+            CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+//? if >=1.21.1 {
+/*        blockEntity.loadWithComponents(tag, Objects.requireNonNull(lookup, "stack codec needs the registry lookup"));
 *///?} else {
         blockEntity.load(tag);
 //?}

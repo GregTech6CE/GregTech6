@@ -25,7 +25,7 @@ public final class FluidDisplayBinding {
     private FluidDisplayBinding() {}
 
     public static FluidStack resolveCurrent(ItemStack stack) {
-        return resolve(RegistryContext.current(), stack);
+        return resolve(stack, RegistryContext.current());
     }
 
     public static boolean hasPayload(ItemStack stack) {
@@ -38,7 +38,7 @@ public final class FluidDisplayBinding {
      * carrier keeps that item; everything else (vanilla water/lava and third-party fluids) falls
      * back to the generic carrier so a foreign fluid never borrows an unrelated GT fluid item.
      */
-    public static ItemStack display(@Nullable HolderLookup.Provider lookup, FluidStack fluid) {
+    public static ItemStack display(FluidStack fluid, @Nullable HolderLookup.Provider lookup) {
         if (fluid.isEmpty()) return ItemStack.EMPTY;
 //? if >=1.21.1 {
         /*// The payload is saved against this lookup; without one the fluid cannot be encoded.
@@ -73,7 +73,7 @@ public final class FluidDisplayBinding {
 //?}
     }
 
-    public static FluidStack resolve(@Nullable HolderLookup.Provider lookup, ItemStack stack) {
+    public static FluidStack resolve(ItemStack stack, @Nullable HolderLookup.Provider lookup) {
         if (!(stack.getItem() instanceof FluidDisplayItemLike carrierItem)) return FluidStack.EMPTY;
         var data = StackData.read(stack);
         if (data != null && data.contains(TAG, 10)) return NbtCompat.readFluid(data.getCompound(TAG), lookup);
@@ -86,8 +86,8 @@ public final class FluidDisplayBinding {
     }
 
     /** Amount is presentation data, not a JEI fluid subtype. */
-    public static String subtype(@Nullable HolderLookup.Provider lookup, ItemStack stack) {
-        var fluid = resolve(lookup, stack);
+    public static String subtype(ItemStack stack, @Nullable HolderLookup.Provider lookup) {
+        var fluid = resolve(stack, lookup);
 //? if >=1.21.1 {
         /*return fluid.isEmpty() ? "empty" : BuiltInRegistries.FLUID.getKey(fluid.getFluid()) + "/" + fluid.getComponentsPatch();
 *///?} else {

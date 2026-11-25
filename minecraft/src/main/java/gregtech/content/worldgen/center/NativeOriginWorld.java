@@ -180,23 +180,11 @@ public final class NativeOriginWorld implements OriginWorld {
             var text = sign.getFrontText();
             for (int i = 0; i < Math.min(4, lines.length); i++) text = text.setMessage(i, Component.literal(lines[i]));
             // Proto-chunk block entities have no Level yet; setText sends a live world update.
-//? if >=1.21.1 {
-            /*CompoundTag tag = sign.saveWithoutMetadata(level.registryAccess());
-*///?} else {
-            CompoundTag tag = sign.saveWithoutMetadata();
-//?}
+            CompoundTag tag = gregtech.engine.stack.NbtCompat.saveWithoutMetadata(sign, level.registryAccess());
             tag.put("front_text", net.minecraft.world.level.block.entity.SignText.DIRECT_CODEC
-//? if >=1.21.1 {
-            /*.encodeStart(level.registryAccess().createSerializationContext(net.minecraft.nbt.NbtOps.INSTANCE), text).result()
-*///?} else {
-                    .encodeStart(net.minecraft.nbt.NbtOps.INSTANCE, text).result()
-//?}
+                    .encodeStart(gregtech.engine.stack.NbtCompat.nbtOps(level.registryAccess()), text).result()
                     .orElseThrow(() -> new IllegalStateException("Cannot encode generated road sign")));
-//? if >=1.21.1 {
-            /*sign.loadWithComponents(tag, level.registryAccess());
-*///?} else {
-            sign.load(tag);
-//?}
+            gregtech.engine.stack.NbtCompat.loadBlockEntityWithComponents(sign, tag, level.registryAccess());
             sign.setChanged();
         }
     }
@@ -205,19 +193,16 @@ public final class NativeOriginWorld implements OriginWorld {
     public void beacon(int x, int y, int z, String primary, String secondary) {
         if (!setBlock(x, y, z, OriginSupport.Blocks.beacon, 0, 2)) return;
         if (level.getBlockEntity(new BlockPos(x, y, z)) instanceof BeaconBlockEntity beacon) {
+            CompoundTag tag = gregtech.engine.stack.NbtCompat.saveWithoutMetadata(beacon, level.registryAccess());
 //? if >=1.21.1 {
-            /*CompoundTag tag = beacon.saveWithoutMetadata(level.registryAccess());
-            tag.putString("primary_effect", "minecraft:" + primary);
+            /*tag.putString("primary_effect", "minecraft:" + primary);
             tag.putString("secondary_effect", "minecraft:" + secondary);
-            beacon.loadWithComponents(tag, level.registryAccess());
-            beacon.setChanged();
 *///?} else {
-            CompoundTag tag = beacon.saveWithoutMetadata();
             tag.putInt("Primary", net.minecraft.world.effect.MobEffect.getId(BuiltInRegistries.MOB_EFFECT.get(id("minecraft:" + primary))));
             tag.putInt("Secondary", net.minecraft.world.effect.MobEffect.getId(BuiltInRegistries.MOB_EFFECT.get(id("minecraft:" + secondary))));
-            beacon.load(tag);
-            beacon.setChanged();
 //?}
+            gregtech.engine.stack.NbtCompat.loadBlockEntityWithComponents(beacon, tag, level.registryAccess());
+            beacon.setChanged();
         }
     }
 

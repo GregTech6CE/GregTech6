@@ -215,7 +215,7 @@ public final class SandwichBlockEntity extends GTBlockEntity {
     public ItemStack sandwichItem(int count) {
         ItemStack result = new ItemStack(GTSandwich.SANDWICH_BLOCK.get().asItem(), count);
         CompoundTag tag = new CompoundTag();
-        writeFields(tag, level == null ? net.minecraft.core.RegistryAccess.fromRegistryOfRegistries(net.minecraft.core.registries.BuiltInRegistries.REGISTRY) : level.registryAccess(), true);
+        writeFields(tag, true, gregtech.engine.stack.RegistryContext.orCurrent(level == null ? null : level.registryAccess()));
 //? if >=1.21.1 {
         /*tag.putString("id", "gt6ce:sandwich_block");
         result.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(tag));
@@ -245,7 +245,7 @@ public final class SandwichBlockEntity extends GTBlockEntity {
         dropped = false;
     }
 
-    private void writeFields(CompoundTag tag, @Nullable HolderLookup.Provider lookup, boolean item) {
+    private void writeFields(CompoundTag tag, boolean item, @Nullable HolderLookup.Provider lookup) {
         ListTag list = new ListTag();
         for (int i = 0; i < SLOTS; i++) if (!ingredients[i].isEmpty()) {
             CompoundTag row = new CompoundTag();
@@ -260,7 +260,7 @@ public final class SandwichBlockEntity extends GTBlockEntity {
     @Override
     protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         super.saveData(tag, lookup);
-        writeFields(tag, lookup, false);
+        writeFields(tag, false, lookup);
     }
 
     @Override

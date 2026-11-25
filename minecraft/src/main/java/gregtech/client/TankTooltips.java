@@ -26,17 +26,12 @@ public final class TankTooltips {
     public static void appendTank(
             TankSpec spec,
             net.minecraft.world.item.ItemStack stack,
-            @org.jetbrains.annotations.Nullable net.minecraft.core.HolderLookup.Provider lookup,
-            List<Component> tooltip) {
+            List<Component> tooltip,
+            @org.jetbrains.annotations.Nullable net.minecraft.core.HolderLookup.Provider lookup) {
         var data = gregtech.engine.stack.BlockEntityData.read(stack);
         var tank = new gregtech.engine.fluid.FluidTankGT(spec.capacity());
         if (data != null && data.contains("gt.tank"))
-            tank.readFromNBT(
-                    data.getCompound("gt.tank"),
-                    lookup == null
-                            ? net.minecraft.core.RegistryAccess.fromRegistryOfRegistries(
-                                    net.minecraft.core.registries.BuiltInRegistries.REGISTRY)
-                            : lookup);
+            tank.readFromNBT(data.getCompound("gt.tank"), gregtech.engine.stack.RegistryContext.orCurrent(lookup));
         appendTankState(spec, tank, data != null && data.getBoolean("gt.soft_hammer"), tooltip);
     }
 

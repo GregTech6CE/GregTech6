@@ -688,11 +688,7 @@ public class MoldBlockEntity extends gregtech.content.blockentity.GTEnergyBlockE
         tag.putLong(NBT_CONTENT_AMOUNT, contentAmount);
         tag.putBoolean(NBT_CONTENT_SOLIDIFIED, contentSolidified);
         if (!solidOutput.isEmpty()) {
-//? if >=1.21.1 {
-            /*tag.put(NBT_SOLID_OUTPUT, solidOutput.saveOptional(lookup));
-*///?} else {
-            tag.put(NBT_SOLID_OUTPUT, solidOutput.save(new CompoundTag()));
-//?}
+            tag.put(NBT_SOLID_OUTPUT, gregtech.engine.stack.NbtCompat.saveItem(solidOutput, lookup));
         }
     }
 
@@ -711,11 +707,7 @@ public class MoldBlockEntity extends gregtech.content.blockentity.GTEnergyBlockE
         tag.putBoolean(NBT_CONTENT_SOLIDIFIED, contentSolidified);
         tag.putBoolean("gt.mold.has_solid", !solidOutput.isEmpty());
         if (!solidOutput.isEmpty()) {
-//? if >=1.21.1 {
-            /*tag.put(NBT_SOLID_OUTPUT, solidOutput.saveOptional(lookup));
-*///?} else {
-            tag.put(NBT_SOLID_OUTPUT, solidOutput.save(new CompoundTag()));
-//?}
+            tag.put(NBT_SOLID_OUTPUT, gregtech.engine.stack.NbtCompat.saveItem(solidOutput, lookup));
         }
     }
 

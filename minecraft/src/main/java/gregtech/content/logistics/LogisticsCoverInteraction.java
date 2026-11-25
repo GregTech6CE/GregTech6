@@ -1,10 +1,5 @@
 package gregtech.content.logistics;
 
-//? if >=1.21.1 {
-/*import net.minecraft.core.HolderLookup;
-
-*///?} else {
-//?}
 import gregtech.engine.stack.StackData;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;

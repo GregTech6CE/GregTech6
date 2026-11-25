@@ -61,7 +61,7 @@ public final class FluidDisplayItem extends Item implements FluidDisplayItemLike
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        var actual = gregtech.engine.fluid.FluidDisplayBinding.resolve(context.registries(), stack);
+        var actual = gregtech.engine.fluid.FluidDisplayBinding.resolve(stack, context.registries());
         long amount = gregtech.engine.fluid.FluidDisplayBinding.hasPayload(stack) ? actual.getAmount() : 0;
         tooltip.addAll(GTFluidType.describeTooltip(actual, amount, flag.isAdvanced()));
     }

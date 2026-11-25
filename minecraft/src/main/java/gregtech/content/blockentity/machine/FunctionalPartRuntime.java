@@ -233,8 +233,7 @@ public final class FunctionalPartRuntime {
         return tankRules != null && side != null && PartTankRules.extracts(tankRules, PartFaces.relative(facing(), side));
     }
 
-//? if >=1.21.1 {
-/*    public void save(CompoundTag tag, @Nullable net.minecraft.core.HolderLookup.Provider lookup) {
+    public void save(CompoundTag tag, @Nullable net.minecraft.core.HolderLookup.Provider lookup) {
         saveSlots(tag, lookup);
         saveTanks(tag, lookup);
         tag.put("gt.part_fields", state.save(lookup));
@@ -245,23 +244,22 @@ public final class FunctionalPartRuntime {
         try {
             loadSlots(tag, lookup);
             loadTanks(tag, lookup);
-            if (tag.contains("gt.part_fields")) state.load(lookup, tag.getCompound("gt.part_fields"));
+            if (tag.contains("gt.part_fields")) state.load(tag.getCompound("gt.part_fields"), lookup);
         } finally {
             loading = false;
         }
     }
 
-    private void saveSlots(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    private void saveSlots(CompoundTag tag, @Nullable net.minecraft.core.HolderLookup.Provider lookup) {
         if (slots == null) return;
         ListTag list = new ListTag();
         for (int slot = 0; slot < items.getSlots(); slot++) {
-            ItemStack stack = items.getStackInSlot(slot);
-            list.add(stack.isEmpty() ? new CompoundTag() : stack.save(lookup));
+            list.add(NbtCompat.saveItem(items.getStackInSlot(slot), lookup));
         }
         tag.put("gt.part_slots", list);
     }
 
-    private void saveTanks(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    private void saveTanks(CompoundTag tag, @Nullable net.minecraft.core.HolderLookup.Provider lookup) {
         if (tanks.length == 0) return;
         ListTag list = new ListTag();
         for (FluidTankGT tank : tanks) {
@@ -272,7 +270,7 @@ public final class FunctionalPartRuntime {
         tag.put("gt.part_tanks", list);
     }
 
-    private void loadTanks(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    private void loadTanks(CompoundTag tag, @Nullable net.minecraft.core.HolderLookup.Provider lookup) {
         if (tanks.length == 0 || !tag.contains("gt.part_tanks")) return;
         ListTag list = tag.getList("gt.part_tanks", Tag.TAG_COMPOUND);
         for (int tank = 0; tank < tanks.length && tank < list.size(); tank++) {
@@ -280,52 +278,6 @@ public final class FunctionalPartRuntime {
             tanks[tank].setCapacity(tankRules.capacity());
         }
     }
-*///?} else {
-    public void save(CompoundTag tag, @Nullable net.minecraft.core.HolderLookup.Provider lookup) {
-        saveSlots(tag);
-        saveTanks(tag);
-        tag.put("gt.part_fields", state.save());
-    }
-
-    public void load(CompoundTag tag, @Nullable net.minecraft.core.HolderLookup.Provider lookup) {
-        loading = true;
-        try {
-            loadSlots(tag, lookup);
-            loadTanks(tag);
-            if (tag.contains("gt.part_fields")) state.load(lookup, tag.getCompound("gt.part_fields"));
-        } finally {
-            loading = false;
-        }
-    }
-
-    private void saveSlots(CompoundTag tag) {
-        if (slots == null) return;
-        ListTag list = new ListTag();
-        for (int slot = 0; slot < items.getSlots(); slot++)
-            list.add(items.getStackInSlot(slot).save(new CompoundTag()));
-        tag.put("gt.part_slots", list);
-    }
-
-    private void saveTanks(CompoundTag tag) {
-        if (tanks.length == 0) return;
-        ListTag list = new ListTag();
-        for (FluidTankGT tank : tanks) {
-            CompoundTag saved = new CompoundTag();
-            tank.writeToNBT(saved, null);
-            list.add(saved);
-        }
-        tag.put("gt.part_tanks", list);
-    }
-
-    private void loadTanks(CompoundTag tag) {
-        if (tanks.length == 0 || !tag.contains("gt.part_tanks")) return;
-        ListTag list = tag.getList("gt.part_tanks", Tag.TAG_COMPOUND);
-        for (int tank = 0; tank < tanks.length && tank < list.size(); tank++) {
-            tanks[tank].readFromNBT(list.getCompound(tank), null);
-            tanks[tank].setCapacity(tankRules.capacity());
-        }
-    }
-//?}
 
     private void loadSlots(CompoundTag tag, @Nullable net.minecraft.core.HolderLookup.Provider lookup) {
         if (slots == null || !tag.contains("gt.part_slots")) return;
@@ -583,11 +535,7 @@ public final class FunctionalPartRuntime {
             return key;
         }
 
-//? if >=1.21.1 {
-/*        CompoundTag save(net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-        CompoundTag save() {
-//?}
+        CompoundTag save(@Nullable net.minecraft.core.HolderLookup.Provider lookup) {
             CompoundTag tag = new CompoundTag();
             CompoundTag intTag = new CompoundTag();
             ints.forEach(intTag::putInt);
@@ -598,11 +546,9 @@ public final class FunctionalPartRuntime {
             CompoundTag stringTag = new CompoundTag();
             strings.forEach(stringTag::putString);
             CompoundTag itemTag = new CompoundTag();
-//? if >=1.21.1 {
-/*            storedItems.forEach((key, stack) -> { if (!stack.isEmpty()) itemTag.put(key, stack.save(lookup)); });
-*///?} else {
-            storedItems.forEach((key, stack) -> { if (!stack.isEmpty()) itemTag.put(key, stack.save(new CompoundTag())); });
-//?}
+            storedItems.forEach((key, stack) -> {
+                if (!stack.isEmpty()) itemTag.put(key, NbtCompat.saveItem(stack, lookup));
+            });
             tag.put("i", intTag);
             tag.put("l", longTag);
             tag.put("b", boolTag);
@@ -611,7 +557,7 @@ public final class FunctionalPartRuntime {
             return tag;
         }
 
-        void load(@org.jetbrains.annotations.Nullable net.minecraft.core.HolderLookup.Provider lookup, CompoundTag tag) {
+        void load(CompoundTag tag, @org.jetbrains.annotations.Nullable net.minecraft.core.HolderLookup.Provider lookup) {
             ints.clear(); longs.clear(); bools.clear(); strings.clear(); storedItems.clear();
             readInts(tag.getCompound("i"));
             readLongs(tag.getCompound("l"));

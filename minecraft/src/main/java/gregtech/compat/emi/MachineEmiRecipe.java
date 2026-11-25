@@ -74,7 +74,7 @@ public final class MachineEmiRecipe implements EmiRecipe {
         var nativeStack = fluid(stack);
         var client = net.minecraft.client.Minecraft.getInstance();
         if (client.level == null) return nativeStack;
-        var display = gregtech.engine.fluid.FluidDisplayBinding.display(client.level.registryAccess(), stack);
+        var display = gregtech.engine.fluid.FluidDisplayBinding.display(stack, client.level.registryAccess());
         return display.isEmpty() ? nativeStack : new FluidDisplayEmiStack(nativeStack, EmiStack.of(display));
     }
     @Override public EmiRecipeCategory getCategory() { return category; }

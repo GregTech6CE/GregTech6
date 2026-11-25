@@ -350,11 +350,7 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
         tag.putLong("gt.drill_energy", energy);
         tag.putInt("gt.stone_type", stoneType);
         tag.put("gt.output", gregtech.engine.stack.HandlerNbt.save(output, lookup));
-//? if >=1.21.1 {
-        /*tag.put("gt.lubricant", lubricant.writeToNBT(lookup, new CompoundTag()));
-*///?} else {
-        tag.put("gt.lubricant", lubricant.writeToNBT(new CompoundTag()));
-//?}
+        tag.put("gt.lubricant", gregtech.engine.stack.NbtCompat.writeTank(lubricant, new CompoundTag(), lookup));
     }
 
     @Override
@@ -363,11 +359,7 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
         energy = Math.max(0, tag.getLong("gt.drill_energy"));
         stoneType = Math.floorMod(tag.getInt("gt.stone_type"), StoneType.values().length + 2);
         gregtech.engine.stack.HandlerNbt.load(output, tag.getCompound("gt.output"), lookup);
-//? if >=1.21.1 {
-        /*gregtech.engine.fluid.NativeMachineTankData.restore(lubricant, tag.getCompound("gt.lubricant"), lookup);
-*///?} else {
-        lubricant.readFromNBT(tag.getCompound("gt.lubricant"));
-//?}
+        gregtech.engine.stack.NbtCompat.readTank(lubricant, tag.getCompound("gt.lubricant"), lookup);
     }
 
     public void restorePersistentState(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {

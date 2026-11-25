@@ -11,13 +11,19 @@ import java.util.List;
 /** Reads item state only; no hover-time tile creation, inventory access or loot generation. */
 public final class StorageBlockTooltips {
     private StorageBlockTooltips() {}
-    public static void massStorage(ItemStack stack, @javax.annotation.Nullable net.minecraft.core.HolderLookup.Provider lookup, List<Component> lines) {
+    public static void massStorage(
+            ItemStack stack,
+            List<Component> lines,
+            @javax.annotation.Nullable net.minecraft.core.HolderLookup.Provider lookup) {
         var data = CommonBlockTooltips.blockData(stack);
-//? if >=1.21.1 {
-        /*massStorage(stack, data == null || lookup == null ? ItemStack.EMPTY : ItemStack.parseOptional(lookup, data.getCompound("gt.template")), lines);
-*///?} else {
-        massStorage(stack, data == null ? ItemStack.EMPTY : ItemStack.of(data.getCompound("gt.template")), lines);
-//?}
+        massStorage(
+                stack,
+                data == null
+                        ? ItemStack.EMPTY
+                        : gregtech.engine.stack.NbtCompat.readItem(
+                                data.getCompound("gt.template"),
+                                gregtech.engine.stack.RegistryContext.orCurrent(lookup)),
+                lines);
     }
     public static void massStorage(ItemStack stack, ItemStack template, List<Component> lines) {
         var data = CommonBlockTooltips.blockData(stack);

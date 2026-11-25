@@ -133,7 +133,7 @@ public class FilterBlockEntity extends CapabilityRelayBlockEntity implements Men
         boolean found = false;
         for (int templateSlot = 0; templateSlot < gregtech.content.logistics.FilterPolicy.TEMPLATES && !found; templateSlot++) {
             var template = templates.getItem(templateSlot);
-            var fluid = level == null ? FluidStack.EMPTY : FluidDisplayBinding.resolve(level.registryAccess(), template);
+            var fluid = level == null ? FluidStack.EMPTY : FluidDisplayBinding.resolve(template, level.registryAccess());
             if (fluid.isEmpty()) fluid = FluidUtil.getFluidContained(template).orElse(FluidStack.EMPTY);
             found = !fluid.isEmpty() && fluid.getFluid() == stack.getFluid();
         }

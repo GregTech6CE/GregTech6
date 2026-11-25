@@ -400,13 +400,9 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
         tag.putBoolean("gt.stopped", stopped);
         tag.putBoolean("gt.rotor_formed", rotorFormed);
         tag.putBoolean("gt.rotor_active", rotorActive);
-//? if >=1.21.1 {
-        /*tag.put("gt.tank", fuel.writeToNBT(lookup, new CompoundTag()));
-        for (int i = 0; i < 3; i++) tag.put("gt.exhaust" + i, exhaust[i].writeToNBT(lookup, new CompoundTag()));
-*///?} else {
-        tag.put("gt.tank", fuel.writeToNBT(new CompoundTag()));
-        for (int i = 0; i < 3; i++) tag.put("gt.exhaust" + i, exhaust[i].writeToNBT(new CompoundTag()));
-//?}
+        tag.put("gt.tank", gregtech.engine.stack.NbtCompat.writeTank(fuel, new CompoundTag(), lookup));
+        for (int i = 0; i < 3; i++)
+            tag.put("gt.exhaust" + i, gregtech.engine.stack.NbtCompat.writeTank(exhaust[i], new CompoundTag(), lookup));
     }
 
     @Override
@@ -417,18 +413,8 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
         stopped = tag.getBoolean("gt.stopped");
         rotorFormed = tag.getBoolean("gt.rotor_formed");
         rotorActive = rotorFormed && tag.getBoolean("gt.rotor_active");
-//? if >=1.21.1 {
-        /*gregtech.engine.fluid.NativeMachineTankData.restore(fuel, tag.getCompound("gt.tank"), lookup);
-        for (int i = 0; i < 3; i++) gregtech.engine.fluid.NativeMachineTankData.restore(exhaust[i], tag.getCompound("gt.exhaust" + i),
-                lookup);
-*///?} else {
-        var data = tag.getCompound("gt.tank");
-        if (data.contains("Fluid")) {
-            var fluid = FluidStack.loadFluidStackFromNBT(data.getCompound("Fluid"));
-            fluid.setAmount((int) Math.max(0, Math.min(fuel.getCapacity(), data.getLong("Amount"))));
-            fuel.setFluid(fluid);
-        } else fuel.readFromNBT(data);
-        for (int i = 0; i < 3; i++) exhaust[i].readFromNBT(tag.getCompound("gt.exhaust" + i));
-//?}
+        gregtech.engine.stack.NbtCompat.readTank(fuel, tag.getCompound("gt.tank"), lookup);
+        for (int i = 0; i < 3; i++)
+            gregtech.engine.stack.NbtCompat.readTank(exhaust[i], tag.getCompound("gt.exhaust" + i), lookup);
     }
 }

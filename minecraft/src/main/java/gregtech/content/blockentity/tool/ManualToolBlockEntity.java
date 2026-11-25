@@ -356,11 +356,7 @@ public class ManualToolBlockEntity extends GTBlockEntity {
         super.saveData(tag, lookup);
         tag.putInt("gt.progress", progress);
         tag.putInt("gt.stone_uses", stoneUses);
-//? if >=1.21.1 {
-        /*net.minecraft.world.ContainerHelper.saveAllItems(tag, outputs, lookup);
-*///?} else {
-        net.minecraft.world.ContainerHelper.saveAllItems(tag, outputs);
-//?}
+        NbtCompat.saveAllItems(tag, outputs, lookup);
         if (!work.isEmpty()) tag.put("gt.work", NbtCompat.saveItem(work, lookup));
     }
 
@@ -370,11 +366,7 @@ public class ManualToolBlockEntity extends GTBlockEntity {
         progress = tag.getInt("gt.progress");
         stoneUses = Math.max(0, tag.getInt("gt.stone_uses"));
         outputs.clear();
-//? if >=1.21.1 {
-        /*net.minecraft.world.ContainerHelper.loadAllItems(tag, outputs, lookup);
-*///?} else {
-        net.minecraft.world.ContainerHelper.loadAllItems(tag, outputs);
-//?}
+        NbtCompat.loadAllItems(tag, outputs, lookup);
         work = tag.contains("gt.work") ? NbtCompat.readItem(tag.getCompound("gt.work"), lookup) : ItemStack.EMPTY;
     }
 

@@ -650,11 +650,7 @@ public class QueueHopperBlockEntity extends GTBlockEntity
     protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         super.writeUpdateTag(tag, lookup);
         tag.putByte(NBT_MODE, mMode);
-//? if >=1.21.1 {
-        /*ContainerHelper.saveAllItems(tag,inventory,lookup);
-*///?} else {
-        ContainerHelper.saveAllItems(tag, inventory);
-//?}
+        gregtech.engine.stack.NbtCompat.saveAllItems(tag, inventory, lookup);
     }
 
     @Override
@@ -673,11 +669,7 @@ public class QueueHopperBlockEntity extends GTBlockEntity
         super.readUpdateTag(tag, lookup);
         if (tag.contains(NBT_MODE)) mMode = tag.getByte(NBT_MODE);
         inventory.clear();
-//? if >=1.21.1 {
-        /*ContainerHelper.loadAllItems(tag,inventory,lookup);
-*///?} else {
-        ContainerHelper.loadAllItems(tag, inventory);
-//?}
+        gregtech.engine.stack.NbtCompat.loadAllItems(tag, inventory, lookup);
     }
 
     // ── GUI ──────────────────────────────────────────────────────────────
@@ -730,11 +722,7 @@ public class QueueHopperBlockEntity extends GTBlockEntity
         mMode = tag.contains(NBT_MODE) ? tag.getByte(NBT_MODE) : 64;
         mCheck = tag.contains(NBT_CHECK) ? tag.getByte(NBT_CHECK) : 3;
         inventory.clear();
-//? if >=1.21.1 {
-        /*ContainerHelper.loadAllItems(tag,inventory,lookup);
-*///?} else {
-        ContainerHelper.loadAllItems(tag, inventory);
-//?}
+        gregtech.engine.stack.NbtCompat.loadAllItems(tag, inventory, lookup);
     }
 
     @Override
@@ -742,10 +730,6 @@ public class QueueHopperBlockEntity extends GTBlockEntity
         super.saveData(tag, lookup);
         tag.putByte(NBT_MODE, mMode);
         if (mCheck != 3) tag.putByte(NBT_CHECK, mCheck);
-//? if >=1.21.1 {
-        /*ContainerHelper.saveAllItems(tag,inventory,lookup);
-*///?} else {
-        ContainerHelper.saveAllItems(tag, inventory);
-//?}
+        gregtech.engine.stack.NbtCompat.saveAllItems(tag, inventory, lookup);
     }
 }

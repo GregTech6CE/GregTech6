@@ -1091,22 +1091,22 @@ public final class FluidToolAccessTests {
                 "Bare gt6ce:fluid_display shell must remain hidden from CatalogVisibility");
 
         var waterDisplay = gregtech.engine.fluid.FluidDisplayBinding.display(
-                lookup, new FluidStack(Fluids.WATER, 1000));
+                new FluidStack(Fluids.WATER, 1000), lookup);
         var lavaDisplay = gregtech.engine.fluid.FluidDisplayBinding.display(
-                lookup, new FluidStack(Fluids.LAVA, 1000));
+                new FluidStack(Fluids.LAVA, 1000), lookup);
         var flowingWaterDisplay = gregtech.engine.fluid.FluidDisplayBinding.display(
-                lookup, new FluidStack(Fluids.FLOWING_WATER, 1000));
+                new FluidStack(Fluids.FLOWING_WATER, 1000), lookup);
         helper.assertTrue(
                 waterDisplay.is(generic)
                         && lavaDisplay.is(generic)
                         && flowingWaterDisplay.is(generic),
                 "Vanilla water/lava/fallback fluids did not resolve onto gt6ce:fluid_display");
 
-        var resolvedWater = gregtech.engine.fluid.FluidDisplayBinding.resolve(lookup, waterDisplay);
-        var resolvedLava = gregtech.engine.fluid.FluidDisplayBinding.resolve(lookup, lavaDisplay);
+        var resolvedWater = gregtech.engine.fluid.FluidDisplayBinding.resolve(waterDisplay, lookup);
+        var resolvedLava = gregtech.engine.fluid.FluidDisplayBinding.resolve(lavaDisplay, lookup);
         var nitrogen = GTFluids.stack("Nitrogen", 1000);
         helper.assertTrue(nitrogen != null, "Nitrogen test fluid missing");
-        var nitrogenDisplay = gregtech.engine.fluid.FluidDisplayBinding.display(lookup, nitrogen);
+        var nitrogenDisplay = gregtech.engine.fluid.FluidDisplayBinding.display(nitrogen, lookup);
         helper.assertTrue(
                 resolvedWater.getFluid() == Fluids.WATER
                         && resolvedLava.getFluid() == Fluids.LAVA
@@ -1123,7 +1123,7 @@ public final class FluidToolAccessTests {
                 || techPage.stream().anyMatch(s -> s.is(generic));
         boolean hasWaterInFluids = fluidsPage.stream()
                 .anyMatch(s -> s.is(generic)
-                        && gregtech.engine.fluid.FluidDisplayBinding.resolve(lookup, s).getFluid() == Fluids.WATER);
+                        && gregtech.engine.fluid.FluidDisplayBinding.resolve(s, lookup).getFluid() == Fluids.WATER);
         helper.assertTrue(
                 !hasBareInCatalog && hasWaterInFluids,
                 "Creative fluids tab must contain water-loaded gt6ce:fluid_display and never bare shell");
@@ -1163,12 +1163,12 @@ public final class FluidToolAccessTests {
         helper.assertTrue(drum != null && gasDrum != null && crucible != null, "Attachment/crucible fixture missing");
 
         var waterDisplay = gregtech.engine.fluid.FluidDisplayBinding.display(
-                lookup, new FluidStack(Fluids.WATER, 1000));
+                new FluidStack(Fluids.WATER, 1000), lookup);
         var nitrogen = GTFluids.stack("Nitrogen", 1000);
         helper.assertTrue(nitrogen != null, "Nitrogen fluid missing");
-        var nitrogenDisplay = gregtech.engine.fluid.FluidDisplayBinding.display(lookup, nitrogen);
+        var nitrogenDisplay = gregtech.engine.fluid.FluidDisplayBinding.display(nitrogen, lookup);
         var lavaDisplay = gregtech.engine.fluid.FluidDisplayBinding.display(
-                lookup, new FluidStack(Fluids.LAVA, 1000));
+                new FluidStack(Fluids.LAVA, 1000), lookup);
 
         var player = MultiblockBehaviorApiTests.menuPlayer(helper);
         try {
@@ -1191,7 +1191,7 @@ public final class FluidToolAccessTests {
                             && drum.getFluidInTank(0).getAmount() == drum.getTankCapacity(0)
                             && player.getMainHandItem().is(waterDisplay.getItem())
                             && gregtech.engine.fluid.FluidDisplayBinding
-                                            .resolve(lookup, player.getMainHandItem())
+                                            .resolve(player.getMainHandItem(), lookup)
                                             .getFluid()
                                     == Fluids.WATER,
                     "Creative display carrier failed to fill tank through fluid_funnel");
@@ -1212,7 +1212,7 @@ public final class FluidToolAccessTests {
                             && gasDrum.getFluidInTank(0).getFluid() == nitrogen.getFluid()
                             && player.getMainHandItem().is(nitrogenDisplay.getItem())
                             && gregtech.engine.fluid.FluidDisplayBinding
-                                            .resolve(lookup, player.getMainHandItem())
+                                            .resolve(player.getMainHandItem(), lookup)
                                             .getFluid()
                                     == nitrogen.getFluid(),
                     "Creative display carrier failed to fill gas through cap_nozzle");
@@ -1236,7 +1236,7 @@ public final class FluidToolAccessTests {
                     lavaCrucibleRes.consumesAction()
                             && player.getMainHandItem().is(lavaDisplay.getItem())
                             && gregtech.engine.fluid.FluidDisplayBinding
-                                            .resolve(lookup, player.getMainHandItem())
+                                            .resolve(player.getMainHandItem(), lookup)
                                             .getFluid()
                                     == Fluids.LAVA
                             && crucible.getContentView().stream()
@@ -1312,9 +1312,9 @@ public final class FluidToolAccessTests {
                 "Failed to attach test filter covers");
 
         var waterDisplay = gregtech.engine.fluid.FluidDisplayBinding.display(
-                lookup, new FluidStack(Fluids.WATER, 1000));
+                new FluidStack(Fluids.WATER, 1000), lookup);
         var lavaDisplay = gregtech.engine.fluid.FluidDisplayBinding.display(
-                lookup, new FluidStack(Fluids.LAVA, 1000));
+                new FluidStack(Fluids.LAVA, 1000), lookup);
         var drinkDisplayItem = gregtech.content.registry.GTFluidItems.allEntries().stream()
                 .filter(gregtech.content.registry.RegisteredItem::isPresent)
                 .map(gregtech.content.registry.RegisteredItem::get)
@@ -1347,7 +1347,7 @@ public final class FluidToolAccessTests {
                             && mixer.getTanksInput()[0].getFluid().getFluid() == Fluids.WATER
                             && player.getMainHandItem().is(waterDisplay.getItem())
                             && gregtech.engine.fluid.FluidDisplayBinding
-                                            .resolve(lookup, player.getMainHandItem())
+                                            .resolve(player.getMainHandItem(), lookup)
                                             .getFluid()
                                     == Fluids.WATER,
                     "Survival display carrier failed to fill targets without consuming itself");

@@ -57,7 +57,7 @@ public final class CoverStackData {
     }
 
     /** Original cover/filter items always store one specimen; legacy custom tags remain opaque. */
-    public static ItemStack readItem(HolderLookup.Provider lookup, CompoundTag tag) {
+    public static ItemStack readItem(CompoundTag tag, @org.jetbrains.annotations.Nullable HolderLookup.Provider lookup) {
         return gregtech.engine.stack.NbtCompat.readItem(tag, lookup);
     }
 }

@@ -223,11 +223,8 @@ public class BookShelfBlock extends GTHorizontalDirectionalBlock implements Enti
         if (!state.is(newState.getBlock())
                 && level.getBlockEntity(pos) instanceof BookShelfBlockEntity shelf) {
             for (ItemStack stack : shelf.contents()) popResource(level, pos, stack);
-//? if >=1.21.1 {
-            /*shelf.inventory().deserializeNBT(level.registryAccess(),new net.minecraft.nbt.CompoundTag());
-*///?} else {
-            shelf.inventory().deserializeNBT(new net.minecraft.nbt.CompoundTag());
-//?}
+            gregtech.engine.stack.HandlerNbt.load(
+                    shelf.inventory(), new net.minecraft.nbt.CompoundTag(), level.registryAccess());
         }
         super.onRemove(state, level, pos, newState, movedByPiston);
     }

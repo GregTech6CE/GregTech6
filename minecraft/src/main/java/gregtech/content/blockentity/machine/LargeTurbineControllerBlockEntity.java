@@ -175,13 +175,8 @@ public class LargeTurbineControllerBlockEntity extends AxialGeneratorBlockEntity
         super.saveData(tag, lookup);
         tag.putLong("gt.pending", pending);
         tag.putInt("gt.steam_counter", steamCounter);
-//? if >=1.21.1 {
-        /*tag.put("gt.steam", steam.writeToNBT(lookup, new CompoundTag()));
-        tag.put("gt.water", water.writeToNBT(lookup, new CompoundTag()));
-*///?} else {
-        tag.put("gt.steam", steam.writeToNBT(new CompoundTag()));
-        tag.put("gt.water", water.writeToNBT(new CompoundTag()));
-//?}
+        tag.put("gt.steam", gregtech.engine.stack.NbtCompat.writeTank(steam, new CompoundTag(), lookup));
+        tag.put("gt.water", gregtech.engine.stack.NbtCompat.writeTank(water, new CompoundTag(), lookup));
     }
 
     @Override
@@ -190,23 +185,8 @@ public class LargeTurbineControllerBlockEntity extends AxialGeneratorBlockEntity
         pending = Math.max(0, Math.min(grade().inputMaximum(), tag.getLong("gt.pending")));
         steamCounter = Math.floorMod(tag.getInt("gt.steam_counter"),
                 gregtech.content.multiblock.OriginalGeneratorParameters.STEAM_CONDENSATION_RATIO);
-        readTank(steam, tag.getCompound("gt.steam"), lookup);
+        gregtech.engine.stack.NbtCompat.readTank(steam, tag.getCompound("gt.steam"), lookup);
         if (!steam.isEmpty() && !isSteam(steam.getFluid())) steam.setFluid(FluidStack.EMPTY);
-        readTank(water, tag.getCompound("gt.water"), lookup);
-    }
-
-    private static void readTank(FluidTank tank, CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
-//? if >=1.21.1 {
-        /*gregtech.engine.fluid.NativeMachineTankData.restore(tank, tag, lookup);
-*///?} else {
-        var fluid = tag.contains("Fluid") ? FluidStack.loadFluidStackFromNBT(tag.getCompound("Fluid")) : FluidStack.loadFluidStackFromNBT(tag);
-        if (fluid.isEmpty()) {
-            tank.setFluid(FluidStack.EMPTY);
-            return;
-        }
-        long amount = tag.contains("Fluid") ? tag.getLong("Amount") : fluid.getAmount();
-        fluid.setAmount((int) Math.max(0, Math.min(tank.getCapacity(), amount)));
-        tank.setFluid(fluid);
-//?}
+        gregtech.engine.stack.NbtCompat.readTank(water, tag.getCompound("gt.water"), lookup);
     }
 }

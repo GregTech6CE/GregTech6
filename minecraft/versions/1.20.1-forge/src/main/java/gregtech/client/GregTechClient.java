@@ -374,7 +374,7 @@ public final class GregTechClient {
                             (stack, t) -> {
                                 if (t != 0) return 0xFFFFFF;
                                 if (gregtech.engine.fluid.FluidDisplayBinding.hasPayload(stack)) {
-                                    var actual = gregtech.engine.fluid.FluidDisplayBinding.resolve(null, stack);
+                                    var actual = gregtech.engine.fluid.FluidDisplayBinding.resolve(stack, null);
                                     if (!actual.isEmpty())
                                         return net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions
                                                 .of(actual.getFluid())

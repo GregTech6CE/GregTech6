@@ -223,7 +223,7 @@ public class MassStorageBlock extends GTHorizontalDirectionalBlock
     @Override
     protected void appendTooltip(ItemStack stack, @javax.annotation.Nullable BlockGetter level,
             @javax.annotation.Nullable HolderLookup.Provider registries, List<Component> tooltip, TooltipFlag flag) {
-        gregtech.client.StorageBlockTooltips.massStorage(stack, registries, tooltip);
+        gregtech.client.StorageBlockTooltips.massStorage(stack, tooltip, registries);
     }
 
     public long capacity() { return gregtech.content.storage.OriginalStorageTooltipData.MASS_CAPACITY; }

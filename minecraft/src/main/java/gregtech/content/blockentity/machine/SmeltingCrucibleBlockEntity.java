@@ -886,11 +886,7 @@ public class SmeltingCrucibleBlockEntity extends gregtech.content.blockentity.GT
             list.add(entry);
         }
         tag.put("gt.materials", list);
-//? if >=1.21.1 {
-        /*tag.put("gt.cache", cache.serializeNBT(lookup));
-*///?} else {
-        tag.put("gt.cache", cache.serializeNBT());
-//?}
+        tag.put("gt.cache", gregtech.engine.stack.HandlerNbt.save(cache, lookup));
     }
 
     @Override

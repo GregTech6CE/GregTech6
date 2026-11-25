@@ -35,7 +35,7 @@ public class GTMachineBlockItem extends GTBlockItem {
             @Nullable HolderLookup.Provider registries,
             List<Component> tooltip,
             TooltipFlag flag) {
-        if (getBlock() instanceof TankBlock tank) TankTooltips.appendTank(tank.spec(), stack, registries, tooltip);
+        if (getBlock() instanceof TankBlock tank) TankTooltips.appendTank(tank.spec(), stack, tooltip, registries);
         if (getBlock() instanceof FluidPipeBlock pipe) TankTooltips.appendPipe(pipe.spec(), tooltip);
         if (getBlock() instanceof ItemPipeBlock pipe) TankTooltips.appendItemPipe(pipe.spec(), tooltip);
     }

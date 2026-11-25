@@ -5,10 +5,6 @@ import gregtech.api.addon.machine.FuelOutput;
 import gregtech.engine.energy.EnergyBlockViews;
 import gregtech.engine.energy.EnergyTransfer;
 import gregtech.engine.energy.IEnergyBlock;
-//? if >=1.21.1 {
-/*import gregtech.engine.fluid.NativeMachineTankData;
-*///?} else {
-//?}
 import gregtech.engine.recipe.FluidFuelBatch;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
@@ -378,30 +374,20 @@ public class FuelGeneratorBlockEntity extends GTBlockEntity implements IEnergyBl
         tag.putLong("gt.energy", stored);
         tag.putBoolean("gt.stopped", stopped);
         tag.putBoolean("gt.formed", formed);
-//? if >=1.21.1 {
-/*        tag.put("gt.fuel", fuel.writeToNBT(lookup, new CompoundTag()));
-        for (int i = 0; i < exhaust.size(); i++) tag.put("gt.exhaust" + i, exhaust.get(i).writeToNBT(lookup, new CompoundTag()));
-*///?} else {
-        tag.put("gt.fuel", fuel.writeToNBT(new CompoundTag()));
-        for (int i = 0; i < exhaust.size(); i++) tag.put("gt.exhaust" + i, exhaust.get(i).writeToNBT(new CompoundTag()));
-//?}
+        tag.put("gt.fuel", gregtech.engine.stack.NbtCompat.writeTank(fuel, new CompoundTag(), lookup));
+        for (int i = 0; i < exhaust.size(); i++)
+            tag.put("gt.exhaust" + i, gregtech.engine.stack.NbtCompat.writeTank(exhaust.get(i), new CompoundTag(), lookup));
     }
 
     protected void readMachine(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         stored = Math.max(0, tag.getLong("gt.energy"));
         stopped = tag.getBoolean("gt.stopped");
         formed = !tag.contains("gt.formed") || tag.getBoolean("gt.formed");
-//? if >=1.21.1 {
-/*        if (tag.contains("gt.fuel")) NativeMachineTankData.restore(fuel, tag.getCompound("gt.fuel"), lookup);
-*///?} else {
-        if (tag.contains("gt.fuel")) fuel.readFromNBT(tag.getCompound("gt.fuel"));
-//?}
+        if (tag.contains("gt.fuel"))
+            gregtech.engine.stack.NbtCompat.readTank(fuel, tag.getCompound("gt.fuel"), lookup);
         for (int i = 0; i < exhaust.size(); i++) {
-//? if >=1.21.1 {
-/*            if (tag.contains("gt.exhaust" + i)) NativeMachineTankData.restore(exhaust.get(i), tag.getCompound("gt.exhaust" + i), lookup);
-*///?} else {
-            if (tag.contains("gt.exhaust" + i)) exhaust.get(i).readFromNBT(tag.getCompound("gt.exhaust" + i));
-//?}
+            if (tag.contains("gt.exhaust" + i))
+                gregtech.engine.stack.NbtCompat.readTank(exhaust.get(i), tag.getCompound("gt.exhaust" + i), lookup);
         }
     }
 }

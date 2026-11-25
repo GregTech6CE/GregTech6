@@ -55,12 +55,8 @@ public class GarbageData extends SavedData {
     public static GarbageData get(Level level) {
         MinecraftServer server = level.getServer();
         if (server == null) throw new IllegalStateException("GarbageData requested on the client");
-        return server.overworld().getDataStorage()
-//? if >=1.21.1 {
-        /*.computeIfAbsent(new SavedData.Factory<>(GarbageData::new, GarbageData::load, net.minecraft.util.datafix.DataFixTypes.LEVEL), NAME);
-*///?} else {
-                .computeIfAbsent(tag -> GarbageData.load(tag, null), GarbageData::new, NAME);
-//?}
+        return gregtech.engine.stack.NbtCompat.computeSavedData(
+                server.overworld().getDataStorage(), GarbageData::new, GarbageData::load, NAME);
     }
 
     // ── trashing (Ender Garbage Bin) ─────────────────────────────────────
@@ -187,21 +183,13 @@ public class GarbageData extends SavedData {
             // oldest ones, which are exactly the ones the container shows and drains.
             if (data.items.size() >= MAX_ENTRIES) break;
             CompoundTag compound = (CompoundTag) savedTag;
-//? if >=1.21.1 {
-            /*ItemStack template = ItemStack.parseOptional(lookup, compound.getCompound("Item"));
-*///?} else {
-            ItemStack template = ItemStack.of(compound.getCompound("Item"));
-//?}
+            ItemStack template = gregtech.engine.stack.NbtCompat.readItem(compound.getCompound("Item"), lookup);
             long count = compound.getLong("Count");
             if (!template.isEmpty() && count > 0) data.items.add(new Entry(template, count));
         }
         for (Tag savedTag : tag.getList("Fluids", Tag.TAG_COMPOUND)) {
             if (data.fluids.size() >= MAX_ENTRIES) break;
-//? if >=1.21.1 {
-            /*FluidStack storedFluid = FluidStack.parseOptional(lookup, (CompoundTag) savedTag);
-*///?} else {
-            FluidStack storedFluid = FluidStack.loadFluidStackFromNBT((CompoundTag) savedTag);
-//?}
+            FluidStack storedFluid = gregtech.engine.stack.NbtCompat.readFluid((CompoundTag) savedTag, lookup);
             if (!storedFluid.isEmpty()) data.fluids.add(storedFluid);
         }
         return data;
@@ -210,28 +198,28 @@ public class GarbageData extends SavedData {
     @Override
 //? if >=1.21.1 {
     /*public CompoundTag save(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        return saveData(tag, lookup);
+    }
 *///?} else {
     public CompoundTag save(CompoundTag tag) {
+        return saveData(tag, null);
+    }
 //?}
+
+    private CompoundTag saveData(
+            CompoundTag tag, @org.jetbrains.annotations.Nullable net.minecraft.core.HolderLookup.Provider lookup) {
         ListTag itemList = new ListTag();
         for (Entry entry : items) {
             CompoundTag compound = new CompoundTag();
             // Keep the pool count separately; the saved item template represents one item
-//? if >=1.21.1 {
-            /*compound.put("Item", entry.template.save(lookup));
-*///?} else {
-            compound.put("Item", entry.template.save(new CompoundTag()));
-//?}
+            compound.put("Item", gregtech.engine.stack.NbtCompat.saveItem(entry.template, lookup));
             compound.putLong("Count", entry.count);
             itemList.add(compound);
         }
         tag.put("Items", itemList);
         ListTag fluidList = new ListTag();
-//? if >=1.21.1 {
-        /*for (FluidStack storedFluid : fluids) fluidList.add(storedFluid.save(lookup));
-*///?} else {
-        for (FluidStack storedFluid : fluids) fluidList.add(storedFluid.writeToNBT(new CompoundTag()));
-//?}
+        for (FluidStack storedFluid : fluids)
+            fluidList.add(gregtech.engine.stack.NbtCompat.saveFluid(storedFluid, lookup));
         tag.put("Fluids", fluidList);
         return tag;
     }

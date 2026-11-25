@@ -685,11 +685,7 @@ public class HopperBlockEntity extends GTBlockEntity
         super.writeUpdateTag(tag, lookup);
         tag.putByte(NBT_MODE, mMode);
         tag.putBoolean(NBT_EXACT, mExactMode);
-//? if >=1.21.1 {
-        /*ContainerHelper.saveAllItems(tag,inventory,lookup);
-*///?} else {
-        ContainerHelper.saveAllItems(tag, inventory);
-//?}
+        gregtech.engine.stack.NbtCompat.saveAllItems(tag, inventory, lookup);
     }
 
     @Override
@@ -708,11 +704,7 @@ public class HopperBlockEntity extends GTBlockEntity
         super.readUpdateTag(tag, lookup);
         if (tag.contains(NBT_MODE)) mMode = tag.getByte(NBT_MODE);
         if (tag.contains(NBT_EXACT)) mExactMode = tag.getBoolean(NBT_EXACT);
-//? if >=1.21.1 {
-        /*ContainerHelper.loadAllItems(tag,inventory,lookup);
-*///?} else {
-        ContainerHelper.loadAllItems(tag, inventory);
-//?}
+        gregtech.engine.stack.NbtCompat.loadAllItems(tag, inventory, lookup);
     }
 
     // ── GUI ──────────────────────────────────────────────────────────────
@@ -748,11 +740,7 @@ public class HopperBlockEntity extends GTBlockEntity
         mMode = tag.getByte(NBT_MODE);
         mExactMode = tag.getBoolean(NBT_EXACT);
         mCheck = tag.contains(NBT_CHECK) ? tag.getByte(NBT_CHECK) : 3;
-//? if >=1.21.1 {
-        /*ContainerHelper.loadAllItems(tag,inventory,lookup);
-*///?} else {
-        ContainerHelper.loadAllItems(tag, inventory);
-//?}
+        gregtech.engine.stack.NbtCompat.loadAllItems(tag, inventory, lookup);
     }
 
     @Override
@@ -761,10 +749,6 @@ public class HopperBlockEntity extends GTBlockEntity
         tag.putByte(NBT_MODE, mMode);
         if (mExactMode) tag.putBoolean(NBT_EXACT, true);
         if (mCheck != 3) tag.putByte(NBT_CHECK, mCheck);
-//? if >=1.21.1 {
-        /*ContainerHelper.saveAllItems(tag,inventory,lookup);
-*///?} else {
-        ContainerHelper.saveAllItems(tag, inventory);
-//?}
+        gregtech.engine.stack.NbtCompat.saveAllItems(tag, inventory, lookup);
     }
 }

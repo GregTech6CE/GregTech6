@@ -197,8 +197,8 @@ public final class OriginCreativeContents {
         // Creative convenience: the fluids page leads with a payload-carrying water carrier. The bare
         // shell itself stays hidden by CatalogVisibility.
         var water = gregtech.engine.fluid.FluidDisplayBinding.display(
-                gregtech.engine.stack.RegistryContext.current(),
-                new FluidStack(net.minecraft.world.level.material.Fluids.WATER, 1000));
+                new FluidStack(net.minecraft.world.level.material.Fluids.WATER, 1000),
+                gregtech.engine.stack.RegistryContext.current());
         if (!water.isEmpty()) result.get("fluids").add(0, water);
         result.replaceAll((family,stacks)->List.copyOf(stacks));pages=Collections.unmodifiableMap(result);
 //? if >=1.21.1 {

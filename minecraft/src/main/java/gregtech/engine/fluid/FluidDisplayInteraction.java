@@ -43,7 +43,7 @@ public final class FluidDisplayInteraction {
                 || !player.mayUseItemAt(pos, context.getClickedFace(), stack))
             return InteractionResult.CONSUME;
         if (passesToFilterCover(level, pos, context.getClickedFace())) return InteractionResult.PASS;
-        var fluid = FluidDisplayBinding.resolve(level.registryAccess(), stack);
+        var fluid = FluidDisplayBinding.resolve(stack, level.registryAccess());
         if (fluid.isEmpty()) return InteractionResult.CONSUME;
         // Preserve the actual native identity and NBT/components, not merely the carrier's field.
         var offered = fluid.copy();
