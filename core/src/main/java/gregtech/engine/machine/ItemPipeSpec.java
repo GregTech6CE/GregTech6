@@ -13,15 +13,25 @@ public record ItemPipeSpec(
         boolean restrictive,
         boolean blocking) {
     public enum ItemPipeSize {
-        MEDIUM,
-        LARGE,
-        HUGE,
-        RESTRICTIVE_MEDIUM,
-        RESTRICTIVE_LARGE,
-        RESTRICTIVE_HUGE;
+        MEDIUM(1, 0.500F, false),
+        LARGE(2, 0.750F, false),
+        HUGE(4, 1.000F, false),
+        RESTRICTIVE_MEDIUM(1, 0.500F, true),
+        RESTRICTIVE_LARGE(2, 0.750F, true),
+        RESTRICTIVE_HUGE(4, 1.000F, true);
+
+        private final int scale;
+        private final float diameter;
+        private final boolean restrictive;
+
+        ItemPipeSize(int scale, float diameter, boolean restrictive) {
+            this.scale = scale;
+            this.diameter = diameter;
+            this.restrictive = restrictive;
+        }
 
         public boolean restrictive() {
-            return this == RESTRICTIVE_MEDIUM || this == RESTRICTIVE_LARGE || this == RESTRICTIVE_HUGE;
+            return restrictive;
         }
 
         public String textureName() {
@@ -29,34 +39,16 @@ public record ItemPipeSpec(
         }
 
         public float diameter() {
-            return switch (this) {
-                case MEDIUM, RESTRICTIVE_MEDIUM -> 0.500F;
-                case LARGE, RESTRICTIVE_LARGE -> 0.750F;
-                case HUGE, RESTRICTIVE_HUGE -> 1.000F;
-                default -> 0.500F;
-            };
+            return diameter;
         }
 
         public int invSizeMultiplier() {
-            return switch (this) {
-                case MEDIUM, RESTRICTIVE_MEDIUM -> 1;
-                case LARGE, RESTRICTIVE_LARGE -> 2;
-                case HUGE, RESTRICTIVE_HUGE -> 4;
-                default -> 1;
-            };
+            return scale;
         }
 
         /** Routing cost, not travel time: restrictive variants multiply their same-size cost by 100. */
         public long stepSize(long baseStepSize) {
-            return switch (this) {
-                case MEDIUM -> baseStepSize;
-                case LARGE -> baseStepSize / 2;
-                case HUGE -> baseStepSize / 4;
-                case RESTRICTIVE_MEDIUM -> baseStepSize * 100;
-                case RESTRICTIVE_LARGE -> baseStepSize / 2 * 100;
-                case RESTRICTIVE_HUGE -> baseStepSize / 4 * 100;
-                default -> baseStepSize;
-            };
+            return baseStepSize / scale * (restrictive ? 100 : 1);
         }
     }
 
