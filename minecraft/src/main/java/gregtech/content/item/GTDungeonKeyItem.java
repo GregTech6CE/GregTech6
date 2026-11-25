@@ -76,15 +76,7 @@ public class GTDungeonKeyItem extends GTItem {
 
     /** GT6's {@code getWithNameAndNBT}'s name part: the vanilla custom name of a stack. */
     public static ItemStack withName(ItemStack stack, String name) {
-//? if >=1.21.1 {
-        /*stack.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME, Component.literal(name));
-*///?} else {
-        StackData.update(stack, tag -> {
-            CompoundTag display = tag.getCompound(NBT_DISPLAY);
-            display.putString(NBT_NAME, Component.Serializer.toJson(Component.literal(name)));
-            tag.put(NBT_DISPLAY, display);
-        });
-//?}
+        gregtech.platform.Mc.setCustomName(stack, Component.literal(name));
         return stack;
     }
 

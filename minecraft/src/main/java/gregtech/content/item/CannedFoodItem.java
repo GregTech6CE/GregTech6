@@ -63,11 +63,9 @@ public final class CannedFoodItem extends TechItem {
     public ItemStack getRotten(ItemStack stack) {
         String target=CannedFoodCatalog.rottenId(spec.id()); if (target.equals(spec.id())) return stack;
         Item item=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",target));
-//? if >=1.21.1 {
-        /*return stack.transmuteCopy(item, stack.getCount());
-*///?} else {
-        var result=new ItemStack(item,stack.getCount()); if (stack.hasTag()) result.setTag(stack.getTag().copy()); return result;
-//?}
+        var result = new ItemStack(item, stack.getCount());
+        gregtech.engine.stack.StackData.copyAll(stack, result);
+        return result;
     }
     @Override protected void appendTooltip(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
         super.appendTooltip(stack, level, tooltip, flag);

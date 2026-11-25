@@ -1,8 +1,10 @@
 package gregtech.engine.stack;
 
+import java.util.Objects;
 import java.util.function.Consumer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
 //? if >=1.21.1 {
 /*import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.component.CustomData;
@@ -19,17 +21,18 @@ import net.minecraft.world.item.component.CustomData;
 public final class StackData {
     private StackData() {}
 
-    public static boolean has(ItemStack stack) {
+    /**
+     * Whether the stack carries free-form custom data.
+     *
+     * <p>1.21.1 inspects {@code DataComponents.CUSTOM_DATA}; 1.20.1 has only the unified stack
+     * tag, so it falls back to {@link ItemStack#hasTag()}.</p>
+     */
+    public static boolean hasCustomData(ItemStack stack) {
 //? if >=1.21.1 {
 /*        return stack.has(DataComponents.CUSTOM_DATA);
 *///?} else {
         return stack.hasTag();
 //?}
-    }
-
-    /** Whether the stack carries free-form custom data. */
-    public static boolean hasCustomData(ItemStack stack) {
-        return has(stack);
     }
 
     /** Whether the stack carries any non-default data; 1.20.1 has only the tag. */
@@ -41,8 +44,32 @@ public final class StackData {
 //?}
     }
 
-    /** The stack's data, or null when it carries none. */
-    public static CompoundTag read(ItemStack stack) {
+    /**
+     * Whether two stacks carry the same whole non-default data payload (components patch on
+     * 1.21.1, full NBT tag on 1.20.1), independent of item identity or count.
+     */
+    public static boolean sameData(ItemStack first, ItemStack second) {
+//? if >=1.21.1 {
+/*        return first.getComponentsPatch().equals(second.getComponentsPatch());
+*///?} else {
+        return Objects.equals(first.getTag(), second.getTag());
+//?}
+    }
+
+    /**
+     * Value-equality key representing the stack's non-default data (components patch on 1.21.1,
+     * full NBT tag or {@code null} on 1.20.1) for diagnostics and deduplication maps.
+     */
+    public static @Nullable Object dataKey(ItemStack stack) {
+//? if >=1.21.1 {
+/*        return stack.getComponentsPatch();
+*///?} else {
+        return stack.getTag();
+//?}
+    }
+
+    /** The stack's data as a defensive copy, or {@code null} when it carries none. */
+    public static @Nullable CompoundTag read(ItemStack stack) {
 //? if >=1.21.1 {
 /*        var data = stack.get(DataComponents.CUSTOM_DATA);
         return data == null ? null : data.copyTag();
@@ -56,12 +83,19 @@ public final class StackData {
         return tag == null ? new CompoundTag() : tag;
     }
 
-    public static void write(ItemStack stack, CompoundTag tag) {
+    /**
+     * Writes free-form custom data onto {@code stack}.
+     *
+     * <p>A {@code null} or empty tag is normalized to removal on both nodes so {@link #hasCustomData}
+     * and {@link #hasAnyData} never observe an empty payload. Both nodes store an independent copy
+     * of {@code tag} so callers cannot mutate the stack's stored state through the passed tag.</p>
+     */
+    public static void write(ItemStack stack, @Nullable CompoundTag tag) {
 //? if >=1.21.1 {
 /*        if (tag == null || tag.isEmpty()) stack.remove(DataComponents.CUSTOM_DATA);
         else stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
 *///?} else {
-        stack.setTag(tag == null || tag.isEmpty() ? null : tag);
+        stack.setTag(tag == null || tag.isEmpty() ? null : tag.copy());
 //?}
     }
 

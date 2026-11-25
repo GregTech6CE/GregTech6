@@ -22,16 +22,15 @@ final class ItemMaterialContentFacts implements ItemMaterialRuntimeFacts.StoredC
             var loot = gregtech.engine.stack.BlockEntityData.read(stack);
             if (loot == null || !loot.getBoolean("GTLootGenerated")) return true;
         }
+        var blockData = gregtech.engine.stack.BlockEntityData.read(stack);
+        if (blockData != null && hasStoredBlockEntityData(stack, blockData)) return true;
         var tag = StackData.read(stack);
         if (tag != null
-                && (hasStoredBlockEntityData(stack, tag.getCompound("BlockEntityTag"))
-                        || tag.contains("Items")
+                && (tag.contains("Items")
                         || tag.contains("EntityTag")
                         || tag.contains("ChargedProjectiles"))) return true;
 //? if >=1.21.1 {
-        /*var blockData = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-        return (blockData != null && hasStoredBlockEntityData(stack, blockData.copyTag()))
-                || stack.has(net.minecraft.core.component.DataComponents.ENTITY_DATA)
+        /*return stack.has(net.minecraft.core.component.DataComponents.ENTITY_DATA)
                 || stack.has(net.minecraft.core.component.DataComponents.BUCKET_ENTITY_DATA)
                 || stack.has(net.minecraft.core.component.DataComponents.CONTAINER_LOOT)
                 || stack.has(net.minecraft.core.component.DataComponents.CHARGED_PROJECTILES)

@@ -645,11 +645,7 @@ public class SmeltingCrucibleBlockEntity extends gregtech.content.blockentity.GT
         }
         ItemStack expected = GTItems.getStack(MaterialPrefix.scrapGt, lightest.material, 1);
         return !expected.isEmpty()
-//? if >=1.21.1 {
-                /*&& ItemStack.isSameItemSameComponents(held, expected)
-*///?} else {
-                && ItemStack.isSameItemSameTags(held, expected)
-//?}
+                && gregtech.engine.stack.StackCompat.sameItem(held, expected)
                 && held.getCount() < held.getMaxStackSize();
     }
 
@@ -776,11 +772,7 @@ public class SmeltingCrucibleBlockEntity extends gregtech.content.blockentity.GT
     private static void giveScrapToPlayer(Player player, InteractionHand hand, ItemStack scrap) {
         ItemStack clicked = player.getItemInHand(hand);
         if (!clicked.isEmpty()) {
-//? if >=1.21.1 {
-            /*if (ItemStack.isSameItemSameComponents(clicked, scrap) && clicked.getCount() < clicked.getMaxStackSize()) {
-*///?} else {
-            if (ItemStack.isSameItemSameTags(clicked, scrap) && clicked.getCount() < clicked.getMaxStackSize()) {
-//?}
+            if (gregtech.engine.stack.StackCompat.sameItem(clicked, scrap) && clicked.getCount() < clicked.getMaxStackSize()) {
                 clicked.grow(1);
                 return;
             }
@@ -798,11 +790,7 @@ public class SmeltingCrucibleBlockEntity extends gregtech.content.blockentity.GT
             player.setItemInHand(InteractionHand.MAIN_HAND, scrap);
             return;
         }
-//? if >=1.21.1 {
-        /*if (ItemStack.isSameItemSameComponents(main, scrap) && main.getCount() < main.getMaxStackSize()) {
-*///?} else {
-        if (ItemStack.isSameItemSameTags(main, scrap) && main.getCount() < main.getMaxStackSize()) {
-//?}
+        if (gregtech.engine.stack.StackCompat.sameItem(main, scrap) && main.getCount() < main.getMaxStackSize()) {
             main.grow(1);
             return;
         }
@@ -821,13 +809,8 @@ public class SmeltingCrucibleBlockEntity extends gregtech.content.blockentity.GT
             player.setItemInHand(InteractionHand.MAIN_HAND, stack);
             return;
         }
-//? if >=1.21.1 {
-        /*if (ItemStack.isSameItemSameComponents(main, stack)
+        if (gregtech.engine.stack.StackCompat.sameItem(main, stack)
                 && main.getCount() + stack.getCount() <= main.getMaxStackSize()) {
-*///?} else {
-        if (ItemStack.isSameItemSameTags(main, stack)
-                && main.getCount() + stack.getCount() <= main.getMaxStackSize()) {
-//?}
             main.grow(stack.getCount());
             player.setItemInHand(InteractionHand.MAIN_HAND, main);
             return;

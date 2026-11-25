@@ -142,11 +142,7 @@ public final class MobDropEvents {
         for (int i = 0; i < scraps; i++) drops.add(entity(dead, GTLootTables.stackOf("tech:scrap_meat:1")));
         if (dead instanceof Mob mob && mob.isPersistenceRequired() && mob.hasCustomName()) {
             var tag = new ItemStack(Items.NAME_TAG);
-//? if >=1.21.1 {
-            /*tag.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME, mob.getCustomName());
-*///?} else {
-            tag.setHoverName(mob.getCustomName());
-//?}
+            gregtech.platform.Mc.setCustomName(tag, mob.getCustomName());
             drops.add(entity(dead, tag));
         }
     }
@@ -160,11 +156,7 @@ public final class MobDropEvents {
         var stack = GTLootTables.stackOf(drop.spec()).copy();
         if (!stack.isEmpty()) {
             stack.setCount(drop.count());
-//? if >=1.21.1 {
-            /*if (!drop.name().isEmpty()) stack.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME, Component.literal(drop.name()));
-*///?} else {
-            if (!drop.name().isEmpty()) stack.setHoverName(Component.literal(drop.name()));
-//?}
+            if (!drop.name().isEmpty()) gregtech.platform.Mc.setCustomName(stack, Component.literal(drop.name()));
         }
         return stack;
     }

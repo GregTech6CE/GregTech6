@@ -166,13 +166,8 @@ public final class SandwichBlockEntity extends GTBlockEntity {
     public static ItemStack[] readItemIngredients(ItemStack stack, @Nullable HolderLookup.Provider lookup) {
         ItemStack[] result = new ItemStack[SLOTS];
         Arrays.fill(result, ItemStack.EMPTY);
-//? if >=1.21.1 {
-        /*CompoundTag be=stack.getOrDefault(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
-        if (be.contains("Ingredients", Tag.TAG_LIST)) readIngredients(be,result,lookup);
-*///?} else {
-        CompoundTag be = stack.getTagElement("BlockEntityTag");
+        CompoundTag be = gregtech.engine.stack.BlockEntityData.read(stack);
         if (be != null && be.contains("Ingredients", Tag.TAG_LIST)) readIngredients(be, result, lookup);
-//?}
         else {
             result[0] = gt("toast"); result[2] = gt("cooked_meat_bar");
             result[4] = gt("cucumber_slice"); result[5] = gt("cheese_slice");
@@ -216,12 +211,7 @@ public final class SandwichBlockEntity extends GTBlockEntity {
         ItemStack result = new ItemStack(GTSandwich.SANDWICH_BLOCK.get().asItem(), count);
         CompoundTag tag = new CompoundTag();
         writeFields(tag, true, gregtech.engine.stack.RegistryContext.orCurrent(level == null ? null : level.registryAccess()));
-//? if >=1.21.1 {
-        /*tag.putString("id", "gt6ce:sandwich_block");
-        result.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(tag));
-*///?} else {
-        result.getOrCreateTag().put("BlockEntityTag", tag);
-//?}
+        gregtech.engine.stack.BlockEntityData.write(result, tag, "gt6ce:sandwich_block");
         return result;
     }
 

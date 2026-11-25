@@ -14,12 +14,8 @@ public final class ZpmEnergy {
     }
     public static void set(ItemStack stack,long charge){
         if (!isModule(stack))throw new IllegalArgumentException("Not a ZPM");
-        gregtech.engine.stack.BlockEntityData.update(stack, data -> {
-//? if >=1.21.1 {
-/*            data.putString("id","gt6ce:zpm_module");
-*///?}
-            data.putLong(KEY,ZpmWorkRules.charge(charge));
-        });
+        gregtech.engine.stack.BlockEntityData.update(
+                stack, "gt6ce:zpm_module", data -> data.putLong(KEY, ZpmWorkRules.charge(charge)));
     }
     public static ItemStack charged(){var stack=new ItemStack(gregtech.content.registry.GTLasers.ZPM.get());set(stack,CAPACITY);return stack;}
 }

@@ -99,11 +99,7 @@ public final class BlueprintRecipes {
                 net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "blueprint")));
         CraftingBlueprintData.writeItem(level, output, pattern);
         ItemStack crafted = preview(level, pattern);
-//? if >=1.21.1 {
-        /*if (!crafted.isEmpty()) output.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME, crafted.getHoverName());
-*///?} else {
-        if (!crafted.isEmpty()) output.setHoverName(crafted.getHoverName());
-//?}
+        if (!crafted.isEmpty()) gregtech.platform.Mc.setCustomName(output, crafted.getHoverName());
         return exact(new Recipe(
                 new ItemStack[]{paper.copyWithCount(1), medium.copyWithCount(1)},
                 new ItemStack[]{output},

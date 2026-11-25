@@ -299,11 +299,7 @@ public final class RecipeInputs {
         if (!colors.isEmpty()) return colors.stream().anyMatch(color -> matches(color, available));
         if (!required.is(available.getItem())) return gregtech.engine.material.MaterialEquivalence.matches(required,available);
         if (!emptyContainerMatches(required, available)) return false;
-//? if >=1.21.1 {
-        /*return required.getComponentsPatch().isEmpty() || ItemStack.isSameItemSameComponents(required, available);
-*///?} else {
-        return !required.hasTag() || ItemStack.isSameItemSameTags(required, available);
-//?}
+        return !gregtech.engine.stack.StackData.hasAnyData(required) || StackCompat.sameItem(required, available);
     }
 
     /** Empty shells must stay empty even when a recipe supplies its own stack-data predicate. */

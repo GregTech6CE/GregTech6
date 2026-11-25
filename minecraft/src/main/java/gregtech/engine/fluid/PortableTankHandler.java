@@ -45,12 +45,8 @@ public final class PortableTankHandler implements IFluidHandlerItem {
             tank.writeToNBT(contents, gregtech.engine.stack.RegistryContext.current());
             data.put("gt.tank", contents);
         }
-//? if >=1.21.1 {
-        /*if (data.size() == 1 && data.contains("id")) data.remove("id");
-        if (!data.isEmpty()) data.putString("id", net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE
-                .getKey(gregtech.content.registry.GTBlockEntities.TANK.get()).toString());
-*///?}
-        gregtech.engine.stack.BlockEntityData.write(container, data);
+        gregtech.engine.stack.BlockEntityData.write(
+                container, data, gregtech.content.registry.GTBlockEntities.TANK.get());
     }
 
     @Override public ItemStack getContainer() { return container; }

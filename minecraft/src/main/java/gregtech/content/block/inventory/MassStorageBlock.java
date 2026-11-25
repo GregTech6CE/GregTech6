@@ -7,22 +7,12 @@ import gregtech.content.blockentity.inventory.MassStorageBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
-//? if >=1.21.1 {
-/*import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.Containers;
-*///?} else {
-//?}
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-//? if >=1.21.1 {
-/*import net.minecraft.world.item.component.CustomData;
-*///?} else {
-//?}
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
@@ -138,85 +128,52 @@ public class MassStorageBlock extends GTHorizontalDirectionalBlock
         return new MassStorageBlockEntity(pos, state);
     }
 
-//? if >=1.21.1 {
-    /*private ItemStack shell(BlockState state, MassStorageBlockEntity storage) {
+    private ItemStack shell(MassStorageBlockEntity storage, @Nullable HolderLookup.Provider lookup) {
         ItemStack shell = new ItemStack(this);
         CompoundTag tag = new CompoundTag();
         if (storage.isPacked()) {
-            tag = gregtech.engine.stack.NbtCompat.getUpdateTag(storage, storage.getLevel().registryAccess());
+            tag = gregtech.engine.stack.NbtCompat.getUpdateTag(storage, lookup);
+            // GT6 breakBlock emits the fractional material separately and clears it
+            // before the kept inventory is written to the harvested block item.
             tag.remove("gt.partial_units");
-        } else if ((storage.mode() & 7) != 0) tag.putInt("gt.mode", storage.mode() & 7);
-        if (!tag.isEmpty()) {
-            tag.putString("id", BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(storage.getType()).toString());
-            shell.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(tag));
+        } else if ((storage.mode() & 7) != 0) {
+            // The lower GT6 mode bits belong to the machine, but untaped inventory
+            // does not travel inside the harvested block item.
+            tag.putInt("gt.mode", storage.mode() & 7);
         }
+        gregtech.engine.stack.BlockEntityData.write(shell, tag, storage.getType());
         return shell;
     }
 
-    @Override
-    protected List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
-        BlockEntity entity = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
-        if (!(entity instanceof MassStorageBlockEntity storage)) return List.of(new ItemStack(this));
-        var drops = new ArrayList<ItemStack>();
-        drops.add(shell(state, storage));
-        drops.addAll(storage.looseDrops());
-        return drops;
-    }
-
-    /^* Source creative pick retains the complete state, including untaped inventory and fractions. ^/
-    @Override
-    public ItemStack getCloneItemStack(BlockState state, net.minecraft.world.phys.HitResult hit,
-            net.minecraft.world.level.LevelReader level, BlockPos pos, Player player) {
-        var stack = new ItemStack(state.getBlock());
-        if (level.getBlockEntity(pos) instanceof MassStorageBlockEntity storage) {
-            var data = gregtech.engine.stack.NbtCompat.getUpdateTag(storage, level.registryAccess());
-            data.putString("id", BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(storage.getType()).toString());
-            stack.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(data));
-        }
-        return stack;
-    }
-*///?} else {
-    private static ItemStack packed(BlockState state, @Nullable BlockEntity be) {
-        ItemStack stack = new ItemStack(state.getBlock());
-        if (be instanceof MassStorageBlockEntity storage)
-            stack.addTagElement("BlockEntityTag", gregtech.engine.stack.NbtCompat.getUpdateTag(storage, null));
-        return stack;
-    }
-
-    private static ItemStack packedForHarvest(BlockState state, MassStorageBlockEntity storage) {
-        ItemStack stack = packed(state, storage);
-        // GT6 breakBlock emits the fractional material separately and clears it
-        // before the kept inventory is written to the harvested block item.
-        if (stack.getTagElement("BlockEntityTag") != null)
-            stack.getTagElement("BlockEntityTag").remove("gt.partial_units");
-        return stack;
-    }
-
-    private static ItemStack emptyShell(BlockState state, MassStorageBlockEntity storage) {
-        ItemStack stack = new ItemStack(state.getBlock());
-        // The lower GT6 mode bits belong to the machine, but untaped inventory
-        // does not travel inside the harvested block item.
-        if ((storage.mode() & 7) != 0) {
-            net.minecraft.nbt.CompoundTag tag = new net.minecraft.nbt.CompoundTag();
-            tag.putInt("gt.mode", storage.mode() & 7);
-            stack.addTagElement("BlockEntityTag", tag);
+    private ItemStack packedClone(@Nullable BlockEntity entity, @Nullable HolderLookup.Provider lookup) {
+        ItemStack stack = new ItemStack(this);
+        if (entity instanceof MassStorageBlockEntity storage) {
+            var data = gregtech.engine.stack.NbtCompat.getUpdateTag(storage, lookup);
+            gregtech.engine.stack.BlockEntityData.write(stack, data, storage.getType());
         }
         return stack;
     }
 
     @Override
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
-        BlockEntity be = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
-        if (!(be instanceof MassStorageBlockEntity storage)) return List.of(new ItemStack(state.getBlock()));
-        List<ItemStack> drops = new ArrayList<>();
-        drops.add(storage.isPacked() ? packedForHarvest(state, storage) : emptyShell(state, storage));
+        BlockEntity entity = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
+        if (!(entity instanceof MassStorageBlockEntity storage)) return List.of(new ItemStack(this));
+        var drops = new ArrayList<ItemStack>();
+        drops.add(shell(storage, builder.getLevel().registryAccess()));
         drops.addAll(storage.looseDrops());
         return drops;
     }
 
+    /** Source creative pick retains the complete state, including untaped inventory and fractions. */
     @Override
+//? if >=1.21.1 {
+    /*public ItemStack getCloneItemStack(BlockState state, net.minecraft.world.phys.HitResult hit,
+            net.minecraft.world.level.LevelReader level, BlockPos pos, Player player) {
+        return packedClone(level.getBlockEntity(pos), level.registryAccess());
+    }
+*///?} else {
     public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
-        return packed(state, level.getBlockEntity(pos));
+        return packedClone(level.getBlockEntity(pos), null);
     }
 //?}
 

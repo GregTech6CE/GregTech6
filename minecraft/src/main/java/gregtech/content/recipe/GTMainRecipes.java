@@ -375,11 +375,7 @@ public final class GTMainRecipes {
             if (stack == null || stack.isEmpty()) throw new MissingContent(side + " " + spec.ingredient());
             if (spec.label() != null) {
                 Component name = Component.literal(spec.label());
-//? if >=1.21.1 {
-                /*stack.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME, name);
-*///?} else {
-                stack.setHoverName(name);
-//?}
+                gregtech.platform.Mc.setCustomName(stack, name);
             }
             stacks[index] = stack;
         }

@@ -168,11 +168,7 @@ public class PileBlockEntity extends GTBlockEntity {
         GTMaterial heldMaterial = materialOf(held);
         GTMaterial storedMaterial = materialOf(stored);
         return heldMaterial != null && storedMaterial != null && heldMaterial.resolve() == storedMaterial.resolve()
-//? if >=1.21.1 {
-                /*&& held.getComponentsPatch().equals(stored.getComponentsPatch());
-*///?} else {
-                && java.util.Objects.equals(held.getTag(), stored.getTag());
-//?}
+                && gregtech.engine.stack.StackData.sameData(held, stored);
     }
 
     /** True when both piles hold the very same stack - GT6's {@code ST.equal} in its column walk. */
@@ -259,11 +255,7 @@ public class PileBlockEntity extends GTBlockEntity {
     protected void readUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         ItemStack before = stored;
         super.readUpdateTag(tag, lookup);
-//? if >=1.21.1 {
-        /*if (level != null && level.isClientSide && !ItemStack.isSameItemSameComponents(before, stored)) {
-*///?} else {
-        if (level != null && level.isClientSide && !ItemStack.isSameItemSameTags(before, stored)) {
-//?}
+        if (level != null && level.isClientSide && !StackCompat.sameItem(before, stored)) {
             requestModelDataUpdate();
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
         }

@@ -92,11 +92,7 @@ final class MachineEmiIngredients {
         return new MachineEmiIngredient(candidates.of(expanded), recipe.itemInputs[index].getCount());
     }
     EmiIngredient ingredient(ItemStack stack) {
-//? if >=1.21.1 {
-        /*if (!stack.getComponentsPatch().isEmpty()) return create(stack);
-*///?} else {
-        if (stack.hasTag()) return create(stack);
-//?}
+        if (gregtech.engine.stack.StackData.hasAnyData(stack)) return create(stack);
         return plain.computeIfAbsent(stack.getItem(), item -> create(new ItemStack(item)))
                 .copy().setAmount(stack.getCount());
     }

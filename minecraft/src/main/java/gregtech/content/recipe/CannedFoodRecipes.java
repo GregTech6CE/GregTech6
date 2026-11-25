@@ -70,11 +70,9 @@ public final class CannedFoodRecipes {
         return registered;
     }
     private static int pack(ItemStack input,String id,String name) {
-//? if >=1.21.1 {
-        /*var output=can(id,1); output.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME,Component.translatable("item.gt6ce." + name.toLowerCase(java.util.Locale.ROOT).replace(" ", "_")));
-*///?} else {
-        var output=can(id,1); output.setHoverName(Component.translatable("item.gt6ce." + name.toLowerCase(java.util.Locale.ROOT).replace(" ", "_")));
-//?}
+        var output = can(id, 1);
+        gregtech.platform.Mc.setCustomName(
+                output, Component.translatable("item.gt6ce." + name.toLowerCase(java.util.Locale.ROOT).replace(" ", "_")));
         return MachineRecipeMaps.Canner.register(RecipeBuilder.of(16, 16)
                 .itemInputs(input, can("empty_food_can",1))
                 .itemOutputs(output))!=null?1:0;

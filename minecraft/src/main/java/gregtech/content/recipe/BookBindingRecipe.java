@@ -28,11 +28,10 @@ public final class BookBindingRecipe extends ShapelessRecipe {
     @Override public ItemStack assemble(net.minecraft.world.inventory.CraftingContainer input,net.minecraft.core.RegistryAccess lookup){
 //?}
         var output=super.assemble(input,lookup);var payload=source(input);if (payload.isEmpty())return output;
+        gregtech.engine.stack.StackData.copyAll(payload, output);
 //? if >=1.21.1 {
-        /*output.applyComponents(payload.getComponentsPatch());
-        if (copies()){if (generation(payload)>=2)return ItemStack.EMPTY;var content=output.get(net.minecraft.core.component.DataComponents.WRITTEN_BOOK_CONTENT);output.set(net.minecraft.core.component.DataComponents.WRITTEN_BOOK_CONTENT,new net.minecraft.world.item.component.WrittenBookContent(content.title(),content.author(),content.generation()+1,content.pages(),content.resolved()));}
+        /*if (copies()){if (generation(payload)>=2)return ItemStack.EMPTY;var content=output.get(net.minecraft.core.component.DataComponents.WRITTEN_BOOK_CONTENT);output.set(net.minecraft.core.component.DataComponents.WRITTEN_BOOK_CONTENT,new net.minecraft.world.item.component.WrittenBookContent(content.title(),content.author(),content.generation()+1,content.pages(),content.resolved()));}
 *///?} else {
-        if (payload.hasTag())output.setTag(payload.getTag().copy());
         if (copies()){if (generation(payload)>=2)return ItemStack.EMPTY;output.getOrCreateTag().putInt("generation",generation(payload)+1);}
 //?}
         return output;

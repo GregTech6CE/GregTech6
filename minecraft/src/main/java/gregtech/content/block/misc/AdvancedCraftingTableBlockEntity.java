@@ -146,13 +146,8 @@ public class AdvancedCraftingTableBlockEntity extends GTBlockEntity implements B
         ItemStack[] pattern = new ItemStack[9];
         for (int i = 0; i < pattern.length; i++) pattern[i] = inventory.getStackInSlot(i + 21).copyWithCount(1);
         gregtech.content.data.CraftingBlueprintData.writeItem(level, written, pattern);
-//? if >=1.21.1 {
-        /*ItemStack result = preview();
-        if (!result.isEmpty()) written.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME, result.getHoverName());
-*///?} else {
         ItemStack result = preview();
-        if (!result.isEmpty()) written.setHoverName(result.getHoverName());
-//?}
+        if (!result.isEmpty()) Mc.setCustomName(written, result.getHoverName());
         inventory.setStackInSlot(30, written);
         return true;
     }

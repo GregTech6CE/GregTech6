@@ -27,11 +27,8 @@ public final class GTColoredBooks {
             var book=stack(variant.originalId());
             gregtech.content.data.MachineRecipeMaps.generify(book,new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.WRITTEN_BOOK));
             var usb=new ItemStack(GTTechnological.get("usb1_stick"));var scanned=usb.copy();
-//? if >=1.21.1 {
-            /*scanned.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME,net.minecraft.network.chat.Component.literal("Containing scanned Book"));
-*///?} else {
-            scanned.setHoverName(net.minecraft.network.chat.Component.literal("Containing scanned Book"));
-//?}
+            gregtech.platform.Mc.setCustomName(
+                    scanned, net.minecraft.network.chat.Component.literal("Containing scanned Book"));
             gregtech.content.data.MachineRecipeMaps.ScannerVisuals.register(
                     RecipeBuilder.of(16, 512).itemInputs(book, usb).itemOutputs(scanned, book.copy()),
                     RecipeMap.Registration.DISPLAY);

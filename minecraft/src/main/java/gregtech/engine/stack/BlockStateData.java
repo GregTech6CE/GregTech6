@@ -20,6 +20,15 @@ import net.minecraft.world.item.component.BlockItemStateProperties;
 public final class BlockStateData {
     private BlockStateData() {}
 
+    /** Whether the stack carries a block-state component/sub-tag. */
+    public static boolean has(ItemStack stack) {
+//? if >=1.21.1 {
+/*        return stack.has(DataComponents.BLOCK_STATE);
+*///?} else {
+        return stack.getTagElement("BlockStateTag") != null;
+//?}
+    }
+
     /** The property map, empty when the stack carries none. */
     public static Map<String, String> readProperties(ItemStack stack) {
 //? if >=1.21.1 {

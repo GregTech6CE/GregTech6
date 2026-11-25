@@ -80,11 +80,7 @@ public final class RecipeDiagnostics {
             ItemStack stack = recipe.itemInputs[i];
             if (stack == null || stack.isEmpty()) continue;
             if (!recipe.exactItemInputs) stack = MaterialUnification.canonical(stack);
-//? if >=1.21.1 {
-            /*Object data = stack.getComponentsPatch();
-*///?} else {
-            Object data = stack.getTag();
-//?}
+            Object data = gregtech.engine.stack.StackData.dataKey(stack);
             var key = new StackKey(recipe.itemTag(i) == null ? stack.getItem() : recipe.itemTag(i), data, stack.getCount(),
                     recipe.isCatalystInput(i), false);
             items.merge(key, 1, Integer::sum);

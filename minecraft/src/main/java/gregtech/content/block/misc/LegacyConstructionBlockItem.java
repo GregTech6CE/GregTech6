@@ -63,25 +63,12 @@ public abstract class LegacyConstructionBlockItem extends BlockItem {
         Block block = gregtech.content.registry.GTConstructionVariants.coloredBlock(legacy.getBlock(), color);
         if (block == null) return stack;
         ItemStack result = new ItemStack(block, stack.getCount());
-//? if >=1.21.1 {
-        /*result.applyComponents(stack.getComponentsPatch());
-        var state = result.get(net.minecraft.core.component.DataComponents.BLOCK_STATE);
-        if (state != null) {
-            var properties = new java.util.HashMap<>(state.properties());
+        StackData.copyAll(stack, result);
+        if (gregtech.engine.stack.BlockStateData.has(result)) {
+            var properties = new java.util.HashMap<>(gregtech.engine.stack.BlockStateData.readProperties(result));
             properties.remove("color");
-            if (properties.isEmpty()) result.remove(net.minecraft.core.component.DataComponents.BLOCK_STATE);
-            else result.set(net.minecraft.core.component.DataComponents.BLOCK_STATE,
-                    new net.minecraft.world.item.component.BlockItemStateProperties(properties));
+            gregtech.engine.stack.BlockStateData.writeProperties(result, properties);
         }
-*///?} else {
-        if (stack.hasTag()) result.setTag(stack.getTag().copy());
-        var state = result.getTagElement("BlockStateTag");
-        if (state != null) {
-            state.remove("color");
-            if (state.isEmpty()) result.removeTagKey("BlockStateTag");
-        }
-        if (result.hasTag() && result.getTag().isEmpty()) result.setTag(null);
-//?}
         return result;
     }
 

@@ -11,15 +11,11 @@ public final class FilterRules {
     }
 
     public static boolean itemMatches(ItemStack templateStack, ItemStack candidateStack) {
-//? if >=1.21.1 {
-        /*return FilterPolicy.matches(!templateStack.isEmpty() && !candidateStack.isEmpty(),
-                templateStack.is(candidateStack.getItem()), templateStack.getComponentsPatch().isEmpty(),
-                ItemStack.isSameItemSameComponents(templateStack, candidateStack));
-*///?} else {
-        return FilterPolicy.matches(!templateStack.isEmpty() && !candidateStack.isEmpty(),
-                templateStack.is(candidateStack.getItem()), !templateStack.hasTag(),
-                ItemStack.isSameItemSameTags(templateStack, candidateStack));
-//?}
+        return FilterPolicy.matches(
+                !templateStack.isEmpty() && !candidateStack.isEmpty(),
+                templateStack.is(candidateStack.getItem()),
+                !gregtech.engine.stack.StackData.hasAnyData(templateStack),
+                gregtech.engine.stack.StackCompat.sameItem(templateStack, candidateStack));
     }
 
     public static String prefix(ItemStack candidateStack) {

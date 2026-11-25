@@ -29,12 +29,8 @@ public final class CanvasRecipes {
         registered = true;
         var usb = new ItemStack(GTTechnological.get("usb1_stick"));
         var scannedUsb = usb.copy();
-//? if >=1.21.1 {
-        /*scannedUsb.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME,
-                net.minecraft.network.chat.Component.literal("Containing scanned Block"));
-*///?} else {
-        scannedUsb.setHoverName(net.minecraft.network.chat.Component.literal("Containing scanned Block"));
-//?}
+        gregtech.platform.Mc.setCustomName(
+                scannedUsb, net.minecraft.network.chat.Component.literal("Containing scanned Block"));
         var white = new ItemStack(GTTechnological.get("canvas_white"));
         for (var variant : CanvasRules.VARIANTS) {
             var canvas = new ItemStack(GTTechnological.get(variant.path()));
