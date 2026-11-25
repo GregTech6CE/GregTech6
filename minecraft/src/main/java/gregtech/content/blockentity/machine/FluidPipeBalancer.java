@@ -4,7 +4,7 @@ import gregtech.content.cover.ComponentCoverRuntime;
 import gregtech.content.cover.CoverAttachmentBehaviors;
 import gregtech.content.cover.CoverItems;
 import gregtech.content.cover.CoverUtilityBehaviors;
-import gregtech.engine.fluid.FluidPipeChannels;
+import gregtech.engine.fluid.FluidPipeBalance;
 import gregtech.engine.fluid.FluidTankGT;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -29,7 +29,6 @@ import java.util.Set;
 /** Levels each fluid across connected pipe channels in balanced distribution mode. */
 final class FluidPipeBalancer {
     private static final int BALANCE_PERIOD = 10;
-    private static final long BALANCE_DEADBAND = 1;
 
     private FluidPipeBalancer() {}
 
@@ -69,114 +68,40 @@ final class FluidPipeBalancer {
     private static void balanceFluid(Level level, List<FluidPipeBlockEntity> component,
                                      Map<FluidPipeBlockEntity, Integer> index, FluidStack fluid) {
         int size = component.size();
-        int[] channel = new int[size];
-        long[] amount = new long[size];
+        FluidTankGT[] channels = new FluidTankGT[size];
         long[] capacity = new long[size];
         for (int i = 0; i < size; i++) {
             FluidPipeBlockEntity pipe = component.get(i);
-            channel[i] = isBalanceExcluded(pipe) ? -1 : pipe.fillableChannel(fluid);
-            if (channel[i] < 0) continue;
-            FluidTankGT tank = pipe.channelTanks()[channel[i]];
-            amount[i] = tank.isEmpty() ? 0 : tank.getAmount();
-            capacity[i] = tank.capacity(fluid);
+            int channel = isBalanceExcluded(pipe) ? -1 : pipe.fillableChannel(fluid);
+            if (channel < 0) continue;
+            channels[i] = pipe.channelTanks()[channel];
+            capacity[i] = channels[i].capacity(fluid);
         }
 
         List<List<Integer>> adjacency = new ArrayList<>(size);
         for (int i = 0; i < size; i++) adjacency.add(new ArrayList<>());
         for (int i = 0; i < size; i++) {
-            if (channel[i] < 0) continue;
+            if (channels[i] == null) continue;
             FluidPipeBlockEntity pipe = component.get(i);
             for (Direction side : Direction.values()) {
                 if (!pipe.connected(side)) continue;
                 BlockPos next = pipe.getBlockPos().relative(side);
                 if (!level.hasChunkAt(next) || !(level.getBlockEntity(next) instanceof FluidPipeBlockEntity neighbor)) continue;
                 Integer other = index.get(neighbor);
-                if (other == null || other <= i || channel[other] < 0 || !neighbor.connected(side.getOpposite())) continue;
+                if (other == null || other <= i || channels[other] == null || !neighbor.connected(side.getOpposite())) continue;
                 if (!balanceEdgeOpen(pipe, side, neighbor, fluid)) continue;
                 adjacency.get(i).add(other);
                 adjacency.get(other).add(i);
             }
         }
 
-        boolean[] visited = new boolean[size];
-        int[] parent = new int[size];
-        long[] balance = new long[size];
-        List<Integer> order = new ArrayList<>();
-        ArrayDeque<Integer> stack = new ArrayDeque<>();
-        for (int root = 0; root < size; root++) {
-            if (channel[root] < 0 || visited[root]) continue;
-            order.clear();
-            visited[root] = true;
-            parent[root] = -1;
-            stack.push(root);
-            while (!stack.isEmpty()) {
-                int node = stack.pop();
-                order.add(node);
-                for (int next : adjacency.get(node)) {
-                    if (visited[next]) continue;
-                    visited[next] = true;
-                    parent[next] = node;
-                    stack.push(next);
-                }
-            }
-            if (order.size() > 1) {
-                balanceTree(component, channel, fluid, amount, capacity, order, parent, balance);
-            }
-        }
-    }
-
-    /**
-     * Levels a connected group along a spanning tree. Leaves first push excess toward the root,
-     * then each deficit subtree pulls fluid down. A pipe at its target can still forward fluid to
-     * a deficit branch behind it. Each edge moves at most one source tank of fluid per pass.
-     */
-    private static void balanceTree(List<FluidPipeBlockEntity> component, int[] channel,
-                                    FluidStack fluid, long[] amount, long[] capacity,
-                                    List<Integer> order, int[] parent, long[] balance) {
-        long total = 0;
-        long totalCapacity = 0;
-        for (int node : order) {
-            total += amount[node];
-            totalCapacity += capacity[node];
-        }
-        if (total <= 0 || total >= totalCapacity) return;
-
-        long[] target = FluidPipeChannels.balancedTargets(order, capacity, total);
-
-        // Leaves to root: each subtree sheds its excess into its parent.
-        for (int k = order.size() - 1; k > 0; k--) {
-            int node = order.get(k);
-            long surplus = amountOf(component, channel, node) - target[node];
-            if (surplus <= BALANCE_DEADBAND) continue;
-            moveEdge(component, channel, fluid, node, parent[node], surplus);
-        }
-        // Subtree surplus or deficit after the upward pass is what the downward pass moves.
-        for (int node : order) balance[node] = amountOf(component, channel, node) - target[node];
-        for (int k = order.size() - 1; k > 0; k--) {
-            int node = order.get(k);
-            balance[parent[node]] += balance[node];
-        }
-        // Root to leaves: each deficit subtree pulls fluid down from its parent.
-        for (int k = 1; k < order.size(); k++) {
-            int node = order.get(k);
-            if (balance[node] >= -BALANCE_DEADBAND) continue;
-            moveEdge(component, channel, fluid, parent[node], node, -balance[node]);
-        }
-    }
-
-    private static long amountOf(List<FluidPipeBlockEntity> component, int[] channel, int node) {
-        FluidTankGT tank = component.get(node).channelTanks()[channel[node]];
-        return tank.isEmpty() ? 0 : tank.getAmount();
-    }
-
-    /** One edge moves no more than the source tank's capacity for this fluid in a single pass. */
-    private static void moveEdge(List<FluidPipeBlockEntity> component, int[] channel,
-                                 FluidStack fluid, int from, int to, long requested) {
-        FluidPipeBlockEntity source = component.get(from);
-        FluidTankGT sourceTank = source.channelTanks()[channel[from]];
-        FluidTankGT sinkTank = component.get(to).channelTanks()[channel[to]];
-        long limit = Math.min(requested, sourceTank.capacity(fluid));
-        source.transferToPipe(sourceTank, sinkTank, limit);
+        FluidPipeBalance.distribute(adjacency, capacity,
+                node -> channels[node].isEmpty() ? 0 : channels[node].getAmount(),
+                (from, to, requested) -> {
+                    FluidTankGT source = channels[from];
+                    long limit = Math.min(requested, source.capacity(fluid));
+                    component.get(from).transferToPipe(source, channels[to], limit);
+                });
     }
 
     /** A balancing edge must pass in both directions, including both ends' filters for this fluid. */
