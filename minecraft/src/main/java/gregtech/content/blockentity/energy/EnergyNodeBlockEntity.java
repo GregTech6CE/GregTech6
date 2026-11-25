@@ -687,23 +687,33 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
         return isBatteryBox() ? (type==spec.outType()?outRate():0) : super.getEnergySizeOutputMax(type,side);
     }
 
+    private boolean acceptsBufferedInputFrom(GregTechTags.Tag energyType, @Nullable Direction side) {
+        if (!acceptsEnergyInput() || energyType != spec.inType()) return false;
+        if (isMagnet() || isElectricTransformer() || isRotationTransformer()) {
+            return isEnergyAcceptingFrom(energyType, side, false);
+        }
+        return true;
+    }
+
     @Override
     public long getEnergyDemanded(GregTechTags.Tag energyType, @Nullable Direction side, long size) {
         if (hasOriginalConverter()) return 0; // Source Root: push-only, discovery is via simulated injection.
         if (isBatteryBox()) return batteryBox.demanded(energyType, side, size);
         long magnitude = gregtech.engine.energy.EnergyPackets.magnitude(size, energyType == GregTechTags.Energy.RU);
-        if (!acceptsEnergyInput() || energyType != spec.inType() || magnitude == 0) return 0;
-        if ((isMagnet() || isElectricTransformer()) && !isEnergyAcceptingFrom(energyType, side, false)) return 0;
-        if ((isRotationTransformer() || isElectricTransformer()) && !isEnergyAcceptingFrom(energyType, side, false)) return 0;
+        if (magnitude == 0 || !acceptsBufferedInputFrom(energyType, side)) return 0;
         return Math.max(0, capacity() - buffer) / magnitude;
+    }
+
+    /** These devices push during their own tick and refuse energy pull requests. */
+    private boolean usesPushOnlyOutput() {
+        return hasOriginalConverter() || isSteamConverter() || isRotationTransformer()
+                || isElectricTransformer() || isMagnet() || isBatteryBox();
     }
 
     @Override
     public long getEnergyOffered(GregTechTags.Tag energyType, @Nullable Direction side, long size) {
         if (isSolar()) return isEnergyEmittingTo(energyType, side, false) ? solarEnergy.energy() : 0;
-        // GT6 energy converters emit during their own tick. The inherited
-        // TileEntityBase01Root.doExtract() returns zero for pull requests.
-        if (hasOriginalConverter() || isSteamConverter() || isRotationTransformer() || isElectricTransformer() || isMagnet() || isBatteryBox()) return 0;
+        if (usesPushOnlyOutput()) return 0;
         long magnitude = size;
         if (spec == null || energyType != spec.outType() || magnitude <= 0) return 0;
         long packets = buffer / costPerPacket();
@@ -737,8 +747,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
             return accepted;
         }
         long magnitude = gregtech.engine.energy.EnergyPackets.magnitude(size, energyType == GregTechTags.Energy.RU);
-        if (!acceptsEnergyInput() || energyType != spec.inType() || amount <= 0 || magnitude == 0) return 0;
-        if ((isMagnet() || isElectricTransformer()) && !isEnergyAcceptingFrom(energyType, side, false)) return 0;
+        if (amount <= 0 || magnitude == 0 || !acceptsBufferedInputFrom(energyType, side)) return 0;
         if ((isMagnet() || isElectricTransformer()) && magnitude > getEnergySizeInputMax(energyType, side)) {
             if (doInject) {
                 if (level != null) conversionMeter.input(level.getGameTime(), magnitude, amount);
@@ -746,7 +755,6 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
             }
             return amount;
         }
-        if ((isRotationTransformer() || isElectricTransformer()) && !isEnergyAcceptingFrom(energyType, side, false)) return 0;
         long space = Math.max(0, capacity() - buffer);
         long accepted = gregtech.engine.energy.EnergyPackets.fitting(amount, space, magnitude);
         if (doInject && accepted > 0) {
@@ -766,7 +774,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
             if (doExtract && extracted > 0) setChanged();
             return extracted;
         }
-        if (hasOriginalConverter() || isSteamConverter() || isRotationTransformer() || isElectricTransformer() || isMagnet() || isBatteryBox()) return 0;
+        if (usesPushOnlyOutput()) return 0;
         long magnitude = size;
         if (spec == null || energyType != spec.outType() || amount <= 0 || magnitude <= 0) return 0;
         long cost = costPerPacket();
