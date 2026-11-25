@@ -7,13 +7,10 @@ import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.cover.CoverItems;
 import gregtech.content.cover.CoverStore;
 import gregtech.content.cover.CoverUtilityBehaviors;
-import gregtech.content.cover.CoverUtilityBehaviors.FilterAction;
 import gregtech.content.cover.MachineCoverSpec;
-import gregtech.content.cover.PanelCoverHost;
 import gregtech.content.cover.PanelCoverRuntime;
+import gregtech.content.cover.PipeCoverHost;
 import gregtech.content.registry.GTBlockEntities;
-import gregtech.engine.tool.GTToolHelper;
-import gregtech.engine.tool.GTToolType;
 import gregtech.content.transport.ItemPipeNetwork;
 import gregtech.content.transport.ItemPipeNetwork.Membership;
 import gregtech.content.transport.ItemPipeNetworkTransfer;
@@ -61,7 +58,7 @@ import java.util.*;
  * a transferred-item counter alone does not implement GT6's progress interface.
  */
 public class ItemPipeBlockEntity extends GTBlockEntity
-        implements IItemHandler, ITileEntityAdjacentInventoryUpdatable, PanelCoverHost, CoverStore.Hooks {
+        implements IItemHandler, ITileEntityAdjacentInventoryUpdatable, PipeCoverHost {
     /** Bandwidth window: transfer counters restart every 20 ticks. */
     private static final int BANDWIDTH_WINDOW = 20;
     /** Each slot holds one ordinary stack. */
@@ -234,15 +231,6 @@ public class ItemPipeBlockEntity extends GTBlockEntity
         return coverStore.panels();
     }
 
-    @Override
-    public boolean consumesTool(ItemStack tool) {
-        if (PanelCoverHost.blockConsumesTool(this, tool)) return true;
-        return GTToolHelper.matchesTool(tool, GTToolType.CROWBAR)
-                || GTToolHelper.isScrewdriver(tool)
-                || GTToolHelper.isSoftHammer(tool)
-                || GTToolHelper.isMagnifyingGlass(tool);
-    }
-
     /** Item filters reject pipe-to-pipe faces without disconnecting existing pipe links. */
     @Override
     public boolean canAttach(Direction side, ItemStack stack) {
@@ -291,11 +279,6 @@ public class ItemPipeBlockEntity extends GTBlockEntity
     /** Cover behaviour id of a face; {@code null} when no cover is attached. */
     private String coverIdOf(Direction side) {
         return CoverItems.behavior(getCover(side));
-    }
-
-    private void syncCovers() {
-        setChanged();
-        if (level != null) level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
     }
 
     private boolean retrieverPending(int face) {
@@ -347,52 +330,9 @@ public class ItemPipeBlockEntity extends GTBlockEntity
         runtime.afterTick();
     }
 
-    /**
-     * Two of the three player-facing entry points of a filter cover, shared with
-     * {@link BasicMachineBlockEntity} and {@link FluidPipeBlockEntity} so that every host delegates to
-     * the same statics and the machine block's {@code use} call order can be mirrored in
-     * {@link ItemPipeBlock}'s.
-     *
-     * <p>GT6's right-click on an item filter ({@code CoverFilterItem}) and on the retriever
-     * ({@code CoverRetrieverItem}): the held stack becomes the filter. The fluid half of
-     * the machine's method is deliberately absent — an item pipe cannot host a fluid filter
-     * ({@code CoverFilterFluid} asks a tank, and {@code FluidPipeBlockEntity} is its host).</p>
-     *
-     * <p>The client decides from the same rule without writing the cover, and the server
-     * re-syncs the host only when the stored filter actually changed.</p>
-     *
-     * @return whether a filter was stored
-     */
-    public boolean clickFilterCover(Direction side, ItemStack held) {
-        String id = coverIdOf(side);
-        if (level == null || id == null || held == null || held.isEmpty()) return false;
-        if (CoverUtilityBehaviors.FILTER_ITEM.equals(id) || CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id)) {
-            ItemStack cover = getCover(side);
-            if (level.isClientSide)
-                return CoverUtilityBehaviors.canSetItemFilter(cover, held, level.registryAccess());
-            if (!CoverUtilityBehaviors.setItemFilter(cover, held, level.registryAccess())) return false;
-            syncCovers();
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * The screwdriver and soft-hammer halves of the same two covers, shared with
-     * {@link BasicMachineBlockEntity}: the screwdriver flips whitelist/blacklist
-     * ({@code CoverFilterItem}, {@code CoverRetrieverItem}) and the soft hammer clears the
-     * filter ({@code CoverFilterItem}, {@code CoverRetrieverItem}).
-     */
-    public boolean configureFilterCover(Direction side, FilterAction action) {
-        String id = coverIdOf(side);
-        if (id == null) return false;
-        boolean filterish = CoverUtilityBehaviors.FILTER_ITEM.equals(id)
-                || CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id);
-        if (!filterish) return false;
-        if (level != null && level.isClientSide) return true;
-        action.apply(getCover(side));
-        syncCovers();
-        return true;
+    @Override
+    public boolean supportsFilterCover(String behavior) {
+        return CoverUtilityBehaviors.FILTER_ITEM.equals(behavior) || CoverUtilityBehaviors.RETRIEVER_ITEM.equals(behavior);
     }
 
     /**

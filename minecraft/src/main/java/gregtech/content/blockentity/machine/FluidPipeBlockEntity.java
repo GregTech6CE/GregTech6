@@ -18,12 +18,9 @@ import gregtech.content.cover.CoverAttachmentBehaviors;
 import gregtech.content.cover.CoverItems;
 import gregtech.content.cover.CoverStore;
 import gregtech.content.cover.CoverUtilityBehaviors;
-import gregtech.content.cover.CoverUtilityBehaviors.FilterAction;
-import gregtech.content.cover.PanelCoverHost;
 import gregtech.content.cover.PanelCoverRuntime;
+import gregtech.content.cover.PipeCoverHost;
 import gregtech.content.data.GregTechConstants;
-import gregtech.engine.tool.GTToolHelper;
-import gregtech.engine.tool.GTToolType;
 
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.util.GTEntityHelper;
@@ -73,7 +70,7 @@ import org.jetbrains.annotations.Nullable;
  * covers second: the pressure valve, whose {@code interceptCoverPlacement} refuses any host that is
  * not a fluid pipe with exactly one tank ({@code CoverPressureValve}), and the fluid filter, whose
  * {@code interceptFluidFill}/{@code interceptFluidDrain} are asked from the pipe's own fill path
- * ({@code CoverFilterFluid}). This class is therefore a {@link PanelCoverHost} exactly the
+ * ({@code CoverFilterFluid}). This class is therefore a {@link PipeCoverHost} exactly the
  * way {@code BasicMachineBlockEntity} is one, with three differences, each of them deliberate:</p>
  *
  * <ul>
@@ -100,7 +97,7 @@ import org.jetbrains.annotations.Nullable;
  * ({@code CoverPressureValve}) and can only be attached when the pipe has a single tank, so
  * {@code tanks[0]} and "the pipe" coincide there.</p>
  */
-public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler, PanelCoverHost, CoverStore.Hooks, gregtech.api.sensor.CompressionSensorSource, gregtech.api.sensor.TemperatureSource, gregtech.api.sensor.ProgressSensorSource {
+public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler, PipeCoverHost, gregtech.api.sensor.CompressionSensorSource, gregtech.api.sensor.TemperatureSource, gregtech.api.sensor.ProgressSensorSource {
     @Override public long gibblValue(BlockFace side) {
         long total = 0;
         for (var tank : tanks) total += tank.getAmount();
@@ -298,15 +295,6 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
         return coverStore.panels();
     }
 
-    @Override
-    public boolean consumesTool(ItemStack tool) {
-        if (PanelCoverHost.blockConsumesTool(this, tool)) return true;
-        return GTToolHelper.matchesTool(tool, GTToolType.CROWBAR)
-                || GTToolHelper.isScrewdriver(tool)
-                || GTToolHelper.isSoftHammer(tool)
-                || GTToolHelper.isMagnifyingGlass(tool);
-    }
-
     /**
      * The one rule the machine does not need is the pressure valve's host test, which GT6 keeps in
      * the cover itself: {@code CoverPressureValve} {@code interceptCoverPlacement} refuses any host
@@ -369,11 +357,6 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
         return CoverItems.behavior(getCover(side));
     }
 
-    private void syncCovers() {
-        setChanged();
-        if (level != null) level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
-    }
-
     /** Refresh the controller before its pause gate, then dispatch valid covers with source cadence. */
     private void tickCovers() {
         PanelCoverRuntime runtime = panels();
@@ -401,57 +384,14 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
         runtime.afterTick();
     }
 
-    /**
-     * Two of the three player-facing entry points of a filter cover, shared with
-     * {@link BasicMachineBlockEntity} and {@link ItemPipeBlockEntity} so that all hosts delegate to
-     * the same statics and the machine block's {@code use} call order can be mirrored in
-     * {@link FluidPipeBlock}'s.
-     *
-     * <p>GT6's right-click on a filter cover ({@code CoverFilterItem},
-     * {@code CoverFilterFluid}): the held stack becomes the filter. The client decides from the
-     * same rule without writing the cover, and the server re-syncs the pipe only when the stored
-     * filter actually changed.</p>
-     *
-     * @return whether a filter was stored
-     */
-    public boolean clickFilterCover(Direction side, ItemStack held) {
-        String id = coverIdOf(side);
-        if (level == null || id == null || held == null || held.isEmpty()) return false;
-        ItemStack stack = getCover(side);
-        if (CoverUtilityBehaviors.FILTER_ITEM.equals(id)) {
-            if (level.isClientSide)
-                return CoverUtilityBehaviors.canSetItemFilter(stack, held, level.registryAccess());
-            if (!CoverUtilityBehaviors.setItemFilter(stack, held, level.registryAccess())) return false;
-            syncCovers();
-            return true;
-        }
-        if (CoverUtilityBehaviors.FILTER_FLUID.equals(id)) {
-            FluidStack fluid = gregtech.content.cover.UtilityCoverInteraction.sample(held);
-            if (level.isClientSide)
-                return CoverUtilityBehaviors.canSetFluidFilter(stack, fluid, level.registryAccess());
-            if (!CoverUtilityBehaviors.setFluidFilter(stack, fluid, level.registryAccess())) return false;
-            syncCovers();
-            return true;
-        }
-        return false;
+    @Override
+    public boolean supportsFilterCover(String behavior) {
+        return CoverUtilityBehaviors.FILTER_ITEM.equals(behavior) || CoverUtilityBehaviors.FILTER_FLUID.equals(behavior);
     }
 
-    /**
-     * The screwdriver and soft-hammer halves of the same covers, shared with
-     * {@link BasicMachineBlockEntity}: the screwdriver flips whitelist/blacklist
-     * ({@code CoverFilterFluid}) and the soft hammer clears the filter ({@code CoverFilterFluid}).
-     */
-    public boolean configureFilterCover(Direction side, FilterAction action) {
-        String id = coverIdOf(side);
-        if (id == null) return false;
-        boolean filterish = CoverUtilityBehaviors.FILTER_ITEM.equals(id)
-                || CoverUtilityBehaviors.FILTER_FLUID.equals(id);
-        if (!filterish) return false;
-        if (level != null && level.isClientSide) return true;
-        action.apply(getCover(side));
-        syncCovers();
+    @Override
+    public void wakeAfterFilterChange() {
         gregtech.content.transport.fluid.FluidPipeTickPhases.wakeAround(this);
-        return true;
     }
 
     /** GT6 runs magic, gas, plasma and acid independently against the original channel fluid. */

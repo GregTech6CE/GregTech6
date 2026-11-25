@@ -1,8 +1,9 @@
 package gregtech.content.tool;
 
-import gregtech.api.material.*;
+import gregtech.content.block.machine.MaterialPipeBlock;
 import gregtech.content.data.BlockHarvestPolicy;
 import gregtech.content.item.ElectricToolItem;
+import gregtech.engine.tool.GTToolType;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.*;
@@ -19,16 +20,7 @@ public final class ElectricWrenchHarvest {
 
     public static boolean target(BlockState state) {
         Block block = state.getBlock();
-        if (block instanceof gregtech.content.block.machine.FluidPipeBlock pipe) {
-            var texture = pipe.spec().material().getTextureSet();
-            if (texture == gregtech.api.material.MaterialTextureSet.WOOD
-                    || texture == gregtech.api.material.MaterialTextureSet.RUBBER) return false;
-        }
-        if (block instanceof gregtech.content.block.machine.ItemPipeBlock pipe) {
-            var texture = pipe.spec().material().getTextureSet();
-            if (texture == gregtech.api.material.MaterialTextureSet.WOOD
-                    || texture == gregtech.api.material.MaterialTextureSet.RUBBER) return false;
-        }
+        if (block instanceof MaterialPipeBlock pipe && pipe.harvestTool() != GTToolType.WRENCH) return false;
         return state.is(WRENCH)
                 || state.is(MONKEY_WRENCH)
                 || block instanceof gregtech.content.block.misc.BarsBlock

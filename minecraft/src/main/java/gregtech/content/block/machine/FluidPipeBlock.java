@@ -1,11 +1,6 @@
 package gregtech.content.block.machine;
 
-import gregtech.api.material.MaterialTextureSet;
-import gregtech.content.block.GTBlock;
 import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
-import gregtech.content.cover.CoverItems;
-import gregtech.content.cover.CoverUtilityBehaviors.FilterAction;
-import gregtech.content.cover.PanelCoverInteraction;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.engine.GTWaterloggable;
 import gregtech.engine.machine.PipeSpec;
@@ -24,9 +19,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -47,7 +40,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 /** GT6 fluid pipe block with wrench-toggleable connections and thin-cross collision shape. */
-public class FluidPipeBlock extends GTBlock
+public class FluidPipeBlock extends MaterialPipeBlock
         implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget, gregtech.engine.inventory.PipeFormLike {
     public static final BooleanProperty UP = gregtech.engine.transport.PipeConnections.UP;
     public static final BooleanProperty DOWN = gregtech.engine.transport.PipeConnections.DOWN;
@@ -61,25 +54,6 @@ public class FluidPipeBlock extends GTBlock
     private final PipeSpec spec;
     private @Nullable Direction placementFace;
 
-    /**
-     * GT6's right-click order on a tile that can carry covers, mirrored from
-     * {@code BasicMachineBlock.use} so a pipe and a machine answer a click the same way.
-     *
-     * <p>{@code ToolInteractions.use} stays first, exactly where {@code super.use} (the wrench
-     * rotation) is on the machine, and the pipe's own responses keep their order:
-     * the magnifying glass, the fluid-container path through
-     * {@link FluidPipeBlockEntity#handleUse} and the shift-empty-hand debug print. Between the two
-     * sits the cover block, in {@code BasicMachineBlock}'s own order —
-     * {@code PanelCoverInteraction.use}, then a held cover item attached to the
-     * clicked face, then the crowbar removing the face's cover,
-     * then the filter covers' screwdriver / soft-hammer configuration
-     * and the filter-setting click.</p>
-     *
-     * <p>A pipe with no cover and no cover item in hand is unaffected: {@code PanelCoverInteraction.use}
-     * returns {@code PASS} for every item that is not a panel, a cover item or a tool, and for a tool
-     * it returns {@code PASS} as soon as {@code PanelCoverRuntime.configure} answers false, which it
-     * does whenever the clicked face has no cover ({@code PanelCoverRuntime}).</p>
-     */
     @Override
     protected InteractionResult useBlock(
             BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
@@ -89,39 +63,10 @@ public class FluidPipeBlock extends GTBlock
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
 
-        // Covers on the clicked face — the machine's order, see the method javadoc.
         BlockEntity be = level.getBlockEntity(pos);
-        if (be instanceof FluidPipeBlockEntity coverHost) {
-            InteractionResult panelResult = PanelCoverInteraction.use(coverHost, player, hand, hit, false);
-            if (panelResult != InteractionResult.PASS) return panelResult;
-
-            if (gregtech.content.cover.CoverPlacement.placing(player) && CoverItems.isCover(held)) {
-                if (!level.isClientSide && coverHost.attachCover(hit.getDirection(), held)) {
-                    if (!player.getAbilities().instabuild) held.shrink(1);
-                }
-                return InteractionResult.sidedSuccess(level.isClientSide);
-            }
-            if (GTToolHelper.matchesTool(held, GTToolType.CROWBAR)) {
-                if (!level.isClientSide) {
-                    ItemStack removed = coverHost.removeCover(hit.getDirection());
-                    if (!removed.isEmpty() && !player.addItem(removed)) player.drop(removed, false);
-                }
-                return InteractionResult.sidedSuccess(level.isClientSide);
-            }
-            if (!held.isEmpty()) {
-                if (GTToolHelper.matchesTool(held, GTToolType.SCREWDRIVER)
-                        && coverHost.configureFilterCover(hit.getDirection(), FilterAction.TOGGLE_MODE)) {
-                    return InteractionResult.sidedSuccess(level.isClientSide);
-                }
-                if (GTToolHelper.matchesTool(held, GTToolType.SOFT_HAMMER)
-                        && coverHost.configureFilterCover(hit.getDirection(), FilterAction.CLEAR)) {
-                    return InteractionResult.sidedSuccess(level.isClientSide);
-                }
-                if (!coverHost.consumesTool(held) && coverHost.clickFilterCover(hit.getDirection(), held)) {
-                    if (!level.isClientSide) gregtech.content.transport.fluid.FluidPipeTickPhases.wakeAround(coverHost);
-                    return InteractionResult.sidedSuccess(level.isClientSide);
-                }
-            }
+        if (be instanceof FluidPipeBlockEntity pipe) {
+            InteractionResult result = pipe.usePipeCover(player, hand, hit);
+            if (result != InteractionResult.PASS) return result;
         }
 
         // Magnifying glass: show pipe network info in chat
@@ -157,7 +102,7 @@ public class FluidPipeBlock extends GTBlock
     }
 
     public FluidPipeBlock(PipeSpec spec, Properties properties) {
-        super(properties);
+        super(spec.material(), properties);
         this.spec = spec;
         BlockState defaultState = stateDefinition.any();
         for (BooleanProperty prop : CONNECTIONS) {
@@ -359,61 +304,6 @@ public class FluidPipeBlock extends GTBlock
             }
         }
         super.onRemove(state, level, pos, newState, isMoving);
-    }
-
-    @Override
-    public float getDestroyProgress(BlockState state, Player player, BlockGetter level, BlockPos pos) {
-        if (player.getMainHandItem().getItem() instanceof gregtech.content.item.ElectricToolItem)
-            return super.getDestroyProgress(state, player, level, pos);
-        ItemStack tool = player.getMainHandItem();
-        MaterialTextureSet texSet = spec.material().getTextureSet();
-        float hardness = state.getDestroySpeed(level, pos);
-        if (hardness < 0) return 0;
-
-        if (texSet == MaterialTextureSet.RUBBER) {
-            if (tool.getItem() instanceof ShearsItem || GTToolHelper.matchesTool(tool, GTToolType.SCISSORS)) {
-                float speed = GTToolHelper.matchesTool(tool, GTToolType.SCISSORS) && GTToolHelper.isUsable(tool)
-                        ? GTToolHelper.getMiningSpeed(tool, state)
-                        : tool.getItem() instanceof ShearsItem ? tool.getDestroySpeed(state) : 1.0F;
-                return speed / hardness / 30.0F;
-            }
-        } else if (texSet == MaterialTextureSet.WOOD) {
-            if (tool.getItem() instanceof AxeItem || GTToolHelper.matchesTool(tool, GTToolType.AXE)) {
-                float speed = GTToolHelper.matchesTool(tool, GTToolType.AXE) && GTToolHelper.isUsable(tool)
-                        ? GTToolHelper.getMiningSpeed(tool, state)
-                        : tool.getItem() instanceof AxeItem ? tool.getDestroySpeed(state) : 1.0F;
-                return speed / hardness / 30.0F;
-            }
-        } else {
-            if (GTToolHelper.isMachineWrench(tool)) {
-                return GTToolHelper.wrenchReachesQuality(tool, harvestLevel())
-                        ? GTToolHelper.getMachineHarvestSpeed(tool) / hardness / 30.0F
-                        : 0.0F;
-            }
-        }
-        return super.getDestroyProgress(state, player, level, pos);
-    }
-
-    @Override
-    public boolean canHarvestBlock(BlockState state, BlockGetter level, BlockPos pos, Player player) {
-        if (player.getMainHandItem().getItem() instanceof gregtech.content.item.ElectricToolItem electric)
-            return gregtech.content.tool.ElectricWrenchHarvest.canHarvest(electric, player.getMainHandItem(), state);
-        ItemStack tool = player.getMainHandItem();
-        MaterialTextureSet texSet = spec.material().getTextureSet();
-        if (texSet == MaterialTextureSet.RUBBER) {
-            if (tool.getItem() instanceof ShearsItem || GTToolHelper.matchesTool(tool, GTToolType.SCISSORS))
-                return true;
-        } else if (texSet == MaterialTextureSet.WOOD) {
-            if (tool.getItem() instanceof AxeItem || GTToolHelper.matchesTool(tool, GTToolType.AXE)) return true;
-        } else {
-            if (GTToolHelper.isMachineWrench(tool)) return GTToolHelper.wrenchReachesQuality(tool, harvestLevel());
-        }
-        return super.canHarvestBlock(state, level, pos, player);
-    }
-
-    /** GT6 registers each pipe with its material's tool quality as the block harvest level. */
-    public int harvestLevel() {
-        return Math.max(0, spec.material().getToolQuality());
     }
 
     @Override

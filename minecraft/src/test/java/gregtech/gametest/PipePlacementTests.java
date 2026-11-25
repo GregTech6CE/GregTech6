@@ -2,7 +2,11 @@ package gregtech.gametest;
 
 import gregtech.content.block.machine.FluidPipeBlock;
 import gregtech.content.block.machine.ItemPipeBlock;
+import gregtech.content.block.machine.MaterialPipeBlock;
 import gregtech.content.blockentity.machine.LogisticsWireBlockEntity;
+import gregtech.content.data.generated.GT6Materials;
+import gregtech.content.item.GTToolItem;
+import gregtech.content.tool.ElectricWrenchHarvest;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
 import gregtech.engine.transport.PipeConnections;
@@ -16,6 +20,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -43,6 +48,42 @@ public final class PipePlacementTests {
     private static final String BATCH = "pipe_placement";
 
     private PipePlacementTests() {}
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 20)
+    public static void pipeHarvestUsesMaterialToolAndWrenchQuality(GameTestHelper helper) {
+        Player player = mockPlayer(helper);
+        var level = helper.getLevel();
+        BlockPos pos = at(helper, 1, 1, 1);
+        var wood = (FluidPipeBlock) block("pipe_medium_wood");
+        var rubber = (FluidPipeBlock) block("pipe_medium_rubber");
+        checkSoftPipeTool(helper, player, pos, wood, new ItemStack(Items.IRON_AXE));
+        checkSoftPipeTool(helper, player, pos, rubber, new ItemStack(Items.SHEARS));
+
+        ItemStack wrench = GTToolItem.create(GTToolType.WRENCH, GT6Materials.Compounds.Brass, GT6Materials.Woods.Spruce);
+        player.setItemInHand(InteractionHand.MAIN_HAND, wrench);
+        var brass = (ItemPipeBlock) block("item_pipe_medium_brass");
+        var hard = (ItemPipeBlock) block("item_pipe_medium_vibranium_silver");
+        helper.assertTrue(brass.canHarvestBlock(brass.defaultBlockState(), level, pos, player)
+                && brass.getDestroyProgress(brass.defaultBlockState(), player, level, pos) > 0,
+                "a brass wrench mines a brass item pipe");
+        helper.assertFalse(hard.canHarvestBlock(hard.defaultBlockState(), level, pos, player),
+                "a brass wrench cannot harvest the higher-quality pipe");
+        helper.assertTrue(hard.getDestroyProgress(hard.defaultBlockState(), player, level, pos) == 0,
+                "an underqualified wrench makes no mining progress");
+        helper.succeed();
+    }
+
+    private static void checkSoftPipeTool(GameTestHelper helper, Player player, BlockPos pos,
+                                          MaterialPipeBlock pipe, ItemStack tool) {
+        player.setItemInHand(InteractionHand.MAIN_HAND, tool);
+        var state = pipe.defaultBlockState();
+        var level = helper.getLevel();
+        float speed = tool.getDestroySpeed(state) / state.getDestroySpeed(level, pos) / 30.0F;
+        helper.assertTrue(pipe.canHarvestBlock(state, level, pos, player)
+                && pipe.getDestroyProgress(state, player, level, pos) == speed,
+                "the matching vanilla tool harvests the pipe at its tool speed");
+        helper.assertFalse(ElectricWrenchHarvest.target(state), "wood and rubber are excluded from electric wrench targets");
+    }
 
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 100)
     public static void pipePlacedAgainstAChestLinksTheClickFace(GameTestHelper helper) {
@@ -246,12 +287,16 @@ public final class PipePlacementTests {
         clear(helper, stone, wire);
     }
 
-    private static boolean clickWithTool(GameTestHelper helper, BlockPos pos, Direction face, ItemStack tool) {
+    private static Player mockPlayer(GameTestHelper helper) {
 //? if >=1.21.1 {
-        /*Player player = helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+        /*return helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
 *///?} else {
-        Player player = helper.makeMockPlayer();
+        return helper.makeMockPlayer();
 //?}
+    }
+
+    private static boolean clickWithTool(GameTestHelper helper, BlockPos pos, Direction face, ItemStack tool) {
+        Player player = mockPlayer(helper);
         player.setItemInHand(InteractionHand.MAIN_HAND, tool);
         Vec3 hit = Vec3.atCenterOf(pos).add(
                 face.getStepX() * 0.5D, face.getStepY() * 0.5D, face.getStepZ() * 0.5D);
@@ -270,11 +315,7 @@ public final class PipePlacementTests {
 
     /** Places {@code item} the way a player does: the item's own use-on path against {@code clicked}. */
     private static boolean place(GameTestHelper helper, BlockPos clicked, Direction face, String item) {
-//? if >=1.21.1 {
-        /*Player player = helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
-*///?} else {
-        Player player = helper.makeMockPlayer();
-//?}
+        Player player = mockPlayer(helper);
         player.setShiftKeyDown(true);
         BlockPos target = clicked.relative(face);
         Vec3 hit = Vec3.atCenterOf(clicked).add(

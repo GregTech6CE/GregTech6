@@ -719,6 +719,28 @@ public final class FilterCoverTests {
         return player.gameMode.useItemOn(player, player.level(), held, InteractionHand.MAIN_HAND, hit);
     }
 
+    @GameTest(template = "test_empty", timeoutTicks = 20)
+    public static void pipeCrowbarReturnsCoverWithoutToolWear(GameTestHelper helper) {
+        Player player = mockPlayer(helper);
+        player.getAbilities().instabuild = false;
+        var crowbar = GTToolHelper.displayTool(GTToolType.CROWBAR);
+        int damage = crowbar.getDamageValue();
+        var itemPipe = place(helper, 1, 2, "item_pipe_medium_brass");
+        var fluidPipe = place(helper, 3, 2, "pipe_large_steel");
+        for (BlockPos pos : List.of(itemPipe, fluidPipe)) {
+            var host = (gregtech.content.cover.PipeCoverHost) helper.getLevel().getBlockEntity(pos);
+            var filter = new ItemStack(item(pos.equals(itemPipe) ? "item_filter" : "fluid_filter"));
+            helper.assertTrue(host.attachCover(Direction.UP, filter), "filter attaches to the pipe");
+            int count = player.getInventory().countItem(filter.getItem());
+            helper.assertTrue(click(player, pos, Direction.UP, crowbar) && host.getCover(Direction.UP).isEmpty(),
+                    "a crowbar removes the pipe cover");
+            helper.assertTrue(player.getInventory().countItem(filter.getItem()) == count + 1
+                            && crowbar.getDamageValue() == damage,
+                    "the cover is returned to the player without wearing the crowbar");
+        }
+        helper.succeed();
+    }
+
     // ── Shared fixtures ─────────────────────────────────────────────────────────
 
     /** Places a GT block at a relative test position and returns its absolute position. */
