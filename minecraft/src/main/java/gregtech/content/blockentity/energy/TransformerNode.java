@@ -55,7 +55,7 @@ abstract class TransformerNode extends BufferedEnergyNode {
     long minOutput(Tag type, @Nullable Direction side) {
         if (!acceptsOutputType(type)) return super.minOutput(type, side);
         var spec = host.spec();
-        return inverted() ? spec.inputRate() * 3 / 4 : Math.max(1, spec.outputRate() / 2);
+        return inverted() ? Math.max(1, spec.inputRate() * 3 / 4) : Math.max(1, spec.outputRate() / 2);
     }
 
     static final class Electric extends TransformerNode {

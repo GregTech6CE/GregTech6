@@ -76,6 +76,15 @@ public record EnergyNodeSpec(
             if ((deviceType == DeviceType.BATTERY_BOX) != (batterySlots > 0))
                 throw new IllegalArgumentException("Only battery boxes and chargers have battery slots: " + id);
         }
+        boolean transformer =
+                deviceType == DeviceType.ELECTRIC_TRANSFORMER || deviceType == DeviceType.ROTATION_TRANSFORMER;
+        if (inputRate == 0
+                && (transformer || deviceType.usesOriginalConverter() || deviceType == DeviceType.BATTERY_BOX))
+            throw new IllegalArgumentException("Device requires a positive input packet size: " + id);
+        if (transformer && outputRate == 0)
+            throw new IllegalArgumentException("Transformer output packet size must be positive: " + id);
+        if (deviceType == DeviceType.ELECTRIC_TRANSFORMER && inputRate < outputRate)
+            throw new IllegalArgumentException("Step-down input packet size must be at least the output size: " + id);
     }
 
     public static Builder builder(String id, GTMaterial casing) {

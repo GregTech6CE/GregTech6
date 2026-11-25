@@ -8,7 +8,10 @@ import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.core.Direction;
 
-/** A cooler emits cooling at the front and an auxiliary heat packet at the rear. */
+/**
+ * A cooler emits cooling at the front and heat at the rear. GT6's two-output converter
+ * advertises both energy types, but its packet-size queries describe only the primary output.
+ */
 final class CoolerNode extends OriginalConverterNode {
     CoolerNode(EnergyNodeBlockEntity host, EnergyNodeSpec spec) {
         super(host, spec, LATERAL);

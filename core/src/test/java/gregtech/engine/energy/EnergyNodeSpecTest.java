@@ -79,6 +79,56 @@ final class EnergyNodeSpecTest {
     }
 
     @Test
+    void transformerPacketSizesSupportTheirConversionRatios() {
+        for (var type : new DeviceType[] {DeviceType.ELECTRIC_TRANSFORMER, DeviceType.ROTATION_TRANSFORMER}) {
+            var builder = EnergyNodeSpec.builder("test_transformer", Materials.Steel)
+                    .deviceType(type)
+                    .texture("test")
+                    .name("Test Transformer");
+            assertThrows(
+                    IllegalArgumentException.class,
+                    () -> builder.input(EU, 0).output(EU, 1).build());
+            assertThrows(
+                    IllegalArgumentException.class,
+                    () -> builder.input(EU, 1).output(EU, 0).build());
+            assertEquals(1, builder.input(EU, 1).output(EU, 1).build().inputRate());
+        }
+        var stepDown = EnergyNodeSpec.builder("transformer_example", Materials.Steel)
+                .texture("test")
+                .name("Legacy Electric Transformer")
+                .input(EU, 1)
+                .output(EU, 2);
+        assertThrows(IllegalArgumentException.class, stepDown::build);
+        assertEquals(
+                DeviceType.ELECTRIC_TRANSFORMER, stepDown.input(EU, 2).build().deviceType());
+    }
+
+    @Test
+    void familiesThatConvertOrDistributeInputRequireAPositiveRating() {
+        for (var type : DeviceType.values()) {
+            if (!type.usesOriginalConverter() && type != DeviceType.BATTERY_BOX) continue;
+            var builder = EnergyNodeSpec.builder("test_device", Materials.Steel)
+                    .deviceType(type)
+                    .texture("test")
+                    .name("Test Device")
+                    .input(EU, 0)
+                    .output(EU, 1);
+            if (type == DeviceType.BATTERY_BOX) builder.batterySlots(4);
+            assertThrows(IllegalArgumentException.class, builder::build);
+        }
+        assertEquals(
+                0,
+                EnergyNodeSpec.builder("test_solar", Materials.Steel)
+                        .deviceType(DeviceType.SOLAR)
+                        .texture("test")
+                        .name("Test Panel")
+                        .input(EU, 0)
+                        .output(EU, 1)
+                        .build()
+                        .inputRate());
+    }
+
+    @Test
     void separatelyRegisteredDevicesShareTheAppropriateFamilies() {
         for (var tier : GearboxCatalog.tiers()) {
             assertEquals(

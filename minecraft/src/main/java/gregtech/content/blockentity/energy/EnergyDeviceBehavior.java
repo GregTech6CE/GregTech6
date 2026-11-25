@@ -131,6 +131,11 @@ abstract class EnergyDeviceBehavior {
         return host.effectiveOutputRate();
     }
 
+    long recommendedOutput(Tag type, @Nullable Direction side) {
+        var spec = host.spec();
+        return spec != null && type == spec.outType() ? outputRate() : 0;
+    }
+
     long minInput(Tag type, @Nullable Direction side) {
         return EnergyBlockDefaults.getEnergySizeInputMin(host, type, side);
     }

@@ -546,7 +546,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
 
     @Override
     public long getEnergySizeOutputRecommended(GregTechTags.Tag energyType, @Nullable Direction side) {
-        return spec != null && energyType == spec.outType() ? behavior.outputRate() : 0;
+        return behavior.recommendedOutput(energyType, side);
     }
 
     @Override

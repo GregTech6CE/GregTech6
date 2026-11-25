@@ -30,13 +30,18 @@ abstract class BufferedEnergyNode extends EnergyDeviceBehavior implements Machin
         host.syncBufferedInput(level, pos, state);
     }
 
+    long availableOutputPackets() {
+        long cost = host.inputCostPerOutputPacket();
+        return cost > 0 && outputRate() > 0 ? host.bufferedInput / cost : 0;
+    }
+
     void emitOutput() {
-        if (host.bufferedInput < host.inputCostPerOutputPacket()) return;
+        long offered = availableOutputPackets();
+        if (offered <= 0) return;
         if (host.spec().outType() == GregTechTags.Energy.RF) {
             host.forgeEnergy.push();
             return;
         }
-        long offered = host.bufferedInput / host.inputCostPerOutputPacket();
         long accepted =
                 EnergyTransfer.emitEnergyToSide(host.spec().outType(), host.facing(), outputRate(), offered, host);
         if (accepted > 0) {
@@ -145,22 +150,22 @@ abstract class BufferedEnergyNode extends EnergyDeviceBehavior implements Machin
         @Override
         long offered(Tag type, @Nullable Direction side, long size) {
             if (!acceptsOutputType(type) || size <= 0) return 0;
-            long available = host.bufferedInput / host.inputCostPerOutputPacket();
+            long available = availableOutputPackets();
             return Math.min(available, available * outputRate() / size);
         }
 
         @Override
         long extract(Tag type, @Nullable Direction side, long size, long amount, boolean execute) {
             if (!acceptsOutputType(type) || amount <= 0 || size <= 0) return 0;
-            long cost = host.inputCostPerOutputPacket();
-            long available = host.bufferedInput / cost;
-            long requested = amount * size / Math.max(1, outputRate());
+            long available = availableOutputPackets();
+            if (available <= 0) return 0;
+            long requested = amount * size / outputRate();
             long outputPackets = Math.min(available, Math.max(0, requested));
             long extracted = outputPackets * outputRate() / size;
             if (execute && extracted > 0) {
                 if (host.getLevel() != null)
                     host.conversionMeter().output(host.getLevel().getGameTime(), size, extracted);
-                host.bufferedInput -= outputPackets * cost;
+                host.bufferedInput -= outputPackets * host.inputCostPerOutputPacket();
                 host.setChanged();
             }
             return extracted;
