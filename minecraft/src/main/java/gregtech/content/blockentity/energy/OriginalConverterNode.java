@@ -3,7 +3,6 @@ package gregtech.content.blockentity.energy;
 import gregtech.api.platform.machine.MachineControl;
 import gregtech.content.block.energy.OriginalMotorBlock;
 import gregtech.content.block.energy.RotaryConverterBlock;
-import gregtech.content.cover.ComponentCoverRuntime;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.energy.OriginalRotaryConverter;
 import gregtech.content.energy.OriginalThermalConverter;
@@ -121,9 +120,7 @@ class OriginalConverterNode extends EnergyDeviceBehavior implements MachineContr
     @Override
     void tickCoversBeforeDevice(Level level) {
         host.panels().beforeTick();
-        for (Direction side : Direction.values()) {
-            ComponentCoverRuntime.tick(host, side, level.getGameTime());
-        }
+        host.tickCoverComponents(level);
     }
 
     @Override

@@ -20,8 +20,6 @@ import gregtech.engine.energy.MachineOverload;
 import gregtech.engine.inventory.BlockContents;
 import gregtech.engine.machine.AdjacentEnergyControl;
 import gregtech.engine.stack.NbtCompat;
-import gregtech.engine.tool.GTToolHelper;
-import gregtech.engine.tool.GTToolType;
 import java.util.Collection;
 import java.util.EnumMap;
 import java.util.Objects;
@@ -384,24 +382,9 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
         return isElectricTransformer() && behavior.control().running();
     }
 
-    /** Mirrors the host's tool actions so unhandled tools reach the cover. */
     @Override
     public boolean consumesTool(ItemStack tool) {
-        if (PanelCoverHost.blockConsumesTool(this, tool)) return true;
-        if (isOriginalMotor() && (GTToolHelper.isMonkeyWrench(tool) || GTToolHelper.isMagnifyingGlass(tool))) {
-            return true;
-        }
-        if (isInvertible()) {
-            boolean switchesMode = isTransformer()
-                    ? GTToolHelper.isMonkeyWrench(tool)
-                    : GTToolHelper.isSoftHammer(tool);
-            if (switchesMode) return true;
-        }
-        if (isTurbine()) {
-            if (GTToolHelper.matchesTool(tool, GTToolType.PLUNGER)) return true;
-            if (hasRotor() && GTToolHelper.matchesTool(tool, GTToolType.CROWBAR)) return true;
-        }
-        return isBatteryBox() && GTToolHelper.matchesTool(tool, GTToolType.CROWBAR);
+        return PanelCoverHost.blockConsumesTool(this, tool) || EnergyNodeBlock.consumesDeviceTool(this, tool);
     }
 
     @Override
@@ -438,10 +421,15 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
     void tickComponentCovers(Level level) {
         if (covers.isEmpty()) return;
         panels().beforeTick();
-        for (Direction side : Direction.values()) {
-            ComponentCoverRuntime.tick(this, side, level.getGameTime());
-        }
+        tickCoverComponents(level);
         panels().afterTick();
+    }
+
+    void tickCoverComponents(Level level) {
+        long time = level.getGameTime();
+        for (Direction side : Direction.values()) {
+            ComponentCoverRuntime.tick(this, side, time);
+        }
     }
 
     void syncBufferedInput(Level level, BlockPos pos, BlockState state) {

@@ -3,7 +3,6 @@ package gregtech.content.blockentity.energy;
 import gregtech.GregTechConfig;
 import gregtech.api.platform.machine.MachineControl;
 import gregtech.content.block.energy.BatteryBoxBlock;
-import gregtech.content.cover.ComponentCoverRuntime;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.energy.BatteryBoxEnergy;
 import gregtech.content.energy.OriginalEnergyDeviceTooltipData;
@@ -61,9 +60,7 @@ final class BatteryBoxNode extends EnergyDeviceBehavior implements MachineContro
     void tick(Level level, BlockPos pos, BlockState state) {
         long time = level.getGameTime();
         host.panels().beforeTick();
-        for (Direction side : Direction.values()) {
-            ComponentCoverRuntime.tick(host, side, time);
-        }
+        host.tickCoverComponents(level);
         energy.tick(time, level, pos);
         long offered = energy.offered();
         if (offered > 0) {
