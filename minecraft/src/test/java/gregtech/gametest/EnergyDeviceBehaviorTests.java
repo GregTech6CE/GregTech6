@@ -1,5 +1,6 @@
 package gregtech.gametest;
 
+import gregtech.content.block.energy.EnergyNodeBlock;
 import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
 import gregtech.content.data.GregTechTags;
 import gregtech.engine.energy.EnergyNodeSpec;
@@ -9,6 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DirectionalBlock;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.gametest.GameTestHolder;
@@ -22,6 +24,25 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 @PrefixGameTestTemplate(false)
 public final class EnergyDeviceBehaviorTests {
     private EnergyDeviceBehaviorTests() {}
+
+    @GameTest(template = "test_empty")
+    public static void deviceQueriesFollowTheBoundSpec(GameTestHelper helper) {
+        var pos = helper.absolutePos(new BlockPos(1, 1, 1));
+        var node = new EnergyNodeBlockEntity(pos, Blocks.STONE.defaultBlockState());
+        helper.assertTrue(!node.isTransformer() && !node.isOriginalMotor() && !node.isTurbine(),
+                "queries are safe before binding a spec");
+
+        var transformer = (EnergyNodeBlock) BuiltInRegistries.BLOCK.get(Mc.gregtechId("rotation_transformer_wood"));
+        node.setSpec(transformer.spec());
+        helper.assertTrue(transformer.isTransformer() && node.isRotationTransformer() && node.isInvertible(),
+                "block and entity recognize the same rotation transformer");
+
+        var motor = (EnergyNodeBlock) BuiltInRegistries.BLOCK.get(Mc.gregtechId("electric_motor_lv"));
+        node.setSpec(motor.spec());
+        helper.assertTrue(motor.isOriginalMotor() && node.isOriginalMotor() && !node.isTransformer(),
+                "rebinding uses the current spec");
+        helper.succeed();
+    }
 
     @GameTest(template = "test_empty")
     public static void rotationTransformerWaitsForWorldBeforeEmitting(GameTestHelper helper) {

@@ -7,6 +7,7 @@ import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
 import gregtech.engine.energy.EnergyNodeSpec;
 import gregtech.engine.energy.EnergyNodeSpec.DeviceType;
+import gregtech.content.energy.EnergyNodeSpecProvider;
 import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
 import net.minecraft.world.InteractionResult;
 import gregtech.content.registry.GTEnergyNodes;
@@ -29,7 +30,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /** GT6 energy-net node block (motor/dynamo/transformer/turbine/solar/storage). */
-public class EnergyNodeBlock extends GTDirectionalBlock implements EntityBlock, ToolInteractionTarget,
+public class EnergyNodeBlock extends GTDirectionalBlock implements EntityBlock, EnergyNodeSpecProvider, ToolInteractionTarget,
         gregtech.engine.machine.PipeGeometry.FluidConnectorGeometry {
 
     @Override
@@ -50,22 +51,19 @@ public class EnergyNodeBlock extends GTDirectionalBlock implements EntityBlock, 
         }
         if (ToolInteractions.use(state, level, pos, player, hand, hit))
             return InteractionResult.sidedSuccess(level.isClientSide);
-        if (node.isOriginalMotor() && GTToolHelper.isMonkeyWrench(held)) {
-            if (!level.isClientSide) {
-                node.reverseMotor();
-                GTToolHelper.damageForUse(held, 1, player);
-                player.displayClientMessage(Component.literal(node.motorCounterClockwise() ? "Counterclockwise" : "Clockwise"), true);
+        if (node.isOriginalMotor()) {
+            boolean reverse = GTToolHelper.isMonkeyWrench(held);
+            if (reverse || GTToolHelper.isMagnifyingGlass(held)) {
+                if (!level.isClientSide) {
+                    if (reverse) node.reverseMotor();
+                    GTToolHelper.damageForUse(held, 1, player);
+                    String direction = node.motorCounterClockwise() ? "Counterclockwise" : "Clockwise";
+                    player.displayClientMessage(Component.literal(direction), true);
+                }
+                return InteractionResult.sidedSuccess(level.isClientSide);
             }
-            return InteractionResult.sidedSuccess(level.isClientSide);
         }
-        if (node.isOriginalMotor() && GTToolHelper.isMagnifyingGlass(held)) {
-            if (!level.isClientSide) {
-                GTToolHelper.damageForUse(held, 1, player);
-                player.displayClientMessage(Component.literal(node.motorCounterClockwise() ? "Counterclockwise" : "Clockwise"), true);
-            }
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-        boolean transformer = node.isRotationTransformer() || node.isElectricTransformer();
+        boolean transformer = node.isTransformer();
         boolean modeTool = transformer
                 ? GTToolHelper.isMonkeyWrench(held) : GTToolHelper.isSoftHammer(held);
         if (node.isInvertible() && modeTool) {
@@ -77,15 +75,15 @@ public class EnergyNodeBlock extends GTDirectionalBlock implements EntityBlock, 
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
-        if (node.isTurbine() && GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.PLUNGER)) {
-            if (!level.isClientSide) {
-                long removed = node.purgeTurbineSteam();
-                if (removed > 0) GTToolHelper.damageForToolClickReturn(held, removed, player);
-            }
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-        // Return obsolete installed rotors from worlds made by earlier port versions.
         if (node.isTurbine()) {
+            if (GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.PLUNGER)) {
+                if (!level.isClientSide) {
+                    long removed = node.purgeTurbineSteam();
+                    if (removed > 0) GTToolHelper.damageForToolClickReturn(held, removed, player);
+                }
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
+            // Return obsolete installed rotors from worlds made by earlier port versions.
             if (node.hasRotor() && GTToolHelper.matchesTool(held,
                     gregtech.engine.tool.GTToolType.CROWBAR)) {
                 if (!level.isClientSide) {
@@ -131,7 +129,7 @@ public class EnergyNodeBlock extends GTDirectionalBlock implements EntityBlock, 
 
     @Override
     public double fluidConnectorHalf(BlockState state, Direction face) {
-        if (spec.kind() != EnergyNodeSpec.Kind.TURBINE) return gregtech.engine.machine.PipeGeometry.NONE;
+        if (!isTurbine()) return gregtech.engine.machine.PipeGeometry.NONE;
         Direction front = state.getValue(FACING);
         if (face == front) return gregtech.engine.machine.PipeGeometry.NONE;
         return gregtech.engine.machine.PipeGeometry.virtual(face.getAxis() == front.getAxis() ? 4 : 2);
@@ -139,10 +137,8 @@ public class EnergyNodeBlock extends GTDirectionalBlock implements EntityBlock, 
 
     @Override public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         boolean fixed = spec.id().startsWith("battery_eu");
-        boolean reservesMonkeyWrench = switch (spec.deviceType()) {
-            case HEATER, COOLER, MAGNET, ROTATION_TRANSFORMER, ELECTRIC_TRANSFORMER -> true;
-            default -> false;
-        };
+        boolean reservesMonkeyWrench = isTransformer() || isOriginalThermalConverter()
+                || spec.deviceType() == DeviceType.MAGNET;
         if (reservesMonkeyWrench && GTToolHelper.isMonkeyWrench(tool)) return null;
         return !fixed && GTToolHelper.isMachineWrench(tool)
                 ? ToolInteractionSpec.facing(FACING, spec.deviceType() == DeviceType.SOLAR
@@ -150,6 +146,7 @@ public class EnergyNodeBlock extends GTDirectionalBlock implements EntityBlock, 
                     : gregtech.content.block.machine.MachineRotationType.ALL) : null;
     }
 
+    @Override
     public EnergyNodeSpec spec() { return spec; }
 
     @Override
@@ -230,8 +227,8 @@ public class EnergyNodeBlock extends GTDirectionalBlock implements EntityBlock, 
                 tooltip.add(gregtech.client.TooltipHelper.energyOutLine(spec.outputRate(), outUnit));
             }
             default -> {
-                boolean electricTransformer = spec.deviceType() == DeviceType.ELECTRIC_TRANSFORMER;
-                boolean rotationTransformer = spec.deviceType() == DeviceType.ROTATION_TRANSFORMER;
+                boolean electricTransformer = isElectricTransformer();
+                boolean rotationTransformer = isRotationTransformer();
                 String outputFace = rotationTransformer ? "gt.lang.face.back"
                         : electricTransformer ? "gt.lang.face.sides" : "gt.lang.face.front";
                 tooltip.add(gregtech.client.TooltipHelper.energyInLine(

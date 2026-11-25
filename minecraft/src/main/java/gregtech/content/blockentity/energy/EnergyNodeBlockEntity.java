@@ -11,6 +11,7 @@ import gregtech.content.cover.PanelCoverHost;
 import gregtech.content.cover.PanelCoverRuntime;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.energy.BatteryBoxEnergy;
+import gregtech.content.energy.EnergyNodeSpecProvider;
 import gregtech.content.registry.GTEnergyNodes;
 import gregtech.engine.energy.EnergyConversionMeter;
 import gregtech.engine.energy.EnergyNodeSpec;
@@ -55,7 +56,7 @@ import org.jetbrains.annotations.NotNull;
  * selects its energy types, packet sizes and device-specific behavior.
  */
 public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
-        implements AdjacentEnergyControl.Provider, BlockContents, MachineControl.Provider, PanelCoverHost {
+        implements EnergyNodeSpecProvider, AdjacentEnergyControl.Provider, BlockContents, MachineControl.Provider, PanelCoverHost {
     private EnergyNodeSpec spec;
     private final EnergyConversionMeter conversionMeter = new EnergyConversionMeter();
     /** Stored in input units (litres of steam for turbines). */
@@ -133,6 +134,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
         if (isSolar()) solarPanel.onLoad();
     }
 
+    @Override
     public EnergyNodeSpec spec() {
         return spec;
     }
@@ -177,18 +179,6 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
         return behavior instanceof OriginalConverterNode;
     }
 
-    public boolean isOriginalRotaryConverter() {
-        return spec != null && (spec.deviceType() == DeviceType.MOTOR || spec.deviceType() == DeviceType.DYNAMO);
-    }
-
-    public boolean isOriginalThermalConverter() {
-        return spec != null && (spec.deviceType() == DeviceType.HEATER || spec.deviceType() == DeviceType.COOLER);
-    }
-
-    public boolean isOriginalMotor() {
-        return spec != null && (spec.deviceType() == DeviceType.MOTOR || spec.deviceType() == DeviceType.STEAM_TURBINE);
-    }
-
     public boolean reverseMotor() {
         var converter = originalConverter();
         return converter != null && converter.reverseMotor();
@@ -213,10 +203,6 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
         return converter != null && converter.fast();
     }
 
-    public boolean isMagnet() {
-        return spec != null && spec.kind() == EnergyNodeSpec.Kind.MAGNET;
-    }
-
     public boolean magnetEnabled() {
         return isMagnet() && !converterStopped;
     }
@@ -231,18 +217,6 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
     }
 
     // Transformers
-
-    public boolean isInvertible() {
-        return spec != null && spec.kind() == EnergyNodeSpec.Kind.CONVERTER && spec.inType() == spec.outType();
-    }
-
-    public boolean isElectricTransformer() {
-        return spec != null && spec.deviceType() == DeviceType.ELECTRIC_TRANSFORMER;
-    }
-
-    public boolean isRotationTransformer() {
-        return spec != null && spec.deviceType() == DeviceType.ROTATION_TRANSFORMER;
-    }
 
     public boolean transformerInverted() {
         return inverted;
@@ -293,10 +267,6 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
     }
 
     // Steam turbines
-
-    public boolean isTurbine() {
-        return spec != null && spec.kind() == EnergyNodeSpec.Kind.TURBINE;
-    }
 
     public long turbineSteamAmount() {
         return turbine.steamAmount();
@@ -405,13 +375,15 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
             return true;
         }
         if (isInvertible()) {
-            boolean switchesMode = isRotationTransformer() || isElectricTransformer()
+            boolean switchesMode = isTransformer()
                     ? GTToolHelper.isMonkeyWrench(tool)
                     : GTToolHelper.isSoftHammer(tool);
             if (switchesMode) return true;
         }
-        if (isTurbine() && GTToolHelper.matchesTool(tool, GTToolType.PLUNGER)) return true;
-        if (isTurbine() && hasRotor() && GTToolHelper.matchesTool(tool, GTToolType.CROWBAR)) return true;
+        if (isTurbine()) {
+            if (GTToolHelper.matchesTool(tool, GTToolType.PLUNGER)) return true;
+            if (hasRotor() && GTToolHelper.matchesTool(tool, GTToolType.CROWBAR)) return true;
+        }
         return isBatteryBox() && GTToolHelper.matchesTool(tool, GTToolType.CROWBAR);
     }
 
