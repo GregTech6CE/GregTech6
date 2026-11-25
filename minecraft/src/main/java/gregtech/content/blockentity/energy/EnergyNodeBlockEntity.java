@@ -493,25 +493,27 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
 
     private void emitOutput() {
         if (level == null || converterStopped) return;
-        if (isElectricTransformer()){emitElectricTransformer();return;}
+        if (isElectricTransformer()) {
+            emitElectricTransformer();
+            return;
+        }
         if (isRotationTransformer()) {
             emitRotationTransformer();
             return;
         }
+
         if (buffer < costPerPacket()) return;
         if (spec.outType() == GregTechTags.Energy.RF) {
             pushForgeEnergy();
             return;
         }
-        long packets = buffer / costPerPacket();
-        if (isRotationTransformer()) packets = Math.min(packets, inverted ? 1 : 4);
-        long emitted = EnergyTransfer.emitEnergyToSide(
-                spec.outType(), isRotationTransformer() ? rotationOutputFace() : facing(),
-                isRotationTransformer() && rotationNegativeInput ? -outRate() : outRate(), packets, this);
-        if (isRotationTransformer()) emitted = Math.min(packets, Math.max(0, emitted));
-        if (emitted > 0) {
-            conversionMeter.output(level.getGameTime(), outRate(), emitted);
-            buffer -= emitted * costPerPacket();
+
+        long offeredPackets = buffer / costPerPacket();
+        long acceptedPackets = EnergyTransfer.emitEnergyToSide(
+                spec.outType(), facing(), outRate(), offeredPackets, this);
+        if (acceptedPackets > 0) {
+            conversionMeter.output(level.getGameTime(), outRate(), acceptedPackets);
+            buffer -= acceptedPackets * costPerPacket();
             setChanged();
         }
     }
