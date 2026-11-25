@@ -87,17 +87,9 @@ public class WoodLeavesBlock extends LeavesBlock {
         if (tool.canPerformAction(net.minecraftforge.common.ToolActions.SHEARS_HARVEST)
 //?}
                 || gregtech.engine.tool.GTToolHelper.matchesTool(tool,gregtech.engine.tool.GTToolType.SCISSORS)
-//? if >=1.21.1 {
-                /*|| net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(builder.getLevel().registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT).getOrThrow(net.minecraft.world.item.enchantment.Enchantments.SILK_TOUCH),tool)>0)
-*///?} else {
-                || net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(net.minecraft.world.item.enchantment.Enchantments.SILK_TOUCH,tool)>0)
-//?}
+                || gregtech.engine.stack.EnchantmentCompat.silkTouch(tool, builder.getLevel()) > 0)
             return java.util.List.of(new net.minecraft.world.item.ItemStack(this));
-//? if >=1.21.1 {
-        /*int fortune=net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(builder.getLevel().registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT).getOrThrow(net.minecraft.world.item.enchantment.Enchantments.FORTUNE),tool);
-*///?} else {
-        int fortune=net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(net.minecraft.world.item.enchantment.Enchantments.BLOCK_FORTUNE,tool);
-//?}
+        int fortune = gregtech.engine.stack.EnchantmentCompat.fortune(tool, builder.getLevel());
         int chance=fortune<=0?50:fortune>=4?5:Math.max(5,50-(5<<fortune));
         var random=builder.getLevel().random;
         if (random.nextInt(chance)==0) return java.util.List.of(sapling());

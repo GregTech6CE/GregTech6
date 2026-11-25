@@ -105,7 +105,7 @@ public final class FluidItemClientModels {
 
     @SubscribeEvent
     public static void setup(FMLClientSetupEvent event) {
-        gregtech.engine.fluid.FluidDisplayBinding.setClientLookup(() -> {
+        gregtech.engine.stack.RegistryContext.setClientLookup(() -> {
             var client=net.minecraft.client.Minecraft.getInstance();
             if (client.level!=null) return client.level.registryAccess();
             return client.getConnection()==null?null:client.getConnection().registryAccess();

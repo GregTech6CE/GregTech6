@@ -76,11 +76,7 @@ public class LootCrateBlock extends GTBlock {
 
     /** Run a random modern table, then choose one output stack; GT6 chose one weighted entry. */
     public static List<ItemStack> rollVanillaLoot(ServerLevel level, BlockPos pos, RandomSource random) {
-//? if >=1.21.1 {
-        /*LootTable table = level.getServer().reloadableRegistries().getLootTable(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.LOOT_TABLE,randomTable(random)));
-*///?} else {
-        LootTable table = level.getServer().getLootData().getLootTable(randomTable(random));
-//?}
+        LootTable table = gregtech.engine.stack.LootCompat.getLootTable(level.getServer(), randomTable(random));
         if (table == LootTable.EMPTY) return List.of();
         net.minecraft.world.level.storage.loot.LootParams params =
                 new net.minecraft.world.level.storage.loot.LootParams.Builder(level)

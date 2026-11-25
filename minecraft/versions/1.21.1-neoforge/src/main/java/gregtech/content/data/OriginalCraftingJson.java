@@ -27,9 +27,7 @@ public final class OriginalCraftingJson {
     /** Preserve serializable components, including those attached by other mods when stacks are constructed. */
     public static JsonObject result(ResourceLocation id, ItemStack output) {
         try {
-            var lookup = gregtech.engine.tool.GTToolEnchantments.currentLookup();
-            if (lookup == null)
-                lookup = net.minecraft.core.RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY);
+            var lookup = gregtech.engine.stack.RegistryContext.current();
             var result = ItemStack.CODEC
                     .encodeStart(lookup.createSerializationContext(JsonOps.INSTANCE), output)
                     .getOrThrow()

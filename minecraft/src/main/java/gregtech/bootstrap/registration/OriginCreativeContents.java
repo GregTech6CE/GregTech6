@@ -120,7 +120,7 @@ public final class OriginCreativeContents {
     }
     public static synchronized Map<String,List<ItemStack>> pages() {
 //? if >=1.21.1 {
-        /*var lookup = gregtech.engine.tool.GTToolEnchantments.currentLookup();
+        /*var lookup = gregtech.engine.stack.RegistryContext.currentActive();
         var enchantmentRegistry = lookup == null ? null : lookup.lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT);
         if (pages != null && pagesEnchantmentRegistry == enchantmentRegistry) return pages;
 *///?} else {
@@ -197,7 +197,7 @@ public final class OriginCreativeContents {
         // Creative convenience: the fluids page leads with a payload-carrying water carrier. The bare
         // shell itself stays hidden by CatalogVisibility.
         var water = gregtech.engine.fluid.FluidDisplayBinding.display(
-                gregtech.engine.fluid.FluidDisplayBinding.currentLookup(),
+                gregtech.engine.stack.RegistryContext.current(),
                 new FluidStack(net.minecraft.world.level.material.Fluids.WATER, 1000));
         if (!water.isEmpty()) result.get("fluids").add(0, water);
         result.replaceAll((family,stacks)->List.copyOf(stacks));pages=Collections.unmodifiableMap(result);

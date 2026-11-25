@@ -4,6 +4,7 @@ import gregtech.content.data.RegisteredFluids;
 import gregtech.content.item.FluidDisplayItemLike;
 import gregtech.content.registry.GTFluidItems;
 import gregtech.engine.stack.NbtCompat;
+import gregtech.engine.stack.RegistryContext;
 import gregtech.engine.stack.StackData;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -13,35 +14,18 @@ import net.minecraft.world.level.material.Fluids;
 import org.jetbrains.annotations.Nullable;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.server.ServerLifecycleHooks;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.server.ServerLifecycleHooks;
 //?}
 
 /** Lossless actual-fluid payload for display items, including external fluids and fluid NBT. */
 public final class FluidDisplayBinding {
     public static final String TAG = "gt.display_fluid";
-    private static volatile java.util.function.Supplier<HolderLookup.Provider> clientLookup = () -> null;
 
     private FluidDisplayBinding() {}
 
-    public static void setClientLookup(java.util.function.Supplier<HolderLookup.Provider> lookup) {
-        clientLookup = java.util.Objects.requireNonNull(lookup);
-    }
-
-    public static @Nullable HolderLookup.Provider currentLookup() {
-        var server = ServerLifecycleHooks.getCurrentServer();
-        return server == null ? clientLookup.get() : server.registryAccess();
-    }
-
     public static FluidStack resolveCurrent(ItemStack stack) {
-        var lookup = currentLookup();
-//? if >=1.21.1 {
-        /*return hasPayload(stack) && lookup == null ? FluidStack.EMPTY : resolve(lookup, stack);
-*///?} else {
-        return resolve(lookup, stack);
-//?}
+        return resolve(RegistryContext.current(), stack);
     }
 
     public static boolean hasPayload(ItemStack stack) {

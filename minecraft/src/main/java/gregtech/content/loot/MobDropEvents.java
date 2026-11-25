@@ -80,13 +80,10 @@ public final class MobDropEvents {
         var dead = event.getEntity();
         if (dead.level().isClientSide || dead instanceof Player) return;
 //? if >=1.21.1 {
-        /*apply(dead, event.getDrops(), looting(event), event.isRecentlyHit());
-    }
-    private static int looting(LivingDropsEvent event) {
-        if (!(event.getSource().getEntity() instanceof LivingEntity attacker)) return 0;
-        var enchantment = event.getEntity().registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT)
-                .getOrThrow(net.minecraft.world.item.enchantment.Enchantments.LOOTING);
-        return net.minecraft.world.item.enchantment.EnchantmentHelper.getEnchantmentLevel(enchantment, attacker);
+        /*int looting = event.getSource().getEntity() instanceof LivingEntity attacker
+                ? gregtech.engine.stack.EnchantmentCompat.looting(attacker)
+                : 0;
+        apply(dead, event.getDrops(), looting, event.isRecentlyHit());
 *///?} else {
         apply(dead, event.getDrops(), event.getLootingLevel(), event.isRecentlyHit());
 //?}

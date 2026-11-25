@@ -95,11 +95,7 @@ public class BookShelfBlockEntity extends GTBlockEntity {
         for (int face = 0; face < 2; face++) {
             var id = face == 0 ? frontLoot : backLoot;
             if (id == null) continue;
-//? if >=1.21.1 {
-            /*var table = server.getServer().reloadableRegistries().getLootTable(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.LOOT_TABLE,id));
-*///?} else {
-            var table = server.getServer().getLootData().getLootTable(id);
-//?}
+            var table = gregtech.engine.stack.LootCompat.getLootTable(server.getServer(), id);
             if (table == net.minecraft.world.level.storage.loot.LootTable.EMPTY) continue;
             var params = new net.minecraft.world.level.storage.loot.LootParams.Builder(server)
                     .withParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.ORIGIN,

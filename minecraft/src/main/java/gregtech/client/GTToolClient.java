@@ -7,13 +7,11 @@ import gregtech.content.item.GTToolItem;
 import gregtech.content.registry.GTToolItems;
 //? if >=1.21.1 {
 /*import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 *///?} else {
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -26,15 +24,6 @@ import net.minecraftforge.fml.common.Mod;
 //?}
 public final class GTToolClient {
     private GTToolClient() {}
-
-    @SubscribeEvent
-    public static void setup(FMLClientSetupEvent event) {
-        gregtech.engine.tool.GTToolEnchantments.setClientLookup(() -> {
-            var client = net.minecraft.client.Minecraft.getInstance();
-            var connection = client.getConnection();
-            return connection == null ? null : connection.registryAccess();
-        });
-    }
 
     @SubscribeEvent
     public static void registerItemColors(RegisterColorHandlersEvent.Item event) {

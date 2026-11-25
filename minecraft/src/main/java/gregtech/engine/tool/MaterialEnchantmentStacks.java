@@ -18,9 +18,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
-*///?} else {
-import net.minecraft.core.registries.BuiltInRegistries;
-//?}
+*///?}
 
 /** Material ammunition uses real enchantments, including the original caliber looting multiplier. */
 public final class MaterialEnchantmentStacks {
@@ -31,40 +29,19 @@ public final class MaterialEnchantmentStacks {
         if (!(stack.getItem() instanceof MaterialFormItem form) || !form.getPrefix().hasEmptyAmmunitionForm()
                 || !form.getMaterial().isValid() || "Empty".equals(form.getMaterial().getName())) return;
         if (StackData.getBoolean(stack, AMMO_APPLIED, false)) return;
-//? if >=1.21.1 {
-        /*var enchants = new ItemEnchantments.Mutable(stack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY));
-        var registry = level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
-*///?} else {
-        var enchants = EnchantmentHelper.getEnchantments(stack);
-//?}
         int multiplier = form.getPrefix() == MaterialPrefix.bulletGtLarge ? 3 : form.getPrefix() == MaterialPrefix.bulletGtMedium ? 2 : 1;
+        var levels = new java.util.LinkedHashMap<ResourceLocation, Integer>();
         for (var entry : MaterialToolEnchantments.ammunition(form.getMaterial()).entrySet()) {
             int value = entry.getValue() * (entry.getKey().equals("looting") ? multiplier : 1);
-            var id = ResourceLocation.parse(MaterialToolEnchantments.id(entry.getKey()));
-//? if >=1.21.1 {
-            /*registry.get(ResourceKey.create(Registries.ENCHANTMENT, id)).ifPresent(holder -> enchants.upgrade(holder, value));
-*///?} else {
-            var enchantment = BuiltInRegistries.ENCHANTMENT.get(id);
-            if (enchantment != null) enchants.merge(enchantment, value, Math::max);
-//?}
+            levels.merge(ResourceLocation.parse(MaterialToolEnchantments.id(entry.getKey())), value, Math::max);
         }
-//? if >=1.21.1 {
-        /*stack.set(DataComponents.ENCHANTMENTS, enchants.toImmutable());
-*///?} else {
-        EnchantmentHelper.setEnchantments(enchants, stack);
-//?}
+        gregtech.engine.stack.EnchantmentCompat.upgradeAll(stack, levels, level.registryAccess());
         StackData.putBoolean(stack, AMMO_APPLIED, true);
     }
 
     public static int level(ItemStack stack, String name, Level level) {
         var id = ResourceLocation.parse(MaterialToolEnchantments.id(name));
-//? if >=1.21.1 {
-        /*return level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).get(ResourceKey.create(Registries.ENCHANTMENT, id))
-                .map(holder -> EnchantmentHelper.getItemEnchantmentLevel(holder, stack)).orElse(0);
-*///?} else {
-        var enchantment = BuiltInRegistries.ENCHANTMENT.get(id);
-        return enchantment == null ? 0 : EnchantmentHelper.getItemEnchantmentLevel(enchantment, stack);
-//?}
+        return gregtech.engine.stack.EnchantmentCompat.level(stack, id, level);
     }
 
     public static float damageBonus(ItemStack ammo, Entity target, DamageSource source) {

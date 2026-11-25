@@ -15,12 +15,7 @@ public final class ToolPlantHarvest {
     private ToolPlantHarvest() {}
     public static void harvest(GTToolType type, ItemStack tool, Level level, BlockState state, BlockPos pos) {
         if (level.isClientSide || type != GTToolType.SWORD && type != GTToolType.KNIFE && type != GTToolType.SENSE) return;
-        int fortune = net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(
-//? if >=1.21.1 {
-                /*level.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT).getOrThrow(net.minecraft.world.item.enchantment.Enchantments.FORTUNE), tool);
-*///?} else {
-                net.minecraft.world.item.enchantment.Enchantments.BLOCK_FORTUNE, tool);
-//?}
+        int fortune = gregtech.engine.stack.EnchantmentCompat.fortune(tool, level);
         int count;
 //? if >=1.21.1 {
         /*if (state.is(Blocks.SHORT_GRASS) || state.is(Blocks.FERN))

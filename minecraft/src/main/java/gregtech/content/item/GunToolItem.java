@@ -46,7 +46,7 @@ import java.util.*;
 public final class GunToolItem extends GTToolItem {
  public GunToolItem(Properties properties,GTToolType type){super(properties,type);}
  public GunRules.Definition definition(){return GunRules.of(toolType().id());}
- public ItemStack ammunition(ItemStack gun,Level level){var tag=StackData.read(gun);if (tag==null||!tag.contains("gt.ammo",net.minecraft.nbt.Tag.TAG_COMPOUND))return ItemStack.EMPTY;var lookup=level!=null?level.registryAccess():gregtech.engine.fluid.FluidDisplayBinding.currentLookup();return lookup==null?ItemStack.EMPTY:gregtech.engine.stack.NbtCompat.readItem(tag.getCompound("gt.ammo"),lookup);}
+ public ItemStack ammunition(ItemStack gun,Level level){var tag=StackData.read(gun);if (tag==null||!tag.contains("gt.ammo",net.minecraft.nbt.Tag.TAG_COMPOUND))return ItemStack.EMPTY;var lookup=gregtech.engine.stack.RegistryContext.orCurrent(level!=null?level.registryAccess():null);return gregtech.engine.stack.NbtCompat.readItem(tag.getCompound("gt.ammo"),lookup);}
  private void magazine(ItemStack gun,ItemStack ammo,Level level){StackData.update(gun,t->{if (ammo.isEmpty())t.remove("gt.ammo");else t.put("gt.ammo",gregtech.engine.stack.NbtCompat.saveItem(ammo,level.registryAccess()));});}
  public boolean accepts(ItemStack stack){return stack.getItem() instanceof MaterialFormItem form&&form.getPrefix()==definition().ammunition()&&!form.getMaterial().getName().equals("Empty");}
  @Override public InteractionResult onItemUseFirst(ItemStack stack,UseOnContext context){var player=context.getPlayer();if (player==null)return InteractionResult.PASS;activate(context.getLevel(),player,context.getHand());return InteractionResult.sidedSuccess(context.getLevel().isClientSide);}
@@ -76,11 +76,7 @@ public final class GunToolItem extends GTToolItem {
   for (int slot:order){var stock=inventory.getItem(slot);if (!accepts(stock))continue;int count=Math.min(definition().magazine(),stock.getCount());magazine(gun,enchantedAmmo(stock.copyWithCount(count),player.level()),player.level());stock.shrink(count);inventory.setChanged();return true;}
   return false;
  }
-//? if >=1.21.1 {
- /*private static int enchantment(ItemStack stack,String name,Level level){var registry=level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);return registry.get(ResourceKey.create(Registries.ENCHANTMENT,ResourceLocation.parse(name.contains(":")?name:"minecraft:"+name))).map(e->net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(e,stack)).orElse(0);}
-*///?} else {
- private static int enchantment(ItemStack stack,String name,Level level){var enchant=net.minecraft.core.registries.BuiltInRegistries.ENCHANTMENT.get(ResourceLocation.parse(name.contains(":")?name:"minecraft:"+name));return enchant==null?0:net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(enchant,stack);}
-//?}
+ private static int enchantment(ItemStack stack,String name,Level level){return gregtech.engine.stack.EnchantmentCompat.level(stack,name,level);}
  private static ItemStack enchantedAmmo(ItemStack ammo,Level level){
   gregtech.engine.tool.MaterialEnchantmentStacks.applyAmmo(ammo,level);
   return ammo;

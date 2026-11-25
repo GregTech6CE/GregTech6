@@ -74,11 +74,7 @@ public class SafeBlockEntity extends GTBlockEntity {
     /** GT6 rolls one candidate stack per empty slot; preserve preplaced keys and consume the table once. */
     public void generateDungeonLoot() {
         if (dungeonLoot == null || !(level instanceof net.minecraft.server.level.ServerLevel server)) return;
-//? if >=1.21.1 {
-        /*var table = server.getServer().reloadableRegistries().getLootTable(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.LOOT_TABLE, dungeonLoot));
-*///?} else {
-        var table = server.getServer().getLootData().getLootTable(dungeonLoot);
-//?}
+        var table = gregtech.engine.stack.LootCompat.getLootTable(server.getServer(), dungeonLoot);
         if (table == net.minecraft.world.level.storage.loot.LootTable.EMPTY) return;
         var params = new net.minecraft.world.level.storage.loot.LootParams.Builder(server)
                 .withParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.ORIGIN,

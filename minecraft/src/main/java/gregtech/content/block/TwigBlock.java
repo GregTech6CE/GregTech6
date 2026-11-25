@@ -62,12 +62,7 @@ public class TwigBlock extends GTBlock {
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         if (placed) return Collections.singletonList(new ItemStack(Items.STICK));
         ItemStack tool = builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.TOOL);
-        int fortune = tool == null ? 0 : net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(
-//? if >=1.21.1 {
-                /*builder.getLevel().registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT).getOrThrow(net.minecraft.world.item.enchantment.Enchantments.FORTUNE), tool);
-*///?} else {
-                net.minecraft.world.item.enchantment.Enchantments.BLOCK_FORTUNE, tool);
-//?}
+        int fortune = tool == null ? 0 : gregtech.engine.stack.EnchantmentCompat.fortune(tool, builder.getLevel());
         var origin = builder.getParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.ORIGIN);
         return Collections.singletonList(contents(builder.getLevel(), BlockPos.containing(origin),
                 1 + builder.getLevel().random.nextInt(1 + fortune)));

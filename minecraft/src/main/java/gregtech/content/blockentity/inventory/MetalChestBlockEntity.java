@@ -146,11 +146,7 @@ public class MetalChestBlockEntity extends GTBlockEntity implements MenuProvider
     public int generateLootIfNeeded() {
         if (lootGenerated || level == null || level.isClientSide) return 0;
         if (dungeonLoot != null && level instanceof net.minecraft.server.level.ServerLevel server) {
-//? if >=1.21.1 {
-            /*var table = server.getServer().reloadableRegistries().getLootTable(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.LOOT_TABLE,dungeonLoot));
-*///?} else {
-            var table = server.getServer().getLootData().getLootTable(dungeonLoot);
-//?}
+            var table = gregtech.engine.stack.LootCompat.getLootTable(server.getServer(), dungeonLoot);
             if (table == net.minecraft.world.level.storage.loot.LootTable.EMPTY) return 0;
             var params = new net.minecraft.world.level.storage.loot.LootParams.Builder(server)
                     .withParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.ORIGIN,

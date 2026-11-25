@@ -75,26 +75,8 @@ public final class GTToolRepairRecipe extends CustomRecipe {
         long remaining = (long) max - first.getDamageValue() + max - second.getDamageValue() + max * 5L / 100;
         result.setDamageValue((int) Math.max(0, max - remaining));
         // Vanilla grid repair removes acquired enchantments, but retains curses. Material bonuses stay.
-//? if >=1.21.1 {
-        /*gregtech.engine.tool.GTToolEnchantments.apply(result, lookup);
-        var enchantments = new net.minecraft.world.item.enchantment.ItemEnchantments.Mutable(
-                result.getOrDefault(net.minecraft.core.component.DataComponents.ENCHANTMENTS,
-                        net.minecraft.world.item.enchantment.ItemEnchantments.EMPTY));
-        for (var tool : tools) for (var entry : tool.getOrDefault(net.minecraft.core.component.DataComponents.ENCHANTMENTS,
-                net.minecraft.world.item.enchantment.ItemEnchantments.EMPTY).entrySet()) {
-            if (entry.getKey().is(net.minecraft.tags.EnchantmentTags.CURSE))
-                enchantments.upgrade(entry.getKey(), entry.getIntValue());
-        }
-        result.set(net.minecraft.core.component.DataComponents.ENCHANTMENTS, enchantments.toImmutable());
-*///?} else {
         gregtech.engine.tool.GTToolEnchantments.apply(result, lookup);
-        var enchantments = net.minecraft.world.item.enchantment.EnchantmentHelper.getEnchantments(result);
-        for (var tool : tools) net.minecraft.world.item.enchantment.EnchantmentHelper.getEnchantments(tool)
-                .forEach((enchantment, level) -> {
-                    if (enchantment.isCurse()) enchantments.merge(enchantment, level, Math::max);
-                });
-        net.minecraft.world.item.enchantment.EnchantmentHelper.setEnchantments(enchantments, result);
-//?}
+        for (var tool : tools) gregtech.engine.stack.EnchantmentCompat.copyCurses(tool, result);
         return result;
     }
 

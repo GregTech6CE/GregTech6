@@ -237,11 +237,7 @@ public class ManualToolBlockEntity extends GTBlockEntity {
             if (enchantmentXp > 0) {
                 ItemStack result = held.copyWithCount(1);
                 int xp = enchantmentXp;
-//? if >=1.21.1 {
-                /*result.remove(net.minecraft.core.component.DataComponents.ENCHANTMENTS);
-*///?} else {
-                result.removeTagKey("Enchantments");
-//?}
+                gregtech.engine.stack.EnchantmentCompat.clear(result);
                 if (!player.getAbilities().instabuild) held.shrink(1);
                 give(player, result);
                 if (xp > 0 && level instanceof net.minecraft.server.level.ServerLevel server)
@@ -259,15 +255,8 @@ public class ManualToolBlockEntity extends GTBlockEntity {
         // GT6 excludes its own tools and refuses cursed items; books use a different enchantment tag.
         if (held.getItem() instanceof gregtech.content.item.GTToolItem || !held.isEnchanted()
                 || held.is(net.minecraft.world.item.Items.ENCHANTED_BOOK)) return 0;
-//? if >=1.21.1 {
-        /*var enchantments = net.minecraft.world.item.enchantment.EnchantmentHelper.getEnchantmentsForCrafting(held);
-        if (enchantments.keySet().stream().anyMatch(holder -> holder.is(net.minecraft.tags.EnchantmentTags.CURSE))) return 0;
-        int sum = enchantments.entrySet().stream().mapToInt(entry -> entry.getKey().value().getMinCost(entry.getIntValue())).sum();
-*///?} else {
-        var enchantments = net.minecraft.world.item.enchantment.EnchantmentHelper.getEnchantments(held);
-        if (enchantments.keySet().stream().anyMatch(net.minecraft.world.item.enchantment.Enchantment::isCurse)) return 0;
-        int sum = enchantments.entrySet().stream().mapToInt(entry -> entry.getKey().getMinCost(entry.getValue())).sum();
-//?}
+        if (gregtech.engine.stack.EnchantmentCompat.hasCurse(held)) return 0;
+        int sum = gregtech.engine.stack.EnchantmentCompat.minCostSum(held);
         return (sum + 1) / 2;
     }
 

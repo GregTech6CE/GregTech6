@@ -1,6 +1,7 @@
 package gregtech.engine.tool;
 
 import gregtech.content.tool.MaterialToolEnchantments;
+import gregtech.engine.stack.RegistryContext;
 import gregtech.engine.stack.StackData;
 import net.minecraft.core.HolderLookup;
 import org.jetbrains.annotations.Nullable;
@@ -8,12 +9,8 @@ import org.jetbrains.annotations.Nullable;
 /*import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.neoforged.fml.util.thread.EffectiveSide;
-import net.neoforged.neoforge.server.ServerLifecycleHooks;
 *///?} else {
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraftforge.fml.util.thread.EffectiveSide;
-import net.minecraftforge.server.ServerLifecycleHooks;
 //?}
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -30,21 +27,9 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 public final class GTToolEnchantments {
     private GTToolEnchantments() {}
     private static final String APPLIED = "gt.material_enchantments.v2";
-    private static volatile java.util.function.Supplier<HolderLookup.Provider> clientLookup = () -> null;
-
-    public static void setClientLookup(java.util.function.Supplier<HolderLookup.Provider> lookup) {
-        clientLookup = java.util.Objects.requireNonNull(lookup);
-    }
-
-    /** Integrated-server holders cannot be encoded against the client connection's registry. */
-    public static @Nullable HolderLookup.Provider currentLookup() {
-        if (EffectiveSide.get().isClient()) return clientLookup.get();
-        var server = ServerLifecycleHooks.getCurrentServer();
-        return server == null ? null : server.registryAccess();
-    }
 
     public static void applyCurrent(ItemStack stack) {
-        apply(stack, currentLookup());
+        apply(stack, RegistryContext.currentActive());
     }
 
     /** Enchantment holders resolve against the active data pack, so a detached lookup is a no-op. */

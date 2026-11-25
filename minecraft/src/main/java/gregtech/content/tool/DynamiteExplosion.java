@@ -9,7 +9,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -69,11 +68,7 @@ public final class DynamiteExplosion extends Explosion {
                 (1+(world.random.nextFloat()-world.random.nextFloat())*.2f)*.7f);
         if (effects) world.sendParticles(ParticleTypes.EXPLOSION,center.getX()+.5,center.getY()+.5,center.getZ()+.5,1,0,0,0,0);
         ItemStack tool=new ItemStack(Items.DIAMOND_PICKAXE);
-//? if >=1.21.1 {
-        /*tool.enchant(world.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE),fortune);
-*///?} else {
-        tool.enchant(Enchantments.BLOCK_FORTUNE,fortune);
-//?}
+        gregtech.engine.stack.EnchantmentCompat.enchantFortune(tool, fortune, world);
         // Snapshot the positions: chain explosions can change the world while callbacks run.
         for (var pos:new ArrayList<>(getToBlow())) {
             var state=world.getBlockState(pos);
