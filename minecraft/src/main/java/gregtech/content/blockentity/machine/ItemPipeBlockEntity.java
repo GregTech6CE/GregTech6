@@ -633,72 +633,16 @@ public class ItemPipeBlockEntity extends GTBlockEntity
         }
     }
 
-    /**
-     * Auto-connect on placement: the clicked face connects both ways, every other side completes a
-     * connection the neighbour already declares, and a block implementing
-     * {@link gregtech.api.transport.ItemPipeConnectable} connects on any face.
-     * Faces the wrench closed stay closed.
-     */
+    private static final PipeAutoConnections<ItemPipeBlockEntity> AUTO_CONNECTIONS = new PipeAutoConnections<>(
+            ItemPipeBlockEntity.class, ItemPipeBlock::propFor, ItemPipeBlockEntity::isFaceManuallyDisconnected,
+            ItemPipeBlockEntity::isConnectableNeighbor, ItemPipeBlockEntity::isNativePlacementEndpoint);
+
     public void autoConnectOnPlace(@Nullable Direction clickedFace) {
-        if (level == null || level.isClientSide) return;
-
-        if (clickedFace != null) {
-            Direction side = clickedFace.getOpposite();
-            if (canAutoConnect(side)) {
-                BlockEntity be = level.getBlockEntity(worldPosition.relative(side));
-                if (be instanceof ItemPipeBlockEntity neighborPipe) {
-                    if (!neighborPipe.isFaceManuallyDisconnected(clickedFace)) {
-                        connectOwnFace(side);
-                        BlockState neighborState = level.getBlockState(neighborPipe.getBlockPos());
-                        if (!neighborState.getValue(ItemPipeBlock.propFor(clickedFace))) {
-                            level.setBlockAndUpdate(neighborPipe.getBlockPos(),
-                                    neighborState.setValue(ItemPipeBlock.propFor(clickedFace), true));
-                        }
-                    }
-                } else if (isConnectableNeighbor(side) || isNativePlacementEndpoint(side)) {
-                    connectOwnFace(side);
-                }
-            }
-        }
-
-        for (Direction dir : Direction.values()) {
-            if (!canAutoConnect(dir)) continue;
-            BlockEntity be = level.getBlockEntity(worldPosition.relative(dir));
-            if (be instanceof ItemPipeBlockEntity neighborPipe) {
-                if (!neighborPipe.isFaceManuallyDisconnected(dir.getOpposite())
-                        && level.getBlockState(neighborPipe.getBlockPos())
-                                .getValue(ItemPipeBlock.propFor(dir.getOpposite()))) {
-                    connectOwnFace(dir);
-                }
-            } else if (isConnectableNeighbor(dir)) {
-                connectOwnFace(dir);
-            }
-        }
+        AUTO_CONNECTIONS.onPlace(this, clickedFace);
     }
 
-    /**
-     * Adds one connection after a neighbour was placed or changed. Returns whether anything changed.
-     * Never opens a face the wrench closed on either pipe.
-     */
     public boolean tryConnectTo(Direction side) {
-        if (!canAutoConnect(side)) return false;
-        BlockPos neighborPos = worldPosition.relative(side);
-        BlockEntity be = level.getBlockEntity(neighborPos);
-        if (be instanceof ItemPipeBlockEntity neighborPipe) {
-            // Complete a half-connection only: two pipes stay apart until one side declares the other,
-            // exactly like the placement scan.
-            if (neighborPipe.isFaceManuallyDisconnected(side.getOpposite())) return false;
-            if (!level.getBlockState(neighborPos).getValue(ItemPipeBlock.propFor(side.getOpposite()))) return false;
-            return connectOwnFace(side);
-        }
-        return isConnectableNeighbor(side) && connectOwnFace(side);
-    }
-
-    private boolean canAutoConnect(Direction side) {
-        if (isFaceManuallyDisconnected(side)) return false;
-        BlockPos neighborPos = worldPosition.relative(side);
-        return level.hasChunkAt(neighborPos)
-                && gregtech.content.cover.CoverConnections.canConnect(level, worldPosition, side);
+        return AUTO_CONNECTIONS.tryConnect(this, side);
     }
 
     /** Ordinary capability endpoints connect only when explicitly clicked during placement. */
@@ -715,13 +659,6 @@ public class ItemPipeBlockEntity extends GTBlockEntity
                 && block.canConnectItemPipe(neighborSide)) return true;
         return level.getBlockEntity(neighborPos) instanceof gregtech.api.transport.ItemPipeConnectable host
                 && host.canConnectItemPipe(neighborSide);
-    }
-
-    private boolean connectOwnFace(Direction side) {
-        BlockState state = level.getBlockState(worldPosition);
-        if (state.getValue(ItemPipeBlock.propFor(side))) return false;
-        level.setBlockAndUpdate(worldPosition, state.setValue(ItemPipeBlock.propFor(side), true));
-        return true;
     }
 
     public boolean isFaceManuallyDisconnected(Direction side) {

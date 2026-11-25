@@ -71,6 +71,23 @@ public final class PipePlacementTests {
     }
 
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 100)
+    public static void pipePlacedBetweenTwoClosedPipesLinksOnlyTheClickedPair(GameTestHelper helper) {
+        String item = "item_pipe_medium_electrum";
+        BlockPos clicked = at(helper, 1, 1, 2);
+        BlockPos middle = clicked.east();
+        BlockPos other = middle.east();
+        helper.getLevel().setBlockAndUpdate(clicked, block(item).defaultBlockState());
+        helper.getLevel().setBlockAndUpdate(other, block(item).defaultBlockState());
+
+        helper.assertTrue(place(helper, clicked, Direction.EAST, item), "the middle pipe places against the first pipe");
+        helper.assertTrue(connected(helper, clicked, ItemPipeBlock.EAST) && connected(helper, middle, ItemPipeBlock.WEST),
+                "the placed pipe and the clicked neighbor open their shared faces");
+        helper.assertFalse(connected(helper, middle, ItemPipeBlock.EAST) || connected(helper, other, ItemPipeBlock.WEST),
+                "the second neighbor and the placed pipe keep their shared faces closed");
+        clear(helper, clicked, middle, other);
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 100)
     public static void hopperPlacedFacingAPipeLinksThatFace(GameTestHelper helper) {
         BlockPos pipe = at(helper, 2, 1, 1);
         helper.getLevel().setBlockAndUpdate(pipe, block("item_pipe_medium_electrum").defaultBlockState());
