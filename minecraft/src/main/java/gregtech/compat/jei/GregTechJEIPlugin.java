@@ -22,8 +22,7 @@ import java.util.Map;
  * JEI integration for GT6: one generic {@link RecipeMapCategory} per {@link RecipeMap}
  * that contains recipes, populated from the map's recipe list.
  *
- * <p>{@code FluidItem} proxies appear in JEI's item panel automatically
- * (they are registered in the {@code GregTech Fluids} creative tab).</p>
+ * <p>Fluid lookups use JEI's native fluid ingredients. Display items remain available in the creative tab.</p>
  */
 @JeiPlugin
 public final class GregTechJEIPlugin implements IModPlugin {
@@ -36,7 +35,10 @@ public final class GregTechJEIPlugin implements IModPlugin {
             return true;
         });
         var legacy = net.minecraft.core.registries.BuiltInRegistries.ITEM.stream()
-                .filter(item -> !gregtech.content.item.CatalogVisibility.visible(new ItemStack(item)))
+                .filter(item -> {
+                    var stack = new ItemStack(item);
+                    return item instanceof gregtech.content.item.FluidDisplayItemLike || !gregtech.content.item.CatalogVisibility.visible(stack);
+                })
                 .map(ItemStack::new).toList();
         runtime.getIngredientManager().removeIngredientsAtRuntime(mezz.jei.api.constants.VanillaTypes.ITEM_STACK, legacy);
     }

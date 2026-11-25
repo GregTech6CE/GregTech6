@@ -73,7 +73,7 @@ public final class GTFluidType {
         boolean castable = material.isValid() && !MaterialStackItemHelper.mat(MaterialPrefix.ingot, material, 1).isEmpty();
         var traits =
                 new Traits(phase, flags, castable, FluidHazards.isAcid(fluid), FluidHazards.isMagic(fluid), industrial);
-        var facts = new Facts(registry, formula, owner, amount, advanced, physical, traits);
+        var facts = new Facts(id.toString(), formula, owner, amount, advanced, physical, traits);
         var fuels = new ArrayList<Fuel>();
         if (!industrial) for (var map : FuelRecipeMaps.FUEL_MAP_LIST) {
             var recipes = map.recipesForFluid(stack);

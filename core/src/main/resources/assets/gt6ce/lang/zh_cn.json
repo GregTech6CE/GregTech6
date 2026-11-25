@@ -1,4 +1,5 @@
 {
+  "item.gt6ce.fluid_display": "流体展示物品",
   "tooltip.gt6ce.composition_scaled_damage": "材料数量已按剩余耐久计算",
   "tooltip.gt6ce.composition_stored_contents": "回收材料前请清空内部物品或流体",
   "tooltip.gt6ce.composition_container": "此装满的容器不能进行材料回收",

@@ -10,7 +10,6 @@ import net.minecraft.nbt.CompoundTag;
 //?}
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import java.util.ArrayList;
 import java.util.List;
 
 /** A visible GT fluid item with the actual fluid key and components for EMI recipe queries. */
@@ -42,21 +41,23 @@ final class FluidDisplayEmiStack extends EmiStack {
     @Override public CompoundTag getNbt() { return fluid.getNbt(); }
 //?}
     @Override public Object getKey() { return fluid.getKey(); }
-    @Override public ResourceLocation getId() { return indexIcon ? icon.getId() : fluid.getId(); }
+    @Override public ResourceLocation getId() { return fluid.getId(); }
     @Override public net.minecraft.world.item.ItemStack getItemStack() { return indexIcon ? icon.getItemStack() : net.minecraft.world.item.ItemStack.EMPTY; }
-    @Override public Component getName() { return icon.getName(); }
+    @Override public Component getName() { return fluid.getName(); }
     @Override public void render(GuiGraphics graphics, int x, int y, float delta, int flags) {
         icon.render(graphics, x, y, delta, flags & ~RENDER_AMOUNT);
     }
     @Override public List<Component> getTooltipText() {
-        var lines = new ArrayList<>(icon.getTooltipText());
-        lines.add(gregtech.engine.fluid.FluidUnits.text("gt6ce.fluid.amount", amount));
-        return lines;
+        var type = (net.minecraft.world.level.material.Fluid) fluid.getKey();
+//? if >=1.21.1 {
+        /*var stack = new net.neoforged.neoforge.fluids.FluidStack(type.builtInRegistryHolder(), 1, fluid.getComponentChanges());
+*///?} else {
+        var stack = new net.minecraftforge.fluids.FluidStack(type, 1, fluid.getNbt());
+//?}
+        return gregtech.client.gui.FluidSlotPresentation.viewerTooltip(stack, amount);
     }
     @Override public List<ClientTooltipComponent> getTooltip() {
-        var lines = new ArrayList<>(icon.getTooltip());
-        lines.add(ClientTooltipComponent.create(gregtech.engine.fluid.FluidUnits.text("gt6ce.fluid.amount", amount).getVisualOrderText()));
-        return lines;
+        return getTooltipText().stream().map(line -> ClientTooltipComponent.create(line.getVisualOrderText())).toList();
     }
 
     /** Bookmarks persist the fluid identity and its display icon separately, just like live queries. */

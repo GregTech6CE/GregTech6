@@ -83,15 +83,15 @@ public final class GregTechEMIPlugin implements EmiPlugin {
                         dev.emi.emi.api.recipe.VanillaEmiRecipeCategories.CRAFTING, EmiStack.of(new ItemStack(table)));
         EmiCatalogRepair.apply();
         // Native fluid proxies carry a creative payload only in cheat mode; never filter them out.
-        registry.removeEmiStacks(stack -> !(stack instanceof NativeFluidEmiStack)
-                && !gregtech.content.item.CatalogVisibility.visible(stack.getItemStack()));
-        // Dedicated lava display and the generic fluid_display carrier duplicate native fluids in EMI's item list.
-        var lavaDisplayId = ResourceLocation.fromNamespaceAndPath(
-                gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE, "fluid_item_lava");
-        var genericDisplayId = ResourceLocation.fromNamespaceAndPath(
-                gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE, "fluid_display");
-        registry.removeEmiStacks(stack -> !(stack instanceof NativeFluidEmiStack)
-                && (lavaDisplayId.equals(stack.getId()) || genericDisplayId.equals(stack.getId())));
+        var genericDisplay = gregtech.content.registry.GTFluidItems.generic();
+        var lavaDisplay = gregtech.platform.Mc.item(gregtech.platform.Mc.gregtechId("fluid_item_lava"));
+        registry.removeEmiStacks(stack -> {
+            if (stack instanceof NativeFluidEmiStack) return false;
+            var item = stack.getItemStack();
+            return item.getItem() == genericDisplay
+                    || item.getItem() == lavaDisplay
+                    || !gregtech.content.item.CatalogVisibility.visible(item);
+        });
         // EMI builds repair entries from canBeDepleted() alone, so GT tools would still show a dead recipe.
         registry.removeRecipes(GregTechEMIPlugin::repairedGtTool);
         for (var item : gregtech.engine.recipe.UsbRecipeDisplayBinding.sticks())

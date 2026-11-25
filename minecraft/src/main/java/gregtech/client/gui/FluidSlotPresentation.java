@@ -17,17 +17,25 @@ import net.minecraftforge.fluids.FluidStack;
 //?}
 
 /** Shared tank tooltips and compact, left-aligned quantity labels. */
-final class FluidSlotPresentation {
+public final class FluidSlotPresentation {
     private FluidSlotPresentation() {}
 
     static List<Component> tooltip(FluidStack fluid, long amount, long capacity) {
+        return tooltip(fluid, amount, capacity, false);
+    }
+
+    public static List<Component> viewerTooltip(FluidStack fluid, long amount) {
+        return tooltip(fluid, amount, -1, true);
+    }
+
+    private static List<Component> tooltip(FluidStack fluid, long amount, long capacity, boolean advanced) {
         if (fluid.isEmpty()) return List.of(Component.translatable("gui.gt6ce.empty")
                 .append("/" + (capacity == Long.MAX_VALUE ? "∞" : Long.toString(capacity)) + FluidUnits.unit()));
         var result = new ArrayList<Component>();
         var entry = GTFluids.entryForFluid(fluid.getFluid());
         result.add(entry == null ? fluid.getDisplayName()
                 : GTFluidType.describe(entry, RegisteredFluids.sanitizePath(entry.registryName())));
-        result.addAll(GTFluidType.describeTooltip(fluid, amount, capacity, false));
+        result.addAll(GTFluidType.describeTooltip(fluid, amount, capacity, advanced));
         return result;
     }
 
