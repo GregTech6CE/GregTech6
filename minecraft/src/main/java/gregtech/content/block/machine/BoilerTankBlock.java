@@ -1,9 +1,12 @@
 package gregtech.content.block.machine;
 
-import gregtech.engine.tool.MachineRotationType;
-import gregtech.engine.machine.BoilerSpec;
+import gregtech.content.block.GTBlock;
 import gregtech.content.blockentity.machine.BoilerTankBlockEntity;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.engine.machine.BoilerSpec;
+import gregtech.engine.tool.MachineRotationType;
+import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -26,17 +29,15 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 
-import javax.annotation.Nullable;
-import java.util.List;
-
-import gregtech.content.block.GTBlock;
 /**
  * GT6 single-block Steam Boiler Tank. Symmetric full cube (top/bottom/side
  * material-tinted textures); HU in from any face, steam out the top.
  * The front face shows a pressure gauge; rotate with a wrench.
  */
-public class BoilerTankBlock extends GTBlock implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget,
-        gregtech.engine.machine.PipeGeometry.FluidConnectorGeometry {
+public class BoilerTankBlock extends GTBlock
+        implements EntityBlock,
+                gregtech.engine.tool.ToolInteractionTarget,
+                gregtech.engine.machine.PipeGeometry.FluidConnectorGeometry {
 
     /** Original boilers retain a full-width attachment surface; they do not use the engine's tiny outlets. */
     @Override
@@ -44,22 +45,32 @@ public class BoilerTankBlock extends GTBlock implements EntityBlock, gregtech.en
         return gregtech.engine.machine.PipeGeometry.virtual(8);
     }
 
-    @Override public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state,ItemStack tool) {
+    @Override
+    public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return gregtech.engine.tool.GTToolHelper.isMachineWrench(tool)
-                ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING,MachineRotationType.HORIZONTAL) : null;
+                ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING, MachineRotationType.HORIZONTAL)
+                : null;
     }
     /** Source boiler collision bounds are inset two pixels so touching entities enter its heat surface. */
-    @Override public net.minecraft.world.phys.shapes.VoxelShape getCollisionShape(BlockState state,BlockGetter level,BlockPos pos,
+    @Override
+    public net.minecraft.world.phys.shapes.VoxelShape getCollisionShape(
+            BlockState state,
+            BlockGetter level,
+            BlockPos pos,
             net.minecraft.world.phys.shapes.CollisionContext context) {
-        return Block.box(2,2,2,14,14,14);
+        return Block.box(2, 2, 2, 14, 14, 14);
     }
-    @Override public void entityInside(BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.Entity entity) {
+
+    @Override
+    public void entityInside(BlockState state, Level level, BlockPos pos, net.minecraft.world.entity.Entity entity) {
         if (!level.isClientSide && level.getBlockEntity(pos) instanceof BoilerTankBlockEntity boiler)
-            gregtech.util.GTEntityHelper.applyHeatDamage(entity,boiler.contactDamage());
+            gregtech.util.GTEntityHelper.applyHeatDamage(entity, boiler.contactDamage());
     }
-    @Override public void stepOn(Level level,BlockPos pos,BlockState state,net.minecraft.world.entity.Entity entity) {
-        entityInside(state,level,pos,entity);
-        super.stepOn(level,pos,state,entity);
+
+    @Override
+    public void stepOn(Level level, BlockPos pos, BlockState state, net.minecraft.world.entity.Entity entity) {
+        entityInside(state, level, pos, entity);
+        super.stepOn(level, pos, state, entity);
     }
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
@@ -73,8 +84,8 @@ public class BoilerTankBlock extends GTBlock implements EntityBlock, gregtech.en
     }
 
     @Override
-    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!level.isClientSide && hand == InteractionHand.MAIN_HAND) {
             BlockEntity be = level.getBlockEntity(pos);
             if (be instanceof BoilerTankBlockEntity boiler) {
@@ -92,31 +103,28 @@ public class BoilerTankBlock extends GTBlock implements EntityBlock, gregtech.en
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+        return defaultBlockState()
+                .setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
 
-    public BoilerSpec spec() { return spec; }
+    public BoilerSpec spec() {
+        return spec;
+    }
 
     // GT6 MultiTileEntityBoilerTank.removedByPlayer: pressure > 4/31, survival only.
     @Override
-//? if >=1.21.1 {
-    /*public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-*///?} else {
-    public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-//?}
-        if (!level.isClientSide && !player.isCreative()
+    protected void onPlayerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+        if (!level.isClientSide
+                && !player.isCreative()
                 && level.getBlockEntity(pos) instanceof BoilerTankBlockEntity boiler
                 && boiler.barometerValue() > 4) boiler.explode();
-//? if >=1.21.1 {
-        /*return super.playerWillDestroy(level, pos, state, player);
-*///?} else {
-        super.playerWillDestroy(level, pos, state, player);
-//?}
     }
 
     @Override
-    public List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder context) {
-        var entity = context.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY);
+    public List<ItemStack> getDrops(
+            BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder context) {
+        var entity = context.getOptionalParameter(
+                net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY);
         if (entity instanceof BoilerTankBlockEntity boiler && boiler.barometerValue() > 4) return List.of();
         return List.of(new ItemStack(this));
     }
@@ -130,13 +138,15 @@ public class BoilerTankBlock extends GTBlock implements EntityBlock, gregtech.en
     @Nullable
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide || type != GTBlockEntities.STEAM_BOILER.get()) return null;
         return (BlockEntityTicker<T>) (BlockEntityTicker<BoilerTankBlockEntity>) BoilerTankBlockEntity::serverTick;
     }
 
     @Override
-    protected void appendTooltip(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
+    protected void appendTooltip(
+            ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
         var data = gregtech.engine.stack.BlockEntityData.read(stack);
         int efficiency = data != null && data.contains("gt.efficiency") ? data.getShort("gt.efficiency") : 10000;
         gregtech.client.FunctionalBlockTooltips.appendBoiler(spec, efficiency, getExplosionResistance(), tooltip);

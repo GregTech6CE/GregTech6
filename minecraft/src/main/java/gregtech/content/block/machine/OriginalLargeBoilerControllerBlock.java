@@ -122,18 +122,10 @@ public final class OriginalLargeBoilerControllerBlock extends GTHorizontalDirect
         if (saved != null && level.getBlockEntity(pos) instanceof OriginalLargeBoilerControllerBlockEntity boiler)
             boiler.loadItemConfig(saved);
     }
-//? if >=1.21.1 {
-    /*@Override public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-*///?} else {
-    @Override public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-//?}
+    @Override
+    protected void onPlayerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
         if (!level.isClientSide && !player.isCreative()
                 && level.getBlockEntity(pos) instanceof OriginalLargeBoilerControllerBlockEntity boiler
                 && boiler.barometerValue() > 4) boiler.explode();
-//? if >=1.21.1 {
-        /*return super.playerWillDestroy(level, pos, state, player);
-*///?} else {
-        super.playerWillDestroy(level, pos, state, player);
-//?}
     }
 }

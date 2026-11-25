@@ -31,19 +31,25 @@ public final class SpectatorMenus {
     public static boolean canOpen(Level level, BlockHitResult hit) {
         var pos = hit.getBlockPos();
         var state = level.getBlockState(pos);
-        if (!BuiltInRegistries.BLOCK.getKey(state.getBlock()).getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return false;
+        if (!BuiltInRegistries.BLOCK
+                .getKey(state.getBlock())
+                .getNamespace()
+                .equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return false;
         var entity = level.getBlockEntity(pos);
         if (entity instanceof BasicMachineBlockEntity && state.getBlock() instanceof BasicMachineBlock
                 || entity instanceof BehaviorMachineBlockEntity) return true;
         if (entity instanceof AdvancedCraftingTableBlockEntity) {
             return hit.getDirection() == Direction.UP
-                    || hit.getDirection().getAxis() == state.getValue(AdvancedCraftingTableBlock.FACING).getAxis();
+                    || hit.getDirection().getAxis()
+                            == state.getValue(AdvancedCraftingTableBlock.FACING).getAxis();
         }
-        if (entity instanceof DrawerQuadBlockEntity) return hit.getDirection() == state.getValue(DrawerQuadBlock.FACING);
+        if (entity instanceof DrawerQuadBlockEntity)
+            return hit.getDirection() == state.getValue(DrawerQuadBlock.FACING);
         return entity instanceof SafeBlockEntity
                 || entity instanceof EnergyNodeBlockEntity node && node.isBatteryBox()
                 || entity instanceof FunctionalPartRuntime.Host host
-                        && host.function() != null && host.function().opensMenu()
+                        && host.function() != null
+                        && host.function().opensMenu()
                 || entity instanceof FilterBlockEntity
                 || entity instanceof MenuProvider;
     }
@@ -60,21 +66,26 @@ public final class SpectatorMenus {
             Mc.openMenu(player, machine, buf -> buf.writeBlockPos(pos));
         } else if (entity instanceof AdvancedCraftingTableBlockEntity table) {
             boolean upper = hit.getDirection() == Direction.UP;
-            if (!upper && hit.getDirection().getAxis() != state.getValue(AdvancedCraftingTableBlock.FACING).getAxis()) return false;
-            player.openMenu(new SimpleMenuProvider((id, inv, p) -> upper
-                    ? new AdvancedCraftingMenu(id, inv, table) : table.storageMenu(id, inv), title));
+            if (!upper
+                    && hit.getDirection().getAxis()
+                            != state.getValue(AdvancedCraftingTableBlock.FACING).getAxis()) return false;
+            player.openMenu(new SimpleMenuProvider(
+                    (id, inv, p) -> upper ? new AdvancedCraftingMenu(id, inv, table) : table.storageMenu(id, inv),
+                    title));
         } else if (entity instanceof DrawerQuadBlockEntity drawer) {
             Direction facing = state.getValue(DrawerQuadBlock.FACING);
             if (hit.getDirection() != facing) return false;
             int page = DrawerQuadBlock.quadrant(facing, pos, hit.getLocation());
-            player.openMenu(new SimpleMenuProvider((id, inv, p) -> drawer.createMenu(page, id, inv),
+            player.openMenu(new SimpleMenuProvider(
+                    (id, inv, p) -> drawer.createMenu(page, id, inv),
                     Component.translatable("gui.gt6ce.drawer.page", title, page + 1)));
         } else if (entity instanceof SafeBlockEntity safe) {
             player.openMenu(new SimpleMenuProvider((id, inv, p) -> safe.createMenu(id, inv), title));
         } else if (entity instanceof EnergyNodeBlockEntity node && node.isBatteryBox()) {
             player.openMenu(node.batteryMenu());
         } else if (entity instanceof FunctionalPartRuntime.Host host
-                && host.function() != null && host.function().opensMenu()) {
+                && host.function() != null
+                && host.function().opensMenu()) {
             FunctionalPartInteraction.openMenu(player, host);
         } else if (entity instanceof FilterBlockEntity filter) {
             Mc.openMenu(player, filter, buf -> buf.writeBoolean(filter.prefixMode()));

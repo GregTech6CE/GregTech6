@@ -1,10 +1,10 @@
 package gregtech.content.block.machine;
 
-import gregtech.engine.tool.MachineRotationType;
+import gregtech.client.gui.PartMenu;
+import gregtech.content.blockentity.machine.FunctionalPartRuntime;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
-import gregtech.content.blockentity.machine.FunctionalPartRuntime;
-import gregtech.client.gui.PartMenu;
+import gregtech.engine.tool.MachineRotationType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -20,15 +20,23 @@ import net.minecraft.world.phys.Vec3;
 public final class FunctionalPartInteraction {
     private FunctionalPartInteraction() {}
 
-    public static InteractionResult interact(Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    public static InteractionResult interact(
+            Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!(level.getBlockEntity(pos) instanceof FunctionalPartRuntime.Host host)) return InteractionResult.PASS;
         FunctionalPartRuntime runtime = host.function();
         if (runtime == null) return InteractionResult.PASS;
         var partHit = hitOf(pos, hit);
         if (GTToolHelper.isMachineWrench(player.getItemInHand(hand))) {
             if (runtime.onWrench(player, partHit)) return InteractionResult.sidedSuccess(level.isClientSide);
-            boolean turned = MachineRotationType.handleWrench(level.getBlockState(pos), level, pos, player, hand, hit,
-                    net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING, MachineRotationType.HORIZONTAL);
+            boolean turned = MachineRotationType.handleWrench(
+                    level.getBlockState(pos),
+                    level,
+                    pos,
+                    player,
+                    hand,
+                    hit,
+                    net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING,
+                    MachineRotationType.HORIZONTAL);
             return turned ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
         }
         if (GTToolHelper.matchesTool(player.getItemInHand(hand), GTToolType.MAGNIFYING_GLASS)) {
@@ -52,7 +60,7 @@ public final class FunctionalPartInteraction {
 
     public static gregtech.api.addon.platform.PartHit hitOf(BlockPos pos, BlockHitResult hit) {
         Vec3 at = hit.getLocation();
-        return gregtech.api.addon.platform.PartHit.at(hit.getDirection(),
-                at.x - pos.getX(), at.y - pos.getY(), at.z - pos.getZ());
+        return gregtech.api.addon.platform.PartHit.at(
+                hit.getDirection(), at.x - pos.getX(), at.y - pos.getY(), at.z - pos.getZ());
     }
 }

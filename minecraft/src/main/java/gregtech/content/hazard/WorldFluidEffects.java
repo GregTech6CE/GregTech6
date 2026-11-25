@@ -1,17 +1,16 @@
 package gregtech.content.hazard;
 
-import gregtech.engine.effect.MobEffectCompat;
-import gregtech.engine.fluid.FluidHazards;
 import gregtech.content.damage.GTHazmat;
 import gregtech.content.data.RegisteredFluids;
+import gregtech.engine.effect.MobEffectCompat;
+import gregtech.engine.fluid.FluidHazards;
 import gregtech.platform.Mc;
 import gregtech.util.GTEntityHelper;
+import java.util.List;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.material.Fluid;
-
-import java.util.List;
 
 /**
  * GT6's two <em>world fluid</em> hazard tables: the effects a fluid gives to a body that touches it

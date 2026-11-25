@@ -1,14 +1,11 @@
 package gregtech.content.block.inventory;
 
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
-import gregtech.engine.GTWaterloggable;
 import gregtech.api.material.*;
-
 import gregtech.content.block.GTHorizontalDirectionalBlock;
 import gregtech.content.blockentity.inventory.BottleCrateBlockEntity;
+import gregtech.engine.GTWaterloggable;
 import gregtech.engine.stack.StackCompat;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -21,22 +18,25 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
 /** GT6 bottle crate: nine X/Z cells, whole-stack interaction and inventory-preserving drops. */
-public class BottleCrateBlock extends GTHorizontalDirectionalBlock implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget, SimpleWaterloggedBlock {
+public class BottleCrateBlock extends GTHorizontalDirectionalBlock
+        implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget, SimpleWaterloggedBlock {
     @Override
-    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
-        if (hand != InteractionHand.MAIN_HAND || !(level.getBlockEntity(pos) instanceof BottleCrateBlockEntity crate)) return InteractionResult.PASS;
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (hand != InteractionHand.MAIN_HAND || !(level.getBlockEntity(pos) instanceof BottleCrateBlockEntity crate))
+            return InteractionResult.PASS;
         if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit))
             return InteractionResult.sidedSuccess(level.isClientSide);
         if (level.isClientSide) return InteractionResult.SUCCESS;
@@ -64,19 +64,27 @@ public class BottleCrateBlock extends GTHorizontalDirectionalBlock implements En
 
     private final gregtech.api.material.GTMaterial material;
     private final String woodTexture;
+
     public BottleCrateBlock(Properties properties) {
         this(null, "gt6ce:block/iconsets/planks_treated", properties);
     }
-    public BottleCrateBlock(gregtech.api.material.GTMaterial material,
-                            String woodTexture, Properties properties) {
+
+    public BottleCrateBlock(gregtech.api.material.GTMaterial material, String woodTexture, Properties properties) {
         super(properties);
         this.material = material;
         this.woodTexture = woodTexture;
-        registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH).setValue(GTWaterloggable.WATERLOGGED, false));
+        registerDefaultState(
+                defaultBlockState().setValue(FACING, Direction.NORTH).setValue(GTWaterloggable.WATERLOGGED, false));
     }
 
-    public boolean metal() { return material != null; }
-    public int tintRgb() { return metal() ? material.getColor() : 0xFFFFFF; }
+    public boolean metal() {
+        return material != null;
+    }
+
+    public int tintRgb() {
+        return metal() ? material.getColor() : 0xFFFFFF;
+    }
+
     public String frameTexture() {
         return frameTexture(gregtech.engine.material.MaterialIconDefinitions::classpathResourceExists);
     }
@@ -85,18 +93,29 @@ public class BottleCrateBlock extends GTHorizontalDirectionalBlock implements En
         if (!metal()) return woodTexture;
         var set = gregtech.engine.material.MaterialIconDefinitions.resolveTextureSet(material);
         String file = gregtech.engine.prefix.BlockMaterialPrefix.casingMachine.getTextureFileName();
-        var owner = gregtech.engine.material.MaterialIconDefinitions.resolveBlockTextureOwner(
-                set, file, resourceExists);
+        var owner =
+                gregtech.engine.material.MaterialIconDefinitions.resolveBlockTextureOwner(set, file, resourceExists);
         return "gt6ce:"
                 + gregtech.engine.material.MaterialIconDefinitions.blockIconPath(owner == null ? set : owner, file);
     }
 
-    @Override public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state,ItemStack tool) {
+    @Override
+    public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return gregtech.engine.tool.GTToolHelper.isMachineWrench(tool)
-                ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING,gregtech.engine.tool.MachineRotationType.HORIZONTAL) : null;
+                ? gregtech.engine.tool.ToolInteractionSpec.facing(
+                        FACING, gregtech.engine.tool.MachineRotationType.HORIZONTAL)
+                : null;
     }
-    @Override public int getFlammability(BlockState state,BlockGetter level,BlockPos pos,Direction face) { return metal() ? 0 : 150; }
-    @Override public int getFireSpreadSpeed(BlockState state,BlockGetter level,BlockPos pos,Direction face) { return metal() ? 0 : 150; }
+
+    @Override
+    public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
+        return metal() ? 0 : 150;
+    }
+
+    @Override
+    public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
+        return metal() ? 0 : 150;
+    }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -106,7 +125,10 @@ public class BottleCrateBlock extends GTHorizontalDirectionalBlock implements En
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return GTWaterloggable.getStateForPlacement(defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite()), context);
+        return GTWaterloggable.getStateForPlacement(
+                defaultBlockState()
+                        .setValue(FACING, context.getHorizontalDirection().getOpposite()),
+                context);
     }
 
     @Override
@@ -123,72 +145,92 @@ public class BottleCrateBlock extends GTHorizontalDirectionalBlock implements En
     /** ST.add(player, stack, true): nonheld merges, selected slot, then other empty slots. */
     private static int destination(Player player, ItemStack stack) {
         var inv = player.getInventory();
-        for (int i = 0; i < 36; i++)
-            if (i != inv.selected && fits(inv.getItem(i), stack)) return i;
+        for (int i = 0; i < 36; i++) if (i != inv.selected && fits(inv.getItem(i), stack)) return i;
         if (inv.getSelected().isEmpty() || fits(inv.getSelected(), stack)) return inv.selected;
-        for (int i = 0; i < 36; i++)
-            if (inv.getItem(i).isEmpty()) return i;
+        for (int i = 0; i < 36; i++) if (inv.getItem(i).isEmpty()) return i;
         return -1;
     }
+
     private static boolean fits(ItemStack existing, ItemStack stack) {
-        return !existing.isEmpty() && StackCompat.sameItem(existing, stack)
+        return !existing.isEmpty()
+                && StackCompat.sameItem(existing, stack)
                 && existing.getCount() + stack.getCount() <= existing.getMaxStackSize();
     }
 
     public static boolean isBottle(ItemStack stack) {
         if (stack.isEmpty()) return false;
-        if (stack.is(Items.GLASS_BOTTLE) || stack.is(Items.EXPERIENCE_BOTTLE)
+        if (stack.is(Items.GLASS_BOTTLE)
+                || stack.is(Items.EXPERIENCE_BOTTLE)
                 || stack.getItem() instanceof net.minecraft.world.item.PotionItem
                 || stack.getItem() instanceof gregtech.content.item.BottleItem
                 || stack.is(gregtech.content.item.BottleItem.emptyBottle().getItem())) return true;
-        ItemStack remainder=stack.getCraftingRemainingItem();
-        return remainder.is(Items.GLASS_BOTTLE) || remainder.is(gregtech.content.item.BottleItem.emptyBottle().getItem());
-    }
-
-    @Override public net.minecraft.world.phys.shapes.VoxelShape getShape(BlockState state,BlockGetter level,BlockPos pos,net.minecraft.world.phys.shapes.CollisionContext context) {
-        return box(0,0,0,16,6,16);
-    }
-    @Override public net.minecraft.world.phys.shapes.VoxelShape getCollisionShape(BlockState state,BlockGetter level,BlockPos pos,net.minecraft.world.phys.shapes.CollisionContext context) {
-        return box(0,0,0,16,10,16);
-    }
-    @Override public net.minecraft.world.phys.shapes.VoxelShape getOcclusionShape(BlockState state,BlockGetter level,BlockPos pos) {
-        return net.minecraft.world.phys.shapes.Shapes.empty();
-    }
-
-    @Override public void onRemove(BlockState state,Level level,BlockPos pos,BlockState next,boolean moving) {
-        if (!state.is(next.getBlock()) && level.getBlockEntity(pos) instanceof BottleCrateBlockEntity crate) crate.detachInventory();
-        super.onRemove(state,level,pos,next,moving);
-    }
-
-    @Override public List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
-        if (builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof BottleCrateBlockEntity crate)
-            return List.of(crate.packedStack());
-        return List.of(new ItemStack(this));
-    }
-
-//? if >=1.21.1 {
-    /*@Override public BlockState playerWillDestroy(Level level,BlockPos pos,BlockState state,Player player) {
-*///?} else {
-    @Override public void playerWillDestroy(Level level,BlockPos pos,BlockState state,Player player) {
-//?}
-        if (!level.isClientSide && player.isCreative() && level.getBlockEntity(pos) instanceof BottleCrateBlockEntity crate
-                && !crate.contents().isEmpty()) popResource(level,pos,crate.packedStack());
-//? if >=1.21.1 {
-        /*return super.playerWillDestroy(level,pos,state,player);
-*///?} else {
-        super.playerWillDestroy(level,pos,state,player);
-//?}
+        ItemStack remainder = stack.getCraftingRemainingItem();
+        return remainder.is(Items.GLASS_BOTTLE)
+                || remainder.is(gregtech.content.item.BottleItem.emptyBottle().getItem());
     }
 
     @Override
-    protected void appendTooltip(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip,
-                                TooltipFlag flag) {
+    public net.minecraft.world.phys.shapes.VoxelShape getShape(
+            BlockState state,
+            BlockGetter level,
+            BlockPos pos,
+            net.minecraft.world.phys.shapes.CollisionContext context) {
+        return box(0, 0, 0, 16, 6, 16);
+    }
+
+    @Override
+    public net.minecraft.world.phys.shapes.VoxelShape getCollisionShape(
+            BlockState state,
+            BlockGetter level,
+            BlockPos pos,
+            net.minecraft.world.phys.shapes.CollisionContext context) {
+        return box(0, 0, 0, 16, 10, 16);
+    }
+
+    @Override
+    public net.minecraft.world.phys.shapes.VoxelShape getOcclusionShape(
+            BlockState state, BlockGetter level, BlockPos pos) {
+        return net.minecraft.world.phys.shapes.Shapes.empty();
+    }
+
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState next, boolean moving) {
+        if (!state.is(next.getBlock()) && level.getBlockEntity(pos) instanceof BottleCrateBlockEntity crate)
+            crate.detachInventory();
+        super.onRemove(state, level, pos, next, moving);
+    }
+
+    @Override
+    public List<ItemStack> getDrops(
+            BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
+        if (builder.getOptionalParameter(
+                        net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY)
+                instanceof BottleCrateBlockEntity crate) return List.of(crate.packedStack());
+        return List.of(new ItemStack(this));
+    }
+
+    @Override
+    protected void onPlayerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+        if (!level.isClientSide
+                && player.isCreative()
+                && level.getBlockEntity(pos) instanceof BottleCrateBlockEntity crate
+                && !crate.contents().isEmpty()) popResource(level, pos, crate.packedStack());
+    }
+
+    @Override
+    protected void appendTooltip(
+            ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
         gregtech.client.StorageBlockTooltips.bottleCrate(tooltip);
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
-            LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+    public BlockState updateShape(
+            BlockState state,
+            Direction side,
+            BlockState neighbor,
+            LevelAccessor level,
+            BlockPos pos,
+            BlockPos neighborPos) {
         GTWaterloggable.updateShape(state, level, pos);
         return super.updateShape(state, side, neighbor, level, pos, neighborPos);
     }

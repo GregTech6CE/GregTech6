@@ -31,7 +31,9 @@ final class BottleDrinkFallback {
                             false,
                             false,
                             false,
-                            List.of( new DrinkNutritionRows.Effect("Potion.jump.id", 1200, 1, 90), new DrinkNutritionRows.Effect("PotionsGT.ID_STICKY", 300, 0, 90)))),
+                            List.of(
+                                    new DrinkNutritionRows.Effect("Potion.jump.id", 1200, 1, 90),
+                                    new DrinkNutritionRows.Effect("PotionsGT.ID_STICKY", 300, 0, 90)))),
             Map.entry(
                     "HolyWater",
                     new DrinkNutritionRows.Row(
@@ -45,7 +47,9 @@ final class BottleDrinkFallback {
                             true,
                             false,
                             false,
-                            List.of( new DrinkNutritionRows.Effect("Potion.poison.id", 100, 1, 100), new DrinkNutritionRows.Effect("PotionsGT.ID_INSANITY", 600, 1, 100)))),
+                            List.of(
+                                    new DrinkNutritionRows.Effect("Potion.poison.id", 100, 1, 100),
+                                    new DrinkNutritionRows.Effect("PotionsGT.ID_INSANITY", 600, 1, 100)))),
             Map.entry(
                     "Purple_Drink",
                     new DrinkNutritionRows.Row(
@@ -129,7 +133,9 @@ final class BottleDrinkFallback {
                             false,
                             false,
                             false,
-                            List.of( new DrinkNutritionRows.Effect("Potion.digSpeed.id", 1200, 0, 60), new DrinkNutritionRows.Effect("PotionsGT.ID_CONDUCTIVE", 300, 0, 70)))),
+                            List.of(
+                                    new DrinkNutritionRows.Effect("Potion.digSpeed.id", 1200, 0, 60),
+                                    new DrinkNutritionRows.Effect("PotionsGT.ID_CONDUCTIVE", 300, 0, 70)))),
             Map.entry(
                     "Juice_Mango",
                     new DrinkNutritionRows.Row(
@@ -171,7 +177,9 @@ final class BottleDrinkFallback {
                             false,
                             false,
                             false,
-                            List.of( new DrinkNutritionRows.Effect("Potion.digSpeed.id", 1200, 0, 60), new DrinkNutritionRows.Effect("PotionsGT.ID_CONDUCTIVE", 300, 0, 70)))),
+                            List.of(
+                                    new DrinkNutritionRows.Effect("Potion.digSpeed.id", 1200, 0, 60),
+                                    new DrinkNutritionRows.Effect("PotionsGT.ID_CONDUCTIVE", 300, 0, 70)))),
             Map.entry(
                     "Juice_Starfruit",
                     new DrinkNutritionRows.Row(
@@ -217,17 +225,7 @@ final class BottleDrinkFallback {
             Map.entry(
                     "Juice_Potato",
                     new DrinkNutritionRows.Row(
-                            "potatojuice",
-                            3,
-                            0.3f,
-                            0,
-                            false,
-                            false,
-                            "drink",
-                            false,
-                            false,
-                            false,
-                            List.of())),
+                            "potatojuice", 3, 0.3f, 0, false, false, "drink", false, false, false, List.of())),
             Map.entry(
                     "Juice",
                     new DrinkNutritionRows.Row(
@@ -245,31 +243,11 @@ final class BottleDrinkFallback {
             Map.entry(
                     "Mash_Hops",
                     new DrinkNutritionRows.Row(
-                            "hopsmash",
-                            1,
-                            0.1f,
-                            0,
-                            false,
-                            false,
-                            "drink",
-                            false,
-                            false,
-                            false,
-                            List.of())),
+                            "hopsmash", 1, 0.1f, 0, false, false, "drink", false, false, false, List.of())),
             Map.entry(
                     "MilkSoy",
                     new DrinkNutritionRows.Row(
-                            "soymilk",
-                            0,
-                            0.0f,
-                            0,
-                            true,
-                            false,
-                            "drink",
-                            true,
-                            false,
-                            false,
-                            List.of())),
+                            "soymilk", 0, 0.0f, 0, true, false, "drink", true, false, false, List.of())),
             Map.entry(
                     "Sauce_Chili",
                     new DrinkNutritionRows.Row(
@@ -283,7 +261,11 @@ final class BottleDrinkFallback {
                             false,
                             false,
                             false,
-                            List.of( new DrinkNutritionRows.Effect("PotionsGT.ID_FLAMMABLE", 300, 0, 70), new DrinkNutritionRows.Effect("Potion.confusion.id", 1000, 0, 10), new DrinkNutritionRows.Effect("Potion.fireResistance.id", 1000, 0, 60), new DrinkNutritionRows.Effect("PotionsGT.ID_DEHYDRATION", 400, 0, 100)))),
+                            List.of(
+                                    new DrinkNutritionRows.Effect("PotionsGT.ID_FLAMMABLE", 300, 0, 70),
+                                    new DrinkNutritionRows.Effect("Potion.confusion.id", 1000, 0, 10),
+                                    new DrinkNutritionRows.Effect("Potion.fireResistance.id", 1000, 0, 60),
+                                    new DrinkNutritionRows.Effect("PotionsGT.ID_DEHYDRATION", 400, 0, 100)))),
             Map.entry(
                     "Sauce_BBQ",
                     new DrinkNutritionRows.Row(
@@ -297,21 +279,13 @@ final class BottleDrinkFallback {
                             false,
                             false,
                             false,
-                            List.of( new DrinkNutritionRows.Effect("Potion.heal.id", 1, 0, 10), new DrinkNutritionRows.Effect("Potion.moveSpeed.id", 200, 0, 20)))),
+                            List.of(
+                                    new DrinkNutritionRows.Effect("Potion.heal.id", 1, 0, 10),
+                                    new DrinkNutritionRows.Effect("Potion.moveSpeed.id", 200, 0, 20)))),
             Map.entry(
                     "Cream_Coconut",
                     new DrinkNutritionRows.Row(
-                            "coconutcream",
-                            2,
-                            0.4f,
-                            0,
-                            false,
-                            false,
-                            "drink",
-                            false,
-                            false,
-                            false,
-                            List.of())),
+                            "coconutcream", 2, 0.4f, 0, false, false, "drink", false, false, false, List.of())),
             Map.entry(
                     "Smoothie_Coconut",
                     new DrinkNutritionRows.Row(
@@ -381,7 +355,9 @@ final class BottleDrinkFallback {
                             false,
                             false,
                             false,
-                            List.of( new DrinkNutritionRows.Effect("Potion.digSpeed.id", 1200, 0, 60), new DrinkNutritionRows.Effect("PotionsGT.ID_CONDUCTIVE", 300, 0, 70)))),
+                            List.of(
+                                    new DrinkNutritionRows.Effect("Potion.digSpeed.id", 1200, 0, 60),
+                                    new DrinkNutritionRows.Effect("PotionsGT.ID_CONDUCTIVE", 300, 0, 70)))),
             Map.entry(
                     "Smoothie_Mango",
                     new DrinkNutritionRows.Row(
@@ -423,7 +399,9 @@ final class BottleDrinkFallback {
                             false,
                             false,
                             false,
-                            List.of( new DrinkNutritionRows.Effect("Potion.digSpeed.id", 1200, 0, 60), new DrinkNutritionRows.Effect("PotionsGT.ID_CONDUCTIVE", 300, 0, 70)))),
+                            List.of(
+                                    new DrinkNutritionRows.Effect("Potion.digSpeed.id", 1200, 0, 60),
+                                    new DrinkNutritionRows.Effect("PotionsGT.ID_CONDUCTIVE", 300, 0, 70)))),
             Map.entry(
                     "Smoothie_Starfruit",
                     new DrinkNutritionRows.Row(
@@ -605,7 +583,9 @@ final class BottleDrinkFallback {
                             false,
                             false,
                             false,
-                            List.of( new DrinkNutritionRows.Effect("Potion.damageBoost.id", 300, 2, 90), new DrinkNutritionRows.Effect("PotionsGT.ID_INSANITY", 600, 0, 100)))),
+                            List.of(
+                                    new DrinkNutritionRows.Effect("Potion.damageBoost.id", 300, 2, 90),
+                                    new DrinkNutritionRows.Effect("PotionsGT.ID_INSANITY", 600, 0, 100)))),
             Map.entry(
                     "Sauce_Hot",
                     new DrinkNutritionRows.Row(
@@ -619,7 +599,11 @@ final class BottleDrinkFallback {
                             false,
                             false,
                             false,
-                            List.of( new DrinkNutritionRows.Effect("PotionsGT.ID_FLAMMABLE", 300, 0, 70), new DrinkNutritionRows.Effect("Potion.confusion.id", 2000, 0, 30), new DrinkNutritionRows.Effect("Potion.fireResistance.id", 2000, 0, 70), new DrinkNutritionRows.Effect("PotionsGT.ID_DEHYDRATION", 400, 1, 100)))),
+                            List.of(
+                                    new DrinkNutritionRows.Effect("PotionsGT.ID_FLAMMABLE", 300, 0, 70),
+                                    new DrinkNutritionRows.Effect("Potion.confusion.id", 2000, 0, 30),
+                                    new DrinkNutritionRows.Effect("Potion.fireResistance.id", 2000, 0, 70),
+                                    new DrinkNutritionRows.Effect("PotionsGT.ID_DEHYDRATION", 400, 1, 100)))),
             Map.entry(
                     "Sauce_Diabolo",
                     new DrinkNutritionRows.Row(
@@ -633,7 +617,12 @@ final class BottleDrinkFallback {
                             false,
                             false,
                             false,
-                            List.of( new DrinkNutritionRows.Effect("PotionsGT.ID_FLAMMABLE", 300, 1, 70), new DrinkNutritionRows.Effect("Potion.confusion.id", 3000, 1, 50), new DrinkNutritionRows.Effect("Potion.fireResistance.id", 3000, 0, 80), new DrinkNutritionRows.Effect("PotionsGT.ID_DEHYDRATION", 400, 2, 100), new DrinkNutritionRows.Effect("PotionsGT.ID_INSANITY", 600, 0, 100)))),
+                            List.of(
+                                    new DrinkNutritionRows.Effect("PotionsGT.ID_FLAMMABLE", 300, 1, 70),
+                                    new DrinkNutritionRows.Effect("Potion.confusion.id", 3000, 1, 50),
+                                    new DrinkNutritionRows.Effect("Potion.fireResistance.id", 3000, 0, 80),
+                                    new DrinkNutritionRows.Effect("PotionsGT.ID_DEHYDRATION", 400, 2, 100),
+                                    new DrinkNutritionRows.Effect("PotionsGT.ID_INSANITY", 600, 0, 100)))),
             Map.entry(
                     "Sauce_Diablo",
                     new DrinkNutritionRows.Row(
@@ -647,7 +636,12 @@ final class BottleDrinkFallback {
                             false,
                             false,
                             false,
-                            List.of( new DrinkNutritionRows.Effect("PotionsGT.ID_FLAMMABLE", 300, 1, 70), new DrinkNutritionRows.Effect("Potion.confusion.id", 4000, 1, 70), new DrinkNutritionRows.Effect("Potion.fireResistance.id", 4000, 0, 90), new DrinkNutritionRows.Effect("PotionsGT.ID_DEHYDRATION", 400, 3, 100), new DrinkNutritionRows.Effect("PotionsGT.ID_INSANITY", 600, 1, 100)))),
+                            List.of(
+                                    new DrinkNutritionRows.Effect("PotionsGT.ID_FLAMMABLE", 300, 1, 70),
+                                    new DrinkNutritionRows.Effect("Potion.confusion.id", 4000, 1, 70),
+                                    new DrinkNutritionRows.Effect("Potion.fireResistance.id", 4000, 0, 90),
+                                    new DrinkNutritionRows.Effect("PotionsGT.ID_DEHYDRATION", 400, 3, 100),
+                                    new DrinkNutritionRows.Effect("PotionsGT.ID_INSANITY", 600, 1, 100)))),
             Map.entry(
                     "Sauce_Cow_Level",
                     new DrinkNutritionRows.Row(
@@ -661,7 +655,12 @@ final class BottleDrinkFallback {
                             false,
                             false,
                             false,
-                            List.of( new DrinkNutritionRows.Effect("PotionsGT.ID_FLAMMABLE", 300, 2, 90), new DrinkNutritionRows.Effect("Potion.confusion.id", 9999, 2, 999), new DrinkNutritionRows.Effect("Potion.fireResistance.id", 9999, 9, 999), new DrinkNutritionRows.Effect("PotionsGT.ID_DEHYDRATION", 400, 4, 100), new DrinkNutritionRows.Effect("PotionsGT.ID_INSANITY", 600, 2, 100)))),
+                            List.of(
+                                    new DrinkNutritionRows.Effect("PotionsGT.ID_FLAMMABLE", 300, 2, 90),
+                                    new DrinkNutritionRows.Effect("Potion.confusion.id", 9999, 2, 999),
+                                    new DrinkNutritionRows.Effect("Potion.fireResistance.id", 9999, 9, 999),
+                                    new DrinkNutritionRows.Effect("PotionsGT.ID_DEHYDRATION", 400, 4, 100),
+                                    new DrinkNutritionRows.Effect("PotionsGT.ID_INSANITY", 600, 2, 100)))),
             Map.entry(
                     "Sake",
                     new DrinkNutritionRows.Row(
@@ -759,7 +758,9 @@ final class BottleDrinkFallback {
                             false,
                             false,
                             false,
-                            List.of( new DrinkNutritionRows.Effect("Potion.digSpeed.id", 1200, 0, 60), new DrinkNutritionRows.Effect("PotionsGT.ID_CONDUCTIVE", 300, 0, 70)))),
+                            List.of(
+                                    new DrinkNutritionRows.Effect("Potion.digSpeed.id", 1200, 0, 60),
+                                    new DrinkNutritionRows.Effect("PotionsGT.ID_CONDUCTIVE", 300, 0, 70)))),
             Map.entry(
                     "Smoothie_Orange",
                     new DrinkNutritionRows.Row(
@@ -773,7 +774,9 @@ final class BottleDrinkFallback {
                             false,
                             false,
                             false,
-                            List.of( new DrinkNutritionRows.Effect("Potion.digSpeed.id", 1200, 0, 60), new DrinkNutritionRows.Effect("PotionsGT.ID_CONDUCTIVE", 300, 0, 70)))),
+                            List.of(
+                                    new DrinkNutritionRows.Effect("Potion.digSpeed.id", 1200, 0, 60),
+                                    new DrinkNutritionRows.Effect("PotionsGT.ID_CONDUCTIVE", 300, 0, 70)))),
             Map.entry(
                     "Smoothie_Peach",
                     new DrinkNutritionRows.Row(
@@ -899,7 +902,9 @@ final class BottleDrinkFallback {
                             false,
                             false,
                             false,
-                            List.of( new DrinkNutritionRows.Effect("Potion.digSpeed.id", 1200, 0, 60), new DrinkNutritionRows.Effect("PotionsGT.ID_CONDUCTIVE", 300, 0, 70)))),
+                            List.of(
+                                    new DrinkNutritionRows.Effect("Potion.digSpeed.id", 1200, 0, 60),
+                                    new DrinkNutritionRows.Effect("PotionsGT.ID_CONDUCTIVE", 300, 0, 70)))),
             Map.entry(
                     "Smoothie_Pomegranate",
                     new DrinkNutritionRows.Row(
@@ -927,8 +932,7 @@ final class BottleDrinkFallback {
                             false,
                             false,
                             false,
-                            List.of(new DrinkNutritionRows.Effect("Potion.hunger.id", 100, 1, 10))))
-    );
+                            List.of(new DrinkNutritionRows.Effect("Potion.hunger.id", 100, 1, 10)))));
 
     private BottleDrinkFallback() {}
 
@@ -949,17 +953,25 @@ final class BottleDrinkFallback {
                     player, id, effect.duration(), effect.amplifier(), false, !row.invisibleParticles());
         }
         if (row.explosive()) {
-            player.level().explode(player, player.getX(), player.getY(), player.getZ(), 4, true,
-                    net.minecraft.world.level.Level.ExplosionInteraction.TNT);
+            player.level()
+                    .explode(
+                            player,
+                            player.getX(),
+                            player.getY(),
+                            player.getZ(),
+                            4,
+                            true,
+                            net.minecraft.world.level.Level.ExplosionInteraction.TNT);
             player.hurt(player.damageSources().explosion(player, player), Float.MAX_VALUE);
         }
-        player.level().playSound(
-                null,
-                player.blockPosition(),
-                SoundEvents.GENERIC_DRINK,
-                SoundSource.PLAYERS,
-                0.5F,
-                0.4F / (player.level().random.nextFloat() * 0.4F + 0.8F));
+        player.level()
+                .playSound(
+                        null,
+                        player.blockPosition(),
+                        SoundEvents.GENERIC_DRINK,
+                        SoundSource.PLAYERS,
+                        0.5F,
+                        0.4F / (player.level().random.nextFloat() * 0.4F + 0.8F));
     }
 
     private static ResourceLocation effectId(String source) {

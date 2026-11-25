@@ -1,8 +1,9 @@
 package gregtech.content.block.tool;
 
-import gregtech.engine.tool.GTToolHelper;
 import gregtech.content.blockentity.tool.BumbliaryBlockEntity;
+import gregtech.engine.tool.GTToolHelper;
 import gregtech.platform.Mc;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -21,8 +22,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 /**
  * GT6's bumbliary ({@code MultiTileEntityBumbliary}, GT6 id 32741) and its advanced variant
@@ -61,7 +60,9 @@ public class BumbliaryBlock extends ShapedToolBlock implements EntityBlock {
     }
 
     /** GT6's advanced bumbliary (id 32007) with its 20 slots and its 3x3x3 tooltip range. */
-    public boolean advanced() { return advanced; }
+    public boolean advanced() {
+        return advanced;
+    }
 
     /**
      * GT6 registers the standard bumbliary with {@code ANY.Wood} and the advanced one with
@@ -70,8 +71,7 @@ public class BumbliaryBlock extends ShapedToolBlock implements EntityBlock {
      */
     @Override
     public int tintRgb() {
-        return advanced ? gregtech.content.material.Materials.StainlessSteel.getColor()
-                : super.tintRgb();
+        return advanced ? gregtech.content.material.Materials.StainlessSteel.getColor() : super.tintRgb();
     }
 
     @Nullable
@@ -81,26 +81,32 @@ public class BumbliaryBlock extends ShapedToolBlock implements EntityBlock {
     }
 
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state,
-                                                                 BlockEntityType<T> type) {
-        return level.isClientSide ? null : (l, p, s, be) -> {
-            if (be instanceof BumbliaryBlockEntity machine) machine.serverTick();
-        };
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, BlockEntityType<T> type) {
+        return level.isClientSide
+                ? null
+                : (l, p, s, be) -> {
+                    if (be instanceof BumbliaryBlockEntity machine) machine.serverTick();
+                };
     }
 
     @Override
-    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         // `SIDES_TOP[aSide]`: the bees are only reachable from above.
         var heldId = Mc.itemId(player.getItemInHand(hand).getItem());
         if (Mc.gregtechId("quicksilver_thermometer").equals(heldId)
                 && level.getBlockEntity(pos) instanceof BumbliaryBlockEntity machine) {
-            if (!level.isClientSide) player.displayClientMessage(Component.translatable(
-                    "message.gt6ce.bumbliary.climate", machine.temperature(), Float.toString(machine.humidity())), false);
+            if (!level.isClientSide)
+                player.displayClientMessage(
+                        Component.translatable(
+                                "message.gt6ce.bumbliary.climate",
+                                machine.temperature(),
+                                Float.toString(machine.humidity())),
+                        false);
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
-        if (hit.getDirection() == Direction.UP
-                && level.getBlockEntity(pos) instanceof BumbliaryBlockEntity machine) {
+        if (hit.getDirection() == Direction.UP && level.getBlockEntity(pos) instanceof BumbliaryBlockEntity machine) {
             ItemStack held = player.getItemInHand(hand);
             boolean scoop = GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.SCOOP);
             if (player.isCreative() || scoop || held.isEmpty() || !GTToolHelper.isTool(held)) {
@@ -112,11 +118,17 @@ public class BumbliaryBlock extends ShapedToolBlock implements EntityBlock {
                     }
                     boolean scoopMode = scoop || player.isCreative();
                     serverPlayer.openMenu(new net.minecraft.world.SimpleMenuProvider(
-                            (id, inventory, user) -> new gregtech.client.gui.BumbliaryContainerMenu(
-                                    id, inventory, machine, scoopMode), machine.getDisplayName()));
-                    if (scoop) GTToolHelper.damageForToolClickReturn(held, 10000, player,
-                            hand == InteractionHand.MAIN_HAND ? net.minecraft.world.entity.EquipmentSlot.MAINHAND
-                                    : net.minecraft.world.entity.EquipmentSlot.OFFHAND);
+                            (id, inventory, user) ->
+                                    new gregtech.client.gui.BumbliaryContainerMenu(id, inventory, machine, scoopMode),
+                            machine.getDisplayName()));
+                    if (scoop)
+                        GTToolHelper.damageForToolClickReturn(
+                                held,
+                                10000,
+                                player,
+                                hand == InteractionHand.MAIN_HAND
+                                        ? net.minecraft.world.entity.EquipmentSlot.MAINHAND
+                                        : net.minecraft.world.entity.EquipmentSlot.OFFHAND);
                 }
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
@@ -131,30 +143,20 @@ public class BumbliaryBlock extends ShapedToolBlock implements EntityBlock {
      * broken bumbliary never gives a live queen back.
      *
      * <p>Both paths call {@code dropContents()}, which empties the inventory: a player's break hits
-     * {@link #playerWillDestroy} first and {@link #onRemove} then finds nothing left, so nothing can
+     * {@link #onPlayerWillDestroy} first and {@link #onRemove} then finds nothing left, so nothing can
      * be duplicated. {@code onRemove} is the one that covers pistons and explosions, exactly like the
      * other port containers.</p>
      */
     @Override
-//? if >=1.21.1 {
-    /*public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-*///?} else {
-    public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-//?}
+    protected void onPlayerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
         if (!level.isClientSide && level.getBlockEntity(pos) instanceof BumbliaryBlockEntity machine) {
             machine.dropContents();
         }
-//? if >=1.21.1 {
-        /*return super.playerWillDestroy(level, pos, state, player);
-*///?} else {
-        super.playerWillDestroy(level, pos, state, player);
-//?}
     }
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean moved) {
-        if (!state.is(newState.getBlock())
-                && level.getBlockEntity(pos) instanceof BumbliaryBlockEntity machine) {
+        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof BumbliaryBlockEntity machine) {
             machine.dropContents();
         }
         super.onRemove(state, level, pos, newState, moved);
@@ -165,12 +167,14 @@ public class BumbliaryBlock extends ShapedToolBlock implements EntityBlock {
      * thermometer hint. The port reuses its own thermometer key and adds the two missing ones.
      */
     @Override
-    protected void appendTooltip(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip,
-                                TooltipFlag flag) {
-        tooltip.add(gregtech.client.TooltipHelper.stat("tooltip.gt6ce.machine.range", net.minecraft.ChatFormatting.AQUA,
-                advanced ? "3x3x3" : "7x7x7"));
-        tooltip.add(Component.translatable("tooltip.gt6ce.machine.tool.scoop").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
-        tooltip.add(Component.translatable("tooltip.gt6ce.crucible.thermometer").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
+    protected void appendTooltip(
+            ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
+        tooltip.add(gregtech.client.TooltipHelper.stat(
+                "tooltip.gt6ce.machine.range", net.minecraft.ChatFormatting.AQUA, advanced ? "3x3x3" : "7x7x7"));
+        tooltip.add(Component.translatable("tooltip.gt6ce.machine.tool.scoop")
+                .withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
+        tooltip.add(Component.translatable("tooltip.gt6ce.crucible.thermometer")
+                .withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
         super.appendTooltip(stack, level, tooltip, flag);
     }
 }

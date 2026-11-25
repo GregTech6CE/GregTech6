@@ -1,7 +1,9 @@
 package gregtech.content.block.misc;
 
+import gregtech.content.block.GTBlock;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
+import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -25,9 +27,6 @@ import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
-import gregtech.content.block.GTBlock;
 /** GT6 craftable miniature portal: cross-dimension items, fluids, GT/FE energy and signals.
  * Existing registry ids are retained. Dungeon rooms use vanilla portals separately.
  */
@@ -58,8 +57,8 @@ public class DungeonPortalBlock extends GTBlock implements EntityBlock {
     private final Target target;
 
     @Override
-    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack held = player.getItemInHand(hand);
         // GT6's magnifying glass report for the link state and the counterpart's coordinates.
         if (!player.isShiftKeyDown() && GTToolHelper.matchesTool(held, GTToolType.MAGNIFYING_GLASS)) {
@@ -80,8 +79,12 @@ public class DungeonPortalBlock extends GTBlock implements EntityBlock {
             if (!player.isCreative()) held.shrink(1);
         }
         var remote = portal.linkedPortal();
-        if (eye && remote != null) player.displayClientMessage(Component.literal("X: " + remote.getBlockPos().getX()
-                + "   Y: " + remote.getBlockPos().getY() + "   Z: " + remote.getBlockPos().getZ()), false);
+        if (eye && remote != null)
+            player.displayClientMessage(
+                    Component.literal("X: " + remote.getBlockPos().getX() + "   Y: "
+                            + remote.getBlockPos().getY() + "   Z: "
+                            + remote.getBlockPos().getZ()),
+                    false);
         return InteractionResult.CONSUME;
     }
 
@@ -131,34 +134,34 @@ public class DungeonPortalBlock extends GTBlock implements EntityBlock {
     }
 
     @Override
-    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-    }
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {}
 
     /** GT6's portal tooltips ({@code MultiTileEntityMiniPortalNether}, {@code MultiTileEntityMiniPortalEnd}). */
     @Override
-    protected void appendTooltip(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip,
-            TooltipFlag flag) {
+    protected void appendTooltip(
+            ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
         if (target == Target.NETHER) {
-            tooltip.add(Component.translatable("tooltip.gt6ce.portal.nether.range")
-            .withStyle(ChatFormatting.AQUA));
-            tooltip.add(Component.translatable("tooltip.gt6ce.portal.nether.margin")
-            .withStyle(ChatFormatting.AQUA));
+            tooltip.add(
+                    Component.translatable("tooltip.gt6ce.portal.nether.range").withStyle(ChatFormatting.AQUA));
+            tooltip.add(
+                    Component.translatable("tooltip.gt6ce.portal.nether.margin").withStyle(ChatFormatting.AQUA));
         } else {
-            tooltip.add(Component.translatable("tooltip.gt6ce.portal.end.range")
-            .withStyle(ChatFormatting.AQUA));
-            tooltip.add(Component.translatable("tooltip.gt6ce.portal.end.margin")
-            .withStyle(ChatFormatting.AQUA));
+            tooltip.add(Component.translatable("tooltip.gt6ce.portal.end.range").withStyle(ChatFormatting.AQUA));
+            tooltip.add(
+                    Component.translatable("tooltip.gt6ce.portal.end.margin").withStyle(ChatFormatting.AQUA));
         }
         tooltip.add(Component.translatable("tooltip.gt6ce.portal.relay").withStyle(ChatFormatting.AQUA));
-        tooltip.add(Component.translatable(target == Target.NETHER ? "tooltip.gt6ce.portal.ignite" : "tooltip.gt6ce.portal.eye")
-        .withStyle(ChatFormatting.DARK_GRAY));
+        tooltip.add(Component.translatable(
+                        target == Target.NETHER ? "tooltip.gt6ce.portal.ignite" : "tooltip.gt6ce.portal.eye")
+                .withStyle(ChatFormatting.DARK_GRAY));
     }
 
     @Override
     public <T extends BlockEntity> net.minecraft.world.level.block.entity.BlockEntityTicker<T> getTicker(
             Level level, BlockState state, net.minecraft.world.level.block.entity.BlockEntityType<T> type) {
         return level.isClientSide || type != gregtech.content.registry.GTBlockEntities.DUNGEON_PORTAL.get()
-        ? null : (world, pos, blockState, entity) -> ((DungeonPortalBlockEntity) entity).tickRelay();
+                ? null
+                : (world, pos, blockState, entity) -> ((DungeonPortalBlockEntity) entity).tickRelay();
     }
 
     @Override

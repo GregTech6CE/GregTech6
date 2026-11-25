@@ -77,20 +77,11 @@ public class BumbleHiveBlock extends GTBlock implements EntityBlock {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-*///?} else {
-    public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-//?}
+    protected void onPlayerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
         if (!level.isClientSide && level.getBlockEntity(pos) instanceof BumbleHiveBlockEntity hive) {
             for (ItemStack stack : hive.contents()) popResource(level, pos, stack);
             hive.clearContents();
         }
-//? if >=1.21.1 {
-        /*return super.playerWillDestroy(level, pos, state, player);
-*///?} else {
-        super.playerWillDestroy(level, pos, state, player);
-//?}
     }
 
     /** GT6's thermometer tooltip ({@code addToolTips}), reusing the port's own lang key. */

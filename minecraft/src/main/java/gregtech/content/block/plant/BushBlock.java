@@ -233,16 +233,6 @@ public class BushBlock extends GTBlock implements EntityBlock, SimpleWaterlogged
         }
     }
 
-    @Override
-//? if >=1.21.1 {
-    /*public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-        return super.playerWillDestroy(level,pos,state,player);
-*///?} else {
-    public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-        super.playerWillDestroy(level, pos, state, player);
-//?}
-    }
-
     /** GT6's bush faces the ground it stands on; exposed for the block entity's growth check. */
     public static Direction groundSide() {
         return Direction.UP;

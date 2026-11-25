@@ -80,21 +80,12 @@ public class SapBagBlock extends ShapedToolBlock implements EntityBlock {
 
     /** GT6's {@code breakBlock}: the tank is trashed, the stored resin item drops. */
     @Override
-//? if >=1.21.1 {
-    /*public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-*///?} else {
-    public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-//?}
+    protected void onPlayerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
         if (!level.isClientSide && level.getBlockEntity(pos) instanceof SapBagBlockEntity bag
                 && !bag.stored().isEmpty()) {
             popResource(level, pos, bag.stored());
             bag.setStored(ItemStack.EMPTY);
         }
-//? if >=1.21.1 {
-        /*return super.playerWillDestroy(level, pos, state, player);
-*///?} else {
-        super.playerWillDestroy(level, pos, state, player);
-//?}
     }
 
     @Override

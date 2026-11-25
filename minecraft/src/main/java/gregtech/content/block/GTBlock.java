@@ -89,4 +89,22 @@ public class GTBlock extends Block {
     protected void appendTooltip(ItemStack stack, @Nullable BlockGetter level,
             List<Component> tooltip, TooltipFlag flag) {
     }
+
+//? if >=1.21.1 {
+    /*@Override
+    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+        onPlayerWillDestroy(level, pos, state, player);
+        return super.playerWillDestroy(level, pos, state, player);
+    }
+*///?} else {
+    @Override
+    public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+        onPlayerWillDestroy(level, pos, state, player);
+        super.playerWillDestroy(level, pos, state, player);
+    }
+//?}
+
+    /** Runs before vanilla {@code playerWillDestroy} handling across 1.20.1 / 1.21.1. */
+    protected void onPlayerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+    }
 }
