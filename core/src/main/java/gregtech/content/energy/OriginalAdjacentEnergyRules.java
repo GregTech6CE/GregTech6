@@ -22,10 +22,6 @@ public final class OriginalAdjacentEnergyRules {
     }
     /** These imported source families all explicitly register WASTE_ENERGY=T. */
     public static boolean respondsToAdjacent(EnergyNodeSpec spec) {
-        return spec != null
-                && (OriginalRotaryConverter.handles(spec)
-                        || OriginalThermalConverter.handles(spec)
-                        || MagnetMachineDefinitions.handles(spec)
-                        || OriginalSteamTurbines.handles(spec));
+        return spec != null && spec.deviceType().usesOriginalConverter();
     }
 }

@@ -5,6 +5,8 @@ import gregtech.content.block.energy.SolarPanelBlock;
 import gregtech.content.data.GregTechTags;
 import gregtech.engine.energy.EnergyTransfer;
 import gregtech.engine.energy.SolarPanelEnergy;
+import java.util.Collection;
+import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -12,14 +14,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DirectionalBlock;
+import net.minecraft.world.level.block.state.BlockState;
 
 /** Applies the solar panel's generation rules to its world conditions, covers and energy port. */
-final class SolarPanelNode implements MachineControl {
-    private final EnergyNodeBlockEntity host;
+final class SolarPanelNode extends EnergyDeviceBehavior implements MachineControl {
     private SolarPanelEnergy energy;
 
     SolarPanelNode(EnergyNodeBlockEntity host, long outputRate) {
-        this.host = host;
+        super(host);
         configure(outputRate);
     }
 
@@ -37,7 +39,8 @@ final class SolarPanelNode implements MachineControl {
         }
     }
 
-    void tick(Level level, BlockPos pos) {
+    @Override
+    void tick(Level level, BlockPos pos, BlockState state) {
         host.panels().beforeTick();
         var conditions = new SolarPanelEnergy.Conditions(
                 level.isDay(),
@@ -50,17 +53,33 @@ final class SolarPanelNode implements MachineControl {
                 conditions,
                 packetSize -> EnergyTransfer.emitEnergyToNetwork(host.spec().outType(), packetSize, 1, host));
 
-        var state = host.getBlockState();
+        var currentState = host.getBlockState();
         var activeProperty = SolarPanelBlock.ACTIVE;
-        if (state.hasProperty(activeProperty) && state.getValue(activeProperty) != energy.active()) {
-            level.setBlock(pos, state.setValue(activeProperty, energy.active()), Block.UPDATE_CLIENTS);
+        if (currentState.hasProperty(activeProperty) && currentState.getValue(activeProperty) != energy.active()) {
+            level.setBlock(pos, currentState.setValue(activeProperty, energy.active()), Block.UPDATE_CLIENTS);
         }
         host.panels().afterTick();
         host.setChanged();
     }
 
-    long energyAvailable() {
+    @Override
+    long stored() {
         return energy.energy();
+    }
+
+    @Override
+    Collection<GregTechTags.Tag> capacitorTypes(@Nullable Direction side) {
+        return List.of();
+    }
+
+    @Override
+    long energyCapacity(GregTechTags.Tag type) {
+        return 0;
+    }
+
+    @Override
+    long energyStored(GregTechTags.Tag type) {
+        return 0;
     }
 
     boolean skyVisible() {
@@ -71,23 +90,33 @@ final class SolarPanelNode implements MachineControl {
         energy.checkSky();
     }
 
-    boolean emitsTo(@Nullable Direction side, boolean theoretical) {
+    @Override
+    boolean acceptsInputType(GregTechTags.Tag type) {
+        return false;
+    }
+
+    @Override
+    boolean emitsTo(GregTechTags.Tag type, @Nullable Direction side, boolean theoretical) {
         return (side == null || side == host.facing())
                 && (theoretical || side == null || !host.panels().shuttered(side));
     }
 
-    long minOutput(GregTechTags.Tag type) {
+    @Override
+    long minOutput(GregTechTags.Tag type, @Nullable Direction side) {
         return type == host.spec().outType() ? host.spec().outputRate() / 8 : 0;
     }
 
-    long maxOutput(GregTechTags.Tag type) {
+    @Override
+    long maxOutput(GregTechTags.Tag type, @Nullable Direction side) {
         return type == host.spec().outType() ? host.spec().outputRate() : 0;
     }
 
-    long offered(GregTechTags.Tag type, @Nullable Direction side) {
+    @Override
+    long offered(GregTechTags.Tag type, @Nullable Direction side, long packetSize) {
         return host.isEnergyEmittingTo(type, side, false) ? energy.energy() : 0;
     }
 
+    @Override
     long extract(GregTechTags.Tag type, @Nullable Direction side, long packetSize, long packetCount, boolean execute) {
         if (!host.isEnergyEmittingTo(type, side, false)) return 0;
         long extracted = energy.extract(packetSize, packetCount, execute);
@@ -108,6 +137,11 @@ final class SolarPanelNode implements MachineControl {
                 tag.getBoolean("gt.solar_active"),
                 tag.getBoolean("gt.solar_emitting"),
                 tag.getBoolean("gt.solar_stopped"));
+    }
+
+    @Override
+    MachineControl control() {
+        return this;
     }
 
     @Override

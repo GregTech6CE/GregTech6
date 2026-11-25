@@ -1,61 +1,42 @@
 package gregtech.content.blockentity.energy;
 
 import gregtech.api.platform.machine.MachineControl;
-import gregtech.content.block.energy.MagnetMachineBlock;
 import gregtech.content.block.energy.OriginalMotorBlock;
 import gregtech.content.block.energy.RotaryConverterBlock;
 import gregtech.content.cover.ComponentCoverRuntime;
 import gregtech.content.data.GregTechTags;
-import gregtech.content.energy.MagnetMachineDefinitions;
-import gregtech.content.energy.OriginalAdjacentEnergyRules;
 import gregtech.content.energy.OriginalRotaryConverter;
-import gregtech.content.energy.OriginalSteamTurbines;
 import gregtech.content.energy.OriginalThermalConverter;
 import gregtech.engine.energy.EnergyNodeSpec;
 import gregtech.engine.energy.EnergyTransfer;
 import gregtech.engine.machine.AdjacentEnergyControl;
+import java.util.function.BiPredicate;
 import javax.annotation.Nullable;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
 /** World-facing behavior for devices that share the original GT6 conversion cycle. */
-final class OriginalConverterNode implements MachineControl {
-    private final EnergyNodeBlockEntity host;
+class OriginalConverterNode extends EnergyDeviceBehavior implements MachineControl {
+    private static final BiPredicate<Direction, Direction> REAR = (front, side) -> side == front.getOpposite();
+    private static final BiPredicate<Direction, Direction> EXCEPT_FRONT = (front, side) -> side != front;
+    static final BiPredicate<Direction, Direction> LATERAL = (front, side) -> side.getAxis() != front.getAxis();
 
-    @Nullable
-    private OriginalRotaryConverter.State state;
+    private final BiPredicate<Direction, Direction> inputFaces;
+    private final OriginalRotaryConverter.State state;
 
-    OriginalConverterNode(EnergyNodeBlockEntity host) {
-        this.host = host;
+    OriginalConverterNode(
+            EnergyNodeBlockEntity host, EnergyNodeSpec spec, BiPredicate<Direction, Direction> inputFaces) {
+        super(host);
+        this.inputFaces = inputFaces;
+        state = new OriginalRotaryConverter.State(spec);
     }
 
-    void setSpec(EnergyNodeSpec spec) {
-        boolean usesConverterState = OriginalRotaryConverter.handles(spec)
-                || OriginalThermalConverter.handles(spec)
-                || MagnetMachineDefinitions.handles(spec)
-                || OriginalSteamTurbines.handles(spec);
-        state = usesConverterState ? new OriginalRotaryConverter.State(spec) : null;
-    }
-
-    boolean hasState() {
-        return state != null;
-    }
-
-    boolean isRotary() {
-        return host.hasOriginalConverter() && OriginalRotaryConverter.handles(host.spec());
-    }
-
-    boolean isThermal() {
-        return host.hasOriginalConverter() && OriginalThermalConverter.handles(host.spec());
-    }
-
-    boolean isMotor() {
-        return host.hasOriginalConverter() && OriginalRotaryConverter.motorBehavior(host.spec());
-    }
-
-    boolean isCooler() {
-        return host.isOriginalThermalConverter() && OriginalThermalConverter.cooler(host.spec());
+    OriginalConverterNode(EnergyNodeBlockEntity host, EnergyNodeSpec spec) {
+        this(host, spec, spec.deviceType() == EnergyNodeSpec.DeviceType.DYNAMO ? REAR : EXCEPT_FRONT);
     }
 
     boolean reverseMotor() {
@@ -70,31 +51,56 @@ final class OriginalConverterNode implements MachineControl {
     }
 
     boolean emitted() {
-        return state != null && state.emitted();
+        return state.emitted();
     }
 
     boolean fast() {
-        return state != null && state.fast();
+        return state.fast();
     }
 
-    boolean acceptsInputFrom(@Nullable Direction side, boolean theoretical) {
-        if (!theoretical && host.converterStopped) return false;
-        if (side == null) return true;
-        Direction front = host.facing();
-        if (host.isMagnet()) return side != front && side != front.getOpposite();
-        if (host.isOriginalThermalConverter()) {
-            return side != front && (!OriginalThermalConverter.cooler(host.spec()) || side != front.getOpposite());
-        }
-        if (host.isOriginalMotor() && !host.isTurbine()) return side != front;
-        return side == front.getOpposite();
+    @Override
+    boolean acceptsFrom(@Nullable Direction side, boolean theoretical) {
+        return (theoretical || !host.converterStopped)
+                && (side == null || inputFaces.test(host.facing(), side))
+                && host.hasEnergySurface(side);
     }
 
-    boolean emitsCoolerTo(GregTechTags.Tag energyType, @Nullable Direction side) {
-        if (energyType == host.spec().outType()) return side == null || side == host.facing();
-        return energyType == GregTechTags.Energy.HU
-                && (side == null || side == host.facing().getOpposite());
+    @Override
+    long capacity() {
+        return OriginalRotaryConverter.capacity(host.spec());
     }
 
+    @Override
+    long inputRate() {
+        return host.spec().inputRate();
+    }
+
+    @Override
+    long outputRate() {
+        return host.spec().outputRate();
+    }
+
+    @Override
+    long minInput(GregTechTags.Tag type, @Nullable Direction side) {
+        return type == host.spec().inType() ? OriginalRotaryConverter.inputMinimum(host.spec()) : 0;
+    }
+
+    @Override
+    long maxInput(GregTechTags.Tag type, @Nullable Direction side) {
+        return type == host.spec().inType() ? inputRate() * 2 : 0;
+    }
+
+    @Override
+    long minOutput(GregTechTags.Tag type, @Nullable Direction side) {
+        return type == host.spec().outType() ? outputRate() / 2 : 0;
+    }
+
+    @Override
+    long maxOutput(GregTechTags.Tag type, @Nullable Direction side) {
+        return type == host.spec().outType() ? outputRate() * 2 : 0;
+    }
+
+    @Override
     long inject(
             GregTechTags.Tag energyType, @Nullable Direction side, long packetSize, long packetCount, boolean execute) {
         if (!host.isEnergyAcceptingFrom(energyType, side, false)) return 0;
@@ -110,13 +116,20 @@ final class OriginalConverterNode implements MachineControl {
         return injection.consumed();
     }
 
-    void tick() {
+    @Override
+    void tickCoversBeforeDevice(Level level) {
         host.panels().beforeTick();
         for (Direction side : Direction.values()) {
-            ComponentCoverRuntime.tick(host, side, host.getLevel().getGameTime());
+            ComponentCoverRuntime.tick(host, side, level.getGameTime());
         }
-        if (host.isTurbine()) host.turbine.tick();
+    }
 
+    @Override
+    void tick(Level level, BlockPos pos, BlockState state) {
+        convertBufferedInput();
+    }
+
+    final void convertBufferedInput() {
         long bufferBeforeConversion = host.bufferedInput;
         var conversion = state.tick(host.bufferedInput, host.converterStopped, this::emit);
         host.bufferedInput = conversion.energy();
@@ -128,16 +141,10 @@ final class OriginalConverterNode implements MachineControl {
         if (host.isRemoved() || level.getBlockEntity(pos) != host) return;
         host.coolDownOverload(conversion.possible());
 
+        var converter = host.originalConverter();
+        if (converter == null) return;
         var blockState = host.getBlockState();
-        // Magnet activity levels 1 and 2 share the same overlay.
-        var nextState = host.isMagnet()
-                ? blockState.setValue(MagnetMachineBlock.ACTIVE, conversion.visual() > 0)
-                : blockState.setValue(RotaryConverterBlock.ACTIVITY, conversion.visual());
-        if (host.isOriginalMotor()) {
-            nextState = nextState
-                    .setValue(OriginalMotorBlock.COUNTER_CLOCKWISE, state.counterClockwise())
-                    .setValue(OriginalMotorBlock.FAST, conversion.fast());
-        }
+        var nextState = converter.visualState(blockState, conversion);
         if (nextState != blockState) {
             level.setBlock(pos, nextState, Block.UPDATE_CLIENTS);
         } else {
@@ -147,35 +154,30 @@ final class OriginalConverterNode implements MachineControl {
         host.setChanged();
     }
 
-    private long emit(long packetSize, long offeredPackets) {
-        if (host.isMagnet()) {
-            long positivePackets = EnergyTransfer.emitEnergyToSide(
-                    host.spec().outType(), host.facing(), packetSize, offeredPackets, host);
-            long negativePackets = EnergyTransfer.emitEnergyToSide(
-                    host.spec().outType(), host.facing().getOpposite(), -packetSize, offeredPackets, host);
-            long acceptedPackets = positivePackets + negativePackets;
-            host.conversionMeter().output(host.getLevel().getGameTime(), packetSize, acceptedPackets);
-            return acceptedPackets;
+    BlockState visualState(BlockState blockState, OriginalRotaryConverter.Tick conversion) {
+        var nextState = blockState.setValue(RotaryConverterBlock.ACTIVITY, conversion.visual());
+        if (host.isOriginalMotor()) {
+            nextState = nextState
+                    .setValue(OriginalMotorBlock.COUNTER_CLOCKWISE, state.counterClockwise())
+                    .setValue(OriginalMotorBlock.FAST, conversion.fast());
         }
-        if (isCooler()) {
-            long coldPackets = EnergyTransfer.emitEnergyToSide(
-                    host.spec().outType(), host.facing(), packetSize, offeredPackets, host);
-            long heatPackets = EnergyTransfer.emitEnergyToSide(
-                    GregTechTags.Energy.HU, host.facing().getOpposite(), packetSize, offeredPackets, host);
-            host.conversionMeter().output(host.getLevel().getGameTime(), packetSize, coldPackets);
-            host.conversionMeter().auxiliaryOutput(host.getLevel().getGameTime(), packetSize, heatPackets);
-            return coldPackets > 0 || heatPackets > 0 ? 1 : 0;
-        }
+        return nextState;
+    }
 
+    long emit(long packetSize, long offeredPackets) {
         long acceptedPackets =
                 EnergyTransfer.emitEnergyToNetwork(host.spec().outType(), packetSize, offeredPackets, host);
         host.conversionMeter().output(host.getLevel().getGameTime(), packetSize, acceptedPackets);
         return acceptedPackets;
     }
 
-    @Nullable
+    @Override
+    MachineControl control() {
+        return this;
+    }
+
+    @Override
     AdjacentEnergyControl adjacentEnergyControl() {
-        if (!host.hasOriginalConverter() || !OriginalAdjacentEnergyRules.respondsToAdjacent(host.spec())) return null;
         return enabled -> {
             // Manual and adjacent requests share the stopped state. Stored energy still drains normally.
             if (!host.isRemoved()
@@ -203,14 +205,17 @@ final class OriginalConverterNode implements MachineControl {
         return host.isOriginalMotor() || host.isMagnet() || OriginalThermalConverter.modeSelectable(host.spec());
     }
 
+    // Covers may retain their control across a spec change.
     @Override
     public int mode() {
-        return state.mode();
+        var current = host.originalConverter();
+        return current == null ? 0 : current.state.mode();
     }
 
     @Override
     public int setMode(int value) {
-        if (supportsMode()) state.mode(value);
+        var current = host.originalConverter();
+        if (current != null && supportsMode()) current.state.mode(value);
         host.setChanged();
         return mode();
     }
@@ -229,12 +234,14 @@ final class OriginalConverterNode implements MachineControl {
 
     @Override
     public boolean running() {
-        return state.possible();
+        var current = host.originalConverter();
+        return current != null && current.state.possible();
     }
 
     @Override
     public boolean active() {
-        return state.emitted();
+        var current = host.originalConverter();
+        return current != null && current.state.emitted();
     }
 
     @Override
@@ -248,7 +255,6 @@ final class OriginalConverterNode implements MachineControl {
     }
 
     void save(CompoundTag tag) {
-        if (!host.hasOriginalConverter()) return;
         var snapshot = state.snapshot();
         tag.putByte("gt.mode", (byte) snapshot.mode());
         if (host.isOriginalMotor()) tag.putBoolean("gt.reversed", snapshot.counterClockwise());
@@ -258,7 +264,6 @@ final class OriginalConverterNode implements MachineControl {
     }
 
     void load(CompoundTag tag, boolean usesLegacyMagnetKeys) {
-        if (!host.hasOriginalConverter()) return;
         state.restore(new OriginalRotaryConverter.Snapshot(
                 tag.getByte(usesLegacyMagnetKeys ? "gt.magnet_mode" : "gt.mode"),
                 host.isOriginalMotor() && tag.getBoolean("gt.reversed"),
@@ -266,5 +271,19 @@ final class OriginalConverterNode implements MachineControl {
                 tag.getBoolean("gt.can.energy"),
                 tag.getBoolean("gt.active.energy"),
                 host.isOriginalMotor() && tag.getBoolean("gt.visual")));
+    }
+
+    static final class SteamConverter extends OriginalConverterNode {
+        SteamConverter(EnergyNodeBlockEntity host, EnergyNodeSpec spec) {
+            super(host, spec, REAR);
+            host.turbine.configure(spec.inputRate());
+        }
+
+        @Override
+        void tick(Level level, BlockPos pos, BlockState state) {
+            host.turbine.tick();
+            var converter = host.originalConverter();
+            if (converter != null) converter.convertBufferedInput();
+        }
     }
 }

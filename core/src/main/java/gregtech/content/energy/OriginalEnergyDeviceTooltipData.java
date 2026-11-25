@@ -4,6 +4,7 @@
 package gregtech.content.energy;
 
 import gregtech.engine.energy.EnergyNodeSpec;
+import gregtech.engine.energy.EnergyNodeSpec.DeviceType;
 
 /** Original rated statistics and tooltip choices, without native item/storage/rendering types. */
 public final class OriginalEnergyDeviceTooltipData {
@@ -22,14 +23,7 @@ public final class OriginalEnergyDeviceTooltipData {
             boolean monkeyWrench) {}
 
     public static boolean handles(EnergyNodeSpec spec) {
-        return OriginalSteamTurbines.handles(spec)
-                || MagnetMachineDefinitions.handles(spec)
-                || OriginalThermalConverter.handles(spec)
-                || OriginalRotaryConverter.handles(spec)
-                || spec.batterySlots() > 0
-                || spec.kind() == EnergyNodeSpec.Kind.SOLAR
-                || spec.id().startsWith("transformer_")
-                || spec.id().startsWith("rotation_transformer_");
+        return spec.deviceType() != DeviceType.BUFFERED;
     }
 
     /** Battery boxes inherit TileEntityBase01Root.getEnergySizeInputMin, including ULV = 4. */
@@ -85,7 +79,7 @@ public final class OriginalEnergyDeviceTooltipData {
                     false,
                     OriginalRotaryConverter.motor(spec));
         }
-        if (spec.batterySlots() > 0) {
+        if (spec.deviceType() == DeviceType.BATTERY_BOX) {
             long input = spec.inputRate(), output = spec.outputRate();
             return new Profile(
                     new Stats(batteryInputMinimum(input), input, input * 2),
@@ -97,12 +91,13 @@ public final class OriginalEnergyDeviceTooltipData {
                     true,
                     false);
         }
-        if (spec.kind() == EnergyNodeSpec.Kind.SOLAR) {
+        if (spec.deviceType() == DeviceType.SOLAR) {
             long output = spec.outputRate();
             return new Profile(
                     null, new Stats(output / 8, output, output), null, "gt.lang.face.front", false, -1, false, false);
         }
-        if (spec.id().startsWith("transformer_") || spec.id().startsWith("rotation_transformer_")) {
+        if (spec.deviceType() == DeviceType.ELECTRIC_TRANSFORMER
+                || spec.deviceType() == DeviceType.ROTATION_TRANSFORMER) {
             long input = spec.inputRate(), output = spec.outputRate();
             Stats in, out;
             if (reversed) {
@@ -122,7 +117,9 @@ public final class OriginalEnergyDeviceTooltipData {
                     in,
                     out,
                     "gt.lang.face.front",
-                    spec.id().startsWith("rotation_transformer_") ? "gt.lang.face.back" : "gt.lang.face.any.but.front",
+                    spec.deviceType() == DeviceType.ROTATION_TRANSFORMER
+                            ? "gt.lang.face.back"
+                            : "gt.lang.face.any.but.front",
                     true,
                     10000,
                     false,

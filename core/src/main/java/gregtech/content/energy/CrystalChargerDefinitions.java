@@ -3,6 +3,7 @@ package gregtech.content.energy;
 
 import gregtech.content.data.GregTechTags;
 import gregtech.engine.energy.EnergyNodeSpec;
+import gregtech.engine.energy.EnergyNodeSpec.DeviceType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public final class CrystalChargerDefinitions {
                                 (large ? "large_crystal_charger_" : "crystal_charger_")
                                         + BatteryBoxDefinitions.TIERS.get(tier),
                                 BatteryBoxDefinitions.material(tier))
-                        .kind(EnergyNodeSpec.Kind.STORAGE)
+                        .deviceType(DeviceType.BATTERY_BOX)
                         .texture("energystorages/crystal_laser" + (large ? "_large" : ""))
                         .input(GregTechTags.Energy.LU, size)
                         .output(GregTechTags.Energy.LU, size)

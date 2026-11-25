@@ -5,7 +5,7 @@ import gregtech.api.material.GTMaterial;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.material.Materials;
 import gregtech.engine.energy.EnergyNodeSpec;
-import gregtech.engine.energy.EnergyNodeSpec.Kind;
+import gregtech.engine.energy.EnergyNodeSpec.DeviceType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +32,7 @@ public final class EnergyNodeDefinitions {
         long[] motorOutputs = {16, 64, 256, 1024, 4096};
         for (int i = 0; i < tiers.length; i++) {
             result.add(EnergyNodeSpec.builder("electric_motor_" + tiers[i].name(), tiers[i].material())
-                    .kind(Kind.CONVERTER)
+                    .deviceType(DeviceType.MOTOR)
                     .texture("motors/rotation_electric")
                     .input(GregTechTags.Energy.EU, tiers[i].inputRate())
                     .output(GregTechTags.Energy.RU, motorOutputs[i])
@@ -45,7 +45,7 @@ public final class EnergyNodeDefinitions {
         long[] dynamoOutputs = {22, 88, 352, 1408, 5632};
         for (int i = 0; i < tiers.length; i++) {
             result.add(EnergyNodeSpec.builder("electric_dynamo_" + tiers[i].name(), tiers[i].material())
-                    .kind(Kind.CONVERTER)
+                    .deviceType(DeviceType.DYNAMO)
                     .texture("dynamos/electric_rotation")
                     .input(GregTechTags.Energy.RU, tiers[i].inputRate())
                     .output(GregTechTags.Energy.EU, dynamoOutputs[i])
@@ -73,7 +73,7 @@ public final class EnergyNodeDefinitions {
             String lowTier = GTVoltageTiers.nameOf(step.outputRate());
             String highTier = GTVoltageTiers.nameOf(step.inputRate());
             result.add(EnergyNodeSpec.builder("transformer_" + step.idSuffix(), step.material())
-                    .kind(Kind.CONVERTER)
+                    .deviceType(DeviceType.ELECTRIC_TRANSFORMER)
                     .texture("transformers/transformer_electric")
                     .input(GregTechTags.Energy.EU, step.inputRate())
                     .output(GregTechTags.Energy.EU, step.outputRate())
@@ -89,7 +89,7 @@ public final class EnergyNodeDefinitions {
         // Solar panels (GT6 10050/10051): silicon is the ULV panel (Electric_T[0] = tin alloy),
         // germanium uses Electric_T[2] = aluminium. Both keep only the current tick's output.
         result.add(EnergyNodeSpec.builder("solar_panel_silicon", Materials.TinAlloy)
-                .kind(Kind.SOLAR)
+                .deviceType(DeviceType.SOLAR)
                 .texture("solarpanels/solarpanel_electric_8eu")
                 .input(GregTechTags.Energy.EU, 0)
                 .output(GregTechTags.Energy.EU, 8)
@@ -97,7 +97,7 @@ public final class EnergyNodeDefinitions {
                 .name("Solar Panel (Silicon)")
                 .build());
         result.add(EnergyNodeSpec.builder("solar_panel_germanium", Materials.Aluminium)
-                .kind(Kind.SOLAR)
+                .deviceType(DeviceType.SOLAR)
                 .texture("solarpanels/solarpanel_electric_8eu")
                 .input(GregTechTags.Energy.EU, 0)
                 .output(GregTechTags.Energy.EU, 16)

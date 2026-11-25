@@ -41,17 +41,13 @@ public final class GearboxCatalog {
     public static EnergyNodeSpec transformer(Tier tier) {
         int voltageTierIndex = tier.voltageTier();
         long inputVoltage = V[voltageTierIndex], outputVoltage = voltageTierIndex == 0 ? 2 : V[voltageTierIndex - 1];
-        return new EnergyNodeSpec(
-                "rotation_transformer_" + tier.suffix(),
-                tier.material(),
-                EnergyNodeSpec.Kind.CONVERTER,
-                "transformers/rotation_transformer",
-                GregTechTags.Energy.RU,
-                GregTechTags.Energy.RU,
-                inputVoltage,
-                outputVoltage,
-                inputVoltage * 2,
-                tier.material().getLocalName() + " Transformer Gearbox",
-                0);
+        return EnergyNodeSpec.builder("rotation_transformer_" + tier.suffix(), tier.material())
+                .deviceType(EnergyNodeSpec.DeviceType.ROTATION_TRANSFORMER)
+                .texture("transformers/rotation_transformer")
+                .input(GregTechTags.Energy.RU, inputVoltage)
+                .output(GregTechTags.Energy.RU, outputVoltage)
+                .capacity(inputVoltage * 2)
+                .name(tier.material().getLocalName() + " Transformer Gearbox")
+                .build();
     }
 }

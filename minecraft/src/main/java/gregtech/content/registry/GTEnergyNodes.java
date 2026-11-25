@@ -1,12 +1,18 @@
 package gregtech.content.registry;
 
+import gregtech.content.block.energy.BatteryBoxBlock;
+import gregtech.content.block.energy.ElectricTransformerBlock;
 import gregtech.content.block.energy.EnergyNodeBlock;
 import gregtech.content.block.energy.MagnetMachineBlock;
+import gregtech.content.block.energy.OriginalHeaterBlock;
+import gregtech.content.block.energy.OriginalMotorBlock;
 import gregtech.content.block.energy.ReactorCasingBlock;
 import gregtech.content.block.energy.ReactorCore2x2Block;
+import gregtech.content.block.energy.RotaryConverterBlock;
+import gregtech.content.block.energy.SolarPanelBlock;
 import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
 import gregtech.engine.energy.EnergyNodeSpec;
-import gregtech.engine.energy.EnergyNodeSpec.Kind;
+import gregtech.engine.energy.EnergyNodeSpec.DeviceType;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -100,40 +106,31 @@ public final class GTEnergyNodes {
         var block = registrar.block(
                 gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE,
                 spec.id(),
-                () -> createBlock(spec),
+                () -> createBlock(spec, BlockBehaviour.Properties.of()
+                        .mapColor(MapColor.METAL)
+                        .strength(4.0f, 4.0f)
+                        .requiresCorrectToolForDrops()),
                 node -> new BlockItem(node, itemProperties(spec)));
         ALL.add(block);
     }
 
-    private static EnergyNodeBlock createBlock(EnergyNodeSpec spec) {
-        BlockBehaviour.Properties props = BlockBehaviour.Properties.of()
-                .mapColor(MapColor.METAL)
-                .strength(4.0f, 4.0f)
-                .requiresCorrectToolForDrops();
-        if (spec.kind() == EnergyNodeSpec.Kind.SOLAR) props = props.noOcclusion();
-        if (gregtech.content.energy.OriginalSteamTurbines.handles(spec))
-            return new gregtech.content.block.energy.OriginalMotorBlock(spec, props);
-        if (gregtech.content.energy.OriginalThermalConverter.handles(spec))
-            return gregtech.content.energy.OriginalThermalConverter.cooler(spec)
-                    ? new gregtech.content.block.energy.RotaryConverterBlock(spec, props)
-                    : new gregtech.content.block.energy.OriginalHeaterBlock(spec, props);
-        if (gregtech.content.energy.OriginalRotaryConverter.handles(spec))
-            return gregtech.content.energy.OriginalRotaryConverter.motor(spec)
-                    ? new gregtech.content.block.energy.OriginalMotorBlock(spec, props)
-                    : new gregtech.content.block.energy.RotaryConverterBlock(spec, props);
-        return spec.kind() == EnergyNodeSpec.Kind.MAGNET
-                ? new MagnetMachineBlock(spec, props)
-                : spec.batterySlots() > 0
-                    ? new gregtech.content.block.energy.BatteryBoxBlock(spec, props)
-                    : spec.id().startsWith("transformer_")
-                        ? new gregtech.content.block.energy.ElectricTransformerBlock(spec, props)
-                        : spec.kind() == EnergyNodeSpec.Kind.SOLAR
-                            ? new gregtech.content.block.energy.SolarPanelBlock(spec, props)
-                            : new EnergyNodeBlock(spec, props);
+    static EnergyNodeBlock createBlock(EnergyNodeSpec spec, BlockBehaviour.Properties props) {
+        return switch (spec.deviceType()) {
+            case MOTOR, STEAM_TURBINE -> new OriginalMotorBlock(spec, props);
+            case DYNAMO, COOLER -> new RotaryConverterBlock(spec, props);
+            case HEATER -> new OriginalHeaterBlock(spec, props);
+            case MAGNET -> new MagnetMachineBlock(spec, props);
+            case BATTERY_BOX -> new BatteryBoxBlock(spec, props);
+            case ELECTRIC_TRANSFORMER -> new ElectricTransformerBlock(spec, props);
+            case SOLAR -> new SolarPanelBlock(spec, props.noOcclusion());
+            case ROTATION_TRANSFORMER -> new EnergyNodeBlock(spec, props);
+            case BUFFERED -> spec.kind() == EnergyNodeSpec.Kind.MAGNET
+                    ? new MagnetMachineBlock(spec, props) : new EnergyNodeBlock(spec, props);
+        };
     }
 
     private static Item.Properties itemProperties(EnergyNodeSpec spec) {
-        return gregtech.content.energy.OriginalSteamTurbines.handles(spec)
+        return spec.deviceType() == DeviceType.STEAM_TURBINE
                 ? new Item.Properties().stacksTo(16) : new Item.Properties();
     }
 

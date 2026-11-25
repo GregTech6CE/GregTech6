@@ -6,9 +6,12 @@ import gregtech.content.block.energy.BatteryBoxBlock;
 import gregtech.content.cover.ComponentCoverRuntime;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.energy.BatteryBoxEnergy;
+import gregtech.content.energy.OriginalEnergyDeviceTooltipData;
 import gregtech.engine.energy.EnergyNodeSpec;
 import gregtech.engine.energy.EnergyTransfer;
 import gregtech.engine.energy.MachineOverload;
+import java.util.Collection;
+import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -17,17 +20,19 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 /** Connects the battery box's slot and buffer state to the energy network and the world. */
-final class BatteryBoxNode implements MachineControl {
-    private final EnergyNodeBlockEntity host;
+final class BatteryBoxNode extends EnergyDeviceBehavior implements MachineControl {
     private final EnergyNodeSpec spec;
+    private final BatteryBoxInventory inventory;
     final BatteryBoxEnergy energy;
 
     BatteryBoxNode(EnergyNodeBlockEntity host, EnergyNodeSpec spec, BatteryBoxInventory inventory) {
-        this.host = host;
+        super(host);
         this.spec = spec;
+        this.inventory = inventory;
         energy = new BatteryBoxEnergy(inventory.reset(spec.batterySlots()), spec.inputRate(), spec.inType());
     }
 
+    @Override
     void tick(Level level, BlockPos pos, BlockState state) {
         long time = level.getGameTime();
         host.panels().beforeTick();
@@ -54,15 +59,33 @@ final class BatteryBoxNode implements MachineControl {
         }
     }
 
-    boolean emitsTo(@Nullable Direction side, boolean theoretical) {
+    @Override
+    boolean emitsTo(GregTechTags.Tag type, @Nullable Direction side, boolean theoretical) {
         return (theoretical || energy.enabled()) && (side == null || side == host.facing());
     }
 
+    @Override
+    long minInput(GregTechTags.Tag type, @Nullable Direction side) {
+        return type == spec.inType() ? OriginalEnergyDeviceTooltipData.batteryInputMinimum(inputRate()) : 0;
+    }
+
+    @Override
+    long minOutput(GregTechTags.Tag type, @Nullable Direction side) {
+        return type == spec.outType() ? outputRate() : 0;
+    }
+
+    @Override
+    long maxOutput(GregTechTags.Tag type, @Nullable Direction side) {
+        return type == spec.outType() ? outputRate() : 0;
+    }
+
+    @Override
     long demanded(GregTechTags.Tag type, @Nullable Direction side, long size) {
         if (size == Long.MIN_VALUE || !host.isEnergyAcceptingFrom(type, side, false)) return 0;
         return energy.inject(Math.abs(size), Long.MAX_VALUE, false);
     }
 
+    @Override
     long inject(GregTechTags.Tag type, @Nullable Direction side, long size, long amount, boolean execute) {
         if (size == Long.MIN_VALUE
                 || size == 0
@@ -90,12 +113,34 @@ final class BatteryBoxNode implements MachineControl {
         MachineOverload.apply(host, packet, spec.inType());
     }
 
-    long stored(GregTechTags.Tag type) {
+    @Override
+    long stored() {
+        return energy.buffer();
+    }
+
+    @Override
+    long capacity() {
+        return inventory.installedCapacity();
+    }
+
+    @Override
+    Collection<GregTechTags.Tag> capacitorTypes(@Nullable Direction side) {
+        return List.of(spec.inType());
+    }
+
+    @Override
+    long energyStored(GregTechTags.Tag type) {
         return type == spec.inType() ? energy.stored() : 0;
     }
 
-    long capacity(GregTechTags.Tag type) {
+    @Override
+    long energyCapacity(GregTechTags.Tag type) {
         return type == spec.inType() ? energy.capacity() : 0;
+    }
+
+    @Override
+    MachineControl control() {
+        return this;
     }
 
     @Override

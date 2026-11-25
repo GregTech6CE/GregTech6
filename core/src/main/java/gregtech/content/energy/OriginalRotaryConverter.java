@@ -5,6 +5,7 @@ package gregtech.content.energy;
 
 import gregtech.content.data.GregTechTags;
 import gregtech.engine.energy.EnergyNodeSpec;
+import gregtech.engine.energy.EnergyNodeSpec.DeviceType;
 import java.math.BigInteger;
 import java.util.function.LongBinaryOperator;
 
@@ -13,14 +14,11 @@ public final class OriginalRotaryConverter {
     private OriginalRotaryConverter() {}
 
     public static boolean handles(EnergyNodeSpec spec) {
-        return spec.id().startsWith("electric_motor_")
-                || spec.id().startsWith("flux_motor_")
-                || spec.id().startsWith("electric_dynamo_")
-                || spec.id().startsWith("flux_dynamo_");
+        return motor(spec) || spec.deviceType() == DeviceType.DYNAMO;
     }
 
     public static boolean motor(EnergyNodeSpec spec) {
-        return spec.id().startsWith("electric_motor_") || spec.id().startsWith("flux_motor_");
+        return spec.deviceType() == DeviceType.MOTOR;
     }
     /** Steam turbines inherit the same source motor controls and visual behavior. */
     public static boolean motorBehavior(EnergyNodeSpec spec) {
@@ -84,10 +82,7 @@ public final class OriginalRotaryConverter {
         public State(EnergyNodeSpec spec) {
             // The same source base conversion also drives thermal and bipolar devices. Twin outputs use one
             // native emission callback for both channels, so fixed input waste is applied once.
-            if (!handles(spec)
-                    && !OriginalThermalConverter.handles(spec)
-                    && !MagnetMachineDefinitions.handles(spec)
-                    && !OriginalSteamTurbines.handles(spec))
+            if (!spec.deviceType().usesOriginalConverter())
                 throw new IllegalArgumentException("Not an original registered converter: " + spec.id());
             this.spec = spec;
         }

@@ -7,6 +7,7 @@ import gregtech.api.material.GTMaterial;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.material.Materials;
 import gregtech.engine.energy.EnergyNodeSpec;
+import gregtech.engine.energy.EnergyNodeSpec.DeviceType;
 import java.util.*;
 
 /** Original twenty thermal devices. Native storage, collision, faces and both emissions stay native. */
@@ -20,7 +21,29 @@ public final class OriginalThermalConverter {
             long input,
             long output,
             String texture,
-            String englishName) {}
+            String englishName,
+            DeviceType deviceType,
+            GregTechTags.Tag inputType) {
+        public Variant(
+                String id,
+                int sourceId,
+                GTMaterial material,
+                long input,
+                long output,
+                String texture,
+                String englishName) {
+            this(
+                    id,
+                    sourceId,
+                    material,
+                    input,
+                    output,
+                    texture,
+                    englishName,
+                    id.contains("cooler_") ? DeviceType.COOLER : DeviceType.HEATER,
+                    id.startsWith("flux_") ? GregTechTags.Energy.RF : GregTechTags.Energy.EU);
+        }
+    }
 
     public static final List<Variant> VARIANTS;
 
@@ -57,24 +80,23 @@ public final class OriginalThermalConverter {
                             input,
                             output,
                             (cooler ? "cooler/cryo_" : "heaters/heat_") + (rf ? "flux" : "electric"),
-                            name));
+                            name,
+                            cooler ? DeviceType.COOLER : DeviceType.HEATER,
+                            rf ? GregTechTags.Energy.RF : GregTechTags.Energy.EU));
                 }
         VARIANTS = List.copyOf(variants);
     }
 
     public static boolean handles(EnergyNodeSpec spec) {
-        return spec.id().startsWith("electric_heater_")
-                || spec.id().startsWith("electric_cooler_")
-                || spec.id().startsWith("flux_heater_")
-                || spec.id().startsWith("flux_cooler_");
+        return spec.deviceType() == DeviceType.HEATER || cooler(spec);
     }
 
     public static boolean cooler(EnergyNodeSpec spec) {
-        return spec.id().startsWith("electric_cooler_") || spec.id().startsWith("flux_cooler_");
+        return spec.deviceType() == DeviceType.COOLER;
     }
     /** Source Flux Cooler inherits saved mode arithmetic but does not expose ITileEntitySwitchableMode. */
     public static boolean modeSelectable(EnergyNodeSpec spec) {
-        return handles(spec) && !spec.id().startsWith("flux_cooler_");
+        return spec.deviceType() == DeviceType.HEATER || (cooler(spec) && spec.inType() != GregTechTags.Energy.RF);
     }
 
     public static int efficiency(EnergyNodeSpec spec) {
@@ -90,11 +112,11 @@ public final class OriginalThermalConverter {
     public static List<EnergyNodeSpec> specifications() {
         return VARIANTS.stream()
                 .map(v -> EnergyNodeSpec.builder(v.id(), v.material())
-                        .kind(EnergyNodeSpec.Kind.CONVERTER)
+                        .deviceType(v.deviceType())
                         .texture(v.texture())
-                        .input(v.id().startsWith("flux_") ? GregTechTags.Energy.RF : GregTechTags.Energy.EU, v.input())
+                        .input(v.inputType(), v.input())
                         .output(
-                                v.id().contains("cooler_") ? GregTechTags.Energy.CU : GregTechTags.Energy.HU,
+                                v.deviceType() == DeviceType.COOLER ? GregTechTags.Energy.CU : GregTechTags.Energy.HU,
                                 v.output())
                         .capacity(v.input() * 2)
                         .name(v.englishName())

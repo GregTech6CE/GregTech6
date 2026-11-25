@@ -4,6 +4,7 @@ import gregtech.api.material.GTMaterial;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.material.Materials;
 import gregtech.engine.energy.EnergyNodeSpec;
+import gregtech.engine.energy.EnergyNodeSpec.DeviceType;
 import java.util.*;
 
 /** Original 10080-10099 family. Existing energy_storage IDs become the large boxes they depict. */
@@ -40,7 +41,7 @@ public final class BatteryBoxDefinitions {
                 String name = (large ? "Large Battery Box (" : "Battery Box (") + label(tier) + ")";
                 result.add(EnergyNodeSpec.builder(
                                 (large ? "energy_storage_" : "battery_box_") + TIERS.get(tier), material(tier))
-                        .kind(EnergyNodeSpec.Kind.STORAGE)
+                        .deviceType(DeviceType.BATTERY_BOX)
                         .texture("energystorages/battery_electric" + (large ? "_large" : ""))
                         .input(GregTechTags.Energy.EU, 8L << (2 * tier))
                         .output(GregTechTags.Energy.EU, 8L << (2 * tier))

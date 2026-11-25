@@ -6,6 +6,7 @@ import gregtech.api.material.*;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.material.Materials;
 import gregtech.engine.energy.EnergyNodeSpec;
+import gregtech.engine.energy.EnergyNodeSpec.DeviceType;
 import gregtech.engine.material.*;
 import java.util.*;
 
@@ -25,7 +26,7 @@ public final class FluxRotaryCatalog {
         var values = new ArrayList<EnergyNodeSpec>();
         for (var tier : TIERS) {
             values.add(EnergyNodeSpec.builder("flux_motor_" + tier.tier(), tier.material())
-                    .kind(EnergyNodeSpec.Kind.CONVERTER)
+                    .deviceType(DeviceType.MOTOR)
                     .texture("motors/rotation_flux")
                     .input(GregTechTags.Energy.RF, tier.voltage() * 4)
                     .output(GregTechTags.Energy.RU, tier.voltage() / 2)
@@ -33,7 +34,7 @@ public final class FluxRotaryCatalog {
                     .name("Flux Motor (" + tier.tier().toUpperCase(Locale.ROOT) + ")")
                     .build());
             values.add(EnergyNodeSpec.builder("flux_dynamo_" + tier.tier(), tier.material())
-                    .kind(EnergyNodeSpec.Kind.CONVERTER)
+                    .deviceType(DeviceType.DYNAMO)
                     .texture("dynamos/flux_rotation")
                     .input(GregTechTags.Energy.RU, tier.voltage())
                     .output(GregTechTags.Energy.RF, tier.voltage() * 11 / 4)

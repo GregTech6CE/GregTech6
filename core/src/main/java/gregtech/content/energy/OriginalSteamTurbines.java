@@ -10,6 +10,7 @@ import gregtech.content.material.Materials;
 import gregtech.content.transport.TransportCraftingCatalog.Input;
 import gregtech.content.transport.TransportCraftingCatalog.Row;
 import gregtech.engine.energy.EnergyNodeSpec;
+import gregtech.engine.energy.EnergyNodeSpec.DeviceType;
 import java.util.*;
 
 /** Source name identifies the four crafted rotors; hull identity comes from Kinetic_T. */
@@ -42,7 +43,7 @@ public final class OriginalSteamTurbines {
             variant("graphene", 1548, Materials.Tungstensteel, Materials.Graphene, 6144, 2048, "Graphene"));
 
     public static boolean handles(EnergyNodeSpec spec) {
-        return spec.kind() == EnergyNodeSpec.Kind.TURBINE && spec.id().startsWith("steam_turbine_");
+        return spec.deviceType() == DeviceType.STEAM_TURBINE;
     }
 
     public static int efficiency(EnergyNodeSpec spec) {
@@ -54,7 +55,7 @@ public final class OriginalSteamTurbines {
         // but use that concrete identity at the native block boundary.
         return VARIANTS.stream()
                 .map(v -> EnergyNodeSpec.builder(v.id(), v.hull() == MaterialGroups.Steel ? Materials.Steel : v.hull())
-                        .kind(EnergyNodeSpec.Kind.TURBINE)
+                        .deviceType(DeviceType.STEAM_TURBINE)
                         .texture("turbines/rotation_steam")
                         .input(GregTechTags.Energy.STEAM, v.input())
                         .output(GregTechTags.Energy.RU, v.output())

@@ -4,10 +4,12 @@
 package gregtech.content.energy;
 
 import gregtech.api.material.GTMaterial;
+import gregtech.content.data.GregTechTags;
 import gregtech.content.data.MaterialGroups;
 import gregtech.content.material.Materials;
 import gregtech.content.transport.TransportCraftingCatalog.Input;
 import gregtech.content.transport.TransportCraftingCatalog.Row;
+import gregtech.engine.energy.EnergyNodeSpec.DeviceType;
 import java.util.*;
 
 public final class OriginalThermalCrafting {
@@ -31,7 +33,8 @@ public final class OriginalThermalCrafting {
         };
         for (var variant : OriginalThermalConverter.VARIANTS) {
             int tier = variant.sourceId() % 10 - 1;
-            boolean cooler = variant.id().contains("cooler_"), rf = variant.id().startsWith("flux_");
+            boolean cooler = variant.deviceType() == DeviceType.COOLER;
+            boolean rf = variant.inputType() == GregTechTags.Energy.RF;
             Map<Character, Input> key;
             List<String> pattern;
             if (rf) {

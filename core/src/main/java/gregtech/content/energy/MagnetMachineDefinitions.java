@@ -7,6 +7,7 @@ import gregtech.api.material.GTMaterial;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.material.Materials;
 import gregtech.engine.energy.EnergyNodeSpec;
+import gregtech.engine.energy.EnergyNodeSpec.DeviceType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,8 +28,7 @@ public final class MagnetMachineDefinitions {
     private MagnetMachineDefinitions() {}
 
     public static boolean handles(EnergyNodeSpec spec) {
-        return spec.kind() == EnergyNodeSpec.Kind.MAGNET
-                && (spec.id().startsWith("electromagnet_") || spec.id().startsWith("flux_magnet_"));
+        return spec.deviceType() == DeviceType.MAGNET;
     }
 
     /** Bipolar efficiency includes both equally rated poles; RF has four units per EU. */
@@ -42,7 +42,7 @@ public final class MagnetMachineDefinitions {
         for (int i = 0; i < TIERS.length; i++) {
             String tier = TIERS[i];
             result.add(EnergyNodeSpec.builder("electromagnet_" + tier, ELECTRIC_CASINGS[i])
-                    .kind(EnergyNodeSpec.Kind.MAGNET)
+                    .deviceType(DeviceType.MAGNET)
                     .texture("magnets/magnet_electric")
                     .input(GregTechTags.Energy.EU, ELECTRIC_INPUT[i])
                     .output(GregTechTags.Energy.MU, MAGNETIC_OUTPUT[i])
@@ -50,7 +50,7 @@ public final class MagnetMachineDefinitions {
                     .name("Electromagnet (" + tier.toUpperCase() + ")")
                     .build());
             result.add(EnergyNodeSpec.builder("flux_magnet_" + tier, FLUX_CASINGS[i])
-                    .kind(EnergyNodeSpec.Kind.MAGNET)
+                    .deviceType(DeviceType.MAGNET)
                     .texture("magnets/magnet_flux")
                     .input(GregTechTags.Energy.RF, FLUX_INPUT[i])
                     .output(GregTechTags.Energy.MU, MAGNETIC_OUTPUT[i])

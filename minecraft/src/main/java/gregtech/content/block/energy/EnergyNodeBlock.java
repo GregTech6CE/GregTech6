@@ -6,6 +6,7 @@ import gregtech.engine.tool.ToolInteractions;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
 import gregtech.engine.energy.EnergyNodeSpec;
+import gregtech.engine.energy.EnergyNodeSpec.DeviceType;
 import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
 import net.minecraft.world.InteractionResult;
 import gregtech.content.registry.GTEnergyNodes;
@@ -64,14 +65,13 @@ public class EnergyNodeBlock extends GTDirectionalBlock implements EntityBlock, 
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
-        // GT6 rotational transformers reverse with a monkey wrench; the other
-        // invertible energy nodes keep their existing soft-hammer interaction.
-        boolean modeTool = node.isRotationTransformer() || node.isElectricTransformer()
+        boolean transformer = node.isRotationTransformer() || node.isElectricTransformer();
+        boolean modeTool = transformer
                 ? GTToolHelper.isMonkeyWrench(held) : GTToolHelper.isSoftHammer(held);
         if (node.isInvertible() && modeTool) {
             if (!level.isClientSide) {
                 boolean up = node.toggleInverted();
-                if (node.isRotationTransformer() || node.isElectricTransformer()) GTToolHelper.damageForUse(held, 1, player);
+                if (transformer) GTToolHelper.damageForUse(held, 1, player);
                 player.displayClientMessage(Component.translatable(
                         up ? "message.gt6ce.transformer.step_up" : "message.gt6ce.transformer.step_down"), true);
             }
@@ -125,7 +125,7 @@ public class EnergyNodeBlock extends GTDirectionalBlock implements EntityBlock, 
         super(properties);
         this.spec = spec;
         BlockState initial = defaultBlockState().setValue(FACING,
-                spec.kind() == EnergyNodeSpec.Kind.SOLAR ? Direction.DOWN : Direction.NORTH);
+                spec.deviceType() == DeviceType.SOLAR ? Direction.DOWN : Direction.NORTH);
         registerDefaultState(initial);
     }
 
@@ -139,12 +139,13 @@ public class EnergyNodeBlock extends GTDirectionalBlock implements EntityBlock, 
 
     @Override public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         boolean fixed = spec.id().startsWith("battery_eu");
-        if ((gregtech.content.energy.OriginalThermalConverter.handles(spec) || gregtech.content.energy.MagnetMachineDefinitions.handles(spec)) && GTToolHelper.isMonkeyWrench(tool)) return null;
-        // GT6's rotational transformer reserves the monkey wrench for mode reversal.
-        // A regular wrench still rotates the block itself.
-        if ((spec.id().startsWith("rotation_transformer_") || spec.id().startsWith("transformer_")) && GTToolHelper.isMonkeyWrench(tool)) return null;
+        boolean reservesMonkeyWrench = switch (spec.deviceType()) {
+            case HEATER, COOLER, MAGNET, ROTATION_TRANSFORMER, ELECTRIC_TRANSFORMER -> true;
+            default -> false;
+        };
+        if (reservesMonkeyWrench && GTToolHelper.isMonkeyWrench(tool)) return null;
         return !fixed && GTToolHelper.isMachineWrench(tool)
-                ? ToolInteractionSpec.facing(FACING, spec.kind() == EnergyNodeSpec.Kind.SOLAR
+                ? ToolInteractionSpec.facing(FACING, spec.deviceType() == DeviceType.SOLAR
                     ? gregtech.content.block.machine.MachineRotationType.BOTTOM_HORIZONTAL
                     : gregtech.content.block.machine.MachineRotationType.ALL) : null;
     }
@@ -160,12 +161,14 @@ public class EnergyNodeBlock extends GTDirectionalBlock implements EntityBlock, 
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
         // Ordinary device fronts face the placer; solar panels and fixed batteries keep their special sides.
         // GT6 solar panels use inverse clicked-side placement; their top is not an output.
-        Direction facing = spec.kind() == EnergyNodeSpec.Kind.SOLAR
-                ? ctx.getClickedFace().getOpposite()
-                : spec.id().startsWith("battery_eu") ? Direction.DOWN : ctx.getNearestLookingDirection().getOpposite();
-        if (spec.kind() == EnergyNodeSpec.Kind.SOLAR && facing == Direction.UP) facing = Direction.DOWN;
-        BlockState placed = defaultBlockState().setValue(FACING, facing);
-        return placed;
+        Direction facing;
+        if (spec.deviceType() == DeviceType.SOLAR) {
+            facing = ctx.getClickedFace().getOpposite();
+            if (facing == Direction.UP) facing = Direction.DOWN;
+        } else {
+            facing = spec.id().startsWith("battery_eu") ? Direction.DOWN : ctx.getNearestLookingDirection().getOpposite();
+        }
+        return defaultBlockState().setValue(FACING, facing);
     }
 
     @Override
@@ -227,14 +230,17 @@ public class EnergyNodeBlock extends GTDirectionalBlock implements EntityBlock, 
                 tooltip.add(gregtech.client.TooltipHelper.energyOutLine(spec.outputRate(), outUnit));
             }
             default -> {
+                boolean electricTransformer = spec.deviceType() == DeviceType.ELECTRIC_TRANSFORMER;
+                boolean rotationTransformer = spec.deviceType() == DeviceType.ROTATION_TRANSFORMER;
+                String outputFace = rotationTransformer ? "gt.lang.face.back"
+                        : electricTransformer ? "gt.lang.face.sides" : "gt.lang.face.front";
                 tooltip.add(gregtech.client.TooltipHelper.energyInLine(
                         spec.inputRate(), spec.inputRate(), spec.inputRate(),
                         spec.inType().getShortName(),
-                        Component.translatable((spec.id().startsWith("rotation_transformer_") || spec.id().startsWith("transformer_"))
+                        Component.translatable((rotationTransformer || electricTransformer)
                                 ? "gt.lang.face.front" : "gt.lang.face.sides").getString()));
                 tooltip.add(gregtech.client.TooltipHelper.energyOutLine(spec.outputRate(), outUnit)
-                        .append(Component.literal(" (").append(Component.translatable(spec.id().startsWith("rotation_transformer_")
-                                ? "gt.lang.face.back" : spec.id().startsWith("transformer_") ? "gt.lang.face.sides" : "gt.lang.face.front"))
+                        .append(Component.literal(" (").append(Component.translatable(outputFace))
                                 .append(")").withStyle(net.minecraft.ChatFormatting.WHITE)));
                 if (spec.kind() == EnergyNodeSpec.Kind.STORAGE) {
                     if (spec.batterySlots() > 0) {
@@ -246,7 +252,7 @@ public class EnergyNodeBlock extends GTDirectionalBlock implements EntityBlock, 
                                 .withStyle(net.minecraft.ChatFormatting.YELLOW));
                     }
                 } else if (spec.inType() == spec.outType()) {
-                    tooltip.add(Component.translatable(spec.id().startsWith("transformer_") ? "tooltip.gt6ce.transformer.controls" : "tooltip.gt6ce.node.invert")
+                    tooltip.add(Component.translatable(electricTransformer ? "tooltip.gt6ce.transformer.controls" : "tooltip.gt6ce.node.invert")
                             .withStyle(net.minecraft.ChatFormatting.GRAY));
                 }
             }

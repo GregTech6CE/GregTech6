@@ -72,13 +72,12 @@ public final class GTGearboxes {
     private static void registerTransformer(ContentRegistrar registrar, Tier tier) {
         // NBT_INPUT = V[t], NBT_OUTPUT = V[t-1] (wood: 2); multiplier 4.
         int voltageTierIndex = tier.voltageTier();
-        String id = "rotation_transformer_" + tier.suffix();
         EnergyNodeSpec spec = gregtech.content.energy.GearboxCatalog.transformer(tier);
         boolean wooden = voltageTierIndex == 0;
         RegisteredBlock<EnergyNodeBlock> block = registrar.block(
                 gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE,
-                id,
-                () -> new EnergyNodeBlock(spec, machineProperties(wooden)),
+                spec.id(),
+                () -> GTEnergyNodes.createBlock(spec, machineProperties(wooden)),
                 transformer -> new BlockItem(transformer, new Item.Properties().stacksTo(16)));
         ALL_TRANSFORMERS.add(block);
     }
