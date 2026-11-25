@@ -49,11 +49,7 @@ public class FilterBlock extends GTDirectionalBlock implements net.minecraft.wor
         }
         if (!level.isClientSide && player instanceof net.minecraft.server.level.ServerPlayer server
                 && level.getBlockEntity(pos) instanceof FilterBlockEntity filter)
-//? if >=1.21.1 {
-            /*server.openMenu(filter, buffer -> buffer.writeBoolean(filter.prefixMode()));
-*///?} else {
-            net.minecraftforge.network.NetworkHooks.openScreen(server, filter, buffer -> buffer.writeBoolean(filter.prefixMode()));
-//?}
+            gregtech.platform.Mc.openMenu(server, filter, buffer -> buffer.writeBoolean(filter.prefixMode()));
         return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
     }
     @Override

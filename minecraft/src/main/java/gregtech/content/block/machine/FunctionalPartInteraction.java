@@ -15,10 +15,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-//? if >=1.21.1 {
-//?} else {
-import net.minecraftforge.network.NetworkHooks;
-//?}
 
 /** Wrench, magnifying glass and part click. Energy-only parts do not call this. */
 public final class FunctionalPartInteraction {
@@ -51,11 +47,7 @@ public final class FunctionalPartInteraction {
     public static void openMenu(ServerPlayer server, FunctionalPartRuntime.Host host) {
         Component title = host.blockState().getBlock().getName();
         var provider = new SimpleMenuProvider((id, inventory, player) -> new PartMenu(id, inventory, host), title);
-//? if >=1.21.1 {
-/*        server.openMenu(provider, buf -> buf.writeBlockPos(host.pos()));
-*///?} else {
-        NetworkHooks.openScreen(server, provider, buf -> buf.writeBlockPos(host.pos()));
-//?}
+        gregtech.platform.Mc.openMenu(server, provider, buf -> buf.writeBlockPos(host.pos()));
     }
 
     public static gregtech.api.addon.platform.PartHit hitOf(BlockPos pos, BlockHitResult hit) {

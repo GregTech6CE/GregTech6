@@ -342,19 +342,11 @@ public class MassStorageBlockEntity extends GTBlockEntity implements BehaviorDuc
             int amount = (int) Math.min(64, autoOutput() ? stored() : stored() - baseCapacity());
             ItemStack offered = extract(amount, true);
             if (offered.isEmpty()) return;
-//? if >=1.21.1 {
-            /*ItemStack rest = net.neoforged.neoforge.items.ItemHandlerHelper.insertItem(target, offered.copy(), true);
-*///?} else {
-            ItemStack rest = net.minecraftforge.items.ItemHandlerHelper.insertItem(target, offered.copy(), true);
-//?}
+            ItemStack rest = gregtech.engine.inventory.ItemHandlerCompat.insertItem(target, offered.copy(), true);
             int accepted = offered.getCount() - rest.getCount();
             if (accepted <= 0) return;
             ItemStack removed = extract(accepted, false);
-//? if >=1.21.1 {
-            /*ItemStack returned = net.neoforged.neoforge.items.ItemHandlerHelper.insertItem(target, removed, false);
-*///?} else {
-            ItemStack returned = net.minecraftforge.items.ItemHandlerHelper.insertItem(target, removed, false);
-//?}
+            ItemStack returned = gregtech.engine.inventory.ItemHandlerCompat.insertItem(target, removed, false);
             if (!returned.isEmpty()) insert(returned, false);
             if (returned.getCount() >= accepted || autoOutput()) return;
         } while (stored() > baseCapacity());

@@ -13,6 +13,7 @@ import gregtech.content.blockentity.inventory.SafeBlockEntity;
 import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.blockentity.machine.BehaviorMachineBlockEntity;
 import gregtech.content.blockentity.machine.FunctionalPartRuntime;
+import gregtech.platform.Mc;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -21,9 +22,6 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
-//? if <1.21.1 {
-import net.minecraftforge.network.NetworkHooks;
-//?}
 
 /** Opens existing GT menus without running tools, container transfers, or machine interactions. */
 public final class SpectatorMenus {
@@ -59,11 +57,7 @@ public final class SpectatorMenus {
         if (entity instanceof BasicMachineBlockEntity machine && state.getBlock() instanceof BasicMachineBlock block) {
             block.openMenu(player, machine);
         } else if (entity instanceof BehaviorMachineBlockEntity machine) {
-//? if >=1.21.1 {
-            /*player.openMenu(machine, buf -> buf.writeBlockPos(pos));
-*///?} else {
-            NetworkHooks.openScreen(player, machine, buf -> buf.writeBlockPos(pos));
-//?}
+            Mc.openMenu(player, machine, buf -> buf.writeBlockPos(pos));
         } else if (entity instanceof AdvancedCraftingTableBlockEntity table) {
             boolean upper = hit.getDirection() == Direction.UP;
             if (!upper && hit.getDirection().getAxis() != state.getValue(AdvancedCraftingTableBlock.FACING).getAxis()) return false;
@@ -83,11 +77,7 @@ public final class SpectatorMenus {
                 && host.function() != null && host.function().opensMenu()) {
             FunctionalPartInteraction.openMenu(player, host);
         } else if (entity instanceof FilterBlockEntity filter) {
-//? if >=1.21.1 {
-            /*player.openMenu(filter, buf -> buf.writeBoolean(filter.prefixMode()));
-*///?} else {
-            NetworkHooks.openScreen(player, filter, buf -> buf.writeBoolean(filter.prefixMode()));
-//?}
+            Mc.openMenu(player, filter, buf -> buf.writeBoolean(filter.prefixMode()));
         } else if (entity instanceof MenuProvider provider) {
             player.openMenu(provider);
         } else {

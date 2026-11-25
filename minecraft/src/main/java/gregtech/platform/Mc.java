@@ -3,22 +3,28 @@ package gregtech.platform;
 //? if >=1.21.1 {
 /*import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 *///?} else {
 import gregtech.GregTech;
+import net.minecraft.network.FriendlyByteBuf;
 //?}
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
 //? if >=1.21.1 {
 /**///?} else {
+import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.registries.ForgeRegistries;
 //?}
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.lang.StackWalker.Option;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 /**
@@ -44,6 +50,14 @@ public final class Mc {
 *///?} else {
         return GregTech.id(path);
 //?}
+    }
+
+    public static ResourceLocation id(String namespace, String path) {
+        return ResourceLocation.fromNamespaceAndPath(namespace, path);
+    }
+
+    public static ResourceLocation parseId(String id) {
+        return ResourceLocation.parse(id);
     }
 
     public static Item item(ResourceLocation id) {
@@ -149,4 +163,16 @@ public final class Mc {
         stack.setHoverName(name);
 //?}
     }
+
+//? if >=1.21.1 {
+/*    public static void openMenu(ServerPlayer player, MenuProvider provider,
+            Consumer<RegistryFriendlyByteBuf> extraData) {
+        player.openMenu(provider, extraData);
+    }
+*///?} else {
+    public static void openMenu(ServerPlayer player, MenuProvider provider,
+            Consumer<FriendlyByteBuf> extraData) {
+        NetworkHooks.openScreen(player, provider, extraData);
+    }
+//?}
 }

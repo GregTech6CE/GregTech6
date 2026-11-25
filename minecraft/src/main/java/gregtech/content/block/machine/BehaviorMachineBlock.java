@@ -31,7 +31,6 @@ import net.minecraft.world.phys.BlockHitResult;
 /*import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 *///?} else {
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.network.NetworkHooks;
 //?}
 
 import javax.annotation.Nullable;
@@ -62,11 +61,7 @@ public class BehaviorMachineBlock extends GTFacingMachineBlock implements gregte
         }
         if (!level.isClientSide && machine.onUse(player, hand)) return InteractionResult.sidedSuccess(false);
         if (!level.isClientSide && player instanceof ServerPlayer server) {
-//? if >=1.21.1 {
-            server.openMenu(machine, buf -> buf.writeBlockPos(pos));
-//?} else {
-            NetworkHooks.openScreen(server, machine, buf -> buf.writeBlockPos(pos));
-//?}
+            gregtech.platform.Mc.openMenu(server, machine, buf -> buf.writeBlockPos(pos));
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }

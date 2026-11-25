@@ -22,7 +22,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 /*import net.neoforged.neoforge.fluids.FluidUtil;
 *///?} else {
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.network.NetworkHooks;
 //?}
 
 /** Opens the controller's existing menu; no synthetic use action or inventory is created on a part. */
@@ -53,11 +52,7 @@ public final class MultiblockMenus {
                 && controller.getBlockState().getBlock() instanceof BasicMachineBlock block) {
             block.openMenu(server, machine);
         } else if (controller instanceof BehaviorMachineBlockEntity machine) {
-//? if >=1.21.1 {
-            /*server.openMenu(machine, buf -> buf.writeBlockPos(machine.getBlockPos()));
-*///?} else {
-            NetworkHooks.openScreen(server, machine, buf -> buf.writeBlockPos(machine.getBlockPos()));
-//?}
+            gregtech.platform.Mc.openMenu(server, machine, buf -> buf.writeBlockPos(machine.getBlockPos()));
         }
         if (server.containerMenu == previousMenu) return InteractionResult.PASS;
         if (!(server.containerMenu instanceof MultiblockMenuAccess.Host menu)

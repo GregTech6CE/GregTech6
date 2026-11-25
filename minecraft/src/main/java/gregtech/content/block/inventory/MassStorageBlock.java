@@ -196,13 +196,7 @@ public class MassStorageBlock extends GTHorizontalDirectionalBlock
 
     /** Direct withdrawals enter the player's inventory; only a full-inventory remainder is dropped. */
     private static void deliverWithdrawal(Player player, ItemStack stack) {
-//? if >=1.21.1 {
-        /*ItemStack remainder = net.neoforged.neoforge.items.ItemHandlerHelper.insertItemStacked(
-                new net.neoforged.neoforge.items.wrapper.PlayerMainInvWrapper(player.getInventory()), stack, false);
-*///?} else {
-        ItemStack remainder = net.minecraftforge.items.ItemHandlerHelper.insertItemStacked(
-                new net.minecraftforge.items.wrapper.PlayerMainInvWrapper(player.getInventory()), stack, false);
-//?}
+        ItemStack remainder = gregtech.engine.inventory.ItemHandlerCompat.insertPlayerMainInventory(player, stack, false);
         if (remainder.getCount() != stack.getCount()) player.getInventory().setChanged();
         if (!remainder.isEmpty()) {
             var drop = new net.minecraft.world.entity.item.ItemEntity(player.level(), player.getX(),

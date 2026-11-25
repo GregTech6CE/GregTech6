@@ -60,15 +60,6 @@ import net.minecraftforge.fluids.FluidStack;
 //?}
 
 
-//? if >=1.21.1 {
-/**///?} else {
-import net.minecraftforge.network.NetworkHooks;
-//?}
-
-
-
-
-
 import javax.annotation.Nullable;
 
 import java.util.function.Supplier;
@@ -365,11 +356,7 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements gregtech.
 
     /** Shared menu payload for normal interaction and spectator previews. */
     public void openMenu(ServerPlayer sp, BasicMachineBlockEntity basicBe) {
-//? if >=1.21.1 {
-/*                sp.openMenu(basicBe, buf -> {
-*///?} else {
-                NetworkHooks.openScreen(sp, basicBe, buf -> {
-//?}
+        gregtech.platform.Mc.openMenu(sp, basicBe, buf -> {
 
 
 
