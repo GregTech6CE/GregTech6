@@ -384,7 +384,7 @@ public final class AddonMaterials {
         for (Submission submission : snapshot()) {
             queued.add(new AddonOreVeins.Submission(submission.addonId, submission.veins, submission.smallOres));
         }
-        AddonOreVeins.publish(queued);
+        AddonOreVeins.publish(queued, GTMaterialRegistry::get, ORE_FORMS);
     }
 
     /** Byproduct names resolve after linking, so a list can name a material created in {@code link()}. */

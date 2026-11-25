@@ -1,7 +1,10 @@
 package gregtech.engine.material;
 
 import gregtech.api.addon.material.*;
+import gregtech.api.addon.worldgen.OreVeinDeclaration;
+import gregtech.api.addon.worldgen.SmallOreDeclaration;
 import gregtech.api.mod.ModData;
+import gregtech.content.worldgen.AddonOreVeins;
 import gregtech.engine.addon.AddonCoreServices;
 import gregtech.engine.addon.AddonMaterials;
 import java.nio.file.Files;
@@ -10,6 +13,7 @@ import java.util.Set;
 
 /** Isolated JVM fixture exercising actual addon discovery and publication. */
 public final class MaterialAddonLifecycleProbe {
+    private static final String ORE_DIMENSION = "alpha_addon:probe";
     private static final MaterialProcessKey<String> PROCESS =
             MaterialProcessKey.single(new DataKey("alpha_addon", "probe"), String.class);
     private static final MaterialProcessKey<SpecialProcessValue> SPECIAL =
@@ -26,10 +30,28 @@ public final class MaterialAddonLifecycleProbe {
         }
 
         public List<MaterialDeclaration> materials() {
-            return List.of(MaterialDeclaration.builder("SharedMaterial")
-                    .density(2)
-                    .dust()
-                    .build());
+            return List.of(
+                    MaterialDeclaration.builder("SharedMaterial")
+                            .density(2)
+                            .dust()
+                            .build(),
+                    MaterialDeclaration.builder("ProbeOre").ores().build());
+        }
+
+        @Override
+        public List<OreVeinDeclaration> oreVeins() {
+            return List.of(new OreVeinDeclaration(
+                    "probe_vein", ORE_DIMENSION, 8, 64, 2, 1, 3, "ProbeOre", "Fe", "JasperRainforest", "Fe"));
+        }
+
+        @Override
+        public List<SmallOreDeclaration> smallOres() {
+            String material = switch (System.getProperty("probe.scenario")) {
+                case "no_ore" -> "SharedMaterial";
+                case "unknown_ore" -> "UnknownProbeMaterial";
+                default -> "ProbeOre";
+            };
+            return List.of(new SmallOreDeclaration("probe_small", ORE_DIMENSION, 8, 64, 1, material));
         }
 
         @Override
@@ -128,14 +150,24 @@ public final class MaterialAddonLifecycleProbe {
                 new java.net.URL[] {directory.toUri().toURL()}, MaterialAddonLifecycleProbe.class.getClassLoader())) {
             AddonMaterials.collectContributors(loader);
         }
-        if (Boolean.parseBoolean(args[0]) || args[0].equals("unknown")) {
+        String expectedFailure = switch (args[0]) {
+            case "true" -> "density";
+            case "unknown" -> "Unknown special process output";
+            case "no_ore" -> "material 'SharedMaterial' has no ore";
+            case "unknown_ore" -> "uses unknown material 'UnknownProbeMaterial'";
+            default -> null;
+        };
+        if (expectedFailure != null) {
             try {
                 GTMaterialRegistry.init();
                 throw new AssertionError("invalid addon declarations were accepted");
             } catch (RuntimeException expected) {
-                String wanted = args[0].equals("unknown") ? "Unknown special process output" : "density";
-                if (!expected.getMessage().contains(wanted)) throw expected;
+                if (!expected.getMessage().contains(expectedFailure)) throw expected;
             }
+            if ((args[0].equals("no_ore") || args[0].equals("unknown_ore"))
+                    && (!AddonOreVeins.veins(ORE_DIMENSION).isEmpty()
+                            || !AddonOreVeins.smallOres(ORE_DIMENSION).isEmpty()))
+                throw new AssertionError("A rejected small ore must not publish the preceding vein");
             if (GTMaterialRegistry.registrationPhase() != GTMaterialRegistry.RegistrationPhase.FAILED)
                 throw new AssertionError("failed material initialization became visible");
             try {
@@ -146,6 +178,16 @@ public final class MaterialAddonLifecycleProbe {
             return;
         }
         GTMaterialRegistry.init();
+        var ore = GTMaterialRegistry.get("ProbeOre");
+        var veins = AddonOreVeins.veins(ORE_DIMENSION);
+        var smallOres = AddonOreVeins.smallOres(ORE_DIMENSION);
+        if (veins.size() != 1
+                || veins.get(0).top() != ore
+                || veins.get(0).bottom() != GTMaterialRegistry.get("Iron")
+                || veins.get(0).between() != GTMaterialRegistry.get("RainforestJasper")
+                || smallOres.size() != 1
+                || smallOres.get(0).material() != ore)
+            throw new AssertionError("Ore publication must resolve addon ore forms and built-in aliases");
         if (!GregTechMaterials.resolve("Fe").equals(GregTechMaterials.catalog().resolve("Fe")))
             throw new AssertionError("The ready lookup must agree with the published catalog");
         var material = GTMaterialRegistry.get("SharedMaterial");

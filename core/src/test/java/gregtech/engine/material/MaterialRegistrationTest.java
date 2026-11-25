@@ -17,7 +17,8 @@ import org.junit.jupiter.api.Test;
 class MaterialRegistrationTest {
     @Test
     void discoveredAddonDefinitionsMergeOrFailWithoutPublishing() throws Exception {
-        for (String conflict : List.of("false", "true", "unknown", "foreign_host", "foreign_output")) {
+        for (String conflict :
+                List.of("false", "true", "unknown", "foreign_host", "foreign_output", "no_ore", "unknown_ore")) {
             var classpath = new java.util.ArrayList<String>();
             for (Class<?> type : List.of(MaterialAddonLifecycleProbe.class, GTMaterialRegistry.class, GTMaterial.class))
                 classpath.add(Path.of(type.getProtectionDomain()
