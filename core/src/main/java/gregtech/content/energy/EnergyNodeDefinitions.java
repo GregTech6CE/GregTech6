@@ -1,5 +1,6 @@
 package gregtech.content.energy;
 
+import gregtech.api.energy.GTVoltageTiers;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.material.Materials;
@@ -56,7 +57,7 @@ public final class EnergyNodeDefinitions {
         // Transformers: step-down — accept the higher voltage, emit the lower (GT6 10040+).
         // GT6's first transformer is ULV-LV built from Electric_T[0] (tin alloy), so every step
         // is one tier below the machine tiers above.
-        record Step(String name, long inputRate, long outputRate, GTMaterial material) {}
+        record Step(String idSuffix, long inputRate, long outputRate, GTMaterial material) {}
         Step[] steps = {
             new Step("ulv_lv", 32, 8, Materials.TinAlloy),
             new Step("lv_mv", 128, 32, Materials.SteelGalvanized),
@@ -66,16 +67,18 @@ public final class EnergyNodeDefinitions {
             new Step("iv_luv", 32768, 8192, Materials.Titanium),
             new Step("luv_zpm", 131072, 32768, Materials.Iridium),
             new Step("zpm_uv", 524288, 131072, Materials.OsmiumElemental),
-            new Step("uv_xv", 2097152, 524288, Materials.Trinitanium),
+            new Step("uv_xv", 2097152, 524288, Materials.Trinitanium), // Legacy registry ID for UV-PUV1.
         };
         for (Step step : steps) {
-            result.add(EnergyNodeSpec.builder("transformer_" + step.name(), step.material())
+            String lowTier = GTVoltageTiers.nameOf(step.outputRate());
+            String highTier = GTVoltageTiers.nameOf(step.inputRate());
+            result.add(EnergyNodeSpec.builder("transformer_" + step.idSuffix(), step.material())
                     .kind(Kind.CONVERTER)
                     .texture("transformers/transformer_electric")
                     .input(GregTechTags.Energy.EU, step.inputRate())
                     .output(GregTechTags.Energy.EU, step.outputRate())
                     .capacity(step.inputRate() * 2)
-                    .name("Transformer (" + step.name().replace('_', '-').toUpperCase() + ")")
+                    .name("Transformer (" + lowTier + "-" + highTier + ")")
                     .build());
         }
 
