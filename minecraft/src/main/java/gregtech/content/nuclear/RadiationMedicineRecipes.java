@@ -9,6 +9,11 @@ import gregtech.content.registry.*;
 import gregtech.platform.Mc;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
+//? if >=1.21.1 {
+/*import net.neoforged.neoforge.fluids.FluidStack;
+*///?} else {
+import net.minecraftforge.fluids.FluidStack;
+//?}
 
 /** MultiItemFood 31001 and Loader_Recipes_Extruder food-grade wax pill routes. */
 public final class RadiationMedicineRecipes {
@@ -19,11 +24,7 @@ public final class RadiationMedicineRecipes {
             if (fluid==null)throw new IllegalStateException("Missing Geiger counter gas: "+gas);
             MachineRecipeMaps.Canner.addRecipe(new Recipe(new ItemStack[]{item("geiger_counter_empty")},
                     new ItemStack[]{item("geiger_counter")},null,
-//? if >=1.21.1 {
-                    /*new net.neoforged.neoforge.fluids.FluidStack[]{new net.neoforged.neoforge.fluids.FluidStack(fluid.get(),1000)},null,64,16,0));
-*///?} else {
-                    new net.minecraftforge.fluids.FluidStack[]{new net.minecraftforge.fluids.FluidStack(fluid.get(),1000)},null,64,16,0));
-//?}
+                    new FluidStack[]{new FluidStack(fluid.get(),1000)},null,64,16,0));
         }
         var empty = item("empty_wax_pill");
         add(MachineRecipeMaps.Boxinator, new ItemStack[]{GTItems.getStack(MaterialPrefix.dust,

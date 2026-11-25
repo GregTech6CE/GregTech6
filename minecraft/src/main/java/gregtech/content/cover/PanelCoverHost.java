@@ -4,6 +4,13 @@ import gregtech.api.platform.machine.MachineControl;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
+//? if >=1.21.1 {
+/*import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.items.IItemHandler;
+*///?} else {
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.IItemHandler;
+//?}
 
 /** Small host boundary: storage and machine capabilities are independent of cover behavior. */
 public interface PanelCoverHost {
@@ -19,17 +26,9 @@ public interface PanelCoverHost {
         return false;
     }
     default boolean componentTicks() { return true; }
-//? if >=1.21.1 {
-    /*default net.neoforged.neoforge.items.IItemHandler componentItems(Direction side) {
-*///?} else {
-    default net.minecraftforge.items.IItemHandler componentItems(Direction side) {
-//?}
+    default IItemHandler componentItems(Direction side) {
         var owner=coverOwner();
-//? if >=1.21.1 {
-        /*if (owner instanceof net.neoforged.neoforge.items.IItemHandler handler) return handler;
-*///?} else {
-        if (owner instanceof net.minecraftforge.items.IItemHandler handler) return handler;
-//?}
+        if (owner instanceof IItemHandler handler) return handler;
         if (owner.getLevel()==null) return null;
 //? if >=1.21.1 {
         /*return owner.getLevel().getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,owner.getBlockPos(),null);
@@ -37,17 +36,9 @@ public interface PanelCoverHost {
         return owner.getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER,null).orElse(null);
 //?}
     }
-//? if >=1.21.1 {
-    /*default net.neoforged.neoforge.fluids.capability.IFluidHandler componentFluids(Direction side) {
-*///?} else {
-    default net.minecraftforge.fluids.capability.IFluidHandler componentFluids(Direction side) {
-//?}
+    default IFluidHandler componentFluids(Direction side) {
         var owner=coverOwner();
-//? if >=1.21.1 {
-        /*if (owner instanceof net.neoforged.neoforge.fluids.capability.IFluidHandler handler) return handler;
-*///?} else {
-        if (owner instanceof net.minecraftforge.fluids.capability.IFluidHandler handler) return handler;
-//?}
+        if (owner instanceof IFluidHandler handler) return handler;
         if (owner.getLevel()==null) return null;
 //? if >=1.21.1 {
         /*return owner.getLevel().getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,owner.getBlockPos(),null);

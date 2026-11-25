@@ -9,6 +9,11 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import java.util.*;
+//? if >=1.21.1 {
+/*import net.neoforged.neoforge.fluids.FluidStack;
+*///?} else {
+import net.minecraftforge.fluids.FluidStack;
+//?}
 
 /** Seven fixed output/rate variants plus a legacy metadata carrier. */
 public final class GTFluidSprings {
@@ -41,11 +46,7 @@ public final class GTFluidSprings {
                         var fluid = net.minecraft.core.registries.BuiltInRegistries.FLUID.get(
                                 net.minecraft.resources.ResourceLocation.tryParse(spring.fluidId()));
                         return net.minecraft.network.chat.Component.translatable("block.gt6ce.fluid_spring")
-//? if >=1.21.1 {
-                                /*.append(" (").append(new net.neoforged.neoforge.fluids.FluidStack(fluid, 1000).getDisplayName()).append(")");
-*///?} else {
-                                .append(" (").append(new net.minecraftforge.fluids.FluidStack(fluid, 1000).getDisplayName()).append(")");
-//?}
+                                .append(" (").append(new FluidStack(fluid, 1000).getDisplayName()).append(")");
                     }
                 });
         VARIANTS.put(path, block);

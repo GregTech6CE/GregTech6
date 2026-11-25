@@ -17,11 +17,13 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 //? if >=1.21.1 {
-/*import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+/*import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 *///?} else {
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 //?}
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -227,11 +229,7 @@ public class PumpBlockEntity extends GTEnergyBlockEntity {
 
             if (!fluidState.isEmpty() && fluidState.isSource()) {
                 net.minecraft.world.level.material.Fluid fluid = fluidState.getType();
-//? if >=1.21.1 {
-                /*var bucket = new net.neoforged.neoforge.fluids.FluidStack(fluid, 1000);
-*///?} else {
-                var bucket = new net.minecraftforge.fluids.FluidStack(fluid, 1000);
-//?}
+                var bucket = new FluidStack(fluid, 1000);
                 // A world source is indivisible: never remove it for a partial fill,
                 // and do not mint a bucket if the block cannot be removed.
                 if (pump.tank.fill(bucket, IFluidHandler.FluidAction.SIMULATE) == 1000

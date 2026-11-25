@@ -80,11 +80,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     private final BasicMachineIOPorts ioPorts = new BasicMachineIOPorts(this);
 
 
-//? if >=1.21.1 {
-/*    private final net.neoforged.neoforge.items.ItemStackHandler autocraftingProgram = new net.neoforged.neoforge.items.ItemStackHandler(1) {
-*///?} else {
-    private final net.minecraftforge.items.ItemStackHandler autocraftingProgram = new net.minecraftforge.items.ItemStackHandler(1) {
-//?}
+    private final ItemStackHandler autocraftingProgram = new ItemStackHandler(1) {
 
         @Override public boolean isItemValid(int slot, ItemStack stack) {
             return gregtech.content.recipe.AutocraftingRecipes.isProgram(stack);
@@ -92,11 +88,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         @Override protected void onContentsChanged(int slot) { inventoryChanged(); }
     };
 
-//? if >=1.21.1 {
-/*    public net.neoforged.neoforge.items.IItemHandler autocraftingProgram() { return autocraftingProgram; }
-*///?} else {
-    public net.minecraftforge.items.IItemHandler autocraftingProgram() { return autocraftingProgram; }
-//?}
+    public IItemHandler autocraftingProgram() { return autocraftingProgram; }
 
 
     private FaceConfig faceConfig = FaceConfig.ALL_SIDES;

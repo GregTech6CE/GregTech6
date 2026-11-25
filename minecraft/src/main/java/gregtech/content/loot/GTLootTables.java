@@ -16,6 +16,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+//? if >=1.21.1 {
+/*import net.neoforged.neoforge.items.ItemStackHandler;
+*///?} else {
+import net.minecraftforge.items.ItemStackHandler;
+//?}
 
 /**
  * GT6's loot tables, resolved from the rows {@code tools/transpile_gt6_loot.py} generated into
@@ -174,11 +179,7 @@ public final class GTLootTables {
      *
      * @return how many stacks were placed
      */
-//? if >=1.21.1 {
-    /*public static int fillInto(String table, net.neoforged.neoforge.items.ItemStackHandler inventory,
-*///?} else {
-    public static int fillInto(String table, net.minecraftforge.items.ItemStackHandler inventory,
-//?}
+    public static int fillInto(String table, ItemStackHandler inventory,
                                RandomSource random) {
         int[] range = countRange(table);
         int rolls = LootRollRules.count(range[0],range[1],random::nextInt);

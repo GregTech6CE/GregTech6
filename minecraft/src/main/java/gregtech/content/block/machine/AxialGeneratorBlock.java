@@ -17,6 +17,13 @@ import net.minecraft.world.phys.BlockHitResult;
 import java.util.List;
 
 import gregtech.content.block.GTDirectionalBlock;
+
+//? if >=1.21.1 {
+/*import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+*///?} else {
+import net.minecraftforge.fluids.capability.IFluidHandler;
+//?}
+
 /** Shared placement, wrench, stop switch and stored-content drops for axial generators. */
 public abstract class AxialGeneratorBlock extends GTDirectionalBlock implements gregtech.engine.multiblock.StructurePreviewSource, gregtech.engine.tool.ToolInteractionTarget {
     @Override public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state,ItemStack tool) {
@@ -48,11 +55,7 @@ public abstract class AxialGeneratorBlock extends GTDirectionalBlock implements 
                 if (!level.isClientSide)gregtech.engine.tool.GTToolHelper.damageForToolClickReturn(held,turbine.purgeFluid(),player,hand==InteractionHand.MAIN_HAND?net.minecraft.world.entity.EquipmentSlot.MAINHAND:net.minecraft.world.entity.EquipmentSlot.OFFHAND);
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
-//? if >=1.21.1 {
-            /*if (machine instanceof net.neoforged.neoforge.fluids.capability.IFluidHandler fluids) {
-*///?} else {
-            if (machine instanceof net.minecraftforge.fluids.capability.IFluidHandler fluids) {
-//?}
+            if (machine instanceof IFluidHandler fluids) {
                 if (level.isClientSide) return gregtech.engine.fluid.FluidContainerInteraction.clientResult(player, hand);
                 if (gregtech.engine.fluid.FluidContainerInteraction.use(player, hand, fluids))
                     return InteractionResult.CONSUME;

@@ -24,9 +24,13 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 //? if >=1.21.1 {
-/*import net.neoforged.neoforge.items.ItemStackHandler;
+/*import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 *///?} else {
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 //?}
@@ -115,11 +119,7 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu implements 
         int total = recipeMap.fluidInputTanks + recipeMap.fluidOutputTanks;
         if (total == 0) return;
 
-//? if >=1.21.1 {
-/*        net.neoforged.neoforge.fluids.FluidStack[] fluids = new net.neoforged.neoforge.fluids.FluidStack[total];
-*///?} else {
-        net.minecraftforge.fluids.FluidStack[] fluids = new net.minecraftforge.fluids.FluidStack[total];
-//?}
+        FluidStack[] fluids = new FluidStack[total];
 
         long[] amounts = new long[total], capacities = new long[total];
         for (int i = 0; i < total; i++) {
@@ -146,11 +146,7 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu implements 
     // ── Slot grid ─────────────────────────────────────────────────────────
 
 
-//? if >=1.21.1 {
-/*    private void addMachineSlots(net.neoforged.neoforge.items.IItemHandler inv) {
-*///?} else {
-    private void addMachineSlots(net.minecraftforge.items.IItemHandler inv) {
-//?}
+    private void addMachineSlots(IItemHandler inv) {
 
         int inputCount  = recipeMap.itemInputSlots;
         int outputCount = recipeMap.itemOutputSlots;
@@ -160,22 +156,14 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu implements 
         addGrid(inv,inputCount,outputCount,false,recipeMap.fluidOutputTanks, false);
     }
 
-//? if >=1.21.1 {
-/*    private void addPotionSlot(net.neoforged.neoforge.items.IItemHandler potion) {
-*///?} else {
-    private void addPotionSlot(net.minecraftforge.items.IItemHandler potion) {
-//?}
+    private void addPotionSlot(IItemHandler potion) {
         if (recipeMap.potionInputSlots <= 0 || potion == null) return;
         potionSlot = slots.size();
         addSlot(new SlotInput(potion, 0, 53, 25, this::inventorySlotChanged));
     }
 
 
-//? if >=1.21.1 {
-/*    private void addGrid(net.neoforged.neoforge.items.IItemHandler inv,int start,int count,boolean input,int fluids,boolean shiftForPotion) {
-*///?} else {
-    private void addGrid(net.minecraftforge.items.IItemHandler inv,int start,int count,boolean input,int fluids,boolean shiftForPotion) {
-//?}
+    private void addGrid(IItemHandler inv,int start,int count,boolean input,int fluids,boolean shiftForPotion) {
 
         for (int i=0;i<count;i++) {
             var point=shiftForPotion
@@ -203,11 +191,7 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu implements 
     }
 
 
-//? if >=1.21.1 {
-/*    private void addProgramSlot(net.neoforged.neoforge.items.IItemHandler handler) {
-*///?} else {
-    private void addProgramSlot(net.minecraftforge.items.IItemHandler handler) {
-//?}
+    private void addProgramSlot(IItemHandler handler) {
 
         programSlot = slots.size();
         addSlot(new SlotItemHandler(handler, 0,

@@ -23,6 +23,11 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import java.util.*;
+//? if >=1.21.1 {
+/*import net.neoforged.neoforge.fluids.FluidStack;
+*///?} else {
+import net.minecraftforge.fluids.FluidStack;
+//?}
 
 public final class AutocraftingRecipes {
 
@@ -123,11 +128,7 @@ public final class AutocraftingRecipes {
     }
 
     public static Recipe find(Level level, BlockEntity machine, ItemStack program,
-//? if >=1.21.1 {
-            /*List<ItemStack> available, List<net.neoforged.neoforge.fluids.FluidStack> fluids) {
-*///?} else {
-            List<ItemStack> available, List<net.minecraftforge.fluids.FluidStack> fluids) {
-//?}
+            List<ItemStack> available, List<FluidStack> fluids) {
         if (level == null || level.isClientSide || available.isEmpty()) return null;
         ItemStack[] pattern = blueprint(level, machine, program);
         var grouped = AutocraftingRules.inputs(Arrays.asList(pattern), ItemStack::isEmpty,

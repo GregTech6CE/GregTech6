@@ -7,6 +7,12 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 
+//? if >=1.21.1 {
+/*import net.neoforged.neoforge.fluids.FluidStack;
+*///?} else {
+import net.minecraftforge.fluids.FluidStack;
+//?}
+
 /** Extender/bridge state for covers, routed capabilities, machine controls and signals. */
 public class ExtenderBlockEntity extends gregtech.content.blockentity.EnergyRelayBlockEntity
         implements gregtech.api.platform.machine.MachineControl.Provider,
@@ -94,17 +100,10 @@ public class ExtenderBlockEntity extends gregtech.content.blockentity.EnergyRela
     protected boolean permitsItem(Direction side, net.minecraft.world.item.ItemStack stack) {
         return !panels.shuttered(side);
     }
-//? if >=1.21.1 {
-    /*@Override
-    protected boolean permitsFluid(Direction side, net.neoforged.neoforge.fluids.FluidStack stack) {
-        return !panels.shuttered(side);
-    }
-*///?} else {
     @Override
-    protected boolean permitsFluid(Direction side, net.minecraftforge.fluids.FluidStack stack) {
+    protected boolean permitsFluid(Direction side, FluidStack stack) {
         return !panels.shuttered(side);
     }
-//?}
     public int coverStrongSignal(Direction query) {
         return panels.strongSignal(query.getOpposite());
     }

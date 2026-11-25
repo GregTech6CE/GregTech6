@@ -7,6 +7,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import java.util.ArrayList;
 import java.util.List;
+//? if >=1.21.1 {
+/*import net.neoforged.neoforge.fluids.FluidStack;
+*///?} else {
+import net.minecraftforge.fluids.FluidStack;
+//?}
 
 /** Bucket aliases for viewer lookup only; native fluid recipe execution remains exact. */
 public final class FluidContainerDisplayBinding {
@@ -14,11 +19,7 @@ public final class FluidContainerDisplayBinding {
     private static final java.util.Map<net.minecraft.world.level.material.Fluid, List<ItemStack>> CACHE = new java.util.IdentityHashMap<>();
     private static List<BucketItem> buckets;
     public static void invalidate() { CACHE.clear(); buckets = null; }
-//? if >=1.21.1 {
-    /*public static List<ItemStack> containers(net.neoforged.neoforge.fluids.FluidStack fluid) {
-*///?} else {
-    public static List<ItemStack> containers(net.minecraftforge.fluids.FluidStack fluid) {
-//?}
+    public static List<ItemStack> containers(FluidStack fluid) {
         if (fluid.isEmpty()) return List.of();
         return CACHE.computeIfAbsent(fluid.getFluid(), FluidContainerDisplayBinding::find);
     }
