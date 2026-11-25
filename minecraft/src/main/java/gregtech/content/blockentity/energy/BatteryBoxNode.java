@@ -15,6 +15,8 @@ import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -22,14 +24,37 @@ import net.minecraft.world.level.block.state.BlockState;
 /** Connects the battery box's slot and buffer state to the energy network and the world. */
 final class BatteryBoxNode extends EnergyDeviceBehavior implements MachineControl {
     private final EnergyNodeSpec spec;
-    private final BatteryBoxInventory inventory;
+    final BatteryBoxInventory inventory;
     final BatteryBoxEnergy energy;
 
-    BatteryBoxNode(EnergyNodeBlockEntity host, EnergyNodeSpec spec, BatteryBoxInventory inventory) {
+    BatteryBoxNode(EnergyNodeBlockEntity host, EnergyNodeSpec spec) {
         super(host);
         this.spec = spec;
-        this.inventory = inventory;
-        energy = new BatteryBoxEnergy(inventory.reset(spec.batterySlots()), spec.inputRate(), spec.inType());
+        inventory = new BatteryBoxInventory(host, spec);
+        energy = new BatteryBoxEnergy(inventory.batteries, spec.inputRate(), spec.inType());
+    }
+
+    @Override
+    void saveState(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        energy.save(tag);
+        inventory.save(tag, lookup);
+    }
+
+    @Override
+    void loadState(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadState(tag, lookup);
+        energy.load(tag);
+        inventory.load(tag, lookup);
+    }
+
+    @Override
+    void dropContents() {
+        inventory.dropContents();
+    }
+
+    @Override
+    void detach() {
+        inventory.detach();
     }
 
     @Override

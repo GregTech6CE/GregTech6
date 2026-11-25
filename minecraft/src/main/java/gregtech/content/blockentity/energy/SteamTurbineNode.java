@@ -29,9 +29,11 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 
 /** Steam enters at the rear, adds energy over two ticks and returns condensate through the lateral faces. */
 final class SteamTurbineNode implements MachineControl {
+    private static final String PENDING = "gt.turbine_pending";
+    private static final String REMAINDER = "gt.steam_remainder";
     private final EnergyNodeBlockEntity host;
-    @Nullable
-    private FluidTankGT steamTank;
+    private final FluidTankGT steamTank;
+    private boolean detached;
     private long pendingEnergy;
     private long steamRemainder;
     /** Returned to players who installed a rotor in an older version. */
@@ -43,20 +45,17 @@ final class SteamTurbineNode implements MachineControl {
     private LazyOptional<IFluidHandler> unsidedCapability;
 //?}
 
-    SteamTurbineNode(EnergyNodeBlockEntity host) {
+    SteamTurbineNode(EnergyNodeBlockEntity host, long inputRate) {
         this.host = host;
-    }
-
-    void configure(long inputRate) {
         steamTank = new FluidTankGT(inputRate * 4).setOnChanged(host::setChanged);
     }
 
     long steamAmount() {
-        return steamTank == null ? 0 : steamTank.getAmount();
+        return steamTank.getAmount();
     }
 
     long steamCapacity() {
-        return steamTank == null ? 0 : steamTank.capacity();
+        return steamTank.capacity();
     }
 
     static boolean isRotorItem(ItemStack stack) {
@@ -77,7 +76,6 @@ final class SteamTurbineNode implements MachineControl {
     }
 
     long purge() {
-        if (!host.isTurbine() || steamTank == null) return 0;
         long removedSteam = steamTank.getAmount();
         steamTank.remove(removedSteam);
         host.setChanged();
@@ -85,7 +83,7 @@ final class SteamTurbineNode implements MachineControl {
     }
 
     void tick() {
-        if (steamTank == null || host.spec().inputRate() <= 0) return;
+        if (host.spec().inputRate() <= 0) return;
         // Older saves can contain other fluids. Discard them before converting steam into RU.
         if (!steamTank.getFluid().isEmpty() && !isSteam(steamTank.getFluid())) {
             steamTank.remove(steamTank.getAmount());
@@ -156,7 +154,7 @@ final class SteamTurbineNode implements MachineControl {
     }
 
     boolean exposesInlet(@Nullable Direction side) {
-        return steamTank != null && (side == null || side != host.facing());
+        return !detached && side != host.facing();
     }
 
     private IFluidHandler coveredInlet(Direction side) {
@@ -169,6 +167,7 @@ final class SteamTurbineNode implements MachineControl {
     }
 *///?} else {
     LazyOptional<IFluidHandler> capability(@Nullable Direction side) {
+        if (detached) return LazyOptional.empty();
         if (unsidedCapability == null || !unsidedCapability.isPresent()) {
             unsidedCapability = LazyOptional.of(() -> new SteamInlet(null));
         }
@@ -186,6 +185,13 @@ final class SteamTurbineNode implements MachineControl {
     }
 //?}
 
+    void detach() {
+        detached = true;
+//? if <1.21.1 {
+        invalidateCaps();
+//?}
+    }
+
     private static boolean isSteam(FluidStack fluid) {
         var steam = GTFluids.still("Steam");
         return !fluid.isEmpty() && steam != null && fluid.getFluid().isSame(steam.get());
@@ -201,7 +207,7 @@ final class SteamTurbineNode implements MachineControl {
 
         @Override
         public int getTanks() {
-            return side == host.facing() ? 0 : 1;
+            return exposesInlet(side) ? 1 : 0;
         }
 
         @Override
@@ -216,11 +222,12 @@ final class SteamTurbineNode implements MachineControl {
 
         @Override
         public boolean isFluidValid(int tank, FluidStack fluid) {
-            return isSteam(fluid);
+            return !detached && isSteam(fluid);
         }
 
         @Override
         public int fill(FluidStack fluid, FluidAction action) {
+            if (detached) return 0;
             int filled = 0;
             if (!host.isRemoved() && !host.converterStopped
                     && (side == null || side == host.facing().getOpposite())
@@ -276,30 +283,27 @@ final class SteamTurbineNode implements MachineControl {
         return host.capacity();
     }
 
-    void saveConversion(CompoundTag tag) {
-        tag.putLong("gt.turbine_pending", pendingEnergy);
-        tag.putLong("gt.steam_remainder", steamRemainder);
+    static void saveEmptyConversion(CompoundTag tag) {
+        tag.putLong(PENDING, 0);
+        tag.putLong(REMAINDER, 0);
     }
 
-    void loadConversion(CompoundTag tag) {
-        pendingEnergy = Math.max(0, tag.getLong("gt.turbine_pending"));
-        steamRemainder = Math.floorMod(tag.getLong("gt.steam_remainder"), SteamTurbineConversion.STEAM_PER_WATER);
-    }
-
-    void saveContents(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+    void save(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        tag.putLong(PENDING, pendingEnergy);
+        tag.putLong(REMAINDER, steamRemainder);
         if (!legacyRotor.isEmpty()) tag.put("gt.rotor", NbtCompat.saveItem(legacyRotor, lookup));
-        if (steamTank != null) {
-            CompoundTag tankTag = new CompoundTag();
-            NbtCompat.writeTank(steamTank, tankTag, lookup);
-            tag.put("gt.steam", tankTag);
-        }
+        CompoundTag tankTag = new CompoundTag();
+        NbtCompat.writeTank(steamTank, tankTag, lookup);
+        tag.put("gt.steam", tankTag);
     }
 
-    void loadContents(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+    void load(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        pendingEnergy = Math.max(0, tag.getLong(PENDING));
+        steamRemainder = Math.floorMod(tag.getLong(REMAINDER), SteamTurbineConversion.STEAM_PER_WATER);
         legacyRotor = tag.contains("gt.rotor")
                 ? NbtCompat.readItem(tag.getCompound("gt.rotor"), lookup)
                 : ItemStack.EMPTY;
-        if (steamTank != null && tag.contains("gt.steam")) {
+        if (tag.contains("gt.steam")) {
             NbtCompat.readTank(steamTank, tag.getCompound("gt.steam"), lookup);
             steamTank.setCapacity(host.spec().inputRate() * 4);
         }

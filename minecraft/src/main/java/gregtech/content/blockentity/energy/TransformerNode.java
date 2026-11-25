@@ -6,6 +6,8 @@ import gregtech.content.energy.ElectricTransformerControl;
 import gregtech.engine.energy.EnergyTransfer;
 import javax.annotation.Nullable;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 
@@ -17,6 +19,10 @@ abstract class TransformerNode extends BufferedEnergyNode {
 
     boolean inverted() {
         return host.transformerInverted();
+    }
+
+    void inversionChanged() {
+        host.bufferedInput = 0;
     }
 
     @Override
@@ -53,15 +59,29 @@ abstract class TransformerNode extends BufferedEnergyNode {
     }
 
     static final class Electric extends TransformerNode {
-        private ElectricTransformerControl electricControl;
+        private final ElectricTransformerControl electricControl;
 
         Electric(EnergyNodeBlockEntity host) {
             super(host);
-            configure();
+            electricControl = new ElectricTransformerControl(host::setChanged);
         }
 
-        void configure() {
-            electricControl = new ElectricTransformerControl(host::setChanged);
+        @Override
+        void inversionChanged() {
+            super.inversionChanged();
+            electricControl.select(inverted());
+        }
+
+        @Override
+        void saveState(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+            super.saveState(tag, lookup);
+            electricControl.save(tag);
+        }
+
+        @Override
+        void loadState(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+            super.loadState(tag, lookup);
+            electricControl.load(tag);
         }
 
         @Override
@@ -133,10 +153,30 @@ abstract class TransformerNode extends BufferedEnergyNode {
     }
 
     static final class Rotation extends TransformerNode {
-        boolean negativeInput;
+        private static final String NEGATIVE_INPUT_KEY = "gt.rotation_negative_input";
+
+        private boolean negativeInput;
 
         Rotation(EnergyNodeBlockEntity host) {
             super(host);
+        }
+
+        @Override
+        void inversionChanged() {
+            super.inversionChanged();
+            negativeInput = false;
+        }
+
+        @Override
+        void saveState(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+            super.saveState(tag, lookup);
+            tag.putBoolean(NEGATIVE_INPUT_KEY, negativeInput);
+        }
+
+        @Override
+        void loadState(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+            super.loadState(tag, lookup);
+            negativeInput = tag.getBoolean(NEGATIVE_INPUT_KEY);
         }
 
         private Direction outputFace() {

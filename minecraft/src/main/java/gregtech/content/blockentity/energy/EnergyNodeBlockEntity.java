@@ -43,11 +43,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.IItemHandlerModifiable;
+import net.neoforged.neoforge.items.ItemStackHandler;
 *///?} else {
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 //?}
 
@@ -70,17 +72,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
     private int overloadCount;
     private EnergyDeviceBehavior behavior;
     private boolean inverted;
-    @Nullable
-    private TransformerNode.Rotation rotationTransformer;
-    @Nullable
-    private TransformerNode.Electric electricTransformer;
-    final SteamTurbineNode turbine = new SteamTurbineNode(this);
     final ForgeEnergyNodeAdapter forgeEnergy = new ForgeEnergyNodeAdapter(this);
-    private final BatteryBoxInventory batterySlots = new BatteryBoxInventory(this);
-    @Nullable
-    private BatteryBoxNode batteryBox;
-    @Nullable
-    private SolarPanelNode solarPanel;
 
     public EnergyNodeBlockEntity(BlockPos pos, BlockState state) {
         this(GTEnergyNodes.ENERGY_NODE.get(), pos, state);
@@ -96,42 +88,28 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
     }
 
     public void setSpec(EnergyNodeSpec spec) {
+        var next = EnergyDeviceBehavior.create(this, spec);
+        var previous = behavior;
         this.spec = spec;
-        behavior = switch (spec.deviceType()) {
-            case MOTOR, DYNAMO, HEATER -> new OriginalConverterNode(this, spec);
-            case COOLER -> new CoolerNode(this, spec);
-            case MAGNET -> new MagnetNode(this, spec);
-            case STEAM_TURBINE -> new OriginalConverterNode.SteamConverter(this, spec);
-            case ELECTRIC_TRANSFORMER -> {
-                if (electricTransformer == null) electricTransformer = new TransformerNode.Electric(this);
-                else electricTransformer.configure();
-                yield electricTransformer;
-            }
-            case ROTATION_TRANSFORMER -> {
-                if (rotationTransformer == null) rotationTransformer = new TransformerNode.Rotation(this);
-                yield rotationTransformer;
-            }
-            case BATTERY_BOX -> {
-                batteryBox = new BatteryBoxNode(this, spec, batterySlots);
-                yield batteryBox;
-            }
-            case SOLAR -> {
-                if (solarPanel == null) solarPanel = new SolarPanelNode(this, spec.outputRate());
-                else solarPanel.configure(spec.outputRate());
-                yield solarPanel;
-            }
-            case BUFFERED -> switch (spec.kind()) {
-                case TURBINE -> new BufferedEnergyNode.Turbine(this);
-                case MAGNET -> new BufferedEnergyNode.Magnet(this);
-                default -> new BufferedEnergyNode.Pullable(this);
-            };
-        };
+        behavior = next;
+        if (previous == null) return;
+
+        previous.detach();
+        if (level != null && !level.isClientSide) {
+            previous.dropContents();
+            setChanged();
+        }
+//? if >=1.21.1 {
+        /*if (level != null) level.invalidateCapabilities(worldPosition);
+*///?} else {
+        forgeEnergy.invalidateCaps();
+//?}
     }
 
     @Override
     public void onLoad() {
         super.onLoad();
-        if (isSolar()) solarPanel.onLoad();
+        behavior.onLoad();
     }
 
     @Override
@@ -225,11 +203,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
     /** @return the new mode (true for step-up). */
     public boolean toggleInverted() {
         inverted = !inverted;
-        if (behavior instanceof TransformerNode) {
-            bufferedInput = 0;
-            if (rotationTransformer != null) rotationTransformer.negativeInput = false;
-            if (behavior instanceof TransformerNode.Electric electric) electric.control().select(inverted);
-        }
+        if (behavior instanceof TransformerNode transformer) transformer.inversionChanged();
         setChanged();
         return inverted;
     }
@@ -249,11 +223,11 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
     }
 
     public boolean solarSkyVisible() {
-        return solarPanel != null && solarPanel.skyVisible();
+        return behavior instanceof SolarPanelNode solar && solar.skyVisible();
     }
 
     public void checkSolarSky() {
-        if (isSolar()) solarPanel.checkSky();
+        if (behavior instanceof SolarPanelNode solar) solar.checkSky();
     }
 
     @Override
@@ -269,11 +243,13 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
     // Steam turbines
 
     public long turbineSteamAmount() {
-        return turbine.steamAmount();
+        var turbine = behavior.turbine();
+        return turbine == null ? 0 : turbine.steamAmount();
     }
 
     public long turbineSteamCapacity() {
-        return turbine.steamCapacity();
+        var turbine = behavior.turbine();
+        return turbine == null ? 0 : turbine.steamCapacity();
     }
 
     public static boolean isRotorItem(ItemStack stack) {
@@ -281,7 +257,8 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
     }
 
     public boolean hasRotor() {
-        return turbine.hasRotor();
+        var turbine = behavior.turbine();
+        return turbine != null && turbine.hasRotor();
     }
 
     /** Turbines consume their rotor in the crafting recipe. */
@@ -290,11 +267,13 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
     }
 
     public ItemStack removeRotor() {
-        return turbine.removeRotor();
+        var turbine = behavior.turbine();
+        return turbine == null ? ItemStack.EMPTY : turbine.removeRotor();
     }
 
     public long purgeTurbineSteam() {
-        return turbine.purge();
+        var turbine = behavior.turbine();
+        return turbine == null ? 0 : turbine.purge();
     }
 
     public boolean isSteamConverter() {
@@ -309,7 +288,12 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
 
     @Nullable
     public BatteryBoxEnergy batteryEnergy() {
-        return batteryBox == null ? null : batteryBox.energy;
+        return behavior instanceof BatteryBoxNode battery ? battery.energy : null;
+    }
+
+    @Nullable
+    private BatteryBoxInventory batterySlots() {
+        return behavior instanceof BatteryBoxNode battery ? battery.inventory : null;
     }
 
     public static long batteryCapacityOf(ItemStack stack) {
@@ -321,19 +305,24 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
     }
 
     public boolean installBattery(ItemStack stack) {
-        return batterySlots.install(stack);
+        var slots = batterySlots();
+        return slots != null && slots.install(stack);
     }
 
     public ItemStack removeBattery() {
-        return batterySlots.remove();
+        var slots = batterySlots();
+        return slots == null ? ItemStack.EMPTY : slots.remove();
     }
 
     public IItemHandlerModifiable batteryInventory() {
-        return batterySlots;
+        var slots = batterySlots();
+        return slots == null ? new ItemStackHandler(0) : slots;
     }
 
+    @Nullable
     public MenuProvider batteryMenu() {
-        return batterySlots.menu();
+        var slots = batterySlots();
+        return slots == null ? null : slots.menu();
     }
 
     // Covers and tool interactions
@@ -363,7 +352,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
     @Override
     public boolean coverPossible(Direction side) {
         if (hasOriginalConverter() || isSolar()) return true;
-        if (isBatteryBox()) return batteryBox.energy.buffer() > spec.outputRate();
+        if (behavior instanceof BatteryBoxNode battery) return battery.energy.buffer() > spec.outputRate();
         return isElectricTransformer() && behavior.control().running();
     }
 
@@ -462,6 +451,10 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
 
     public int converterOverloads() {
         return overloadCount;
+    }
+
+    void restoreOverloads(int count) {
+        overloadCount = Math.max(0, count);
     }
 
     void coolDownOverload(boolean conversionPossible) {
@@ -609,11 +602,13 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
     }
 
     public IItemHandler itemCapability(@Nullable Direction side) {
-        return isBatteryBox() ? batterySlots.capability(side) : null;
+        var slots = batterySlots();
+        return slots == null ? null : slots.capability(side);
     }
 
     public IFluidHandler fluidCapability(@Nullable Direction side) {
-        return turbine.exposesInlet(side) ? turbine.capability(side) : null;
+        var turbine = behavior.turbine();
+        return turbine != null && turbine.exposesInlet(side) ? turbine.capability(side) : null;
     }
 *///?} else {
     @Override
@@ -622,12 +617,14 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
             return forgeEnergy.capability(side).cast();
         }
 
-        if (capability == ForgeCapabilities.ITEM_HANDLER && isBatteryBox()) {
-            return batterySlots.capability(side).cast();
+        if (capability == ForgeCapabilities.ITEM_HANDLER) {
+            var slots = batterySlots();
+            if (slots != null) return slots.capability(side).cast();
         }
 
-        if (capability == ForgeCapabilities.FLUID_HANDLER && turbine.exposesInlet(side)) {
-            return turbine.capability(side).cast();
+        if (capability == ForgeCapabilities.FLUID_HANDLER) {
+            var turbine = behavior.turbine();
+            if (turbine != null && turbine.exposesInlet(side)) return turbine.capability(side).cast();
         }
         return super.getCapability(capability, side);
     }
@@ -635,8 +632,10 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
     @Override
     public void invalidateCaps() {
         super.invalidateCaps();
-        batterySlots.invalidateCaps();
-        turbine.invalidateCaps();
+        var slots = batterySlots();
+        if (slots != null) slots.invalidateCaps();
+        var turbine = behavior.turbine();
+        if (turbine != null) turbine.invalidateCaps();
         forgeEnergy.invalidateCaps();
     }
 //?}
@@ -646,39 +645,16 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
     @Override
     protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         super.saveData(tag, lookup);
-        if (isSolar()) solarPanel.save(tag);
-        else tag.putLong("gt.buffer", bufferedInput);
-        if (isBatteryBox()) batteryBox.energy.save(tag);
-        batterySlots.save(tag, lookup);
         covers.forEach((side, stack) ->
                 tag.put("gt.battery_cover_" + side.ordinal(), NbtCompat.saveItem(stack, lookup)));
-        if (behavior instanceof TransformerNode.Electric electric) electric.control().save(tag);
         tag.putBoolean("gt.inverted", inverted);
-        if (behavior instanceof TransformerNode.Rotation rotation) tag.putBoolean("gt.rotation_negative_input", rotation.negativeInput);
-        if (isMagnet()) {
-            // Older magnet saves use these keys for the converter's stopped state and mode.
-            tag.putBoolean("gt.magnet_stopped", converterStopped);
-            tag.putByte("gt.magnet_mode", (byte) magnetMode());
-            tag.putInt("gt.magnet_overloads", overloadCount);
-        }
-        turbine.saveConversion(tag);
         tag.putBoolean("gt.converter_stopped", converterStopped);
-        if (behavior instanceof OriginalConverterNode converter) converter.save(tag);
-        turbine.saveContents(tag, lookup);
+        behavior.save(tag, lookup);
     }
 
     @Override
     protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         super.loadData(tag, lookup);
-        bufferedInput = tag.getLong("gt.buffer");
-        if (isSolar()) {
-            solarPanel.load(tag, bufferedInput);
-            bufferedInput = 0;
-        }
-        if (isBatteryBox()) batteryBox.energy.load(tag);
-        batterySlots.load(tag, lookup);
-        if (behavior instanceof TransformerNode.Electric electric) electric.control().load(tag);
-
         covers.clear();
         for (Direction side : Direction.values()) {
             String coverKey = "gt.battery_cover_" + side.ordinal();
@@ -686,18 +662,10 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
                 covers.put(side, NbtCompat.readItem(tag.getCompound(coverKey), lookup));
             }
         }
-        panels().loaded();
-
         inverted = tag.getBoolean("gt.inverted");
-        if (behavior instanceof TransformerNode.Rotation rotation) rotation.negativeInput = tag.getBoolean("gt.rotation_negative_input");
-        if (isMagnet()) overloadCount = Math.max(0, tag.getInt("gt.magnet_overloads"));
-        turbine.loadConversion(tag);
-
-        // Older magnet saves wrote a separate stopped flag and have no shared mode key.
-        boolean usesLegacyMagnetKeys = isMagnet() && !tag.contains("gt.mode");
-        converterStopped = tag.getBoolean(usesLegacyMagnetKeys ? "gt.magnet_stopped" : "gt.converter_stopped");
-        if (behavior instanceof OriginalConverterNode converter) converter.load(tag, usesLegacyMagnetKeys);
-        turbine.loadContents(tag, lookup);
+        converterStopped = tag.getBoolean("gt.converter_stopped");
+        behavior.load(tag, lookup);
+        panels().loaded();
     }
 
     @Override
@@ -707,8 +675,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
             BlockContents.drop(this, cover);
         }
         covers.clear();
-        batterySlots.dropContents();
-        turbine.dropContents();
+        behavior.dropContents();
         setChanged();
     }
 }

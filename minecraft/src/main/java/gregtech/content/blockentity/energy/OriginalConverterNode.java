@@ -14,6 +14,7 @@ import java.util.function.BiPredicate;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -21,6 +22,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 /** World-facing behavior for devices that share the original GT6 conversion cycle. */
 class OriginalConverterNode extends EnergyDeviceBehavior implements MachineControl {
+    static final String MODE_KEY = "gt.mode";
     private static final BiPredicate<Direction, Direction> REAR = (front, side) -> side == front.getOpposite();
     private static final BiPredicate<Direction, Direction> EXCEPT_FRONT = (front, side) -> side != front;
     static final BiPredicate<Direction, Direction> LATERAL = (front, side) -> side.getAxis() != front.getAxis();
@@ -254,18 +256,26 @@ class OriginalConverterNode extends EnergyDeviceBehavior implements MachineContr
         return 0;
     }
 
-    void save(CompoundTag tag) {
+    @Override
+    void saveState(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveState(tag, lookup);
         var snapshot = state.snapshot();
-        tag.putByte("gt.mode", (byte) snapshot.mode());
+        tag.putByte(MODE_KEY, (byte) snapshot.mode());
         if (host.isOriginalMotor()) tag.putBoolean("gt.reversed", snapshot.counterClockwise());
         tag.putBoolean("gt.active.energy", snapshot.emitted());
         tag.putBoolean("gt.can.energy", snapshot.possible());
         if (host.isOriginalMotor()) tag.putBoolean("gt.visual", snapshot.fast());
     }
 
-    void load(CompoundTag tag, boolean usesLegacyMagnetKeys) {
+    byte readSavedMode(CompoundTag tag) {
+        return tag.getByte(MODE_KEY);
+    }
+
+    @Override
+    void loadState(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadState(tag, lookup);
         state.restore(new OriginalRotaryConverter.Snapshot(
-                tag.getByte(usesLegacyMagnetKeys ? "gt.magnet_mode" : "gt.mode"),
+                readSavedMode(tag),
                 host.isOriginalMotor() && tag.getBoolean("gt.reversed"),
                 false,
                 tag.getBoolean("gt.can.energy"),
@@ -274,14 +284,21 @@ class OriginalConverterNode extends EnergyDeviceBehavior implements MachineContr
     }
 
     static final class SteamConverter extends OriginalConverterNode {
+        private final SteamTurbineNode turbine;
+
         SteamConverter(EnergyNodeBlockEntity host, EnergyNodeSpec spec) {
             super(host, spec, REAR);
-            host.turbine.configure(spec.inputRate());
+            turbine = new SteamTurbineNode(host, spec.inputRate());
+        }
+
+        @Override
+        SteamTurbineNode turbine() {
+            return turbine;
         }
 
         @Override
         void tick(Level level, BlockPos pos, BlockState state) {
-            host.turbine.tick();
+            turbine.tick();
             var converter = host.originalConverter();
             if (converter != null) converter.convertBufferedInput();
         }

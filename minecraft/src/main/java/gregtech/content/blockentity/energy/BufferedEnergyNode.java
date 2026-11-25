@@ -8,6 +8,8 @@ import gregtech.engine.energy.EnergyTransfer;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -166,9 +168,16 @@ abstract class BufferedEnergyNode extends EnergyDeviceBehavior implements Machin
 
     /** Older custom turbine specs can receive energy without the original steam conversion cycle. */
     static final class Turbine extends BufferedEnergyNode {
-        Turbine(EnergyNodeBlockEntity host) {
+        private final SteamTurbineNode turbine;
+
+        Turbine(EnergyNodeBlockEntity host, long inputRate) {
             super(host);
-            host.turbine.configure(host.spec().inputRate());
+            turbine = new SteamTurbineNode(host, inputRate);
+        }
+
+        @Override
+        SteamTurbineNode turbine() {
+            return turbine;
         }
 
         @Override
@@ -184,12 +193,12 @@ abstract class BufferedEnergyNode extends EnergyDeviceBehavior implements Machin
 
         @Override
         long inject(Tag type, @Nullable Direction side, long size, long amount, boolean execute) {
-            return host.turbine.inject(type, side, size, amount, execute);
+            return turbine.inject(type, side, size, amount, execute);
         }
 
         @Override
         MachineControl control() {
-            return host.turbine;
+            return turbine;
         }
     }
 
@@ -197,6 +206,18 @@ abstract class BufferedEnergyNode extends EnergyDeviceBehavior implements Machin
     static final class Magnet extends BufferedEnergyNode {
         Magnet(EnergyNodeBlockEntity host) {
             super(host);
+        }
+
+        @Override
+        void saveState(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+            super.saveState(tag, lookup);
+            MagnetNode.saveLegacyState(host, tag, mode());
+        }
+
+        @Override
+        void loadState(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+            super.loadState(tag, lookup);
+            MagnetNode.loadLegacyState(host, tag);
         }
 
         @Override

@@ -10,6 +10,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -18,17 +19,14 @@ import net.minecraft.world.level.block.state.BlockState;
 
 /** Applies the solar panel's generation rules to its world conditions, covers and energy port. */
 final class SolarPanelNode extends EnergyDeviceBehavior implements MachineControl {
-    private SolarPanelEnergy energy;
+    private final SolarPanelEnergy energy;
 
     SolarPanelNode(EnergyNodeBlockEntity host, long outputRate) {
         super(host);
-        configure(outputRate);
-    }
-
-    void configure(long outputRate) {
         energy = new SolarPanelEnergy(outputRate, host.getBlockPos().hashCode());
     }
 
+    @Override
     void onLoad() {
         Level level = host.getLevel();
         if (level != null && !level.isClientSide && !host.isRemoved() && host.facing() == Direction.UP) {
@@ -124,19 +122,22 @@ final class SolarPanelNode extends EnergyDeviceBehavior implements MachineContro
         return extracted;
     }
 
-    void save(CompoundTag tag) {
-        tag.putLong("gt.buffer", energy.energy());
+    @Override
+    void saveState(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        tag.putLong(BUFFER_KEY, energy.energy());
         tag.putBoolean("gt.solar_stopped", !energy.enabled());
         tag.putBoolean("gt.solar_active", energy.active());
         tag.putBoolean("gt.solar_emitting", energy.emitting());
     }
 
-    void load(CompoundTag tag, long savedBuffer) {
+    @Override
+    void loadState(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         energy.restore(
-                savedBuffer,
+                tag.getLong(BUFFER_KEY),
                 tag.getBoolean("gt.solar_active"),
                 tag.getBoolean("gt.solar_emitting"),
                 tag.getBoolean("gt.solar_stopped"));
+        host.bufferedInput = 0;
     }
 
     @Override

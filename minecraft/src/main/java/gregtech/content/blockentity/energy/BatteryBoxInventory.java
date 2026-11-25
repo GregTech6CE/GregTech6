@@ -5,6 +5,7 @@ import gregtech.content.cover.ComponentCoverRuntime;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.energy.BatteryBoxEnergy;
 import gregtech.content.registry.GTMenuTypes;
+import gregtech.engine.energy.EnergyNodeSpec;
 import gregtech.engine.energy.item.IItemEnergy;
 import gregtech.engine.inventory.BlockContents;
 import gregtech.engine.stack.NbtCompat;
@@ -33,15 +34,14 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 /** The menu, automation and energy transfer all see the same fixed battery slots. */
 final class BatteryBoxInventory implements IItemHandlerModifiable {
     private final EnergyNodeBlockEntity host;
-    private NonNullList<ItemStack> batteries = NonNullList.withSize(0, ItemStack.EMPTY);
+    private final GregTechTags.Tag energyType;
+    final NonNullList<ItemStack> batteries;
+    private boolean detached;
 
-    BatteryBoxInventory(EnergyNodeBlockEntity host) {
+    BatteryBoxInventory(EnergyNodeBlockEntity host, EnergyNodeSpec spec) {
         this.host = host;
-    }
-
-    NonNullList<ItemStack> reset(int slotCount) {
-        batteries = NonNullList.withSize(slotCount, ItemStack.EMPTY);
-        return batteries;
+        energyType = spec.inType();
+        batteries = NonNullList.withSize(spec.batterySlots(), ItemStack.EMPTY);
     }
 
     static long capacityOf(ItemStack stack, GregTechTags.Tag type) {
@@ -53,14 +53,14 @@ final class BatteryBoxInventory implements IItemHandlerModifiable {
         long capacity = 0;
         for (var stack : batteries) {
             if (stack.getItem() instanceof IItemEnergy item) {
-                capacity += item.getEnergyCapacity(stack, host.spec().inType());
+                capacity += item.getEnergyCapacity(stack, energyType);
             }
         }
         return capacity;
     }
 
     boolean install(ItemStack stack) {
-        if (!host.isBatteryBox() || stack.isEmpty()) return false;
+        if (stack.isEmpty()) return false;
         for (int slot = 0; slot < batteries.size(); slot++) {
             if (insertItem(slot, stack.copyWithCount(1), false).isEmpty()) return true;
         }
@@ -86,7 +86,7 @@ final class BatteryBoxInventory implements IItemHandlerModifiable {
     @Override
     public ItemStack getStackInSlot(int slot) {
         checkSlot(slot);
-        return batteries.get(slot);
+        return detached ? ItemStack.EMPTY : batteries.get(slot);
     }
 
     @Override
@@ -103,7 +103,7 @@ final class BatteryBoxInventory implements IItemHandlerModifiable {
     @Override
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
         checkSlot(slot);
-        if (amount <= 0 || batteries.get(slot).isEmpty()) return ItemStack.EMPTY;
+        if (detached || amount <= 0 || batteries.get(slot).isEmpty()) return ItemStack.EMPTY;
         var result = batteries.get(slot).copy();
         if (!simulate) {
             batteries.set(slot, ItemStack.EMPTY);
@@ -115,6 +115,7 @@ final class BatteryBoxInventory implements IItemHandlerModifiable {
     @Override
     public void setStackInSlot(int slot, ItemStack stack) {
         checkSlot(slot);
+        if (detached) return;
         if (!stack.isEmpty() && !isItemValid(slot, stack)) throw new IllegalArgumentException("Not an energy item");
         batteries.set(slot, stack.isEmpty() ? ItemStack.EMPTY : stack.copyWithCount(1));
         host.setChanged();
@@ -129,7 +130,7 @@ final class BatteryBoxInventory implements IItemHandlerModifiable {
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
         checkSlot(slot);
-        return host.isBatteryBox() && BatteryBoxEnergy.accepts(stack, host.spec().inType());
+        return !detached && BatteryBoxEnergy.accepts(stack, energyType);
     }
 
     MenuProvider menu() {
@@ -140,7 +141,7 @@ final class BatteryBoxInventory implements IItemHandlerModifiable {
                     public boolean stillValid(Player viewer) {
                         var level = host.getLevel();
                         var pos = host.getBlockPos();
-                        return !host.isRemoved() && level != null && viewer.level() == level
+                        return !detached && !host.isRemoved() && level != null && viewer.level() == level
                                 && viewer.distanceToSqr(pos.getCenter()) <= 64
                                 && level.hasChunkAt(pos) && level.getBlockEntity(pos) == host;
                     }
@@ -152,7 +153,8 @@ final class BatteryBoxInventory implements IItemHandlerModifiable {
         return new IItemHandler() {
             // Native battery automation checks shutters and component direction. Item filters are separate.
             private boolean allowsTransfer(boolean insert) {
-                return !host.panels().shuttered(side) && ComponentCoverRuntime.allowsItem(host.getCover(side), insert);
+                return !detached && !host.panels().shuttered(side)
+                        && ComponentCoverRuntime.allowsItem(host.getCover(side), insert);
             }
 
             @Override
@@ -182,7 +184,7 @@ final class BatteryBoxInventory implements IItemHandlerModifiable {
 
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
-                return !host.panels().shuttered(side) && BatteryBoxInventory.this.isItemValid(slot, stack);
+                return !detached && !host.panels().shuttered(side) && BatteryBoxInventory.this.isItemValid(slot, stack);
             }
         };
     }
@@ -196,6 +198,7 @@ final class BatteryBoxInventory implements IItemHandlerModifiable {
     @Nullable private EnumMap<Direction, LazyOptional<IItemHandler>> sidedCapabilities;
 
     LazyOptional<IItemHandler> capability(@Nullable Direction side) {
+        if (detached) return LazyOptional.empty();
         if (side != null) {
             if (sidedCapabilities == null) sidedCapabilities = new EnumMap<>(Direction.class);
             return sidedCapabilities.computeIfAbsent(side, face -> LazyOptional.of(() -> sided(face)));
@@ -217,6 +220,13 @@ final class BatteryBoxInventory implements IItemHandlerModifiable {
         }
     }
 //?}
+
+    void detach() {
+        detached = true;
+//? if <1.21.1 {
+        invalidateCaps();
+//?}
+    }
 
     void save(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         if (batteries.isEmpty()) return;

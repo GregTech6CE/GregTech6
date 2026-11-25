@@ -7,12 +7,47 @@ import gregtech.engine.energy.EnergyNodeSpec;
 import gregtech.engine.energy.EnergyTransfer;
 import javax.annotation.Nullable;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
 
 /** A bipolar magnet emits opposite signs from its two poles and accepts input through its sides. */
 final class MagnetNode extends OriginalConverterNode {
+    private static final String STOPPED_KEY = "gt.magnet_stopped";
+    private static final String LEGACY_MODE_KEY = "gt.magnet_mode";
+    private static final String OVERLOADS_KEY = "gt.magnet_overloads";
+
     MagnetNode(EnergyNodeBlockEntity host, EnergyNodeSpec spec) {
         super(host, spec, LATERAL);
+    }
+
+    @Override
+    void saveState(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.saveState(tag, lookup);
+        saveLegacyState(host, tag, mode());
+    }
+
+    @Override
+    void loadState(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        super.loadState(tag, lookup);
+        loadLegacyState(host, tag);
+    }
+
+    @Override
+    byte readSavedMode(CompoundTag tag) {
+        return tag.contains(MODE_KEY) ? super.readSavedMode(tag) : tag.getByte(LEGACY_MODE_KEY);
+    }
+
+    static void saveLegacyState(EnergyNodeBlockEntity host, CompoundTag tag, int mode) {
+        tag.putBoolean(STOPPED_KEY, host.converterStopped);
+        tag.putByte(LEGACY_MODE_KEY, (byte) mode);
+        tag.putInt(OVERLOADS_KEY, host.converterOverloads());
+    }
+
+    static void loadLegacyState(EnergyNodeBlockEntity host, CompoundTag tag) {
+        // Original magnets use the shared mode key to signal the shared stopped flag is present.
+        if (!tag.contains(MODE_KEY)) host.converterStopped = tag.getBoolean(STOPPED_KEY);
+        host.restoreOverloads(tag.getInt(OVERLOADS_KEY));
     }
 
     @Override
