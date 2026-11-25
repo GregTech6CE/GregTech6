@@ -46,7 +46,7 @@ public final class SpectatorMenus {
         if (entity instanceof DrawerQuadBlockEntity)
             return hit.getDirection() == state.getValue(DrawerQuadBlock.FACING);
         return entity instanceof SafeBlockEntity
-                || entity instanceof EnergyNodeBlockEntity node && node.isBatteryBox()
+                || entity instanceof EnergyNodeBlockEntity node && node.deviceMenu() != null
                 || entity instanceof FunctionalPartRuntime.Host host
                         && host.function() != null
                         && host.function().opensMenu()
@@ -59,6 +59,7 @@ public final class SpectatorMenus {
         var pos = hit.getBlockPos();
         var state = level.getBlockState(pos);
         var entity = level.getBlockEntity(pos);
+        var deviceMenu = entity instanceof EnergyNodeBlockEntity node ? node.deviceMenu() : null;
         Component title = state.getBlock().getName();
         if (entity instanceof BasicMachineBlockEntity machine && state.getBlock() instanceof BasicMachineBlock block) {
             block.openMenu(player, machine);
@@ -81,8 +82,8 @@ public final class SpectatorMenus {
                     Component.translatable("gui.gt6ce.drawer.page", title, page + 1)));
         } else if (entity instanceof SafeBlockEntity safe) {
             player.openMenu(new SimpleMenuProvider((id, inv, p) -> safe.createMenu(id, inv), title));
-        } else if (entity instanceof EnergyNodeBlockEntity node && node.isBatteryBox()) {
-            player.openMenu(node.batteryMenu());
+        } else if (deviceMenu != null) {
+            player.openMenu(deviceMenu);
         } else if (entity instanceof FunctionalPartRuntime.Host host
                 && host.function() != null
                 && host.function().opensMenu()) {

@@ -17,10 +17,12 @@ public enum TurbineJadeProvider implements IBlockComponentProvider, IServerDataP
 
     @Override
     public void appendServerData(CompoundTag tag, BlockAccessor accessor) {
-        if (!(accessor.getBlockEntity() instanceof EnergyNodeBlockEntity turbine) || !turbine.isTurbine()) return;
-        tag.putLong("gt.turbine.steam", turbine.turbineSteamAmount());
-        tag.putLong("gt.turbine.capacity", turbine.turbineSteamCapacity());
-        tag.putLong("gt.turbine.input", turbine.spec().inputRate());
+        if (!(accessor.getBlockEntity() instanceof EnergyNodeBlockEntity node)) return;
+        var steam = node.steamStatus();
+        if (steam == null) return;
+        tag.putLong("gt.turbine.steam", steam.amount());
+        tag.putLong("gt.turbine.capacity", steam.capacity());
+        tag.putLong("gt.turbine.input", node.spec().inputRate());
     }
 
     @Override

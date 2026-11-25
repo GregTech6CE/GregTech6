@@ -4,10 +4,13 @@ import gregtech.content.block.energy.ElectricTransformerBlock;
 import gregtech.content.data.GregTechTags.Tag;
 import gregtech.content.energy.ElectricTransformerControl;
 import gregtech.engine.energy.EnergyTransfer;
+import gregtech.engine.tool.GTToolHelper;
 import javax.annotation.Nullable;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 
@@ -21,6 +24,20 @@ abstract class TransformerNode extends BufferedEnergyNode {
         return host.transformerInverted();
     }
 
+    @Override
+    @Nullable
+    EnergyDeviceTool toolAction(ItemStack tool) {
+        return host.isInvertible() && GTToolHelper.isMonkeyWrench(tool) ? this::invert : null;
+    }
+
+    @Override
+    void invert(Player player, ItemStack tool) {
+        boolean up = host.toggleInverted();
+        GTToolHelper.damageForUse(tool, 1, player);
+        showInversionMode(player, up);
+    }
+
+    @Override
     void inversionChanged() {
         host.bufferedInput = 0;
     }
@@ -59,6 +76,21 @@ abstract class TransformerNode extends BufferedEnergyNode {
     }
 
     static final class Electric extends TransformerNode {
+        @Override
+        boolean allowsCovers() {
+            return false;
+        }
+
+        @Override
+        boolean supportsControlPanels() {
+            return true;
+        }
+
+        @Override
+        boolean coverPossible() {
+            return control().running();
+        }
+
         private final ElectricTransformerControl electricControl;
 
         Electric(EnergyNodeBlockEntity host) {

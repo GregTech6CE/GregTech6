@@ -139,7 +139,7 @@ final class BatteryBoxInventory implements IItemHandlerModifiable {
 
     MenuProvider menu() {
         return new SimpleMenuProvider(
-                (id, playerInventory, player) -> new HopperContainerMenu(
+                (id, playerInventory, player) -> !available() ? null : new HopperContainerMenu(
                         GTMenuTypes.forSlotCount(getSlots()), id, playerInventory, this) {
                     @Override
                     protected void inventorySlotChanged(int index) {

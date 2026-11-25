@@ -9,12 +9,16 @@ import gregtech.content.energy.OriginalThermalConverter;
 import gregtech.engine.energy.EnergyNodeSpec;
 import gregtech.engine.energy.EnergyTransfer;
 import gregtech.engine.machine.AdjacentEnergyControl;
+import gregtech.engine.tool.GTToolHelper;
 import java.util.function.BiPredicate;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -38,6 +42,37 @@ class OriginalConverterNode extends EnergyDeviceBehavior implements MachineContr
 
     OriginalConverterNode(EnergyNodeBlockEntity host, EnergyNodeSpec spec) {
         this(host, spec, spec.deviceType() == EnergyNodeSpec.DeviceType.DYNAMO ? REAR : EXCEPT_FRONT);
+    }
+
+    @Override
+    boolean supportsControlPanels() {
+        return true;
+    }
+
+    @Override
+    boolean coverPossible() {
+        return true;
+    }
+
+    @Override
+    @Nullable
+    EnergyDeviceTool toolAction(ItemStack tool) {
+        if (host.isOriginalMotor()) {
+            if (GTToolHelper.isMonkeyWrench(tool)) return this::reverseMotor;
+            if (GTToolHelper.isMagnifyingGlass(tool)) return this::inspectMotor;
+        }
+        return super.toolAction(tool);
+    }
+
+    private void reverseMotor(Player player, ItemStack tool) {
+        reverseMotor();
+        inspectMotor(player, tool);
+    }
+
+    private void inspectMotor(Player player, ItemStack tool) {
+        GTToolHelper.damageForUse(tool, 1, player);
+        String direction = host.motorCounterClockwise() ? "Counterclockwise" : "Clockwise";
+        player.displayClientMessage(Component.literal(direction), true);
     }
 
     boolean reverseMotor() {
@@ -64,6 +99,16 @@ class OriginalConverterNode extends EnergyDeviceBehavior implements MachineContr
         return (theoretical || !host.converterStopped)
                 && (side == null || inputFaces.test(host.facing(), side))
                 && host.hasEnergySurface(side);
+    }
+
+    @Override
+    boolean canReceiveRf(@Nullable Direction side) {
+        return acceptsInputType(GregTechTags.Energy.RF) && acceptsFrom(side, false);
+    }
+
+    @Override
+    int receiveRf(int amount, boolean simulate) {
+        return (int) host.doEnergyInjection(GregTechTags.Energy.RF, null, 1, amount, !simulate);
     }
 
     @Override

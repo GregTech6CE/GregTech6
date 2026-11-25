@@ -18,6 +18,11 @@ final class CoolerNode extends OriginalConverterNode {
     }
 
     @Override
+    boolean exposesRfInputOn(Direction side) {
+        return LATERAL.test(host.facing(), side);
+    }
+
+    @Override
     boolean acceptsOutputType(GregTechTags.Tag type) {
         return type == host.spec().outType() || type == GregTechTags.Energy.HU;
     }

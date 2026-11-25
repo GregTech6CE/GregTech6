@@ -81,6 +81,18 @@ public final class EnergyDeviceBehaviorTests {
                 "the box exposes its energy state and both inventory ports");
         var cell = new ItemStack(GTChemicalBatteries.item(ChemicalBatterySpec.Chemistry.LEAD_ACID, 1));
         helper.assertTrue(unsided.insertItem(0, cell, false).isEmpty(), "the inventory accepts a battery");
+        var status = node.batteryStatus();
+        var menu = node.deviceMenu();
+        helper.assertTrue(status != null && status.items().get(0).is(cell.getItem()) && menu != null,
+                "the active device exposes battery inspection and a menu");
+        status.items().get(0).shrink(1);
+        helper.assertTrue(unsided.getStackInSlot(0).is(cell.getItem()),
+                "changing an inspection stack does not change the inventory");
+//? if >=1.21.1 {
+        /*var player = helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+*///?} else {
+        var player = helper.makeMockPlayer();
+//?}
         var control = node.machineControl(null);
         control.setMode(3);
         node.setSpec(node.spec());
@@ -98,6 +110,8 @@ public final class EnergyDeviceBehaviorTests {
                 "retained ports cannot extract or insert into the retired inventory");
         helper.assertTrue(!control.available() && control.setMode(7) == 0 && node.machineControl(null).mode() == 0,
                 "a retired battery control cannot change the replacement box");
+        helper.assertTrue(node.deviceMenu() != menu && menu.createMenu(1, player.getInventory(), player) == null,
+                "a retained menu provider cannot open the retired inventory");
         helper.assertTrue(countDrops(node, cell) == 1, "rebinding releases the installed battery");
         helper.succeed();
     }
@@ -238,11 +252,21 @@ public final class EnergyDeviceBehaviorTests {
         var node = new EnergyNodeBlockEntity(pos, Blocks.STONE.defaultBlockState());
         helper.assertTrue(!node.isTransformer() && !node.isOriginalMotor() && !node.isTurbine(),
                 "queries are safe before binding a spec");
+        helper.assertTrue(node.deviceMenu() == null && node.batteryStatus() == null && node.steamStatus() == null,
+                "an unbound node has no device-specific view or menu");
 
         var transformer = (EnergyNodeBlock) BuiltInRegistries.BLOCK.get(Mc.gregtechId("rotation_transformer_wood"));
         node.setSpec(transformer.spec());
         helper.assertTrue(transformer.isTransformer() && node.isRotationTransformer() && node.isInvertible(),
                 "block and entity recognize the same rotation transformer");
+
+        node.setSpec(energyBlock("steam_turbine_bronze").spec());
+        helper.assertTrue(node.steamStatus() != null && node.steamStatus().capacity() > 0 && !node.isRainProof(null),
+                "a turbine exposes its steam tank");
+
+        node.setSpec(energyBlock("solar_panel_silicon").spec());
+        helper.assertTrue(node.steamStatus() == null && node.isRainProof(null) && node.isThunderProof(null),
+                "rebinding replaces the steam view with the solar weather rules");
 
         var motor = (EnergyNodeBlock) BuiltInRegistries.BLOCK.get(Mc.gregtechId("electric_motor_lv"));
         node.setSpec(motor.spec());

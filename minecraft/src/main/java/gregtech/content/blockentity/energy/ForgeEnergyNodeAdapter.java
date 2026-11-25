@@ -1,6 +1,5 @@
 package gregtech.content.blockentity.energy;
 
-import gregtech.content.data.GregTechTags;
 import javax.annotation.Nullable;
 import net.minecraft.core.Direction;
 //? if >=1.21.1 {
@@ -27,11 +26,7 @@ final class ForgeEnergyNodeAdapter {
     }
 
     boolean exposes(@Nullable Direction side) {
-        if (host.isRemoved() || host.spec() == null || host.spec().inType() != GregTechTags.Energy.RF) return false;
-        if (side == null) return true;
-        if (side == host.facing()) return false;
-        boolean hasRearOutput = host.isMagnet() || host.isOriginalCooler();
-        return !hasRearOutput || side != host.facing().getOpposite();
+        return !host.isRemoved() && host.behavior().exposesRfInput(side);
     }
 
 //? if >=1.21.1 {
@@ -94,19 +89,8 @@ final class ForgeEnergyNodeAdapter {
 
         @Override
         public int receiveEnergy(int maxReceive, boolean simulate) {
-            if (maxReceive <= 0 || !canReceive()) return 0;
-            if (host.hasOriginalConverter()) {
-                return (int) host.doEnergyInjection(GregTechTags.Energy.RF, null, 1, maxReceive, !simulate);
-            }
-            long space = Math.max(0, host.capacity() - host.bufferedInput);
-            int accepted = (int) Math.min(maxReceive, space);
-            if (!simulate && accepted > 0) {
-                host.bufferedInput += accepted;
-                var level = host.getLevel();
-                if (level != null) host.conversionMeter().input(level.getGameTime(), accepted);
-                host.setChanged();
-            }
-            return accepted;
+            var device = host.behavior();
+            return maxReceive > 0 && canReceive(device) ? device.receiveRf(maxReceive, simulate) : 0;
         }
 
         @Override
@@ -131,10 +115,11 @@ final class ForgeEnergyNodeAdapter {
 
         @Override
         public boolean canReceive() {
-            if (!exposes(side)) return false;
-            // Generic RF buffers accept on every exposed face, independently of GT packet controls.
-            return !(host.hasOriginalConverter() || host.isMagnet())
-                    || host.isEnergyAcceptingFrom(GregTechTags.Energy.RF, side, false);
+            return canReceive(host.behavior());
+        }
+
+        private boolean canReceive(EnergyDeviceBehavior device) {
+            return !host.isRemoved() && device.exposesRfInput(side) && device.canReceiveRf(side);
         }
     }
 }

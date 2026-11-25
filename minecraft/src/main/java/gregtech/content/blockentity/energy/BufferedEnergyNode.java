@@ -215,6 +215,16 @@ abstract class BufferedEnergyNode extends EnergyDeviceBehavior implements Machin
         }
 
         @Override
+        boolean exposesRfInputOn(Direction side) {
+            return side.getAxis() != host.facing().getAxis();
+        }
+
+        @Override
+        boolean canReceiveRf(@Nullable Direction side) {
+            return acceptsInputType(GregTechTags.Energy.RF) && acceptsFrom(side, false);
+        }
+
+        @Override
         void saveState(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
             super.saveState(tag, lookup);
             MagnetNode.saveLegacyState(host, tag, mode());

@@ -8,6 +8,7 @@ import gregtech.content.energy.OriginalEnergyDeviceTooltipData;
 import gregtech.content.energy.OriginalThermalConverter;
 import gregtech.engine.energy.EnergyNodeSpec;
 import gregtech.engine.energy.EnergyNodeSpec.DeviceType;
+import gregtech.engine.energy.EnergyNodeSpec.Kind;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
@@ -162,7 +163,7 @@ final class OmniEnergyInfo {
                 : EnergyRateText.efficiency(spec.inputRate(), spec.outputRate(), input, output);
         EnergyRateText.efficiency(info, efficiency);
         long capacity = node.getEnergyCapacity(input, null);
-        if (capacity > 0 && !node.isTurbine()) {
+        if (capacity > 0 && spec.kind() != Kind.TURBINE) {
             info.detail("buffer", node.stored(), capacity, input.getShortName());
         }
     }

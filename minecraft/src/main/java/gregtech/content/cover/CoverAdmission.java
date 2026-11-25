@@ -127,11 +127,7 @@ public final class CoverAdmission {
             Direction facing = facing(engine, DirectionalBlock.FACING);
             return facing == null || side.getAxis() == facing.getAxis();
         }
-        // TileEntityBase08Battery: no covers at all. The transformer has fixed input/output faces,
-        // so the port refuses covers there as well even though GT6's converter base allows them.
-        if (owner instanceof EnergyNodeBlockEntity node && (node.isBatteryBox() || node.isElectricTransformer()))
-            return false;
-        return true;
+        return !(owner instanceof EnergyNodeBlockEntity node) || node.allowsCovers();
     }
 
     /** GT6 {@code allowCover(aSide, aCover)}: the host may additionally restrict the cover type. */

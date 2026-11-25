@@ -1,10 +1,12 @@
 package gregtech.content.blockentity.energy;
 
 import gregtech.api.platform.machine.MachineControl;
+import gregtech.content.data.GregTechTags;
 import gregtech.content.data.GregTechTags.Tag;
 import gregtech.engine.energy.EnergyBlockDefaults;
 import gregtech.engine.energy.EnergyNodeSpec;
 import gregtech.engine.machine.AdjacentEnergyControl;
+import gregtech.engine.tool.GTToolHelper;
 import java.util.Collection;
 import java.util.List;
 import javax.annotation.Nullable;
@@ -12,10 +14,15 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-/** The energy ports, server tick and controls of one placed device. */
+/** The active device's energy ports, lifecycle and interactions. */
 abstract class EnergyDeviceBehavior {
     static final String BUFFER_KEY = "gt.buffer";
 
@@ -51,6 +58,63 @@ abstract class EnergyDeviceBehavior {
     void onBound() {}
 
     void onLoad() {}
+
+    void onHostChanged() {}
+
+    void onNeighborChanged() {}
+
+    boolean weatherproof() {
+        return false;
+    }
+
+    boolean skyVisible() {
+        return false;
+    }
+
+    boolean allowsCovers() {
+        return true;
+    }
+
+    boolean supportsControlPanels() {
+        return false;
+    }
+
+    boolean coverPossible() {
+        return false;
+    }
+
+    void inversionChanged() {}
+
+    @Nullable
+    EnergyDeviceTool toolAction(ItemStack tool) {
+        if (host.isInvertible() && GTToolHelper.isSoftHammer(tool)) return this::invert;
+        var turbine = turbine();
+        return turbine == null ? null : turbine.toolAction(tool);
+    }
+
+    InteractionResult use(Player player, ItemStack tool) {
+        var action = toolAction(tool);
+        if (action == null) return InteractionResult.PASS;
+        boolean client = player.level().isClientSide;
+        if (!client) action.use(player, tool);
+        return InteractionResult.sidedSuccess(client);
+    }
+
+    void invert(Player player, ItemStack tool) {
+        showInversionMode(player, host.toggleInverted());
+    }
+
+    static void showInversionMode(Player player, boolean up) {
+        player.displayClientMessage(
+                Component.translatable(
+                        up ? "message.gt6ce.transformer.step_up" : "message.gt6ce.transformer.step_down"),
+                true);
+    }
+
+    @Nullable
+    MenuProvider menu() {
+        return null;
+    }
 
     final void save(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         saveState(tag, lookup);
@@ -103,6 +167,32 @@ abstract class EnergyDeviceBehavior {
 
     boolean acceptsInputType(Tag type) {
         return host.spec() != null && type == host.spec().inType();
+    }
+
+    final boolean exposesRfInput(@Nullable Direction side) {
+        var spec = host.spec();
+        return spec != null && spec.inType() == GregTechTags.Energy.RF && (side == null || exposesRfInputOn(side));
+    }
+
+    boolean exposesRfInputOn(Direction side) {
+        return side != host.facing();
+    }
+
+    boolean canReceiveRf(@Nullable Direction side) {
+        // Generic RF buffers accept directly on every exposed side.
+        return true;
+    }
+
+    int receiveRf(int amount, boolean simulate) {
+        long space = Math.max(0, capacity() - host.bufferedInput);
+        int accepted = (int) Math.min(amount, space);
+        if (!simulate && accepted > 0) {
+            host.bufferedInput += accepted;
+            var level = host.getLevel();
+            if (level != null) host.conversionMeter().input(level.getGameTime(), accepted);
+            host.setChanged();
+        }
+        return accepted;
     }
 
     boolean acceptsOutputType(Tag type) {

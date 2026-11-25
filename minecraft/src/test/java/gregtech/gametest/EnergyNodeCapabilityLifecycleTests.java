@@ -102,6 +102,28 @@ public final class EnergyNodeCapabilityLifecycleTests {
     }
 
     @GameTest(template = "test_empty")
+    public static void fluxDevicesWithTwoOutputsReserveBothEnds(GameTestHelper helper) {
+        for (String id : new String[] {"flux_cooler_lv", "flux_magnet_lv"}) {
+            var node = place(helper, id);
+            var lateral = rfPort(node, Direction.EAST);
+            var unsided = rfPort(node, null);
+            helper.assertTrue(
+                    rfPort(node, Direction.NORTH) == null && rfPort(node, Direction.SOUTH) == null,
+                    id + " reserves the front and rear for output");
+            helper.assertTrue(lateral != null && unsided != null && lateral.canReceive() && unsided.canReceive(),
+                    id + " exposes a live RF input at the side and through the unsided port");
+            helper.assertTrue(lateral.receiveEnergy(8, true) == 8 && node.stored() == 0,
+                    id + " simulates an RF transfer without changing the buffer");
+            helper.assertTrue(lateral.receiveEnergy(8, false) == 8 && node.stored() == 8,
+                    id + " accepts RF from the side");
+            node.machineControl(null).setEnabled(false);
+            helper.assertTrue(!lateral.canReceive() && !unsided.canReceive() && lateral.receiveEnergy(8, false) == 0,
+                    id + " rejects RF while stopped");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty")
     public static void bufferedRfPortsFollowFacingAndSpec(GameTestHelper helper) {
         var state = block("flux_motor_lv").defaultBlockState().setValue(DirectionalBlock.FACING, Direction.NORTH);
         var node = new EnergyNodeBlockEntity(BlockPos.ZERO, state);

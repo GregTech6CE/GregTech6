@@ -22,6 +22,11 @@ final class MagnetNode extends OriginalConverterNode {
     }
 
     @Override
+    boolean exposesRfInputOn(Direction side) {
+        return LATERAL.test(host.facing(), side);
+    }
+
+    @Override
     void saveState(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         super.saveState(tag, lookup);
         saveLegacyState(host, tag, mode());

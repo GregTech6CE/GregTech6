@@ -23,10 +23,11 @@ public enum BatteryBoxJadeProvider implements IServerDataProvider<BlockAccessor>
     }
 
     @Override public void appendServerData(CompoundTag tag, BlockAccessor accessor) {
-        if (!(accessor.getBlockEntity() instanceof EnergyNodeBlockEntity node) || !node.isBatteryBox()) return;
+        if (!(accessor.getBlockEntity() instanceof EnergyNodeBlockEntity node)) return;
+        var battery = node.batteryStatus();
+        if (battery == null) return;
         var data = new CompoundTag();
         var spec = node.spec();
-        var battery = node.batteryEnergy();
         var control = node.machineControl(null);
         data.putBoolean("enabled", control.enabled());
         data.putBoolean("running", control.running());
@@ -42,9 +43,9 @@ public enum BatteryBoxJadeProvider implements IServerDataProvider<BlockAccessor>
         data.putLong("offered", battery.offered());
         data.putInt("mode", control.mode());
         var icons = new ListTag();
-        var inventory = node.batteryInventory();
-        for (int slot = 0; slot < Math.min(MAX_SLOTS, inventory.getSlots()); slot++) {
-            var stack = inventory.getStackInSlot(slot);
+        var items = battery.items();
+        for (int slot = 0; slot < Math.min(MAX_SLOTS, items.size()); slot++) {
+            var stack = items.get(slot);
             if (stack.isEmpty()) continue;
             var icon = saveIcon(stack, accessor);
             // Arbitrary third-party battery data must not evict the entire status panel.

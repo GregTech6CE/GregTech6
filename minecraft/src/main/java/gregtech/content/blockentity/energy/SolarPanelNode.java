@@ -80,11 +80,28 @@ final class SolarPanelNode extends EnergyDeviceBehavior implements MachineContro
         return 0;
     }
 
+    @Override
+    boolean supportsControlPanels() {
+        return true;
+    }
+
+    @Override
+    boolean coverPossible() {
+        return true;
+    }
+
+    @Override
+    boolean weatherproof() {
+        return true;
+    }
+
+    @Override
     boolean skyVisible() {
         return energy.skyVisible();
     }
 
-    void checkSky() {
+    @Override
+    void onNeighborChanged() {
         energy.checkSky();
     }
 

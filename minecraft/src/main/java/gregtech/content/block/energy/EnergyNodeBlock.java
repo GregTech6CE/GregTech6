@@ -1,21 +1,25 @@
 package gregtech.content.block.energy;
 
 import gregtech.content.block.GTDirectionalBlock;
-import gregtech.engine.tool.GTToolHelper;
-import gregtech.engine.tool.ToolInteractions;
-import gregtech.engine.tool.ToolInteractionSpec;
-import gregtech.engine.tool.ToolInteractionTarget;
-import gregtech.engine.tool.GTToolType;
+import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
+import gregtech.content.cover.PanelCover;
+import gregtech.content.cover.PanelCoverInteraction;
+import gregtech.content.energy.EnergyNodeSpecProvider;
+import gregtech.content.registry.GTEnergyNodes;
 import gregtech.engine.energy.EnergyNodeSpec;
 import gregtech.engine.energy.EnergyNodeSpec.DeviceType;
-import gregtech.content.energy.EnergyNodeSpecProvider;
-import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
-import gregtech.content.registry.GTEnergyNodes;
+import gregtech.engine.tool.GTToolHelper;
+import gregtech.engine.tool.ToolInteractionSpec;
+import gregtech.engine.tool.ToolInteractionTarget;
+import gregtech.engine.tool.ToolInteractions;
+import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -28,110 +32,31 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import javax.annotation.Nullable;
-import java.util.List;
+import net.minecraft.world.phys.BlockHitResult;
 
 /** GT6 energy-net node block (motor/dynamo/transformer/turbine/solar/storage). */
 public class EnergyNodeBlock extends GTDirectionalBlock implements EntityBlock, EnergyNodeSpecProvider, ToolInteractionTarget,
         gregtech.engine.machine.PipeGeometry.FluidConnectorGeometry {
 
     @Override
-    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player,
-            net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         // both hands fire use(); handling the off hand double-triggers
         // (insert+extract in one click, double withdrawals, armor swap-backs)
-        if (hand == net.minecraft.world.InteractionHand.OFF_HAND) return InteractionResult.PASS;
+        if (hand == InteractionHand.OFF_HAND) return InteractionResult.PASS;
         ItemStack held = player.getItemInHand(hand);
         if (!(level.getBlockEntity(pos) instanceof EnergyNodeBlockEntity node)) {
             return InteractionResult.PASS;
         }
-        if (node.hasControlPanels()&&(!node.getCover(hit.getDirection()).isEmpty()
-                ||gregtech.content.cover.PanelCover.of(held)!=null)){
-            var result=gregtech.content.cover.PanelCoverInteraction.use(node,player,hand,hit,true);
-            if (result.consumesAction())return result;
+        if (node.hasControlPanels()
+                && (!node.getCover(hit.getDirection()).isEmpty() || PanelCover.of(held) != null)) {
+            var result = PanelCoverInteraction.use(node, player, hand, hit, true);
+            if (result.consumesAction()) return result;
         }
-        if (ToolInteractions.use(state, level, pos, player, hand, hit))
-            return InteractionResult.sidedSuccess(level.isClientSide);
-
-        var action = deviceTool(node, held);
-        boolean batteryBox = node.isBatteryBox();
-        if (batteryBox && (action == null || action == DeviceTool.REMOVE_BATTERY)
-                && EnergyNodeBlockEntity.batteryCapacityOf(held, node.spec().inType()) > 0) {
-            if (!level.isClientSide && node.installBattery(held) && !player.getAbilities().instabuild) held.shrink(1);
+        if (ToolInteractions.use(state, level, pos, player, hand, hit)) {
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
-        if (action != null) {
-            if (!level.isClientSide) useDeviceTool(node, action, player, held);
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-        if (batteryBox) {
-            if (!level.isClientSide && player instanceof net.minecraft.server.level.ServerPlayer sp) {
-                sp.openMenu(node.batteryMenu());
-            }
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-        return InteractionResult.PASS;
-    }
-
-    public static boolean consumesDeviceTool(EnergyNodeBlockEntity node, ItemStack tool) {
-        return deviceTool(node, tool) != null;
-    }
-
-    @Nullable
-    private static DeviceTool deviceTool(EnergyNodeBlockEntity node, ItemStack tool) {
-        if (node.isOriginalMotor()) {
-            if (GTToolHelper.isMonkeyWrench(tool)) return DeviceTool.REVERSE_MOTOR;
-            if (GTToolHelper.isMagnifyingGlass(tool)) return DeviceTool.INSPECT_MOTOR;
-        }
-        if (node.isInvertible()) {
-            if (node.isTransformer()) {
-                if (GTToolHelper.isMonkeyWrench(tool)) return DeviceTool.INVERT_TRANSFORMER;
-            } else if (GTToolHelper.isSoftHammer(tool)) {
-                return DeviceTool.INVERT_CONVERTER;
-            }
-        }
-        if (node.isTurbine()) {
-            if (GTToolHelper.matchesTool(tool, GTToolType.PLUNGER)) return DeviceTool.PURGE_STEAM;
-            if (node.hasRotor() && GTToolHelper.matchesTool(tool, GTToolType.CROWBAR)) return DeviceTool.REMOVE_ROTOR;
-        }
-        return node.isBatteryBox() && GTToolHelper.matchesTool(tool, GTToolType.CROWBAR)
-                ? DeviceTool.REMOVE_BATTERY : null;
-    }
-
-    private static void useDeviceTool(EnergyNodeBlockEntity node, DeviceTool action, Player player, ItemStack tool) {
-        switch (action) {
-            case REVERSE_MOTOR, INSPECT_MOTOR -> {
-                if (action == DeviceTool.REVERSE_MOTOR) node.reverseMotor();
-                GTToolHelper.damageForUse(tool, 1, player);
-                String direction = node.motorCounterClockwise() ? "Counterclockwise" : "Clockwise";
-                player.displayClientMessage(Component.literal(direction), true);
-            }
-            case INVERT_TRANSFORMER, INVERT_CONVERTER -> {
-                boolean up = node.toggleInverted();
-                if (action == DeviceTool.INVERT_TRANSFORMER) GTToolHelper.damageForUse(tool, 1, player);
-                player.displayClientMessage(Component.translatable(
-                        up ? "message.gt6ce.transformer.step_up" : "message.gt6ce.transformer.step_down"), true);
-            }
-            case PURGE_STEAM -> {
-                long removed = node.purgeTurbineSteam();
-                if (removed > 0) GTToolHelper.damageForToolClickReturn(tool, removed, player);
-            }
-            case REMOVE_ROTOR, REMOVE_BATTERY -> {
-                ItemStack removed = action == DeviceTool.REMOVE_ROTOR ? node.removeRotor() : node.removeBattery();
-                if (!removed.isEmpty() && !player.addItem(removed)) player.drop(removed, false);
-            }
-        }
-    }
-
-    private enum DeviceTool {
-        REVERSE_MOTOR,
-        INSPECT_MOTOR,
-        INVERT_TRANSFORMER,
-        INVERT_CONVERTER,
-        PURGE_STEAM,
-        REMOVE_ROTOR,
-        REMOVE_BATTERY
+        return node.useDevice(player, held);
     }
 
     private final EnergyNodeSpec spec;

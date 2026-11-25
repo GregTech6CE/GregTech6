@@ -10,10 +10,13 @@ import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.inventory.BlockContents;
 import gregtech.engine.material.MaterialFormItem;
 import gregtech.engine.stack.NbtCompat;
+import gregtech.engine.tool.GTToolHelper;
+import gregtech.engine.tool.GTToolType;
 import javax.annotation.Nullable;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.capabilities.Capabilities;
@@ -66,6 +69,21 @@ final class SteamTurbineNode implements MachineControl {
 
     boolean hasRotor() {
         return !legacyRotor.isEmpty();
+    }
+
+    @Nullable
+    EnergyDeviceTool toolAction(ItemStack tool) {
+        if (GTToolHelper.matchesTool(tool, GTToolType.PLUNGER)) return this::purgeWithTool;
+        return hasRotor() && GTToolHelper.matchesTool(tool, GTToolType.CROWBAR) ? this::returnRotor : null;
+    }
+
+    private void purgeWithTool(Player player, ItemStack tool) {
+        long removed = purge();
+        if (removed > 0) GTToolHelper.damageForToolClickReturn(tool, removed, player);
+    }
+
+    private void returnRotor(Player player, ItemStack tool) {
+        EnergyDeviceTool.returnItem(player, removeRotor());
     }
 
     ItemStack removeRotor() {

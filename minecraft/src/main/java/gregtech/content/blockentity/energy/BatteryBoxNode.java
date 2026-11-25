@@ -9,6 +9,9 @@ import gregtech.content.energy.OriginalEnergyDeviceTooltipData;
 import gregtech.engine.energy.EnergyNodeSpec;
 import gregtech.engine.energy.EnergyTransfer;
 import gregtech.engine.energy.MachineOverload;
+import gregtech.engine.tool.GTToolHelper;
+import gregtech.engine.tool.GTToolType;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.annotation.Nullable;
@@ -16,6 +19,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -25,6 +33,8 @@ final class BatteryBoxNode extends EnergyDeviceBehavior implements MachineContro
     private final EnergyNodeSpec spec;
     final BatteryBoxInventory inventory;
     final BatteryBoxEnergy energy;
+    private final MenuProvider menu;
+    private final EnergyDeviceTool batteryRemoval = this::returnBattery;
     private boolean updatePending;
 
     BatteryBoxNode(EnergyNodeBlockEntity host, EnergyNodeSpec spec) {
@@ -32,14 +42,76 @@ final class BatteryBoxNode extends EnergyDeviceBehavior implements MachineContro
         this.spec = spec;
         inventory = new BatteryBoxInventory(host, spec);
         energy = new BatteryBoxEnergy(inventory.batteries, spec.inputRate(), spec.inType(), this::energyChanged);
+        menu = inventory.menu();
     }
 
     private void energyChanged() {
         if (isCurrent()) host.setChanged();
     }
 
-    void markUpdatePending() {
+    @Override
+    void onHostChanged() {
         updatePending = true;
+    }
+
+    @Override
+    boolean allowsCovers() {
+        return false;
+    }
+
+    @Override
+    boolean supportsControlPanels() {
+        return true;
+    }
+
+    @Override
+    boolean coverPossible() {
+        return energy.buffer() > spec.outputRate();
+    }
+
+    @Override
+    @Nullable
+    EnergyDeviceTool toolAction(ItemStack tool) {
+        var action = super.toolAction(tool);
+        if (action != null) return action;
+        return GTToolHelper.matchesTool(tool, GTToolType.CROWBAR) ? batteryRemoval : null;
+    }
+
+    @Override
+    InteractionResult use(Player player, ItemStack held) {
+        boolean client = player.level().isClientSide;
+        var action = toolAction(held);
+        if ((action == null || action == batteryRemoval) && BatteryBoxInventory.capacityOf(held, spec.inType()) > 0) {
+            if (!client && inventory.install(held) && !player.getAbilities().instabuild) held.shrink(1);
+        } else if (!client) {
+            if (action != null) action.use(player, held);
+            else if (player instanceof ServerPlayer serverPlayer) serverPlayer.openMenu(menu);
+        }
+        return InteractionResult.sidedSuccess(client);
+    }
+
+    private void returnBattery(Player player, ItemStack tool) {
+        EnergyDeviceTool.returnItem(player, inventory.remove());
+    }
+
+    @Override
+    @Nullable
+    MenuProvider menu() {
+        return isCurrent() ? menu : null;
+    }
+
+    EnergyNodeBlockEntity.BatteryStatus status() {
+        var items = new ArrayList<ItemStack>(inventory.getSlots());
+        for (int slot = 0; slot < inventory.getSlots(); slot++) {
+            items.add(inventory.getStackInSlot(slot).copy());
+        }
+        return new EnergyNodeBlockEntity.BatteryStatus(
+                energy.buffer(),
+                energy.bufferCapacity(),
+                energy.stored(),
+                energy.capacity(),
+                energy.offered(),
+                List.copyOf(items));
     }
 
     @Override
@@ -54,7 +126,7 @@ final class BatteryBoxNode extends EnergyDeviceBehavior implements MachineContro
         energy.load(tag);
         inventory.load(tag, lookup);
         // A block-item snapshot can be applied after the block has already been placed.
-        markUpdatePending();
+        onHostChanged();
     }
 
     @Override

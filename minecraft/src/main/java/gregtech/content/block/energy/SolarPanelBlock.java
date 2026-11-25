@@ -28,6 +28,6 @@ public final class SolarPanelBlock extends EnergyNodeBlock {
     public void neighborChanged(
             BlockState state, Level level, BlockPos pos, Block block, BlockPos source, boolean moving) {
         super.neighborChanged(state, level, pos, block, source, moving);
-        if (level.getBlockEntity(pos) instanceof EnergyNodeBlockEntity node) node.checkSolarSky();
+        if (level.getBlockEntity(pos) instanceof EnergyNodeBlockEntity node) node.onNeighborChanged();
     }
 }
