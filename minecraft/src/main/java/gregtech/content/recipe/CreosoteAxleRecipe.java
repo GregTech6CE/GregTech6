@@ -115,8 +115,6 @@ public final class CreosoteAxleRecipe extends ToolShapedRecipe {
     /*/^* No registry-bound example is constructed during serializer registration. ^/
     public static final class ContainerIngredient implements ICustomIngredient {
         public static final MapCodec<ContainerIngredient> CODEC = MapCodec.unit(CreosoteAxleRecipe::creosote);
-        private static boolean sameFluid(FluidStack a, FluidStack b) {
-            return !a.isEmpty() && !b.isEmpty() && a.getFluid() == b.getFluid();
 *///?} else {
     public static void registerIngredient() {
         CraftingHelper.register(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("creosote_container_1000").toLowerCase()), ContainerIngredient.SERIALIZER);
@@ -132,8 +130,8 @@ public final class CreosoteAxleRecipe extends ToolShapedRecipe {
 
         private ContainerIngredient() {
             super(examples().map(Ingredient.ItemValue::new));
-//?}
         }
+//?}
 
         private static FluidStack required() {
             var fluid = GTFluids.stillFluid("Oil_Creosote");
@@ -147,49 +145,28 @@ public final class CreosoteAxleRecipe extends ToolShapedRecipe {
         @Override public boolean test(@org.jetbrains.annotations.Nullable ItemStack input) {
             if (input == null || input.isEmpty() || input.getItem() instanceof FluidDisplayItemLike
                     || FluidDisplayBinding.hasPayload(input)) return false;
-//? if >=1.21.1 {
-            /*var need = required();
-*///?} else {
             FluidStack need = required();
-//?}
             if (need.isEmpty()) return false;
-//? if >=1.21.1 {
-            /*var one = input.copyWithCount(1);
-            var handler = FluidUtil.getFluidHandler(one).orElse(null);
-*///?} else {
             ItemStack one = input.copyWithCount(1);
-            var handler = FluidUtil.getFluidHandler(one).resolve().orElse(null);
-//?}
+            var handler = gregtech.engine.stack.StackCompat.fluidHandler(one);
             if (handler == null) return false;
-//? if >=1.21.1 {
-            /*var before = FluidUtil.getFluidContained(one).orElse(FluidStack.EMPTY);
-            if (!sameFluid(before, need) || before.getAmount() < 1000) return false;
-            var taken = handler.drain(need, IFluidHandler.FluidAction.EXECUTE);
-            if (!sameFluid(taken, need) || taken.getAmount() != 1000) return false;
-            var after = FluidUtil.getFluidContained(handler.getContainer()).orElse(FluidStack.EMPTY);
-*///?} else {
-            FluidStack before = FluidUtil.getFluidContained(one).orElse(FluidStack.EMPTY);
-            if (before.isEmpty() || !before.isFluidEqual(need) || before.getAmount() < 1000) return false;
-            FluidStack taken = handler.drain(need, IFluidHandler.FluidAction.EXECUTE);
-            if (!taken.isFluidEqual(need) || taken.getAmount() != 1000) return false;
-            FluidStack after = FluidUtil.getFluidContained(handler.getContainer()).orElse(FluidStack.EMPTY);
+            FluidStack before = gregtech.engine.stack.StackCompat.fluidContained(one);
+            if (before.isEmpty() || !gregtech.engine.fluid.FluidCompat.sameFluid(before, need) || before.getAmount() < 1000)
+                return false;
+            FluidStack taken = handler.drain(need, gregtech.engine.fluid.FluidCompat.EXECUTE);
+            if (taken.isEmpty() || !gregtech.engine.fluid.FluidCompat.sameFluid(taken, need) || taken.getAmount() != 1000)
+                return false;
+            FluidStack after = gregtech.engine.stack.StackCompat.fluidContained(handler.getContainer());
             // Reject creative/infinite handlers even if they claim to drain successfully.
-//?}
             return before.getAmount() - after.getAmount() == 1000;
         }
 
         static ItemStack drainOne(ItemStack input) {
-//? if >=1.21.1 {
-            /*var handler = FluidUtil.getFluidHandler(input.copyWithCount(1)).orElseThrow();
-            var need = required();
-            var drained = handler.drain(need, IFluidHandler.FluidAction.EXECUTE);
-            if (!sameFluid(drained, need) || drained.getAmount() != 1000)
+            var handler = gregtech.engine.stack.StackCompat.fluidHandlerOrThrow(input.copyWithCount(1));
+            FluidStack need = required();
+            FluidStack drained = handler.drain(need, gregtech.engine.fluid.FluidCompat.EXECUTE);
+            if (drained.isEmpty() || !gregtech.engine.fluid.FluidCompat.sameFluid(drained, need) || drained.getAmount() != 1000)
                 throw new IllegalStateException("Creosote axle did not drain 1000 mB");
-*///?} else {
-            var handler = FluidUtil.getFluidHandler(input.copyWithCount(1)).resolve().orElseThrow();
-            FluidStack drained = handler.drain(required(), IFluidHandler.FluidAction.EXECUTE);
-            if (drained.getAmount() != 1000) throw new IllegalStateException("Creosote axle did not drain 1000 mB");
-//?}
             return handler.getContainer();
         }
 

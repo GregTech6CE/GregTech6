@@ -138,11 +138,7 @@ public class GarbageData extends SavedData {
         FluidStack storedFluid = fluids.get(index);
         if (storedFluid.isEmpty()) return FluidStack.EMPTY;
         int take = (int) Math.min(Integer.MAX_VALUE, storedFluid.getAmount());
-//? if >=1.21.1 {
-        /*return storedFluid.copyWithAmount(take);
-*///?} else {
-        return new FluidStack(storedFluid, take);
-//?}
+        return gregtech.engine.fluid.FluidCompat.copyWithAmount(storedFluid, take);
     }
 
     /** Drains the pile at {@code index}, preserving the insertion order the dump exposes. */
@@ -151,11 +147,7 @@ public class GarbageData extends SavedData {
         FluidStack storedFluid = fluids.get(index);
         if (storedFluid.isEmpty()) return FluidStack.EMPTY;
         int take = Math.min(maxDrain, storedFluid.getAmount());
-//? if >=1.21.1 {
-        /*FluidStack out = storedFluid.copyWithAmount(take);
-*///?} else {
-        FluidStack out = new FluidStack(storedFluid, take);
-//?}
+        FluidStack out = gregtech.engine.fluid.FluidCompat.copyWithAmount(storedFluid, take);
         if (!simulate) {
             storedFluid.shrink(take);
             if (storedFluid.isEmpty()) fluids.remove(index);

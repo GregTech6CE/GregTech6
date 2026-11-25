@@ -372,13 +372,7 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements gregtech.
 
                         FluidStack fs = basicBe.getFluidInTank(i);
 
-
-
-//? if >=1.21.1 {
-/*                        FluidStack.OPTIONAL_STREAM_CODEC.encode(buf,fs);
-*///?} else {
-                        buf.writeFluidStack(fs);
-//?}
+                        gregtech.engine.fluid.FluidCompat.writeFluid(buf, fs);
                         var inputs = basicBe.getTanksInput();
                         var tank = i < inputs.length ? inputs[i] : basicBe.getTanksOutput()[i - inputs.length];
                         buf.writeVarLong(tank.getAmount());

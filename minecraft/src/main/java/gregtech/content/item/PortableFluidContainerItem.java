@@ -65,11 +65,9 @@ public final class PortableFluidContainerItem extends GTBlockItem implements gre
             public int fill(FluidStack fluid, FluidAction action) {
                 int availableCapacity = Math.max(0, getTankCapacity(0) - getFluid().getAmount());
                 if (availableCapacity == 0 || fluid.isEmpty()) return 0;
-//? if >=1.21.1 {
-                /*return super.fill(fluid.copyWithAmount(Math.min(availableCapacity, fluid.getAmount())), action);
-*///?} else {
-                return super.fill(new FluidStack(fluid, Math.min(availableCapacity, fluid.getAmount())), action);
-//?}
+                return super.fill(
+                        gregtech.engine.fluid.FluidCompat.copyWithAmount(fluid, Math.min(availableCapacity, fluid.getAmount())),
+                        action);
             }
         };
     }
@@ -123,11 +121,7 @@ public final class PortableFluidContainerItem extends GTBlockItem implements gre
                 if (fluid.isSource() && container != null && level.mayInteract(player, pos)
                         && player.mayUseItemAt(pos, hit.getDirection(), stack)
                         && container.fill(new FluidStack(fluid.getType(), 1000),
-//? if >=1.21.1 {
-                        /*net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.SIMULATE) == 1000) {
-*///?} else {
-                        net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.SIMULATE) == 1000) {
-//?}
+                        gregtech.engine.fluid.FluidCompat.SIMULATE) == 1000) {
                     if (level.isClientSide) return net.minecraft.world.InteractionResultHolder.success(stack);
                     // The platform transaction removes a source only after the full bucket fits.
                     var pickedUp = FluidUtil.tryPickUpFluid(stack.copyWithCount(1), player, level, pos, hit.getDirection());
@@ -161,18 +155,9 @@ public final class PortableFluidContainerItem extends GTBlockItem implements gre
                 || !(entity instanceof net.minecraft.world.entity.player.Player player)) return stack;
         var tank = FluidUtil.getFluidHandler(stack).orElse(null);
         if (tank == null) return stack;
-//? if >=1.21.1 {
-        /*var action = net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.SIMULATE;
-*///?} else {
-        var action = net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.SIMULATE;
-//?}
-        var portion = tank.drain(250, action);
+        var portion = tank.drain(250, gregtech.engine.fluid.FluidCompat.SIMULATE);
         if (gregtech.content.food.GTDrinks.drink(player, portion)) {
-//? if >=1.21.1 {
-            /*tank.drain(250, net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);
-*///?} else {
-            tank.drain(250, net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);
-//?}
+            tank.drain(250, gregtech.engine.fluid.FluidCompat.EXECUTE);
         }
         return tank.getContainer();
     }

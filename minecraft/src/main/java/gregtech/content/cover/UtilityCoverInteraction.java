@@ -34,13 +34,8 @@ public final class UtilityCoverInteraction {
         }
         if (held.getItem() instanceof gregtech.content.item.BottleItem bottle && bottle.fluid() != null)
             return new FluidStack(bottle.fluid(), 250);
-//? if >=1.21.1 {
-        /*if (held.getItem() instanceof net.minecraft.world.item.BucketItem bucket)
-            return new FluidStack(bucket.content, 1000);
-*///?} else {
         if (held.getItem() instanceof net.minecraft.world.item.BucketItem bucket)
-            return new FluidStack(bucket.getFluid(), 1000);
-//?}
+            return new FluidStack(gregtech.engine.fluid.FluidCompat.bucketFluid(bucket), 1000);
         // These registered GT containers encode their fluid identity in the item catalog, not NBT.
         var key = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(held.getItem());
         if (key.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) {
