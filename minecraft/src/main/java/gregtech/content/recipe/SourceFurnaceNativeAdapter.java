@@ -10,6 +10,7 @@ import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.generated.MaterialWorkability;
 import gregtech.content.material.MaterialFactKeys;
 import gregtech.content.registry.GTBlocks;
+import gregtech.content.registry.SpecialOreBlocks;
 import gregtech.engine.material.MaterialFormItem;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.recipe.Recipe;
@@ -127,13 +128,7 @@ final class SourceFurnaceNativeAdapter {
             boolean matches = block instanceof DenseOreBlock ore && ore.material().resolve() == material.resolve()
                     || block instanceof VanillaOreBlock vanilla && vanilla.material().resolve() == material.resolve();
             if (!matches) return false;
-//? if >=1.21.1 {
-            /*return gregtech.content.registry.GTSpecialOreBlocks.all().stream()
-                    .anyMatch(holder -> holder.isBound() && holder.get() == block);
-*///?} else {
-            return gregtech.content.registry.GTIconSetBlocks.all().stream()
-                    .anyMatch(holder -> holder.isPresent() && holder.get() == block);
-//?}
+            return SpecialOreBlocks.contains(block);
         }
     }
 }

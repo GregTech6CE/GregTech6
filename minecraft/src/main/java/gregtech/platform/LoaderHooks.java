@@ -21,6 +21,14 @@ import net.minecraftforge.event.ForgeEventFactory;
 public final class LoaderHooks {
     private LoaderHooks() {}
 
+    public static String loaderId() {
+//? if >=1.21.1 {
+/*        return "neoforge";
+*///?} else {
+        return "forge";
+//?}
+    }
+
     public static void firePlayerCraftingEvent(Player player, ItemStack crafted, Container craftMatrix) {
 //? if >=1.21.1 {
 /*        EventHooks.firePlayerCraftingEvent(player, crafted, craftMatrix);

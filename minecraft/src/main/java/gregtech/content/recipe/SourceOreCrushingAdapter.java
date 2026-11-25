@@ -8,6 +8,7 @@ import gregtech.content.block.stone.OreHostFacts;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.material.MaterialFactKeys;
 import gregtech.content.registry.GTBlocks;
+import gregtech.content.registry.SpecialOreBlocks;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.ItemMaterialRegistry;
@@ -301,7 +302,7 @@ final class SourceOreCrushingAdapter {
                 return physical.material().resolve() == material && physical.prefix().getMaterialWeight() == 18 * U
                         && GTBlocks.getStack(BlockMaterialPrefix.blockRaw, material).getItem() == item
                         && composition(input, null, material, 18 * U, true) ? NativeKind.RAW_BLOCK : null;
-            if (!special(block)) return null;
+            if (!SpecialOreBlocks.contains(block)) return null;
             // These are GT-owned typed blocks in the special-ore registry; the block class carries
             // the dense/vanilla prefix, and the item cannot be an external substitute.
             if (block instanceof DenseOreBlock dense && dense.material().resolve() == material)
@@ -309,15 +310,6 @@ final class SourceOreCrushingAdapter {
             if (block instanceof VanillaOreBlock ordinary && ordinary.material().resolve() == material)
                 return NativeKind.FIXED_STONE;
             return null;
-        }
-        private static boolean special(net.minecraft.world.level.block.Block block) {
-//? if >=1.21.1 {
-            /*return gregtech.content.registry.GTSpecialOreBlocks.all().stream()
-                    .anyMatch(holder -> holder.isBound() && holder.get() == block);
-*///?} else {
-            return gregtech.content.registry.GTIconSetBlocks.all().stream()
-                    .anyMatch(holder -> holder.isPresent() && holder.get() == block);
-//?}
         }
         private static boolean composition(ItemStack input, MaterialPrefix prefix, GTMaterial material, long amount, boolean optional) {
             var data = ItemMaterialRegistry.base(input.getItem()).orElse(null);

@@ -141,12 +141,7 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy, gregtec
             var hit = new net.minecraft.world.phys.BlockHitResult(context.getClickLocation(),
                     context.getClickedFace(), pos, context.isInside());
 
-//? if >=1.21.1 {
-/*            var itemResult=state.useItemOn(stack,level,player,context.getHand(),hit);
-            var result=itemResult==net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION?state.useWithoutItem(level,player,hit):itemResult.result();
-*///?} else {
-            var result = state.use(level, player, context.getHand(), hit);
-//?}
+            var result = Mc.useBlock(state, stack, level, pos, player, context.getHand(), hit);
 
             if (result != net.minecraft.world.InteractionResult.PASS) return result;
         } else if (level.getBlockEntity(pos) != null) return net.minecraft.world.InteractionResult.PASS;

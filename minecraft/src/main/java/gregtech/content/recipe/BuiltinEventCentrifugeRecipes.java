@@ -12,6 +12,7 @@ import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.engine.stack.StackCompat;
 import gregtech.engine.stack.StackData;
+import gregtech.platform.LoaderHooks;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -203,11 +204,7 @@ public final class BuiltinEventCentrifugeRecipes {
             if (mods == null) return Shell.UNKNOWN;
             var ids = new HashSet<String>();
             for (var mod : mods.getMods()) if (mod.getModId() == null || !ids.add(mod.getModId())) return Shell.UNKNOWN;
-//? if >=1.21.1 {
-            /*String loader = "neoforge";*/
-//?} else {
-            String loader = "forge";
-//?}
+            String loader = LoaderHooks.loaderId();
             if (!ids.contains("minecraft") || !ids.contains("gt6ce") || !ids.contains(loader)) return Shell.UNKNOWN;
             return ids.contains("exoticbirds") ? Shell.UNKNOWN : Shell.ABSENT;
         } catch (RuntimeException | LinkageError unavailableProviderList) { return Shell.UNKNOWN; }

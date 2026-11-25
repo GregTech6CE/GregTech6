@@ -4,22 +4,30 @@ package gregtech.platform;
 /*import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.world.ItemInteractionResult;
 *///?} else {
 import gregtech.GregTech;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.MobType;
 //?}
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 //? if >=1.21.1 {
 /**///?} else {
@@ -182,6 +190,36 @@ public final class Mc {
             LevelReader level, BlockPos pos, @Nullable Player player) {
         return state.getCloneItemStack(target, level, pos, player);
     }
+
+    public static InteractionResult useBlock(BlockState state, ItemStack stack, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+//? if >=1.21.1 {
+/*        ItemInteractionResult itemResult = state.useItemOn(stack, level, player, hand, hit);
+        return itemResult == ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+                ? state.useWithoutItem(level, player, hit)
+                : itemResult.result();
+*///?} else {
+        return state.use(level, player, hand, hit);
+//?}
+    }
+
+//? if >=1.21.1 {
+/*    public static boolean isArthropod(LivingEntity entity) {
+        return entity.getType().is(EntityTypeTags.ARTHROPOD);
+    }
+
+    public static boolean isUndead(LivingEntity entity) {
+        return entity.getType().is(EntityTypeTags.UNDEAD);
+    }
+*///?} else {
+    public static boolean isArthropod(LivingEntity entity) {
+        return entity.getMobType() == MobType.ARTHROPOD;
+    }
+
+    public static boolean isUndead(LivingEntity entity) {
+        return entity.getMobType() == MobType.UNDEAD;
+    }
+//?}
 
 //? if >=1.21.1 {
 /*    public static void openMenu(ServerPlayer player, MenuProvider provider,

@@ -3,6 +3,7 @@
 package gregtech.client;
 
 import gregtech.engine.block.OriginalBlockTooltipRules;
+import gregtech.engine.stack.NbtCompat;
 import gregtech.content.block.BookShelfBlock;
 import gregtech.content.cover.CoverItems;
 import gregtech.content.data.BlockHarvestPolicy;
@@ -137,13 +138,7 @@ public final class CommonBlockTooltips {
     private static boolean savedCover(CompoundTag data, String key) {
         if (!data.contains(key, Tag.TAG_COMPOUND)) return false;
         CompoundTag face = data.getCompound(key);
-//? if >=1.21.1 {
-        /*// Native ItemStack.CODEC defaults an absent count to1 and restricts explicit counts to1..99.
-        int count = face.contains("count") ? face.getInt("count") : 1;
-        if (count < 1 || count > 99) return false;
-*///?} else {
-        if (!face.contains("Count", Tag.TAG_ANY_NUMERIC) || face.getByte("Count") <= 0) return false;
-//?}
+        if (!NbtCompat.hasValidSerializedItemCount(face)) return false;
         ResourceLocation id = ResourceLocation.tryParse(face.getString("id"));
         return id != null && BuiltInRegistries.ITEM.containsKey(id)
                 && CoverItems.isCover(new ItemStack(BuiltInRegistries.ITEM.get(id)));

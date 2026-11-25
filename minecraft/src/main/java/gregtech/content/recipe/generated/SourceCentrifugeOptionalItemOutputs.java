@@ -4,6 +4,7 @@ import gregtech.content.recipe.SourceCentrifugeOptionalBindings;
 import gregtech.content.recipe.SourceCentrifugeOptionalBindings.*;
 import gregtech.engine.material.MaterialEquivalence;
 import gregtech.engine.stack.StackData;
+import gregtech.platform.LoaderHooks;
 import java.util.*;
 import java.util.function.Function;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -27,11 +28,7 @@ final class SourceCentrifugeOptionalItemOutputs {
 
     static Snapshot nativeSnapshot() {
         var mods=ModList.get();
-//? if >=1.21.1 {
-        /*String loader="neoforge";*/
-//?} else {
-        String loader="forge";
-//?}
+        String loader = LoaderHooks.loaderId();
         if (mods==null)return new Snapshot("",loader,false,Map.of());
         Map<String,String> versions=new TreeMap<>();
         for (var mod:mods.getMods()){
