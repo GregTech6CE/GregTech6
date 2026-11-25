@@ -115,23 +115,18 @@ public final class PanelCoverRuntime {
             return host.componentTicks()
                     && host.componentFluids(side) != null
                     && host.componentFluids(side).getTanks() > 0;
-        if (CoverUtilityBehaviors.FILTER_ITEM.equals(id)) {
-            var owner = host.coverOwner();
-            var level = owner.getLevel();
+        if (CoverUtilityBehaviors.FILTER_ITEM.equals(id))
             return host.componentItems(side) != null
-                    && !(owner instanceof gregtech.content.blockentity.machine.ItemPipeBlockEntity
-                            && level != null
-                            && level.getBlockEntity(owner.getBlockPos().relative(side))
-                                    instanceof gregtech.content.blockentity.machine.ItemPipeBlockEntity);
-        }
+                    && !(host instanceof PipeCoverHost pipe && pipe.blocksPipeConnection(side, id));
         if (CoverUtilityBehaviors.FILTER_FLUID.equals(id))
             return host.componentFluids(side) != null
                     && host.componentFluids(side).getTanks() > 0;
         if (CoverUtilityBehaviors.PRESSURE_VALVE.equals(id))
-            return host.coverOwner() instanceof gregtech.content.blockentity.machine.FluidPipeBlockEntity;
+            return host instanceof PipeCoverHost pipe
+                    && pipe.supportsPressureValve()
+                    && !pipe.blocksPipeConnection(side, id);
         if (CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id))
-            return host.componentTicks()
-                    && host.coverOwner() instanceof gregtech.content.blockentity.machine.ItemPipeBlockEntity;
+            return host instanceof PipeCoverHost pipe && pipe.supportsItemRetriever();
         if (MachineCoverSpec.of(stack) != null) return candidateControl != null && candidateControl.supportsSwitch();
         var panel = PanelCover.of(stack);
         if (panel == null) return CoverItems.isCover(stack);
@@ -372,8 +367,7 @@ public final class PanelCoverRuntime {
         if (stopped
                 || !host.componentTicks()
                 || host.coverOwner() instanceof gregtech.content.blockentity.machine.BasicMachineBlockEntity
-                || host.coverOwner() instanceof gregtech.content.blockentity.machine.FluidPipeBlockEntity
-                || host.coverOwner() instanceof gregtech.content.blockentity.machine.ItemPipeBlockEntity) return;
+                || host instanceof PipeCoverHost) return;
         for (var side : Direction.values()) {
             var id = CoverItems.behavior(host.getCover(side));
             if (!CoverAttachmentBehaviors.DRAIN.equals(id) && !CoverAttachmentBehaviors.AIR_VENT.equals(id)) continue;

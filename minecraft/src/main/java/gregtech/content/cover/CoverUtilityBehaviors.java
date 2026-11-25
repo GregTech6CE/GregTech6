@@ -452,18 +452,6 @@ public final class CoverUtilityBehaviors {
     public static final double VALVE_VENT_INFLATE = 2.0D;
 
     /**
-     * GT6 {@code CoverPressureValve}: the valve only goes on a fluid pipe with exactly one tank,
-     * and only when the block it faces is <em>not</em> another fluid pipe.
-     *
-     * <p>The original rejects a non-pipe host, a tank count other than one, or
-     * another fluid pipe in front. The caller checks the host class; this predicate
-     * checks the remaining two conditions.</p>
-     */
-    public static boolean valveCanAttachTo(int hostTankCount, boolean neighbourIsFluidPipe) {
-        return hostTankCount == 1 && !neighbourIsFluidPipe;
-    }
-
-    /**
      * One pressure valve operation: GT6 {@code CoverPressureValve}.
      *
      * <p>The fluid pipe host supplies its first tank after checking the global cover

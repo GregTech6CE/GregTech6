@@ -4,6 +4,7 @@ import gregtech.engine.machine.ITileEntityAdjacentInventoryUpdatable;
 import gregtech.engine.machine.ItemPipeSpec;
 import gregtech.content.block.machine.ItemPipeBlock;
 import gregtech.content.blockentity.GTBlockEntity;
+import gregtech.content.cover.ComponentCoverRuntime;
 import gregtech.content.cover.CoverItems;
 import gregtech.content.cover.CoverStore;
 import gregtech.content.cover.CoverUtilityBehaviors;
@@ -38,7 +39,9 @@ import net.minecraftforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.Map;
 
 /**
  * Native item inventory, network routing endpoint and lazily allocated cover host.
@@ -50,9 +53,8 @@ import java.util.*;
  * {@code invSize} stacks per second; every pipe on a delivery's path pays that bandwidth. A stack is
  * never delivered back into its recorded origin block or the other half of a vanilla double chest.</p>
  *
- * <p>Face handlers apply insertion/extraction cover rules. An item filter cannot
- * be attached facing another item pipe: attachCover disconnects that face and
- * refuses placement. Covers are allocated on demand and tick before routing.
+ * <p>Face handlers apply insertion/extraction cover rules. Placement refuses an item
+ * filter facing another item pipe. Covers are allocated on demand and tick before routing.
  *
  * <p>The host does not expose MachineControl or ProgressSensorSource. In particular,
  * a transferred-item counter alone does not implement GT6's progress interface.
@@ -86,6 +88,7 @@ public class ItemPipeBlockEntity extends GTBlockEntity
     private int manualDisconnects;
 
     private static final String NBT_ITEMS = "gt.items";
+    private static final String COVER_UPDATE = "gt.cover_sync";
     /** Read only, to give stacks in older saves the single input side the pipe used to track. */
     private static final String NBT_LAST_RECEIVED = "gt.last_received";
     private static final String NBT_SLOT_ORIGINS = "gt.slot_origins";
@@ -93,6 +96,7 @@ public class ItemPipeBlockEntity extends GTBlockEntity
     private static final String NBT_DISABLED_OUTPUTS = "gt.disabled_outputs";
     private static final String NBT_MANUAL_DISCONNECTS = "gt.manual_disconnects";
     private static final String NBT_TRANSFERRED = "gt.transferred";
+    private static final String NBT_TRANSFER_WINDOW = "gt.transfer_window";
 
 //? if >=1.21.1 {
 //?} else {
@@ -105,7 +109,6 @@ public class ItemPipeBlockEntity extends GTBlockEntity
     // only the pipes that carry covers. CoverStore keeps the face array null and the panel runtime
     // uncreated until the first cover is attached, so a coverless pipe pays one boolean read on the
     // transfer path and never walks a face:
-    //   * `faceHandlers` is null until a face actually carries an item filter or a retriever;
     //   * the retriever's pending flags are six bits of one byte rather than the machine's
     //     `boolean[6]` — see `retrieverPending`.
 
@@ -118,13 +121,6 @@ public class ItemPipeBlockEntity extends GTBlockEntity
      * covered server tick, independent of {@code level.getGameTime()}.
      */
     private long coverTicks;
-
-    /** Per-face filter views, built by {@link #faceHandler} and dropped by {@link #invalidateCaps}. */
-//? if >=1.21.1 {
-    /*private @Nullable IItemHandler[] faceHandlers;
-*///?} else {
-    private @Nullable LazyOptional<IItemHandler>[] faceHandlers;
-//?}
 
     /**
      * Whether the covers were suspended by a controller cover on the previous cover tick, i.e. the
@@ -151,7 +147,7 @@ public class ItemPipeBlockEntity extends GTBlockEntity
         int slots = Math.max(1, spec.invSize());
         this.inventory = NonNullList.withSize(slots, ItemStack.EMPTY);
         this.slotOrigins = new byte[slots];
-        java.util.Arrays.fill(slotOrigins, NO_ORIGIN);
+        Arrays.fill(slotOrigins, NO_ORIGIN);
     }
 
     public ItemPipeBlockEntity(BlockPos pos, BlockState state) {
@@ -197,18 +193,11 @@ public class ItemPipeBlockEntity extends GTBlockEntity
     @Override
     @SuppressWarnings("deprecation")
     public void setBlockState(BlockState state) {
-        int before = connectionMask(getBlockState());
+        int before = AUTO_CONNECTIONS.connectionMask(getBlockState());
         super.setBlockState(state);
-        if (level != null && !level.isClientSide && connectionMask(state) != before) ItemPipeNetworks.invalidate(this);
-    }
-
-    private static int connectionMask(BlockState state) {
-        int mask = 0;
-        for (Direction face : Direction.values()) {
-            var property = ItemPipeBlock.propFor(face);
-            if (state.hasProperty(property) && state.getValue(property)) mask |= 1 << face.ordinal();
+        if (level != null && !level.isClientSide && AUTO_CONNECTIONS.connectionMask(state) != before) {
+            ItemPipeNetworks.invalidate(this);
         }
-        return mask;
     }
 
     public @Nullable ItemPipeNetwork network() {
@@ -231,12 +220,9 @@ public class ItemPipeBlockEntity extends GTBlockEntity
         return coverStore.panels();
     }
 
-    /** Item filters reject pipe-to-pipe faces without disconnecting existing pipe links. */
     @Override
-    public boolean canAttach(Direction side, ItemStack stack) {
-        return !(CoverUtilityBehaviors.FILTER_ITEM.equals(CoverItems.behavior(stack))
-                && level != null
-                && level.getBlockEntity(worldPosition.relative(side)) instanceof ItemPipeBlockEntity);
+    public Family pipeFamily() {
+        return Family.ITEM;
     }
 
     @Override
@@ -246,16 +232,20 @@ public class ItemPipeBlockEntity extends GTBlockEntity
 
     @Override
     public void attached(Direction side, ItemStack stack) {
-        invalidateFaceHandler(side);
-        syncCovers();
-        ItemPipeNetworks.coversChanged(this, CoverUtilityBehaviors.RETRIEVER_ITEM.equals(CoverItems.behavior(stack)));
+        coversChanged(stack);
     }
 
     /** The signals a pipe face can emit are the panel ones; {@code afterTick} publishes them. */
     @Override
     public void removed(Direction side, ItemStack stack) {
-        invalidateFaceHandler(side);
         panels().afterTick();
+        coversChanged(stack);
+    }
+
+    private void coversChanged(ItemStack stack) {
+//? if >=1.21.1 {
+        /*if (level != null) level.invalidateCapabilities(worldPosition);
+*///?}
         syncCovers();
         ItemPipeNetworks.coversChanged(this, CoverUtilityBehaviors.RETRIEVER_ITEM.equals(CoverItems.behavior(stack)));
     }
@@ -444,10 +434,7 @@ public class ItemPipeBlockEntity extends GTBlockEntity
                             ? itemHandlerAt(targetPos, face.getOpposite()) : null).accepted();
             if (accepted <= 0) continue;
             stack.shrink(accepted);
-            if (stack.isEmpty()) {
-                source.inventory.set(slot, ItemStack.EMPTY);
-                source.slotOrigins[slot] = NO_ORIGIN;
-            }
+            if (stack.isEmpty()) source.clearSlot(slot);
             source.setChanged();
             return true;
         }
@@ -514,6 +501,8 @@ public class ItemPipeBlockEntity extends GTBlockEntity
     public void chargeTransfer() {
         syncTransferWindow();
         transferredThisSecond++;
+        // Transit pipes also persist the charge even when their inventory never changes.
+        if (level != null && !level.isClientSide) level.blockEntityChanged(worldPosition);
     }
 
     /** The game time at which this pipe's bandwidth is restored. */
@@ -555,7 +544,7 @@ public class ItemPipeBlockEntity extends GTBlockEntity
                         () -> itemHandlerAt(targetPos, side.getOpposite())).accepted();
                 if (moved > 0) {
                     stack.shrink(moved);
-                    if (stack.isEmpty()) inventory.set(slot, ItemStack.EMPTY);
+                    if (stack.isEmpty()) clearSlot(slot);
                     setChanged();
                 }
             }
@@ -569,8 +558,17 @@ public class ItemPipeBlockEntity extends GTBlockEntity
             ItemStack stack = inventory.get(slot);
             if (stack.isEmpty()) continue;
             gregtech.util.GTItemDrops.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), stack.copy());
-            inventory.set(slot, ItemStack.EMPTY);
+            clearSlot(slot);
         }
+    }
+
+    private void clearSlot(int slot) {
+        setSlot(slot, ItemStack.EMPTY, NO_ORIGIN);
+    }
+
+    private void setSlot(int slot, ItemStack stack, byte origin) {
+        inventory.set(slot, stack);
+        slotOrigins[slot] = origin;
     }
 
     private static final PipeAutoConnections<ItemPipeBlockEntity> AUTO_CONNECTIONS = new PipeAutoConnections<>(
@@ -663,13 +661,16 @@ public class ItemPipeBlockEntity extends GTBlockEntity
     @NotNull
     @Override
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+        return insertItem(slot, stack, simulate, NO_ORIGIN);
+    }
+
+    private ItemStack insertItem(int slot, ItemStack stack, boolean simulate, byte origin) {
         if (stack.isEmpty()) return ItemStack.EMPTY;
         if (slot < 0 || slot >= inventory.size() || !inventory.get(slot).isEmpty()) return stack;
         int insertable = Math.min(stack.getCount(), Math.min(getSlotLimit(slot), stack.getMaxStackSize()));
         if (insertable <= 0) return stack;
         if (!simulate) {
-            inventory.set(slot, stack.copyWithCount(insertable));
-            slotOrigins[slot] = NO_ORIGIN;
+            setSlot(slot, stack.copyWithCount(insertable), origin);
             setChanged();
             if (level != null && !level.isClientSide) ItemPipeNetworks.wake(this);
         }
@@ -687,10 +688,7 @@ public class ItemPipeBlockEntity extends GTBlockEntity
         result.setCount(toExtract);
         if (!simulate) {
             stack.shrink(toExtract);
-            if (stack.isEmpty()) {
-                inventory.set(slot, ItemStack.EMPTY);
-                slotOrigins[slot] = NO_ORIGIN;
-            }
+            if (stack.isEmpty()) clearSlot(slot);
             setChanged();
         }
         return result;
@@ -706,111 +704,46 @@ public class ItemPipeBlockEntity extends GTBlockEntity
 
 //? if >=1.21.1 {
     /*public IItemHandler capabilityHandler(@Nullable Direction side) {
-        if (side!=null)return coverStore.hasCovers()&&isItemCoverFace(side)?faceHandler(side):sideHandler(side);return this;
+        return side == null ? this : sideHandler(side);
 *///?} else {
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
         if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            if (side != null) {
-                // Zero cost when unused: `hasCovers` is false for every coverless pipe, so the ordinary
-                // path below is byte for byte the pre-cover one and no face view is ever built. A
-                // face-aware handler exists only where an item filter or a retriever actually sits,
-                // because those are the two covers whose rule is an item rule (§112 / GT6
-                // CoverFilterItem, CoverRetrieverItem).
-                if (coverStore.hasCovers() && isItemCoverFace(side)) return faceHandler(side).cast();
-                return sideHandler(side).cast();
-            }
-            return handler.cast();
+            if (isRemoved() || !handler.isPresent()) return LazyOptional.empty();
+            return side == null ? handler.cast() : sideHandler(side).cast();
         }
         return super.getCapability(cap, side);
 //?}
     }
 
-    /**
-     * One external view per side, retaining {@link SideAwareItemHandler} backflow bookkeeping
-     * and checking the current shutter even when a caller retains the view across cover changes.
-     *
-     * <p><b>Deviation from the fluid pipe.</b> {@link FluidPipeBlockEntity} falls back to
-     * {@code handler.cast()} for an ordinary face, because on that class the no-face handler and the
-     * per-face one are the same object. Here they are not: {@code handler} is the unsided view, and a
-     * <em>sided</em> query is answered by this wrapper, whose per-face handle must stay stable across
-     * cover changes. Returning {@code handler.cast()} from the new branch would silently drop the
-     * backflow bookkeeping for every covered pipe, so the pre-existing handler is this method.</p>
-     */
+    /** One external view per side, recording the input face and consulting live cover rules. */
 //? if >=1.21.1 {
     /*private IItemHandler sideHandler(Direction side) {
+        return sideCaps.computeIfAbsent(side, ExternalSideItemHandler::new);
+    }
+
+    private final Map<Direction, IItemHandler> sideCaps = new EnumMap<>(Direction.class);
 *///?} else {
     private LazyOptional<IItemHandler> sideHandler(Direction side) {
-//?}
-        return sideCaps.computeIfAbsent(side,
-//? if >=1.21.1 {
-                /*ExternalSideItemHandler::new);
-*///?} else {
-                s -> LazyOptional.of(() -> new ExternalSideItemHandler(s)));
-//?}
+        return sideCaps.computeIfAbsent(side, face -> LazyOptional.of(() -> new ExternalSideItemHandler(face)));
     }
 
-//? if >=1.21.1 {
-    /*private final java.util.Map<Direction,IItemHandler> sideCaps =
-*///?} else {
-    private final java.util.Map<Direction, LazyOptional<IItemHandler>> sideCaps =
-//?}
-            new java.util.EnumMap<>(Direction.class);
+    private final Map<Direction, LazyOptional<IItemHandler>> sideCaps = new EnumMap<>(Direction.class);
 
-    /** Whether this face's cover gates item traffic — the item filter or the item retriever. */
-    private boolean isItemCoverFace(Direction side) {
-        String id = coverIdOf(side);
-        return gregtech.content.cover.ComponentCoverRuntime.kind(getCover(side))!=null || CoverUtilityBehaviors.FILTER_ITEM.equals(id)
-                || CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id);
-    }
-
-    /** The cached face view of a covered face, built on first request and dropped on any cover change. */
-    @SuppressWarnings("unchecked")
-//? if >=1.21.1 {
-    /*private IItemHandler faceHandler(Direction side) {
-        if (faceHandlers==null)faceHandlers=new IItemHandler[6];var cached=faceHandlers[side.ordinal()];if (cached==null)faceHandlers[side.ordinal()]=cached=new FaceItemHandler(side);return cached;
-*///?} else {
-    private LazyOptional<IItemHandler> faceHandler(Direction side) {
-        if (faceHandlers == null) faceHandlers = new LazyOptional[6];
-        LazyOptional<IItemHandler> cached = faceHandlers[side.ordinal()];
-        if (cached == null) {
-            FaceItemHandler face = new FaceItemHandler(side);
-            cached = LazyOptional.of(() -> face);
-            faceHandlers[side.ordinal()] = cached;
-        }
-        return cached;
-//?}
-    }
-
-    private void invalidateFaceHandler(Direction side) {
-//? if >=1.21.1 {
-        /*if (faceHandlers!=null)faceHandlers[side.ordinal()]=null;if (level!=null)level.invalidateCapabilities(worldPosition);
-*///?} else {
-        if (faceHandlers == null) return;
-        LazyOptional<IItemHandler> cached = faceHandlers[side.ordinal()];
-        if (cached == null) return;
-        cached.invalidate();
-        faceHandlers[side.ordinal()] = null;
-//?}
-    }
-
-//? if >=1.21.1 {
-    /*public void invalidateItemCapabilities() {
-        sideCaps.clear();faceHandlers=null;if (level!=null)level.invalidateCapabilities(worldPosition);
-*///?} else {
     @Override
     public void invalidateCaps() {
         super.invalidateCaps();
         handler.invalidate();
         sideCaps.values().forEach(LazyOptional::invalidate);
         sideCaps.clear();
-        if (faceHandlers != null) {
-            for (int i = 0; i < faceHandlers.length; i++) {
-                if (faceHandlers[i] != null) { faceHandlers[i].invalidate(); faceHandlers[i] = null; }
-            }
-        }
-//?}
     }
+
+    @Override
+    public void reviveCaps() {
+        super.reviveCaps();
+        handler = LazyOptional.of(() -> this);
+    }
+//?}
 
     /** Wraps this pipe's IItemHandler to record the face each inserted stack came through.
      *  IItemHandler.insertItem() carries no direction, so the sided view supplies it; the origin
@@ -835,9 +768,7 @@ public class ItemPipeBlockEntity extends GTBlockEntity
         @Override
         public ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
             if ((disabledInputs & (1 << sideOrdinal)) != 0) return stack;
-            ItemStack result = ItemPipeBlockEntity.this.insertItem(slot, stack, simulate);
-            if (!simulate && result.getCount() < stack.getCount()) slotOrigins[slot] = sideOrdinal;
-            return result;
+            return ItemPipeBlockEntity.this.insertItem(slot, stack, simulate, sideOrdinal);
         }
 
         @NotNull
@@ -856,9 +787,8 @@ public class ItemPipeBlockEntity extends GTBlockEntity
         }
     }
 
-    /** External sided views consult the live shutter, including handles acquired before attachment.
-     * Internal componentItems access deliberately retains the ungated SideAwareItemHandler. */
-    private class ExternalSideItemHandler extends SideAwareItemHandler {
+    /** Consults current covers even through a handle acquired before a cover was attached. */
+    private final class ExternalSideItemHandler extends SideAwareItemHandler {
         private final Direction side;
 
         ExternalSideItemHandler(Direction side) {
@@ -868,71 +798,22 @@ public class ItemPipeBlockEntity extends GTBlockEntity
 
         @Override
         public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-            return coverStore.shuttered(side) ? stack : super.insertItem(slot, stack, simulate);
+            return permits(stack, true) ? super.insertItem(slot, stack, simulate) : stack;
         }
 
         @Override
         public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            return coverStore.shuttered(side) ? ItemStack.EMPTY : super.extractItem(slot, amount, simulate);
-        }
-    }
-
-    // ── The face-aware view the item covers need ─────────────────────────────
-
-    /**
-     * A pipe's {@code insertItem}/{@code extractItem} take no face, and {@link #getCapability} hands
-     * out a per-side view for every side, so the face has to be carried <em>by the handler</em>. This is
-     * that handler — {@link SideAwareItemHandler} plus the two cover rules — and it is built only where
-     * an item filter or a retriever actually sits ({@link #getCapability}), never for a coverless pipe.
-     * It is the item-side counterpart of {@link FluidPipeBlockEntity}'s face fluid handler.
-     *
-     * <p>Everything except the two intercepts delegates straight through, by inheritance: that is the
-     * pipe's own answer for {@code getSlots}, {@code getStackInSlot}, {@code getSlotLimit} and
-     * {@code isItemValid} <em>and</em> the per-slot origin bookkeeping on
-     * insert, so a mod that queries a covered face still sees exactly the pipe it saw before, with one
-     * rule added. GT6 has no interception hook for item validity either — only
-     * {@code interceptItemInsert} and {@code interceptItemExtract} — so {@code isItemValid} is left
-     * alone on purpose.</p>
-     *
-     * <p><b>Not intercepted:</b> the player's own {@code use}/{@code printDebug} paths, which never go
-     * through a face's handler; and the retriever's own movement, which {@link #tickCovers} hands this
-     * block entity <em>directly</em> as {@code CoverUtilityBehaviors.tickRetriever}'s {@code target} and
-     * not the face view, so the pipe's own insert is not refused by the blanket rule the retriever
-     * applies to its face. GT6 draws that line the same way from the other end: its retriever inserts
-     * into the inventory across the face ({@code CoverRetrieverItem}) and only extracts through
-     * the pipe's sides, and the port's substitution of "the host's own slots" for that target has always
-     * bypassed the host's own intercepts — the machine's retriever does too.</p>
-     */
-    private class FaceItemHandler extends ExternalSideItemHandler {
-        private final Direction side;
-
-        FaceItemHandler(Direction side) {
-            super(side);
-            this.side = side;
+            ItemStack stack = getStackInSlot(slot);
+            return !stack.isEmpty() && permits(stack, false)
+                    ? super.extractItem(slot, amount, simulate)
+                    : ItemStack.EMPTY;
         }
 
-        /**
-         * GT6 {@code CoverFilterItem} {@code interceptItemInsert} and
-         * {@code CoverRetrieverItem}: refuse, never partially insert.
-         */
-        @NotNull
-        @Override
-        public ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
-            if (!gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side),true) || !coverPermitsItemTraffic(side, stack)) return stack;
-            return super.insertItem(slot, stack, simulate);
-        }
-
-        /**
-         * GT6 {@code CoverFilterItem} {@code interceptItemExtract} and
-         * {@code CoverRetrieverItem}, asked with the stack the slot holds — which is the stack the
-         * original is handed ({@code interceptItemExtract(..., ItemStack aStack, ...)}).
-         */
-        @NotNull
-        @Override
-        public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            ItemStack present = getStackInSlot(slot);
-            if (!gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side),false) || present.isEmpty() || !coverPermitsItemTraffic(side, present)) return ItemStack.EMPTY;
-            return super.extractItem(slot, amount, simulate);
+        private boolean permits(ItemStack stack, boolean insert) {
+            if (isRemoved() || coverStore.shuttered(side)) return false;
+            ItemStack cover = getCover(side);
+            return cover.isEmpty()
+                    || (ComponentCoverRuntime.allowsItem(cover, insert) && coverPermitsItemTraffic(side, stack));
         }
     }
 
@@ -978,8 +859,7 @@ public class ItemPipeBlockEntity extends GTBlockEntity
                 while (empty < inventory.size() && !inventory.get(empty).isEmpty()) empty++;
                 // Keep any overflow in its existing slot if an addon reduced the pipe's capacity.
                 if (empty == inventory.size()) return;
-                inventory.set(empty, stack.split(limit));
-                slotOrigins[empty] = slotOrigins[slot];
+                setSlot(empty, stack.split(limit), slotOrigins[slot]);
             }
         }
     }
@@ -987,22 +867,30 @@ public class ItemPipeBlockEntity extends GTBlockEntity
     @Override
     protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         super.loadData(tag, lookup);
+        if (tag.contains(COVER_UPDATE, Tag.TAG_COMPOUND)) {
+            coverStore.load(tag.getCompound(COVER_UPDATE), lookup);
+            return;
+        }
         disabledInputs = tag.contains(NBT_DISABLED_INPUTS) ? tag.getByte(NBT_DISABLED_INPUTS) : 0;
         disabledOutputs = tag.contains(NBT_DISABLED_OUTPUTS) ? tag.getByte(NBT_DISABLED_OUTPUTS) : 0;
         manualDisconnects = tag.contains(NBT_MANUAL_DISCONNECTS) ? tag.getByte(NBT_MANUAL_DISCONNECTS) & 0x3F : 0;
-        transferredThisSecond = tag.contains(NBT_TRANSFERRED) ? tag.getLong(NBT_TRANSFERRED) : 0;
+        // A counter from a legacy save has no window and cannot consume the current allowance.
+        transferWindow = tag.contains(NBT_TRANSFER_WINDOW, Tag.TAG_LONG)
+                ? tag.getLong(NBT_TRANSFER_WINDOW)
+                : Long.MIN_VALUE;
+        transferredThisSecond = transferWindow == Long.MIN_VALUE ? 0L : Math.max(0L, tag.getLong(NBT_TRANSFERRED));
         if (tag.contains(NBT_ITEMS)) {
             loadInventory(tag.getCompound(NBT_ITEMS), lookup);
         }
         loadOrigins(tag);
         splitLegacyStacks();
-        loadCovers(tag, lookup);
+        coverStore.load(tag, lookup);
         // /data and structure tools can replace an already-loaded pipe's inventory or covers.
         if (level != null && !level.isClientSide) ItemPipeNetworks.joined(this);
     }
 
     private void loadOrigins(CompoundTag tag) {
-        java.util.Arrays.fill(slotOrigins, NO_ORIGIN);
+        Arrays.fill(slotOrigins, NO_ORIGIN);
         if (tag.contains(NBT_SLOT_ORIGINS)) {
             byte[] saved = tag.getByteArray(NBT_SLOT_ORIGINS);
             System.arraycopy(saved, 0, slotOrigins, 0, Math.min(saved.length, slotOrigins.length));
@@ -1013,23 +901,10 @@ public class ItemPipeBlockEntity extends GTBlockEntity
             }
         }
         for (int slot = 0; slot < slotOrigins.length; slot++) {
-            if (slotOrigins[slot] < NO_ORIGIN || slotOrigins[slot] > 5) slotOrigins[slot] = NO_ORIGIN;
+            if (inventory.get(slot).isEmpty() || slotOrigins[slot] < NO_ORIGIN || slotOrigins[slot] > 5) {
+                slotOrigins[slot] = NO_ORIGIN;
+            }
         }
-    }
-
-    /**
-     * The shared flat {@code gt_cover_*} keys, written only for non-empty faces; a coverless pipe
-     * (no array yet) writes nothing. Loading a tag without cover keys clears the faces, so a cover
-     * removed on the server disappears on the client through {@link #readUpdateTag} instead of
-     * lingering; the store recomputes {@link #hasCovers()} so the tick pass and {@link #getCapability}
-     * re-arm after a load that brings covers back.
-     */
-    private void saveCovers(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
-        coverStore.save(tag, lookup);
-    }
-
-    private void loadCovers(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
-        coverStore.load(tag, lookup);
     }
 
     @Override
@@ -1040,21 +915,20 @@ public class ItemPipeBlockEntity extends GTBlockEntity
         tag.putByte(NBT_DISABLED_OUTPUTS, disabledOutputs);
         tag.putByte(NBT_MANUAL_DISCONNECTS, (byte) manualDisconnects);
         tag.putLong(NBT_TRANSFERRED, transferredThisSecond);
+        tag.putLong(NBT_TRANSFER_WINDOW, transferWindow);
         CompoundTag itemsTag = new CompoundTag();
         saveInventory(itemsTag, lookup);
         tag.put(NBT_ITEMS, itemsTag);
-        saveCovers(tag, lookup);
+        coverStore.save(tag, lookup);
     }
 
     @Override
     protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         super.writeUpdateTag(tag, lookup);
-        tag.putByte(NBT_DISABLED_INPUTS, disabledInputs);
-        tag.putByte(NBT_DISABLED_OUTPUTS, disabledOutputs);
-        CompoundTag itemsTag = new CompoundTag();
-        saveInventory(itemsTag, lookup);
-        tag.put(NBT_ITEMS, itemsTag);
-        saveCovers(tag, lookup);
+        CompoundTag covers = new CompoundTag();
+        coverStore.save(covers, lookup);
+        // Forge drops an empty packet tag. Keep a snapshot even when the last cover was removed.
+        tag.put(COVER_UPDATE, covers);
     }
 
     /**
@@ -1071,19 +945,7 @@ public class ItemPipeBlockEntity extends GTBlockEntity
     protected void handleDataPacket(net.minecraft.network.Connection net,
             net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket pkt,
             @Nullable HolderLookup.Provider lookup) {
-        if (pkt.getTag() != null) loadCovers(pkt.getTag(), lookup);
-    }
-
-    @Override
-    protected void readUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
-        super.readUpdateTag(tag, lookup);
-        if (tag.contains(NBT_DISABLED_INPUTS)) disabledInputs = tag.getByte(NBT_DISABLED_INPUTS);
-        if (tag.contains(NBT_DISABLED_OUTPUTS)) disabledOutputs = tag.getByte(NBT_DISABLED_OUTPUTS);
-        if (tag.contains(NBT_TRANSFERRED)) transferredThisSecond = tag.getLong(NBT_TRANSFERRED);
-        if (tag.contains(NBT_ITEMS)) {
-            loadInventory(tag.getCompound(NBT_ITEMS), lookup);
-        }
-        loadCovers(tag, lookup);
+        if (pkt.getTag() != null) readUpdateTag(pkt.getTag(), lookup);
     }
 
     public long getTransferredThisSecond() {

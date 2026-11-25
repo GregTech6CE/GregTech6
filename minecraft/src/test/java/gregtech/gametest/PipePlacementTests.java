@@ -4,6 +4,7 @@ import gregtech.content.block.machine.FluidPipeBlock;
 import gregtech.content.block.machine.ItemPipeBlock;
 import gregtech.content.block.machine.MaterialPipeBlock;
 import gregtech.content.blockentity.machine.LogisticsWireBlockEntity;
+import gregtech.content.cover.PipeCoverHost;
 import gregtech.content.data.generated.GT6Materials;
 import gregtech.content.item.GTToolItem;
 import gregtech.content.tool.ElectricWrenchHarvest;
@@ -24,6 +25,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 //? if >=1.21.1 {
@@ -126,6 +128,35 @@ public final class PipePlacementTests {
         helper.assertFalse(connected(helper, middle, ItemPipeBlock.EAST) || connected(helper, other, ItemPipeBlock.WEST),
                 "the second neighbor and the placed pipe keep their shared faces closed");
         clear(helper, clicked, middle, other);
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 20)
+    public static void installedCoversBlockLaterSameFamilyPipePlacement(GameTestHelper helper) {
+        BlockPos itemPos = at(helper, 1, 1, 1);
+        BlockPos fluidPos = at(helper, 1, 1, 3);
+        checkCoveredPipePlacement(helper, itemPos, "item_pipe_medium_electrum", "item_filter",
+                ItemPipeBlock.EAST, ItemPipeBlock.WEST);
+        checkCoveredPipePlacement(helper, fluidPos, "pipe_medium_steel", "pressure_value",
+                FluidPipeBlock.EAST, FluidPipeBlock.WEST);
+        clear(helper, itemPos, itemPos.east(), fluidPos, fluidPos.east());
+    }
+
+    private static void checkCoveredPipePlacement(GameTestHelper helper, BlockPos pos, String pipeId, String coverId,
+            BooleanProperty east, BooleanProperty west) {
+        var level = helper.getLevel();
+        level.setBlockAndUpdate(pos, block(pipeId).defaultBlockState());
+        var host = (PipeCoverHost) level.getBlockEntity(pos);
+        var cover = new ItemStack(BuiltInRegistries.ITEM.get(id(coverId)));
+        helper.assertTrue(host.attachCover(Direction.EAST, cover), "the cover attaches on an open face");
+        helper.assertTrue(place(helper, pos, Direction.EAST, pipeId), "the second pipe can be placed");
+        helper.assertFalse(connected(helper, pos, east) || connected(helper, pos.east(), west),
+                "neither pipe opens across the covered seam");
+
+        level.setBlockAndUpdate(pos.east(), Blocks.AIR.defaultBlockState());
+        helper.assertFalse(host.removeCover(Direction.EAST).isEmpty(), "the cover can be removed");
+        helper.assertTrue(place(helper, pos, Direction.EAST, pipeId), "the second pipe can be placed again");
+        helper.assertTrue(connected(helper, pos, east) && connected(helper, pos.east(), west),
+                "the same placement connects both faces after cover removal");
     }
 
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 100)

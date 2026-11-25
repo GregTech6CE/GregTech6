@@ -51,8 +51,7 @@ public final class ComponentCoverRuntime {
     }
 
     public static boolean pipe(PanelCoverHost host) {
-        return host.coverOwner() instanceof gregtech.content.blockentity.machine.FluidPipeBlockEntity
-                || host.coverOwner() instanceof gregtech.content.blockentity.machine.ItemPipeBlockEntity;
+        return host instanceof PipeCoverHost;
     }
 
     public static boolean canAttach(PanelCoverHost host, Direction side, ItemStack stack) {

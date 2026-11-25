@@ -10,8 +10,40 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
 
-/** Cover clicks handled by a pipe after its connection tools and before its own interactions. */
+/** Native pipe host rules for cover admission, connections and player interaction. */
 public interface PipeCoverHost extends CoverStore.Hooks {
+    enum Family {
+        ITEM(CoverUtilityBehaviors.FILTER_ITEM),
+        FLUID(CoverUtilityBehaviors.PRESSURE_VALVE);
+
+        private final String connectionBlockingCover;
+
+        Family(String connectionBlockingCover) {
+            this.connectionBlockingCover = connectionBlockingCover;
+        }
+    }
+
+    Family pipeFamily();
+
+    default boolean supportsPressureValve() {
+        return false;
+    }
+
+    default boolean supportsItemRetriever() {
+        return pipeFamily() == Family.ITEM && componentTicks();
+    }
+
+    /** A filter or valve on this face separates two pipes of its own family. */
+    default boolean blocksPipeConnection(Direction side, String behavior) {
+        Family family = pipeFamily();
+        if (!family.connectionBlockingCover.equals(behavior)) return false;
+        var owner = coverOwner();
+        var level = owner.getLevel();
+        if (level == null) return false;
+        var neighbor = owner.getBlockPos().relative(side);
+        return level.getBlockEntity(neighbor) instanceof PipeCoverHost pipe && pipe.pipeFamily() == family;
+    }
+
     boolean supportsFilterCover(String behavior);
 
     default void wakeAfterFilterChange() {}

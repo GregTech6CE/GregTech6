@@ -39,6 +39,7 @@ import net.minecraft.world.phys.Vec3;
 //? if >=1.21.1 {
 /*import net.minecraft.world.item.crafting.CraftingInput;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 *///?} else {
@@ -46,6 +47,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 //?}
@@ -386,6 +388,73 @@ public final class FilterCoverTests {
                 isFluid(storedFluid(NbtCompat.readItem(update.getCompound(coverKey(Direction.UP)), lookup), lookup),
                         Fluids.LAVA),
                 "the machine filter did not survive getUpdateTag");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 100)
+    public static void itemPipeSyncClearsTheLastCoverWithoutSendingInventory(GameTestHelper helper) {
+        var lookup = helper.getLevel().registryAccess();
+        var pos = place(helper, 1, 2, "item_pipe_medium_brass");
+        var pipe = (ItemPipeBlockEntity) helper.getLevel().getBlockEntity(pos);
+        var replica = new ItemPipeBlockEntity(pos, pipe.getBlockState());
+        pipe.insertItem(0, new ItemStack(Items.GOLD_INGOT), false);
+        helper.assertTrue(pipe.attachCover(Direction.UP, new ItemStack(item("item_filter")))
+                        && pipe.clickFilterCover(Direction.UP, new ItemStack(Items.IRON_INGOT)),
+                "the item pipe stores a filter and a separate inventory stack");
+
+        var snapshot = NbtCompat.getUpdateTag(pipe, lookup);
+        helper.assertFalse(snapshot.contains("gt.items") || snapshot.contains("gt.disabled_inputs")
+                        || snapshot.contains("gt.disabled_outputs"),
+                "the item pipe sends no inventory or disabled IO fields");
+//? if >=1.21.1 {
+        /*replica.handleUpdateTag(snapshot, lookup);
+*///?} else {
+        replica.handleUpdateTag(snapshot);
+//?}
+        helper.assertTrue(storedItem(replica.getCover(Direction.UP), lookup).is(Items.IRON_INGOT),
+                "the chunk snapshot applies the filter");
+        helper.assertTrue(replica.getStackInSlot(0).isEmpty(), "the chunk snapshot omits the server inventory");
+
+        pipe.removeCover(Direction.UP);
+        var packet = pipe.getUpdatePacket();
+        helper.assertTrue(packet.getTag() != null, "an empty cover snapshot survives packet creation");
+//? if >=1.21.1 {
+        /*replica.onDataPacket(null, packet, lookup);
+*///?} else {
+        replica.onDataPacket(null, packet);
+//?}
+        helper.assertTrue(replica.getCover(Direction.UP).isEmpty(), "the update clears the last cover");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 100)
+    public static void fluidPipeChunkAndPacketSyncApplyTankAndCoverState(GameTestHelper helper) {
+        var lookup = helper.getLevel().registryAccess();
+        var pos = place(helper, 1, 2, "pipe_medium_steel");
+        var pipe = (FluidPipeBlockEntity) helper.getLevel().getBlockEntity(pos);
+        var replica = new FluidPipeBlockEntity(pos, pipe.getBlockState());
+        helper.assertTrue(pipe.fill(new FluidStack(Fluids.WATER, 80), FluidAction.EXECUTE) == 80
+                        && pipe.attachCover(Direction.UP, new ItemStack(item("fluid_filter"))),
+                "the fluid-pipe fixture contains water and a cover");
+        var snapshot = NbtCompat.getUpdateTag(pipe, lookup);
+//? if >=1.21.1 {
+        /*replica.handleUpdateTag(snapshot, lookup);
+*///?} else {
+        replica.handleUpdateTag(snapshot);
+//?}
+        helper.assertTrue(replica.getFluidInTank(0).getAmount() == 80 && !replica.getCover(Direction.UP).isEmpty(),
+                "the chunk snapshot applies both the tank and cover");
+
+        pipe.drain(80, FluidAction.EXECUTE);
+        pipe.removeCover(Direction.UP);
+        var packet = pipe.getUpdatePacket();
+//? if >=1.21.1 {
+        /*replica.onDataPacket(null, packet, lookup);
+*///?} else {
+        replica.onDataPacket(null, packet);
+//?}
+        helper.assertTrue(replica.getFluidInTank(0).isEmpty() && replica.getCover(Direction.UP).isEmpty(),
+                "the incremental update clears both the tank and cover");
         helper.succeed();
     }
 

@@ -21,6 +21,7 @@ import gregtech.content.cover.CoverUtilityBehaviors;
 import gregtech.content.cover.PanelCoverRuntime;
 import gregtech.content.cover.PipeCoverHost;
 import gregtech.content.data.GregTechConstants;
+import gregtech.content.transport.fluid.FluidPipeNetwork;
 
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.util.GTEntityHelper;
@@ -295,20 +296,15 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
         return coverStore.panels();
     }
 
-    /**
-     * The one rule the machine does not need is the pressure valve's host test, which GT6 keeps in
-     * the cover itself: {@code CoverPressureValve} {@code interceptCoverPlacement} refuses any host
-     * that is not a {@code MultiTileEntityPipeFluid} with exactly one tank, and any placement whose
-     * neighbour is another fluid pipe. {@link CoverUtilityBehaviors#valveCanAttachTo} is that rule as
-     * a predicate; the tank count comes from {@link PipeSpec#tankCount()}, which is {@code 1} for
-     * every size except QUADRUPLE ({@code 4}) and NONUPLE ({@code 9}) — exactly GT6's
-     * {@code NBT_TANK_COUNT} ({@code MultiTileEntityPipeFluid}). Without the test a valve could
-     * be attached to a quadruple pipe and would then silently release {@code tanks[0]} only.
-     */
     @Override
-    public boolean canAttach(Direction side, ItemStack stack) {
-        return !CoverUtilityBehaviors.PRESSURE_VALVE.equals(CoverItems.behavior(stack))
-                || CoverUtilityBehaviors.valveCanAttachTo(spec.tankCount(), neighbourIsFluidPipe(side));
+    public Family pipeFamily() {
+        return Family.FLUID;
+    }
+
+    /** A pressure valve operates on a single tank. */
+    @Override
+    public boolean supportsPressureValve() {
+        return spec.tankCount() == 1;
     }
 
     @Override
@@ -346,10 +342,6 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
         if (!coverStore.hasCovers()) return;
         coverStore.drop();
         setChanged();
-    }
-
-    private boolean neighbourIsFluidPipe(Direction side) {
-        return level != null && level.getBlockEntity(worldPosition.relative(side)) instanceof FluidPipeBlockEntity;
     }
 
     /** Cover behaviour id of a face; {@code null} when no cover is attached. */
@@ -698,49 +690,15 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
     @Override
     public int fill(FluidStack resource, FluidAction action) {
         if (resource.isEmpty()) return 0;
-        if (poolMode()) return fillPool(resource, action);
+        FluidPipeNetwork network = sharedPoolNetwork();
+        if (network != null) return SharedFluidPool.fill(network, resource, action);
         int channel = fillableChannel(resource);
         return channel < 0 ? 0 : tanks[channel].fill(resource, action);
     }
 
-    private boolean poolMode() {
-        return gregtech.GregTechConfig.fluidDistribution() == gregtech.GregTechConfig.FluidDistribution.SHARED;
-    }
-
-    /**
-     * Shared mode keeps every tank as the only storage and treats the component as one derived
-     * pool. Filling walks the snapshot from this pipe, so the receiving pipe is deterministic.
-     */
-    private int fillPool(FluidStack resource, IFluidHandler.FluidAction action) {
-        gregtech.content.transport.fluid.FluidPipeNetwork network =
-                gregtech.content.transport.fluid.FluidPipeNetworks.networkOf(this);
-        if (network == null || isPoolExcluded()) {
-            int channel = fillableChannel(resource);
-            return channel < 0 ? 0 : tanks[channel].fill(resource, action);
-        }
-        network.beginPass();
-        int accepted = 0;
-        FluidStack remaining = resource.copy();
-        for (int i = 0; i < network.size() && remaining.getAmount() > 0; i++) {
-            if (!network.live(i)) break;
-            FluidPipeBlockEntity pipe = network.pipe(i);
-            if (pipe.isPoolExcluded()) continue;
-            int channel = pipe.fillableChannel(remaining);
-            if (channel < 0) continue;
-            int filled = pipe.tanks[channel].fill(remaining, action);
-            if (filled <= 0) continue;
-            accepted += filled;
-            remaining.setAmount(remaining.getAmount() - filled);
-        }
-        return accepted;
-    }
-
-    /** Pressure valves act on one tank directly; keep their host out of the pool. */
-    private boolean isPoolExcluded() {
-        for (Direction side : Direction.values()) {
-            if (CoverUtilityBehaviors.PRESSURE_VALVE.equals(coverIdOf(side))) return true;
-        }
-        return false;
+    private @Nullable FluidPipeNetwork sharedPoolNetwork() {
+        return gregtech.GregTechConfig.fluidDistribution() == gregtech.GregTechConfig.FluidDistribution.SHARED
+                ? SharedFluidPool.networkFrom(this) : null;
     }
 
     /** GT6 and the wolfram port both reserve an existing fluid channel before any empty one. */
@@ -756,89 +714,24 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
     @Override
     public FluidStack drain(FluidStack resource, FluidAction action) {
         if (resource.isEmpty()) return FluidStack.EMPTY;
-        if (poolMode()) return drainPool(resource, action);
-        return drainLocal(resource, action);
+        FluidPipeNetwork network = sharedPoolNetwork();
+        if (network != null) return SharedFluidPool.drain(network, resource, resource.getAmount(), action);
+        for (FluidTankGT tank : tanks) {
+            FluidStack existing = tank.getFluid();
+            if (!existing.isEmpty() && StackCompat.sameFluid(existing, resource)) return tank.drain(resource, action);
+        }
+        return FluidStack.EMPTY;
     }
 
     @NotNull
     @Override
     public FluidStack drain(int maxDrain, FluidAction action) {
-        if (poolMode()) return drainPool(maxDrain, action);
-        return drainLocal(maxDrain, action);
-    }
-
-    private FluidStack drainLocal(FluidStack resource, FluidAction action) {
-        for (FluidTankGT tank : tanks) {
-            FluidStack existing = tank.getFluid();
-            if (!existing.isEmpty() && sameFluid(existing, resource)) return tank.drain(resource, action);
-        }
-        return FluidStack.EMPTY;
-    }
-
-    private FluidStack drainLocal(int maxDrain, FluidAction action) {
+        FluidPipeNetwork network = sharedPoolNetwork();
+        if (network != null) return SharedFluidPool.drain(network, FluidStack.EMPTY, maxDrain, action);
         for (FluidTankGT tank : tanks) {
             if (!tank.isEmpty()) return tank.drain(maxDrain, action);
         }
         return FluidStack.EMPTY;
-    }
-
-    private FluidStack drainPool(FluidStack resource, IFluidHandler.FluidAction action) {
-        gregtech.content.transport.fluid.FluidPipeNetwork network =
-                gregtech.content.transport.fluid.FluidPipeNetworks.networkOf(this);
-        if (network == null || isPoolExcluded()) return drainLocal(resource, action);
-        network.beginPass();
-        FluidStack result = FluidStack.EMPTY;
-        long remaining = resource.getAmount();
-        for (int i = 0; i < network.size() && remaining > 0; i++) {
-            if (!network.live(i)) break;
-            FluidPipeBlockEntity pipe = network.pipe(i);
-            if (pipe.isPoolExcluded()) continue;
-            for (FluidTankGT tank : pipe.tanks) {
-                FluidStack existing = tank.getFluid();
-                if (existing.isEmpty() || !sameFluid(existing, resource)) continue;
-                FluidStack request = resource.copy();
-                request.setAmount(FluidTankGT.bindInt(remaining));
-                FluidStack drained = tank.drain(request, action);
-                if (drained.isEmpty()) continue;
-                result = merge(result, drained);
-                remaining -= drained.getAmount();
-                if (remaining <= 0) break;
-            }
-        }
-        return result;
-    }
-
-    private FluidStack drainPool(int maxDrain, IFluidHandler.FluidAction action) {
-        gregtech.content.transport.fluid.FluidPipeNetwork network =
-                gregtech.content.transport.fluid.FluidPipeNetworks.networkOf(this);
-        if (network == null || isPoolExcluded()) return drainLocal(maxDrain, action);
-        network.beginPass();
-        FluidStack result = FluidStack.EMPTY;
-        int remaining = maxDrain;
-        for (int i = 0; i < network.size() && remaining > 0; i++) {
-            if (!network.live(i)) break;
-            FluidPipeBlockEntity pipe = network.pipe(i);
-            if (pipe.isPoolExcluded()) continue;
-            for (FluidTankGT tank : pipe.tanks) {
-                if (tank.isEmpty() || (!result.isEmpty() && !tank.contains(result))) continue;
-                FluidStack drained = tank.drain(remaining, action);
-                if (drained.isEmpty()) continue;
-                result = merge(result, drained);
-                remaining -= drained.getAmount();
-                if (remaining <= 0) break;
-            }
-        }
-        return result;
-    }
-
-    private static boolean sameFluid(FluidStack left, FluidStack right) {
-        return StackCompat.sameFluid(left, right);
-    }
-
-    private static FluidStack merge(FluidStack total, FluidStack part) {
-        if (total.isEmpty()) return part.copy();
-        total.grow(part.getAmount());
-        return total;
     }
 
     // === Capability ===
@@ -950,12 +843,6 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
         coverStore.load(tag, lookup);
     }
 
-    /**
-     * The shared flat {@code gt_cover_*} keys, written only for non-empty faces; a coverless pipe
-     * writes nothing. Loading a tag without cover keys clears the faces, so a cover removed on the
-     * server disappears on the client through {@link #readUpdateTag} instead of lingering.
-     */
-
     @Override
     protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         super.saveData(tag, lookup);
@@ -999,22 +886,6 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
             net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet,
             @Nullable HolderLookup.Provider lookup) {
         if (packet.getTag() != null) readUpdateTag(packet.getTag(), lookup);
-    }
-
-    @Override
-    protected void readUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
-        super.readUpdateTag(tag, lookup);
-        if (tag.contains(NBT_TEMPERATURE)) temperature = tag.getLong(NBT_TEMPERATURE);
-        if (tag.contains(NBT_TRANSFERRED)) transferredAmount = tag.getLong(NBT_TRANSFERRED);
-        for (int i = 0; i < tanks.length; i++) {
-            if (tag.contains(NBT_TANK_PREFIX + i)) {
-                // The registered pipe owns capacity. Preserve overfull legacy contents until drained.
-                CompoundTag contents = tag.getCompound(NBT_TANK_PREFIX + i).copy();
-                contents.putLong("Capacity", spec.capacity());
-                NbtCompat.readTank(tanks[i],contents,lookup);
-            }
-        }
-        coverStore.load(tag, lookup);
     }
 
     // Counter lifetime is the existing native pipe tick interval, not tank occupancy.
@@ -1100,20 +971,12 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
     @Override
     @SuppressWarnings("deprecation")
     public void setBlockState(BlockState state) {
-        int before = connectionMask(getBlockState());
+        int before = AUTO_CONNECTIONS.connectionMask(getBlockState());
         super.setBlockState(state);
-        if (level != null && !level.isClientSide && connectionMask(state) != before) {
+        if (level != null && !level.isClientSide && AUTO_CONNECTIONS.connectionMask(state) != before) {
             gregtech.content.transport.fluid.FluidPipeTickPhases.wakeAround(this);
             gregtech.content.transport.fluid.FluidPipeNetworks.invalidate(this);
         }
-    }
-
-    private static int connectionMask(BlockState state) {
-        int mask = 0;
-        for (Direction face : Direction.values()) {
-            if (state.getValue(FluidPipeBlock.propFor(face))) mask |= 1 << face.ordinal();
-        }
-        return mask;
     }
 
     // ── The face-aware view a fluid filter needs ─────────────────────────────
@@ -1170,39 +1033,21 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
             return pipe.drain(resource, action);
         }
 
-        /**
-         * The unsided drain asks about a fluid the caller has not named, so the candidate is the
-         * fluid of the tank the pipe would empty — the first non-empty one, which is exactly the
-         * tank {@link FluidPipeBlockEntity#drain(int, FluidAction)} picks.
-         */
+        /** Fluid filter covers compare against the first stored fluid when the caller names none. */
         @NotNull @Override
         public FluidStack drain(int maxDrain, FluidAction action) {
-            if (!internal && (!gregtech.content.cover.ComponentCoverRuntime.allowsFluid(pipe.getCover(side),false) || !pipe.connected(side) || !pipe.coverFluidFilterPermits(side, pipe.firstDrainCandidate()))) return FluidStack.EMPTY;
-            return pipe.drain(maxDrain, action);
-        }
-    }
-
-    /** The fluid {@link #drain(int, FluidAction)} would take, without draining it. */
-    private FluidStack firstDrainCandidate() {
-        if (poolMode()) {
-            gregtech.content.transport.fluid.FluidPipeNetwork network =
-                    gregtech.content.transport.fluid.FluidPipeNetworks.networkOf(this);
-            if (network != null && !isPoolExcluded()) {
-                network.beginPass();
-                for (int i = 0; i < network.size(); i++) {
-                    if (!network.live(i)) break;
-                    FluidPipeBlockEntity pipe = network.pipe(i);
-                    if (pipe.isPoolExcluded()) continue;
-                    for (FluidTankGT tank : pipe.tanks) {
-                        if (!tank.isEmpty()) return tank.getFluid();
-                    }
+            if (!internal) {
+                ItemStack cover = pipe.getCover(side);
+                if (!pipe.connected(side) || pipe.coverStore.shuttered(side)
+                        || !gregtech.content.cover.ComponentCoverRuntime.allowsFluid(cover, false))
+                    return FluidStack.EMPTY;
+                if (CoverUtilityBehaviors.FILTER_FLUID.equals(CoverItems.behavior(cover))) {
+                    FluidStack candidate = SharedFluidPool.firstDrainCandidate(pipe, pipe.sharedPoolNetwork());
+                    if (!pipe.coverFluidFilterPermits(side, candidate)) return FluidStack.EMPTY;
                 }
             }
+            return pipe.drain(maxDrain, action);
         }
-        for (FluidTankGT tank : tanks) {
-            if (!tank.isEmpty()) return tank.getFluid();
-        }
-        return FluidStack.EMPTY;
     }
 
 }

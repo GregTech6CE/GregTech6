@@ -22,6 +22,15 @@ record PipeAutoConnections<T extends BlockEntity>(
         BiPredicate<T, Direction> declaredEndpoint,
         BiPredicate<T, Direction> capabilityEndpoint) {
 
+    int connectionMask(BlockState state) {
+        int mask = 0;
+        for (Direction side : Direction.values()) {
+            BooleanProperty bit = property.apply(side);
+            if (state.hasProperty(bit) && state.getValue(bit)) mask |= 1 << side.ordinal();
+        }
+        return mask;
+    }
+
     void onPlace(T pipe, @Nullable Direction clickedFace) {
         Level level = pipe.getLevel();
         if (level == null || level.isClientSide) return;

@@ -13,6 +13,7 @@ import gregtech.content.data.generated.GT6Materials;
 import gregtech.content.item.GTToolItem;
 import gregtech.content.transport.ItemPipeNetwork;
 import gregtech.content.transport.ItemPipeNetworks;
+import gregtech.engine.stack.NbtCompat;
 import gregtech.engine.tool.GTToolType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -90,6 +91,64 @@ public final class ItemPipeRoutingTests {
                     && exit.getTransferredThisSecond() == 1, "each path member is charged exactly once");
             finish(helper);
         });
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 60)
+    public static void reloadRestoresBandwidthOnlyWithinItsWindow(GameTestHelper helper) {
+        ItemPipeBlockEntity source = placePipe(helper, 2, "brass");
+        ItemPipeBlockEntity restored = placePipe(helper, 4, "brass");
+        var level = helper.getLevel();
+        var lookup = level.registryAccess();
+        source.chargeTransfer();
+        helper.assertFalse(source.pipeCapacityCheck(), "fixture consumes the only transfer this window");
+        var saved = NbtCompat.saveWithoutMetadata(source, lookup);
+
+        NbtCompat.loadBlockEntity(restored, saved, lookup);
+        helper.assertFalse(restored.pipeCapacityCheck(), "reloading in the same window preserves the spent allowance");
+        helper.assertTrue(restored.getTransferredThisSecond() == 1, "the restored counter retains the charge");
+
+        var legacy = saved.copy();
+        legacy.remove("gt.transfer_window");
+        NbtCompat.loadBlockEntity(restored, legacy, lookup);
+        helper.assertTrue(restored.pipeCapacityCheck(), "legacy counters without a window do not charge the current one");
+
+        long untilNextWindow = source.nextBandwidthWindow() - level.getGameTime();
+        helper.runAfterDelay(untilNextWindow + 1, () -> {
+            NbtCompat.loadBlockEntity(restored, saved, lookup);
+            helper.assertTrue(restored.pipeCapacityCheck() && restored.getTransferredThisSecond() == 0,
+                    "a charge from an earlier window does not consume the new allowance");
+            finish(helper);
+        });
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 40)
+    public static void retainedSideHandlerFollowsFilterAttachmentAndRemoval(GameTestHelper helper) {
+        ItemPipeBlockEntity pipe = placePipe(helper, 2, "brass");
+        placeChest(helper, 3);
+        Direction face = Direction.UP;
+//? if >=1.21.1 {
+        /*var retained = helper.getLevel().getCapability(
+                net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK, pipe.getBlockPos(), face);
+*///?} else {
+        var retained = pipe.getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER, face)
+                .orElseThrow(() -> new IllegalStateException("Missing sided item pipe handler"));
+//?}
+        var iron = new ItemStack(Items.IRON_INGOT, 5);
+        var gold = new ItemStack(Items.GOLD_INGOT, 5);
+        helper.assertTrue(retained != null && retained.insertItem(0, iron, false).isEmpty(),
+                "the pre-attachment view accepts an unfiltered stack");
+        helper.assertTrue(pipe.attachCover(face, item("item_filter")) && pipe.clickFilterCover(face, gold),
+                "the fixture attaches a gold whitelist");
+        helper.assertTrue(retained.extractItem(0, 5, false).isEmpty() && pipe.getStackInSlot(0).getCount() == 5,
+                "the retained view blocks extraction of iron");
+        pipe.extractItem(0, 5, false);
+        helper.assertTrue(retained.insertItem(0, iron, false).getCount() == 5 && !pipe.hasStoredItems(),
+                "the retained view also rejects insertion of iron");
+        helper.assertTrue(retained.insertItem(0, gold, false).isEmpty() && retained.extractItem(0, 5, false).is(gold.getItem()),
+                "the retained view accepts matching stacks in both directions");
+        pipe.removeCover(face);
+        helper.assertTrue(retained.insertItem(0, iron, false).isEmpty(), "removal reopens the same view");
+        finish(helper);
     }
 
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 100)

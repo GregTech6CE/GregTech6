@@ -1,6 +1,7 @@
 package gregtech.content.cover;
 
-import net.minecraft.core.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -14,18 +15,7 @@ public final class CoverConnections {
         var id = CoverItems.behavior(cover);
         if (host.panels().shuttered(side)) return true;
         if (CoverItems.REDSTONE_TORCH.equals(id) || CoverItems.REDSTONE_REPEATER.equals(id)) return true;
-        var owner = host.coverOwner();
-        var level = owner.getLevel();
-        if (CoverUtilityBehaviors.PRESSURE_VALVE.equals(id)
-                && owner instanceof gregtech.content.blockentity.machine.FluidPipeBlockEntity
-                && level != null
-                && level.getBlockEntity(owner.getBlockPos().relative(side))
-                        instanceof gregtech.content.blockentity.machine.FluidPipeBlockEntity) return true;
-        return CoverUtilityBehaviors.FILTER_ITEM.equals(id)
-                && owner instanceof gregtech.content.blockentity.machine.ItemPipeBlockEntity
-                && level != null
-                && level.getBlockEntity(owner.getBlockPos().relative(side))
-                        instanceof gregtech.content.blockentity.machine.ItemPipeBlockEntity;
+        return host instanceof PipeCoverHost pipe && pipe.blocksPipeConnection(side, id);
     }
 
     public static boolean canConnect(Level level, BlockPos pos, Direction side) {

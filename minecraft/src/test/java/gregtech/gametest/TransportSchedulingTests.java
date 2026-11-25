@@ -386,6 +386,87 @@ public final class TransportSchedulingTests {
         helper.succeed();
     }
 
+    @GameTest(template = "test_empty", batch = "shared_fluid_pipes", timeoutTicks = 20)
+    public static void sharedPoolSkipsPressureValveStorage(GameTestHelper helper) {
+        var block = (FluidPipeBlock) BuiltInRegistries.BLOCK.get(id("pipe_medium_steel"));
+        var source = placeHorizontalPipe(helper, block, 0, 2, 3);
+        var valvePipe = placeHorizontalPipe(helper, block, 1, 2, 3);
+        var target = placeHorizontalPipe(helper, block, 2, 2, 3);
+        var execute = IFluidHandler.FluidAction.EXECUTE;
+        var simulate = IFluidHandler.FluidAction.SIMULATE;
+        var valve = new ItemStack(BuiltInRegistries.ITEM.get(id(CoverUtilityBehaviors.PRESSURE_VALVE)));
+        int capacity = source.getTankCapacity(0);
+        var request = new FluidStack(Fluids.WATER, capacity + 100);
+        try {
+            GregTechConfig.overrideFluidDistributionForTesting(GregTechConfig.FluidDistribution.LOCAL);
+            helper.assertTrue(valvePipe.attachCover(Direction.UP, valve)
+                            && valvePipe.fill(new FluidStack(Fluids.WATER, 40), execute) == 40,
+                    "the middle pipe holds a local reserve behind its pressure valve");
+            GregTechConfig.overrideFluidDistributionForTesting(GregTechConfig.FluidDistribution.SHARED);
+            helper.assertTrue(source.fill(request, simulate) == request.getAmount()
+                            && source.gibblValue(null) == 0 && target.gibblValue(null) == 0,
+                    "a simulated pool fill reaches through the valve pipe without filling any tank");
+            helper.assertTrue(source.fill(request, execute) == request.getAmount()
+                            && source.gibblValue(null) == capacity && target.gibblValue(null) == 100
+                            && valvePipe.gibblValue(null) == 40 && request.getAmount() == capacity + 100,
+                    "pool fills the connected non-valve tanks in order without mutating the request");
+            helper.assertTrue(source.drain(request, simulate).getAmount() == request.getAmount()
+                            && source.gibblValue(null) == capacity && target.gibblValue(null) == 100,
+                    "a typed simulation reads both pool members without draining either");
+            var drained = source.drain(new FluidStack(Fluids.WATER, capacity + 140), execute);
+            helper.assertTrue(drained.getAmount() == request.getAmount() && valvePipe.gibblValue(null) == 40,
+                    "a typed pool drain leaves the pressure valve's reserve intact");
+            helper.assertTrue(valvePipe.drain(100, execute).getAmount() == 40
+                            && valvePipe.fill(request, execute) == capacity
+                            && source.gibblValue(null) == 0 && target.gibblValue(null) == 0,
+                    "a request at the pressure valve's host uses its local tank only");
+        } finally {
+            GregTechConfig.overrideFluidDistributionForTesting(null);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = "shared_fluid_pipes", timeoutTicks = 20)
+    public static void sharedPoolSideFilterUsesFirstStoredFluid(GameTestHelper helper) {
+        var block = (FluidPipeBlock) BuiltInRegistries.BLOCK.get(id("pipe_quadruple_bronze"));
+        var port = placeHorizontalPipe(helper, block, 0, 2, 2);
+        var reservoir = placeHorizontalPipe(helper, block, 1, 2, 2);
+        var execute = IFluidHandler.FluidAction.EXECUTE;
+        var filter = new ItemStack(BuiltInRegistries.ITEM.get(id(CoverUtilityBehaviors.FILTER_FLUID)));
+        openFaces(port, Direction.UP, Direction.EAST);
+//? if >=1.21.1 {
+        /*var side = helper.getLevel().getCapability(
+                net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK, port.getBlockPos(), Direction.UP);
+*///?} else {
+        var side = port.getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.FLUID_HANDLER, Direction.UP)
+                .orElseThrow(IllegalStateException::new);
+//?}
+        helper.assertTrue(side != null, "the port exposes the upward fluid handler");
+        try {
+            GregTechConfig.overrideFluidDistributionForTesting(GregTechConfig.FluidDistribution.LOCAL);
+            reservoir.fill(new FluidStack(Fluids.WATER, 80), execute);
+            reservoir.fill(new FluidStack(Fluids.LAVA, 50), execute);
+            helper.assertTrue(CoverUtilityBehaviors.setFluidFilter(
+                                    filter, new FluidStack(Fluids.LAVA, 1), helper.getLevel().registryAccess())
+                            && port.attachCover(Direction.UP, filter),
+                    "the port admits lava only");
+            GregTechConfig.overrideFluidDistributionForTesting(GregTechConfig.FluidDistribution.SHARED);
+            helper.assertTrue(side.drain(100, execute).isEmpty() && reservoir.gibblValue(null) == 130,
+                    "the filter refuses a quantity drain when the pool's first stored fluid is water");
+            port.removeCover(Direction.UP);
+            var water = side.drain(100, execute);
+            helper.assertTrue(water.getFluid() == Fluids.WATER && water.getAmount() == 80,
+                    "the same face drains the pool's first fluid after the filter is removed");
+            helper.assertTrue(port.attachCover(Direction.UP, filter), "the filter can be put back");
+            var lava = side.drain(100, execute);
+            helper.assertTrue(lava.getFluid() == Fluids.LAVA && lava.getAmount() == 50,
+                    "the filter admits the new first fluid in the pool");
+        } finally {
+            GregTechConfig.overrideFluidDistributionForTesting(null);
+        }
+        helper.succeed();
+    }
+
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 120)
     public static void siftingTableAcceptsAutomationInputAndOutput(GameTestHelper helper) {
         BlockPos pos = helper.absolutePos(new BlockPos(2, 1, 2));

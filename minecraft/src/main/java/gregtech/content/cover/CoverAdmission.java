@@ -141,8 +141,7 @@ public final class CoverAdmission {
         if (owner instanceof MassStorageBlockEntity) return isDecorative(stack);
         // CoverRetrieverItem: ticking item pipes only.
         if (CoverUtilityBehaviors.RETRIEVER_ITEM.equals(CoverItems.behavior(stack)))
-            return owner instanceof gregtech.content.blockentity.machine.ItemPipeBlockEntity pipe
-                    && pipe.componentTicks();
+            return owner instanceof PipeCoverHost pipe && pipe.supportsItemRetriever();
         return true;
     }
 

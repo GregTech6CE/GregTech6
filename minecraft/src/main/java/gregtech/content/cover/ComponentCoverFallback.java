@@ -45,6 +45,7 @@ public final class ComponentCoverFallback {
 
     public static boolean ownClass(BlockEntity owner) {
         if (owner == null) return false;
+        if (owner instanceof PipeCoverHost) return true;
         for (Class<?> type = owner.getClass();
                 type != BlockEntity.class && type != gregtech.content.blockentity.GTBlockEntity.class && type != null;
                 type = type.getSuperclass())
