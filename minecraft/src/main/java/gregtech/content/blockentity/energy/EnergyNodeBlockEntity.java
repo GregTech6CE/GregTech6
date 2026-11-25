@@ -1,5 +1,7 @@
 package gregtech.content.blockentity.energy;
 
+import gregtech.content.cover.PanelCoverRuntime;
+import gregtech.content.energy.BatteryBoxEnergy;
 import gregtech.engine.energy.EnergyNodeSpec;
 import gregtech.engine.energy.EnergyTransfer;
 import gregtech.engine.energy.IEnergyBlock;
@@ -7,6 +9,7 @@ import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.stack.NbtCompat;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import gregtech.content.blockentity.GTEnergyBlockEntity;
 import gregtech.content.data.GregTechTags;
@@ -26,27 +29,30 @@ import net.minecraft.world.level.block.state.BlockState;
 
 /*import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.IItemHandlerModifiable;
 *///?} else {
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.items.IItemHandlerModifiable;
 //?}
 
 import javax.annotation.Nullable;
+import java.util.EnumMap;
 import java.util.List;
 
 /**
  * GT6 energy-net node: motors/dynamos/transformers (energy conversion), steam
  * turbines (steam fluid → RU), solar panels (sun → EU) and battery boxes /
- * storage cabinets (EU buffer). Inputs on every face except the front; output
- * packets of {@code outputRate} leave through the front (FACING).
+ * storage cabinets. Each device defines its own input and output faces.
  */
 public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregtech.engine.machine.AdjacentEnergyControl.Provider, gregtech.engine.inventory.BlockContents, gregtech.api.platform.machine.MachineControl.Provider, gregtech.content.cover.PanelCoverHost {
 
-    private java.util.Map<Direction,net.minecraft.world.item.ItemStack> batteryCovers=new java.util.EnumMap<>(Direction.class);
-    private gregtech.content.cover.PanelCoverRuntime batteryPanels;
+    private final EnumMap<Direction, ItemStack> covers = new EnumMap<>(Direction.class);
+    private PanelCoverRuntime controlPanels;
     private gregtech.content.energy.ElectricTransformerControl transformerControl;
     private gregtech.content.energy.OriginalRotaryConverter.State rotaryConverter;
     public boolean hasOriginalConverter(){return rotaryConverter != null;}
@@ -56,13 +62,17 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
     public boolean reverseMotor(){buffer=0;boolean reversed=rotaryConverter.reverse();setChanged();return reversed;}
     public boolean motorCounterClockwise(){return isOriginalMotor() && rotaryConverter.counterClockwise();}
     public boolean hasControlPanels(){return hasOriginalConverter()||isBatteryBox()||isElectricTransformer()||isSolar();}
-    @Override public net.minecraft.world.item.ItemStack getCover(Direction side){return batteryCovers.getOrDefault(side,net.minecraft.world.item.ItemStack.EMPTY);}
-    @Override public gregtech.content.cover.PanelCoverRuntime panels(){
-        if (batteryPanels==null)batteryPanels=new gregtech.content.cover.PanelCoverRuntime(this);
-        return batteryPanels;
+    @Override public net.minecraft.world.item.ItemStack getCover(Direction side){return covers.getOrDefault(side,net.minecraft.world.item.ItemStack.EMPTY);}
+    @Override public PanelCoverRuntime panels() {
+        if (controlPanels == null) controlPanels = new PanelCoverRuntime(this);
+        return controlPanels;
     }
     @Override public boolean coverSupportsPossible(){return hasControlPanels();}
-    @Override public boolean coverPossible(Direction side){return hasOriginalConverter()||isSolar()|| (isBatteryBox()?batteryEnergy.buffer()>spec.outputRate():isElectricTransformer()&&transformerControl.running());}
+    @Override public boolean coverPossible(Direction side) {
+        if (hasOriginalConverter() || isSolar()) return true;
+        if (isBatteryBox()) return batteryBox.energy.buffer() > spec.outputRate();
+        return isElectricTransformer() && transformerControl.running();
+    }
     /** Mirrors the tool actions in {@code EnergyNodeBlock.use}; unhandled tools fall through to the cover. */
     @Override public boolean consumesTool(ItemStack tool){
         if (gregtech.content.cover.PanelCoverHost.blockConsumesTool(this,tool))return true;
@@ -77,10 +87,10 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
         var panel=gregtech.content.cover.PanelCover.of(stack);
         if (!gregtech.content.cover.CoverItems.isCover(stack)||!getCover(side).isEmpty()||!panels().canAttach(side,stack)
                 ||!gregtech.content.cover.CoverAdmission.allowCover(this,side,stack))return false;
-        batteryCovers.put(side,stack.copyWithCount(1));panels().attached(side);return true;
+        covers.put(side,stack.copyWithCount(1));panels().attached(side);return true;
     }
     @Override public net.minecraft.world.item.ItemStack removeCover(Direction side){
-        var removed=batteryCovers.remove(side);
+        var removed=covers.remove(side);
         if (removed==null)return net.minecraft.world.item.ItemStack.EMPTY;
         var panel=gregtech.content.cover.PanelCover.of(removed);
         if (panel!=null&&panel.selector())machineControl(side).setMode(0);
@@ -102,10 +112,9 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
     private boolean rotationNegativeInput;
     /** GT6 bipolar magnets: stopped state and 0..15 output current limit. */
     private int magnetOverloads;
-    private gregtech.content.energy.BatteryBoxEnergy batteryEnergy;
-    /** Battery boxes store complete energy items in fixed slots. */
-    private net.minecraft.core.NonNullList<net.minecraft.world.item.ItemStack> batteries =
-            net.minecraft.core.NonNullList.withSize(0, net.minecraft.world.item.ItemStack.EMPTY);
+    private final BatteryBoxInventory batterySlots = new BatteryBoxInventory(this);
+    @Nullable
+    private BatteryBoxNode batteryBox;
     /** Retained only to return rotor items installed in older versions of the port. */
     private net.minecraft.world.item.ItemStack rotor = net.minecraft.world.item.ItemStack.EMPTY;
     private long turbinePending, steamRemainder;
@@ -145,14 +154,13 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
                 ? new gregtech.content.energy.OriginalRotaryConverter.State(spec) : null;
         if (isSolar()) {
             solarEnergy = new gregtech.engine.energy.SolarPanelEnergy(spec.outputRate(), worldPosition.hashCode());
-            if (!(batteryCovers instanceof java.util.EnumMap)) batteryCovers = new java.util.EnumMap<>(Direction.class);
         }
         if (isBatteryBox()) {
-            batteries=net.minecraft.core.NonNullList.withSize(spec.batterySlots(),net.minecraft.world.item.ItemStack.EMPTY);
-            batteryEnergy = new gregtech.content.energy.BatteryBoxEnergy(batteries, spec.inputRate(), spec.inType());
-            if (!(batteryCovers instanceof java.util.EnumMap))batteryCovers=new java.util.EnumMap<>(Direction.class);
+            batteryBox = new BatteryBoxNode(this, spec, batterySlots);
         }
-        if (isElectricTransformer()){transformerControl=new gregtech.content.energy.ElectricTransformerControl(this::setChanged);if (!(batteryCovers instanceof java.util.EnumMap))batteryCovers=new java.util.EnumMap<>(Direction.class);}
+        if (isElectricTransformer()) {
+            transformerControl = new gregtech.content.energy.ElectricTransformerControl(this::setChanged);
+        }
         if (spec.kind() == EnergyNodeSpec.Kind.TURBINE) {
             steamTank = new FluidTankGT(spec.inputRate() * 4).setOnChanged(this::setChanged);
         }
@@ -166,8 +174,9 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
     public boolean converterFast() { return rotaryConverter != null && rotaryConverter.fast(); }
     public boolean solarSkyVisible() { return solarEnergy != null && solarEnergy.skyVisible(); }
     public boolean transformerInverted() { return inverted; }
-    public long stored() { return isSolar() ? solarEnergy.energy() : isBatteryBox() ? batteryEnergy.buffer() : buffer; }
-    public gregtech.content.energy.BatteryBoxEnergy batteryEnergy() { return batteryEnergy; }
+    public long stored() { return isSolar() ? solarEnergy.energy() : isBatteryBox() ? batteryBox.energy.buffer() : buffer; }
+    @Nullable
+    public BatteryBoxEnergy batteryEnergy() { return batteryBox == null ? null : batteryBox.energy; }
 
     // ── Transformer step-up/step-down ───────────────────────────────────────
 
@@ -216,7 +225,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
     }
 
     private long inRate() { return inverted ? spec.outputRate() : spec.inputRate(); }
-    private long outRate() { return inverted ? spec.inputRate() : spec.outputRate(); }
+    long outRate() { return inverted ? spec.inputRate() : spec.outputRate(); }
     private Direction rotationInputFace() { return inverted ? facing().getOpposite() : facing(); }
     private Direction rotationOutputFace() { return inverted ? facing() : facing().getOpposite(); }
 
@@ -236,8 +245,6 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
         // In reverse, both recommendations are the original input rate.
         return inverted ? buffer : buffer * spec.outputRate() / spec.inputRate();
     }
-
-    // ── Battery boxes (GT6: capacity comes from installed battery cells) ───
 
     // ── Recovery of obsolete port rotor inventories ────
 
@@ -267,159 +274,36 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
         return spec != null && spec.batterySlots() > 0;
     }
 
-    /** Actual energy-item capacity; filled chemical cells are crafting ingredients, not batteries. */
-    public static long batteryCapacityOf(net.minecraft.world.item.ItemStack stack) {
+    public static long batteryCapacityOf(ItemStack stack) {
         return batteryCapacityOf(stack, GregTechTags.Energy.EU);
     }
 
-    /** Battery interaction must use the host's channel (EU boxes or LU crystal chargers). */
-    public static long batteryCapacityOf(net.minecraft.world.item.ItemStack stack, GregTechTags.Tag type) {
-        return gregtech.content.energy.BatteryBoxEnergy.accepts(stack, type)
-                ? ((gregtech.engine.energy.item.IItemEnergy)stack.getItem())
-                    .getEnergyCapacity(stack, type) : 0;
+    public static long batteryCapacityOf(ItemStack stack, GregTechTags.Tag type) {
+        return BatteryBoxInventory.capacityOf(stack, type);
     }
 
-    public boolean installBattery(net.minecraft.world.item.ItemStack stack) {
-        if (!isBatteryBox() || stack.isEmpty()) return false;
-        for (int slot = 0; slot < batteries.size(); slot++) {
-            if (batterySlots.insertItem(slot, stack.copyWithCount(1), false).isEmpty()) return true;
-        }
-        return false;
+    public boolean installBattery(ItemStack stack) {
+        return batterySlots.install(stack);
     }
 
-    public net.minecraft.world.item.ItemStack removeBattery() {
-        for (int slot = batteries.size() - 1; slot >= 0; slot--) {
-            if (!batteries.get(slot).isEmpty()) return batterySlots.extractItem(slot, 1, false);
-        }
-        return net.minecraft.world.item.ItemStack.EMPTY;
+    public ItemStack removeBattery() {
+        return batterySlots.remove();
     }
 
-    /** Effective capacity: battery boxes scale with installed cells. */
+    public IItemHandlerModifiable batteryInventory() {
+        return batterySlots;
+    }
+
+    public MenuProvider batteryMenu() {
+        return batterySlots.menu();
+    }
+
     private long capacity() {
-        if (isBatteryBox()) {
-            long sum = 0;
-            for (var b : batteries) if (b.getItem() instanceof gregtech.engine.energy.item.IItemEnergy item) sum += item.getEnergyCapacity(b, spec.inType());
-            return sum;
-        }
+        if (isBatteryBox()) return batterySlots.installedCapacity();
         return hasOriginalConverter() || isSteamConverter() ? spec.inputRate() * 2 : spec.capacity();
     }
 
-    // ── Battery box GUI (GT6 TileEntityBase10EnergyBatBox opens one) ────────
-
-    /** Fixed slot identities: a vacant slot never shifts another stack. */
-//? if >=1.21.1 {
-    /*private final net.neoforged.neoforge.items.IItemHandlerModifiable batterySlots =
-            new net.neoforged.neoforge.items.IItemHandlerModifiable() {
-*///?} else {
-    private final net.minecraftforge.items.IItemHandlerModifiable batterySlots =
-            new net.minecraftforge.items.IItemHandlerModifiable() {
-//?}
-        private void checkSlot(int slot) {
-            if (slot < 0 || slot >= batteries.size()) throw new IndexOutOfBoundsException("Battery slot " + slot);
-        }
-        @Override public int getSlots() { return batteries.size(); }
-        @Override public net.minecraft.world.item.ItemStack getStackInSlot(int slot) {
-            checkSlot(slot);
-            return batteries.get(slot);
-        }
-        @Override public net.minecraft.world.item.ItemStack insertItem(int slot,
-                net.minecraft.world.item.ItemStack stack, boolean simulate) {
-            checkSlot(slot);
-            if (stack.isEmpty() || !isItemValid(slot, stack) || !batteries.get(slot).isEmpty()) return stack;
-            if (!simulate) {
-                batteries.set(slot, stack.copyWithCount(1));
-                setChanged();
-            }
-            return stack.copyWithCount(stack.getCount() - 1);
-        }
-        @Override public net.minecraft.world.item.ItemStack extractItem(int slot, int amount, boolean simulate) {
-            checkSlot(slot);
-            if (amount <= 0 || batteries.get(slot).isEmpty()) return net.minecraft.world.item.ItemStack.EMPTY;
-            var out = batteries.get(slot).copy();
-            if (!simulate) {
-                batteries.set(slot, net.minecraft.world.item.ItemStack.EMPTY);
-                setChanged();
-            }
-            return out;
-        }
-        @Override public void setStackInSlot(int slot, net.minecraft.world.item.ItemStack stack) {
-            checkSlot(slot);
-            if (!stack.isEmpty() && !isItemValid(slot, stack)) throw new IllegalArgumentException("Not an energy item");
-            batteries.set(slot, stack.isEmpty() ? net.minecraft.world.item.ItemStack.EMPTY : stack.copyWithCount(1));
-            setChanged();
-        }
-        @Override public int getSlotLimit(int slot) { checkSlot(slot); return 1; }
-        @Override public boolean isItemValid(int slot, net.minecraft.world.item.ItemStack stack) {
-            checkSlot(slot);
-            return isBatteryBox() && gregtech.content.energy.BatteryBoxEnergy.accepts(stack, spec.inType());
-        }
-    };
-
-    /** Shared inventory used by the menu and sided automation. */
-//? if >=1.21.1 {
-    /*public net.neoforged.neoforge.items.IItemHandlerModifiable batteryInventory() { return batterySlots; }
-*///?} else {
-    public net.minecraftforge.items.IItemHandlerModifiable batteryInventory() { return batterySlots; }
-    @Nullable private LazyOptional<net.minecraftforge.items.IItemHandler> batteryCap;
-//?}
-
-//? if >=1.21.1 {
-    /*private net.neoforged.neoforge.items.IItemHandler sidedBatteryInventory(Direction side) {
-        return new net.neoforged.neoforge.items.IItemHandler() {
-*///?} else {
-    private java.util.Map<Direction,LazyOptional<net.minecraftforge.items.IItemHandler>> sidedBatteryCaps;
-    private net.minecraftforge.items.IItemHandler sidedBatteryInventory(Direction side) {
-        return new net.minecraftforge.items.IItemHandler() {
-//?}
-            // This native wrapper currently checks shutters and component direction only.
-            // Item-filter matching is not supplied by the fallback capability mixin.
-            private boolean blocked() {
-                return panels().shuttered(side);
-            }
-
-            @Override public int getSlots() {
-                return batterySlots.getSlots();
-            }
-
-            @Override public net.minecraft.world.item.ItemStack getStackInSlot(int slot) {
-                return batterySlots.getStackInSlot(slot);
-            }
-
-            @Override public net.minecraft.world.item.ItemStack insertItem(int slot, net.minecraft.world.item.ItemStack stack, boolean simulate) {
-                return blocked() || !gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side), true)
-                        ? stack : batterySlots.insertItem(slot, stack, simulate);
-            }
-
-            @Override public net.minecraft.world.item.ItemStack extractItem(int slot, int amount, boolean simulate) {
-                return blocked() || !gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side), false)
-                        ? net.minecraft.world.item.ItemStack.EMPTY : batterySlots.extractItem(slot, amount, simulate);
-            }
-
-            @Override public int getSlotLimit(int slot) {
-                return batterySlots.getSlotLimit(slot);
-            }
-
-            @Override public boolean isItemValid(int slot, net.minecraft.world.item.ItemStack stack) {
-                return !blocked() && batterySlots.isItemValid(slot, stack);
-            }
-        };
-    }
-
-    public net.minecraft.world.MenuProvider batteryMenu() {
-        return new net.minecraft.world.SimpleMenuProvider(
-                (id, inv, p) -> new gregtech.client.gui.HopperContainerMenu(
-                        gregtech.content.registry.GTMenuTypes.forSlotCount(batteries.size()), id, inv, batterySlots) {
-                    @Override public boolean stillValid(net.minecraft.world.entity.player.Player player) {
-                        return !isRemoved() && level != null && player.level() == level
-                                && player.distanceToSqr(worldPosition.getCenter()) <= 64
-                                && level.hasChunkAt(worldPosition)
-                                && level.getBlockEntity(worldPosition) == EnergyNodeBlockEntity.this;
-                    }
-                },
-                net.minecraft.network.chat.Component.translatable(getBlockState().getBlock().getDescriptionId()));
-    }
-
-    private Direction facing() {
+    Direction facing() {
         BlockState st = getBlockState();
         return st.hasProperty(DirectionalBlock.FACING) ? st.getValue(DirectionalBlock.FACING) : Direction.NORTH;
     }
@@ -430,27 +314,14 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, EnergyNodeBlockEntity be) {
         if (be.spec == null) return;
-        if (!be.hasOriginalConverter()&&!be.isBatteryBox()&&!be.isSolar()&&!be.isElectricTransformer()&&!be.batteryCovers.isEmpty()) {
-            be.panels().beforeTick();
-            for (var side:Direction.values())gregtech.content.cover.ComponentCoverRuntime.tick(be,side,level.getGameTime());
-            be.panels().afterTick();
-        }
         if (be.isBatteryBox()) {
+            be.batteryBox.tick(level, pos, state);
+            return;
+        }
+        if (!be.hasOriginalConverter() && !be.isSolar() && !be.isElectricTransformer() && !be.covers.isEmpty()) {
             be.panels().beforeTick();
             for (var side:Direction.values())gregtech.content.cover.ComponentCoverRuntime.tick(be,side,level.getGameTime());
-            be.batteryEnergy.tick(level.getGameTime(),level,pos);
-            long offered=be.batteryEnergy.offered();
-            if (offered>0) be.batteryEnergy.emitted(EnergyTransfer.emitEnergyToSide(
-                    be.spec.outType(),be.facing(),be.outRate(),offered,be));
             be.panels().afterTick();
-            be.setChanged();
-            if (level.getGameTime()%20==0){
-                var property=gregtech.content.block.energy.BatteryBoxBlock.CHARGE_STATE;
-                if (state.hasProperty(property)&&state.getValue(property)!=be.batteryEnergy.displayState())
-                    level.setBlock(pos,state.setValue(property,be.batteryEnergy.displayState()),3);
-                else level.sendBlockUpdated(pos,state,state,2);
-            }
-            return;
         }
         if (be.isSolar()) {
             be.tickSolar(level, pos);
@@ -762,7 +633,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
                     : energyType == spec.outType() ? side == facing() : energyType == GregTechTags.Energy.HU && side == facing().getOpposite();
         if (energyType != spec.outType()) return false;
         if (isSolar()) return (side == null || side == facing()) && (theoretical || side == null || !panels().shuttered(side));
-        if (isBatteryBox()) return (theoretical || batteryEnergy.enabled()) && (side == null || side == facing());
+        if (isBatteryBox()) return batteryBox.emitsTo(side, theoretical);
         if (isMagnet()) return side == null || side == facing() || side == facing().getOpposite();
         if (isElectricTransformer())return side==null||(inverted?side==facing():side!=facing());
         if (isRotationTransformer()) return side == null || side == rotationOutputFace();
@@ -817,10 +688,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
     @Override
     public long getEnergyDemanded(GregTechTags.Tag energyType, @Nullable Direction side, long size) {
         if (hasOriginalConverter()) return 0; // Source Root: push-only, discovery is via simulated injection.
-        if (isBatteryBox()) {
-            if (size==Long.MIN_VALUE || !isEnergyAcceptingFrom(energyType,side,false))return 0;
-            return batteryEnergy.inject(Math.abs(size),Long.MAX_VALUE,false);
-        }
+        if (isBatteryBox()) return batteryBox.demanded(energyType, side, size);
         long magnitude = gregtech.engine.energy.EnergyPackets.magnitude(size, energyType == GregTechTags.Energy.RU);
         if (!acceptsEnergyInput() || energyType != spec.inType() || magnitude == 0) return 0;
         if ((isMagnet() || isElectricTransformer()) && !isEnergyAcceptingFrom(energyType, side, false)) return 0;
@@ -853,20 +721,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
             }
             return step.consumed();
         }
-        if (isBatteryBox()) {
-            if (size==Long.MIN_VALUE || size==0 || amount<=0 || !isEnergyAcceptingFrom(energyType,side,false) || !batteryEnergy.canReceive())return 0;
-            long packet=Math.abs(size);
-            if (packet>getEnergySizeInputMax(energyType,side)) {
-                if (doInject)batteryOvervoltage(packet);
-                return amount;
-            }
-            long used=batteryEnergy.inject(packet,amount,doInject);
-            if (doInject&&used>0){
-                if (level!=null)conversionMeter.input(level.getGameTime(),packet,used);
-                setChanged();
-            }
-            return used;
-        }
+        if (isBatteryBox()) return batteryBox.inject(energyType, side, size, amount, doInject);
         if (isSteamConverter()) {
             if (amount <= 0 || size == 0 || size == Long.MIN_VALUE || !isEnergyAcceptingFrom(energyType, side, false)) return 0;
             long magnitude = Math.abs(size);
@@ -932,22 +787,17 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
     @Override
     public long getEnergyStored(GregTechTags.Tag energyType, @Nullable Direction side) {
         if (isSolar()) return 0; // Source solar panels do not implement an energy capacitor.
-        if (isBatteryBox())return energyType==spec.inType()?batteryEnergy.stored():0;
+        if (isBatteryBox()) return batteryBox.stored(energyType);
         return spec != null && (energyType == spec.inType() || energyType == spec.outType()) ? buffer : 0;
     }
 
     @Override
     public long getEnergyCapacity(GregTechTags.Tag energyType, @Nullable Direction side) {
         if (isSolar()) return 0; // Source solar panels do not implement an energy capacitor.
-        if (isBatteryBox())return energyType==spec.inType()?batteryEnergy.capacity():0;
+        if (isBatteryBox()) return batteryBox.capacity(energyType);
         return spec != null ? capacity() : 0;
     }
 
-    private void batteryOvervoltage(long packet) {
-        if (level == null || level.isClientSide) return;
-        if (gregtech.GregTechConfig.breakByOverload()) dropContents();
-        gregtech.engine.energy.MachineOverload.apply(this, packet, spec.inType());
-    }
     @Override public gregtech.engine.machine.AdjacentEnergyControl adjacentEnergyControl() {
         if (!hasOriginalConverter() || !gregtech.content.energy.OriginalAdjacentEnergyRules.respondsToAdjacent(spec)) return null;
         return enabled -> {
@@ -991,7 +841,8 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
             @Override public long progress() { return buffer; }
             @Override public long progressMax() { return capacity(); }
         };
-        if (!isBatteryBox())return new gregtech.api.platform.machine.MachineControl(){
+        if (isBatteryBox()) return batteryBox;
+        return new gregtech.api.platform.machine.MachineControl(){
             public boolean available(){return !isRemoved();}
             public boolean supportsMode(){return false;}
             public boolean enabled(){return !converterStopped;}
@@ -1000,17 +851,6 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
             public boolean active(){return running();}
             public long progress(){return stored();}
             public long progressMax(){return capacity();}
-        };
-        return new gregtech.api.platform.machine.MachineControl() {
-            @Override public boolean supportsMode(){return true;}
-            @Override public int mode(){return batteryEnergy.mode();}
-            @Override public int setMode(int mode){batteryEnergy.mode(mode);setChanged();return batteryEnergy.mode();}
-            @Override public boolean enabled(){return batteryEnergy.enabled();}
-            @Override public boolean setEnabled(boolean value){batteryEnergy.enabled(value);setChanged();return value;}
-            @Override public boolean running(){return batteryEnergy.running();}
-            @Override public boolean active(){return batteryEnergy.emitted();}
-            @Override public long progress(){return batteryEnergy.buffer();}
-            @Override public long progressMax(){return batteryEnergy.bufferCapacity();}
         };
     }
 
@@ -1091,12 +931,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
             return feCap.cast();
         }
         if (cap == ForgeCapabilities.ITEM_HANDLER && isBatteryBox()) {
-            if (side!=null){
-                if (sidedBatteryCaps==null)sidedBatteryCaps=new java.util.EnumMap<>(Direction.class);
-                return sidedBatteryCaps.computeIfAbsent(side,key->LazyOptional.of(()->sidedBatteryInventory(key))).cast();
-            }
-            if (batteryCap == null || !batteryCap.isPresent()) batteryCap = LazyOptional.of(() -> batterySlots);
-            return batteryCap.cast();
+            return batterySlots.capability(side).cast();
         }
         if (cap == ForgeCapabilities.FLUID_HANDLER && steamTank != null
                 && (side == null || side != facing())) {
@@ -1109,15 +944,16 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
 //?}
     }
 //? if >=1.21.1 {
-    /*public net.neoforged.neoforge.items.IItemHandler itemCapability(@Nullable Direction side){return !isBatteryBox()?null:side==null?batterySlots:sidedBatteryInventory(side);}
+    /*public IItemHandler itemCapability(@Nullable Direction side) {
+        return isBatteryBox() ? batterySlots.capability(side) : null;
+    }
     public IFluidHandler fluidCapability(@Nullable Direction side){return steamTank!=null&&(side==null||side!=facing())?side==null?turbineInlet():gregtech.content.cover.ComponentCoverAccess.fluids(this,side,turbineInlet(side)):null;}
 *///?} else {
 
     @Override
     public void invalidateCaps() {
         super.invalidateCaps();
-        if (batteryCap != null) { batteryCap.invalidate(); batteryCap = null; }
-        if (sidedBatteryCaps!=null){sidedBatteryCaps.values().forEach(LazyOptional::invalidate);sidedBatteryCaps.clear();}
+        batterySlots.invalidateCaps();
         componentSteamCaps.values().forEach(LazyOptional::invalidate);componentSteamCaps.clear();
         if (steamCap != null) { steamCap.invalidate(); steamCap = null; }
         if (feCap != null) { feCap.invalidate(); feCap = null; }
@@ -1137,11 +973,9 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
             tag.putBoolean("gt.solar_active", solarEnergy.active());
             tag.putBoolean("gt.solar_emitting", solarEnergy.emitting());
         }
-        if (isBatteryBox()){
-            batteryEnergy.save(tag);
-
-        }
-        batteryCovers.forEach((side,stack)->tag.put("gt.battery_cover_"+side.ordinal(),NbtCompat.saveItem(stack,lookup)));
+        if (isBatteryBox()) batteryBox.energy.save(tag);
+        batterySlots.save(tag, lookup);
+        covers.forEach((side,stack)->tag.put("gt.battery_cover_"+side.ordinal(),NbtCompat.saveItem(stack,lookup)));
         if (isElectricTransformer())transformerControl.save(tag);
         tag.putBoolean("gt.inverted", inverted);
         if (isMagnet()) {
@@ -1163,11 +997,6 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
             if (isOriginalMotor()) tag.putBoolean("gt.visual", rotary.fast());
         }
         if (!rotor.isEmpty()) tag.put("gt.rotor", NbtCompat.saveItem(rotor, lookup));
-        if (!batteries.isEmpty()) {
-            net.minecraft.nbt.ListTag list = new net.minecraft.nbt.ListTag();
-            for (var b : batteries) list.add(NbtCompat.saveItem(b, lookup));
-            tag.put("gt.batteries", list);
-        }
         if (steamTank != null) {
             CompoundTag t = new CompoundTag();
             NbtCompat.writeTank(steamTank, t, lookup);
@@ -1183,15 +1012,14 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
             solarEnergy.restore(buffer, tag.getBoolean("gt.solar_active"), tag.getBoolean("gt.solar_emitting"), tag.getBoolean("gt.solar_stopped"));
             buffer = 0;
         }
-        if (isBatteryBox()){
-            batteryEnergy.load(tag);
-        }
+        if (isBatteryBox()) batteryBox.energy.load(tag);
+        batterySlots.load(tag, lookup);
         if (isElectricTransformer())transformerControl.load(tag);
         {
-            batteryCovers.clear();
+            covers.clear();
             for (var side:Direction.values()){
                 String key="gt.battery_cover_"+side.ordinal();
-                if (tag.contains(key))batteryCovers.put(side,NbtCompat.readItem(tag.getCompound(key),lookup));
+                if (tag.contains(key))covers.put(side,NbtCompat.readItem(tag.getCompound(key),lookup));
             }
             panels().loaded();
         }
@@ -1212,13 +1040,6 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
         rotor = tag.contains("gt.rotor")
                 ? NbtCompat.readItem(tag.getCompound("gt.rotor"), lookup)
                 : net.minecraft.world.item.ItemStack.EMPTY;
-        batteries.clear();
-        if (tag.contains("gt.batteries")) {
-            net.minecraft.nbt.ListTag list = tag.getList("gt.batteries", 10);
-            for (int i = 0; i < Math.min(batteries.size(), list.size()); i++) {
-                batteries.set(i, NbtCompat.readItem(list.getCompound(i), lookup).copyWithCount(1));
-            }
-        }
         if (steamTank != null && tag.contains("gt.steam")) {
             NbtCompat.readTank(steamTank, tag.getCompound("gt.steam"), lookup);
             steamTank.setCapacity(spec.inputRate() * 4); // Source resets rated tank capacity after loading saved contents.
@@ -1226,10 +1047,9 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
     }
     @Override public void dropContents() {
         if (level == null || level.isClientSide) return;
-        for (var cover:batteryCovers.values())gregtech.engine.inventory.BlockContents.drop(this,cover);
-        if (!batteryCovers.isEmpty())batteryCovers.clear();
-        for (var battery : batteries) gregtech.engine.inventory.BlockContents.drop(this, battery);
-        batteries.clear();
+        for (var cover:covers.values())gregtech.engine.inventory.BlockContents.drop(this,cover);
+        if (!covers.isEmpty())covers.clear();
+        batterySlots.dropContents();
         gregtech.engine.inventory.BlockContents.drop(this, rotor); rotor = net.minecraft.world.item.ItemStack.EMPTY;
         setChanged();
     }
