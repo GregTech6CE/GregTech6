@@ -137,8 +137,8 @@ public final class OriginCreativeContents {
                     || blockItem.getBlock() instanceof gregtech.content.block.machine.BehaviorMachineBlock behavior
                     && !REGISTRY_NAMESPACE.equals(behavior.accepted().addonId()));
             boolean addonPipe = item instanceof BlockItem pipeItem
-                    && (pipeItem.getBlock() instanceof gregtech.content.block.machine.FluidPipeBlock
-                    || pipeItem.getBlock() instanceof gregtech.content.block.machine.ItemPipeBlock);
+                    && (pipeItem.getBlock() instanceof gregtech.content.transport.pipe.fluid.FluidPipeBlock
+                    || pipeItem.getBlock() instanceof gregtech.content.transport.pipe.item.ItemPipeBlock);
             boolean addonPart = item instanceof BlockItem partItem
                     && (partItem.getBlock() instanceof gregtech.content.block.machine.MultiblockPortBlock
                     || partItem.getBlock() instanceof gregtech.content.block.machine.AddonEnergyPartBlock

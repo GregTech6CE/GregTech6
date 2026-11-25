@@ -1,4 +1,4 @@
-package gregtech.content.block.machine;
+package gregtech.content.transport.pipe;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialTextureSet;
@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public abstract class MaterialPipeBlock extends GTBlock {
     private final GTMaterial material;
 
-    MaterialPipeBlock(GTMaterial material, Properties properties) {
+    protected MaterialPipeBlock(GTMaterial material, Properties properties) {
         super(properties);
         this.material = material;
     }

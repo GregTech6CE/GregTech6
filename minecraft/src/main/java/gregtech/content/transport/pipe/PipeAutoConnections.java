@@ -1,4 +1,4 @@
-package gregtech.content.blockentity.machine;
+package gregtech.content.transport.pipe;
 
 import gregtech.content.cover.CoverConnections;
 import gregtech.content.transport.PipeConnectionRules;
@@ -15,14 +15,14 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import org.jetbrains.annotations.Nullable;
 
 /** Observes loaded neighbors and applies automatic connections using each pipe family's own ports. */
-record PipeAutoConnections<T extends BlockEntity>(
+public record PipeAutoConnections<T extends BlockEntity>(
         Class<T> pipeType,
         Function<Direction, BooleanProperty> property,
         BiPredicate<T, Direction> manuallyDisconnected,
         BiPredicate<T, Direction> declaredEndpoint,
         BiPredicate<T, Direction> capabilityEndpoint) {
 
-    int connectionMask(BlockState state) {
+    public int connectionMask(BlockState state) {
         int mask = 0;
         for (Direction side : Direction.values()) {
             BooleanProperty bit = property.apply(side);
@@ -31,14 +31,14 @@ record PipeAutoConnections<T extends BlockEntity>(
         return mask;
     }
 
-    void onPlace(T pipe, @Nullable Direction clickedFace) {
+    public void onPlace(T pipe, @Nullable Direction clickedFace) {
         Level level = pipe.getLevel();
         if (level == null || level.isClientSide) return;
         if (clickedFace != null) connect(level, pipe, clickedFace.getOpposite(), true);
         for (Direction side : Direction.values()) connect(level, pipe, side, false);
     }
 
-    boolean tryConnect(T pipe, Direction side) {
+    public boolean tryConnect(T pipe, Direction side) {
         Level level = pipe.getLevel();
         return level != null && !level.isClientSide && connect(level, pipe, side, false);
     }

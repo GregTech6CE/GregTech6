@@ -1,6 +1,9 @@
-package gregtech.content.transport;
+package gregtech.content.transport.pipe.item;
 
-import gregtech.content.registry.*;
+import gregtech.content.registry.AddonPipeRegistration;
+import gregtech.content.registry.ContentRegistrar;
+import gregtech.content.registry.GTItemPipes;
+import gregtech.content.transport.ItemPipeCatalog;
 import gregtech.engine.machine.ItemPipeSpec;
 
 /** Built-in GT6 definitions; registration IDs and ordering are preserved. */
@@ -17,7 +20,7 @@ public final class ItemPipeDefinitions {
                 String id = "item_pipe_" + sizeKey + "_" + mat.idSuffix();
                 String owner = gregtech.engine.addon.AddonPipes.owner(id);
                 if (owner != null) {
-                    gregtech.content.registry.AddonPipeRegistration.queueItem(
+                    AddonPipeRegistration.queueItem(
                             registrar, owner, id, mat.material(), size, mat.stepSize(), mat.invSize(), true);
                     continue;
                 }

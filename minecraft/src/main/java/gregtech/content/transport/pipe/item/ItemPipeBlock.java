@@ -1,6 +1,6 @@
-package gregtech.content.block.machine;
+package gregtech.content.transport.pipe.item;
 
-import gregtech.content.blockentity.machine.ItemPipeBlockEntity;
+import gregtech.content.transport.pipe.MaterialPipeBlock;
 import gregtech.engine.GTWaterloggable;
 import gregtech.engine.machine.ItemPipeSpec;
 import gregtech.engine.tool.GTToolHelper;

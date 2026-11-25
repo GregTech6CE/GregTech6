@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
-import gregtech.content.block.machine.FluidPipeBlock;
-import gregtech.content.block.machine.ItemPipeBlock;
-import gregtech.content.block.machine.MaterialPipeBlock;
+import gregtech.content.transport.pipe.fluid.FluidPipeBlock;
+import gregtech.content.transport.pipe.item.ItemPipeBlock;
+import gregtech.content.transport.pipe.MaterialPipeBlock;
 import gregtech.content.blockentity.machine.LogisticsWireBlockEntity;
 import gregtech.content.cover.PipeCoverHost;
 import gregtech.content.data.generated.GT6Materials;

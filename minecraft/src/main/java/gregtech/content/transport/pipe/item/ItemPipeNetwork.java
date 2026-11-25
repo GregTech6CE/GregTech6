@@ -1,6 +1,7 @@
-package gregtech.content.transport;
+package gregtech.content.transport.pipe.item;
 
-import gregtech.content.blockentity.machine.ItemPipeBlockEntity;
+import gregtech.content.transport.ItemPipeNetworkTransfer;
+import gregtech.content.transport.WeightedItemPipeRoutes;
 import it.unimi.dsi.fastutil.longs.Long2IntOpenHashMap;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -27,12 +28,12 @@ import net.minecraft.world.level.Level;
  * Any layout change {@link #invalidate invalidates} the whole snapshot; the next pipe that needs
  * it builds a fresh one. Stable networks reuse their topology and keep a bounded cache of routes.</p>
  */
-public final class ItemPipeNetwork implements WeightedItemPipeRoutes.Graph {
+final class ItemPipeNetwork implements WeightedItemPipeRoutes.Graph {
     /** Shared by all members, so invalidation detaches the snapshot without visiting every pipe. */
-    public static final class Membership {
+    static final class Membership {
         private ItemPipeNetwork network;
 
-        public ItemPipeNetwork network() {
+        ItemPipeNetwork network() {
             return network;
         }
     }
@@ -169,16 +170,16 @@ public final class ItemPipeNetwork implements WeightedItemPipeRoutes.Graph {
                 : null;
     }
 
-    public boolean valid() {
+    boolean valid() {
         return valid;
     }
 
-    public int size() {
+    int size() {
         return pipes.length;
     }
 
     /** Drop the snapshot and wake every source that used it, so blocked items retry on the new layout. */
-    public void invalidate() {
+    void invalidate() {
         if (!valid) return;
         valid = false;
         membership.network = null;
@@ -202,7 +203,7 @@ public final class ItemPipeNetwork implements WeightedItemPipeRoutes.Graph {
      *
      * @return the number of stacks moved
      */
-    public int deliverFrom(ItemPipeBlockEntity source) {
+    int deliverFrom(ItemPipeBlockEntity source) {
         Integer at = index.get(source);
         if (!valid || at == null || source.isRemoved()) return 0;
         sources.add(source);

@@ -1,5 +1,7 @@
 package gregtech.content.blockentity.machine;
 
+import gregtech.content.transport.pipe.fluid.FluidPipeBlockEntity;
+
 import gregtech.api.machine.BlockFace;
 
 import gregtech.engine.fluid.FluidContainerInteraction;
@@ -8,7 +10,7 @@ import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.fluid.FluidTransportEnvironment;
 import gregtech.engine.machine.TankSpec;
 import gregtech.engine.tool.GTToolHelper;
-import gregtech.content.block.machine.FluidPipeBlock;
+import gregtech.content.transport.pipe.fluid.FluidPipeBlock;
 import gregtech.content.block.machine.TankBlock;
 import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.data.GregTechConstants;

@@ -124,12 +124,12 @@ public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
     public static final Supplier<BlockEntityType<gregtech.content.block.misc.FilterBlockEntity>> FILTER =
             BLOCK_ENTITIES.register("filter",()->BlockEntityType.Builder.of(gregtech.content.block.misc.FilterBlockEntity::new,GTRelaysFilters.FILTERS.stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
 
-    public static final Supplier<BlockEntityType<gregtech.content.blockentity.machine.FluidPipeBlockEntity>> FLUID_PIPE =
+    public static final Supplier<BlockEntityType<gregtech.content.transport.pipe.fluid.FluidPipeBlockEntity>> FLUID_PIPE =
             BLOCK_ENTITIES.register("fluid_pipe", () -> {
                 net.minecraft.world.level.block.Block[] blocks = AddonPipeRegistration.fluidPipeBlocks(
                         GTFluidPipes.all().stream().map(RegisteredBlock::get));
                 return BlockEntityType.Builder.of(
-                        gregtech.content.blockentity.machine.FluidPipeBlockEntity::new, blocks).build(null);
+                        gregtech.content.transport.pipe.fluid.FluidPipeBlockEntity::new, blocks).build(null);
             });
 
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.FluidSpringBlockEntity>> FLUID_SPRING =
@@ -141,8 +141,8 @@ public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.machine.HopperBlockEntity>> HOPPER =
             BLOCK_ENTITIES.register("hopper",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.HopperBlockEntity::new,GTHoppers.hoppers().stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
 
-    public static final Supplier<BlockEntityType<gregtech.content.blockentity.machine.ItemPipeBlockEntity>> ITEM_PIPE =
-            BLOCK_ENTITIES.register("item_pipe",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.ItemPipeBlockEntity::new,AddonPipeRegistration.itemPipeBlocks(GTItemPipes.all().stream().map(RegisteredBlock::get))).build(null));
+    public static final Supplier<BlockEntityType<gregtech.content.transport.pipe.item.ItemPipeBlockEntity>> ITEM_PIPE =
+            BLOCK_ENTITIES.register("item_pipe",()->BlockEntityType.Builder.of(gregtech.content.transport.pipe.item.ItemPipeBlockEntity::new,AddonPipeRegistration.itemPipeBlocks(GTItemPipes.all().stream().map(RegisteredBlock::get))).build(null));
 
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.machine.LargeCrucibleControllerBlockEntity>> LARGE_CRUCIBLE =
             BLOCK_ENTITIES.register("large_crucible",()->BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.LargeCrucibleControllerBlockEntity>entityFactory(REGISTRY_NAMESPACE, "large_crucible"), MultiblockRegistration.blocksForEntityType(REGISTRY_NAMESPACE, "large_crucible")).build(null));

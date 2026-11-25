@@ -38,7 +38,7 @@ public class GTJadePlugin implements IWailaPlugin {
         registration.registerBlockDataProvider(
                 FluidVesselJadeProvider.INSTANCE, gregtech.content.blockentity.machine.TankBlockEntity.class);
         registration.registerBlockDataProvider(
-                FluidVesselJadeProvider.INSTANCE, gregtech.content.blockentity.machine.FluidPipeBlockEntity.class);
+                FluidVesselJadeProvider.INSTANCE, gregtech.content.transport.pipe.fluid.FluidPipeBlockEntity.class);
         registration.registerBlockDataProvider(
                 MagicFieldAbsorberJadeProvider.INSTANCE,
                 gregtech.content.blockentity.energy.MagicFieldAbsorberBlockEntity.class);
@@ -86,7 +86,7 @@ public class GTJadePlugin implements IWailaPlugin {
         registration.registerBlockComponent(
                 FluidVesselJadeProvider.INSTANCE, gregtech.content.block.machine.TankBlock.class);
         registration.registerBlockComponent(
-                FluidVesselJadeProvider.INSTANCE, gregtech.content.block.machine.FluidPipeBlock.class);
+                FluidVesselJadeProvider.INSTANCE, gregtech.content.transport.pipe.fluid.FluidPipeBlock.class);
         registration.registerBlockComponent(
                 FluidVesselJadeProvider.INSTANCE, gregtech.content.block.inventory.EnderGarbageBlock.class);
         registration.registerBlockComponent(

@@ -1,6 +1,5 @@
-package gregtech.content.transport.fluid;
+package gregtech.content.transport.pipe.fluid;
 
-import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
@@ -10,7 +9,7 @@ public final class FluidPipeNetworks {
     private FluidPipeNetworks() {}
 
     /** The current snapshot containing {@code pipe}, built on demand. */
-    public static FluidPipeNetwork networkOf(FluidPipeBlockEntity pipe) {
+    static FluidPipeNetwork networkOf(FluidPipeBlockEntity pipe) {
         Level level = pipe.getLevel();
         if (level == null || level.isClientSide || pipe.isRemoved()) return null;
         FluidPipeNetwork network = pipe.network();
@@ -34,7 +33,7 @@ public final class FluidPipeNetworks {
         }
     }
 
-    public static void left(FluidPipeBlockEntity pipe) {
+    static void left(FluidPipeBlockEntity pipe) {
         invalidate(pipe);
     }
 }

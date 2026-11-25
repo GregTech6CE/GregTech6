@@ -6,7 +6,7 @@ import gregtech.content.block.machine.BasicMachineBlock;
 import gregtech.content.block.machine.BehaviorMachineBlock;
 import gregtech.content.block.machine.BurningBoxBlock;
 import gregtech.content.block.machine.CompressedGasTankBlock;
-import gregtech.content.block.machine.FluidPipeBlock;
+import gregtech.content.transport.pipe.fluid.FluidPipeBlock;
 import gregtech.content.block.machine.LargeGasTurbineControllerBlock;
 import gregtech.content.block.machine.LargeHeatExchangerControllerBlock;
 import gregtech.content.block.machine.OriginalBedrockDrillControllerBlock;

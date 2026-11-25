@@ -1,10 +1,9 @@
-package gregtech.content.blockentity.machine;
+package gregtech.content.transport.pipe.fluid;
 
 import gregtech.content.cover.ComponentCoverRuntime;
 import gregtech.content.cover.CoverAttachmentBehaviors;
 import gregtech.content.cover.CoverItems;
 import gregtech.content.cover.CoverUtilityBehaviors;
-import gregtech.content.transport.fluid.FluidPipeTopology;
 import gregtech.engine.fluid.FluidPipeBalance;
 import gregtech.engine.fluid.FluidTankGT;
 import net.minecraft.core.Direction;

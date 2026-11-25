@@ -1,6 +1,5 @@
 package gregtech.content.worldgen.dungeon;
 
-import gregtech.content.block.machine.ItemPipeBlock;
 import gregtech.content.block.misc.SpikeBlock;
 import gregtech.content.blockentity.inventory.MassStorageBlockEntity;
 import gregtech.content.data.MaterialPrefix;
@@ -8,6 +7,7 @@ import gregtech.content.data.generated.GT6Materials;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTMassStorages;
 import gregtech.content.registry.GTStorageContainers;
+import gregtech.content.transport.pipe.item.ItemPipeBlock;
 import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

@@ -11,6 +11,8 @@ import gregtech.content.blockentity.machine.KineticSteamEngineBlockEntity;
 import gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity;
 import gregtech.content.item.FluidDisplayItemLike;
 import gregtech.content.registry.*;
+import gregtech.content.transport.pipe.fluid.FluidPipeBlock;
+import gregtech.content.transport.pipe.item.ItemPipeBlock;
 import gregtech.engine.fluid.FluidRenderLayers;
 import gregtech.engine.machine.EngineType;
 import net.minecraft.client.gui.screens.MenuScreens;

@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
+import gregtech.content.transport.pipe.fluid.FluidPipeBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;

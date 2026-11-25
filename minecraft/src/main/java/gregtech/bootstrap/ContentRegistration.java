@@ -3,7 +3,7 @@ package gregtech.bootstrap;
 import com.mojang.logging.LogUtils;
 import gregtech.bootstrap.content.BlockBootstrap;
 import gregtech.content.registry.ContentRegistrar;
-import gregtech.content.transport.ItemPipeDefinitions;
+import gregtech.content.transport.pipe.item.ItemPipeDefinitions;
 import org.slf4j.Logger;
 
 /**

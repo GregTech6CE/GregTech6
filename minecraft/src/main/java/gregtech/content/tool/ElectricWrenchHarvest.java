@@ -1,8 +1,8 @@
 package gregtech.content.tool;
 
-import gregtech.content.block.machine.MaterialPipeBlock;
 import gregtech.content.data.BlockHarvestPolicy;
 import gregtech.content.item.ElectricToolItem;
+import gregtech.content.transport.pipe.MaterialPipeBlock;
 import gregtech.engine.tool.GTToolType;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.ItemStack;

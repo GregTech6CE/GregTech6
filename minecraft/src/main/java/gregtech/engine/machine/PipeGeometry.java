@@ -1,8 +1,8 @@
 package gregtech.engine.machine;
 
 import gregtech.content.block.energy.SignalWireBlock;
-import gregtech.content.block.machine.FluidPipeBlock;
-import gregtech.content.block.machine.ItemPipeBlock;
+import gregtech.content.transport.pipe.fluid.FluidPipeBlock;
+import gregtech.content.transport.pipe.item.ItemPipeBlock;
 import gregtech.engine.energy.WireMaterialLike;
 import javax.annotation.Nullable;
 import net.minecraft.core.Direction;

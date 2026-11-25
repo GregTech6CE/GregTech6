@@ -1,20 +1,17 @@
-package gregtech.gametest;
+package gregtech.content.transport.pipe.item;
 
-import gregtech.content.block.machine.ItemPipeBlock;
 import gregtech.content.blockentity.inventory.MetalChestBlockEntity;
 import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
-import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
-import gregtech.content.blockentity.machine.ItemPipeBlockEntity;
 import gregtech.content.cover.CoverAdmission;
 import gregtech.content.cover.CoverPlacement;
 import gregtech.content.cover.CoverUtilityBehaviors.FilterAction;
 import gregtech.content.cover.PanelCoverHost;
 import gregtech.content.data.generated.GT6Materials;
 import gregtech.content.item.GTToolItem;
-import gregtech.content.transport.ItemPipeNetwork;
-import gregtech.content.transport.ItemPipeNetworks;
+import gregtech.content.transport.pipe.fluid.FluidPipeBlockEntity;
 import gregtech.engine.stack.NbtCompat;
 import gregtech.engine.tool.GTToolType;
+import gregtech.gametest.MultiblockBehaviorApiTests;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -148,6 +145,49 @@ public final class ItemPipeRoutingTests {
                 "the retained view accepts matching stacks in both directions");
         pipe.removeCover(face);
         helper.assertTrue(retained.insertItem(0, iron, false).isEmpty(), "removal reopens the same view");
+        finish(helper);
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 40)
+    public static void itemCapabilitiesReturnAfterRevival(GameTestHelper helper) {
+        ItemPipeBlockEntity pipe = placePipe(helper, 2, "brass");
+        Direction face = Direction.UP;
+//? if >=1.21.1 {
+        /*var level = helper.getLevel();
+        var capability = net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK;
+        helper.assertTrue(level.getCapability(capability, pipe.getBlockPos(), face) != null
+                        && level.getCapability(capability, pipe.getBlockPos(), null) != null,
+                "the pipe initially exposes both capability views");
+        pipe.setRemoved();
+        pipe.clearRemoved();
+        var sided = level.getCapability(capability, pipe.getBlockPos(), face);
+        var unsided = level.getCapability(capability, pipe.getBlockPos(), null);
+*///?} else {
+        var capability = net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER;
+        var oldSided = pipe.getCapability(capability, face);
+        var oldUnsided = pipe.getCapability(capability, null);
+        helper.assertTrue(oldSided.isPresent() && oldUnsided.isPresent(),
+                "the pipe initially exposes both capability views");
+        pipe.setRemoved();
+        try {
+            helper.assertFalse(oldSided.isPresent() || oldUnsided.isPresent(),
+                    "removing the pipe invalidates both published capabilities");
+            helper.assertFalse(pipe.getCapability(capability, face).isPresent(),
+                    "a request while removed does not recreate the sided capability");
+        } finally {
+            pipe.clearRemoved();
+            pipe.reviveCaps();
+        }
+        helper.assertFalse(oldSided.isPresent() || oldUnsided.isPresent(),
+                "the revived pipe does not reactivate the old handles");
+        var sided = pipe.getCapability(capability, face).orElse(null);
+        var unsided = pipe.getCapability(capability, null).orElse(null);
+//?}
+        helper.assertTrue(sided != null && unsided != null, "both capability views return after revival");
+        var iron = new ItemStack(Items.IRON_INGOT, 5);
+        helper.assertTrue(sided.insertItem(0, iron, false).isEmpty()
+                        && unsided.extractItem(0, 5, false).getCount() == 5,
+                "the restored views access the same live storage");
         finish(helper);
     }
 

@@ -2,9 +2,9 @@ package gregtech.content.registry;
 
 import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
-import gregtech.content.block.machine.FluidPipeBlock;
 import gregtech.content.block.machine.GTMachineBlockItem;
 import gregtech.content.transport.fluid.FluidTransportDefinitions;
+import gregtech.content.transport.pipe.fluid.FluidPipeBlock;
 import gregtech.engine.machine.PipeSpec;
 import java.util.ArrayList;
 import java.util.Collections;

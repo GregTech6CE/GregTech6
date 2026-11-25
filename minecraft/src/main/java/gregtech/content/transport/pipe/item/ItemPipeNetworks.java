@@ -1,6 +1,5 @@
-package gregtech.content.transport;
+package gregtech.content.transport.pipe.item;
 
-import gregtech.content.blockentity.machine.ItemPipeBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
@@ -98,13 +97,13 @@ public final class ItemPipeNetworks {
     // ── Pipe lifecycle ───────────────────────────────────────────────────────
 
     /** Register placement or chunk load for connection repair at the end of the tick. */
-    public static void joined(ItemPipeBlockEntity pipe) {
+    static void joined(ItemPipeBlockEntity pipe) {
         State state = state(pipe.getLevel());
         if (state != null) state.joined.add(pipe);
     }
 
     /** A pipe left the level, by removal or chunk unload. */
-    public static void left(ItemPipeBlockEntity pipe) {
+    static void left(ItemPipeBlockEntity pipe) {
         invalidate(pipe);
         State state = STATES.get(pipe.getLevel());
         if (state == null) return;
@@ -114,7 +113,7 @@ public final class ItemPipeNetworks {
     }
 
     /** The layout around {@code pipe} changed: its network snapshot is stale. */
-    public static void invalidate(ItemPipeBlockEntity pipe) {
+    static void invalidate(ItemPipeBlockEntity pipe) {
         ItemPipeNetwork network = pipe.network();
         if (network != null) network.invalidate();
         // Opening a previously one-sided connection joins snapshots which did not contain this pipe.
@@ -130,13 +129,13 @@ public final class ItemPipeNetworks {
     }
 
     /** {@code pipe} holds new items. */
-    public static void wake(ItemPipeBlockEntity pipe) {
+    static void wake(ItemPipeBlockEntity pipe) {
         State state = state(pipe.getLevel());
         if (state != null) state.wake(pipe);
     }
 
     /** Only retrievers change the cached layout; all other cover rules are checked at delivery. */
-    public static void coversChanged(ItemPipeBlockEntity pipe, boolean layoutChanged) {
+    static void coversChanged(ItemPipeBlockEntity pipe, boolean layoutChanged) {
         if (layoutChanged) invalidate(pipe);
         else inventoryUpdated(pipe);
         State state = state(pipe.getLevel());
@@ -146,13 +145,13 @@ public final class ItemPipeNetworks {
     }
 
     /** An inventory beside {@code pipe} reported room; sources that routed through its network retry. */
-    public static void inventoryUpdated(ItemPipeBlockEntity pipe) {
+    static void inventoryUpdated(ItemPipeBlockEntity pipe) {
         ItemPipeNetwork network = pipe.network();
         if (network != null && network.valid()) network.wakeSources();
     }
 
     /** The current snapshot containing {@code pipe}, built on demand. */
-    public static ItemPipeNetwork networkOf(ItemPipeBlockEntity pipe) {
+    static ItemPipeNetwork networkOf(ItemPipeBlockEntity pipe) {
         State state = state(pipe.getLevel());
         if (state == null || !loaded(state, pipe)) return null;
         ItemPipeNetwork network = pipe.network();
@@ -171,7 +170,7 @@ public final class ItemPipeNetworks {
     @SubscribeEvent public static void unload(net.minecraftforge.event.level.LevelEvent.Unload event) { if (!event.getLevel().isClientSide()) STATES.remove(event.getLevel()); }
 //?}
 
-    public static void tick(Level level) {
+    static void tick(Level level) {
         if (level.isClientSide) return;
         State state = STATES.get(level);
         if (state == null) return;

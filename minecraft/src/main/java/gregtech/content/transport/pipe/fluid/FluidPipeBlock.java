@@ -1,7 +1,7 @@
-package gregtech.content.block.machine;
+package gregtech.content.transport.pipe.fluid;
 
-import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.transport.pipe.MaterialPipeBlock;
 import gregtech.engine.GTWaterloggable;
 import gregtech.engine.machine.PipeSpec;
 import gregtech.engine.tool.GTToolHelper;
@@ -49,7 +49,7 @@ public class FluidPipeBlock extends MaterialPipeBlock
     public static final BooleanProperty WEST = gregtech.engine.transport.PipeConnections.WEST;
     public static final BooleanProperty EAST = gregtech.engine.transport.PipeConnections.EAST;
 
-    public static final BooleanProperty[] CONNECTIONS = {DOWN, UP, NORTH, SOUTH, WEST, EAST};
+    private static final BooleanProperty[] CONNECTIONS = {DOWN, UP, NORTH, SOUTH, WEST, EAST};
 
     private final PipeSpec spec;
     private @Nullable Direction placementFace;
@@ -233,8 +233,7 @@ public class FluidPipeBlock extends MaterialPipeBlock
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
             Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide || type != GTBlockEntities.FLUID_PIPE.get()) return null;
-        return (BlockEntityTicker<T>)
-                (BlockEntityTicker<FluidPipeBlockEntity>) gregtech.content.transport.fluid.FluidPipeTickPhases::enqueue;
+        return (BlockEntityTicker<T>) (BlockEntityTicker<FluidPipeBlockEntity>) FluidPipeTickPhases::enqueue;
     }
 
     @Override
@@ -273,8 +272,8 @@ public class FluidPipeBlock extends MaterialPipeBlock
                 neighborPos.getX() - pos.getX(), neighborPos.getY() - pos.getY(), neighborPos.getZ() - pos.getZ());
         if (side != null && level.getBlockEntity(pos) instanceof FluidPipeBlockEntity pipe) {
             pipe.tryConnectTo(side);
-            gregtech.content.transport.fluid.FluidPipeTickPhases.wakeAround(pipe);
-            gregtech.content.transport.fluid.FluidPipeNetworks.invalidate(pipe);
+            FluidPipeTickPhases.wakeAround(pipe);
+            FluidPipeNetworks.invalidate(pipe);
         }
     }
 
@@ -300,7 +299,7 @@ public class FluidPipeBlock extends MaterialPipeBlock
             if (be instanceof FluidPipeBlockEntity pipe) {
                 pipe.dumpFluidsToAdjacent();
                 pipe.dropCovers();
-                gregtech.content.transport.fluid.FluidPipeTickPhases.wakeAround(pipe);
+                FluidPipeTickPhases.wakeAround(pipe);
             }
         }
         super.onRemove(state, level, pos, newState, isMoving);

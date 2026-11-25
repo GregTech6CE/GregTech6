@@ -56,8 +56,8 @@ public final class BlockHarvestPolicy {
       || block instanceof gregtech.content.block.inventory.UsbSwitchBlock
       || block instanceof gregtech.content.block.inventory.DrawerQuadBlock
       || block instanceof gregtech.content.block.misc.AdvancedCraftingTableBlock
-      || block instanceof gregtech.content.block.machine.FluidPipeBlock
-      || block instanceof gregtech.content.block.machine.ItemPipeBlock
+      || block instanceof gregtech.content.transport.pipe.fluid.FluidPipeBlock
+      || block instanceof gregtech.content.transport.pipe.item.ItemPipeBlock
       || path.startsWith("axle_") || path.startsWith("gearbox_")
       || block.getClass().getSimpleName().endsWith("ControllerBlock")
       || block instanceof gregtech.content.block.machine.MultiblockPortBlock) return Tool.WRENCH;
@@ -70,8 +70,8 @@ public final class BlockHarvestPolicy {
  public static int level(Block block) {
   if (block instanceof gregtech.content.block.machine.TankBlock)return 0;
   var original=source(block);if (original.isPresent())return original.get().level();
-  if (block instanceof gregtech.content.block.machine.FluidPipeBlock pipe) return pipe.harvestLevel();
-  if (block instanceof gregtech.content.block.machine.ItemPipeBlock pipe) return pipe.harvestLevel();
+  if (block instanceof gregtech.content.transport.pipe.fluid.FluidPipeBlock pipe) return pipe.harvestLevel();
+  if (block instanceof gregtech.content.transport.pipe.item.ItemPipeBlock pipe) return pipe.harvestLevel();
   if (block instanceof gregtech.content.block.misc.LongDistPipeBlock) return 3;
   if (block instanceof gregtech.content.block.misc.LongDistEndpointBlock endpoint) return endpoint.material().getToolQuality();
   if (block instanceof gregtech.content.block.misc.LongDistanceTransformerBlock endpoint) return endpoint.material().getToolQuality();

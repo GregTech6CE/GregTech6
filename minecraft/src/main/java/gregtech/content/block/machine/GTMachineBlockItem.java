@@ -2,6 +2,8 @@ package gregtech.content.block.machine;
 
 import gregtech.client.TankTooltips;
 import gregtech.content.item.GTBlockItem;
+import gregtech.content.transport.pipe.fluid.FluidPipeBlock;
+import gregtech.content.transport.pipe.item.ItemPipeBlock;
 import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.core.HolderLookup;

@@ -9,7 +9,7 @@ import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.MaterialEquivalence;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.energy.WireMaterialLike;
-import gregtech.content.block.machine.FluidPipeBlock;
+import gregtech.content.transport.pipe.fluid.FluidPipeBlock;
 import gregtech.platform.Mc;
 import gregtech.content.registry.GTFluidPipes;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -460,7 +460,7 @@ public final class MachineRecipeIngredients {
         // OP.pipeMedium/pipeLarge/pipeHuge also names the original item-pipe forms.
         for (var item : net.minecraft.core.registries.BuiltInRegistries.ITEM) {
             if (item instanceof net.minecraft.world.item.BlockItem blockItem
-                    && blockItem.getBlock() instanceof gregtech.content.block.machine.ItemPipeBlock pipe
+                    && blockItem.getBlock() instanceof gregtech.content.transport.pipe.item.ItemPipeBlock pipe
                     && !pipe.spec().size().restrictive()) {
                 index.computeIfAbsent(pipe.spec().size().name().toLowerCase(java.util.Locale.ROOT), k -> new HashMap<>())
                         .putIfAbsent(pipe.spec().material(), item);

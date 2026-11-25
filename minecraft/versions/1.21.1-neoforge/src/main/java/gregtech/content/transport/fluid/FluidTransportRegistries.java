@@ -1,8 +1,8 @@
 package gregtech.content.transport.fluid;
 
-import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
 import gregtech.content.blockentity.machine.TankBlockEntity;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.transport.pipe.fluid.FluidPipeBlockEntity;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;

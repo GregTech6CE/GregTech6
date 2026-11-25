@@ -1,6 +1,6 @@
 package gregtech.compat.jade;
 
-import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
+import gregtech.content.transport.pipe.fluid.FluidPipeBlockEntity;
 import gregtech.content.blockentity.machine.TankBlockEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;

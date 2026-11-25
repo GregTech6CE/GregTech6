@@ -1,9 +1,8 @@
 /* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later.
  * MultiTileEntityPipeFluid.onTick2/onServerTickPre and WD.even. */
-package gregtech.content.transport.fluid;
+package gregtech.content.transport.pipe.fluid;
 
 import gregtech.GregTechConfig;
-import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
@@ -65,7 +64,7 @@ public final class FluidPipeTickPhases {
      * Every call is stamped with its pass and rank, including the sleeping pipes it skips, so a
      * later wake can reinsert the pipe at the position the original tick loop would have used.
      */
-    public static void enqueue(Level level, BlockPos pos, BlockState state, FluidPipeBlockEntity pipe) {
+    static void enqueue(Level level, BlockPos pos, BlockState state, FluidPipeBlockEntity pipe) {
         if (level.isClientSide) return;
         State queue = stateOf(level);
         if (queue.expectPass) {
@@ -98,7 +97,7 @@ public final class FluidPipeTickPhases {
     }
 
     /** A pipe has a reason to run: new fluid, a cover change, a neighbour change or a load. */
-    public static void wake(FluidPipeBlockEntity pipe) {
+    static void wake(FluidPipeBlockEntity pipe) {
         State queue = stateOf(pipe.getLevel());
         if (queue == null) return;
         queue.active.add(pipe);
@@ -120,7 +119,7 @@ public final class FluidPipeTickPhases {
     }
 
     /** Wake this pipe and every adjacent pipe; a change on one can unblock the other. */
-    public static void wakeAround(FluidPipeBlockEntity pipe) {
+    static void wakeAround(FluidPipeBlockEntity pipe) {
         wake(pipe);
         Level level = pipe.getLevel();
         if (level == null || level.isClientSide) return;
@@ -133,13 +132,13 @@ public final class FluidPipeTickPhases {
         }
     }
 
-    public static void joined(FluidPipeBlockEntity pipe) {
+    static void joined(FluidPipeBlockEntity pipe) {
         wake(pipe);
         State queue = stateOf(pipe.getLevel());
         if (queue != null) queue.joined.add(pipe);
     }
 
-    public static void left(FluidPipeBlockEntity pipe) {
+    static void left(FluidPipeBlockEntity pipe) {
         State queue = STATES.get(pipe.getLevel());
         if (queue == null) return;
         queue.pending.remove(pipe);
@@ -164,7 +163,7 @@ public final class FluidPipeTickPhases {
     }
 //?}
 
-    public static void tick(Level level) {
+    private static void tick(Level level) {
         if (level.isClientSide) return;
         State queue = STATES.get(level);
         if (queue == null) return;

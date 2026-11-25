@@ -1,4 +1,4 @@
-package gregtech.content.blockentity.machine;
+package gregtech.content.transport.pipe.fluid;
 
 import gregtech.api.machine.BlockFace;
 
@@ -12,16 +12,14 @@ import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.machine.PipeSpec;
 import gregtech.engine.stack.NbtCompat;
 import gregtech.engine.stack.StackCompat;
-import gregtech.content.block.machine.FluidPipeBlock;
-import gregtech.content.blockentity.GTBlockEntity;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.cover.CoverAttachmentBehaviors;
 import gregtech.content.cover.CoverItems;
-import gregtech.content.cover.CoverStore;
 import gregtech.content.cover.CoverUtilityBehaviors;
 import gregtech.content.cover.PanelCoverRuntime;
-import gregtech.content.cover.PipeCoverHost;
 import gregtech.content.data.GregTechConstants;
-import gregtech.content.transport.fluid.FluidPipeNetwork;
+import gregtech.content.transport.pipe.PipeAutoConnections;
+import gregtech.content.transport.pipe.PipeBlockEntity;
 
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.util.GTEntityHelper;
@@ -71,8 +69,7 @@ import org.jetbrains.annotations.Nullable;
  * covers second: the pressure valve, whose {@code interceptCoverPlacement} refuses any host that is
  * not a fluid pipe with exactly one tank ({@code CoverPressureValve}), and the fluid filter, whose
  * {@code interceptFluidFill}/{@code interceptFluidDrain} are asked from the pipe's own fill path
- * ({@code CoverFilterFluid}). This class is therefore a {@link PipeCoverHost} exactly the
- * way {@code BasicMachineBlockEntity} is one, with three differences, each of them deliberate:</p>
+ * ({@code CoverFilterFluid}). The native cover host follows these rules:</p>
  *
  * <ul>
  *   <li><b>No switch/mode control.</b> The pipe is not a {@code MachineControl.Provider}.
@@ -98,7 +95,7 @@ import org.jetbrains.annotations.Nullable;
  * ({@code CoverPressureValve}) and can only be attached when the pipe has a single tank, so
  * {@code tanks[0]} and "the pipe" coincide there.</p>
  */
-public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler, PipeCoverHost, gregtech.api.sensor.CompressionSensorSource, gregtech.api.sensor.TemperatureSource, gregtech.api.sensor.ProgressSensorSource {
+public class FluidPipeBlockEntity extends PipeBlockEntity<IFluidHandler> implements IFluidHandler, gregtech.api.sensor.CompressionSensorSource, gregtech.api.sensor.TemperatureSource, gregtech.api.sensor.ProgressSensorSource {
     @Override public long gibblValue(BlockFace side) {
         long total = 0;
         for (var tank : tanks) total += tank.getAmount();
@@ -110,8 +107,6 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
     private final byte[] lastReceivedFrom;
     private long temperature = GregTechConstants.DEF_ENV_TEMP;
     private long transferredAmount;
-    /** Faces the wrench disconnected; auto-connect leaves them alone. Persisted so a reload keeps them. */
-    private int manualDisconnects;
     /** Set on load; the next server tick repairs half-connections that the load order hid. */
     private boolean reconnectPending = true;
     /** Next tick at which the component may run a balanced-distribution pass. */
@@ -120,43 +115,19 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
     private long schedulerGeneration = -1;
     private long schedulerRank;
     /** Shared-pool snapshot membership; null until the first pool operation. */
-    private gregtech.content.transport.fluid.FluidPipeNetwork.Membership membership;
+    private FluidPipeNetwork.Membership membership;
 
     private static final String NBT_TEMPERATURE = "gt.temperature";
     private static final String NBT_TRANSFERRED = "gt.transferred";
-    private static final String NBT_MANUAL_DISCONNECTS = "gt.manual_disconnects";
     private static final String NBT_LAST_RECEIVED = "gt.last_received";
     private static final String NBT_TANK_PREFIX = "gt.tank.";
 
-    
-//? if >=1.21.1 {
-//?} else {
-    private LazyOptional<IFluidHandler> handler = LazyOptional.of(() -> this);
-//?}
-
-    // ── Cover state: zero cost when unused ───────────────────────────────────
-    //
-    // A world holds tens of thousands of fluid pipes and serverTick runs for every one of them, so a
-    // coverless pipe must not pay for the cover system at all: CoverStore keeps the face array null
-    // and the panel runtime uncreated until the first cover is attached, so the whole cover pass is
-    // one boolean read for a pipe that has none and no face is walked. `faceHandlers` is null until
-    // a sided capability is requested (see {@link #faceHandler}).
-
-    /** Shared face storage, lazy panel runtime and `gt_cover_*` persistence. */
-    private final CoverStore coverStore = new CoverStore(this);
 
     /**
      * Local counter advanced by the covered tick pass. It is not the original global
      * SERVER_TIME used by CoverDrain and CoverVent and is not persisted by this pipe.
      */
     private long coverTicks;
-
-    /** Per-face capability views, built by {@link #faceHandler} and dropped by {@link #invalidateCaps}. */
-//? if >=1.21.1 {
-    /*private @Nullable IFluidHandler[] faceHandlers;
-*///?} else {
-    private @Nullable LazyOptional<IFluidHandler>[] faceHandlers;
-//?}
 
     public FluidPipeBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -182,11 +153,11 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
 
     public PipeSpec spec() { return spec; }
 
-    public gregtech.content.transport.fluid.FluidPipeNetwork network() {
+    public FluidPipeNetwork network() {
         return membership == null ? null : membership.network();
     }
 
-    public void membership(gregtech.content.transport.fluid.FluidPipeNetwork.Membership membership) {
+    void membership(FluidPipeNetwork.Membership membership) {
         this.membership = membership;
     }
 
@@ -251,15 +222,15 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
         return temperature == environmentTemperature();
     }
 
-    public long schedulerGeneration() { return schedulerGeneration; }
+    long schedulerGeneration() { return schedulerGeneration; }
 
-    public long schedulerRank() { return schedulerRank; }
+    long schedulerRank() { return schedulerRank; }
 
     final void deferBalanceUntil(long tick) { balanceDue = tick; }
 
     final FluidTankGT[] channelTanks() { return tanks; }
 
-    public void schedulerOffered(long generation, long rank) {
+    void schedulerOffered(long generation, long rank) {
         schedulerGeneration = generation;
         schedulerRank = rank;
     }
@@ -268,33 +239,14 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
         setChanged();
         // Waking this pipe is enough: its next pass distributes, which wakes the neighbours that
         // actually receive fluid. Avoiding a six-face walk per tank mutation keeps bulk moves cheap.
-        gregtech.content.transport.fluid.FluidPipeTickPhases.wake(this);
+        FluidPipeTickPhases.wake(this);
     }
 
     private long environmentTemperature() {
-//? if >=1.21.1 {
-            /*return FluidTransportEnvironment.environmentTemperature(level, worldPosition);
-*///?} else {
-        return SmelteryBlockEntityHelper.environmentTemperature(level, worldPosition);
-//?}
+        return FluidTransportEnvironment.environmentTemperature(level, worldPosition);
     }
 
     // ── Covers: host API (GT6's fluid pipe as a cover host) ──────────────────
-
-    @Override
-    public ItemStack getCover(Direction side) {
-        return coverStore.get(side);
-    }
-
-    /** Whether this pipe carries at least one cover. The renderer uses it to skip coverless pipes. */
-    public boolean hasCovers() {
-        return coverStore.hasCovers();
-    }
-
-    @Override
-    public PanelCoverRuntime panels() {
-        return coverStore.panels();
-    }
 
     @Override
     public Family pipeFamily() {
@@ -308,45 +260,19 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
     }
 
     @Override
-    public boolean attachCover(Direction side, ItemStack stack) {
-        return coverStore.attach(side, stack);
-    }
-
-    @Override
     public void attached(Direction side, ItemStack stack) {
-        invalidateFaceHandler(side);
+        invalidatePipeFace(side);
         syncCovers();
-        gregtech.content.transport.fluid.FluidPipeTickPhases.wakeAround(this);
+        FluidPipeTickPhases.wakeAround(this);
     }
 
     /** The signals a pipe face can emit are the panel ones; {@code afterTick} publishes them. */
     @Override
     public void removed(Direction side, ItemStack stack) {
-        invalidateFaceHandler(side);
+        invalidatePipeFace(side);
         panels().afterTick();
         syncCovers();
-        gregtech.content.transport.fluid.FluidPipeTickPhases.wakeAround(this);
-    }
-
-    @Override
-    public ItemStack removeCover(Direction side) {
-        return coverStore.remove(side);
-    }
-
-    /**
-     * The pipe's drop-on-break for covers; called from {@link FluidPipeBlock#onRemove}, next to
-     * {@link #dumpFluidsToAdjacent()} — that is where this pipe's own removal logic lives and the
-     * block entity is still resolvable there.
-     */
-    public void dropCovers() {
-        if (!coverStore.hasCovers()) return;
-        coverStore.drop();
-        setChanged();
-    }
-
-    /** Cover behaviour id of a face; {@code null} when no cover is attached. */
-    private String coverIdOf(Direction side) {
-        return CoverItems.behavior(getCover(side));
+        FluidPipeTickPhases.wakeAround(this);
     }
 
     /** Refresh the controller before its pause gate, then dispatch valid covers with source cadence. */
@@ -383,7 +309,7 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
 
     @Override
     public void wakeAfterFilterChange() {
-        gregtech.content.transport.fluid.FluidPipeTickPhases.wakeAround(this);
+        FluidPipeTickPhases.wakeAround(this);
     }
 
     /** GT6 runs magic, gas, plasma and acid independently against the original channel fluid. */
@@ -469,11 +395,11 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
             FluidPipeBlockEntity.class, FluidPipeBlock::propFor, FluidPipeBlockEntity::isFaceManuallyDisconnected,
             FluidPipeBlockEntity::isConnectableNeighbor, FluidPipeBlockEntity::isNativePlacementEndpoint);
 
-    public void autoConnectOnPlace(@Nullable Direction clickedFace) {
+    void autoConnectOnPlace(@Nullable Direction clickedFace) {
         AUTO_CONNECTIONS.onPlace(this, clickedFace);
     }
 
-    public boolean tryConnectTo(Direction side) {
+    boolean tryConnectTo(Direction side) {
         return AUTO_CONNECTIONS.tryConnect(this, side);
     }
 
@@ -501,20 +427,9 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
                 && host.canConnectFluidPipe(neighborSide);
     }
 
-    public boolean isFaceManuallyDisconnected(Direction side) {
-        return (manualDisconnects & (1 << side.ordinal())) != 0;
-    }
-
-    /** Called after a wrench toggled {@code side}; the bit is persisted with the pipe. */
-    public void setFaceManuallyDisconnected(Direction side, boolean disconnected) {
-        int next = disconnected
-                ? manualDisconnects | (1 << side.ordinal())
-                : manualDisconnects & ~(1 << side.ordinal());
-        if (next != manualDisconnects) {
-            manualDisconnects = next;
-            setChanged();
-            gregtech.content.transport.fluid.FluidPipeTickPhases.wakeAround(this);
-        }
+    @Override
+    protected void manualDisconnectChanged() {
+        FluidPipeTickPhases.wakeAround(this);
     }
 
     private void distributeChannel(BlockState state, FluidTankGT tank, int channel) {
@@ -620,7 +535,7 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
      * Original MultiTileEntityPipeFluid.breakBlock: try each connected face while its covers
      * still exist, count only delivered fluid, then discard the residual contents.
      */
-    public void dumpFluidsToAdjacent() {
+    void dumpFluidsToAdjacent() {
         if (level == null || level.isClientSide) return;
         for (Direction side : Direction.values()) {
             if (!connected(side)
@@ -650,7 +565,7 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
         }
     }
 
-    public void printDebug(Player player) {
+    void printDebug(Player player) {
         StringBuilder sb = new StringBuilder("Pipe ").append(spec.size()).append(": ");
         for (int i = 0; i < tanks.length; i++) {
             FluidTankGT tank = tanks[i];
@@ -734,59 +649,27 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
         return FluidStack.EMPTY;
     }
 
-    // === Capability ===
-
-//? if >=1.21.1 {
-    /*public IFluidHandler capabilityHandler(@Nullable Direction side) {
-        return side!=null?faceHandler(side):this;
-*///?} else {
     @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.FLUID_HANDLER) {
-            if (side != null) return faceHandler(side).cast();
-            return handler.cast();
-        }
-        return super.getCapability(cap, side);
-//?}
+    protected IFluidHandler unsidedPipeHandler() {
+        return this;
     }
 
-    public final boolean connected(Direction side) {
+    @Override
+    protected IFluidHandler createFaceHandler(Direction side) {
+        return new FaceFluidHandler(this, side);
+    }
+
+//? if <1.21.1 {
+    @Override
+    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction side) {
+        return capability == ForgeCapabilities.FLUID_HANDLER
+                ? pipeCapability(side).cast()
+                : super.getCapability(capability, side);
+    }
+//?}
+
+    final boolean connected(Direction side) {
         return !isRemoved() && getBlockState().getValue(FluidPipeBlock.propFor(side));
-    }
-
-//? if >=1.21.1 {
-    /*private IFluidHandler faceHandler(Direction side){
-        if (faceHandlers==null)faceHandlers=new IFluidHandler[6];
-        var handler=faceHandlers[side.ordinal()];
-        if (handler==null)faceHandlers[side.ordinal()]=handler=new FaceFluidHandler(this,side);
-        return handler;
-*///?} else {
-    /** The cached sided view, allocated on first capability request. */
-    @SuppressWarnings("unchecked")
-    private LazyOptional<IFluidHandler> faceHandler(Direction side) {
-        if (faceHandlers == null) faceHandlers = new LazyOptional[6];
-        LazyOptional<IFluidHandler> cached = faceHandlers[side.ordinal()];
-        if (cached == null) {
-            FaceFluidHandler face = new FaceFluidHandler(this, side);
-            cached = LazyOptional.of(() -> face);
-            faceHandlers[side.ordinal()] = cached;
-        }
-        return cached;
-//?}
-    }
-
-//? if >=1.21.1 {
-    /*private void invalidateFaceHandler(Direction side){
-        if (faceHandlers!=null)faceHandlers[side.ordinal()]=null;
-        if (level!=null)level.invalidateCapabilities(worldPosition);
-*///?} else {
-    private void invalidateFaceHandler(Direction side) {
-        if (faceHandlers == null) return;
-        LazyOptional<IFluidHandler> cached = faceHandlers[side.ordinal()];
-        if (cached == null) return;
-        cached.invalidate();
-        faceHandlers[side.ordinal()] = null;
-//?}
     }
 
     /**
@@ -804,24 +687,9 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
      * {@code return aData.mVisuals[aCoverSide] == 0;}. A suspended cover (a controller cover holding
      * the pipe) refuses everything.</p>
      */
-    public boolean coverFluidFilterPermits(Direction side, FluidStack candidate) {
+    boolean coverFluidFilterPermits(Direction side, FluidStack candidate) {
         return !coverStore.shuttered(side) && CoverUtilityBehaviors.fluidFilterPermits(getCover(side), coverStore.stopped(), candidate,level.registryAccess());
     }
-
-//? if >=1.21.1 {
-    /*public void invalidateFluidCapabilities(){faceHandlers=null;if (level!=null)level.invalidateCapabilities(worldPosition);}
-*///?} else {
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        handler.invalidate();
-        if (faceHandlers != null) {
-            for (int i = 0; i < faceHandlers.length; i++) {
-                if (faceHandlers[i] != null) { faceHandlers[i].invalidate(); faceHandlers[i] = null; }
-            }
-        }
-    }
-//?}
 
     // === NBT ===
 
@@ -830,7 +698,7 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
         super.loadData(tag, lookup);
         temperature = tag.contains(NBT_TEMPERATURE) ? tag.getLong(NBT_TEMPERATURE) : GregTechConstants.DEF_ENV_TEMP;
         transferredAmount = tag.contains(NBT_TRANSFERRED) ? tag.getLong(NBT_TRANSFERRED) : 0;
-        manualDisconnects = tag.contains(NBT_MANUAL_DISCONNECTS) ? tag.getByte(NBT_MANUAL_DISCONNECTS) & 0x3F : 0;
+        loadManualDisconnects(tag);
         for (int i = 0; i < tanks.length && i < lastReceivedFrom.length; i++) {
             lastReceivedFrom[i] = tag.contains(NBT_LAST_RECEIVED + i) ? tag.getByte(NBT_LAST_RECEIVED + i) : 0;
             if (tag.contains(NBT_TANK_PREFIX + i)) {
@@ -848,7 +716,7 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
         super.saveData(tag, lookup);
         tag.putLong(NBT_TEMPERATURE, temperature);
         tag.putLong(NBT_TRANSFERRED, transferredAmount);
-        tag.putByte(NBT_MANUAL_DISCONNECTS, (byte) manualDisconnects);
+        saveManualDisconnects(tag);
         for (int i = 0; i < tanks.length; i++) {
             tag.putByte(NBT_LAST_RECEIVED + i, lastReceivedFrom[i]);
             CompoundTag tankTag = new CompoundTag();
@@ -871,112 +739,51 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
         coverStore.save(tag, lookup);
     }
 
-    /**
-     * Covers have to reach the client renderer, so the pipe sends the update tag built above; this is
-     * the same packet pair as {@link BasicMachineBlockEntity#getUpdatePacket()} and
-     * {@link ItemPipeBlockEntity#getUpdatePacket()}.
-     */
-    @Override
-    public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override
-    protected void handleDataPacket(net.minecraft.network.Connection net,
-            net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet,
-            @Nullable HolderLookup.Provider lookup) {
-        if (packet.getTag() != null) readUpdateTag(packet.getTag(), lookup);
-    }
-
     // Counter lifetime is the existing native pipe tick interval, not tank occupancy.
     @Override public long progressValue(BlockFace side) { return transferredAmount; }
     @Override public long progressMaximum(BlockFace side) { return spec.capacity() * tanks.length; }
-    public long getTransferredAmount() { return transferredAmount; }
+    long getTransferredAmount() { return transferredAmount; }
     @Override public long temperatureK(BlockFace side) { return temperature; }
     @Override public long maximumK(BlockFace side) { return spec.maxTemperature(); }
-    public long getTemperature() { return temperature; }
+    long getTemperature() { return temperature; }
 
     /** Container transactions use the clicked face, including its connection, filter and backflow rules. */
-    public net.minecraft.world.InteractionResult handleUse(Player player, net.minecraft.world.InteractionHand hand,
+    net.minecraft.world.InteractionResult handleUse(Player player, net.minecraft.world.InteractionHand hand,
                                                            Direction side) {
         if (level == null) return net.minecraft.world.InteractionResult.PASS;
         if (level.isClientSide) return FluidContainerInteraction.clientResult(player, hand);
-//? if >=1.21.1 {
-        /*IFluidHandler face = capabilityHandler(side);
-*///?} else {
-        IFluidHandler face = getCapability(ForgeCapabilities.FLUID_HANDLER, side)
-                .orElseThrow(() -> new IllegalStateException("Missing pipe face handler"));
-//?}
+        IFluidHandler face = externalPipeHandler(side);
         if (!FluidContainerInteraction.use(player, hand, face))
             return net.minecraft.world.InteractionResult.PASS;
         setChanged();
         return net.minecraft.world.InteractionResult.CONSUME;
     }
-    // ── Client model data (dynamic pipe model neighbor sizes) ───────────────
-
     @Override
-//? if >=1.21.1 {
-    /*public net.neoforged.neoforge.client.model.data.ModelData getModelData() {
-*///?} else {
-    public net.minecraftforge.client.model.data.ModelData getModelData() {
-//?}
-        float[] halves = new float[6];
-        for (net.minecraft.core.Direction d : net.minecraft.core.Direction.values()) {
-            halves[d.ordinal()] = level == null
-                    ? (float) gregtech.engine.machine.PipeGeometry.NONE
-                    : (float) gregtech.engine.machine.PipeGeometry.fluidNeighborHalf(
-                            level.getBlockState(worldPosition.relative(d)), d);
-        }
-//? if >=1.21.1 {
-        /*return net.neoforged.neoforge.client.model.data.ModelData.builder()
-*///?} else {
-        return net.minecraftforge.client.model.data.ModelData.builder()
-//?}
-                .with(gregtech.engine.machine.PipeModelData.NEIGHBOR_HALVES, halves)
-                .build();
+    protected double neighborHalf(BlockState state, Direction side) {
+        return gregtech.engine.machine.PipeGeometry.fluidNeighborHalf(state, side);
     }
 
     @Override
-    public void onLoad() {
-        super.onLoad();
-        if (level == null) return;
-        if (level.isClientSide) {
-            requestModelDataUpdate();
-            gregtech.engine.machine.PipeModelData.refreshCrossChunkNeighbors(level, worldPosition);
-        } else {
-            balanceDue = 0;
-            gregtech.content.transport.fluid.FluidPipeTickPhases.joined(this);
-        }
+    protected int connectionMask(BlockState state) {
+        return AUTO_CONNECTIONS.connectionMask(state);
     }
 
     @Override
-    public void setRemoved() {
-        if (level != null && !level.isClientSide) {
-            gregtech.content.transport.fluid.FluidPipeTickPhases.left(this);
-            gregtech.content.transport.fluid.FluidPipeNetworks.left(this);
-        }
-        super.setRemoved();
+    protected void joinedLevel() {
+        balanceDue = 0;
+        FluidPipeTickPhases.joined(this);
     }
 
     @Override
-    public void onChunkUnloaded() {
-        if (level != null && !level.isClientSide) {
-            gregtech.content.transport.fluid.FluidPipeTickPhases.left(this);
-            gregtech.content.transport.fluid.FluidPipeNetworks.left(this);
-        }
-        super.onChunkUnloaded();
+    protected void leftLevel() {
+        FluidPipeTickPhases.left(this);
+        FluidPipeNetworks.left(this);
     }
 
-    /** Connection changes are a wake-up source, not a stored layout. */
     @Override
-    @SuppressWarnings("deprecation")
-    public void setBlockState(BlockState state) {
-        int before = AUTO_CONNECTIONS.connectionMask(getBlockState());
-        super.setBlockState(state);
-        if (level != null && !level.isClientSide && AUTO_CONNECTIONS.connectionMask(state) != before) {
-            gregtech.content.transport.fluid.FluidPipeTickPhases.wakeAround(this);
-            gregtech.content.transport.fluid.FluidPipeNetworks.invalidate(this);
-        }
+    protected void connectionsChanged() {
+        FluidPipeTickPhases.wakeAround(this);
+        FluidPipeNetworks.invalidate(this);
     }
 
     // ── The face-aware view a fluid filter needs ─────────────────────────────

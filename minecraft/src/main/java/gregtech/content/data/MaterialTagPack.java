@@ -288,10 +288,10 @@ public final class MaterialTagPack extends AbstractPackResources {
             }
             if (item instanceof BlockItem b) {
                 var block=b.getBlock();
-                if (block instanceof gregtech.content.block.machine.FluidPipeBlock pipe
+                if (block instanceof gregtech.content.transport.pipe.fluid.FluidPipeBlock pipe
                         && ironMaterials.contains(pipe.spec().material().resolve()))
                     add(tags,"gt6ce","items","pipe_"+pipe.spec().size().name().toLowerCase(java.util.Locale.ROOT)+"/any_iron_or_steel",id.toString());
-                if (block instanceof gregtech.content.block.machine.ItemPipeBlock pipe
+                if (block instanceof gregtech.content.transport.pipe.item.ItemPipeBlock pipe
                         && ironMaterials.contains(pipe.spec().material().resolve()) && !pipe.spec().size().restrictive())
                     add(tags,"gt6ce","items","pipe_"+pipe.spec().size().name().toLowerCase(java.util.Locale.ROOT)+"/any_iron_or_steel",id.toString());
                 if (block instanceof gregtech.engine.energy.WireMaterialLike wire) {

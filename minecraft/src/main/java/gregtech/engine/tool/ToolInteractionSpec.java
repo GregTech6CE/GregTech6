@@ -19,8 +19,8 @@ public record ToolInteractionSpec(DirectionProperty facing, MachineRotationType 
 
         public BooleanProperty property(Direction side) {
             return switch (this) {
-                case FLUID -> gregtech.content.block.machine.FluidPipeBlock.propFor(side);
-                case ITEM -> gregtech.content.block.machine.ItemPipeBlock.propFor(side);
+                case FLUID -> gregtech.content.transport.pipe.fluid.FluidPipeBlock.propFor(side);
+                case ITEM -> gregtech.content.transport.pipe.item.ItemPipeBlock.propFor(side);
                 case ELECTRIC, LASER, REDSTONE -> gregtech.content.block.energy.ElectricWireBlock.propFor(side);
                 case LOGISTICS -> gregtech.engine.transport.PipeConnections.propFor(side);
                 case AXLE -> gregtech.content.block.energy.AxleBlock.propFor(side);

@@ -542,7 +542,7 @@ public final class OriginalHandCraftingRows {
     }
 
     private static ItemStack requiredStainlessPipe(PipeSpec.PipeSize size, String recipe) {
-        for (var holder : blocks(gregtech.content.block.machine.FluidPipeBlock.class)) {
+        for (var holder : blocks(gregtech.content.transport.pipe.fluid.FluidPipeBlock.class)) {
             if (bound(holder) && holder.get().spec().size() == size
                     && holder.get().spec().material() == Materials.StainlessSteel)
                 return new ItemStack(holder.get().asItem());

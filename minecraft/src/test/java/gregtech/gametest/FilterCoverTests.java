@@ -1,8 +1,8 @@
 package gregtech.gametest;
 
 import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
-import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
-import gregtech.content.blockentity.machine.ItemPipeBlockEntity;
+import gregtech.content.transport.pipe.fluid.FluidPipeBlockEntity;
+import gregtech.content.transport.pipe.item.ItemPipeBlockEntity;
 import gregtech.content.blockentity.machine.LogisticsWireBlockEntity;
 import gregtech.content.cover.CoverStackData;
 import gregtech.content.cover.CoverUtilityBehaviors;
@@ -455,6 +455,43 @@ public final class FilterCoverTests {
 //?}
         helper.assertTrue(replica.getFluidInTank(0).isEmpty() && replica.getCover(Direction.UP).isEmpty(),
                 "the incremental update clears both the tank and cover");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 40)
+    public static void fluidPipeCoverChangesInvalidateTheSidedCapability(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var pos = place(helper, 1, 2, "pipe_medium_steel");
+        var pipe = (FluidPipeBlockEntity) level.getBlockEntity(pos);
+        var side = Direction.UP;
+//? if >=1.21.1 {
+        /*var cache = net.neoforged.neoforge.capabilities.BlockCapabilityCache.create(
+                net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK, level, pos, side);
+        var before = cache.getCapability();
+        helper.assertTrue(before != null, "the pipe provides a sided capability");
+*///?} else {
+        var cap = net.minecraftforge.common.capabilities.ForgeCapabilities.FLUID_HANDLER;
+        var before = pipe.getCapability(cap, side);
+        var otherSide = pipe.getCapability(cap, Direction.DOWN);
+        helper.assertTrue(before.isPresent() && otherSide.isPresent(), "the pipe provides sided capabilities");
+//?}
+        helper.assertTrue(pipe.attachCover(side, new ItemStack(item("fluid_filter"))), "the filter attaches to the pipe");
+//? if >=1.21.1 {
+        /*var covered = cache.getCapability();
+        helper.assertTrue(covered != null && covered != before, "the NeoForge block cache refreshed the covered face");
+*///?} else {
+        var covered = pipe.getCapability(cap, side);
+        helper.assertTrue(!before.isPresent() && covered.isPresent(), "Forge replaces the covered face's handle");
+        helper.assertTrue(otherSide.isPresent(), "the other side's handle stays usable");
+//?}
+        pipe.removeCover(side);
+//? if >=1.21.1 {
+        /*var uncovered = cache.getCapability();
+        helper.assertTrue(uncovered != null && uncovered != covered, "the NeoForge block cache refreshed the uncovered face");
+*///?} else {
+        helper.assertTrue(!covered.isPresent() && pipe.getCapability(cap, side).isPresent(),
+                "Forge also replaces the handle after cover removal");
+//?}
         helper.succeed();
     }
 

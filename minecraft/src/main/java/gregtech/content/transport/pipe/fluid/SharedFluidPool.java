@@ -1,9 +1,7 @@
-package gregtech.content.blockentity.machine;
+package gregtech.content.transport.pipe.fluid;
 
 import gregtech.content.cover.CoverItems;
 import gregtech.content.cover.CoverUtilityBehaviors;
-import gregtech.content.transport.fluid.FluidPipeNetwork;
-import gregtech.content.transport.fluid.FluidPipeNetworks;
 import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.Direction;

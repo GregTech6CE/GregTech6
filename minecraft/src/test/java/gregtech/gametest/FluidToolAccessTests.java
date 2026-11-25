@@ -373,10 +373,10 @@ public final class FluidToolAccessTests {
         Block pipeBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "pipe_large_steel"));
         level.setBlockAndUpdate(drumPos, drumBlock.defaultBlockState());
         level.setBlockAndUpdate(
-                pipePos, pipeBlock.defaultBlockState().setValue(gregtech.content.block.machine.FluidPipeBlock.UP, true));
+                pipePos, pipeBlock.defaultBlockState().setValue(gregtech.content.transport.pipe.fluid.FluidPipeBlock.UP, true));
 
         var drum = (TankBlockEntity) level.getBlockEntity(drumPos);
-        var pipe = (gregtech.content.blockentity.machine.FluidPipeBlockEntity) level.getBlockEntity(pipePos);
+        var pipe = (gregtech.content.transport.pipe.fluid.FluidPipeBlockEntity) level.getBlockEntity(pipePos);
         helper.assertTrue(drum != null && pipe != null, "Drum or pipe fixture is missing");
         helper.assertTrue(
                 drum.fill(new FluidStack(Fluids.WATER, 2000), IFluidHandler.FluidAction.EXECUTE) == 2000
@@ -430,10 +430,10 @@ public final class FluidToolAccessTests {
         Block pipeBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "pipe_large_steel"));
         level.setBlockAndUpdate(drumPos, drumBlock.defaultBlockState());
         level.setBlockAndUpdate(
-                pipePos, pipeBlock.defaultBlockState().setValue(gregtech.content.block.machine.FluidPipeBlock.UP, true));
+                pipePos, pipeBlock.defaultBlockState().setValue(gregtech.content.transport.pipe.fluid.FluidPipeBlock.UP, true));
 
         var drum = (TankBlockEntity) level.getBlockEntity(drumPos);
-        var pipe = (gregtech.content.blockentity.machine.FluidPipeBlockEntity) level.getBlockEntity(pipePos);
+        var pipe = (gregtech.content.transport.pipe.fluid.FluidPipeBlockEntity) level.getBlockEntity(pipePos);
         helper.assertTrue(drum != null && pipe != null, "Drum or pipe fixture is missing");
         drum.fill(new FluidStack(Fluids.WATER, 1000), IFluidHandler.FluidAction.EXECUTE);
         pipe.fill(new FluidStack(Fluids.WATER, 1000), IFluidHandler.FluidAction.EXECUTE);
@@ -746,10 +746,10 @@ public final class FluidToolAccessTests {
         level.setBlockAndUpdate(
                 funnelPos, funnelBlock.defaultBlockState().setValue(FluidAttachmentBlock.FACING, Direction.SOUTH));
         level.setBlockAndUpdate(
-                pipePos, pipeBlock.defaultBlockState().setValue(gregtech.content.block.machine.FluidPipeBlock.UP, true));
+                pipePos, pipeBlock.defaultBlockState().setValue(gregtech.content.transport.pipe.fluid.FluidPipeBlock.UP, true));
 
         var drum = (TankBlockEntity) level.getBlockEntity(drumPos);
-        var pipe = (gregtech.content.blockentity.machine.FluidPipeBlockEntity) level.getBlockEntity(pipePos);
+        var pipe = (gregtech.content.transport.pipe.fluid.FluidPipeBlockEntity) level.getBlockEntity(pipePos);
         helper.assertTrue(drum != null && pipe != null, "Drum or pipe fixture missing");
 
         var measuringPot = BuiltInRegistries.ITEM.get(
@@ -1280,7 +1280,7 @@ public final class FluidToolAccessTests {
         level.setBlockAndUpdate(funnelPos, funnelBlock.defaultBlockState().setValue(FluidAttachmentBlock.FACING, Direction.SOUTH));
         level.setBlockAndUpdate(tapDrumPos, drumBlock.defaultBlockState());
         level.setBlockAndUpdate(tapPos, tapBlock.defaultBlockState().setValue(FluidAttachmentBlock.FACING, Direction.SOUTH));
-        var openPipeState = fluidPipeBlock.defaultBlockState().setValue(gregtech.content.block.machine.FluidPipeBlock.UP, true);
+        var openPipeState = fluidPipeBlock.defaultBlockState().setValue(gregtech.content.transport.pipe.fluid.FluidPipeBlock.UP, true);
         level.setBlockAndUpdate(barePipePos, openPipeState);
         level.setBlockAndUpdate(fluidFilteredPipePos, openPipeState);
         level.setBlockAndUpdate(creativeFilteredPipePos, openPipeState);
@@ -1290,10 +1290,10 @@ public final class FluidToolAccessTests {
 
         var drum = (TankBlockEntity) level.getBlockEntity(drumPos);
         var tapDrum = (TankBlockEntity) level.getBlockEntity(tapDrumPos);
-        var barePipe = (gregtech.content.blockentity.machine.FluidPipeBlockEntity) level.getBlockEntity(barePipePos);
-        var fluidFilteredPipe = (gregtech.content.blockentity.machine.FluidPipeBlockEntity) level.getBlockEntity(fluidFilteredPipePos);
-        var creativeFilteredPipe = (gregtech.content.blockentity.machine.FluidPipeBlockEntity) level.getBlockEntity(creativeFilteredPipePos);
-        var itemPipe = (gregtech.content.blockentity.machine.ItemPipeBlockEntity) level.getBlockEntity(itemPipePos);
+        var barePipe = (gregtech.content.transport.pipe.fluid.FluidPipeBlockEntity) level.getBlockEntity(barePipePos);
+        var fluidFilteredPipe = (gregtech.content.transport.pipe.fluid.FluidPipeBlockEntity) level.getBlockEntity(fluidFilteredPipePos);
+        var creativeFilteredPipe = (gregtech.content.transport.pipe.fluid.FluidPipeBlockEntity) level.getBlockEntity(creativeFilteredPipePos);
+        var itemPipe = (gregtech.content.transport.pipe.item.ItemPipeBlockEntity) level.getBlockEntity(itemPipePos);
         var mixer = (BasicMachineBlockEntity) level.getBlockEntity(mixerPos);
         var crucible = (gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity) level.getBlockEntity(cruciblePos);
         helper.assertTrue(

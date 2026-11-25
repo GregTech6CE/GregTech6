@@ -1,21 +1,18 @@
-package gregtech.content.blockentity.machine;
+package gregtech.content.transport.pipe.item;
 
 import gregtech.engine.machine.ITileEntityAdjacentInventoryUpdatable;
 import gregtech.engine.machine.ItemPipeSpec;
-import gregtech.content.block.machine.ItemPipeBlock;
-import gregtech.content.blockentity.GTBlockEntity;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.cover.ComponentCoverRuntime;
 import gregtech.content.cover.CoverItems;
-import gregtech.content.cover.CoverStore;
 import gregtech.content.cover.CoverUtilityBehaviors;
 import gregtech.content.cover.MachineCoverSpec;
 import gregtech.content.cover.PanelCoverRuntime;
-import gregtech.content.cover.PipeCoverHost;
 import gregtech.content.registry.GTBlockEntities;
-import gregtech.content.transport.ItemPipeNetwork;
-import gregtech.content.transport.ItemPipeNetwork.Membership;
 import gregtech.content.transport.ItemPipeNetworkTransfer;
-import gregtech.content.transport.ItemPipeNetworks;
+import gregtech.content.transport.pipe.PipeAutoConnections;
+import gregtech.content.transport.pipe.PipeBlockEntity;
+import gregtech.content.transport.pipe.item.ItemPipeNetwork.Membership;
 import gregtech.engine.stack.NbtCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -40,8 +37,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.Map;
 
 /**
  * Native item inventory, network routing endpoint and lazily allocated cover host.
@@ -59,8 +54,8 @@ import java.util.Map;
  * <p>The host does not expose MachineControl or ProgressSensorSource. In particular,
  * a transferred-item counter alone does not implement GT6's progress interface.
  */
-public class ItemPipeBlockEntity extends GTBlockEntity
-        implements IItemHandler, ITileEntityAdjacentInventoryUpdatable, PipeCoverHost {
+public class ItemPipeBlockEntity extends PipeBlockEntity<IItemHandler>
+        implements IItemHandler, ITileEntityAdjacentInventoryUpdatable {
     /** Bandwidth window: transfer counters restart every 20 ticks. */
     private static final int BANDWIDTH_WINDOW = 20;
     /** Each slot holds one ordinary stack. */
@@ -84,8 +79,6 @@ public class ItemPipeBlockEntity extends GTBlockEntity
     private @Nullable Membership membership;
     private byte disabledInputs;
     private byte disabledOutputs;
-    /** Faces the wrench disconnected; auto-connect leaves them alone. Persisted so a reload keeps them. */
-    private int manualDisconnects;
 
     private static final String NBT_ITEMS = "gt.items";
     private static final String COVER_UPDATE = "gt.cover_sync";
@@ -94,26 +87,8 @@ public class ItemPipeBlockEntity extends GTBlockEntity
     private static final String NBT_SLOT_ORIGINS = "gt.slot_origins";
     private static final String NBT_DISABLED_INPUTS = "gt.disabled_inputs";
     private static final String NBT_DISABLED_OUTPUTS = "gt.disabled_outputs";
-    private static final String NBT_MANUAL_DISCONNECTS = "gt.manual_disconnects";
     private static final String NBT_TRANSFERRED = "gt.transferred";
     private static final String NBT_TRANSFER_WINDOW = "gt.transfer_window";
-
-//? if >=1.21.1 {
-//?} else {
-    private LazyOptional<IItemHandler> handler = LazyOptional.of(() -> this);
-//?}
-
-    // ── Cover state: zero cost when unused ───────────────────────────────────
-    //
-    // An item pipe is the most numerous host the port has. It does not tick; ItemPipeNetworks ticks
-    // only the pipes that carry covers. CoverStore keeps the face array null and the panel runtime
-    // uncreated until the first cover is attached, so a coverless pipe pays one boolean read on the
-    // transfer path and never walks a face:
-    //   * the retriever's pending flags are six bits of one byte rather than the machine's
-    //     `boolean[6]` — see `retrieverPending`.
-
-    /** Shared face storage, lazy panel runtime and `gt_cover_*` persistence. */
-    private final CoverStore coverStore = new CoverStore(this);
 
     /**
      * The cover tick counter, standing in for GT6's {@code SERVER_TIME} / {@code aTimer} exactly as
@@ -164,70 +139,44 @@ public class ItemPipeBlockEntity extends GTBlockEntity
     // ── Scheduling hooks: the pipe has no ticker ─────────────────────────────
 
     @Override
-    public void onLoad() {
-        super.onLoad();
-        if (level == null) return;
-        if (level.isClientSide) {
-            requestModelDataUpdate();
-            gregtech.engine.machine.PipeModelData.refreshCrossChunkNeighbors(level, worldPosition);
-        } else {
-            // Connection repair and snapshot invalidation wait for the end of the tick, when the
-            // neighbours loaded together with this pipe are in place.
-            ItemPipeNetworks.joined(this);
-        }
+    protected int connectionMask(BlockState state) {
+        return AUTO_CONNECTIONS.connectionMask(state);
     }
 
     @Override
-    public void setRemoved() {
-        if (level != null && !level.isClientSide) ItemPipeNetworks.left(this);
-        super.setRemoved();
+    protected double neighborHalf(BlockState state, Direction side) {
+        return gregtech.engine.machine.PipeGeometry.pipeHalfOf(state);
     }
 
     @Override
-    public void onChunkUnloaded() {
-        if (level != null && !level.isClientSide) ItemPipeNetworks.left(this);
-        super.onChunkUnloaded();
+    protected void joinedLevel() {
+        // Repair connections once the neighbours loaded with this pipe are in place.
+        ItemPipeNetworks.joined(this);
     }
 
-    /** Only the six connection properties are layout; waterlogging and the like are not. */
     @Override
-    @SuppressWarnings("deprecation")
-    public void setBlockState(BlockState state) {
-        int before = AUTO_CONNECTIONS.connectionMask(getBlockState());
-        super.setBlockState(state);
-        if (level != null && !level.isClientSide && AUTO_CONNECTIONS.connectionMask(state) != before) {
-            ItemPipeNetworks.invalidate(this);
-        }
+    protected void leftLevel() {
+        ItemPipeNetworks.left(this);
     }
 
-    public @Nullable ItemPipeNetwork network() {
+    @Override
+    protected void connectionsChanged() {
+        ItemPipeNetworks.invalidate(this);
+    }
+
+    @Nullable ItemPipeNetwork network() {
         return membership == null ? null : membership.network();
     }
 
-    public void membership(@Nullable Membership membership) {
+    void membership(@Nullable Membership membership) {
         this.membership = membership;
     }
 
     // ── Covers: host API (GT6's item pipe as a cover host) ───────────────────
 
     @Override
-    public ItemStack getCover(Direction side) {
-        return coverStore.get(side);
-    }
-
-    public boolean hasCovers() { return coverStore.hasCovers(); }
-    @Override public PanelCoverRuntime panels() {
-        return coverStore.panels();
-    }
-
-    @Override
     public Family pipeFamily() {
         return Family.ITEM;
-    }
-
-    @Override
-    public boolean attachCover(Direction side, ItemStack stack) {
-        return coverStore.attach(side, stack);
     }
 
     @Override
@@ -243,32 +192,9 @@ public class ItemPipeBlockEntity extends GTBlockEntity
     }
 
     private void coversChanged(ItemStack stack) {
-//? if >=1.21.1 {
-        /*if (level != null) level.invalidateCapabilities(worldPosition);
-*///?}
+        notifyPipeCapabilitiesChanged();
         syncCovers();
         ItemPipeNetworks.coversChanged(this, CoverUtilityBehaviors.RETRIEVER_ITEM.equals(CoverItems.behavior(stack)));
-    }
-
-    @Override
-    public ItemStack removeCover(Direction side) {
-        return coverStore.remove(side);
-    }
-
-    /**
-     * The pipe's drop-on-break for covers; called from {@link ItemPipeBlock#onRemove}, next to
-     * {@link #dropStoredItems()} — that is where this pipe's own removal logic lives and the block
-     * entity is still resolvable there.
-     */
-    public void dropCovers() {
-        if (!coverStore.hasCovers()) return;
-        coverStore.drop();
-        setChanged();
-    }
-
-    /** Cover behaviour id of a face; {@code null} when no cover is attached. */
-    private String coverIdOf(Direction side) {
-        return CoverItems.behavior(getCover(side));
     }
 
     private boolean retrieverPending(int face) {
@@ -284,7 +210,7 @@ public class ItemPipeBlockEntity extends GTBlockEntity
      * Dispatch inventory covers against this pipe; controller pause gates transfer operations. Called
      * every server tick by {@link ItemPipeNetworks} while the pipe carries covers.
      */
-    public void tickCovers() {
+    void tickCovers() {
         if (level == null) return;
         PanelCoverRuntime runtime = panels();
         coverTicks++;
@@ -339,7 +265,7 @@ public class ItemPipeBlockEntity extends GTBlockEntity
      * {@code return aData.mVisuals[aCoverSide] == 0;} read as "intercept". A suspended cover refuses
      * everything.</p>
      */
-    public boolean coverFilterPermits(Direction side, ItemStack candidate) {
+    boolean coverFilterPermits(Direction side, ItemStack candidate) {
         return !coverStore.shuttered(side) && CoverUtilityBehaviors.itemFilterPermits(getCover(side), coverStore.stopped(), candidate, level.registryAccess());
     }
 
@@ -377,7 +303,7 @@ public class ItemPipeBlockEntity extends GTBlockEntity
      *
      * @return the number of stacks moved
      */
-    public int deliverThrough(ItemPipeNetwork network) {
+    int deliverThrough(ItemPipeNetwork network) {
         int origins = 0;
         for (int slot = 0; slot < inventory.size(); slot++) {
             if (!inventory.get(slot).isEmpty() && slotOrigins[slot] >= 0) origins |= 1 << slotOrigins[slot];
@@ -397,17 +323,17 @@ public class ItemPipeBlockEntity extends GTBlockEntity
         return moved;
     }
 
-    public boolean connected(Direction face) {
+    boolean connected(Direction face) {
         return getBlockState().getValue(ItemPipeBlock.propFor(face));
     }
 
     /** Layout half of {@link #canEmitTo}: the wrench setting and a retriever, both rebuild the snapshot. */
-    public boolean linksOut(Direction face) {
+    boolean linksOut(Direction face) {
         return (disabledOutputs & (1 << face.ordinal())) == 0 && !coverBlocksItemTraffic(face);
     }
 
     /** Layout half of {@link #canLinkIn}. */
-    public boolean linksIn(Direction face) {
+    boolean linksIn(Direction face) {
         return (disabledInputs & (1 << face.ordinal())) == 0 && !coverBlocksItemTraffic(face);
     }
 
@@ -416,7 +342,7 @@ public class ItemPipeBlockEntity extends GTBlockEntity
      * exit. Checks everything the snapshot does not: shutters and cover modes, a hopper or dispenser
      * now facing the pipe, the exit face's filter per stack, and each stack's origin.
      */
-    public boolean sendTo(Direction face, ItemPipeBlockEntity source) {
+    boolean sendTo(Direction face, ItemPipeBlockEntity source) {
         if (level == null || isRemoved() || source.isRemoved() || !connected(face) || !canEmitTo(face)) return false;
         ItemPipeNetwork route = source.network();
         if (route == null || !route.valid() || network() != route) return false;
@@ -493,12 +419,12 @@ public class ItemPipeBlockEntity extends GTBlockEntity
         }
     }
 
-    public boolean pipeCapacityCheck() {
+    boolean pipeCapacityCheck() {
         syncTransferWindow();
         return ItemPipeNetworkTransfer.hasCapacity(transferredThisSecond, spec.invSize());
     }
 
-    public void chargeTransfer() {
+    void chargeTransfer() {
         syncTransferWindow();
         transferredThisSecond++;
         // Transit pipes also persist the charge even when their inventory never changes.
@@ -506,21 +432,21 @@ public class ItemPipeBlockEntity extends GTBlockEntity
     }
 
     /** The game time at which this pipe's bandwidth is restored. */
-    public long nextBandwidthWindow() {
+    long nextBandwidthWindow() {
         return level == null ? 0 : (level.getGameTime() / BANDWIDTH_WINDOW + 1) * BANDWIDTH_WINDOW;
     }
 
     /** Whether items may leave through {@code side} right now. */
-    public boolean canEmitTo(Direction side) {
+    boolean canEmitTo(Direction side) {
         return !coverStore.shuttered(side) && gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side),false) && (disabledOutputs & (1 << side.ordinal())) == 0;
     }
 
     /** Whether items may enter through {@code side} right now. */
-    public boolean canLinkIn(Direction side) {
+    boolean canLinkIn(Direction side) {
         return !coverStore.shuttered(side) && gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side),true) && (disabledInputs & (1 << side.ordinal())) == 0;
     }
 
-    public boolean hasStoredItems() {
+    boolean hasStoredItems() {
         return !isEmpty();
     }
     private boolean isEmpty() {
@@ -552,7 +478,7 @@ public class ItemPipeBlockEntity extends GTBlockEntity
     }
 
     /** Drop all stored items on the ground when the pipe block is broken. */
-    public void dropStoredItems() {
+    void dropStoredItems() {
         if (level == null || level.isClientSide) return;
         for (int slot = 0; slot < inventory.size(); slot++) {
             ItemStack stack = inventory.get(slot);
@@ -575,11 +501,11 @@ public class ItemPipeBlockEntity extends GTBlockEntity
             ItemPipeBlockEntity.class, ItemPipeBlock::propFor, ItemPipeBlockEntity::isFaceManuallyDisconnected,
             ItemPipeBlockEntity::isConnectableNeighbor, ItemPipeBlockEntity::isNativePlacementEndpoint);
 
-    public void autoConnectOnPlace(@Nullable Direction clickedFace) {
+    void autoConnectOnPlace(@Nullable Direction clickedFace) {
         AUTO_CONNECTIONS.onPlace(this, clickedFace);
     }
 
-    public boolean tryConnectTo(Direction side) {
+    boolean tryConnectTo(Direction side) {
         return AUTO_CONNECTIONS.tryConnect(this, side);
     }
 
@@ -599,23 +525,8 @@ public class ItemPipeBlockEntity extends GTBlockEntity
                 && host.canConnectItemPipe(neighborSide);
     }
 
-    public boolean isFaceManuallyDisconnected(Direction side) {
-        return (manualDisconnects & (1 << side.ordinal())) != 0;
-    }
-
-    /** Called after a wrench toggled {@code side}; the bit is persisted with the pipe. */
-    public void setFaceManuallyDisconnected(Direction side, boolean disconnected) {
-        int next = disconnected
-                ? manualDisconnects | (1 << side.ordinal())
-                : manualDisconnects & ~(1 << side.ordinal());
-        if (next != manualDisconnects) {
-            manualDisconnects = next;
-            setChanged();
-        }
-    }
-
     /** Toggle item pipe side I/O with monkey wrench. */
-    public void toggleSideIO(Direction side) {
+    void toggleSideIO(Direction side) {
         boolean isConnected = getBlockState().getValue(ItemPipeBlock.propFor(side));
         if (!isConnected) {
             // Connect
@@ -700,48 +611,22 @@ public class ItemPipeBlockEntity extends GTBlockEntity
     @Override
     public boolean isItemValid(int slot, @NotNull ItemStack stack) { return true; }
 
-    // === Capability ===
-
-//? if >=1.21.1 {
-    /*public IItemHandler capabilityHandler(@Nullable Direction side) {
-        return side == null ? this : sideHandler(side);
-*///?} else {
     @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            if (isRemoved() || !handler.isPresent()) return LazyOptional.empty();
-            return side == null ? handler.cast() : sideHandler(side).cast();
-        }
-        return super.getCapability(cap, side);
-//?}
-    }
-
-    /** One external view per side, recording the input face and consulting live cover rules. */
-//? if >=1.21.1 {
-    /*private IItemHandler sideHandler(Direction side) {
-        return sideCaps.computeIfAbsent(side, ExternalSideItemHandler::new);
-    }
-
-    private final Map<Direction, IItemHandler> sideCaps = new EnumMap<>(Direction.class);
-*///?} else {
-    private LazyOptional<IItemHandler> sideHandler(Direction side) {
-        return sideCaps.computeIfAbsent(side, face -> LazyOptional.of(() -> new ExternalSideItemHandler(face)));
-    }
-
-    private final Map<Direction, LazyOptional<IItemHandler>> sideCaps = new EnumMap<>(Direction.class);
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        handler.invalidate();
-        sideCaps.values().forEach(LazyOptional::invalidate);
-        sideCaps.clear();
+    protected IItemHandler unsidedPipeHandler() {
+        return this;
     }
 
     @Override
-    public void reviveCaps() {
-        super.reviveCaps();
-        handler = LazyOptional.of(() -> this);
+    protected IItemHandler createFaceHandler(Direction side) {
+        return new ExternalSideItemHandler(side);
+    }
+
+//? if <1.21.1 {
+    @Override
+    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction side) {
+        return capability == ForgeCapabilities.ITEM_HANDLER
+                ? pipeCapability(side).cast()
+                : super.getCapability(capability, side);
     }
 //?}
 
@@ -873,7 +758,7 @@ public class ItemPipeBlockEntity extends GTBlockEntity
         }
         disabledInputs = tag.contains(NBT_DISABLED_INPUTS) ? tag.getByte(NBT_DISABLED_INPUTS) : 0;
         disabledOutputs = tag.contains(NBT_DISABLED_OUTPUTS) ? tag.getByte(NBT_DISABLED_OUTPUTS) : 0;
-        manualDisconnects = tag.contains(NBT_MANUAL_DISCONNECTS) ? tag.getByte(NBT_MANUAL_DISCONNECTS) & 0x3F : 0;
+        loadManualDisconnects(tag);
         // A counter from a legacy save has no window and cannot consume the current allowance.
         transferWindow = tag.contains(NBT_TRANSFER_WINDOW, Tag.TAG_LONG)
                 ? tag.getLong(NBT_TRANSFER_WINDOW)
@@ -913,7 +798,7 @@ public class ItemPipeBlockEntity extends GTBlockEntity
         tag.putByteArray(NBT_SLOT_ORIGINS, slotOrigins.clone());
         tag.putByte(NBT_DISABLED_INPUTS, disabledInputs);
         tag.putByte(NBT_DISABLED_OUTPUTS, disabledOutputs);
-        tag.putByte(NBT_MANUAL_DISCONNECTS, (byte) manualDisconnects);
+        saveManualDisconnects(tag);
         tag.putLong(NBT_TRANSFERRED, transferredThisSecond);
         tag.putLong(NBT_TRANSFER_WINDOW, transferWindow);
         CompoundTag itemsTag = new CompoundTag();
@@ -931,23 +816,6 @@ public class ItemPipeBlockEntity extends GTBlockEntity
         tag.put(COVER_UPDATE, covers);
     }
 
-    /**
-     * Covers have to reach the client renderer, so the pipe sends the update tag built above; this is
-     * the same packet pair as {@link BasicMachineBlockEntity#getUpdatePacket()} and
-     * {@link FluidPipeBlockEntity#getUpdatePacket()}.
-     */
-    @Override
-    public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override
-    protected void handleDataPacket(net.minecraft.network.Connection net,
-            net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket pkt,
-            @Nullable HolderLookup.Provider lookup) {
-        if (pkt.getTag() != null) readUpdateTag(pkt.getTag(), lookup);
-    }
-
     public long getTransferredThisSecond() {
         syncTransferWindow();
         return transferredThisSecond;
@@ -960,29 +828,4 @@ public class ItemPipeBlockEntity extends GTBlockEntity
         // An inventory beside the network may have room now: sources waiting on it retry.
         if (level != null && !level.isClientSide) ItemPipeNetworks.inventoryUpdated(this);
     }
-    // ── Client model data (dynamic pipe model neighbor sizes) ───────────────
-
-    @Override
-//? if >=1.21.1 {
-    /*public net.neoforged.neoforge.client.model.data.ModelData getModelData() {
-*///?} else {
-    public net.minecraftforge.client.model.data.ModelData getModelData() {
-//?}
-        float[] halves = new float[6];
-        for (net.minecraft.core.Direction d : net.minecraft.core.Direction.values()) {
-            halves[d.ordinal()] = level == null
-                    ? (float) gregtech.engine.machine.PipeGeometry.NONE
-                    : (float) gregtech.engine.machine.PipeGeometry.pipeHalfOf(
-                            level.getBlockState(worldPosition.relative(d)));
-        }
-//? if >=1.21.1 {
-        /*return net.neoforged.neoforge.client.model.data.ModelData.builder()
-*///?} else {
-        return net.minecraftforge.client.model.data.ModelData.builder()
-//?}
-                .with(gregtech.engine.machine.PipeModelData.NEIGHBOR_HALVES, halves)
-                .build();
-    }
-
-
 }

@@ -1,8 +1,8 @@
 package gregtech.content.registry;
 
 import gregtech.api.material.GTMaterial;
-import gregtech.content.block.machine.FluidPipeBlock;
-import gregtech.content.block.machine.ItemPipeBlock;
+import gregtech.content.transport.pipe.fluid.FluidPipeBlock;
+import gregtech.content.transport.pipe.item.ItemPipeBlock;
 import gregtech.engine.machine.ItemPipeSpec;
 import gregtech.engine.machine.PipeSpec;
 import java.util.ArrayList;

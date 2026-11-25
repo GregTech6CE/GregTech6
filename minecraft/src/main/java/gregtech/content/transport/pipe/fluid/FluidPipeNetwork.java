@@ -1,6 +1,5 @@
-package gregtech.content.transport.fluid;
+package gregtech.content.transport.pipe.fluid;
 
-import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
 import it.unimi.dsi.fastutil.longs.Long2IntOpenHashMap;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +15,10 @@ import net.minecraft.world.level.Level;
  */
 public final class FluidPipeNetwork {
     /** Shared by all members, so invalidation detaches the snapshot without visiting every pipe. */
-    public static final class Membership {
+    static final class Membership {
         private FluidPipeNetwork network;
 
-        public FluidPipeNetwork network() {
+        FluidPipeNetwork network() {
             return network;
         }
     }
@@ -74,28 +73,28 @@ public final class FluidPipeNetwork {
         return chunk;
     }
 
-    public boolean valid() {
+    boolean valid() {
         return valid;
     }
 
-    public boolean contains(FluidPipeBlockEntity pipe) {
+    boolean contains(FluidPipeBlockEntity pipe) {
         return topology.indexOf(pipe) >= 0;
     }
 
-    public int size() {
+    int size() {
         return topology.size();
     }
 
-    public FluidPipeBlockEntity pipe(int index) {
+    FluidPipeBlockEntity pipe(int index) {
         return topology.pipe(index);
     }
 
     /** Start one pool pass; chunk liveness is checked once per touched chunk per pass. */
-    public void beginPass() {
+    void beginPass() {
         availabilityEpoch++;
     }
 
-    public boolean live(int pipe) {
+    boolean live(int pipe) {
         if (!valid) return false;
         if (topology.pipe(pipe).isRemoved()) {
             invalidate();
@@ -110,7 +109,7 @@ public final class FluidPipeNetwork {
         return true;
     }
 
-    public void invalidate() {
+    void invalidate() {
         if (!valid) return;
         valid = false;
         membership.network = null;

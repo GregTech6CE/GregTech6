@@ -1,8 +1,8 @@
 package gregtech.compat.jade;
 
-import gregtech.content.blockentity.machine.ItemPipeBlockEntity;
 import gregtech.content.cover.*;
 import gregtech.content.logistics.LogisticsCoverHost;
+import gregtech.content.transport.pipe.item.ItemPipeBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
