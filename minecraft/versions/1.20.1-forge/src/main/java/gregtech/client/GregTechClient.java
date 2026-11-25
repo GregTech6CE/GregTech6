@@ -513,19 +513,6 @@ public final class GregTechClient {
                         (state, level, pos, tintIndex) -> tintIndex == 0 ? explosive.tintRgb() : 0xFFFFFF, explosive);
             }
         });
-        // Surface rocks: tint from the block entity's material (vein indicators).
-        event.register(
-                (state, level, pos, tintIndex) -> {
-                    if (tintIndex != 0 || level == null || pos == null) return 0xFFFFFF;
-                    if (level.getBlockEntity(pos) instanceof gregtech.content.blockentity.RockBlockEntity rock) {
-                        var material = gregtech.engine.material.GTMaterialRegistry.get(rock.getMaterial());
-                        if (material != null && material.resolve().isValid()) {
-                            return material.resolve().getColor();
-                        }
-                    }
-                    return 0xFFFFFF;
-                },
-                GTBlocks.ROCK.get());
         GTBurningBoxes.solidBoxes().forEach(entry -> {
             if (!entry.isPresent()) {
                 return;

@@ -107,10 +107,9 @@ public class GTRocksFeature extends Feature<NoneFeatureConfiguration> {
             }
             if (!rockGround(state)) return false;
             BlockPos above = cursor.above();
-            // GT6's `WD.easyRep`: the block above must be replaceable — air, a snow layer, leaves,
-            // fire, or the plants the vanilla REPLACEABLE tag covers, and not filled with liquid.
-            BlockState aboveState = level.getBlockState(above);
-            if (!aboveState.getFluidState().isEmpty() || !replaceable(aboveState)) return false;
+            // GT6's `WD.easyRep`: the block above must be replaceable — air, a snow layer or the
+            // plants the vanilla REPLACEABLE tag covers, not just air.
+            if (!replaceable(level.getBlockState(above))) return false;
             return placeRock(level, above, litterFor(random));
         }
         return false;
@@ -123,21 +122,19 @@ public class GTRocksFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     /**
-     * GT6's {@code WD.easyRep}: what a rock may replace — air, snow layers, leaves, fire, or
-     * anything covered by the vanilla {@code REPLACEABLE} tag (grass, ferns, flowers).
+     * GT6's {@code WD.easyRep}: air, snow layers, leaves, fire and other dry, replaceable blocks.
      */
     public static boolean replaceable(BlockState state) {
-        return state.isAir()
-                || state.is(BlockTags.REPLACEABLE)
-                || state.is(Blocks.SNOW)
-                || state.is(BlockTags.LEAVES)
-                || state.is(Blocks.FIRE)
-                || state.is(Blocks.SOUL_FIRE);
+        return state.getFluidState().isEmpty()
+                && (state.isAir() || state.is(BlockTags.REPLACEABLE) || state.is(Blocks.SNOW)
+                        || state.is(BlockTags.LEAVES) || state.is(BlockTags.FIRE));
     }
 
     /** Selects the retained surface-litter contents. */
     public static Litter litterFor(RandomSource random) {
-        var value=TerrainWorldgenRules.litter(random::nextInt);return new Litter(value.itemId(),value.material(),value.rawOre());}
+        var value = TerrainWorldgenRules.litter(random::nextInt);
+        return new Litter(value.itemId(), value.material(), value.rawOre());
+    }
 
     /** Places GT6's lying-item rock (the port's rock block) carrying {@code litter}. */
     public static boolean placeRock(WorldGenLevel level, BlockPos pos, Litter litter) {

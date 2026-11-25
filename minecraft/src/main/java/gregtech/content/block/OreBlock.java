@@ -22,6 +22,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.server.level.ServerLevel;
@@ -133,6 +134,10 @@ public class OreBlock extends Block implements MaterialBlockLike {
     /** GT6 bedrock deposits: embedded in bedrock, so unbreakable and dropping nothing. */
     public static boolean isBedrockOre(@Nullable BlockState state) {
         return stoneOf(state).isBedrock();
+    }
+
+    public static boolean isBedrockFloor(BlockState state) {
+        return state.is(Blocks.BEDROCK) || state.getBlock() instanceof OreBlock && isBedrockOre(state);
     }
 
     @Override

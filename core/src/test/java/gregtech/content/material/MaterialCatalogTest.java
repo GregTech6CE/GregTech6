@@ -346,16 +346,16 @@ class MaterialCatalogTest {
     @Test
     void netherBedrockOresKeepOnlyTheRetainedMaterials() {
         MaterialTestFixture.ensureInitialized();
-        var names = gregtech.content.worldgen.GTBedrockOres.NETHER.stream()
+        var nether = gregtech.content.worldgen.OreSourceCatalog.current()
+                .bedrockOres(
+                        gregtech.api.addon.worldgen.OreVeinDeclaration.NETHER,
+                        gregtech.content.worldgen.OreSourceCatalog.Geology.WITHOUT_VANILLA_ORES);
+        var names = nether.stream()
                 .map(gregtech.content.worldgen.GTBedrockOres.BedrockOre::name)
                 .toList();
         assertEquals(java.util.List.of("glowstone", "netherquartz", "ancientdebris", "efrine", "firestone"), names);
-        assertSame(
-                Materials.Efrine,
-                gregtech.content.worldgen.GTBedrockOres.NETHER.get(3).material());
-        assertSame(
-                Materials.Firestone,
-                gregtech.content.worldgen.GTBedrockOres.NETHER.get(4).material());
+        assertSame(Materials.Efrine, nether.get(3).material());
+        assertSame(Materials.Firestone, nether.get(4).material());
         assertTrue(!GTMaterialRegistry.get(8456).isValid());
         assertTrue(!GTMaterialRegistry.get(8457).isValid());
     }

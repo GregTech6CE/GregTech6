@@ -7,6 +7,8 @@ import gregtech.api.addon.AddonNames;
 /** Shared checks for ore-vein and small-ore declarations. */
 final class WorldgenNames {
     private static final int MAX_Y = 255;
+    private static final int MIN_MODERN_Y = -2032;
+    private static final int MAX_MODERN_Y = 2031;
 
     private WorldgenNames() {}
 
@@ -20,6 +22,12 @@ final class WorldgenNames {
         if (minY < 0 || maxY > MAX_Y || minY >= maxY)
             throw new IllegalArgumentException("'" + name + "' Y range must sit inside 0.." + MAX_Y
                     + ", with min below max");
+    }
+
+    static void checkAbsoluteHeight(String name, int minY, int maxY) {
+        if (minY < MIN_MODERN_Y || maxY > MAX_MODERN_Y || minY >= maxY)
+            throw new IllegalArgumentException("'" + name + "' absolute Y range must sit inside "
+                    + MIN_MODERN_Y + ".." + MAX_MODERN_Y + ", with min below max");
     }
 
     /** Any resource location, so addon dimensions are usable. */

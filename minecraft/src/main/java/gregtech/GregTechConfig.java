@@ -215,6 +215,10 @@ public final class GregTechConfig {
         GLOWTUS_AMOUNT("worldgen.surface.glowtus.Amount", 16, 0, 64),
         GLOWTUS_PROBABILITY("worldgen.surface.glowtus.Probability", 2, 1, 1000000),
         SPRING_PROBABILITY("worldgen.fluid_springs_probability", 100, 1, 1000000),
+        BEDROCK_DENSITY("worldgen.bedrock.DensityPercent",
+                gregtech.content.worldgen.GTWorldgenDefaults.BEDROCK_DENSITY_PERCENT, 0, 400),
+        BOUNDARY_GEM_PROBABILITY("worldgen.geology_settings.BoundaryGemProbability",
+                gregtech.content.worldgen.BoundaryGemOres.CHANCE_DIVISOR, 1, 1000000),
         OCEAN_HEIGHT("worldgen.water.ocean.Height", 63, -64, 319),
         RIVER_HEIGHT("worldgen.water.river.Height", 63, -64, 319),
         DUNGEON_PROBABILITY("worldgen.dungeon.Probability", 100, 1, 1000000),
@@ -267,7 +271,8 @@ public final class GregTechConfig {
         var settings = new EnumMap<Number, java.util.function.IntSupplier>(Number.class);
         for (Number number : Number.values()) {
             var value = COMMON.worldRestart().comment(number.key.substring(number.key.lastIndexOf('.') + 1),
-                    number.name().contains("PROBABILITY") ? "One attempt in N. Spring/log/tree values scale the original relative probabilities."
+                    number == Number.BEDROCK_DENSITY ? "Percent of the usual per-mineral bedrock ore chance. Set to 0 to disable random deposits."
+                    : number.name().contains("PROBABILITY") ? "One attempt in N. Spring/log/tree values scale the original relative probabilities."
                     : number == Number.DUNGEON_MIN_Y || number == Number.DUNGEON_MAX_Y ? "GT6 Y coordinate; remapped to modern world depth."
                     : "Restart required; affects newly generated chunks.")
                     .defineInRange(number.key, number.initial, number.min, number.max);
@@ -280,6 +285,12 @@ public final class GregTechConfig {
 
     private static final java.util.function.Supplier<java.util.List<? extends String>> DISABLED_LOOT =
             strings("worldgen.loot.disabled", "Disabled loot: category|item spec, or category|*.");
+    private static final java.util.function.Supplier<java.util.List<? extends String>> DISABLED_BEDROCK_ORES =
+            strings("worldgen.bedrock.DisabledOres", "Disabled natural bedrock ore names or material names. Use * to disable all natural deposits.");
+    private static final java.util.function.Supplier<java.util.List<? extends String>> DISABLED_BEDROCK_DEPTHS =
+            strings("worldgen.bedrock.DisabledDepths", "Disabled natural bedrock ore groups: shallow, deep, neutral.");
+    private static final java.util.function.Supplier<java.util.List<? extends String>> BEDROCK_CHANCE_OVERRIDES =
+            strings("worldgen.bedrock.ChanceOverrides", "Override the final chance divisor before applying DensityPercent. Use material=divisor or deposit_name=divisor, for example gold=32000 or gold_b=16000.");
     private static final java.util.function.Supplier<java.util.List<? extends String>> DISABLED_RECIPES =
             strings("recipes.disabled", "Disabled recipes: namespace:path.");
     private static final java.util.function.Supplier<java.util.List<? extends String>> DISABLED_TOOLS =
@@ -304,6 +315,12 @@ public final class GregTechConfig {
         var disabled = DISABLED_LOOT.get();
         return !disabled.contains(category + "|*") && !disabled.contains(category + "|" + spec);
     }
+
+    public static java.util.List<? extends String> disabledBedrockOres() { return DISABLED_BEDROCK_ORES.get(); }
+
+    public static java.util.List<? extends String> disabledBedrockDepths() { return DISABLED_BEDROCK_DEPTHS.get(); }
+
+    public static java.util.List<? extends String> bedrockChanceOverrides() { return BEDROCK_CHANCE_OVERRIDES.get(); }
 
     public static boolean recipeEnabled(String id) { return !DISABLED_RECIPES.get().contains(id); }
 

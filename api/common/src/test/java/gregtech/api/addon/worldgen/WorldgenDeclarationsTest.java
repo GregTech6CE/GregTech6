@@ -12,8 +12,10 @@ class WorldgenDeclarationsTest {
     void customDimensionsAreAccepted() {
         OreVeinDeclaration vein = vein("example:custom_dimension", 1, 64);
         assertEquals("example:custom_dimension", vein.dimension());
+        assertEquals(HeightCoordinates.LEGACY, vein.coordinates());
         SmallOreDeclaration ore = new SmallOreDeclaration("test_small", "example:custom_dimension", 1, 64, 1, "Iron");
         assertEquals("example:custom_dimension", ore.dimension());
+        assertEquals(HeightCoordinates.LEGACY, ore.coordinates());
     }
 
     @Test
@@ -26,9 +28,23 @@ class WorldgenDeclarationsTest {
 
     @Test
     void heightsStayInThePreRemapRange() {
-        assertThrows(IllegalArgumentException.class, () -> vein("test_vein", -1, 64));
-        assertThrows(IllegalArgumentException.class, () -> vein("test_vein", 1, 256));
-        assertThrows(IllegalArgumentException.class, () -> vein("test_vein", 64, 64));
+        assertThrows(IllegalArgumentException.class, () -> vein(OreVeinDeclaration.OVERWORLD, -1, 64));
+        assertThrows(IllegalArgumentException.class, () -> vein(OreVeinDeclaration.OVERWORLD, 1, 256));
+        assertThrows(IllegalArgumentException.class, () -> vein(OreVeinDeclaration.OVERWORLD, 64, 64));
+    }
+
+    @Test
+    void absoluteHeightsCanBeNegativeAndReachAbove255() {
+        var vein = new OreVeinDeclaration("test_vein", OreVeinDeclaration.OVERWORLD, -64, 319, 1, 1, 1,
+                "Iron", "Iron", "Iron", "Iron", HeightCoordinates.ABSOLUTE);
+        assertEquals(-64, vein.minY());
+        assertEquals(319, vein.maxY());
+        assertEquals(HeightCoordinates.ABSOLUTE, vein.coordinates());
+        var ore = new SmallOreDeclaration("test_ore", SmallOreDeclaration.OVERWORLD,
+                -40, -12, 1, "Iron", HeightCoordinates.ABSOLUTE);
+        assertEquals(-40, ore.minY());
+        assertThrows(IllegalArgumentException.class, () -> new SmallOreDeclaration(
+                "test_ore", SmallOreDeclaration.OVERWORLD, -2033, -12, 1, "Iron", HeightCoordinates.ABSOLUTE));
     }
 
     private static OreVeinDeclaration vein(String dimension, int minY, int maxY) {

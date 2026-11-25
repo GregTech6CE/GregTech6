@@ -46,7 +46,7 @@ final class VirtualResourcesIntegrityTest {
     private static final String FORGE_COMPOSITE = "forge:composite";
     private static final String NEOFORGE_COMPOSITE = "neoforge:composite";
     private static final int MAX_STATIC_JSON = 450;
-    private static final int EXPECTED_STATIC_MODELS = 319;
+    private static final int EXPECTED_STATIC_MODELS = 321;
     private static final int EXPECTED_STATIC_BLOCKSTATES = 100;
     private static final int EXPECTED_VIRTUAL_MODELS = 6611;
     private static final int EXPECTED_MODEL_TSV_ROWS = 4375;

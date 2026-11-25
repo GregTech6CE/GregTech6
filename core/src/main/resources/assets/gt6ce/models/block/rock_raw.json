@@ -1,0 +1,43 @@
+{
+  "textures": {
+    "particle": "minecraft:block/raw_iron_block",
+    "ore": "minecraft:block/raw_iron_block"
+  },
+  "elements": [
+    {
+      "from": [5.25, 0, 6], "to": [9.5, 3, 10.25],
+      "rotation": {"origin": [8, 0, 8], "axis": "y", "angle": -22.5},
+      "faces": {
+        "up": {"texture": "#ore", "uv": [2, 1, 8, 7], "tintindex": 0},
+        "down": {"texture": "#ore", "tintindex": 0},
+        "north": {"texture": "#ore", "tintindex": 0},
+        "south": {"texture": "#ore", "uv": [5, 8, 11, 12], "tintindex": 0},
+        "west": {"texture": "#ore", "tintindex": 0},
+        "east": {"texture": "#ore", "tintindex": 0}
+      }
+    },
+    {
+      "from": [7.5, 0, 5.25], "to": [10.5, 2.25, 7.5],
+      "faces": {
+        "up": {"texture": "#ore", "uv": [7, 5, 11, 8], "tintindex": 0},
+        "down": {"texture": "#ore", "tintindex": 0},
+        "north": {"texture": "#ore", "tintindex": 0},
+        "south": {"texture": "#ore", "tintindex": 0},
+        "west": {"texture": "#ore", "tintindex": 0},
+        "east": {"texture": "#ore", "tintindex": 0}
+      }
+    },
+    {
+      "from": [9.3, 0, 7.5], "to": [11.5, 1.5, 9.5],
+      "rotation": {"origin": [8, 0, 8], "axis": "y", "angle": 22.5},
+      "faces": {
+        "up": {"texture": "#ore", "uv": [3, 9, 6, 12], "tintindex": 0},
+        "down": {"texture": "#ore", "tintindex": 0},
+        "north": {"texture": "#ore", "tintindex": 0},
+        "south": {"texture": "#ore", "tintindex": 0},
+        "west": {"texture": "#ore", "tintindex": 0},
+        "east": {"texture": "#ore", "tintindex": 0}
+      }
+    }
+  ]
+}

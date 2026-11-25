@@ -904,11 +904,6 @@ public final class GTDungeonData {
         return level.getFluidState(new BlockPos(x + ax, y + ay, z + az)).is(FluidTags.WATER);
     }
 
-    /** Whether the cell's floor is above bedrock (GT6's {@code aData.mWorld.getBlock(x, 0, z)} hardness test). */
-    public boolean aboveBedrock(int ax, int az) {
-        return !level.getBlockState(new BlockPos(x + ax, level.getMinBuildHeight(), z + az)).is(Blocks.BEDROCK);
-    }
-
     /** GT6's {@code BlocksGT.Diggables}/{@code Sands} test: blocks the pillar must not dig through. */
     public boolean softGround(int ax, int ay, int az) {
         BlockState state = get(ax, ay, az);

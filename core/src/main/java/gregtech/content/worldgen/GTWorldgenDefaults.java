@@ -5,4 +5,5 @@ public final class GTWorldgenDefaults {
     private GTWorldgenDefaults() {}
 
     public static final boolean STONE_LAYERS = true;
+    public static final int BEDROCK_DENSITY_PERCENT = 100;
 }

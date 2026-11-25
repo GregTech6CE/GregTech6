@@ -1,5 +1,6 @@
 package gregtech.content.worldgen;
 
+import gregtech.api.addon.worldgen.HeightCoordinates;
 import gregtech.api.addon.worldgen.OreVeinDeclaration;
 import gregtech.api.addon.worldgen.SmallOreDeclaration;
 import gregtech.api.material.GTMaterial;
@@ -7,9 +8,8 @@ import gregtech.api.material.MaterialProperty;
 import gregtech.content.worldgen.GTOreVeins.OreVein;
 import gregtech.content.worldgen.GTOreVeins.SmallOre;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.IdentityHashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -21,58 +21,15 @@ public final class AddonOreVeins {
 
     private record Key(String dimension, String kind, String name) {}
 
-    private static volatile Map<String, List<OreVein>> veinsByDimension = Map.of();
-    private static volatile Map<String, List<SmallOre>> smallOresByDimension = Map.of();
-
     private AddonOreVeins() {}
-
-    /** Addon large veins declared for {@code dimension}. */
-    public static List<OreVein> veins(String dimension) {
-        return veinsByDimension.getOrDefault(dimension, List.of());
-    }
-
-    /** Addon small ores declared for {@code dimension}. */
-    public static List<SmallOre> smallOres(String dimension) {
-        return smallOresByDimension.getOrDefault(dimension, List.of());
-    }
-
-    /** Dimensions with at least one addon large vein. */
-    public static Set<String> veinDimensions() {
-        return veinsByDimension.keySet();
-    }
-
-    /** Dimensions with at least one addon small ore. */
-    public static Set<String> smallOreDimensions() {
-        return smallOresByDimension.keySet();
-    }
-
-    public static List<OreVein> overworldVeins() {
-        return veins(OreVeinDeclaration.OVERWORLD);
-    }
-
-    public static List<OreVein> endVeins() {
-        return veins(OreVeinDeclaration.END);
-    }
-
-    public static List<SmallOre> overworldSmall() {
-        return smallOres(SmallOreDeclaration.OVERWORLD);
-    }
-
-    public static List<SmallOre> netherSmall() {
-        return smallOres(SmallOreDeclaration.NETHER);
-    }
-
-    public static List<SmallOre> endSmall() {
-        return smallOres(SmallOreDeclaration.END);
-    }
 
     public static void publish(
             List<Submission> submissions, Function<String, GTMaterial> lookup, Set<GTMaterial> declaredOreForms) {
         var materials = new OreMaterials(lookup, declaredOreForms);
         var taken = new HashMap<Key, String>();
         claimBuiltIn(taken);
-        var veinBuckets = new HashMap<String, List<OreVein>>();
-        var smallBuckets = new HashMap<String, List<SmallOre>>();
+        var veinBuckets = new LinkedHashMap<String, List<OreVein>>();
+        var smallBuckets = new LinkedHashMap<String, List<SmallOre>>();
         for (Submission submission : submissions) {
             for (OreVeinDeclaration vein : submission.veins) {
                 claim(taken, submission.addonId, vein.dimension(), "large", vein.name());
@@ -86,7 +43,8 @@ public final class AddonOreVeins {
                         materials.resolve(submission.addonId, vein.name(), vein.top()),
                         materials.resolve(submission.addonId, vein.name(), vein.bottom()),
                         materials.resolve(submission.addonId, vein.name(), vein.between()),
-                        materials.resolve(submission.addonId, vein.name(), vein.spread()));
+                        materials.resolve(submission.addonId, vein.name(), vein.spread()),
+                        vein.coordinates());
                 veinBuckets
                         .computeIfAbsent(vein.dimension(), key -> new ArrayList<>())
                         .add(resolved);
@@ -98,24 +56,22 @@ public final class AddonOreVeins {
                         ore.minY(),
                         ore.maxY(),
                         ore.amount(),
-                        materials.resolve(submission.addonId, ore.name(), ore.material()));
+                        materials.resolve(submission.addonId, ore.name(), ore.material()),
+                        ore.coordinates() == HeightCoordinates.LEGACY
+                                ? GTOreVeins.Distribution.LEGACY
+                                : GTOreVeins.Distribution.UNIFORM);
                 smallBuckets
                         .computeIfAbsent(ore.dimension(), key -> new ArrayList<>())
                         .add(resolved);
             }
         }
-        var veins = new HashMap<String, List<OreVein>>();
         for (var entry : veinBuckets.entrySet()) {
             fit(entry.getKey(), entry.getValue());
-            veins.put(entry.getKey(), List.copyOf(entry.getValue()));
         }
-        var smallOres = new HashMap<String, List<SmallOre>>();
-        for (var entry : smallBuckets.entrySet()) smallOres.put(entry.getKey(), List.copyOf(entry.getValue()));
-        veinsByDimension = Map.copyOf(veins);
-        smallOresByDimension = Map.copyOf(smallOres);
+        OreSourceCatalog.publish(veinBuckets, smallBuckets);
     }
 
-    private static void claimBuiltIn(java.util.Map<Key, String> taken) {
+    private static void claimBuiltIn(Map<Key, String> taken) {
         for (OreVein vein : GTOreVeins.OVERWORLD_VEINS)
             taken.put(new Key(OreVeinDeclaration.OVERWORLD, "large", vein.name()), "a built-in vein");
         for (OreVein vein : GTOreVeins.END_VEINS)
@@ -128,8 +84,7 @@ public final class AddonOreVeins {
             taken.put(new Key(SmallOreDeclaration.END, "small", ore.name()), "a built-in vein");
     }
 
-    private static void claim(
-            java.util.Map<Key, String> taken, String addonId, String dimension, String kind, String name) {
+    private static void claim(Map<Key, String> taken, String addonId, String dimension, String kind, String name) {
         String previous = taken.putIfAbsent(new Key(dimension, kind, name), "addon '" + addonId + "'");
         if (previous == null) return;
         String label = "large".equals(kind) ? "ore vein" : "small ore";
@@ -154,17 +109,8 @@ public final class AddonOreVeins {
         return sum;
     }
 
-    private static final class OreMaterials {
-        private final Function<String, GTMaterial> lookup;
-        private final Set<GTMaterial> declaredOreForms;
-        private Set<GTMaterial> builtinOres;
-
-        OreMaterials(Function<String, GTMaterial> lookup, Set<GTMaterial> declaredOreForms) {
-            this.lookup = lookup;
-            this.declaredOreForms = declaredOreForms;
-        }
-
-        GTMaterial resolve(String addonId, String vein, String name) {
+    private record OreMaterials(Function<String, GTMaterial> lookup, Set<GTMaterial> declaredOreForms) {
+        private GTMaterial resolve(String addonId, String vein, String name) {
             GTMaterial found = lookup.apply(name);
             if (!found.isValid())
                 throw new IllegalStateException(
@@ -173,40 +119,11 @@ public final class AddonOreVeins {
             if (material.has(MaterialProperty.HIDDEN))
                 throw new IllegalStateException("Addon '" + addonId + "' ore vein '" + vein
                         + "' cannot use hidden material '" + material.getName() + "'");
-            if (declaredOreForms.contains(material) || material.has(MaterialProperty.GENERATE_ORE)) return material;
-            if (builtinOres == null) builtinOres = builtinOreMaterials(lookup);
-            if (builtinOres.contains(material)) return material;
+            if (declaredOreForms.contains(material)
+                    || material.has(MaterialProperty.GENERATE_ORE)
+                    || OreSourceCatalog.hasBuiltinOreForm(material)) return material;
             throw new IllegalStateException(
                     "Addon '" + addonId + "' ore vein '" + vein + "' material '" + material.getName() + "' has no ore");
         }
-    }
-
-    /** Materials {@link GTWorldgenMaterials#flagOreMaterials()} will give an ore block. */
-    private static Set<GTMaterial> builtinOreMaterials(Function<String, GTMaterial> lookup) {
-        Set<GTMaterial> materials = Collections.newSetFromMap(new IdentityHashMap<>());
-        for (OreVein vein : GTOreVeins.OVERWORLD_VEINS) addVein(materials, vein);
-        for (OreVein vein : GTOreVeins.END_VEINS) addVein(materials, vein);
-        for (SmallOre ore : GTOreVeins.OVERWORLD_SMALL_ORES) add(materials, ore.material());
-        for (SmallOre ore : GTOreVeins.NETHER_SMALL_ORES) add(materials, ore.material());
-        for (SmallOre ore : GTOreVeins.END_SMALL_ORES) add(materials, ore.material());
-        for (GTBedrockOres.BedrockOre ore : GTBedrockOres.OVERWORLD) add(materials, ore.material());
-        for (GTStoneLayersGen.LayerDef layer : GTStoneLayersGen.LAYERS) {
-            for (GTStoneLayersGen.OreDef ore : layer.ores()) add(materials, lookup.apply(ore.material()));
-        }
-        for (GTStoneLayersGen.ContactDef contact : GTStoneLayersGen.CONTACTS) {
-            for (GTStoneLayersGen.OreDef ore : contact.ores()) add(materials, lookup.apply(ore.material()));
-        }
-        return materials;
-    }
-
-    private static void addVein(Set<GTMaterial> materials, OreVein vein) {
-        add(materials, vein.top());
-        add(materials, vein.bottom());
-        add(materials, vein.between());
-        add(materials, vein.spread());
-    }
-
-    private static void add(Set<GTMaterial> materials, GTMaterial material) {
-        if (material != null && material.resolve().isValid()) materials.add(material.resolve());
     }
 }

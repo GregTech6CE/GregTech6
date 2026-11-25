@@ -1,76 +1,18 @@
 package gregtech.content.worldgen.dungeon;
 
 import gregtech.api.material.GTMaterial;
+import gregtech.content.block.OreBlock;
 import gregtech.content.block.misc.BarsBlock;
 import gregtech.content.block.tool.DynamiteBlock;
 import gregtech.content.block.tool.ShapedToolBlock;
-import gregtech.content.material.Materials;
-import gregtech.content.material.generated.OreMaterials;
 import gregtech.content.registry.GTToolBlocks;
 import gregtech.content.worldgen.GTBedrockOreFeature;
-import gregtech.platform.Mc;
+import gregtech.content.worldgen.SpecialOreDeposits;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
-/**
- * Port of GT6's {@code DungeonChunkRoomMiningBedrock}
- * ({@code DungeonChunkRoomMiningBedrock}).
- *
- * <p>The bedrock mine: GT6 first generates a bedrock ore vein of one of thirteen materials under
- * the cell and refuses the cell when it cannot (the vein writer requires bedrock at the cell
- * centre); it then digs a 16x16 shaft from the layer under the room floor down to the world Y just
- * above the bedrock band, replaces the room's floor with a lattice of metal scaffolds, bars and
- * four lamps, carves a chamber into the top of the ore vein and grows loose raw ore pillars from
- * the vein up through the bottom of the shaft.</p>
- *
- * <h2>Local Y</h2>
- * <p>GT6 mixes two kinds of Y here: the room's own layers (floor 0, bars 1) and absolute world
- * levels near bedrock (world Y 5, 4 and 3, written as {@code 5-aData.mY} and so on). The port keeps
- * both, with GT6's world levels mapped onto the port's bedrock band: the port's band lies at
- * {@link net.minecraft.world.level.WorldGenLevel#getMinBuildHeight()}, so GT6's world Y 5 becomes
- * {@code getMinBuildHeight() + 5} (the first layer above the band, exactly like GT6), its world Y 4
- * and 3 become {@code +4} and {@code +3}, and the whole shaft is therefore as far below the room
- * floor as the port's stretched depth band demands (see {@code GTWorldgenScale}).</p>
- *
- * <h2>Port differences</h2>
- * <ul>
- *   <li><b>The vein.</b> GT6 calls {@code WorldgenOresBedrock.generateVein} with one of thirteen
- *       materials chosen by {@code UT.Code.select}, i.e. from its global {@code RNGSUS} and
- *       <em>not</em> from the cell's stream. The port calls its own port of that vein writer,
- *       {@link GTBedrockOreFeature#placeVein}, with the same thirteen materials - the port has every one
- *       of them ({@code Materials.Redstone}, {@code Materials.Sulfur}, {@code Materials.Hematite} for
- *       {@code MT.Fe2O3}, {@code Materials.Pyrolusite} for {@code MT.MnO2}, {@code Materials.Apatite}
- *       and the seven {@code MT.OREMATS} ores) - and picks them with
- *       {@link GTDungeonData#select} like GT6 does, so the cell's own roll sequence stays GT6's.</li>
- *   <li><b>The refusal.</b> GT6 returns false when {@code generateVein} fails, which it does when
- *       the cell centre has no bedrock ({@code WorldgenOresBedrock}). The port tests that
- *       with {@link GTDungeonData#aboveBedrock}, whose result is the inverse of GT6's test. The
- *       port's vein writer repeats the same test internally, so its result is not used twice: a
- *       material whose port ore block is missing must not refuse a cell GT6 would have built.</li>
- *   <li><b>The raw ore pillars.</b> GT6 places {@code BlocksGT.blockRaw} with the vein material as
- *       its meta. The port owns that block ({@code MaterialPrefixes.blockRaw}, a block per
- *       material) and places it through {@link GTDungeonData#rawBlock(int, int, int, GTMaterial)}, so
- *       the pillars are GT6's own blocks now; earlier batches of the port used a vanilla diamond-pickaxe
- *       ore of the matching material here.</li>
- *   <li><b>The scaffold and the explosives.</b> GT6's brass/steel roll selects both the bars
- *       and the matching material scaffold throughout the room. The corner explosives use the
- *       port's three dynamite variants, including their original embedded NBT_MODE state.</li>
- *   <li><b>The chamber.</b> GT6 carves its chamber at world Y 4 and 3, inside its 0..4
- *       bedrock band, because its vein had already turned that bedrock into deepslate and ore. The
- *       port's band is still bedrock, so the port carves a chamber cell only where the vein broke
- *       that column's bedrock floor ({@link GTDungeonData#aboveBedrock}) - GT6's rule of stopping
- *       where the rock becomes bedrock. The chamber therefore comes out ragged where the vein left
- *       bedrock, the explosive cells stay solid and the world floor keeps its bedrock.</li>
- *   <li><b>The bars.</b> GT6's Brass and Steel Bars retain their exact four-bit connection
- *       masks (1 = north, 2 = south, 4 = west, 8 = east), including the two-sided
- *       walkway rails.</li>
- *   <li><b>Tag scope.</b> GT6 shares one tag set across the whole dungeon, so only one bedrock mine
- *       is ever built per dungeon. {@code GTDungeonGenerator.generateCell} hands every cell its own
- *       empty tag set, so the port's rule is one bedrock mine per cell.</li>
- * </ul>
- */
+/** A dungeon shaft and raw ore pillars built above a usable bedrock deposit. */
 public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
 
     /** GT6's room tag ({@code WorldgenDungeonGT}); a cell that already carries it is refused. */
@@ -83,43 +25,22 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
      * raw ore blocks of the pillars, so the port keeps it as GT6 wrote it -
      * {@code UT.Code.select(MT.Redstone, MT.Redstone, MT.S, MT.Fe2O3, MT.MnO2, MT.Apatite,...)}.
      */
-    private static final GTMaterial[] VEIN_MATERIALS = {
-        Materials.Redstone,
-        Materials.Redstone,
-        Materials.Sulfur,
-        Materials.Hematite,
-        Materials.Pyrolusite,
-        Materials.Apatite,
-        OreMaterials.Molybdenite,
-        OreMaterials.Bauxite,
-        OreMaterials.Sphalerite,
-        OreMaterials.Tetrahedrite,
-        OreMaterials.Cassiterite,
-        OreMaterials.Garnierite,
-        OreMaterials.Galena
-    };
+    private static final GTMaterial[] VEIN_MATERIALS = SpecialOreDeposits.DUNGEON_ROLLS.toArray(GTMaterial[]::new);
 
     @Override
     public boolean generate(GTDungeonData data) {
-        if (data.hasTag(TAG_MINING_BEDROCK) || !super.generate(data)) return false;
-        data.tags.add(TAG_MINING_BEDROCK);
-
-        // GT6: one of thirteen bedrock ore materials and its ore vein. GT6 picks the
-        // material with UT.Code.select, i.e. from its global RNG rather than the cell's stream, so the
-        // port draws it from a stream of its own (GTDungeonData.select) - the cell's roll sequence has
-        // to stay GT6's.
+        int floor = data.level.getMinBuildHeight();
+        int rawOreBottom = floor + SpecialOreDeposits.DUNGEON_RAW_ORE_OFFSET;
+        if (data.hasTag(TAG_MINING_BEDROCK) || data.y < rawOreBottom) return false;
         GTMaterial vein = data.select(VEIN_MATERIALS, 0, 0, 0);
-        // GT6's vein writer requires existing bedrock under the cell centre and makes the room
-        // refuse the cell without it (WorldgenOresBedrock); aboveBedrock is that test
-        // inverted (GTDungeonData).
-        if (data.aboveBedrock(8, 8)) return false;
-        GTBedrockOreFeature.placeVein(data.level, data.random, data.x, data.z, vein);
+        if (!GTBedrockOreFeature.placeVein(data.level, data.random, data.x, data.z, vein)) return false;
+        if (!super.generate(data)) return false;
+        data.tags.add(TAG_MINING_BEDROCK);
 
         // GT6: brass or steel for the whole room.
         boolean brass = data.next1in2();
 
-        int floor = data.level.getMinBuildHeight();
-        int lowest = floor + 5 - data.y; // GT6's world Y 5: one layer above the bedrock band
+        int lowest = rawOreBottom - data.y; // GT6's world Y 5: one layer above the bedrock band
         int chamberTop = floor + 4 - data.y; // GT6's world Y 4
         int chamberBottom = floor + 3 - data.y; // GT6's world Y 3
 
@@ -203,8 +124,7 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
             }
         }
 
-        // GT6's chamber at world Y 4: the 6x6 centre of the cell minus its four corners,
-        // carved only where the vein broke the column's bedrock floor.
+        // The 6x6 chamber at the top of the bedrock band leaves intact bedrock in place.
         for (int x = 5; x <= 10; x++) {
             for (int z = 5; z <= 10; z++) {
                 if ((x != 5 && x != 10) || (z != 5 && z != 10)) {
@@ -213,8 +133,7 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
             }
         }
 
-        // GT6's chamber at world Y 3: the inner 6x6, again only where the vein took the
-        // bedrock.
+        // The inner chamber is one block lower.
         for (int x = 6; x <= 9; x++) {
             for (int z = 6; z <= 9; z++) {
                 carve(data, x, chamberBottom, z);
@@ -257,14 +176,9 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
         return true;
     }
 
-    /**
-     * GT6's chamber carve: a block of air where the bedrock ore vein already replaced the rock of
-     * that column at the world floor. That is the port's form of GT6's "stop where the rock becomes
-     * bedrock" rule - a column whose world floor is still bedrock keeps its block, so the carvings
-     * never open a hole in the world floor.
-     */
     private static void carve(GTDungeonData data, int x, int y, int z) {
-        if (data.aboveBedrock(x, z)) data.air(x, y, z);
+        BlockState state = data.get(x, y, z);
+        if (!OreBlock.isBedrockFloor(state) && !state.hasBlockEntity()) data.air(x, y, z);
     }
 
     /**
@@ -287,7 +201,7 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
         BlockState state = gregtech.content.registry.GTManualStations.scaffold(
                         brass ? gregtech.content.material.Materials.Brass : gregtech.content.material.Materials.Steel)
                 .defaultBlockState();
-        if (state != null) data.set(x, y, z, state.setValue(ShapedToolBlock.FACING, facing));
+        data.set(x, y, z, state.setValue(ShapedToolBlock.FACING, facing));
     }
 
     /**
@@ -302,6 +216,8 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
             int y,
             int z,
             gregtech.content.registry.RegisteredBlock<? extends DynamiteBlock> block) {
+        BlockState state = data.get(x, y, z);
+        if (OreBlock.isBedrockFloor(state) || state.hasBlockEntity()) return;
         data.set(
                 x,
                 y,
@@ -310,11 +226,5 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
                         .defaultBlockState()
                         .setValue(DirectionalBlock.FACING, Direction.UP)
                         .setValue(DynamiteBlock.SUNK, true));
-    }
-
-    /** One of the port's blocks by registry name, or {@code null} when it is not registered. */
-    private static BlockState port(String id) {
-        Block block = Mc.block(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", id));
-        return block == null ? null : block.defaultBlockState();
     }
 }

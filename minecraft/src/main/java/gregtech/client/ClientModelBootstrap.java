@@ -8,9 +8,11 @@ import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ModelEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 *///?} else {
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelEvent;
+import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -37,6 +39,11 @@ public final class ClientModelBootstrap {
     private ClientModelBootstrap() {}
 
     @SubscribeEvent
+    public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
+        SurfaceRockModels.colors(event);
+    }
+
+    @SubscribeEvent
     public static void registerAdditional(ModelEvent.RegisterAdditional event) {
         CrucibleClientModels.registerSharedModels(event);
         FluidItemClientModels.registerSharedModels(event);
@@ -45,7 +52,7 @@ public final class ClientModelBootstrap {
         MaterialBlockClientModels.registerSharedModels(event);
         MaterialClientModels.registerSharedModels(event);
         OreClientModels.registerTemplate(event);
-        RawOreRockModels.register(event);
+        SurfaceRockModels.register(event);
         SmelteryClientModels.registerSharedModels(event);
         StoneBlockClientModels.registerSharedModels(event);
         registerPlatformAdditional(event);
@@ -72,7 +79,7 @@ public final class ClientModelBootstrap {
         GTToolModel.onModifyBakingResult(event);
         FluidItemClientModels.onModifyBakingResult(event);
         FluidSpringClient.models(event);
-        RawOreRockModels.bake(event);
+        SurfaceRockModels.bake(event);
         modifyPlatformBakingResult(event);
         LOGGER.info("[{}] Client model bootstrap: NORMAL baking pass", GregTechIdentity.REGISTRY_NAMESPACE);
     }

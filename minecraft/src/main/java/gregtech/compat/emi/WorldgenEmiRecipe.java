@@ -5,7 +5,6 @@ import dev.emi.emi.api.recipe.*;
 import dev.emi.emi.api.stack.*;
 import dev.emi.emi.api.widget.WidgetHolder;
 import gregtech.compat.common.WorldgenInfoData;
-import gregtech.content.worldgen.GTWorldgenScale;
 import java.util.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -72,47 +71,26 @@ public final class WorldgenEmiRecipe implements EmiRecipe {
     }
 
     public static void register(EmiRegistry registry) {
+        var atlas = gregtech.client.OreGenerationClient.beginBuild();
         var veins = category(
                 registry, "ore_veins", "ore_veins", gregtech.compat.common.RecipeViewerIcons.item("ore_iridium"));
         int index = 0;
         for (var vein : WorldgenInfoData.buildVeins()) {
-            if (vein.layer() != null) {
-                registry.addRecipe(new WorldgenEmiRecipe(
-                                veins,
-                                index++,
-                                WorldgenInfoData.veinMaterials(vein).stream()
-                                        .map(material -> WorldgenInfoData.stratumStack(vein, material))
-                                        .toList(),
-                                WorldgenInfoData.stratumStones(vein),
-                                WorldgenInfoData.stratumCaptions(vein))
-                        .withAliases(WorldgenInfoData.veinAliases(vein))
-                        .withOutputTooltips(WorldgenInfoData.veinMaterials(vein).stream()
-                                .map(material -> WorldgenInfoData.stratumOreCaptions(vein, material))
-                                .toList()));
-                continue;
-            }
-            int min = vein.remapped() ? GTWorldgenScale.remapY(vein.minY()) : vein.minY();
-            int max = vein.remapped() ? GTWorldgenScale.remapY(vein.maxY()) : vein.maxY();
+            var previews = WorldgenInfoData.veinPreviews(vein);
             registry.addRecipe(new WorldgenEmiRecipe(
                             veins,
                             index++,
-                            List.of(
-                                    WorldgenInfoData.oreStack(vein.top()), WorldgenInfoData.oreStack(vein.bottom()),
-                                    WorldgenInfoData.oreStack(vein.between()),
-                                            WorldgenInfoData.oreStack(vein.spread())),
-                            List.of(),
-                            List.of(
-                                    line("vein_name", vein.name()),
-                                    line("dimension", vein.dimension()),
-                                    line("height", min, max),
-                                    line(
-                                            "chance",
-                                            String.format(
-                                                    Locale.ROOT,
-                                                    "%.2f",
-                                                    100d * vein.weight() / Math.max(1, vein.totalWeight()))),
-                                    line("biome_none")))
-                    .withAliases(WorldgenInfoData.veinAliases(vein)));
+                            previews.stream()
+                                    .map(WorldgenInfoData.OrePreview::stack)
+                                    .toList(),
+                            WorldgenInfoData.veinHosts(vein),
+                            vein.layer() == null
+                                    ? WorldgenInfoData.veinCaptions(vein)
+                                    : WorldgenInfoData.stratumCaptions(vein))
+                    .withAliases(WorldgenInfoData.veinAliases(vein))
+                    .withOutputTooltips(previews.stream()
+                            .map(WorldgenInfoData.OrePreview::tooltip)
+                            .toList()));
         }
         var small = category(
                 registry,
@@ -121,19 +99,18 @@ public final class WorldgenEmiRecipe implements EmiRecipe {
                 gregtech.compat.common.RecipeViewerIcons.item("ore_small_iridium"));
         index = 0;
         for (var ore : WorldgenInfoData.buildSmallOres()) {
-            int min = ore.remapped() ? GTWorldgenScale.remapY(ore.minY()) : ore.minY();
-            int max = ore.remapped() ? GTWorldgenScale.remapY(ore.maxY()) : ore.maxY();
             registry.addRecipe(new WorldgenEmiRecipe(
                             small,
                             index++,
-                            List.of(WorldgenInfoData.smallOreStack(ore.material())),
+                            ore.ores().stream()
+                                    .map(WorldgenInfoData.OrePreview::stack)
+                                    .toList(),
                             List.of(),
-                            List.of(
-                                    line("vein_name", ore.name()),
-                                    line("dimension", ore.dimension()),
-                                    line("height", min, max),
-                                    line("per_chunk", ore.amount())))
-                    .withAliases(WorldgenInfoData.oreAliases(ore.material(), true)));
+                            ore.captions())
+                    .withAliases(ore.aliases())
+                    .withOutputTooltips(ore.ores().stream()
+                            .map(WorldgenInfoData.OrePreview::tooltip)
+                            .toList()));
         }
         var layers = category(
                 registry,
@@ -142,17 +119,21 @@ public final class WorldgenEmiRecipe implements EmiRecipe {
                 gregtech.compat.common.RecipeViewerIcons.item("block_ore_salt"));
         index = 0;
         for (var layer : WorldgenInfoData.buildLayers()) {
+            var previews = WorldgenInfoData.layerPreviews(layer);
             registry.addRecipe(new WorldgenEmiRecipe(
                             layers,
                             index++,
-                            layer.ores().stream()
-                                    .map(material -> WorldgenInfoData.layerOreStack(layer, material))
+                            previews.stream()
+                                    .map(WorldgenInfoData.OrePreview::stack)
                                     .toList(),
                             List.of(layer.stone()),
                             List.of(
                                     line("layer_stone", layer.stone().getHoverName()),
                                     line(layer.ores().isEmpty() ? "layer_no_ores" : "layer_ores")))
-                    .withAliases(WorldgenInfoData.layerAliases(layer)));
+                    .withAliases(WorldgenInfoData.layerAliases(layer))
+                    .withOutputTooltips(previews.stream()
+                            .map(WorldgenInfoData.OrePreview::tooltip)
+                            .toList()));
         }
         var bedrock = category(
                 registry, "bedrock_ores", "bedrock_ores", gregtech.compat.common.RecipeViewerIcons.bedrockOre());
@@ -161,15 +142,13 @@ public final class WorldgenEmiRecipe implements EmiRecipe {
             registry.addRecipe(new WorldgenEmiRecipe(
                             bedrock,
                             index++,
-                            List.of(WorldgenInfoData.oreStack(ore.material())),
+                            List.of(WorldgenInfoData.bedrockOreStack(ore.material())),
                             List.of(ore.flower()),
-                            List.of(
-                                    line("vein_name", ore.name()),
-                                    line("dimension", "minecraft:overworld"),
-                                    line("bedrock_rarity", ore.chance()),
-                                    line("bedrock_flower")))
-                    .withAliases(WorldgenInfoData.oreAliases(ore.material(), false)));
+                            WorldgenInfoData.bedrockCaptions(ore))
+                    .withAliases(WorldgenInfoData.bedrockAliases(ore))
+                    .withOutputTooltips(List.of(WorldgenInfoData.oreSourceCaptions(ore.material()))));
         }
+        gregtech.client.OreGenerationClient.finishBuild(atlas);
     }
 
     @Override
@@ -224,11 +203,11 @@ public final class WorldgenEmiRecipe implements EmiRecipe {
         for (int i = 0; i < stacks.size(); i++) {
             var slot = widgets.addSlot(stacks.get(i), 1 + i % 8 * 19, 1 + i / 8 * 19);
             if (i >= catalysts.size()) slot.recipeContext(this);
+            for (var caption : captions) slot.appendTooltip(caption);
             int output = i - catalysts.size();
             if (output >= 0 && output < outputTooltips.size()) {
                 for (Component caption : outputTooltips.get(output)) slot.appendTooltip(caption);
             }
-            for (var caption : captions) slot.appendTooltip(caption);
         }
         int y = 24 + ((stacks.size() + 7) / 8 - 1) * 19;
         for (var caption : captions) {

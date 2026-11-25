@@ -193,10 +193,12 @@ public final class GregTechJEIPlugin implements IModPlugin {
 //?}
 
         registration.addRecipes(MultiblockInfoCategory.TYPE,MultiblockInfoCategory.recipes());
+        var atlas = gregtech.client.OreGenerationClient.beginBuild();
         registration.addRecipes(WorldgenInfoCategories.VEIN_TYPE, WorldgenInfoCategories.buildVeins());
         registration.addRecipes(WorldgenInfoCategories.SMALL_ORE_TYPE, WorldgenInfoCategories.buildSmallOres());
         registration.addRecipes(WorldgenInfoCategories.LAYER_TYPE, WorldgenInfoCategories.buildLayers());
         registration.addRecipes(WorldgenInfoCategories.BEDROCK_TYPE, WorldgenInfoCategories.buildBedrockOres());
+        gregtech.client.OreGenerationClient.finishBuild(atlas);
         }
 
 //? if >=1.21.1 {

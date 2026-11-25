@@ -13,7 +13,7 @@ import java.util.TreeMap;
  */
 public final class GregTechAddons {
     private static final int API_MAJOR = 1;
-    private static final int API_MINOR = 10;
+    private static final int API_MINOR = 11;
 
     /**
      * Monotonic version code of the independent API artifact: {@code major * 1000 + minor}.

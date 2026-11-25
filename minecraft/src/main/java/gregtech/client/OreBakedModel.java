@@ -143,31 +143,10 @@ public final class OreBakedModel implements IDynamicBakedModel {
             TextureAtlasSprite faceBase = !broken && stone.equals(OreHostStone.DEEPSLATE.id())
                     && quad.getDirection().getAxis() == Direction.Axis.Y
                     ? sprite(ResourceLocation.fromNamespaceAndPath("minecraft", "block/deepslate_top")) : base;
-            out.add(retexture(quad, faceBase, -1));
-            out.add(retexture(quad, overlay, 0));
+            out.add(BakedQuadCompat.retexture(quad, faceBase, -1));
+            out.add(BakedQuadCompat.retexture(quad, overlay, 0));
         }
         return out;
-    }
-
-    /** Copies the quad with sprite + UVs swapped onto {@code to} and the given tint index. */
-    private static BakedQuad retexture(BakedQuad quad, TextureAtlasSprite to, int tintIndex) {
-        TextureAtlasSprite from = quad.getSprite();
-        int[] verts = quad.getVertices().clone();
-        float u0 = from.getU0(), du = from.getU1() - u0;
-        float v0 = from.getV0(), dv = from.getV1() - v0;
-        float tu0 = to.getU0(), tdu = to.getU1() - tu0;
-        float tv0 = to.getV0(), tdv = to.getV1() - tv0;
-        for (int i = 0; i < 4; i++) {
-            int idx = i * 8;
-            float u = Float.intBitsToFloat(verts[idx + 4]);
-            float v = Float.intBitsToFloat(verts[idx + 5]);
-            float relU = du > 0 ? (u - u0) / du : 0;
-            float relV = dv > 0 ? (v - v0) / dv : 0;
-            verts[idx + 4] = Float.floatToRawIntBits(tu0 + relU * tdu);
-            verts[idx + 5] = Float.floatToRawIntBits(tv0 + relV * tdv);
-        }
-        return BakedQuadCompat.withAmbientOcclusion(
-                verts, tintIndex, quad.getDirection(), to, quad.isShade(), quad.hasAmbientOcclusion());
     }
 
     private static TextureAtlasSprite sprite(ResourceLocation texture) {

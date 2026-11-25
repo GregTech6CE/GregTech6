@@ -1,11 +1,10 @@
 package gregtech.compat.jei;
 
 import gregtech.compat.common.WorldgenInfoData;
+import gregtech.content.worldgen.BoundaryGemOres;
 import gregtech.engine.mod.GregTechIdentity;
-
-
-import gregtech.api.material.GTMaterial;
-import gregtech.content.worldgen.GTWorldgenScale;
+import java.util.ArrayList;
+import java.util.List;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
@@ -16,129 +15,155 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-//? if >=1.21.1 {
-/*import net.minecraft.core.registries.BuiltInRegistries;
-*///?} else {
-//?}
-
-import java.util.ArrayList;
 
 /**
- * JEI categories describing GT worldgen: large ore veins (dimension, height,
- * probability, biomes), small ores (dimension, height, blocks per chunk) and
- * regional stone layers with their embedded ores.
+ * JEI categories for vein, small ore, bedrock and stone layer data.
  */
 public final class WorldgenInfoCategories extends WorldgenInfoData {
     private WorldgenInfoCategories() {}
 
     // ── data records shown as "recipes" ─────────────────────────────────────
 
-    public static final RecipeType<VeinInfo> VEIN_TYPE = RecipeType.create(GregTechIdentity.REGISTRY_NAMESPACE, "ore_veins", VeinInfo.class);
-    public static final RecipeType<SmallOreInfo> SMALL_ORE_TYPE = RecipeType.create(GregTechIdentity.REGISTRY_NAMESPACE, "small_ores_info", SmallOreInfo.class);
-    public static final RecipeType<LayerInfo> LAYER_TYPE = RecipeType.create(GregTechIdentity.REGISTRY_NAMESPACE, "stone_layers_info", LayerInfo.class);
+    public static final RecipeType<VeinInfo> VEIN_TYPE =
+            RecipeType.create(GregTechIdentity.REGISTRY_NAMESPACE, "ore_veins", VeinInfo.class);
+    public static final RecipeType<SmallOreInfo> SMALL_ORE_TYPE =
+            RecipeType.create(GregTechIdentity.REGISTRY_NAMESPACE, "small_ores_info", SmallOreInfo.class);
+    public static final RecipeType<LayerInfo> LAYER_TYPE =
+            RecipeType.create(GregTechIdentity.REGISTRY_NAMESPACE, "stone_layers_info", LayerInfo.class);
 
     // ── categories ───────────────────────────────────────────────────────────
 
-    /** Large veins: 4 ore slots + dimension/height/chance/biome text. */
+    /** Mixed veins and deposits hosted by a particular rock layer or contact. */
     public static final class VeinCategory implements IRecipeCategory<VeinInfo> {
         private final IDrawable background, icon, slot;
 
         public VeinCategory(IGuiHelper gui) {
-            int maxOres = buildVeins().stream().mapToInt(vein -> veinMaterials(vein).size() + stratumStones(vein).size()).max().orElse(4);
-            this.background = gui.createBlankDrawable(176, 66 + ((maxOres + 7) / 8) * 18);
+            int height = buildVeins().stream()
+                    .mapToInt(vein -> captionY(vein) + 10 * captions(vein).size())
+                    .max()
+                    .orElse(84);
+            this.background = gui.createBlankDrawable(176, height);
             this.slot = gui.getSlotDrawable();
             this.icon = gui.createDrawableItemStack(gregtech.compat.common.RecipeViewerIcons.item("ore_iridium"));
         }
 
-        @Override public RecipeType<VeinInfo> getRecipeType() { return VEIN_TYPE; }
-        @Override public Component getTitle() { return Component.translatable("gt6ce.jei.category.ore_veins"); }
-        @Override public IDrawable getBackground() { return background; }
-        @Override public IDrawable getIcon() { return icon; }
+        @Override
+        public RecipeType<VeinInfo> getRecipeType() {
+            return VEIN_TYPE;
+        }
+
+        @Override
+        public Component getTitle() {
+            return Component.translatable("gt6ce.jei.category.ore_veins");
+        }
+
+        @Override
+        public IDrawable getBackground() {
+            return background;
+        }
+
+        @Override
+        public IDrawable getIcon() {
+            return icon;
+        }
 
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, VeinInfo vein, IFocusGroup focuses) {
             builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT).addItemStacks(veinAliases(vein));
-            if (vein.layer() != null) {
-                var stones = stratumStones(vein);
-                for (int i = 0; i < stones.size(); i++) {
-                    builder.addSlot(RecipeIngredientRole.CATALYST, 1 + (i % 8) * 18, 1 + (i / 8) * 18)
-                            .setBackground(slot, -1, -1).addItemStack(stones.get(i));
-                }
-                var materials = veinMaterials(vein);
-                for (int i = 0; i < materials.size(); i++) {
-                    GTMaterial material = materials.get(i);
-                    var captions = new ArrayList<>(stratumOreCaptions(vein, material));
-                    captions.addAll(stratumCaptions(vein));
-                    int index = i + stones.size();
-                    builder.addSlot(RecipeIngredientRole.OUTPUT, 1 + (index % 8) * 18, 1 + (index / 8) * 18)
-                            .setBackground(slot, -1, -1).addItemStack(stratumStack(vein, material))
-                            .addTooltipCallback((view, tooltip) -> tooltip.addAll(captions));
-                }
-                return;
-            }
-            GTMaterial[] mats = {vein.top(), vein.bottom(), vein.between(), vein.spread()};
-            for (int i = 0; i < 4; i++) {
-                builder.addSlot(RecipeIngredientRole.OUTPUT, 1 + i * 18, 1)
+            var stones = veinHosts(vein);
+            for (int i = 0; i < stones.size(); i++) {
+                builder.addSlot(RecipeIngredientRole.CATALYST, 1 + (i % 8) * 18, 1 + (i / 8) * 18)
                         .setBackground(slot, -1, -1)
-                        .addItemStack(oreStack(mats[i]));
+                        .addItemStack(stones.get(i));
+            }
+            var previews = veinPreviews(vein);
+            var common = captions(vein);
+            for (int i = 0; i < previews.size(); i++) {
+                var preview = previews.get(i);
+                var captions = new ArrayList<>(common);
+                captions.addAll(preview.tooltip());
+                int index = i + stones.size();
+                builder.addSlot(RecipeIngredientRole.OUTPUT, 1 + (index % 8) * 18, 1 + (index / 8) * 18)
+                        .setBackground(slot, -1, -1)
+                        .addItemStack(preview.stack())
+                        .addTooltipCallback((view, tooltip) -> tooltip.addAll(captions));
             }
         }
 
         @Override
         public void draw(VeinInfo vein, IRecipeSlotsView view, GuiGraphics g, double mx, double my) {
             var font = net.minecraft.client.Minecraft.getInstance().font;
-            if (vein.layer() != null) {
-                int y = 4 + ((veinMaterials(vein).size() + stratumStones(vein).size() + 7) / 8) * 18;
-                for (Component caption : stratumCaptions(vein)) {
-                    g.drawString(font, font.plainSubstrByWidth(caption.getString(), 174), 1, y, 0xFF404040, false);
-                    y += 10;
-                }
-                return;
+            int y = captionY(vein);
+            for (Component caption : captions(vein)) {
+                g.drawString(font, font.plainSubstrByWidth(caption.getString(), 174), 1, y, 0xFF404040, false);
+                y += 10;
             }
-            int minY = vein.remapped() ? GTWorldgenScale.remapY(vein.minY()) : vein.minY();
-            int maxY = vein.remapped() ? GTWorldgenScale.remapY(vein.maxY()) : vein.maxY();
-            double pct = 100.0 * vein.weight() / Math.max(1, vein.totalWeight());
-            int y = 22;
-            g.drawString(font, Component.translatable("gt6ce.jei.info.vein_name", vein.name()), 1, y, 0xFF404040, false);
-            g.drawString(font, Component.translatable("gt6ce.jei.info.dimension", vein.dimension()), 1, y + 10, 0xFF404040, false);
-            g.drawString(font, Component.translatable("gt6ce.jei.info.height", minY, maxY), 1, y + 20, 0xFF404040, false);
-            g.drawString(font, Component.translatable("gt6ce.jei.info.chance", String.format(java.util.Locale.ROOT, "%.2f", pct)), 1, y + 30, 0xFF404040, false);
-            g.drawString(font, Component.translatable("gt6ce.jei.info.biome_none"), 1, y + 40, 0xFF404040, false);
+        }
+
+        private static int captionY(VeinInfo vein) {
+            int slots = veinPreviews(vein).size() + veinHosts(vein).size();
+            return 4 + Math.max(1, (slots + 7) / 8) * 18;
+        }
+
+        private static List<Component> captions(VeinInfo vein) {
+            return vein.layer() == null ? veinCaptions(vein) : stratumCaptions(vein);
         }
     }
 
-    /** Small ores: 1 slot + dimension/height/amount text. */
+    /** Scattered ores and the shared boundary gem pool. */
     public static final class SmallOreCategory implements IRecipeCategory<SmallOreInfo> {
         private final IDrawable background, icon, slot;
 
         public SmallOreCategory(IGuiHelper gui) {
-            this.background = gui.createBlankDrawable(150, 60);
+            int poolRows = (BoundaryGemOres.MATERIALS.size() + 7) / 8;
+            int height = Math.max(62, 34 + poolRows * 18);
+            this.background = gui.createBlankDrawable(176, height);
             this.slot = gui.getSlotDrawable();
             this.icon = gui.createDrawableItemStack(gregtech.compat.common.RecipeViewerIcons.item("ore_small_iridium"));
         }
 
-        @Override public RecipeType<SmallOreInfo> getRecipeType() { return SMALL_ORE_TYPE; }
-        @Override public Component getTitle() { return Component.translatable("gt6ce.jei.category.small_ores"); }
-        @Override public IDrawable getBackground() { return background; }
-        @Override public IDrawable getIcon() { return icon; }
+        @Override
+        public RecipeType<SmallOreInfo> getRecipeType() {
+            return SMALL_ORE_TYPE;
+        }
+
+        @Override
+        public Component getTitle() {
+            return Component.translatable("gt6ce.jei.category.small_ores");
+        }
+
+        @Override
+        public IDrawable getBackground() {
+            return background;
+        }
+
+        @Override
+        public IDrawable getIcon() {
+            return icon;
+        }
 
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, SmallOreInfo ore, IFocusGroup focuses) {
-            builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT).addItemStacks(oreAliases(ore.material(), true));
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 1, 1)
-                    .setBackground(slot, -1, -1)
-                    .addItemStack(smallOreStack(ore.material()));
+            builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT).addItemStacks(ore.aliases());
+            for (int i = 0; i < ore.ores().size(); i++) {
+                var preview = ore.ores().get(i);
+                var captions = new ArrayList<>(ore.captions());
+                captions.addAll(preview.tooltip());
+                builder.addSlot(RecipeIngredientRole.OUTPUT, 1 + (i % 8) * 18, 1 + (i / 8) * 18)
+                        .setBackground(slot, -1, -1)
+                        .addItemStack(preview.stack())
+                        .addTooltipCallback((view, tooltip) -> tooltip.addAll(captions));
+            }
         }
 
         @Override
         public void draw(SmallOreInfo ore, IRecipeSlotsView view, GuiGraphics g, double mx, double my) {
             var font = net.minecraft.client.Minecraft.getInstance().font;
-            int minY = ore.remapped() ? GTWorldgenScale.remapY(ore.minY()) : ore.minY();
-            int maxY = ore.remapped() ? GTWorldgenScale.remapY(ore.maxY()) : ore.maxY();
-            int y = 22;
-            g.drawString(font, Component.translatable("gt6ce.jei.info.dimension", ore.dimension()), 1, y, 0xFF404040, false);
-            g.drawString(font, Component.translatable("gt6ce.jei.info.height", minY, maxY), 1, y + 10, 0xFF404040, false);
-            g.drawString(font, Component.translatable("gt6ce.jei.info.per_chunk", ore.amount()), 1, y + 20, 0xFF404040, false);
+            int y = 4 + ((ore.ores().size() + 7) / 8) * 18;
+            for (Component caption : ore.captions()) {
+                g.drawString(font, font.plainSubstrByWidth(caption.getString(), 174), 1, y, 0xFF404040, false);
+                y += 10;
+            }
         }
     }
 
@@ -147,15 +172,36 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
         private final IDrawable background, icon, slot;
 
         public LayerCategory(IGuiHelper gui) {
-            this.background = gui.createBlankDrawable(168, 56);
+            int rows = Math.max(
+                    1,
+                    buildLayers().stream()
+                            .mapToInt(layer -> (layerPreviews(layer).size() + 7) / 8)
+                            .max()
+                            .orElse(1));
+            this.background = gui.createBlankDrawable(168, 20 + rows * 18);
             this.slot = gui.getSlotDrawable();
             this.icon = gui.createDrawableItemStack(gregtech.compat.common.RecipeViewerIcons.item("block_ore_salt"));
         }
 
-        @Override public RecipeType<LayerInfo> getRecipeType() { return LAYER_TYPE; }
-        @Override public Component getTitle() { return Component.translatable("gt6ce.jei.category.stone_layers"); }
-        @Override public IDrawable getBackground() { return background; }
-        @Override public IDrawable getIcon() { return icon; }
+        @Override
+        public RecipeType<LayerInfo> getRecipeType() {
+            return LAYER_TYPE;
+        }
+
+        @Override
+        public Component getTitle() {
+            return Component.translatable("gt6ce.jei.category.stone_layers");
+        }
+
+        @Override
+        public IDrawable getBackground() {
+            return background;
+        }
+
+        @Override
+        public IDrawable getIcon() {
+            return icon;
+        }
 
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, LayerInfo layer, IFocusGroup focuses) {
@@ -164,11 +210,11 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
                     .setBackground(slot, -1, -1)
                     .addItemStack(layer.stone());
             int i = 0;
-            for (GTMaterial ore : layer.ores()) {
-                if (i >= 16) break;
+            for (var ore : layerPreviews(layer)) {
                 builder.addSlot(RecipeIngredientRole.OUTPUT, 1 + (i % 8) * 18, 20 + (i / 8) * 18)
                         .setBackground(slot, -1, -1)
-                        .addItemStack(layerOreStack(layer, ore));
+                        .addItemStack(ore.stack())
+                        .addTooltipCallback((view, tooltip) -> tooltip.addAll(ore.tooltip()));
                 i++;
             }
         }
@@ -176,7 +222,9 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
         @Override
         public void draw(LayerInfo layer, IRecipeSlotsView view, GuiGraphics g, double mx, double my) {
             var font = net.minecraft.client.Minecraft.getInstance().font;
-            g.drawString(font, Component.translatable("gt6ce.jei.info.layer_stone", layer.stone().getHoverName()), 22, 5, 0xFF404040, false);
+            var title = Component.translatable(
+                    "gt6ce.jei.info.layer_stone", layer.stone().getHoverName());
+            g.drawString(font, font.plainSubstrByWidth(title.getString(), 144), 22, 5, 0xFF404040, false);
             if (!layer.ores().isEmpty()) {
                 g.drawString(font, Component.translatable("gt6ce.jei.info.layer_ores"), 22, 14, 0xFF707070, false);
             } else {
@@ -187,45 +235,60 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
 
     // ── bedrock ores ─────────────────────────────────────────────────────────
 
-
-
-    public static final RecipeType<BedrockInfo> BEDROCK_TYPE = RecipeType.create(GregTechIdentity.REGISTRY_NAMESPACE, "bedrock_ores", BedrockInfo.class);
-
-
+    public static final RecipeType<BedrockInfo> BEDROCK_TYPE =
+            RecipeType.create(GregTechIdentity.REGISTRY_NAMESPACE, "bedrock_ores", BedrockInfo.class);
 
     /** Bedrock deposits: ore + the surface indicator flower above it. */
     public static final class BedrockCategory implements IRecipeCategory<BedrockInfo> {
         private final IDrawable background, icon, slot;
 
         public BedrockCategory(IGuiHelper gui) {
-            this.background = gui.createBlankDrawable(150, 56);
+            this.background = gui.createBlankDrawable(176, 66);
             this.slot = gui.getSlotDrawable();
             this.icon = gui.createDrawableItemStack(gregtech.compat.common.RecipeViewerIcons.bedrockOre());
         }
 
-        @Override public RecipeType<BedrockInfo> getRecipeType() { return BEDROCK_TYPE; }
-        @Override public Component getTitle() { return Component.translatable("gt6ce.jei.category.bedrock_ores"); }
-        @Override public IDrawable getBackground() { return background; }
-        @Override public IDrawable getIcon() { return icon; }
+        @Override
+        public RecipeType<BedrockInfo> getRecipeType() {
+            return BEDROCK_TYPE;
+        }
+
+        @Override
+        public Component getTitle() {
+            return Component.translatable("gt6ce.jei.category.bedrock_ores");
+        }
+
+        @Override
+        public IDrawable getBackground() {
+            return background;
+        }
+
+        @Override
+        public IDrawable getIcon() {
+            return icon;
+        }
 
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, BedrockInfo info, IFocusGroup focuses) {
-            builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT).addItemStacks(oreAliases(info.material(), false));
+            builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT).addItemStacks(bedrockAliases(info));
             builder.addSlot(RecipeIngredientRole.OUTPUT, 1, 1)
                     .setBackground(slot, -1, -1)
-                    .addItemStack(oreStack(info.material()));
-            builder.addSlot(RecipeIngredientRole.CATALYST, 21, 1)
-                    .setBackground(slot, -1, -1)
-                    .addItemStack(info.flower());
+                    .addItemStack(bedrockOreStack(info.material()))
+                    .addTooltipCallback((view, tooltip) -> tooltip.addAll(oreSourceCaptions(info.material())));
+            if (!info.flower().isEmpty())
+                builder.addSlot(RecipeIngredientRole.CATALYST, 21, 1)
+                        .setBackground(slot, -1, -1)
+                        .addItemStack(info.flower());
         }
 
         @Override
         public void draw(BedrockInfo info, IRecipeSlotsView view, GuiGraphics g, double mx, double my) {
             var font = net.minecraft.client.Minecraft.getInstance().font;
             int y = 24;
-            g.drawString(font, Component.translatable("gt6ce.jei.info.dimension", "minecraft:overworld"), 1, y, 0xFF404040, false);
-            g.drawString(font, Component.translatable("gt6ce.jei.info.bedrock_rarity", info.chance()), 1, y + 10, 0xFF404040, false);
-            g.drawString(font, Component.translatable("gt6ce.jei.info.bedrock_flower"), 1, y + 20, 0xFF707070, false);
+            for (Component caption : bedrockCaptions(info)) {
+                g.drawString(font, caption, 1, y, 0xFF404040, false);
+                y += 10;
+            }
         }
     }
 }

@@ -47,6 +47,13 @@ public final class RockItemPlacement {
                 .get()
                 .defaultBlockState()
                 .setValue(
+                        RockBlock.APPEARANCE,
+                        "minecraft:flint".equals(itemId) ? RockBlock.Appearance.FLINT : RockBlock.Appearance.MATERIAL)
+                .setValue(
+                        gregtech.engine.GTWaterloggable.WATERLOGGED,
+                        gregtech.engine.GTWaterloggable.isWaterForLogging(
+                                context.getLevel().getFluidState(context.getClickedPos())))
+                .setValue(
                         RockBlock.GROUND,
                         RockBlock.Ground.of(context.getLevel()
                                 .getBlockState(context.getClickedPos().below())));

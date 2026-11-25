@@ -1,8 +1,8 @@
 package gregtech.content.worldgen;
 
-import gregtech.api.material.GTMaterial;
 import gregtech.content.block.OreHostStone;
-import gregtech.content.block.stone.StoneType;
+import gregtech.content.block.stone.StoneVariant;
+import gregtech.content.registry.GTBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -10,6 +10,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -28,8 +30,8 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
  *
  * <p>The pylon is a double-ended cone around the water column: four tiers of square rings mirrored
  * above and below {@code j}, one block wide at the top (radius 0 for {@code l = 8..10}), then
- * radius 1 ({@code l = 5..7}), radius 2 ({@code l = 2..4}) and radius 3 ({@code l = 0..1}). Every
- * prismarine block has a 1-in-8 chance of being replaced by an ore of the pylon's metal —
+ * radius 1 ({@code l = 5..7}), radius 2 ({@code l = 2..4}) and radius 3 ({@code l = 0..1}). Each
+ * position at or above the centre has a 1-in-8 chance of containing prismarine-backed ore —
  * garnierite for the dark prismarine, pyrolusite for the light one.
  */
 public class GTDeepOceanFeature extends Feature<NoneFeatureConfiguration> {
@@ -38,22 +40,6 @@ public class GTDeepOceanFeature extends Feature<NoneFeatureConfiguration> {
 
     public static final int NOISE_XZ = 8;
     public static final float NOISE_Y = 32.0F;
-    /** GT6's two pylon kinds: dark prismarine for noise 12-13, light for 14-15. */
-    public static final int DARK_NOISE_MIN = 12;
-
-    public static final int DARK_NOISE_MAX = 13;
-    public static final int LIGHT_NOISE_MIN = 14;
-    public static final int LIGHT_NOISE_MAX = 15;
-    /** Every prismarine block rolls {@code nextInt(8) == 0} for an ore. */
-    public static final int ORE_CHANCE = 8;
-
-    /** One GT6 pylon tier: {@code l} range plus the ring radius it fills ({@code m}/{@code n}). */
-    public record Tier(int fromL, int toL, int radius) {}
-
-    /** GT6's four tiers, in source order. */
-    public static final Tier[] TIERS = MineralWorldgenRules.PYLON_TIERS.stream()
-            .map(row -> new Tier(row.fromL(), row.toL(), row.radius()))
-            .toArray(Tier[]::new);
 
     public GTDeepOceanFeature() {
         super(NoneFeatureConfiguration.CODEC);
@@ -69,46 +55,41 @@ public class GTDeepOceanFeature extends Feature<NoneFeatureConfiguration> {
         int minZ = context.origin().getZ() & ~15;
         // GT6 requires the deep ocean specifically (BiomeGenBase.deepOcean).
         if (!GTWorldgenBiomes.anyOf(
-                GTWorldgenBiomes.chunkBiomes(level, minX, minZ),
-                java.util.Set.of(ResourceLocation.withDefaultNamespace("deep_ocean")))) {
+                GTWorldgenBiomes.chunkBiomes(level, minX, minZ), java.util.Set.of(Biomes.DEEP_OCEAN.location()))) {
             return false;
         }
 
         int i = 3 + random.nextInt(9);
-        int j = 30 + random.nextInt(9);
+        int j = SpecialOreDeposits.OCEAN_CENTER_MIN
+                + random.nextInt(SpecialOreDeposits.OCEAN_CENTER_MAX - SpecialOreDeposits.OCEAN_CENTER_MIN + 1);
         int k = 3 + random.nextInt(9);
         BlockPos column = new BlockPos(minX + i, j, minZ + k);
         if (!isWater(level.getBlockState(column))) return false;
 
         GTCellNoise noise = new GTCellNoise(level.getSeed());
         int pick = noise.get(minX + NOISE_XZ, NOISE_Y, minZ + NOISE_XZ, NOISE_OPTIONS);
-        if (pick >= DARK_NOISE_MIN && pick <= DARK_NOISE_MAX) {
-            return buildPylon(level, column, StoneType.PRISMARINE_DARK, "Garnierite", random);
-        }
-        if (pick >= LIGHT_NOISE_MIN && pick <= LIGHT_NOISE_MAX) {
-            return buildPylon(level, column, StoneType.PRISMARINE_LIGHT, "Pyrolusite", random);
+        for (var pylon : SpecialOreDeposits.OCEAN_PYLONS) {
+            if (pick >= pylon.firstNoise() && pick <= pylon.lastNoise()) {
+                return buildPylon(level, column, pylon, random);
+            }
         }
         return false;
     }
 
-    /**
-     * GT6's pylon loop, split out so one pylon can be built on a prepared water column.
-     *
-     * @param oreMaterial GT6's ore for this prismarine kind ({@code ores_normal[14]} garnierite for
-     *                    dark, {@code ores_normal[13]} pyrolusite for light)
-     */
-    public static boolean buildPylon(
-            WorldGenLevel level, BlockPos column, StoneType prismarine, String oreMaterial, RandomSource random) {
-        BlockState stone = blockState(prismarine);
+    private static boolean buildPylon(
+            WorldGenLevel level, BlockPos column, SpecialOreDeposits.Pylon pylon, RandomSource random) {
+        BlockState stone = GTBlocks.getStoneState(pylon.stone(), StoneVariant.STONE);
         if (stone == null) return false;
-        GTMaterial ore = gregtech.engine.material.GTMaterialRegistry.get(oreMaterial);
+        var placement = GTOreBlockResolver.resolve(OreHostStone.of(pylon.stone()), pylon.material(), false);
+        BlockState ore = placement == null ? stone : placement.state();
         boolean placed = false;
-        for (Tier tier : TIERS) {
-            for (int l = tier.fromL(); l < tier.toL() + 1; l++) {
-                for (int m = -tier.radius(); m <= tier.radius(); m++) {
-                    for (int n = -tier.radius(); n <= tier.radius(); n++) {
-                        placed |= setPylonBlock(level, column.offset(m, l, n), stone, ore, random);
-                        placed |= setPylonBlock(level, column.offset(m, -l, n), stone, ore, random);
+        for (var tier : MineralWorldgenRules.PYLON_TIERS) {
+            for (int y = tier.fromL(); y <= tier.toL(); y++) {
+                for (int x = -tier.radius(); x <= tier.radius(); x++) {
+                    for (int z = -tier.radius(); z <= tier.radius(); z++) {
+                        BlockState upper = random.nextInt(SpecialOreDeposits.OCEAN_ORE_DIVISOR) == 0 ? ore : stone;
+                        placed |= setPylonBlock(level, column.offset(x, y, z), upper);
+                        if (y > 0) placed |= setPylonBlock(level, column.offset(x, -y, z), stone);
                     }
                 }
             }
@@ -116,31 +97,13 @@ public class GTDeepOceanFeature extends Feature<NoneFeatureConfiguration> {
         return placed;
     }
 
-    /**
-     * One GT6 pylon block: prismarine, or the ore of the pylon with a 1-in-8 chance.
-     *
-     * <p>GT6 sprinkles {@code BlocksGT.ores_normal[13|14]} — the ore variant whose background is
-     * <b>normal stone</b> — into the pylon, so the port places the ore with an explicit
-     * {@link OreHostStone#STONE} background instead of the prismarine it replaces.
-     */
-    private static boolean setPylonBlock(
-            WorldGenLevel level, BlockPos pos, BlockState stone, GTMaterial ore, RandomSource random) {
-        if (level.isOutsideBuildHeight(pos)) return false;
-        level.setBlock(pos, stone, 2);
-        if (ore != null && random.nextInt(ORE_CHANCE) == 0) {
-            return GTOreBlockResolver.placeOre(level, pos, OreHostStone.STONE, ore, false);
-        }
-        return true;
+    private static boolean setPylonBlock(WorldGenLevel level, BlockPos pos, BlockState state) {
+        return !level.isOutsideBuildHeight(pos) && level.setBlock(pos, state, Block.UPDATE_CLIENTS);
     }
 
     /** GT6's {@code WD.anywater}: the port uses vanilla water only. */
     public static boolean isWater(BlockState state) {
         return state.is(Blocks.WATER);
-    }
-
-    /** The GT stone block of a stone type: stone blocks are registered as {@code <type>_<variant>}. */
-    private static BlockState blockState(StoneType type) {
-        return gregtech.content.registry.GTBlocks.getStoneState(type, gregtech.content.block.stone.StoneVariant.STONE);
     }
 
     /** Registry key of the configured feature (data file {@code worldgen/configured_feature/gt_deep_ocean.json}). */

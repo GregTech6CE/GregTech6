@@ -3,10 +3,7 @@ package gregtech.content.worldgen;
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.MaterialStackItemHelper;
-import gregtech.content.block.RockBlock;
-import gregtech.content.blockentity.RockBlockEntity;
 import gregtech.content.data.MaterialPrefix;
-import gregtech.content.registry.GTBlocks;
 import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -136,16 +133,7 @@ public class GTNetherScatterFeature extends Feature<NoneFeatureConfiguration> {
 
     /** Places GT6's ground item: the port's rock block carrying a material and/or an explicit item. */
     public static boolean place(WorldGenLevel level, BlockPos pos, String material, String itemId, boolean rawOre) {
-        BlockState ground = level.getBlockState(pos.below());
-        BlockState rock = GTBlocks.ROCK.get().defaultBlockState()
-                .setValue(RockBlock.GROUND, RockBlock.Ground.of(ground));
-        if (!level.setBlock(pos, rock, 2)) return false;
-        if (level.getBlockEntity(pos) instanceof RockBlockEntity be) {
-            if (material != null && !material.isEmpty()) be.setMaterial(material);
-            if (itemId != null && !itemId.isEmpty()) be.setItemId(itemId);
-            be.setRawOre(rawOre);
-        }
-        return true;
+        return GTRockPlacement.place(level, pos, material, itemId, rawOre);
     }
 
     private static ItemStack mat(MaterialPrefix prefix, String material) {

@@ -1,11 +1,16 @@
 package gregtech.content.blockentity;
 
+import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.engine.material.MaterialEquivalence;
 import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.client.model.data.ModelData;
@@ -30,6 +35,7 @@ public class RockBlockEntity extends GTBlockEntity {
     public static final String DEFAULT_MATERIAL = "Stone";
     public static final ModelProperty<String> MATERIAL_PROPERTY = new ModelProperty<>();
     public static final ModelProperty<Boolean> RAW_ORE_PROPERTY = new ModelProperty<>();
+    public static final ModelProperty<Boolean> FLINT_PROPERTY = new ModelProperty<>();
 
     private String material = DEFAULT_MATERIAL;
     /** Rocks above bedrock deposits hide a raw ore chunk of their material. */
@@ -60,15 +66,28 @@ public class RockBlockEntity extends GTBlockEntity {
     }
 
     /** The stack this rock hands out, when it carries an explicit item id. */
-    public net.minecraft.world.item.ItemStack itemStack() {
-        if (itemId.isEmpty()) return net.minecraft.world.item.ItemStack.EMPTY;
-        var item = Mc.item(
-                net.minecraft.resources.ResourceLocation.parse(itemId));
-        return item == null ? net.minecraft.world.item.ItemStack.EMPTY : new net.minecraft.world.item.ItemStack(item, count);
+    public ItemStack itemStack() {
+        if (itemId.isEmpty()) return ItemStack.EMPTY;
+        var id = ResourceLocation.tryParse(itemId);
+        if (id == null) return ItemStack.EMPTY;
+        var item = Mc.item(id);
+        return item == null || item == Items.AIR ? ItemStack.EMPTY : new ItemStack(item, count);
     }
 
     public boolean hasRawOre() {
         return rawOre;
+    }
+
+    /** Raw ore placed by hand carries its item ID rather than the bedrock marker flag. */
+    private boolean showsRawOre() {
+        if (rawOre) return true;
+        if (itemId.isEmpty()) return false;
+        var form = MaterialEquivalence.form(itemStack());
+        return form != null && form.prefix() == MaterialPrefix.oreRaw;
+    }
+
+    private boolean hasFlint() {
+        return "minecraft:flint".equals(itemId);
     }
 
     public void setRawOre(boolean rawOre) {
@@ -101,11 +120,12 @@ public class RockBlockEntity extends GTBlockEntity {
     @Override
     protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         super.loadData(tag, lookup);
+        String previousMaterial = material, previousItem = itemId;
+        boolean previousRaw = rawOre;
         String s = tag.getString(TAG_MATERIAL);
         boolean retired = gregtech.content.block.stone.RetiredStoneIds.isMaterial(s);
         s = gregtech.content.block.stone.RetiredStoneIds.material(s);
-        boolean changed = !s.isEmpty() && !s.equals(material) || rawOre != tag.getBoolean(TAG_RAW_ORE);
-        if (!s.isEmpty()) material = s;
+        material = s.isEmpty() ? DEFAULT_MATERIAL : s;
         rawOre = !retired && tag.getBoolean(TAG_RAW_ORE);
         itemId = tag.getString(TAG_ITEM);
         if (retired) itemId = "";
@@ -114,10 +134,10 @@ public class RockBlockEntity extends GTBlockEntity {
             material = DEFAULT_MATERIAL;
             rawOre = false;
             itemId = "";
-            changed = true;
         }
         count = tag.contains(TAG_COUNT) ? Math.max(1, Math.min(64, tag.getInt(TAG_COUNT))) : 1;
-        if (changed && level != null && level.isClientSide) {
+        if (level != null && level.isClientSide
+                && (!material.equals(previousMaterial) || rawOre != previousRaw || !itemId.equals(previousItem))) {
             requestModelDataUpdate();
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 8);
         }
@@ -145,6 +165,10 @@ public class RockBlockEntity extends GTBlockEntity {
 
     @Override
     public @NotNull ModelData getModelData() {
-        return ModelData.builder().with(MATERIAL_PROPERTY, material).with(RAW_ORE_PROPERTY, rawOre).build();
+        return ModelData.builder()
+                .with(MATERIAL_PROPERTY, material)
+                .with(RAW_ORE_PROPERTY, showsRawOre())
+                .with(FLINT_PROPERTY, hasFlint())
+                .build();
     }
 }

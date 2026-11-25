@@ -4,7 +4,7 @@ import gregtech.api.addon.material.*;
 import gregtech.api.addon.worldgen.OreVeinDeclaration;
 import gregtech.api.addon.worldgen.SmallOreDeclaration;
 import gregtech.api.mod.ModData;
-import gregtech.content.worldgen.AddonOreVeins;
+import gregtech.content.worldgen.OreSourceCatalog;
 import gregtech.engine.addon.AddonCoreServices;
 import gregtech.engine.addon.AddonMaterials;
 import java.nio.file.Files;
@@ -165,8 +165,10 @@ public final class MaterialAddonLifecycleProbe {
                 if (!expected.getMessage().contains(expectedFailure)) throw expected;
             }
             if ((args[0].equals("no_ore") || args[0].equals("unknown_ore"))
-                    && (!AddonOreVeins.veins(ORE_DIMENSION).isEmpty()
-                            || !AddonOreVeins.smallOres(ORE_DIMENSION).isEmpty()))
+                    && (!OreSourceCatalog.current().veins(ORE_DIMENSION).isEmpty()
+                            || !OreSourceCatalog.current()
+                                    .smallOres(ORE_DIMENSION)
+                                    .isEmpty()))
                 throw new AssertionError("A rejected small ore must not publish the preceding vein");
             if (GTMaterialRegistry.registrationPhase() != GTMaterialRegistry.RegistrationPhase.FAILED)
                 throw new AssertionError("failed material initialization became visible");
@@ -179,8 +181,8 @@ public final class MaterialAddonLifecycleProbe {
         }
         GTMaterialRegistry.init();
         var ore = GTMaterialRegistry.get("ProbeOre");
-        var veins = AddonOreVeins.veins(ORE_DIMENSION);
-        var smallOres = AddonOreVeins.smallOres(ORE_DIMENSION);
+        var veins = OreSourceCatalog.current().veins(ORE_DIMENSION);
+        var smallOres = OreSourceCatalog.current().smallOres(ORE_DIMENSION);
         if (veins.size() != 1
                 || veins.get(0).top() != ore
                 || veins.get(0).bottom() != GTMaterialRegistry.get("Iron")

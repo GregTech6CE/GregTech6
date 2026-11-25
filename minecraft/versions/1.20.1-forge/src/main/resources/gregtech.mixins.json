@@ -15,6 +15,7 @@
     "ComponentCoverCapabilitiesMixin",
     "ComponentCoverHostMixin",
     "ComponentCoverRemovalMixin",
+    "ConnectionReadStateMixin",
     "ConstructionRecipeMixin",
     "CoverCollectDropMixin",
     "CoverCollisionMixin",

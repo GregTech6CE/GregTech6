@@ -82,10 +82,14 @@ public final class GTDungeonGenerator {
 
     private GTDungeonGenerator() {}
 
+    static boolean miningBedrockEnabled() {
+        return gregtech.GregTechConfig.Rule.MINING_BEDROCK.enabled()
+                && gregtech.GregTechConfig.Worldgen.BEDROCK_ORES.enabled();
+    }
+
     public static boolean roomEnabled(GTDungeonChunk room) {
         if (room instanceof GTDungeonChunkRoomWorkshop) return gregtech.GregTechConfig.Rule.WORKSHOP.enabled();
-        if (room instanceof GTDungeonChunkRoomMiningBedrock)
-            return gregtech.GregTechConfig.Rule.MINING_BEDROCK.enabled();
+        if (room instanceof GTDungeonChunkRoomMiningBedrock) return miningBedrockEnabled();
         if (room instanceof GTDungeonChunkRoomLibraryNormal) return gregtech.GregTechConfig.Rule.LIBRARY.enabled();
         if (room instanceof GTDungeonChunkRoomFarmMobs) return gregtech.GregTechConfig.Rule.FARM_MOBS.enabled();
         if (room instanceof GTDungeonChunkRoomFarmCrop) return gregtech.GregTechConfig.Rule.FARM_CROP.enabled();
