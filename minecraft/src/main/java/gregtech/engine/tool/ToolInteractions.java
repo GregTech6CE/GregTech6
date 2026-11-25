@@ -45,18 +45,16 @@ public final class ToolInteractions {
         if (!spec.allows(state, side) || !player.mayBuild() || !level.mayInteract(player, pos)) return false;
         if (state.getBlock() instanceof ToolInteractionTarget target && !target.canUseTool(level, pos, player, tool)) return false;
         if (spec.connection() == null) return true;
-        if (!state.getValue(spec.connection().property(side))&&!gregtech.content.cover.CoverConnections.canConnect(level,pos,side))return false;
+        boolean opening = !state.getValue(spec.connectionProperty(side));
+        if (opening && !gregtech.content.cover.CoverConnections.canConnect(level, pos, side)) return false;
         BlockPos otherPos = pos.relative(side);
         if (!level.hasChunkAt(otherPos) || !level.mayInteract(player, otherPos)) return false;
+        if (opening && state.getBlock() instanceof ToolInteractionTarget target
+                && !target.canOpenToolConnection(level, pos, otherPos, side)) return false;
         BlockState other = level.getBlockState(otherPos);
-        if (spec.connection()==ToolInteractionSpec.ConnectionKind.LOGISTICS&&!state.getValue(spec.connection().property(side))
-                &&(gregtech.content.block.machine.LogisticsWireBlock.hasBlockingCover(level,pos,otherPos,side)
-                ||!gregtech.content.block.machine.LogisticsWireBlock.canOpenToward(level,otherPos,side.getOpposite())))return false;
         var otherSpec = describe(other, tool);
         return otherSpec == null || otherSpec.connection() != spec.connection()
-                || spec.connection() != ToolInteractionSpec.ConnectionKind.AXLE
-                || gregtech.content.block.energy.AxleBlock.isValidConnectionState(other.setValue(
-                    spec.connection().property(side.getOpposite()), !state.getValue(spec.connection().property(side))));
+                || otherSpec.allowsConnection(other, side.getOpposite(), opening);
     }
 
     public static boolean use(BlockState state, Level level, BlockPos pos, Player player,
@@ -83,16 +81,15 @@ public final class ToolInteractions {
             next = state.setValue(spec.facing(), side);
         } else {
             BlockPos otherPos = pos.relative(side);
-            var property = spec.connection().property(side);
+            var property = spec.connectionProperty(side);
             boolean connect = !state.getValue(property);
             next = state.setValue(property, connect);
             BlockState other = level.getBlockState(otherPos);
             var otherSpec = describe(other, player.getItemInHand(hand));
-            boolean matching = otherSpec != null && otherSpec.connection() == spec.connection();
             if (!level.setBlockAndUpdate(pos, next)) return true;
             if (state.getBlock() instanceof ToolInteractionTarget toggled) toggled.connectionToggled(level, pos, side, connect);
-            if (matching) {
-                level.setBlockAndUpdate(otherPos, other.setValue(spec.connection().property(side.getOpposite()), connect));
+            if (otherSpec != null && otherSpec.connection() == spec.connection()) {
+                level.setBlockAndUpdate(otherPos, other.setValue(otherSpec.connectionProperty(side.getOpposite()), connect));
                 if (other.getBlock() instanceof ToolInteractionTarget otherTarget)
                     otherTarget.connectionToggled(level, otherPos, side.getOpposite(), connect);
                 changed(level, otherPos);

@@ -133,7 +133,7 @@ public class FluidPipeBlock extends MaterialPipeBlock
     @Override
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return GTToolHelper.isMachineWrench(tool)
-                ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.FLUID)
+                ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.FLUID, FluidPipeBlock::propFor)
                 : null;
     }
 

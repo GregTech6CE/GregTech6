@@ -1,5 +1,6 @@
 package gregtech.gametest;
 
+import gregtech.content.block.energy.AxleBlock;
 import gregtech.content.transport.pipe.fluid.FluidPipeBlock;
 import gregtech.content.transport.pipe.item.ItemPipeBlock;
 import gregtech.content.transport.pipe.MaterialPipeBlock;
@@ -11,6 +12,8 @@ import gregtech.content.tool.ElectricWrenchHarvest;
 import gregtech.engine.machine.PipeGeometry;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
+import gregtech.engine.tool.ToolInteractionSpec.ConnectionKind;
+import gregtech.engine.tool.ToolInteractions;
 import gregtech.engine.transport.PipeConnections;
 import java.util.Arrays;
 import net.minecraft.core.BlockPos;
@@ -53,6 +56,68 @@ public final class PipePlacementTests {
     private static final String BATCH = "pipe_placement";
 
     private PipePlacementTests() {}
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 20)
+    public static void connectorToolPreviewsReadEachRegisteredFace(GameTestHelper helper) {
+        ItemStack wrench = GTToolHelper.displayTool(GTToolType.WRENCH);
+        ItemStack cutter = GTToolHelper.displayTool(GTToolType.WIRE_CUTTER);
+        checkPreviewFaces(helper, "pipe_tiny_steel", wrench, ConnectionKind.FLUID);
+        checkPreviewFaces(helper, "item_pipe_medium_brass", wrench, ConnectionKind.ITEM);
+        checkPreviewFaces(helper, "axle_steel_2", wrench, ConnectionKind.AXLE);
+        checkPreviewFaces(helper, "wire_02_copper", cutter, ConnectionKind.ELECTRIC);
+        checkPreviewFaces(helper, "laser_fiber_wire", cutter, ConnectionKind.LASER);
+        checkPreviewFaces(helper, "wire_01_redalloy", cutter, ConnectionKind.REDSTONE);
+        checkPreviewFaces(helper, "logistics_wire", cutter, ConnectionKind.LOGISTICS);
+        helper.succeed();
+    }
+
+    private static void checkPreviewFaces(GameTestHelper helper, String id, ItemStack tool, ConnectionKind kind) {
+        var block = block(id);
+        var closed = block.defaultBlockState();
+        var preview = ToolInteractions.preview(closed, tool);
+        helper.assertTrue(preview != null && preview.connection() == kind, "tool declares " + kind + " for " + id);
+        helper.assertTrue(preview.activeFaces(closed) == 0, id + " starts with no active faces");
+        for (Direction face : Direction.values()) {
+            var property = (BooleanProperty) block.getStateDefinition().getProperty(face.getName());
+            var open = closed.setValue(property, true);
+            helper.assertTrue(preview.activeFaces(open) == (1 << face.ordinal()), id + " highlights only " + face);
+        }
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 20)
+    public static void axleWrenchChecksBothEndsBeforeChangingEitherFace(GameTestHelper helper) {
+        var level = helper.getLevel();
+        BlockPos first = at(helper, 2, 1, 2);
+        BlockPos second = first.east();
+        var axle = block("axle_steel_2").defaultBlockState();
+        var west = axle.setValue(AxleBlock.WEST, true);
+        var north = axle.setValue(AxleBlock.NORTH, true);
+        var east = axle.setValue(AxleBlock.EAST, true);
+        level.setBlockAndUpdate(first, west);
+        level.setBlockAndUpdate(second, north);
+
+        var wrench = GTToolHelper.displayTool(GTToolType.WRENCH);
+        var player = mockPlayer(helper);
+        player.setItemInHand(InteractionHand.MAIN_HAND, wrench);
+        var preview = ToolInteractions.preview(west, wrench);
+        helper.assertTrue(preview != null && preview.allows(west, Direction.EAST),
+                "the clicked axle alone can extend straight to the east");
+        helper.assertFalse(preview.allows(west, Direction.UP), "a turn on the clicked axle is rejected");
+        helper.assertFalse(ToolInteractions.canApply(preview, west, level, first, player, wrench, Direction.EAST),
+                "the preview rejects a turn on the neighboring axle");
+        clickWithTool(helper, first, Direction.EAST, wrench);
+        helper.assertTrue(level.getBlockState(first) == west && level.getBlockState(second) == north,
+                "the rejected wrench click preserves both axles' faces");
+
+        level.setBlockAndUpdate(second, east);
+        helper.assertTrue(ToolInteractions.canApply(preview, west, level, first, player, wrench, Direction.EAST),
+                "the preview allows the shared face when both axles are aligned");
+        helper.assertTrue(clickWithTool(helper, first, Direction.EAST, wrench), "the wrench handles the aligned pair");
+        var straight = west.setValue(AxleBlock.EAST, true);
+        helper.assertTrue(level.getBlockState(first) == straight && level.getBlockState(second) == straight,
+                "the click opens both sides of the seam and preserves the far ends");
+        clear(helper, first, second);
+    }
 
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 20)
     public static void connectorGeometryKeepsPipeWireAndAxleWidthsSeparate(GameTestHelper helper) {
@@ -283,11 +348,22 @@ public final class PipePlacementTests {
         var secondEntity = helper.getLevel().getBlockEntity(second);
         helper.assertTrue(secondEntity instanceof LogisticsWireBlockEntity, "neighbor logistics wire has block entity");
         LogisticsWireBlockEntity secondWire = (LogisticsWireBlockEntity) secondEntity;
+        var level = helper.getLevel();
+        var state = level.getBlockState(first);
+        ItemStack cutter = GTToolHelper.displayTool(GTToolType.WIRE_CUTTER);
+        var player = mockPlayer(helper);
+        player.setItemInHand(InteractionHand.MAIN_HAND, cutter);
+        var preview = ToolInteractions.preview(state, cutter);
+        helper.assertTrue(preview != null && ToolInteractions.canApply(preview, state, level, first, player, cutter, Direction.EAST),
+                "the cutter preview allows opening toward an uncovered logistics wire");
+        helper.assertFalse(ToolInteractions.canApply(preview, state, level, first, player, cutter, Direction.WEST),
+                "the cutter preview refuses to open toward stone");
         ItemStack bus = new ItemStack(BuiltInRegistries.ITEM.get(id("generic_logistics_import_bus")));
         helper.assertTrue(secondWire.logisticsCovers().attach(Direction.WEST, bus),
                 "logistics cover attaches to the neighbor wire face");
 
-        ItemStack cutter = GTToolHelper.displayTool(GTToolType.WIRE_CUTTER);
+        helper.assertFalse(ToolInteractions.canApply(preview, state, level, first, player, cutter, Direction.EAST),
+                "the cutter preview refuses the same wire face after fitting a logistics cover");
         helper.assertFalse(clickWithTool(helper, first, Direction.EAST, cutter),
                 "wire cutter refuses to connect across a neighbor logistics cover");
         helper.assertFalse(connected(helper, first, logisticsProp(Direction.EAST)),

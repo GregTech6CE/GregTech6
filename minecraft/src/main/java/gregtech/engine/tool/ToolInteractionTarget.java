@@ -14,6 +14,16 @@ public interface ToolInteractionTarget {
             ItemStack tool) {
         return true;
     }
+
+    /** Read-only check for opening a connection toward a loaded, editable neighbor. */
+    default boolean canOpenToolConnection(
+            net.minecraft.world.level.Level level,
+            net.minecraft.core.BlockPos pos,
+            net.minecraft.core.BlockPos neighborPos,
+            net.minecraft.core.Direction side) {
+        return true;
+    }
+
     /** Server-only hook for state such as first-use ownership, after feasibility checks pass. */
     default boolean beginToolUse(
             net.minecraft.world.level.Level level,

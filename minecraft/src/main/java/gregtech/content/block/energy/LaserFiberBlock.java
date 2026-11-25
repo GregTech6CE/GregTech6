@@ -66,7 +66,7 @@ public final class LaserFiberBlock extends GTBlock
     @Override
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return GTToolHelper.isWireCutter(tool)
-                ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.LASER)
+                ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.LASER, ElectricWireBlock::propFor)
                 : null;
     }
 

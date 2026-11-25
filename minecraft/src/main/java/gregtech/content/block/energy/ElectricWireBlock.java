@@ -101,7 +101,8 @@ public class ElectricWireBlock extends GTBlock
     @Override
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return GTToolHelper.isWireCutter(tool)
-                ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.ELECTRIC)
+                ? ToolInteractionSpec.connections(
+                        ToolInteractionSpec.ConnectionKind.ELECTRIC, ElectricWireBlock::propFor)
                 : null;
     }
 

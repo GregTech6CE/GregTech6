@@ -39,7 +39,8 @@ public final class SignalWireBlock extends GTBlock
     @Override
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return GTToolHelper.isWireCutter(tool)
-                ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.REDSTONE)
+                ? ToolInteractionSpec.connections(
+                        ToolInteractionSpec.ConnectionKind.REDSTONE, ElectricWireBlock::propFor)
                 : null;
     }
 

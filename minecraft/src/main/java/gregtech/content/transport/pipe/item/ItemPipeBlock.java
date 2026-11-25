@@ -122,7 +122,7 @@ public class ItemPipeBlock extends MaterialPipeBlock
     @Override
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return GTToolHelper.isMachineWrench(tool)
-                ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.ITEM)
+                ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.ITEM, ItemPipeBlock::propFor)
                 : null;
     }
 

@@ -3,11 +3,13 @@ package gregtech.content.block.energy;
 import gregtech.content.block.GTBlock;
 import gregtech.content.blockentity.energy.AxleBlockEntity;
 import gregtech.engine.GTWaterloggable;
+import gregtech.engine.energy.AxleConnectionRules;
 import gregtech.engine.energy.AxleSpec;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
 import gregtech.engine.tool.ToolInteractions;
+import gregtech.engine.transport.PipeConnections;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -99,10 +101,7 @@ public class AxleBlock extends GTBlock
 
     /** Axles may only connect in a straight line: max 2 connections on the same axis. */
     public static boolean isValidConnectionState(BlockState state) {
-        int mask = 0;
-        for (var direction : Direction.values())
-            if (state.getValue(propFor(direction))) mask |= 1 << direction.ordinal();
-        return gregtech.engine.energy.AxleConnectionRules.valid(mask);
+        return AxleConnectionRules.valid(PipeConnections.activeFaces(state, AxleBlock::propFor));
     }
 
     private static Direction propToDir(BooleanProperty prop) {
@@ -117,7 +116,7 @@ public class AxleBlock extends GTBlock
     @Override
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return GTToolHelper.isMachineWrench(tool)
-                ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.AXLE)
+                ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.AXLE, AxleBlock::propFor)
                 : null;
     }
 

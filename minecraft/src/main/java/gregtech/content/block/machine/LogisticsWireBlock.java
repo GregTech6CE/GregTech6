@@ -61,8 +61,7 @@ public final class LogisticsWireBlock extends GTBlock
                 || !level.mayInteract(player, pos)
                 || !level.hasChunkAt(neighborPos)
                 || !level.mayInteract(player, neighborPos)) return InteractionResult.FAIL;
-        if (open && hasBlockingCover(level, pos, neighborPos, side)) return InteractionResult.FAIL;
-        if (open && !canOpenToward(level, neighborPos, side.getOpposite())) return InteractionResult.FAIL;
+        if (open && !canOpenToolConnection(level, pos, neighborPos, side)) return InteractionResult.FAIL;
         level.setBlockAndUpdate(pos, state.setValue(property, open));
         BlockState neighborState = level.getBlockState(neighborPos);
         boolean updatedNeighbor = false;
@@ -106,9 +105,16 @@ public final class LogisticsWireBlock extends GTBlock
     }
 
     @Override
+    public boolean canOpenToolConnection(Level level, BlockPos pos, BlockPos neighborPos, Direction side) {
+        return !hasBlockingCover(level, pos, neighborPos, side)
+                && canOpenToward(level, neighborPos, side.getOpposite());
+    }
+
+    @Override
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return GTToolHelper.isWireCutter(tool)
-                ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.LOGISTICS)
+                ? ToolInteractionSpec.connections(
+                        ToolInteractionSpec.ConnectionKind.LOGISTICS, LogisticsWireBlock::propFor)
                 : null;
     }
 

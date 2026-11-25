@@ -1,13 +1,20 @@
 package gregtech.engine.tool;
 
 import gregtech.content.block.machine.MachineRotationType;
+import gregtech.engine.energy.AxleConnectionRules;
+import gregtech.engine.transport.PipeConnections;
+import java.util.function.Function;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 
 /** Immutable, side-independent declaration; contains no renderer or world references. */
-public record ToolInteractionSpec(DirectionProperty facing, MachineRotationType rotation, ConnectionKind connection) {
+public record ToolInteractionSpec(
+        DirectionProperty facing,
+        MachineRotationType rotation,
+        ConnectionKind connection,
+        Function<Direction, BooleanProperty> connectionProperties) {
     public enum ConnectionKind {
         FLUID,
         ITEM,
@@ -15,25 +22,20 @@ public record ToolInteractionSpec(DirectionProperty facing, MachineRotationType 
         AXLE,
         LASER,
         REDSTONE,
-        LOGISTICS;
-
-        public BooleanProperty property(Direction side) {
-            return switch (this) {
-                case FLUID -> gregtech.content.transport.pipe.fluid.FluidPipeBlock.propFor(side);
-                case ITEM -> gregtech.content.transport.pipe.item.ItemPipeBlock.propFor(side);
-                case ELECTRIC, LASER, REDSTONE -> gregtech.content.block.energy.ElectricWireBlock.propFor(side);
-                case LOGISTICS -> gregtech.engine.transport.PipeConnections.propFor(side);
-                case AXLE -> gregtech.content.block.energy.AxleBlock.propFor(side);
-            };
-        }
+        LOGISTICS
     }
 
     public static ToolInteractionSpec facing(DirectionProperty property, MachineRotationType policy) {
-        return new ToolInteractionSpec(property, policy, null);
+        return new ToolInteractionSpec(property, policy, null, null);
     }
 
-    public static ToolInteractionSpec connections(ConnectionKind kind) {
-        return new ToolInteractionSpec(null, null, kind);
+    public static ToolInteractionSpec connections(
+            ConnectionKind kind, Function<Direction, BooleanProperty> properties) {
+        return new ToolInteractionSpec(null, null, kind, properties);
+    }
+
+    BooleanProperty connectionProperty(Direction side) {
+        return connectionProperties.apply(side);
     }
 
     public boolean allows(Direction side) {
@@ -42,17 +44,17 @@ public record ToolInteractionSpec(DirectionProperty facing, MachineRotationType 
     }
 
     public boolean allows(BlockState state, Direction side) {
-        return allows(side)
-                && (connection != ConnectionKind.AXLE
-                        || gregtech.content.block.energy.AxleBlock.isValidConnectionState(
-                                state.cycle(connection.property(side))));
+        if (connection != ConnectionKind.AXLE) return allows(side);
+        return allowsConnection(state, side, !state.getValue(connectionProperty(side)));
+    }
+
+    boolean allowsConnection(BlockState state, Direction side, boolean connected) {
+        return connection != ConnectionKind.AXLE
+                || AxleConnectionRules.valid(activeFaces(state.setValue(connectionProperty(side), connected)));
     }
 
     public int activeFaces(BlockState state) {
         if (connection == null) return 1 << state.getValue(facing).ordinal();
-        int mask = 0;
-        for (Direction side : Direction.values())
-            if (state.getValue(connection.property(side))) mask |= 1 << side.ordinal();
-        return mask;
+        return PipeConnections.activeFaces(state, connectionProperties);
     }
 }
