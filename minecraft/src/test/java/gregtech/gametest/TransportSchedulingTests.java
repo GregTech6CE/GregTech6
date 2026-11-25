@@ -7,6 +7,7 @@ import gregtech.content.block.misc.ChargingCraftingTableBlockEntity;
 import gregtech.content.blockentity.energy.ElectricWireBlockEntity;
 import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
+import gregtech.content.blockentity.machine.FluidPipeContents;
 import gregtech.content.blockentity.tool.ManualToolBlockEntity;
 import gregtech.content.cover.CoverPlacement;
 import gregtech.content.cover.CoverUtilityBehaviors;
@@ -17,6 +18,7 @@ import gregtech.content.registry.GTChemicalBatteries;
 import gregtech.content.registry.GTFluids;
 import gregtech.content.transport.energy.ElectricNetwork;
 import gregtech.content.transport.energy.ElectricNetworks;
+import gregtech.content.transport.fluid.FluidPipeNetworks;
 import gregtech.engine.fluid.FluidHazard;
 import gregtech.engine.fluid.FluidHazards;
 import gregtech.engine.stack.NbtCompat;
@@ -215,6 +217,140 @@ public final class TransportSchedulingTests {
         GregTechConfig.overrideFluidDistributionForTesting(null);
     }
 
+    @GameTest(template = "test_empty", batch = BALANCED_BATCH, timeoutTicks = 20)
+    public static void balancedPipesReachAroundAHalfConnectedEdge(GameTestHelper helper) {
+        GregTechConfig.overrideFluidDistributionForTesting(GregTechConfig.FluidDistribution.BALANCED);
+        var block = (FluidPipeBlock) BuiltInRegistries.BLOCK.get(id("pipe_medium_steel"));
+        var start = placeAt(helper, block, 1, 1);
+        var east = placeAt(helper, block, 2, 1);
+        var corner = placeAt(helper, block, 2, 2);
+        var south = placeAt(helper, block, 1, 2);
+        var outside = placeAt(helper, block, 0, 1);
+        south.setFaceManuallyDisconnected(Direction.NORTH, true);
+        outside.setFaceManuallyDisconnected(Direction.EAST, true);
+        openFaces(start, Direction.EAST, Direction.SOUTH, Direction.WEST);
+        openFaces(east, Direction.WEST, Direction.SOUTH);
+        openFaces(corner, Direction.NORTH, Direction.WEST);
+        openFaces(south, Direction.EAST);
+        openFaces(outside);
+        var execute = IFluidHandler.FluidAction.EXECUTE;
+        start.fill(new FluidStack(Fluids.WATER, 80), execute);
+        outside.fill(new FluidStack(Fluids.WATER, 17), execute);
+
+        var report = FluidPipeContents.describe(start);
+        helper.assertTrue(report.size() == 3 && report.get(2).getString().startsWith("80 "),
+                "the single-sided external pipe is outside the reported network");
+        FluidPipeBlockEntity.serverTick(helper.getLevel(), start.getBlockPos(), start.getBlockState(), start);
+        for (var pipe : new FluidPipeBlockEntity[] {start, east, corner, south}) {
+            helper.assertTrue(pipe.gibblValue(null) == 20, "the alternate open route reaches every corner");
+        }
+        helper.assertTrue(outside.gibblValue(null) == 17, "the single-sided pipe remains untouched");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = BALANCED_BATCH, timeoutTicks = 20)
+    public static void balancedPipesLevelEachWaterVariant(GameTestHelper helper) {
+        GregTechConfig.overrideFluidDistributionForTesting(GregTechConfig.FluidDistribution.BALANCED);
+        var block = (FluidPipeBlock) BuiltInRegistries.BLOCK.get(id("pipe_quadruple_bronze"));
+        var first = placeHorizontalPipe(helper, block, 0, 2, 2);
+        var second = placeHorizontalPipe(helper, block, 1, 2, 2);
+        var plain = new FluidStack(Fluids.WATER, 100);
+        var marked = markedWater(helper, 80);
+        var execute = IFluidHandler.FluidAction.EXECUTE;
+        first.fill(plain, execute);
+        first.fill(marked, execute);
+        var report = FluidPipeContents.describe(first);
+        helper.assertTrue(report.size() == 5 && report.get(3).getString().startsWith("100 ")
+                        && report.get(4).getString().startsWith("80 "),
+                "network rows retain both variants in first-seen order");
+
+        FluidPipeBlockEntity.serverTick(helper.getLevel(), first.getBlockPos(), first.getBlockState(), first);
+        for (var pipe : new FluidPipeBlockEntity[] {first, second}) {
+            var firstSlot = pipe.getFluidInTank(0);
+            var secondSlot = pipe.getFluidInTank(1);
+            helper.assertTrue(StackCompat.sameFluid(firstSlot, plain) && firstSlot.getAmount() == 50
+                            && StackCompat.sameFluid(secondSlot, marked) && secondSlot.getAmount() == 40,
+                    "each water variant levels its own channel and retains its data");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 20)
+    public static void pipeDiagnosticsShowFullStoredAmounts(GameTestHelper helper) {
+        var block = (FluidPipeBlock) BuiltInRegistries.BLOCK.get(id("pipe_medium_steel"));
+        var first = placeHorizontalPipe(helper, block, 0, 2, 2);
+        var second = placeHorizontalPipe(helper, block, 1, 2, 2);
+        restoreWaterAmount(helper, first, 5_000_000_000L);
+        restoreWaterAmount(helper, second, Long.MAX_VALUE);
+        var report = FluidPipeContents.describe(first);
+        helper.assertTrue(report.size() == 3 && report.get(0).getString().startsWith("5_000_000_000 ")
+                        && report.get(2).getString().startsWith("9_223_372_041_854_775_807 "),
+                "both local storage and component totals retain the full legacy quantities");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = "shared_fluid_pipes", timeoutTicks = 20)
+    public static void pipeDiagnosticsPreserveSharedDrainOrder(GameTestHelper helper) {
+        var block = (FluidPipeBlock) BuiltInRegistries.BLOCK.get(id("pipe_medium_steel"));
+        var first = placeHorizontalPipe(helper, block, 0, 2, 2);
+        var second = placeHorizontalPipe(helper, block, 1, 2, 2);
+        var execute = IFluidHandler.FluidAction.EXECUTE;
+        try {
+            GregTechConfig.overrideFluidDistributionForTesting(GregTechConfig.FluidDistribution.LOCAL);
+            first.fill(new FluidStack(Fluids.WATER, 25), execute);
+            second.fill(new FluidStack(Fluids.LAVA, 35), execute);
+            GregTechConfig.overrideFluidDistributionForTesting(GregTechConfig.FluidDistribution.SHARED);
+            var baseline = first.drain(100, IFluidHandler.FluidAction.SIMULATE);
+            FluidPipeNetworks.invalidate(first);
+//? if >=1.21.1 {
+            /*second.printNetworkInfo(helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL));
+*///?} else {
+            second.printNetworkInfo(helper.makeMockPlayer());
+//?}
+            helper.assertTrue(first.network() == null && second.network() == null,
+                    "inspection from the far end did not create a shared-pool membership");
+            var actual = first.drain(100, execute);
+            helper.assertTrue(baseline.getFluid() == Fluids.WATER && StackCompat.sameFluid(actual, baseline)
+                            && actual.getAmount() == 25 && second.getFluidInTank(0).getFluid() == Fluids.LAVA,
+                    "the same water is withdrawn after inspection from the opposite end");
+        } finally {
+            GregTechConfig.overrideFluidDistributionForTesting(null);
+        }
+        helper.succeed();
+    }
+
+    private static FluidPipeBlockEntity placeAt(GameTestHelper helper, FluidPipeBlock block, int x, int z) {
+        var pos = helper.absolutePos(new BlockPos(x, 2, z));
+        helper.getLevel().setBlockAndUpdate(pos, block.defaultBlockState());
+        return (FluidPipeBlockEntity) helper.getLevel().getBlockEntity(pos);
+    }
+
+    private static void openFaces(FluidPipeBlockEntity pipe, Direction... faces) {
+        var state = pipe.getBlockState().getBlock().defaultBlockState();
+        for (Direction face : faces) state = state.setValue(FluidPipeBlock.propFor(face), true);
+        pipe.getLevel().setBlock(pipe.getBlockPos(), state, Block.UPDATE_CLIENTS);
+    }
+
+    private static void restoreWaterAmount(GameTestHelper helper, FluidPipeBlockEntity pipe, long amount) {
+        var lookup = helper.getLevel().registryAccess();
+        var contents = new CompoundTag();
+        contents.put("Fluid", NbtCompat.saveFluid(new FluidStack(Fluids.WATER, 1), lookup));
+        contents.putLong("Amount", amount);
+        var tag = new CompoundTag();
+        tag.put("gt.tank.0", contents);
+        NbtCompat.loadBlockEntity(pipe, tag, lookup);
+    }
+
+    private static FluidStack markedWater(GameTestHelper helper, int amount) {
+        var tag = new CompoundTag();
+        tag.putString("FluidName", "minecraft:water");
+        tag.putInt("Amount", amount);
+        var data = new CompoundTag();
+        data.putBoolean("marked", true);
+        tag.put("Tag", data);
+        return NbtCompat.readFluid(tag, helper.getLevel().registryAccess());
+    }
+
     @GameTest(template = "test_empty", batch = "shared_fluid_pipes", timeoutTicks = 20)
     public static void sharedPoolDrainKeepsEachFluidIdentity(GameTestHelper helper) {
         var block = (FluidPipeBlock) BuiltInRegistries.BLOCK.get(id("pipe_quadruple_bronze"));
@@ -223,13 +359,7 @@ public final class TransportSchedulingTests {
         int amount = 100;
         var water = new FluidStack(Fluids.WATER, amount);
         var lava = new FluidStack(Fluids.LAVA, amount);
-        var tag = new CompoundTag();
-        tag.putString("FluidName", "minecraft:water");
-        tag.putInt("Amount", amount);
-        var data = new CompoundTag();
-        data.putBoolean("marked", true);
-        tag.put("Tag", data);
-        var marked = NbtCompat.readFluid(tag, helper.getLevel().registryAccess());
+        var marked = markedWater(helper, amount);
 
         try {
             GregTechConfig.overrideFluidDistributionForTesting(GregTechConfig.FluidDistribution.LOCAL);

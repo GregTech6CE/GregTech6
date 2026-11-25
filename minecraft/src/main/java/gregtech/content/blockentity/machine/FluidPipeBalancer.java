@@ -4,12 +4,11 @@ import gregtech.content.cover.ComponentCoverRuntime;
 import gregtech.content.cover.CoverAttachmentBehaviors;
 import gregtech.content.cover.CoverItems;
 import gregtech.content.cover.CoverUtilityBehaviors;
+import gregtech.content.transport.fluid.FluidPipeTopology;
 import gregtech.engine.fluid.FluidPipeBalance;
 import gregtech.engine.fluid.FluidTankGT;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.material.Fluid;
 
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
@@ -17,14 +16,8 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 //?}
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.IdentityHashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /** Levels each fluid across connected pipe channels in balanced distribution mode. */
 final class FluidPipeBalancer {
@@ -34,44 +27,17 @@ final class FluidPipeBalancer {
 
     static void balanceComponent(Level level, FluidPipeBlockEntity start) {
         long nextBalance = level.getGameTime() + BALANCE_PERIOD;
-        List<FluidPipeBlockEntity> component = new ArrayList<>();
-        Map<FluidPipeBlockEntity, Integer> index = new IdentityHashMap<>();
-        Set<BlockPos> seen = new HashSet<>();
-        ArrayDeque<FluidPipeBlockEntity> queue = new ArrayDeque<>();
-        seen.add(start.getBlockPos());
-        queue.add(start);
-        while (!queue.isEmpty()) {
-            FluidPipeBlockEntity pipe = queue.poll();
-            index.put(pipe, component.size());
-            component.add(pipe);
-            for (Direction side : Direction.values()) {
-                if (!pipe.connected(side)) continue;
-                BlockPos next = pipe.getBlockPos().relative(side);
-                if (!level.hasChunkAt(next) || !seen.add(next)) continue;
-                if (level.getBlockEntity(next) instanceof FluidPipeBlockEntity neighbor
-                        && neighbor.connected(side.getOpposite())) {
-                    queue.add(neighbor);
-                }
-            }
-        }
-        for (FluidPipeBlockEntity pipe : component) pipe.deferBalanceUntil(nextBalance);
-
-        Map<Fluid, FluidStack> fluids = new LinkedHashMap<>();
-        for (FluidPipeBlockEntity pipe : component) {
-            for (FluidTankGT tank : pipe.channelTanks()) {
-                if (!tank.isEmpty()) fluids.putIfAbsent(tank.getFluid().getFluid(), tank.getFluid());
-            }
-        }
-        for (FluidStack fluid : fluids.values()) balanceFluid(level, component, index, fluid);
+        FluidPipeTopology topology = FluidPipeTopology.scan(level, start);
+        for (int i = 0; i < topology.size(); i++) topology.pipe(i).deferBalanceUntil(nextBalance);
+        for (FluidStack fluid : FluidPipeContents.variants(topology)) balanceFluid(level, topology, fluid);
     }
 
-    private static void balanceFluid(Level level, List<FluidPipeBlockEntity> component,
-                                     Map<FluidPipeBlockEntity, Integer> index, FluidStack fluid) {
-        int size = component.size();
+    private static void balanceFluid(Level level, FluidPipeTopology topology, FluidStack fluid) {
+        int size = topology.size();
         FluidTankGT[] channels = new FluidTankGT[size];
         long[] capacity = new long[size];
         for (int i = 0; i < size; i++) {
-            FluidPipeBlockEntity pipe = component.get(i);
+            FluidPipeBlockEntity pipe = topology.pipe(i);
             int channel = isBalanceExcluded(pipe) ? -1 : pipe.fillableChannel(fluid);
             if (channel < 0) continue;
             channels[i] = pipe.channelTanks()[channel];
@@ -82,13 +48,12 @@ final class FluidPipeBalancer {
         for (int i = 0; i < size; i++) adjacency.add(new ArrayList<>());
         for (int i = 0; i < size; i++) {
             if (channels[i] == null) continue;
-            FluidPipeBlockEntity pipe = component.get(i);
+            FluidPipeBlockEntity pipe = topology.pipe(i);
             for (Direction side : Direction.values()) {
-                if (!pipe.connected(side)) continue;
-                BlockPos next = pipe.getBlockPos().relative(side);
-                if (!level.hasChunkAt(next) || !(level.getBlockEntity(next) instanceof FluidPipeBlockEntity neighbor)) continue;
-                Integer other = index.get(neighbor);
-                if (other == null || other <= i || channels[other] == null || !neighbor.connected(side.getOpposite())) continue;
+                FluidPipeBlockEntity neighbor = FluidPipeTopology.connectedNeighbor(level, pipe, side);
+                if (neighbor == null) continue;
+                int other = topology.indexOf(neighbor);
+                if (other <= i || channels[other] == null) continue;
                 if (!balanceEdgeOpen(pipe, side, neighbor, fluid)) continue;
                 adjacency.get(i).add(other);
                 adjacency.get(other).add(i);
@@ -100,7 +65,7 @@ final class FluidPipeBalancer {
                 (from, to, requested) -> {
                     FluidTankGT source = channels[from];
                     long limit = Math.min(requested, source.capacity(fluid));
-                    component.get(from).transferToPipe(source, channels[to], limit);
+                    topology.pipe(from).transferToPipe(source, channels[to], limit);
                 });
     }
 

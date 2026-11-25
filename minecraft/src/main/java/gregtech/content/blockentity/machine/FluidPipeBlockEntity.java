@@ -27,7 +27,6 @@ import gregtech.engine.tool.GTToolType;
 
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.util.GTEntityHelper;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -64,11 +63,6 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 //?}
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * GT6 fluid pipe tile entity. Single class handles all sizes via {@link PipeSpec}.
@@ -727,90 +721,17 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
     public void printDebug(Player player) {
         StringBuilder sb = new StringBuilder("Pipe ").append(spec.size()).append(": ");
         for (int i = 0; i < tanks.length; i++) {
-            FluidStack f = tanks[i].getFluid();
-            if (!f.isEmpty()) {
-                sb.append("[").append(i).append("] ").append(f.getDisplayName().getString())
-                        .append(" ").append(f.getAmount()).append(gregtech.engine.fluid.FluidUnits.unit() + ", ");
-            }
+            FluidTankGT tank = tanks[i];
+            if (tank.isEmpty()) continue;
+            sb.append("[").append(i).append("] ").append(tank.getFluidLong().getDisplayName().getString())
+                    .append(" ").append(tank.getAmount()).append(gregtech.engine.fluid.FluidUnits.unit() + ", ");
         }
         player.sendSystemMessage(Component.literal(sb.toString()));
     }
 
     /** Magnifying glass: show this pipe's contents and total network contents in chat. */
     public void printNetworkInfo(Player player) {
-        if (level == null) return;
-
-        // Show this pipe's contents first
-        boolean pipeHasFluid = false;
-        for (FluidTankGT tank : tanks) {
-            FluidStack f = tank.getFluid();
-            if (!f.isEmpty()) {
-                pipeHasFluid = true;
-                player.sendSystemMessage(Component.empty()
-                        .append(Component.literal(formatLargeNumber(f.getAmount()) + " " + gregtech.engine.fluid.FluidUnits.unit() + " of ")
-                                .withStyle(ChatFormatting.WHITE))
-                        .append(f.getDisplayName().copy().withStyle(ChatFormatting.AQUA)));
-            }
-        }
-
-        // BFS scan connected fluid pipe network, sum all fluids
-        Set<BlockPos> visited = new HashSet<>();
-        Deque<FluidPipeBlockEntity> queue = new ArrayDeque<>();
-        visited.add(worldPosition);
-        queue.add(this);
-
-        // Aggregate fluid amounts by fluid type
-        java.util.Map<net.minecraft.world.level.material.Fluid, FluidStack> networkFluids = new java.util.LinkedHashMap<>();
-
-        while (!queue.isEmpty()) {
-            FluidPipeBlockEntity current = queue.poll();
-            // Sum fluids from this pipe
-            for (FluidTankGT tank : current.tanks) {
-                FluidStack f = tank.getFluid();
-                if (!f.isEmpty()) {
-                    networkFluids.merge(f.getFluid(), f.copy(), (a, b) -> {
-                        a.grow(b.getAmount());
-                        return a;
-                    });
-                }
-            }
-            // Enqueue connected neighbors
-            BlockState curState = current.getBlockState();
-            for (Direction side : Direction.values()) {
-                if (!curState.getValue(FluidPipeBlock.propFor(side))) continue;
-                BlockPos neighborPos = current.worldPosition.relative(side);
-                if (visited.contains(neighborPos) || !level.hasChunkAt(neighborPos)) continue;
-                BlockEntity be = level.getBlockEntity(neighborPos);
-                if (be instanceof FluidPipeBlockEntity neighborPipe) {
-                    visited.add(neighborPos);
-                    queue.add(neighborPipe);
-                }
-            }
-        }
-
-        if (networkFluids.isEmpty()) {
-            player.sendSystemMessage(Component.literal("=== This Fluid Pipe Network is empty ===")
-                    .withStyle(ChatFormatting.WHITE));
-        } else {
-            player.sendSystemMessage(Component.literal("=== This Fluid Pipe Network contains: ===")
-                    .withStyle(ChatFormatting.WHITE));
-            for (FluidStack f : networkFluids.values()) {
-                player.sendSystemMessage(Component.empty()
-                        .append(Component.literal(formatLargeNumber(f.getAmount()) + " " + gregtech.engine.fluid.FluidUnits.unit() + " of ")
-                                .withStyle(ChatFormatting.WHITE))
-                        .append(f.getDisplayName().copy().withStyle(ChatFormatting.AQUA)));
-            }
-        }
-    }
-
-    private static String formatLargeNumber(long value) {
-        if (value >= 1_000_000) {
-            return String.format(java.util.Locale.ROOT, "%,d", value).replace(',', '_');
-        }
-        if (value >= 1000) {
-            return String.format(java.util.Locale.ROOT, "%,d", value);
-        }
-        return Long.toString(value);
+        FluidPipeContents.describe(this).forEach(player::sendSystemMessage);
     }
 
     // === IFluidHandler ===
@@ -996,7 +917,7 @@ public class FluidPipeBlockEntity extends GTBlockEntity implements IFluidHandler
 //?}
     }
 
-    final boolean connected(Direction side) {
+    public final boolean connected(Direction side) {
         return !isRemoved() && getBlockState().getValue(FluidPipeBlock.propFor(side));
     }
 
