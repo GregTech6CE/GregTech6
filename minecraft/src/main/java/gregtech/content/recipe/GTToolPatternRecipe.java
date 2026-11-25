@@ -11,17 +11,12 @@ import gregtech.content.tool.OriginalToolMaterials;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.item.GTToolItem;
 import gregtech.content.registry.GTItems;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
-//? if >=1.21.1 {
-/*import net.minecraft.world.item.crafting.CraftingInput;
-*///?} else {
-import net.minecraft.world.inventory.CraftingContainer;
-//?}
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
@@ -48,12 +43,15 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
     }
 
     protected GTToolPatternRecipe(ResourceLocation id, GTToolType type, GTToolRecipes.Pattern pattern, boolean head) {
-//? if >=1.21.1 {
-        /*super(new ShapedRecipe("gt.tools",CraftingBookCategory.EQUIPMENT,new net.minecraft.world.item.crafting.ShapedRecipePattern(pattern.width(),pattern.height(),ingredientsOf(type,pattern),java.util.Optional.empty()),displayResult(type,pattern,head)),
-*///?} else {
-        super(new ShapedRecipe(id, "gt.tools", CraftingBookCategory.EQUIPMENT, pattern.width(), pattern.height(),
-                        ingredientsOf(type, pattern), displayResult(type, pattern, head)),
-//?}
+        super(
+                GTShapedCraftingRecipe.shaped(
+                        id,
+                        "gt.tools",
+                        CraftingBookCategory.EQUIPMENT,
+                        pattern.width(),
+                        pattern.height(),
+                        ingredientsOf(type, pattern),
+                        displayResult(type, pattern, head)),
                 pattern.mirror());
         this.type = type;
         this.pattern = pattern;
@@ -80,11 +78,7 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
      * material, while the row has to accept every material GT6 registers it for.</p>
      */
     @Override
-//? if >=1.21.1 {
-    /*public boolean matches(CraftingInput grid, Level level) {
-*///?} else {
-    public boolean matches(CraftingContainer grid, Level level) {
-//?}
+    protected boolean onMatches(CraftingGridView grid, Level level) {
         return match(grid) != null;
     }
 
@@ -92,19 +86,10 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
      * Matches the pattern (mirrored when GT6's row allows it) and resolves the materials, or null.
      */
     @Nullable
-//? if >=1.21.1 {
-    /*protected Match match(CraftingInput grid) {
-*///?} else {
-    protected Match match(CraftingContainer grid) {
-//?}
+    protected Match match(CraftingGridView grid) {
         if (!toolsUsable(grid)) return null;
-//? if >=1.21.1 {
-        /*for (int left = 0; left <= grid.width() - pattern.width(); left++) {
+        for (int left = 0; left <= grid.width() - pattern.width(); left++) {
             for (int top = 0; top <= grid.height() - pattern.height(); top++) {
-*///?} else {
-        for (int left = 0; left <= grid.getWidth() - pattern.width(); left++) {
-            for (int top = 0; top <= grid.getHeight() - pattern.height(); top++) {
-//?}
                 Match plain = match(grid, left, top, false);
                 if (plain != null) return plain;
                 if (pattern.mirror()) {
@@ -117,22 +102,12 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
     }
 
     @Nullable
-//? if >=1.21.1 {
-    /*private Match match(CraftingInput grid, int left, int top, boolean mirrored) {
-*///?} else {
-    private Match match(CraftingContainer grid, int left, int top, boolean mirrored) {
-//?}
+    private Match match(CraftingGridView grid, int left, int top, boolean mirrored) {
         GTMaterial material = null;
         GTMaterial handle = null;
-//? if >=1.21.1 {
-        /*for (int y = 0; y < grid.height(); y++) {
+        for (int y = 0; y < grid.height(); y++) {
             for (int x = 0; x < grid.width(); x++) {
                 ItemStack stack = grid.getItem(x + y * grid.width());
-*///?} else {
-        for (int y = 0; y < grid.getHeight(); y++) {
-            for (int x = 0; x < grid.getWidth(); x++) {
-                ItemStack stack = grid.getItem(x + y * grid.getWidth());
-//?}
                 int px = x - left;
                 int py = y - top;
                 char letter = ' ';
@@ -249,11 +224,7 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
     protected abstract ItemStack assembleFrom(Match match);
 
     @Override
-//? if >=1.21.1 {
-    /*public ItemStack assemble(CraftingInput grid, net.minecraft.core.HolderLookup.Provider access) {
-*///?} else {
-    public ItemStack assemble(CraftingContainer grid, net.minecraft.core.RegistryAccess access) {
-//?}
+    protected ItemStack onAssemble(CraftingGridView grid, HolderLookup.Provider access) {
         Match match = match(grid);
         return match == null ? ItemStack.EMPTY : assembleFrom(match);
     }
