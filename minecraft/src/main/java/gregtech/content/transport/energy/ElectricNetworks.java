@@ -1,10 +1,10 @@
 package gregtech.content.transport.energy;
 
 import gregtech.content.blockentity.energy.ElectricWireBlockEntity;
+import java.util.IdentityHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.WeakHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
@@ -28,7 +28,7 @@ import net.minecraftforge.event.TickEvent;
 @net.minecraftforge.fml.common.Mod.EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
 //?}
 public final class ElectricNetworks {
-    private static final Map<Level, State> STATES = new WeakHashMap<>();
+    private static final Map<Level, State> STATES = new IdentityHashMap<>();
 
     private ElectricNetworks() {}
 
@@ -57,7 +57,7 @@ public final class ElectricNetworks {
     /** A wire left the level, by removal or chunk unload. */
     public static void left(ElectricWireBlockEntity wire) {
         invalidate(wire);
-        State state = state(wire.getLevel());
+        State state = STATES.get(wire.getLevel());
         if (state == null) return;
         state.joined.remove(wire);
         state.burns.remove(wire);

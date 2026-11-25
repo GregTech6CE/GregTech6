@@ -23,7 +23,7 @@ import net.minecraftforge.event.TickEvent;
 public final class FluidPipeTickPhases {
     /** A sleeping pipe still runs this often so a missed wake-up cannot strand fluid forever. */
     private static final int HEARTBEAT_TICKS = 600;
-    private static final Map<Level, State> STATES = new WeakHashMap<>();
+    private static final Map<Level, State> STATES = new IdentityHashMap<>();
 
     private FluidPipeTickPhases() {}
 
@@ -140,7 +140,7 @@ public final class FluidPipeTickPhases {
     }
 
     public static void left(FluidPipeBlockEntity pipe) {
-        State queue = stateOf(pipe.getLevel());
+        State queue = STATES.get(pipe.getLevel());
         if (queue == null) return;
         queue.pending.remove(pipe);
         queue.active.remove(pipe);

@@ -31,7 +31,7 @@ import net.minecraftforge.event.TickEvent;
 public final class ItemPipeNetworks {
     private static final int MIN_RETRY = 10;
     private static final int MAX_RETRY = 40;
-    private static final Map<Level, State> STATES = new WeakHashMap<>();
+    private static final Map<Level, State> STATES = new IdentityHashMap<>();
 
     private ItemPipeNetworks() {}
 
@@ -106,7 +106,7 @@ public final class ItemPipeNetworks {
     /** A pipe left the level, by removal or chunk unload. */
     public static void left(ItemPipeBlockEntity pipe) {
         invalidate(pipe);
-        State state = state(pipe.getLevel());
+        State state = STATES.get(pipe.getLevel());
         if (state == null) return;
         state.joined.remove(pipe);
         state.covered.remove(pipe);
