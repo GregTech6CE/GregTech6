@@ -8,9 +8,11 @@ import gregtech.content.cover.PipeCoverHost;
 import gregtech.content.data.generated.GT6Materials;
 import gregtech.content.item.GTToolItem;
 import gregtech.content.tool.ElectricWrenchHarvest;
+import gregtech.engine.machine.PipeGeometry;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
 import gregtech.engine.transport.PipeConnections;
+import java.util.Arrays;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -25,6 +27,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -50,6 +53,53 @@ public final class PipePlacementTests {
     private static final String BATCH = "pipe_placement";
 
     private PipePlacementTests() {}
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 20)
+    public static void connectorGeometryKeepsPipeWireAndAxleWidthsSeparate(GameTestHelper helper) {
+        double none = PipeGeometry.NONE;
+        var fluid = block("pipe_tiny_steel").defaultBlockState();
+        var item = block("item_pipe_medium_brass").defaultBlockState();
+        checkWidths(helper, fluid, 2, none, none);
+        checkWidths(helper, item, 4, none, none);
+        checkWidths(helper, block("wire_02_copper").defaultBlockState(), none, 1.5, none);
+        checkWidths(helper, block("wire_01_redalloy").defaultBlockState(), none, 1, none);
+        checkWidths(helper, block("cable_01_redalloy").defaultBlockState(), none, 2, none);
+        checkWidths(helper, block("axle_steel_2").defaultBlockState(), none, none, 4.5);
+        checkWidths(helper, Blocks.STONE.defaultBlockState(), none, none, none);
+
+        double thin = PipeGeometry.pipeHalfOf(fluid);
+        double thick = PipeGeometry.fluidNeighborHalf(item, Direction.EAST);
+        helper.assertTrue(Arrays.equals(PipeGeometry.armBox(Direction.EAST, thin, thick),
+                        new double[] {10, 6, 6, 20, 10, 10}),
+                "the thin fluid pipe renders its arm up to the thick item pipe's core");
+        helper.assertTrue(PipeGeometry.armBox(Direction.WEST, thick, thin) == null,
+                "the thick item pipe leaves rendering to the thin fluid pipe");
+        helper.assertTrue(Arrays.equals(PipeGeometry.localArmBox(Direction.WEST, thick, thin),
+                        new double[] {0, 6, 6, 4, 10, 10}),
+                "the thick pipe's collision arm fills its own cell at the thin pipe's width");
+        helper.succeed();
+    }
+
+    private static void checkWidths(GameTestHelper helper, BlockState state, double pipe, double wire, double axle) {
+        helper.assertTrue(PipeGeometry.pipeHalfOf(state) == pipe, "pipe half-width for " + state);
+        helper.assertTrue(PipeGeometry.wireHalfOf(state) == wire, "wire half-width for " + state);
+        helper.assertTrue(PipeGeometry.axleHalfOf(state) == axle, "axle half-width for " + state);
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 20)
+    public static void steamEngineVirtualSocketsFollowTheirFaces(GameTestHelper helper) {
+        var engine = block("engine_steam_bronze").defaultBlockState()
+                .setValue(BlockStateProperties.FACING, Direction.NORTH);
+        helper.assertTrue(PipeGeometry.pipeHalfOf(engine) == PipeGeometry.NONE,
+                "a machine socket supplies only face-specific fluid geometry");
+        helper.assertTrue(PipeGeometry.fluidNeighborHalf(engine, Direction.SOUTH) == PipeGeometry.NONE,
+                "a pipe facing the engine's kinetic output sees no socket");
+        helper.assertTrue(PipeGeometry.fluidNeighborHalf(engine, Direction.NORTH) == PipeGeometry.virtual(4),
+                "a pipe facing the steam input sees a medium socket");
+        helper.assertTrue(PipeGeometry.fluidNeighborHalf(engine, Direction.DOWN) == PipeGeometry.virtual(2),
+                "a pipe facing the water return sees a tiny socket");
+        helper.succeed();
+    }
 
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 20)
     public static void pipeHarvestUsesMaterialToolAndWrenchQuality(GameTestHelper helper) {

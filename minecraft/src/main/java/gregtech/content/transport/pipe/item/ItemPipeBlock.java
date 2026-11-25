@@ -3,6 +3,7 @@ package gregtech.content.transport.pipe.item;
 import gregtech.content.transport.pipe.MaterialPipeBlock;
 import gregtech.engine.GTWaterloggable;
 import gregtech.engine.machine.ItemPipeSpec;
+import gregtech.engine.machine.PipeGeometry;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
@@ -35,7 +36,11 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 /** GT6 item pipe block with wrench-toggleable I/O and thin-cross collision shape. */
 public class ItemPipeBlock extends MaterialPipeBlock
-        implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget, gregtech.engine.inventory.PipeFormLike {
+        implements EntityBlock,
+                SimpleWaterloggedBlock,
+                ToolInteractionTarget,
+                PipeGeometry.PipeConnectorGeometry,
+                gregtech.engine.inventory.PipeFormLike {
     public static final BooleanProperty UP = BooleanProperty.create("up");
     public static final BooleanProperty DOWN = BooleanProperty.create("down");
     public static final BooleanProperty NORTH = BooleanProperty.create("north");
@@ -87,6 +92,11 @@ public class ItemPipeBlock extends MaterialPipeBlock
 
     public ItemPipeSpec spec() {
         return spec;
+    }
+
+    @Override
+    public double pipeHalfThickness() {
+        return Math.max(1.0, spec().diameter() * 8.0);
     }
 
     @Override

@@ -5,6 +5,7 @@ import gregtech.content.block.GTBlock;
 import gregtech.content.blockentity.energy.SignalWireBlockEntity;
 import gregtech.content.registry.GTSignalWires;
 import gregtech.engine.GTWaterloggable;
+import gregtech.engine.machine.PipeGeometry;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
@@ -26,7 +27,7 @@ import net.minecraft.world.phys.shapes.*;
 
 /** Six independent ports; the common cutter spec also drives the client face overlay. */
 public final class SignalWireBlock extends GTBlock
-        implements EntityBlock, ToolInteractionTarget, SimpleWaterloggedBlock {
+        implements EntityBlock, ToolInteractionTarget, SimpleWaterloggedBlock, PipeGeometry.WireConnectorGeometry {
     @Override
     protected InteractionResult useBlock(
             BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
@@ -71,6 +72,11 @@ public final class SignalWireBlock extends GTBlock
 
     public int halfThickness() {
         return insulated ? 2 : 1;
+    }
+
+    @Override
+    public double wireHalfThickness() {
+        return halfThickness();
     }
 
     @Override

@@ -1,8 +1,5 @@
 package gregtech.engine.machine;
 
-import gregtech.content.block.energy.SignalWireBlock;
-import gregtech.content.transport.pipe.fluid.FluidPipeBlock;
-import gregtech.content.transport.pipe.item.ItemPipeBlock;
 import gregtech.engine.energy.WireMaterialLike;
 import javax.annotation.Nullable;
 import net.minecraft.core.Direction;
@@ -125,19 +122,23 @@ public final class PipeGeometry {
 
     /** Half-thickness of a pipe-family neighbor (fluid/item pipes connect to each other). */
     public static double pipeHalfOf(BlockState state) {
-        if (state.getBlock() instanceof FluidPipeBlock pipe) {
-            return Math.max(1.0, pipe.spec().diameter() * 8.0);
-        }
-        if (state.getBlock() instanceof ItemPipeBlock pipe) {
-            return Math.max(1.0, pipe.spec().diameter() * 8.0);
-        }
-        return NONE;
+        return state.getBlock() instanceof PipeConnectorGeometry pipe ? pipe.pipeHalfThickness() : NONE;
+    }
+
+    /** A fluid or item pipe exposes its half-thickness to adjoining pipe geometry. */
+    public interface PipeConnectorGeometry {
+        double pipeHalfThickness();
     }
 
     /** Half-thickness of a wire-family neighbor. */
     public static double wireHalfOf(BlockState state) {
-        if (state.getBlock() instanceof SignalWireBlock wire) return wire.halfThickness();
+        if (state.getBlock() instanceof WireConnectorGeometry wire) return wire.wireHalfThickness();
         return state.getBlock() instanceof WireMaterialLike wire ? wire.spec().halfThickness() : NONE;
+    }
+
+    /** A wire with its own geometry exposes its half-thickness to adjoining wires. */
+    public interface WireConnectorGeometry {
+        double wireHalfThickness();
     }
 
     /** Half-thickness of an axle-family neighbor. */
