@@ -5,14 +5,10 @@ import gregtech.api.material.GTValues;
 import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.GregTechConstants;
+import gregtech.platform.LoaderHooks;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
-
-//? if >=1.21.1 {
-//?} else {
-import net.minecraftforge.common.ForgeHooks;
-//?}
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -46,11 +42,7 @@ public final class FurnaceFuelValue {
                     return clampFuelValue(sum);
                 })
                 .filter(value -> value > 0)
-//? if >=1.21.1 {
-                /*.orElseGet(() -> (long) Math.max(0, stack.getBurnTime(RecipeType.SMELTING)));
-*///?} else {
-                .orElseGet(() -> (long) Math.max(0, ForgeHooks.getBurnTime(stack, RecipeType.SMELTING)));
-//?}
+                .orElseGet(() -> (long) Math.max(0, LoaderHooks.vanillaBurnTime(stack, RecipeType.SMELTING)));
     }
 
     public static long getHeatUnits(ItemStack stack) {
