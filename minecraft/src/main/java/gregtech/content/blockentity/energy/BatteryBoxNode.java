@@ -25,12 +25,21 @@ final class BatteryBoxNode extends EnergyDeviceBehavior implements MachineContro
     private final EnergyNodeSpec spec;
     final BatteryBoxInventory inventory;
     final BatteryBoxEnergy energy;
+    private boolean updatePending;
 
     BatteryBoxNode(EnergyNodeBlockEntity host, EnergyNodeSpec spec) {
         super(host);
         this.spec = spec;
         inventory = new BatteryBoxInventory(host, spec);
-        energy = new BatteryBoxEnergy(inventory.batteries, spec.inputRate(), spec.inType());
+        energy = new BatteryBoxEnergy(inventory.batteries, spec.inputRate(), spec.inType(), this::energyChanged);
+    }
+
+    private void energyChanged() {
+        if (isCurrent()) host.setChanged();
+    }
+
+    void markUpdatePending() {
+        updatePending = true;
     }
 
     @Override
@@ -44,6 +53,8 @@ final class BatteryBoxNode extends EnergyDeviceBehavior implements MachineContro
         host.bufferedInput = 0;
         energy.load(tag);
         inventory.load(tag, lookup);
+        // A block-item snapshot can be applied after the block has already been placed.
+        markUpdatePending();
     }
 
     @Override
@@ -69,13 +80,14 @@ final class BatteryBoxNode extends EnergyDeviceBehavior implements MachineContro
             energy.emitted(sent);
         }
         host.panels().afterTick();
-        host.setChanged();
         if (time % 20 == 0) {
             int charge = energy.displayState();
+            boolean sendUpdate = updatePending;
+            updatePending = false;
             if (state.hasProperty(BatteryBoxBlock.CHARGE_STATE)
                     && state.getValue(BatteryBoxBlock.CHARGE_STATE) != charge) {
                 level.setBlock(pos, state.setValue(BatteryBoxBlock.CHARGE_STATE, charge), Block.UPDATE_ALL);
-            } else {
+            } else if (sendUpdate) {
                 level.sendBlockUpdated(pos, state, state, Block.UPDATE_CLIENTS);
             }
         }
@@ -123,7 +135,6 @@ final class BatteryBoxNode extends EnergyDeviceBehavior implements MachineContro
         if (execute && used > 0) {
             Level level = host.getLevel();
             if (level != null) host.conversionMeter().input(level.getGameTime(), packet, used);
-            host.setChanged();
         }
         return used;
     }
@@ -184,7 +195,6 @@ final class BatteryBoxNode extends EnergyDeviceBehavior implements MachineContro
     public int setMode(int mode) {
         if (!available()) return 0;
         energy.mode(mode);
-        host.setChanged();
         return energy.mode();
     }
 
@@ -197,7 +207,6 @@ final class BatteryBoxNode extends EnergyDeviceBehavior implements MachineContro
     public boolean setEnabled(boolean enabled) {
         if (!available()) return false;
         energy.enabled(enabled);
-        host.setChanged();
         return enabled;
     }
 

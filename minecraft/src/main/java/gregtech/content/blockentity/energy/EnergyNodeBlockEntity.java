@@ -139,6 +139,12 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity
         return spec;
     }
 
+    @Override
+    public void setChanged() {
+        if (behavior instanceof BatteryBoxNode battery) battery.markUpdatePending();
+        super.setChanged();
+    }
+
     boolean isCurrent(EnergyDeviceBehavior candidate) {
         return behavior == candidate && !isRemoved();
     }

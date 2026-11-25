@@ -12,6 +12,8 @@ import net.minecraft.world.level.Level;
 /** Native item/world/NBT boundary around the original shared battery-box state rules. */
 public final class BatteryBoxEnergy {
     private final BatteryBoxState state;
+    private final Runnable changed;
+    private long cellRevision;
     private Level transferLevel;
     private BlockPos transferPos;
 
@@ -20,6 +22,11 @@ public final class BatteryBoxEnergy {
     }
 
     public BatteryBoxEnergy(List<ItemStack> inventory, long voltage, GregTechTags.Tag type) {
+        this(inventory, voltage, type, () -> {});
+    }
+
+    public BatteryBoxEnergy(List<ItemStack> inventory, long voltage, GregTechTags.Tag type, Runnable changed) {
+        this.changed = changed;
         // Resolve each stack by its slot on every call, so replacements do not leave a stale item reference.
         var slots = java.util.stream.IntStream.range(0, inventory.size())
                 .mapToObj(slot -> (BatteryBoxState.Battery) new BatteryBoxState.Battery() {
@@ -54,14 +61,22 @@ public final class BatteryBoxEnergy {
                     public long extract(long v, long p) {
                         IItemEnergy item = energy();
                         ItemStack original = stack();
+                        ItemStack before = original.copy();
                         long extracted =
                                 item.doEnergyExtraction(type, original, v, p, transferLevel, transferPos, true);
-                        inventory.set(slot, item.afterEnergyTransfer(original));
+                        ItemStack replacement = item.afterEnergyTransfer(original);
+                        inventory.set(slot, replacement);
+                        if (extracted > 0 || !ItemStack.matches(before, replacement)) cellRevision++;
                         return extracted;
                     }
 
                     public long inject(long v, long p) {
-                        return energy().doEnergyInjection(type, stack(), v, p, transferLevel, transferPos, true);
+                        ItemStack original = stack();
+                        ItemStack before = original.copy();
+                        long injected =
+                                energy().doEnergyInjection(type, original, v, p, transferLevel, transferPos, true);
+                        if (injected > 0 || !ItemStack.matches(before, stack())) cellRevision++;
+                        return injected;
                     }
                 })
                 .toList();
@@ -97,7 +112,9 @@ public final class BatteryBoxEnergy {
     }
 
     public void mode(int value) {
+        int previous = state.mode();
         state.mode(value);
+        if (state.mode() != previous) changed.run();
     }
 
     public boolean enabled() {
@@ -105,7 +122,9 @@ public final class BatteryBoxEnergy {
     }
 
     public void enabled(boolean value) {
+        if (value == state.enabled()) return;
         state.enabled(value);
+        changed.run();
     }
 
     public boolean running() {
@@ -134,14 +153,18 @@ public final class BatteryBoxEnergy {
 
     public void emitted(long packets) {
         state.emitted(packets);
+        if (state.emitted()) changed.run();
     }
 
     public long inject(long size, long amount, boolean execute) {
-        return state.inject(size, amount, execute);
+        long used = state.inject(size, amount, execute);
+        if (execute && used > 0) changed.run();
+        return used;
     }
 
     /** Native world context exists only for the duration of item callbacks, including nested calls. */
     public void tick(long time, Level level, BlockPos pos) {
+        long before = cellRevision;
         var oldLevel = transferLevel;
         var oldPos = transferPos;
         transferLevel = level;
@@ -151,6 +174,7 @@ public final class BatteryBoxEnergy {
         } finally {
             transferLevel = oldLevel;
             transferPos = oldPos;
+            if (cellRevision != before) changed.run();
         }
     }
 

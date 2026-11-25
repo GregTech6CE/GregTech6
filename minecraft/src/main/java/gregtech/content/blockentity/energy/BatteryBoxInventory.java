@@ -142,6 +142,11 @@ final class BatteryBoxInventory implements IItemHandlerModifiable {
                 (id, playerInventory, player) -> new HopperContainerMenu(
                         GTMenuTypes.forSlotCount(getSlots()), id, playerInventory, this) {
                     @Override
+                    protected void inventorySlotChanged(int index) {
+                        if (available()) host.setChanged();
+                    }
+
+                    @Override
                     public boolean stillValid(Player viewer) {
                         var level = host.getLevel();
                         var pos = host.getBlockPos();
