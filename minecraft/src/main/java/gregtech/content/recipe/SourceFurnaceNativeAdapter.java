@@ -1,5 +1,7 @@
 package gregtech.content.recipe;
 
+import static gregtech.content.material.MaterialFactKeys.Decision;
+
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialProperty;
 import gregtech.content.block.DenseOreBlock;
@@ -16,15 +18,12 @@ import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.util.OM;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.ItemStack;
-
 import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Optional;
-
-import static gregtech.content.material.MaterialFactKeys.Decision;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
 
 /** The native block branch of Loader_OreProcessing, not the oreRaw form listener.
  * Source permissions govern only this producer; they grant no authority to delete cooking rows.
@@ -35,18 +34,31 @@ final class SourceFurnaceNativeAdapter {
     // Startup baseline keeps these recipe identities across reload. This is passive emission data,
     // not input ownership: replacement/filter decisions must continue using their existing tables.
     private static final Map<Recipe, FurnaceSmeltingRecipes.CookingData> PASSIVE_COOKING = new IdentityHashMap<>();
+
     static Optional<FurnaceSmeltingRecipes.CookingData> cooking(Recipe row) {
         return Optional.ofNullable(PASSIVE_COOKING.get(row));
     }
 
-    enum Action { SOURCE_ROW, SOURCE_NO_ROW, DEFERRED_NO_ROW, LEGACY_UNSUPPORTED }
+    enum Action {
+        SOURCE_ROW,
+        SOURCE_NO_ROW,
+        DEFERRED_NO_ROW,
+        LEGACY_UNSUPPORTED
+    }
 
     /** A canonical GTItems binding may be replaced by a foreign holder; the binding alone is not ownership. */
     static boolean nativeForm(MaterialPrefix prefix, GTMaterial material, ItemStack input) {
-        return material != null && input != null && !input.isEmpty() && input.getCount() == 1
-                && input.getItem() instanceof MaterialFormItem form && form.getPrefix() == prefix
+        return material != null
+                && input != null
+                && !input.isEmpty()
+                && input.getCount() == 1
+                && input.getItem() instanceof MaterialFormItem form
+                && form.getPrefix() == prefix
                 && form.getMaterial().resolve() == material.resolve()
-                && BuiltInRegistries.ITEM.getKey(input.getItem()).getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE);
+                && BuiltInRegistries.ITEM
+                        .getKey(input.getItem())
+                        .getNamespace()
+                        .equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE);
     }
 
     /** Whether the early dust-first producer remains responsible for this selected form. */
@@ -56,15 +68,14 @@ final class SourceFurnaceNativeAdapter {
             return OreSourcePolicy.furnaceInput(material) && !OreSourcePolicy.usesReviewedFurnaceListener(material);
         var decision = MaterialFactKeys.value(material, MaterialFactKeys.SOURCE_FURNACE)
                 .orElse(MaterialFactKeys.Decision.UNKNOWN);
-        return (decision == Decision.UNKNOWN
-                        ? material.has(MaterialProperty.MELTING)
-                        : decision == Decision.YES)
+        return (decision == Decision.UNKNOWN ? material.has(MaterialProperty.MELTING) : decision == Decision.YES)
                 && !(decision == Decision.YES && FurnaceSmeltingRules.legacyAllows(material));
     }
 
     static boolean listenerAllows(MaterialPrefix prefix, GTMaterial material, ItemStack input) {
         return nativeForm(prefix, material, input)
-                ? FurnaceSmeltingRules.allows(material) : FurnaceSmeltingRules.legacyAllows(material);
+                ? FurnaceSmeltingRules.allows(material)
+                : FurnaceSmeltingRules.legacyAllows(material);
     }
 
     record Outcome(Action action, ItemStack input, ItemStack ingot, ItemStack gem, boolean food) {
@@ -112,21 +123,43 @@ final class SourceFurnaceNativeAdapter {
     }
 
     static class Snapshot {
-        Decision decision(GTMaterial material) { return OreSourcePolicy.furnaceDecision(material); }
-        boolean hidden(GTMaterial material) { return material.has(MaterialProperty.HIDDEN); }
-        ItemStack ingot(GTMaterial target, long amount) { return OM.ingot(target, amount); }
-        ItemStack gem(GTMaterial target, long amount) { return OM.gem(target, amount); }
-        boolean food(GTMaterial target) { return MaterialWorkability.isFood(target); }
+        Decision decision(GTMaterial material) {
+            return OreSourcePolicy.furnaceDecision(material);
+        }
+
+        boolean hidden(GTMaterial material) {
+            return material.has(MaterialProperty.HIDDEN);
+        }
+
+        ItemStack ingot(GTMaterial target, long amount) {
+            return OM.ingot(target, amount);
+        }
+
+        ItemStack gem(GTMaterial target, long amount) {
+            return OM.gem(target, amount);
+        }
+
+        boolean food(GTMaterial target) {
+            return MaterialWorkability.isFood(target);
+        }
 
         boolean blockInput(GTMaterial material, ItemStack input) {
-            if (material == null || input.getCount() != 1 || !(input.getItem() instanceof BlockItem item)
-                    || !BuiltInRegistries.ITEM.getKey(item).getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return false;
+            if (material == null
+                    || input.getCount() != 1
+                    || !(input.getItem() instanceof BlockItem item)
+                    || !BuiltInRegistries.ITEM
+                            .getKey(item)
+                            .getNamespace()
+                            .equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return false;
             var block = item.getBlock();
             if (block instanceof OreBlock ore)
-                return ore.prefix() == BlockMaterialPrefix.ore && ore.material().resolve() == material.resolve()
+                return ore.prefix() == BlockMaterialPrefix.ore
+                        && ore.material().resolve() == material.resolve()
                         && GTBlocks.getStack(BlockMaterialPrefix.ore, material).getItem() == item;
-            boolean matches = block instanceof DenseOreBlock ore && ore.material().resolve() == material.resolve()
-                    || block instanceof VanillaOreBlock vanilla && vanilla.material().resolve() == material.resolve();
+            boolean matches =
+                    block instanceof DenseOreBlock ore && ore.material().resolve() == material.resolve()
+                            || block instanceof VanillaOreBlock vanilla
+                                    && vanilla.material().resolve() == material.resolve();
             if (!matches) return false;
             return SpecialOreBlocks.contains(block);
         }
