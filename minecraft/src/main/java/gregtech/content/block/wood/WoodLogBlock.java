@@ -67,11 +67,7 @@ public class WoodLogBlock extends RotatedPillarBlock {
             if (!level.setBlock(pos, stripped, 3)) return InteractionResult.FAIL;
             level.playSound(null, pos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0F, 1.0F);
             if (plainAxe) {
-//? if >=1.21.1 {
-                /*stack.hurtAndBreak(1, player, slot);
-*///?} else {
-                stack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(hand));
-//?}
+                gregtech.engine.tool.ToolDamage.hurtAndBreak(stack, 1, player, slot);
             } else {
                 ItemStack output = toolProduct();
                 if (!output.isEmpty()) gregtech.engine.fluid.HandContainerTransfer.give(player, output);

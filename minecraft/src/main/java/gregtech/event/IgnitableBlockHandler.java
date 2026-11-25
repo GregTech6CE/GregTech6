@@ -1,9 +1,9 @@
 package gregtech.event;
 
 import gregtech.content.item.behavior.ItemBehaviors;
+import gregtech.engine.tool.ToolDamage;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Items;
 //? if >=1.21.1 {
@@ -37,12 +37,7 @@ public final class IgnitableBlockHandler {
                 (float) (hit.getLocation().y - pos.getY()), (float) (hit.getLocation().z - pos.getZ()));
         if (cost <= 0) return;
         if (!player.isCreative()) {
-//? if >=1.21.1 {
-            /*held.hurtAndBreak(1, player, event.getHand() == InteractionHand.OFF_HAND
-                    ? net.minecraft.world.entity.EquipmentSlot.OFFHAND : net.minecraft.world.entity.EquipmentSlot.MAINHAND);
-*///?} else {
-            held.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(event.getHand()));
-//?}
+            ToolDamage.hurtAndBreak(held, 1, player, event.getHand());
         }
         level.playSound(null, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
         event.setCanceled(true);

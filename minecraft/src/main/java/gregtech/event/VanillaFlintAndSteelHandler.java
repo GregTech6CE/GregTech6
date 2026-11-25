@@ -2,6 +2,7 @@ package gregtech.event;
 
 import gregtech.GregTechConfig;
 import gregtech.content.item.behavior.BehaviorFlintAndTinder;
+import gregtech.engine.tool.ToolDamage;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Items;
 //? if >=1.21.1 {
@@ -32,11 +33,6 @@ public final class VanillaFlintAndSteelHandler {
         if (level.random.nextInt(100) < BehaviorFlintAndTinder.DEFAULT_FLINT_CHANCE) return;
         event.setCanceled(true);
         event.setCancellationResult(InteractionResult.CONSUME);
-//? if >=1.21.1 {
-        /*held.hurtAndBreak(1, player, event.getHand() == net.minecraft.world.InteractionHand.OFF_HAND
-                ? net.minecraft.world.entity.EquipmentSlot.OFFHAND : net.minecraft.world.entity.EquipmentSlot.MAINHAND);
-*///?} else {
-        held.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(event.getHand()));
-//?}
+        ToolDamage.hurtAndBreak(held, 1, player, event.getHand());
     }
 }

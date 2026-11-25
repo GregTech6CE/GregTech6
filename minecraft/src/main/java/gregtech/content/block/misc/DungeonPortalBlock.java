@@ -74,13 +74,7 @@ public class DungeonPortalBlock extends GTBlock implements EntityBlock {
         if (!(level.getBlockEntity(pos) instanceof DungeonPortalBlockEntity portal)) return InteractionResult.PASS;
         if (igniter) {
             portal.onIgnite(level, pos, hit.getDirection(), player, held, player.isShiftKeyDown(), 0.5F, 0.5F, 0.5F);
-//? if >=1.21.1 {
-            /*if (!player.isCreative()) held.hurtAndBreak(1, player,
-                    hand == InteractionHand.MAIN_HAND ? net.minecraft.world.entity.EquipmentSlot.MAINHAND
-                    : net.minecraft.world.entity.EquipmentSlot.OFFHAND);
-*///?} else {
-            if (!player.isCreative()) held.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(hand));
-//?}
+            if (!player.isCreative()) gregtech.engine.tool.ToolDamage.hurtAndBreak(held, 1, player, hand);
         } else {
             portal.activate();
             if (!player.isCreative()) held.shrink(1);

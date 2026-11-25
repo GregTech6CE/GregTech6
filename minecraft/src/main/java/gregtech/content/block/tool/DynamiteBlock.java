@@ -33,11 +33,7 @@ public class DynamiteBlock extends GTDirectionalBlock implements RemoteActivatab
                 && charge.onIgnite(level,pos,hit.getDirection(),player,held,player.isShiftKeyDown(),0,0,0)>0
                 && !player.isCreative()) {
             if (held.is(Items.FIRE_CHARGE)) held.shrink(1);
-//? if >=1.21.1 {
-            /*else held.hurtAndBreak(1,player,hand==InteractionHand.OFF_HAND?net.minecraft.world.entity.EquipmentSlot.OFFHAND:net.minecraft.world.entity.EquipmentSlot.MAINHAND);
-*///?} else {
-            else held.hurtAndBreak(1,player,p->p.broadcastBreakEvent(hand));
-//?}
+            else gregtech.engine.tool.ToolDamage.hurtAndBreak(held, 1, player, hand);
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }

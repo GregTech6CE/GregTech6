@@ -301,11 +301,7 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
         if (held.is(Items.FLINT_AND_STEEL)) {
             if (usePoweredIgniter(hit.getDirection(),Long.MAX_VALUE,0)) {
                 cooldown = 100;
-//? if >=1.21.1 {
-                /*if (!player.isCreative()) held.hurtAndBreak(1, player, hand == InteractionHand.OFF_HAND ? net.minecraft.world.entity.EquipmentSlot.OFFHAND : net.minecraft.world.entity.EquipmentSlot.MAINHAND);
-*///?} else {
-                if (!player.isCreative()) held.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(hand));
-//?}
+                if (!player.isCreative()) gregtech.engine.tool.ToolDamage.hurtAndBreak(held, 1, player, hand);
                 return InteractionResult.CONSUME;
             }
             return InteractionResult.SUCCESS;

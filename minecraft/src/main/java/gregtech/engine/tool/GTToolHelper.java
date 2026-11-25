@@ -527,24 +527,12 @@ public final class GTToolHelper {
         }
         if (user instanceof Player player) {
             if (stack.isDamageableItem()) {
-
-//? if >=1.21.1 {
-/*                stack.hurtAndBreak(amount, player, slot);
-*///?} else {
-                stack.hurtAndBreak(amount, player, e -> e.broadcastBreakEvent(slot));
-//?}
-
+                ToolDamage.hurtAndBreak(stack, amount, player, slot);
             }
             player.getInventory().setChanged();
         } else if (user != null) {
             if (stack.isDamageableItem()) {
-
-//? if >=1.21.1 {
-/*                stack.hurtAndBreak(amount, user, slot);
-*///?} else {
-                stack.hurtAndBreak(amount, user, e -> e.broadcastBreakEvent(slot));
-//?}
-
+                ToolDamage.hurtAndBreak(stack, amount, user, slot);
             }
         } else {
             stack.setDamageValue(Math.min(maxDamage, stack.getDamageValue() + amount));
@@ -560,13 +548,7 @@ public final class GTToolHelper {
             var brokenItem = stack.getItem();
             stack.shrink(1);
             if (user != null) {
-
-//? if >=1.21.1 {
-/*                user.onEquippedItemBroken(brokenItem,slot);
-*///?} else {
-                user.broadcastBreakEvent(slot);
-//?}
-
+                ToolDamage.broadcastBreak(user, brokenItem, slot);
             }
         } else {
             stack.setDamageValue(newDamage);
