@@ -1,13 +1,14 @@
 package gregtech.content.recipe;
 
 import gregtech.api.material.GTMaterial;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.item.GTToolItem;
+import gregtech.content.material.Materials;
+import gregtech.content.registry.GTItems;
 import gregtech.engine.material.MaterialEquivalence;
 import gregtech.engine.tool.GTToolType;
 import gregtech.engine.tool.ToolAssemblyRules;
-import gregtech.content.material.Materials;
-import gregtech.content.data.MaterialPrefix;
-import gregtech.content.item.GTToolItem;
-import gregtech.content.registry.GTItems;
+import javax.annotation.Nullable;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
@@ -16,8 +17,6 @@ import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
-
-import javax.annotation.Nullable;
 
 /**
  * GT6's head + handle assembly ({@code AdvancedCraftingTool extends ShapelessOreRecipe},
@@ -48,7 +47,9 @@ public final class GTToolAssemblyRecipe extends GTShapelessCraftingRecipe {
         this.type = type;
     }
 
-    public GTToolType toolType() { return type; }
+    public GTToolType toolType() {
+        return type;
+    }
 
     @Override
     protected boolean onMatches(CraftingGridView grid, Level level) {
@@ -97,7 +98,10 @@ public final class GTToolAssemblyRecipe extends GTShapelessCraftingRecipe {
     }
 
     private static Ingredient displayHandle(GTToolType type) {
-        ItemStack stack = GTItems.getStack(MaterialPrefix.stick, gregtech.content.tool.OriginalToolMaterials.defaultHandle(displayHeadMaterial(type)), 1);
+        ItemStack stack = GTItems.getStack(
+                MaterialPrefix.stick,
+                gregtech.content.tool.OriginalToolMaterials.defaultHandle(displayHeadMaterial(type)),
+                1);
         return stack.isEmpty() ? Ingredient.EMPTY : Ingredient.of(stack);
     }
 
@@ -120,5 +124,4 @@ public final class GTToolAssemblyRecipe extends GTShapelessCraftingRecipe {
                 && gregtech.content.tool.OriginalToolMaterials.acceptsAssemblyHead(type.definition(), material)
                 && !GTItems.getStack(prefix, material, 1).isEmpty();
     }
-
 }

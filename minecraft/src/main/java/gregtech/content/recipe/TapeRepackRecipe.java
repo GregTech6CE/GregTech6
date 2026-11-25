@@ -18,7 +18,8 @@ public final class TapeRepackRecipe extends GTShapelessCraftingRecipe {
 
     @Override
     protected boolean onMatches(CraftingGridView grid, Level level) {
-        return super.onMatches(grid, level) && !onAssemble(grid, level.registryAccess()).isEmpty();
+        return super.onMatches(grid, level)
+                && !onAssemble(grid, level.registryAccess()).isEmpty();
     }
 
     @Override

@@ -28,14 +28,17 @@ public final class GTToolRepairRecipe extends GTCustomCraftingRecipe {
         for (int i = 0; i < size; i++) {
             var stack = grid.getItem(i);
             if (stack.isEmpty()) continue;
-            if (tools.size() == 2 || stack.getCount() != 1 || !(stack.getItem() instanceof GTToolItem)
+            if (tools.size() == 2
+                    || stack.getCount() != 1
+                    || !(stack.getItem() instanceof GTToolItem)
                     || !stack.isDamageableItem()) return java.util.List.of();
             tools.add(stack);
         }
         if (tools.size() != 2) return java.util.List.of();
         var first = tools.get(0);
         var second = tools.get(1);
-        if (first.getItem() != second.getItem() || first.getMaxDamage() != second.getMaxDamage()
+        if (first.getItem() != second.getItem()
+                || first.getMaxDamage() != second.getMaxDamage()
                 || GTToolHelper.getHead(first) != GTToolHelper.getHead(second)
                 || GTToolHelper.getHandle(first) != GTToolHelper.getHandle(second)) return java.util.List.of();
         return tools;
@@ -52,7 +55,8 @@ public final class GTToolRepairRecipe extends GTCustomCraftingRecipe {
         if (tools.isEmpty()) return ItemStack.EMPTY;
         var first = tools.get(0);
         var second = tools.get(1);
-        var result = GTToolItem.create(GTToolHelper.getType(first), GTToolHelper.getHead(first), GTToolHelper.getHandle(first));
+        var result = GTToolItem.create(
+                GTToolHelper.getType(first), GTToolHelper.getHead(first), GTToolHelper.getHandle(first));
         int max = first.getMaxDamage();
         long remaining = (long) max - first.getDamageValue() + max - second.getDamageValue() + max * 5L / 100;
         result.setDamageValue((int) Math.max(0, max - remaining));
@@ -67,6 +71,13 @@ public final class GTToolRepairRecipe extends GTCustomCraftingRecipe {
         return NonNullList.withSize(grid.size(), ItemStack.EMPTY);
     }
 
-    @Override public boolean canCraftInDimensions(int width, int height) { return width * height >= 2; }
-    @Override public RecipeSerializer<?> getSerializer() { return SERIALIZER; }
+    @Override
+    public boolean canCraftInDimensions(int width, int height) {
+        return width * height >= 2;
+    }
+
+    @Override
+    public RecipeSerializer<?> getSerializer() {
+        return SERIALIZER;
+    }
 }

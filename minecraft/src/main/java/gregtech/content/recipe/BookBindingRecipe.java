@@ -16,10 +16,13 @@ public final class BookBindingRecipe extends GTShapelessCraftingRecipe {
         this.base = base;
     }
 
-    private boolean copies() { return getGroup().equals("gt6ce.books.copy"); }
+    private boolean copies() {
+        return getGroup().equals("gt6ce.books.copy");
+    }
 
     private static boolean payload(ItemStack stack) {
-        if (stack.getItem() instanceof gregtech.content.item.ColoredBookItem || stack.is(Items.WRITTEN_BOOK)) return true;
+        if (stack.getItem() instanceof gregtech.content.item.ColoredBookItem || stack.is(Items.WRITTEN_BOOK))
+            return true;
         var id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());
         return id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)
                 && (id.getPath().equals("printed_pages") || id.getPath().equals("many_printed_pages"));
@@ -65,7 +68,10 @@ public final class BookBindingRecipe extends GTShapelessCraftingRecipe {
         return remaining;
     }
 
-    @Override public RecipeSerializer<?> getSerializer() { return SERIALIZER; }
+    @Override
+    public RecipeSerializer<?> getSerializer() {
+        return SERIALIZER;
+    }
 
     public static final RecipeSerializer<BookBindingRecipe> SERIALIZER =
             CraftingRecipeCompat.wrapShapelessSerializer(BookBindingRecipe::new, r -> r.base);
