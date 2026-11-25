@@ -3,7 +3,7 @@ package gregtech.content.block;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
 import gregtech.platform.Mc;
-
+import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -18,11 +18,9 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 /**
  * GT6's Loot Crate ({@code MultiTileEntityLootCrate}): a crate lying around that a player pries open
@@ -36,8 +34,8 @@ import java.util.List;
 public class LootCrateBlock extends GTBlock {
     /** GT6 {@code onToolClick}: a crowbar pries the crate open. */
     @Override
-    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack held = player.getItemInHand(hand);
         if (!GTToolHelper.matchesTool(held, GTToolType.CROWBAR)) return InteractionResult.PASS;
         if (level.isClientSide) return InteractionResult.SUCCESS;
@@ -80,13 +78,18 @@ public class LootCrateBlock extends GTBlock {
         if (table == LootTable.EMPTY) return List.of();
         net.minecraft.world.level.storage.loot.LootParams params =
                 new net.minecraft.world.level.storage.loot.LootParams.Builder(level)
-                        .withParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.ORIGIN,
+                        .withParameter(
+                                net.minecraft.world.level.storage.loot.parameters.LootContextParams.ORIGIN,
                                 net.minecraft.world.phys.Vec3.atCenterOf(pos))
                         .create(net.minecraft.world.level.storage.loot.parameters.LootContextParamSets.CHEST);
-        var candidates = table.getRandomItems(params).stream().filter(stack -> !stack.isEmpty()).toList();
+        var candidates = table.getRandomItems(params).stream()
+                .filter(stack -> !stack.isEmpty())
+                .toList();
         // GT6 returns one generated stack, rather than all contents of a chest.
-        return candidates.isEmpty() ? List.of() : List.of(gregtech.engine.material.ItemMaterialForms.canonical(
-                candidates.get(random.nextInt(candidates.size()))));
+        return candidates.isEmpty()
+                ? List.of()
+                : List.of(gregtech.engine.material.ItemMaterialForms.canonical(
+                        candidates.get(random.nextInt(candidates.size()))));
     }
 
     /** GT6's {@code IL.Crate} — the port's {@code gt6ce:crate} block. */
@@ -96,13 +99,13 @@ public class LootCrateBlock extends GTBlock {
 
     /** {@code IL.Crate_Fireproof} resolves through the same meta-item family in GT6. */
     public static ItemStack crateStack(String id) {
-        var block = Mc.block(
-                ResourceLocation.fromNamespaceAndPath("gt6ce", id));
+        var block = Mc.block(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
         return block == null ? ItemStack.EMPTY : new ItemStack(block);
     }
 
     @Override
-    protected void appendTooltip(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
+    protected void appendTooltip(
+            ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(Component.translatable("block.gt6ce.loot_crate.tooltip").withStyle(ChatFormatting.DARK_GRAY));
     }
 }

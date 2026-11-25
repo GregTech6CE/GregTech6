@@ -1,5 +1,7 @@
 package gregtech.content.block;
 
+import java.util.Collections;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -16,15 +18,12 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import java.util.Collections;
-import java.util.List;
-
 /** Source MultiTileEntityStick: biome/dimension wood, including dead, mossy and rotten wood. */
 public class TwigBlock extends GTBlock {
     /** Right-click picks the twigs up as sticks. */
     @Override
-    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!level.isClientSide) {
             ItemStack stack = contents(level, pos, 1);
             level.removeBlock(pos, false);
@@ -61,18 +60,25 @@ public class TwigBlock extends GTBlock {
     @Override
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         if (placed) return Collections.singletonList(new ItemStack(Items.STICK));
-        ItemStack tool = builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.TOOL);
+        ItemStack tool =
+                builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.TOOL);
         int fortune = tool == null ? 0 : gregtech.engine.stack.EnchantmentCompat.fortune(tool, builder.getLevel());
         var origin = builder.getParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.ORIGIN);
-        return Collections.singletonList(contents(builder.getLevel(), BlockPos.containing(origin),
+        return Collections.singletonList(contents(
+                builder.getLevel(),
+                BlockPos.containing(origin),
                 1 + builder.getLevel().random.nextInt(1 + fortune)));
     }
 
     public ItemStack contents(net.minecraft.world.level.Level level, BlockPos pos, int count) {
         if (placed) return new ItemStack(Items.STICK, count);
-        String biome = level.getBiome(pos).unwrapKey().map(key -> key.location().toString()).orElse("");
+        String biome = level.getBiome(pos)
+                .unwrapKey()
+                .map(key -> key.location().toString())
+                .orElse("");
         // A position has one stable content, shared by pickup, breaking and client inspection.
-        var random = net.minecraft.util.RandomSource.create(pos.asLong() ^ level.dimension().location().hashCode());
+        var random = net.minecraft.util.RandomSource.create(
+                pos.asLong() ^ level.dimension().location().hashCode());
         String name = gregtech.content.worldgen.SurfaceTwigRules.material(
                 level.dimension().location().toString(), biome, random::nextInt);
         return stick(name, count);
@@ -80,9 +86,15 @@ public class TwigBlock extends GTBlock {
 
     /** Candidate pickup items for inspection, without consuming random numbers or changing the block. */
     public static List<ItemStack> possibleSticks(net.minecraft.world.level.Level level, BlockPos pos) {
-        String biome = level.getBiome(pos).unwrapKey().map(key -> key.location().toString()).orElse("");
+        String biome = level.getBiome(pos)
+                .unwrapKey()
+                .map(key -> key.location().toString())
+                .orElse("");
         return gregtech.content.worldgen.SurfaceTwigRules.possibleMaterials(
-                level.dimension().location().toString(), biome).stream().map(name -> stick(name, 1)).toList();
+                        level.dimension().location().toString(), biome)
+                .stream()
+                .map(name -> stick(name, 1))
+                .toList();
     }
 
     private static ItemStack stick(String name, int count) {
@@ -92,18 +104,23 @@ public class TwigBlock extends GTBlock {
         if (!material.isValid() && name.startsWith("Wood"))
             material = gregtech.engine.material.GTMaterialRegistry.get(name.substring(4));
         if (!material.isValid()) throw new IllegalStateException("Missing source twig material " + name);
-        var result = gregtech.content.registry.GTItems.getStack(
-                gregtech.content.data.MaterialPrefix.stick, material, count);
+        var result =
+                gregtech.content.registry.GTItems.getStack(gregtech.content.data.MaterialPrefix.stick, material, count);
         if (result.isEmpty()) throw new IllegalStateException("Missing source twig item " + name);
         return result;
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction side, BlockState neighbour,
-            net.minecraft.world.level.LevelAccessor level, BlockPos pos, BlockPos neighbourPos) {
-        if (!canSurvive(state,level,pos) || side != Direction.DOWN && !neighbour.getFluidState().isEmpty())
+    public BlockState updateShape(
+            BlockState state,
+            Direction side,
+            BlockState neighbour,
+            net.minecraft.world.level.LevelAccessor level,
+            BlockPos pos,
+            BlockPos neighbourPos) {
+        if (!canSurvive(state, level, pos)
+                || side != Direction.DOWN && !neighbour.getFluidState().isEmpty())
             return net.minecraft.world.level.block.Blocks.AIR.defaultBlockState();
-        return super.updateShape(state,side,neighbour,level,pos,neighbourPos);
+        return super.updateShape(state, side, neighbour, level, pos, neighbourPos);
     }
-
 }

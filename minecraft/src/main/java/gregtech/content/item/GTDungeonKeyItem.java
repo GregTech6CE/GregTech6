@@ -1,6 +1,7 @@
 package gregtech.content.item;
 
 import gregtech.engine.stack.StackData;
+import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -9,8 +10,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 /**
  * Port of GT6's ten dungeon keys, which are ordinary entries of its random-tools multi-item
@@ -55,10 +54,16 @@ public class GTDungeonKeyItem extends GTItem {
         super(properties);
     }
 
-    @Override public net.minecraft.world.InteractionResult onItemUseFirst(ItemStack stack, net.minecraft.world.item.context.UseOnContext context) {
-        if (context.getLevel().getBlockEntity(context.getClickedPos()) instanceof gregtech.content.blockentity.inventory.SafeBlockEntity safe && safe.keyLocked()) {
+    @Override
+    public net.minecraft.world.InteractionResult onItemUseFirst(
+            ItemStack stack, net.minecraft.world.item.context.UseOnContext context) {
+        if (context.getLevel().getBlockEntity(context.getClickedPos())
+                        instanceof gregtech.content.blockentity.inventory.SafeBlockEntity safe
+                && safe.keyLocked()) {
             if (context.getLevel().isClientSide) return net.minecraft.world.InteractionResult.SUCCESS;
-            return safe.useKey(stack) ? net.minecraft.world.InteractionResult.CONSUME : net.minecraft.world.InteractionResult.PASS;
+            return safe.useKey(stack)
+                    ? net.minecraft.world.InteractionResult.CONSUME
+                    : net.minecraft.world.InteractionResult.PASS;
         }
         return net.minecraft.world.InteractionResult.PASS;
     }
@@ -95,9 +100,10 @@ public class GTDungeonKeyItem extends GTItem {
     protected void appendTooltip(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(Component.translatable("tooltip.gt6ce.key.lock").withStyle(ChatFormatting.GRAY));
         long keyId = keyId(stack);
-        tooltip.add(keyId == 0
-                ? Component.translatable("tooltip.gt6ce.key.blank").withStyle(ChatFormatting.DARK_GRAY)
-                : Component.translatable("tooltip.gt6ce.key.id", Long.toString(keyId))
-                        .withStyle(ChatFormatting.DARK_GRAY));
+        tooltip.add(
+                keyId == 0
+                        ? Component.translatable("tooltip.gt6ce.key.blank").withStyle(ChatFormatting.DARK_GRAY)
+                        : Component.translatable("tooltip.gt6ce.key.id", Long.toString(keyId))
+                                .withStyle(ChatFormatting.DARK_GRAY));
     }
 }

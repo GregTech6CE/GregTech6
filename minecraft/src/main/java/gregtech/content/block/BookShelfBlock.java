@@ -1,20 +1,18 @@
 package gregtech.content.block;
 
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
-import gregtech.engine.GTWaterloggable;
 import gregtech.content.blockentity.inventory.BookShelfBlockEntity;
-import gregtech.content.book.GTBookList;
 import gregtech.content.book.BookShelfGeometry;
 import gregtech.content.book.BookShelfVariants;
+import gregtech.content.book.GTBookList;
+import gregtech.content.registry.GTBlockEntities;
+import gregtech.engine.GTWaterloggable;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
+import gregtech.engine.tool.MachineRotationType;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
 import gregtech.engine.tool.ToolInteractions;
-import gregtech.engine.tool.MachineRotationType;
-import gregtech.content.registry.GTBlockEntities;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -29,25 +27,26 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 /**
  * GT6's Book Shelf ({@code MultiTileEntityBookShelf} + {@code LoaderBookList}).
@@ -61,22 +60,27 @@ import java.util.List;
  * <p>The frame is a block model; synchronized inventory entries render as GT6 book cuboids
  * with the original spine and side textures.
  */
-public class BookShelfBlock extends GTHorizontalDirectionalBlock implements EntityBlock, ToolInteractionTarget, SimpleWaterloggedBlock {
+public class BookShelfBlock extends GTHorizontalDirectionalBlock
+        implements EntityBlock, ToolInteractionTarget, SimpleWaterloggedBlock {
     /**
      * GT6's click handling: the click lands in the exact slot the player aimed at (GT6's
      * {@code tIndex} formula over the 28-slot layout). Ordinary occupied slots give their item back;
      * buttons and levers activate until taken with sneaking or pincers.
      */
     @Override
-    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (ToolInteractions.use(state, level, pos, player, hand, hit))
             return InteractionResult.sidedSuccess(level.isClientSide);
         if (!(level.getBlockEntity(pos) instanceof BookShelfBlockEntity shelf)) return InteractionResult.PASS;
         if (!level.isClientSide) shelf.generateDungeonLoot();
         // GT6's tCoords are block relative.
-        int slot = BookShelfGeometry.slotAt(state.getValue(FACING), hit.getDirection(),
-                hit.getLocation().x - pos.getX(), hit.getLocation().y - pos.getY(), hit.getLocation().z - pos.getZ());
+        int slot = BookShelfGeometry.slotAt(
+                state.getValue(FACING),
+                hit.getDirection(),
+                hit.getLocation().x - pos.getX(),
+                hit.getLocation().y - pos.getY(),
+                hit.getLocation().z - pos.getZ());
         if (slot < 0) return InteractionResult.PASS;
         ItemStack held = player.getItemInHand(hand);
         ItemStack stored = shelf.inventory().getStackInSlot(slot);
@@ -140,10 +144,13 @@ public class BookShelfBlock extends GTHorizontalDirectionalBlock implements Enti
     public BookShelfBlock(Properties properties, BookShelfVariants.Variant variant) {
         super(properties.noOcclusion());
         this.variant = java.util.Objects.requireNonNull(variant);
-        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(GTWaterloggable.WATERLOGGED, false));
+        registerDefaultState(
+                stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(GTWaterloggable.WATERLOGGED, false));
     }
 
-    public BookShelfVariants.Variant variant() { return variant; }
+    public BookShelfVariants.Variant variant() {
+        return variant;
+    }
 
     @Override
     public net.minecraft.network.chat.MutableComponent getName() {
@@ -158,7 +165,10 @@ public class BookShelfBlock extends GTHorizontalDirectionalBlock implements Enti
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return GTWaterloggable.getStateForPlacement(defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite()), context);
+        return GTWaterloggable.getStateForPlacement(
+                defaultBlockState()
+                        .setValue(FACING, context.getHorizontalDirection().getOpposite()),
+                context);
     }
 
     @Override
@@ -175,7 +185,8 @@ public class BookShelfBlock extends GTHorizontalDirectionalBlock implements Enti
     @Override
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return GTToolHelper.matchesTool(tool, GTToolType.WRENCH)
-                ? ToolInteractionSpec.facing(FACING, MachineRotationType.HORIZONTAL) : null;
+                ? ToolInteractionSpec.facing(FACING, MachineRotationType.HORIZONTAL)
+                : null;
     }
 
     @Nullable
@@ -186,8 +197,8 @@ public class BookShelfBlock extends GTHorizontalDirectionalBlock implements Enti
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state,
-                                                                 BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide || type != GTBlockEntities.BOOKSHELF.get()) return null;
         return (world, pos, current, entity) -> {
             if (entity instanceof BookShelfBlockEntity shelf) shelf.serverTick();
@@ -197,7 +208,8 @@ public class BookShelfBlock extends GTHorizontalDirectionalBlock implements Enti
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return state.getValue(FACING).getAxis() == Direction.Axis.X
-                ? Block.box(2, 0, 0, 14, 16, 16) : Block.box(0, 0, 2, 16, 16, 14);
+                ? Block.box(2, 0, 0, 14, 16, 16)
+                : Block.box(0, 0, 2, 16, 16, 14);
     }
 
     @Override
@@ -208,8 +220,7 @@ public class BookShelfBlock extends GTHorizontalDirectionalBlock implements Enti
 
     @Override
     public VoxelShape getBlockSupportShape(BlockState state, BlockGetter level, BlockPos pos) {
-        return state.getValue(FACING).getAxis() == Direction.Axis.Z
-                ? NORTH_SOUTH_SUPPORT : EAST_WEST_SUPPORT;
+        return state.getValue(FACING).getAxis() == Direction.Axis.Z ? NORTH_SOUTH_SUPPORT : EAST_WEST_SUPPORT;
     }
 
     /**
@@ -220,8 +231,7 @@ public class BookShelfBlock extends GTHorizontalDirectionalBlock implements Enti
      */
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock())
-                && level.getBlockEntity(pos) instanceof BookShelfBlockEntity shelf) {
+        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof BookShelfBlockEntity shelf) {
             for (ItemStack stack : shelf.contents()) popResource(level, pos, stack);
             gregtech.engine.stack.HandlerNbt.load(
                     shelf.inventory(), new net.minecraft.nbt.CompoundTag(), level.registryAccess());
@@ -231,8 +241,8 @@ public class BookShelfBlock extends GTHorizontalDirectionalBlock implements Enti
 
     /** GT6's shelf tooltips: no GUI, pincers take the books out, the magnifying glass reads them. */
     @Override
-    protected void appendTooltip(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip,
-                                TooltipFlag flag) {
+    protected void appendTooltip(
+            ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
         gregtech.client.StorageBlockTooltips.bookShelf(tooltip);
     }
 
@@ -286,8 +296,13 @@ public class BookShelfBlock extends GTHorizontalDirectionalBlock implements Enti
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
-            LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+    public BlockState updateShape(
+            BlockState state,
+            Direction side,
+            BlockState neighbor,
+            LevelAccessor level,
+            BlockPos pos,
+            BlockPos neighborPos) {
         GTWaterloggable.updateShape(state, level, pos);
         return super.updateShape(state, side, neighbor, level, pos, neighborPos);
     }

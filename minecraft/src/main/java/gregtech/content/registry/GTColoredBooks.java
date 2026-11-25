@@ -5,28 +5,46 @@ import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 import gregtech.content.book.ColoredBookRules;
 import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
-import net.minecraft.world.item.*;
 import java.util.*;
+import net.minecraft.world.item.*;
 
 /** Registry identities stay independent of book content and native NBT/component storage. */
 public final class GTColoredBooks {
     private GTColoredBooks() {}
-    private static final Map<String,RegisteredItem<Item>> BOOKS=new LinkedHashMap<>();
-    public static void register(ContentRegistrar registrar){
-        if (!BOOKS.isEmpty())return;
-        for (var spec:ColoredBookRules.VARIANTS)BOOKS.put(spec.path(),registrar.item(REGISTRY_NAMESPACE,spec.path(),()->new gregtech.content.item.ColoredBookItem(spec)));
+
+    private static final Map<String, RegisteredItem<Item>> BOOKS = new LinkedHashMap<>();
+
+    public static void register(ContentRegistrar registrar) {
+        if (!BOOKS.isEmpty()) return;
+        for (var spec : ColoredBookRules.VARIANTS)
+            BOOKS.put(
+                    spec.path(),
+                    registrar.item(
+                            REGISTRY_NAMESPACE, spec.path(), () -> new gregtech.content.item.ColoredBookItem(spec)));
     }
-    public static ItemStack stack(int originalId){return new ItemStack(BOOKS.get(ColoredBookRules.byId(originalId).path()).get());}
-    public static List<Item> items(){return BOOKS.values().stream().map(RegisteredItem::get).map(i->(Item)i).toList();}
+
+    public static ItemStack stack(int originalId) {
+        return new ItemStack(BOOKS.get(ColoredBookRules.byId(originalId).path()).get());
+    }
+
+    public static List<Item> items() {
+        return BOOKS.values().stream()
+                .map(RegisteredItem::get)
+                .map(i -> (Item) i)
+                .toList();
+    }
+
     private static boolean recipesRegistered;
     /** Original directed RM.generify conversion: one book to a blank vanilla written book. */
-    public static synchronized void registerRecipes(){
-        if (recipesRegistered)return;
-        recipesRegistered=true;
-        for (var variant:ColoredBookRules.VARIANTS) {
-            var book=stack(variant.originalId());
-            gregtech.content.data.MachineRecipeMaps.generify(book,new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.WRITTEN_BOOK));
-            var usb=new ItemStack(GTTechnological.get("usb1_stick"));var scanned=usb.copy();
+    public static synchronized void registerRecipes() {
+        if (recipesRegistered) return;
+        recipesRegistered = true;
+        for (var variant : ColoredBookRules.VARIANTS) {
+            var book = stack(variant.originalId());
+            gregtech.content.data.MachineRecipeMaps.generify(
+                    book, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.WRITTEN_BOOK));
+            var usb = new ItemStack(GTTechnological.get("usb1_stick"));
+            var scanned = usb.copy();
             gregtech.platform.Mc.setCustomName(
                     scanned, net.minecraft.network.chat.Component.literal("Containing scanned Book"));
             gregtech.content.data.MachineRecipeMaps.ScannerVisuals.register(

@@ -10,11 +10,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
-//? if >=1.21.1 {
-/*import net.neoforged.neoforge.fluids.FluidStack;
-*///?} else {
-import net.minecraftforge.fluids.FluidStack;
-//?}
 
 /** Explicit MultiItemCans and Loader_Recipes_Food rows; no external ingredient guesses. */
 public final class CannedFoodRecipes {

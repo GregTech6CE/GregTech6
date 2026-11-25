@@ -9,7 +9,9 @@ import net.minecraft.world.level.block.state.BlockState;
 
 /** Retained legacy IDs place and decode into the corresponding registered color identity. */
 public abstract class LegacyConstructionBlockItem extends BlockItem {
-    protected LegacyConstructionBlockItem(Block block, Properties properties) { super(block, properties); }
+    protected LegacyConstructionBlockItem(Block block, Properties properties) {
+        super(block, properties);
+    }
 
     private static final java.util.Map<Block, java.util.List<ItemStack>> MATCHING_ALTERNATIVES =
             new java.util.concurrent.ConcurrentHashMap<>();
@@ -44,7 +46,9 @@ public abstract class LegacyConstructionBlockItem extends BlockItem {
     }
 
     private static boolean legacyPalette(ItemStack stack) {
-        return stack != null && !stack.isEmpty() && stack.getItem() instanceof LegacyConstructionBlockItem legacy
+        return stack != null
+                && !stack.isEmpty()
+                && stack.getItem() instanceof LegacyConstructionBlockItem legacy
                 && gregtech.content.registry.GTConstructionVariants.legacy(legacy.getBlock());
     }
 
@@ -55,11 +59,14 @@ public abstract class LegacyConstructionBlockItem extends BlockItem {
 
     /** Normalized offered identity; {@code RecipeInputs.offerKeys} mirrors this normalization. */
     public static ItemStack canonical(ItemStack stack) {
-        if (stack.isEmpty() || !(stack.getItem() instanceof LegacyConstructionBlockItem legacy)
+        if (stack.isEmpty()
+                || !(stack.getItem() instanceof LegacyConstructionBlockItem legacy)
                 || !gregtech.content.registry.GTConstructionVariants.legacy(legacy.getBlock())) return stack;
         var color = legacy.getBlock() instanceof ColoredConstructionBlock
-                ? ColoredConstructionBlock.itemColor(stack) : legacy.getBlock() instanceof ColoredGlassBlock
-                ? ColoredGlassBlock.itemColor(stack) : ConcreteBlock.itemColor(stack);
+                ? ColoredConstructionBlock.itemColor(stack)
+                : legacy.getBlock() instanceof ColoredGlassBlock
+                        ? ColoredGlassBlock.itemColor(stack)
+                        : ConcreteBlock.itemColor(stack);
         Block block = gregtech.content.registry.GTConstructionVariants.coloredBlock(legacy.getBlock(), color);
         if (block == null) return stack;
         ItemStack result = new ItemStack(block, stack.getCount());
@@ -78,6 +85,7 @@ public abstract class LegacyConstructionBlockItem extends BlockItem {
         if (state == null) return null;
         ItemStack canonical = canonical(context.getItemInHand());
         return canonical.getItem() instanceof BlockItem item && item.getBlock() instanceof FixedConstructionColor fixed
-                ? FixedConstructionColor.recolor(state, fixed.color()) : state;
+                ? FixedConstructionColor.recolor(state, fixed.color())
+                : state;
     }
 }

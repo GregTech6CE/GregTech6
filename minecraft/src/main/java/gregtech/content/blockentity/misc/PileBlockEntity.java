@@ -1,14 +1,15 @@
 package gregtech.content.blockentity.misc;
 
 import gregtech.api.material.GTMaterial;
-import gregtech.content.blockentity.GTBlockEntity;
-import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.content.block.misc.PileBlock;
+import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.item.MaterialItem;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.stack.NbtCompat;
 import gregtech.engine.stack.StackCompat;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -18,8 +19,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 /**
  * GT6's loose ingot / plate / gem-plate pile ({@code MultiTileEntityIngot} 32084,
@@ -135,7 +134,9 @@ public class PileBlockEntity extends GTBlockEntity {
     public static MaterialPrefix prefixOf(ItemStack stack) {
         MaterialPrefix prefix = MaterialItem.getPrefix(stack);
         if (prefix != null) return prefix;
-        return ItemMaterialRegistry.get(stack).map(gregtech.engine.material.ItemComposition::prefix).orElse(null);
+        return ItemMaterialRegistry.get(stack)
+                .map(gregtech.engine.material.ItemComposition::prefix)
+                .orElse(null);
     }
 
     /**
@@ -146,7 +147,8 @@ public class PileBlockEntity extends GTBlockEntity {
     @Nullable
     public static GTMaterial materialOf(ItemStack stack) {
         if (stack.isEmpty()) return null;
-        if (stack.getItem() instanceof gregtech.engine.material.MaterialFormItem materialItem) return materialItem.getMaterial();
+        if (stack.getItem() instanceof gregtech.engine.material.MaterialFormItem materialItem)
+            return materialItem.getMaterial();
         return ItemMaterialRegistry.get(stack)
                 .map(gregtech.engine.material.ItemComposition::material)
                 .filter(GTMaterial::isValid)
@@ -167,7 +169,9 @@ public class PileBlockEntity extends GTBlockEntity {
         if (stored.isEmpty()) return true;
         GTMaterial heldMaterial = materialOf(held);
         GTMaterial storedMaterial = materialOf(stored);
-        return heldMaterial != null && storedMaterial != null && heldMaterial.resolve() == storedMaterial.resolve()
+        return heldMaterial != null
+                && storedMaterial != null
+                && heldMaterial.resolve() == storedMaterial.resolve()
                 && gregtech.engine.stack.StackData.sameData(held, stored);
     }
 
@@ -191,7 +195,7 @@ public class PileBlockEntity extends GTBlockEntity {
         if (!canAccept(held)) return 0;
         int room = MAX_SIZE - count();
         if (room <= 0) return 0;
-        int moved = gregtech.content.block.MaterialPileRules.add(count(),held.getCount());
+        int moved = gregtech.content.block.MaterialPileRules.add(count(), held.getCount());
         if (stored.isEmpty()) stored = held.copyWithCount(moved);
         else stored.grow(moved);
         setChanged();
@@ -209,7 +213,7 @@ public class PileBlockEntity extends GTBlockEntity {
      */
     public ItemStack take(int amount) {
         if (stored.isEmpty() || amount <= 0) return ItemStack.EMPTY;
-        int taken = gregtech.content.block.MaterialPileRules.take(stored.getCount(),amount);
+        int taken = gregtech.content.block.MaterialPileRules.take(stored.getCount(), amount);
         ItemStack result = stored.copyWithCount(taken);
         stored.shrink(taken);
         if (stored.isEmpty()) stored = ItemStack.EMPTY;
@@ -262,8 +266,8 @@ public class PileBlockEntity extends GTBlockEntity {
     }
 
     @Override
-    protected void handleDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt,
-            @Nullable HolderLookup.Provider lookup) {
+    protected void handleDataPacket(
+            Connection net, ClientboundBlockEntityDataPacket pkt, @Nullable HolderLookup.Provider lookup) {
         if (pkt.getTag() != null) readUpdateTag(pkt.getTag(), lookup);
     }
 

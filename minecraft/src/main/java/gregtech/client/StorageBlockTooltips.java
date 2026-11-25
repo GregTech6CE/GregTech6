@@ -3,14 +3,15 @@
 package gregtech.client;
 
 import gregtech.content.storage.OriginalStorageTooltipData;
+import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import java.util.List;
 
 /** Reads item state only; no hover-time tile creation, inventory access or loot generation. */
 public final class StorageBlockTooltips {
     private StorageBlockTooltips() {}
+
     public static void massStorage(
             ItemStack stack,
             List<Component> lines,
@@ -25,40 +26,68 @@ public final class StorageBlockTooltips {
                                 gregtech.engine.stack.RegistryContext.orCurrent(lookup)),
                 lines);
     }
+
     public static void massStorage(ItemStack stack, ItemStack template, List<Component> lines) {
         var data = CommonBlockTooltips.blockData(stack);
-        if (!template.isEmpty()) lines.add(template.getHoverName().copy().withStyle(ChatFormatting.YELLOW)
-                .append(Component.literal(": ").withStyle(ChatFormatting.GRAY))
-                .append(Component.literal(Long.toString(Math.max(0, data == null ? 0 : data.getLong("gt.stored"))))
-                        .withStyle(ChatFormatting.WHITE)));
-        lines.add(Component.translatable(OriginalStorageTooltipData.MASS_SIZE).withStyle(ChatFormatting.AQUA)
-                .append(Long.toString(stack.getItem() instanceof net.minecraft.world.item.BlockItem item && item.getBlock() instanceof gregtech.content.block.inventory.MassStorageBlock block ? block.capacity() : OriginalStorageTooltipData.MASS_CAPACITY)));
+        if (!template.isEmpty())
+            lines.add(template.getHoverName()
+                    .copy()
+                    .withStyle(ChatFormatting.YELLOW)
+                    .append(Component.literal(": ").withStyle(ChatFormatting.GRAY))
+                    .append(Component.literal(Long.toString(Math.max(0, data == null ? 0 : data.getLong("gt.stored"))))
+                            .withStyle(ChatFormatting.WHITE)));
+        lines.add(Component.translatable(OriginalStorageTooltipData.MASS_SIZE)
+                .withStyle(ChatFormatting.AQUA)
+                .append(Long.toString(
+                        stack.getItem() instanceof net.minecraft.world.item.BlockItem item
+                                        && item.getBlock()
+                                                instanceof gregtech.content.block.inventory.MassStorageBlock block
+                                ? block.capacity()
+                                : OriginalStorageTooltipData.MASS_CAPACITY)));
         add(lines, OriginalStorageTooltipData.MASS_TABLE, ChatFormatting.AQUA);
         tools(lines, OriginalStorageTooltipData.massTools(data == null ? 0 : data.getInt("gt.mode")));
         facing(lines);
     }
+
     public static void safe(ItemStack stack, boolean keyed, List<Component> lines) {
         add(lines, keyed ? "gt.lang.key.controlled" : "gt.lang.owner.controlled", ChatFormatting.GOLD);
         loot(stack, lines);
         facing(lines);
     }
-    public static void drawer(List<Component> lines) { tools(lines, OriginalStorageTooltipData.drawerTools()); facing(lines); }
-    public static void bottleCrate(List<Component> lines) {
-        add(lines, "gt.lang.nogui.rightclick.interact", ChatFormatting.GOLD); facing(lines);
+
+    public static void drawer(List<Component> lines) {
+        tools(lines, OriginalStorageTooltipData.drawerTools());
+        facing(lines);
     }
-    public static void craftingTable(List<Component> lines) { tools(lines, OriginalStorageTooltipData.craftingTableTools()); facing(lines); }
+
+    public static void bottleCrate(List<Component> lines) {
+        add(lines, "gt.lang.nogui.rightclick.interact", ChatFormatting.GOLD);
+        facing(lines);
+    }
+
+    public static void craftingTable(List<Component> lines) {
+        tools(lines, OriginalStorageTooltipData.craftingTableTools());
+        facing(lines);
+    }
+
     public static void bookShelf(List<Component> lines) {
         add(lines, "gt.lang.nogui.rightclick.interact", ChatFormatting.GOLD);
-        tools(lines, OriginalStorageTooltipData.bookShelfTools()); facing(lines);
+        tools(lines, OriginalStorageTooltipData.bookShelfTools());
+        facing(lines);
     }
     /** Source chest name is common to every table; show the table without rolling it. */
     public static void chest(ItemStack stack, String defaultTable, List<Component> lines) {
-        lines.add(Component.translatable(OriginalStorageTooltipData.SLOT_COUNT).append("54")
+        lines.add(Component.translatable(OriginalStorageTooltipData.SLOT_COUNT)
+                .append("54")
                 .withStyle(ChatFormatting.AQUA));
         loot(stack, defaultTable, lines);
         add(lines, OriginalStorageTooltipData.PINCERS, ChatFormatting.DARK_GRAY);
     }
-    private static void loot(ItemStack stack, List<Component> lines) { loot(stack, null, lines); }
+
+    private static void loot(ItemStack stack, List<Component> lines) {
+        loot(stack, null, lines);
+    }
+
     private static void loot(ItemStack stack, String defaultTable, List<Component> lines) {
         var data = CommonBlockTooltips.blockData(stack);
         if (data != null && data.getBoolean("GTLootGenerated")) return;
@@ -66,18 +95,24 @@ public final class StorageBlockTooltips {
         if (table.isEmpty()) table = defaultTable;
         if (table == null || table.isEmpty()) return;
         String key = OriginalStorageTooltipData.lootKey(table);
-        lines.add(Component.translatable("tooltip.gt6ce.ui.loot",
-                (key == null ? Component.literal(table) : Component.translatable(key)).withStyle(ChatFormatting.WHITE))
+        lines.add(Component.translatable(
+                        "tooltip.gt6ce.ui.loot",
+                        (key == null ? Component.literal(table) : Component.translatable(key))
+                                .withStyle(ChatFormatting.WHITE))
                 .withStyle(ChatFormatting.AQUA));
     }
+
     public static void tools(List<Component> lines, List<String> keys) {
         for (var key : keys) add(lines, key, ChatFormatting.DARK_GRAY);
     }
+
     public static void facing(List<Component> lines) {
-        lines.add(Component.translatable("gt.lang.use.x.to.toggle.facing.pre").withStyle(ChatFormatting.DARK_GRAY)
+        lines.add(Component.translatable("gt.lang.use.x.to.toggle.facing.pre")
+                .withStyle(ChatFormatting.DARK_GRAY)
                 .append(Component.translatable("gt.lang.tool.name.wrench"))
                 .append(Component.translatable("gt.lang.use.x.to.toggle.facing.post")));
     }
+
     private static void add(List<Component> lines, String key, ChatFormatting color) {
         lines.add(Component.translatable(key).withStyle(color));
     }

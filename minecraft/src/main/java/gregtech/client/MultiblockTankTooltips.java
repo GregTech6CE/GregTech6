@@ -28,8 +28,7 @@ public final class MultiblockTankTooltips {
         long capacity = spec.capacity();
         var tank = new FluidTankGT(capacity);
         var data = CommonBlockTooltips.blockData(stack);
-        MultiblockTankData.readContents(
-                tank, data, capacity, gregtech.engine.stack.RegistryContext.orCurrent(lookup));
+        MultiblockTankData.readContents(tank, data, capacity, gregtech.engine.stack.RegistryContext.orCurrent(lookup));
         var fluid = tank.getFluidLong();
         if (fluid.isEmpty()) {
             add(lines, "gt.lang.pipe.stats.capacity", ChatFormatting.AQUA)

@@ -8,7 +8,10 @@ import gregtech.content.registry.GTSandwich;
 import gregtech.engine.stack.NbtCompat;
 import gregtech.engine.stack.StackCompat;
 import gregtech.platform.Mc;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -19,11 +22,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
-
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * The sixteen GT6 sandwich layer slots. An occupied slot marks the layer's bottom pixel.
@@ -104,7 +102,9 @@ public final class SandwichBlockEntity extends GTBlockEntity {
         return redstone ? comparatorSignal() : 0;
     }
 
-    public boolean redstoneEnabled() { return redstone; }
+    public boolean redstoneEnabled() {
+        return redstone;
+    }
 
     public ItemStack topIngredient() {
         for (int i = SLOTS - 1; i >= 0; i--) if (!ingredients[i].isEmpty()) return ingredients[i].copy();
@@ -122,9 +122,10 @@ public final class SandwichBlockEntity extends GTBlockEntity {
         if (!top.isEmpty() && StackCompat.sameItem(top, stack)) return 0;
         int amount = baseQuantity();
         ItemStack remainder = stack.getCraftingRemainingItem();
-        if (!remainder.isEmpty() && (remainder.is(Items.GLASS_BOTTLE)
-                || Mc.itemId(remainder.getItem()).equals(Mc.gregtechId("bottle_empty"))))
-            amount = gregtech.content.food.SandwichRules.containerQuantity(amount,true);
+        if (!remainder.isEmpty()
+                && (remainder.is(Items.GLASS_BOTTLE)
+                        || Mc.itemId(remainder.getItem()).equals(Mc.gregtechId("bottle_empty"))))
+            amount = gregtech.content.food.SandwichRules.containerQuantity(amount, true);
         if (stack.getCount() < amount) return 0;
         if (!redstone && SandwichIngredients.isRedstone(stack)) {
             redstone = true;
@@ -133,35 +134,47 @@ public final class SandwichBlockEntity extends GTBlockEntity {
         }
         int slot = sizePixels();
         var layer = SandwichIngredients.forItem(stack);
-        if (slot >= SLOTS || layer == null || slot + layer.thickness() > SLOTS
-                || !ingredients[slot].isEmpty()) return 0;
+        if (slot >= SLOTS || layer == null || slot + layer.thickness() > SLOTS || !ingredients[slot].isEmpty())
+            return 0;
         ingredients[slot] = stack.copyWithCount(amount);
         changed();
         return amount;
     }
 
     /** The block item can be eaten. GT6 adds every layer's food value, plus 0.5 saturation. */
-    public int totalFood() { return totalFood(ingredients); }
-    public float totalSaturation() { return totalSaturation(ingredients); }
+    public int totalFood() {
+        return totalFood(ingredients);
+    }
+
+    public float totalSaturation() {
+        return totalSaturation(ingredients);
+    }
 
     private static int totalFood(ItemStack[] stacks) {
         int food = 0;
-        for (ItemStack stack : stacks) if (!stack.isEmpty()) {
-            food += SandwichNutrition.food(stack);
-        }
+        for (ItemStack stack : stacks)
+            if (!stack.isEmpty()) {
+                food += SandwichNutrition.food(stack);
+            }
         return food;
     }
 
     private static float totalSaturation(ItemStack[] stacks) {
         float saturation = 0;
-        for (ItemStack stack : stacks) if (!stack.isEmpty()) {
-            saturation = Math.max(saturation, SandwichNutrition.saturation(stack));
-        }
+        for (ItemStack stack : stacks)
+            if (!stack.isEmpty()) {
+                saturation = Math.max(saturation, SandwichNutrition.saturation(stack));
+            }
         return gregtech.content.food.SandwichRules.saturation(saturation);
     }
 
-    public static int itemFood(ItemStack stack, @Nullable HolderLookup.Provider lookup) { return totalFood(readItemIngredients(stack, lookup)); }
-    public static float itemSaturation(ItemStack stack, @Nullable HolderLookup.Provider lookup) { return totalSaturation(readItemIngredients(stack, lookup)); }
+    public static int itemFood(ItemStack stack, @Nullable HolderLookup.Provider lookup) {
+        return totalFood(readItemIngredients(stack, lookup));
+    }
+
+    public static float itemSaturation(ItemStack stack, @Nullable HolderLookup.Provider lookup) {
+        return totalSaturation(readItemIngredients(stack, lookup));
+    }
 
     public static ItemStack[] readItemIngredients(ItemStack stack, @Nullable HolderLookup.Provider lookup) {
         ItemStack[] result = new ItemStack[SLOTS];
@@ -169,11 +182,16 @@ public final class SandwichBlockEntity extends GTBlockEntity {
         CompoundTag be = gregtech.engine.stack.BlockEntityData.read(stack);
         if (be != null && be.contains("Ingredients", Tag.TAG_LIST)) readIngredients(be, result, lookup);
         else {
-            result[0] = gt("toast"); result[2] = gt("cooked_meat_bar");
-            result[4] = gt("cucumber_slice"); result[5] = gt("cheese_slice");
-            result[6] = gt("onion_slice"); result[7] = gt("tomato_ketchup");
-            result[8] = gt("tomato_slice"); result[9] = gt("mayo");
-            result[10] = gt("pickle_slice"); result[11] = gt("toast");
+            result[0] = gt("toast");
+            result[2] = gt("cooked_meat_bar");
+            result[4] = gt("cucumber_slice");
+            result[5] = gt("cheese_slice");
+            result[6] = gt("onion_slice");
+            result[7] = gt("tomato_ketchup");
+            result[8] = gt("tomato_slice");
+            result[9] = gt("mayo");
+            result[10] = gt("pickle_slice");
+            result[11] = gt("toast");
         }
         return result;
     }
@@ -201,7 +219,11 @@ public final class SandwichBlockEntity extends GTBlockEntity {
     public ItemStack dropItem() {
         int occupied = 0;
         ItemStack only = ItemStack.EMPTY;
-        for (ItemStack stack : ingredients) if (!stack.isEmpty()) { occupied++; only = stack; }
+        for (ItemStack stack : ingredients)
+            if (!stack.isEmpty()) {
+                occupied++;
+                only = stack;
+            }
         if (occupied == 1 && only.getCraftingRemainingItem().isEmpty()) return only.copy();
         return sandwichItem(baseQuantity());
     }
@@ -210,7 +232,10 @@ public final class SandwichBlockEntity extends GTBlockEntity {
     public ItemStack sandwichItem(int count) {
         ItemStack result = new ItemStack(GTSandwich.SANDWICH_BLOCK.get().asItem(), count);
         CompoundTag tag = new CompoundTag();
-        writeFields(tag, true, gregtech.engine.stack.RegistryContext.orCurrent(level == null ? null : level.registryAccess()));
+        writeFields(
+                tag,
+                true,
+                gregtech.engine.stack.RegistryContext.orCurrent(level == null ? null : level.registryAccess()));
         gregtech.engine.stack.BlockEntityData.write(result, tag, "gt6ce:sandwich_block");
         return result;
     }
@@ -237,12 +262,13 @@ public final class SandwichBlockEntity extends GTBlockEntity {
 
     private void writeFields(CompoundTag tag, boolean item, @Nullable HolderLookup.Provider lookup) {
         ListTag list = new ListTag();
-        for (int i = 0; i < SLOTS; i++) if (!ingredients[i].isEmpty()) {
-            CompoundTag row = new CompoundTag();
-            row.putByte("Slot", (byte) i);
-            row.put("Stack", NbtCompat.saveItem(item ? ingredients[i].copyWithCount(1) : ingredients[i], lookup));
-            list.add(row);
-        }
+        for (int i = 0; i < SLOTS; i++)
+            if (!ingredients[i].isEmpty()) {
+                CompoundTag row = new CompoundTag();
+                row.putByte("Slot", (byte) i);
+                row.put("Stack", NbtCompat.saveItem(item ? ingredients[i].copyWithCount(1) : ingredients[i], lookup));
+                list.add(row);
+            }
         tag.put("Ingredients", list);
         tag.putBoolean("Redstone", redstone);
     }
@@ -258,7 +284,8 @@ public final class SandwichBlockEntity extends GTBlockEntity {
         writeWithoutMetadata(tag, lookup);
     }
 
-    @Override public ClientboundBlockEntityDataPacket getUpdatePacket() {
+    @Override
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }
 }

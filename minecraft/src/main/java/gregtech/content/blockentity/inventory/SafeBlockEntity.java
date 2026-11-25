@@ -4,6 +4,8 @@ import gregtech.content.block.inventory.SafeBlock;
 import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.item.GTDungeonKeyItem;
 import gregtech.engine.stack.NbtCompat;
+import java.util.UUID;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -12,16 +14,20 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import javax.annotation.Nullable;
-import java.util.UUID;
 
 /** GT6 mechanical/key safe: 15 slots, front access, no automation capability. */
 public class SafeBlockEntity extends GTBlockEntity {
     private final SimpleContainer inventory = new SimpleContainer(gregtech.content.storage.SafeLockRules.SLOTS);
-    @Nullable private UUID owner;
+
+    @Nullable
+    private UUID owner;
+
     private long keyId;
     private boolean opened;
-    @Nullable private ResourceLocation dungeonLoot;
+
+    @Nullable
+    private ResourceLocation dungeonLoot;
+
     private long lootSeed;
     private final java.util.List<ItemStack> overflow = new java.util.ArrayList<>();
 
@@ -29,12 +35,34 @@ public class SafeBlockEntity extends GTBlockEntity {
         super(gregtech.content.registry.GTBlockEntities.SAFE.get(), pos, state);
         inventory.addListener(c -> setChanged());
     }
-    public SimpleContainer inventory() { return inventory; }
-    public void setOwner(@Nullable UUID owner) { this.owner = owner; syncLock(); }
-    public boolean keyLocked() { return ((SafeBlock) getBlockState().getBlock()).keyLocked(); }
-    public long keyId() { return keyId; }
-    public boolean opened() { return opened; }
-    public void setKeyId(long id) { keyId = id; opened = false; syncLock(); }
+
+    public SimpleContainer inventory() {
+        return inventory;
+    }
+
+    public void setOwner(@Nullable UUID owner) {
+        this.owner = owner;
+        syncLock();
+    }
+
+    public boolean keyLocked() {
+        return ((SafeBlock) getBlockState().getBlock()).keyLocked();
+    }
+
+    public long keyId() {
+        return keyId;
+    }
+
+    public boolean opened() {
+        return opened;
+    }
+
+    public void setKeyId(long id) {
+        keyId = id;
+        opened = false;
+        syncLock();
+    }
+
     public boolean canOpen(Player player) {
         return gregtech.content.storage.SafeLockRules.canOpen(keyLocked(), opened, owner, player.getUUID());
     }
@@ -46,102 +74,166 @@ public class SafeBlockEntity extends GTBlockEntity {
     }
     /** GT6 Behavior_Key: bind blank locks, toggle matching keys, copy only while unlocked. */
     public boolean useKey(ItemStack key) {
-        if (!keyLocked() || !(key.getItem() instanceof GTDungeonKeyItem) || level == null || level.isClientSide) return false;
+        if (!keyLocked() || !(key.getItem() instanceof GTDungeonKeyItem) || level == null || level.isClientSide)
+            return false;
         long supplied = GTDungeonKeyItem.keyId(key), generated = 0;
-        if (supplied == 0 && keyId == 0) do { generated = level.random.nextLong() & Long.MAX_VALUE; } while (generated == 0);
+        if (supplied == 0 && keyId == 0)
+            do {
+                generated = level.random.nextLong() & Long.MAX_VALUE;
+            } while (generated == 0);
         var result = gregtech.content.storage.SafeLockRules.useKey(keyId, opened, supplied, generated);
         if (!result.accepted()) return false;
         if (result.itemId() != supplied) GTDungeonKeyItem.setKeyId(key, result.itemId());
         if (!result.toggle()) return true;
-        keyId = result.lockId(); opened = result.opened();
+        keyId = result.lockId();
+        opened = result.opened();
         syncLock();
-        level.playSound(null, worldPosition, net.minecraft.sounds.SoundEvents.LEVER_CLICK,
-                net.minecraft.sounds.SoundSource.BLOCKS, 1, .25F);
+        level.playSound(
+                null,
+                worldPosition,
+                net.minecraft.sounds.SoundEvents.LEVER_CLICK,
+                net.minecraft.sounds.SoundSource.BLOCKS,
+                1,
+                .25F);
         return true;
     }
+
     private void syncLock() {
         setChanged();
         if (level != null && !level.isClientSide && getBlockState().hasProperty(SafeBlock.OPEN))
             level.setBlock(worldPosition, getBlockState().setValue(SafeBlock.OPEN, opened), 3);
-        if (level != null && !level.isClientSide) level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+        if (level != null && !level.isClientSide)
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
     }
-    @Override protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
-        if (owner != null) tag.putUUID("gt.owner", owner); tag.putBoolean("gt.open", opened);
+
+    @Override
+    protected void writeUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        if (owner != null) tag.putUUID("gt.owner", owner);
+        tag.putBoolean("gt.open", opened);
     }
-    @Override protected void readUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) { owner = tag.hasUUID("gt.owner") ? tag.getUUID("gt.owner") : null; opened = tag.getBoolean("gt.open"); }
-    @Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() { return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this); }
-    public void setDungeonLoot(ResourceLocation table, long seed) { dungeonLoot = table; lootSeed = seed; setChanged(); }
+
+    @Override
+    protected void readUpdateTag(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+        owner = tag.hasUUID("gt.owner") ? tag.getUUID("gt.owner") : null;
+        opened = tag.getBoolean("gt.open");
+    }
+
+    @Override
+    public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    public void setDungeonLoot(ResourceLocation table, long seed) {
+        dungeonLoot = table;
+        lootSeed = seed;
+        setChanged();
+    }
     /** GT6 rolls one candidate stack per empty slot; preserve preplaced keys and consume the table once. */
     public void generateDungeonLoot() {
         if (dungeonLoot == null || !(level instanceof net.minecraft.server.level.ServerLevel server)) return;
         var table = gregtech.engine.stack.LootCompat.getLootTable(server.getServer(), dungeonLoot);
         if (table == net.minecraft.world.level.storage.loot.LootTable.EMPTY) return;
         var params = new net.minecraft.world.level.storage.loot.LootParams.Builder(server)
-                .withParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.ORIGIN,
+                .withParameter(
+                        net.minecraft.world.level.storage.loot.parameters.LootContextParams.ORIGIN,
                         net.minecraft.world.phys.Vec3.atCenterOf(worldPosition))
                 .create(net.minecraft.world.level.storage.loot.parameters.LootContextParamSets.CHEST);
         var random = net.minecraft.util.RandomSource.create(lootSeed);
         dungeonLoot = null;
-        for (int slot = 0; slot < inventory.getContainerSize(); slot++) if (inventory.getItem(slot).isEmpty()) {
-            var candidates = table.getRandomItems(params, random.nextLong());
-            if (!candidates.isEmpty()) inventory.setItem(slot, candidates.get(random.nextInt(candidates.size())).copy());
-        }
+        for (int slot = 0; slot < inventory.getContainerSize(); slot++)
+            if (inventory.getItem(slot).isEmpty()) {
+                var candidates = table.getRandomItems(params, random.nextLong());
+                if (!candidates.isEmpty())
+                    inventory.setItem(
+                            slot,
+                            candidates.get(random.nextInt(candidates.size())).copy());
+            }
         setChanged();
     }
-    public gregtech.client.gui.HopperContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory playerInventory) {
+
+    public gregtech.client.gui.HopperContainerMenu createMenu(
+            int id, net.minecraft.world.entity.player.Inventory playerInventory) {
         if (!playerInventory.player.isSpectator()) {
             // Keep contents from older 27-slot test saves; refill the 15-slot inventory as room becomes available.
             for (int i = overflow.size() - 1; i >= 0; i--) {
                 var rest = inventory.addItem(overflow.get(i));
-                if (rest.isEmpty()) overflow.remove(i); else overflow.set(i, rest);
+                if (rest.isEmpty()) overflow.remove(i);
+                else overflow.set(i, rest);
             }
             setChanged();
             generateDungeonLoot();
         }
         return new gregtech.client.gui.StorageContainerMenu(id, playerInventory, inventory) {
-            @Override public boolean stillValid(Player player) {
-                return !isRemoved() && level != null && level.getBlockEntity(worldPosition) == SafeBlockEntity.this
-                        && (player.isSpectator() || canOpen(player)) && player.distanceToSqr(worldPosition.getX() + .5, worldPosition.getY() + .5, worldPosition.getZ() + .5) <= 64;
+            @Override
+            public boolean stillValid(Player player) {
+                return !isRemoved()
+                        && level != null
+                        && level.getBlockEntity(worldPosition) == SafeBlockEntity.this
+                        && (player.isSpectator() || canOpen(player))
+                        && player.distanceToSqr(
+                                        worldPosition.getX() + .5, worldPosition.getY() + .5, worldPosition.getZ() + .5)
+                                <= 64;
             }
         };
     }
+
     public void dropContents() {
         if (level == null || level.isClientSide) return;
         generateDungeonLoot();
         gregtech.util.GTItemDrops.dropContents(level, worldPosition, inventory);
         inventory.clearContent();
-        for (var stack : overflow) gregtech.util.GTItemDrops.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), stack);
-        overflow.clear(); setChanged();
+        for (var stack : overflow)
+            gregtech.util.GTItemDrops.dropItemStack(
+                    level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), stack);
+        overflow.clear();
+        setChanged();
     }
-    @Override protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+
+    @Override
+    protected void saveData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         super.saveData(tag, lookup);
         // Explicit slot indexes: SimpleContainer.createTag/fromTag compacts holes.
         var items = new net.minecraft.nbt.ListTag();
-        for (int slot = 0; slot < inventory.getContainerSize(); slot++) if (!inventory.getItem(slot).isEmpty()) {
-            var entry = (CompoundTag) NbtCompat.saveItem(inventory.getItem(slot), lookup); entry.putInt("Slot", slot); items.add(entry);
-        }
+        for (int slot = 0; slot < inventory.getContainerSize(); slot++)
+            if (!inventory.getItem(slot).isEmpty()) {
+                var entry = (CompoundTag) NbtCompat.saveItem(inventory.getItem(slot), lookup);
+                entry.putInt("Slot", slot);
+                items.add(entry);
+            }
         tag.put("gt.items", items);
-        var extra = new net.minecraft.nbt.ListTag(); for (var stack : overflow) extra.add(NbtCompat.saveItem(stack, lookup)); tag.put("gt.overflow", extra);
+        var extra = new net.minecraft.nbt.ListTag();
+        for (var stack : overflow) extra.add(NbtCompat.saveItem(stack, lookup));
+        tag.put("gt.overflow", extra);
         if (owner != null) tag.putUUID("gt.owner", owner);
-        tag.putLong("gt.key", keyId); tag.putBoolean("gt.open", opened);
+        tag.putLong("gt.key", keyId);
+        tag.putBoolean("gt.open", opened);
         if (dungeonLoot != null) tag.putString("gt.dungeonloot", dungeonLoot.toString());
         tag.putLong("gt.loot.seed", lootSeed);
     }
-    @Override protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
+
+    @Override
+    protected void loadData(CompoundTag tag, @Nullable HolderLookup.Provider lookup) {
         super.loadData(tag, lookup);
         inventory.clearContent();
         overflow.clear();
         var items = tag.getList("gt.items", 10);
         for (int i = 0; i < items.size(); i++) {
-            var entry = items.getCompound(i); int slot = entry.contains("Slot") ? entry.getInt("Slot") : i;
+            var entry = items.getCompound(i);
+            int slot = entry.contains("Slot") ? entry.getInt("Slot") : i;
             var stack = NbtCompat.readItem(entry, lookup);
             if (slot >= 0 && slot < 15) inventory.setItem(slot, stack);
             else if (!stack.isEmpty()) overflow.add(stack);
         }
-        var extra = tag.getList("gt.overflow", 10); for (int i = 0; i < extra.size(); i++) { var stack = NbtCompat.readItem(extra.getCompound(i), lookup); if (!stack.isEmpty()) overflow.add(stack); }
+        var extra = tag.getList("gt.overflow", 10);
+        for (int i = 0; i < extra.size(); i++) {
+            var stack = NbtCompat.readItem(extra.getCompound(i), lookup);
+            if (!stack.isEmpty()) overflow.add(stack);
+        }
         owner = tag.hasUUID("gt.owner") ? tag.getUUID("gt.owner") : null;
-        keyId = tag.getLong("gt.key"); opened = tag.getBoolean("gt.open");
-        dungeonLoot = tag.contains("gt.dungeonloot") ? ResourceLocation.tryParse(tag.getString("gt.dungeonloot")) : null;
+        keyId = tag.getLong("gt.key");
+        opened = tag.getBoolean("gt.open");
+        dungeonLoot =
+                tag.contains("gt.dungeonloot") ? ResourceLocation.tryParse(tag.getString("gt.dungeonloot")) : null;
         lootSeed = tag.getLong("gt.loot.seed");
     }
 }
