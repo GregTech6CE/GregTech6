@@ -8,7 +8,10 @@ import org.jetbrains.annotations.Nullable;
 //? if >=1.21.1 {
 /*import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.component.CustomData;
-*///?}
+import net.minecraft.world.item.component.WrittenBookContent;
+*///?} else {
+import net.minecraft.world.item.WrittenBookItem;
+//?}
 
 /**
  * Free-form item data: the 1.20.1 tag and the 1.21.1 {@code CUSTOM_DATA} component.
@@ -147,5 +150,37 @@ public final class StackData {
 
     public static void remove(ItemStack stack, String key) {
         update(stack, tag -> tag.remove(key));
+    }
+
+    /**
+     * Returns the written book generation of {@code stack}, or {@code 3} when the stack carries no
+     * written-book payload (matching vanilla's non-copyable cap).
+     */
+    public static int writtenBookGeneration(ItemStack stack) {
+//? if >=1.21.1 {
+/*        var content = stack.get(DataComponents.WRITTEN_BOOK_CONTENT);
+        return content == null ? 3 : content.generation();
+*///?} else {
+        return stack.hasTag() ? WrittenBookItem.getGeneration(stack) : 3;
+//?}
+    }
+
+    /** Increments the written book generation of {@code stack} by {@code delta} when present. */
+    public static void incrementWrittenBookGeneration(ItemStack stack, int delta) {
+//? if >=1.21.1 {
+/*        var content = stack.get(DataComponents.WRITTEN_BOOK_CONTENT);
+        if (content == null) return;
+        stack.set(
+                DataComponents.WRITTEN_BOOK_CONTENT,
+                new WrittenBookContent(
+                        content.title(),
+                        content.author(),
+                        content.generation() + delta,
+                        content.pages(),
+                        content.resolved()));
+*///?} else {
+        if (!stack.hasTag()) return;
+        stack.getOrCreateTag().putInt("generation", WrittenBookItem.getGeneration(stack) + delta);
+//?}
     }
 }
