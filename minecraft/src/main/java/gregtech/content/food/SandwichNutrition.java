@@ -51,28 +51,18 @@ public final class SandwichNutrition {
         if (can != null && can.rebreathe() > 0) player.setAirSupply(player.getAirSupply() + can.rebreathe());
         if (item.equals("gt6ce:cure_all") || bottle != null && bottle.extinguish()) player.clearFire();
         if (item.equals("gt6ce:cure_all") || bottle != null && bottle.milk()) {
-//? if >=1.21.1 {
-            /*player.removeEffectsCuredBy(net.neoforged.neoforge.common.EffectCures.MILK);
-*///?} else {
-            player.curePotionEffects(new ItemStack(net.minecraft.world.item.Items.MILK_BUCKET));
-//?}
+            gregtech.engine.effect.MobEffectCompat.cureWithMilk(player);
         }
         for (var row : SandwichIngredientEffects.forItem(item)) {
             if (player.getRandom().nextInt(100) >= row.chance()) continue;
             // UT.Entities.applyPotion rejects negative durations even for removal tuples.
             if (row.duration() <= 0) continue;
-//? if >=1.21.1 {
-            /*var id = net.minecraft.resources.ResourceLocation.parse(row.effect());
-            var effect = net.minecraft.core.registries.BuiltInRegistries.MOB_EFFECT.getHolder(id).orElse(null);
-*///?} else {
             var id = net.minecraft.resources.ResourceLocation.tryParse(row.effect());
-            var effect = net.minecraft.core.registries.BuiltInRegistries.MOB_EFFECT.get(id);
-//?}
             // IE callbacks are optional, just as the original skips unregistered potion IDs.
-            if (effect == null) continue;
-            if (row.amplifier() < 0) player.removeEffect(effect);
-            else player.addEffect(new net.minecraft.world.effect.MobEffectInstance(effect,
-                    row.duration(), row.amplifier(), row.ambient(), true));
+            if (id == null) continue;
+            if (row.amplifier() < 0) gregtech.engine.effect.MobEffectCompat.remove(player, id);
+            else gregtech.engine.effect.MobEffectCompat.apply(
+                    player, id, row.duration(), row.amplifier(), row.ambient(), true);
         }
         if (bottle != null && bottle.explosive()) {
             player.level().explode(player, player.getX(), player.getY(), player.getZ(), 4, true, net.minecraft.world.level.Level.ExplosionInteraction.TNT);

@@ -1,14 +1,13 @@
 package gregtech.content.hazard;
 
+import gregtech.engine.effect.MobEffectCompat;
 import gregtech.engine.fluid.FluidHazards;
 import gregtech.content.damage.GTHazmat;
 import gregtech.content.data.RegisteredFluids;
 import gregtech.platform.Mc;
 import gregtech.util.GTEntityHelper;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.material.Fluid;
 
@@ -74,14 +73,10 @@ public final class WorldFluidEffects {
      * {@code amplifier} is GT6's third element ("level"), passed through unchanged - GT6 hands it to
      * {@code applyPotion} as {@code aLevel}, which is vanilla's amplifier.
      */
-//? if >=1.21.1 {
-    /*public record EffectRow(net.minecraft.core.Holder<MobEffect> effect, int duration, int amplifier, String source) {
-*///?} else {
-    public record EffectRow(MobEffect effect, int duration, int amplifier, String source) {
-//?}
+    public record EffectRow(ResourceLocation effect, int duration, int amplifier, String source) {
         /** GT6 {@code UT.Entities.applyPotion(entity, id, duration, level, F)}: ambient is false. */
         public MobEffectInstance instance() {
-            return new MobEffectInstance(effect, duration, amplifier);
+            return MobEffectCompat.createInstance(effect, duration, amplifier);
         }
     }
 
@@ -113,14 +108,14 @@ public final class WorldFluidEffects {
      * instead of being applied.
      */
     private static final List<EffectRow> OIL_BATHING = List.of(
-            new EffectRow(MobEffects.BLINDNESS, 60, 1, "Loader_Blocks.java:149-152 blindness 60/1"));
+            new EffectRow(MobEffectCompat.vanillaId("blindness"), 60, 1, "Loader_Blocks.java:149-152 blindness 60/1"));
 
     /** Recorded, not applied: GT6 gets these three from Immersive Engineering ({@code GT_API}). */
     public static final List<String> OIL_IE_EFFECTS = List.of("flammable 300/1", "sticky 300/1", "slippery 300/1");
 
     private static final List<EffectRow> GEOTHERMAL_BATHING = List.of(
-            new EffectRow(MobEffects.REGENERATION, 100, 0, "Loader_Blocks regeneration 100/0"),
-            new EffectRow(MobEffects.DAMAGE_RESISTANCE, 2400, 2, "Loader_Blocks resistance 2400/2"));
+            new EffectRow(MobEffectCompat.vanillaId("regeneration"), 100, 0, "Loader_Blocks regeneration 100/0"),
+            new EffectRow(MobEffectCompat.vanillaId("resistance"), 2400, 2, "Loader_Blocks resistance 2400/2"));
 
     /** Which fluids have a bathing row, and their rows. */
     public static List<EffectRow> bathingRows(Fluid fluid) {
@@ -171,13 +166,13 @@ public final class WorldFluidEffects {
 
     /** {@code Loader_Blocks}: breathing oils poisons and confuses. */
     private static final List<EffectRow> OIL_BREATHING = List.of(
-            new EffectRow(MobEffects.POISON, 300, 0, "Loader_Blocks.java:149-152 poison 300/0"),
-            new EffectRow(MobEffects.CONFUSION, 120, 0, "Loader_Blocks.java:149-152 confusion 120/0"));
+            new EffectRow(MobEffectCompat.vanillaId("poison"), 300, 0, "Loader_Blocks.java:149-152 poison 300/0"),
+            new EffectRow(MobEffectCompat.vanillaId("nausea"), 120, 0, "Loader_Blocks.java:149-152 confusion 120/0"));
 
     /** {@code Loader_Blocks}: the natural-gas spring, the gas row this port already had. */
     private static final List<EffectRow> GAS_BREATHING = List.of(
-            new EffectRow(MobEffects.POISON, 300, 0, "Loader_Blocks.java:153 poison 300/0"),
-            new EffectRow(MobEffects.CONFUSION, 120, 0, "Loader_Blocks.java:153 confusion 120/0"));
+            new EffectRow(MobEffectCompat.vanillaId("poison"), 300, 0, "Loader_Blocks.java:153 poison 300/0"),
+            new EffectRow(MobEffectCompat.vanillaId("nausea"), 120, 0, "Loader_Blocks.java:153 confusion 120/0"));
 
     /** The head-inside rows of one fluid. */
     public static List<EffectRow> headInsideRows(Fluid fluid) {

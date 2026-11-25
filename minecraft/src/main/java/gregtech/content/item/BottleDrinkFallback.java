@@ -1,12 +1,12 @@
 package gregtech.content.item;
 
 import gregtech.content.food.DrinkNutritionRows;
+import gregtech.engine.effect.MobEffectCompat;
 import java.util.List;
 import java.util.Map;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 
 /**
@@ -940,22 +940,13 @@ final class BottleDrinkFallback {
         player.getFoodData().eat(row.foodLevel(), row.saturation());
         if (row.extinguish()) player.clearFire();
         if (row.milk()) {
-//? if >=1.21.1 {
-            /*player.removeEffectsCuredBy(net.neoforged.neoforge.common.EffectCures.MILK);
-*///?} else {
-            player.curePotionEffects(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.MILK_BUCKET));
-//?}
+            MobEffectCompat.cureWithMilk(player);
         }
         for (var effect : row.effects()) {
-            var type = effectType(effect.sourceId());
-            if (type == null || player.getRandom().nextInt(100) >= effect.chance()) continue;
-//? if >=1.21.1 {
-            /*if (type.value().isInstantenous()) type.value().applyInstantenousEffect(player, player, player, effect.amplifier(), 1.0);
-            else player.addEffect(new MobEffectInstance(type, effect.duration(), effect.amplifier(), false, !row.invisibleParticles()));
-*///?} else {
-            if (type.isInstantenous()) type.applyInstantenousEffect(player, player, player, effect.amplifier(), 1.0);
-            else player.addEffect(new MobEffectInstance(type, effect.duration(), effect.amplifier(), false, !row.invisibleParticles()));
-//?}
+            var id = effectId(effect.sourceId());
+            if (id == null || player.getRandom().nextInt(100) >= effect.chance()) continue;
+            MobEffectCompat.applyOrTrigger(
+                    player, id, effect.duration(), effect.amplifier(), false, !row.invisibleParticles());
         }
         if (row.explosive()) {
             player.level().explode(player, player.getX(), player.getY(), player.getZ(), 4, true,
@@ -971,45 +962,23 @@ final class BottleDrinkFallback {
                 0.4F / (player.level().random.nextFloat() * 0.4F + 0.8F));
     }
 
-//? if >=1.21.1 {
-    /*private static net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect> effectType(String source) {
+    private static ResourceLocation effectId(String source) {
         return switch (source) {
-            case "Potion.confusion.id" -> MobEffects.CONFUSION;
-            case "Potion.damageBoost.id" -> MobEffects.DAMAGE_BOOST;
-            case "Potion.digSpeed.id" -> MobEffects.DIG_SPEED;
-            case "Potion.field_76444_x.id" -> MobEffects.ABSORPTION;
-            case "Potion.fireResistance.id" -> MobEffects.FIRE_RESISTANCE;
-            case "Potion.heal.id" -> MobEffects.HEAL;
-            case "Potion.hunger.id" -> MobEffects.HUNGER;
-            case "Potion.jump.id" -> MobEffects.JUMP;
-            case "Potion.moveSlowdown.id" -> MobEffects.MOVEMENT_SLOWDOWN;
-            case "Potion.moveSpeed.id" -> MobEffects.MOVEMENT_SPEED;
-            case "Potion.nightVision.id" -> MobEffects.NIGHT_VISION;
-            case "Potion.poison.id" -> MobEffects.POISON;
-            case "Potion.regeneration.id" -> MobEffects.REGENERATION;
-            case "Potion.resistance.id" -> MobEffects.DAMAGE_RESISTANCE;
+            case "Potion.confusion.id" -> MobEffectCompat.vanillaId("nausea");
+            case "Potion.damageBoost.id" -> MobEffectCompat.vanillaId("strength");
+            case "Potion.digSpeed.id" -> MobEffectCompat.vanillaId("haste");
+            case "Potion.field_76444_x.id" -> MobEffectCompat.vanillaId("absorption");
+            case "Potion.fireResistance.id" -> MobEffectCompat.vanillaId("fire_resistance");
+            case "Potion.heal.id" -> MobEffectCompat.vanillaId("instant_health");
+            case "Potion.hunger.id" -> MobEffectCompat.vanillaId("hunger");
+            case "Potion.jump.id" -> MobEffectCompat.vanillaId("jump_boost");
+            case "Potion.moveSlowdown.id" -> MobEffectCompat.vanillaId("slowness");
+            case "Potion.moveSpeed.id" -> MobEffectCompat.vanillaId("speed");
+            case "Potion.nightVision.id" -> MobEffectCompat.vanillaId("night_vision");
+            case "Potion.poison.id" -> MobEffectCompat.vanillaId("poison");
+            case "Potion.regeneration.id" -> MobEffectCompat.vanillaId("regeneration");
+            case "Potion.resistance.id" -> MobEffectCompat.vanillaId("resistance");
             default -> null;
         };
     }
-*///?} else {
-    private static net.minecraft.world.effect.MobEffect effectType(String source) {
-        return switch (source) {
-            case "Potion.confusion.id" -> MobEffects.CONFUSION;
-            case "Potion.damageBoost.id" -> MobEffects.DAMAGE_BOOST;
-            case "Potion.digSpeed.id" -> MobEffects.DIG_SPEED;
-            case "Potion.field_76444_x.id" -> MobEffects.ABSORPTION;
-            case "Potion.fireResistance.id" -> MobEffects.FIRE_RESISTANCE;
-            case "Potion.heal.id" -> MobEffects.HEAL;
-            case "Potion.hunger.id" -> MobEffects.HUNGER;
-            case "Potion.jump.id" -> MobEffects.JUMP;
-            case "Potion.moveSlowdown.id" -> MobEffects.MOVEMENT_SLOWDOWN;
-            case "Potion.moveSpeed.id" -> MobEffects.MOVEMENT_SPEED;
-            case "Potion.nightVision.id" -> MobEffects.NIGHT_VISION;
-            case "Potion.poison.id" -> MobEffects.POISON;
-            case "Potion.regeneration.id" -> MobEffects.REGENERATION;
-            case "Potion.resistance.id" -> MobEffects.DAMAGE_RESISTANCE;
-            default -> null;
-        };
-    }
-//?}
 }

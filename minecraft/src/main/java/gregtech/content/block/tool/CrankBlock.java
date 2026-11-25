@@ -173,16 +173,20 @@ public class CrankBlock extends GTDirectionalBlock implements SimpleWaterloggedB
     private static void offerEnergy(BlockState state, ServerLevel level, BlockPos pos, Player player) {
         Direction handle = state.getValue(FACING);
         long size = gregtech.content.tool.UtilityToolRules.crankSize(
-                effectLevel(player, net.minecraft.world.effect.MobEffects.DAMAGE_BOOST),
-                effectLevel(player, net.minecraft.world.effect.MobEffects.WEAKNESS));
+                gregtech.engine.effect.MobEffectCompat.effectLevel(player,
+                        gregtech.engine.effect.MobEffectCompat.vanillaId("strength")),
+                gregtech.engine.effect.MobEffectCompat.effectLevel(player,
+                        gregtech.engine.effect.MobEffectCompat.vanillaId("weakness")));
         BlockPos mount = pos.relative(handle.getOpposite());
         if (!level.hasChunkAt(mount)) return;
         var target = level.getBlockEntity(mount);
         long accepted = EnergyBlockViews.view(target) == null ? 0 : EnergyTransfer.insertEnergyInto(
                 GregTechTags.Energy.RU, handle, size,
-                1 + effectLevel(player, net.minecraft.world.effect.MobEffects.DIG_SPEED), target);
+                1 + gregtech.engine.effect.MobEffectCompat.effectLevel(player,
+                        gregtech.engine.effect.MobEffectCompat.vanillaId("haste")), target);
         if (accepted > 0) player.causeFoodExhaustion(0.025F *
-                (1 + effectLevel(player, net.minecraft.world.effect.MobEffects.DIG_SLOWDOWN)));
+                (1 + gregtech.engine.effect.MobEffectCompat.effectLevel(player,
+                        gregtech.engine.effect.MobEffectCompat.vanillaId("mining_fatigue"))));
     }
 
     /** Like a vanilla lever, notify both the attachment and the block conducting its strong signal. */
@@ -197,14 +201,6 @@ public class CrankBlock extends GTDirectionalBlock implements SimpleWaterloggedB
             updateMountNeighbors(state, level, pos);
         }
         super.onRemove(state, level, pos, next, moving);
-    }
-//? if >=1.21.1 {
-    /*private static int effectLevel(Player player, net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect> effect) {
-*///?} else {
-    private static int effectLevel(Player player, net.minecraft.world.effect.MobEffect effect) {
-//?}
-        var active = player.getEffect(effect);
-        return active == null ? 0 : active.getAmplifier() + 1;
     }
 
 //? if >=1.21.1 {

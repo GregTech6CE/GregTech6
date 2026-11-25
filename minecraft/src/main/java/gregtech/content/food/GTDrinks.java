@@ -181,51 +181,35 @@ public final class GTDrinks {
     }
 
     /** External-mod effects remain in the source table but are unavailable without their owning mod. */
-//? if >=1.21.1 {
-    /*private static net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect> effectType(String source) {
-*///?} else {
-    private static net.minecraft.world.effect.MobEffect effectType(String source) {
-//?}
+    private static net.minecraft.resources.ResourceLocation effectId(String source) {
         return switch (source) {
-            case "Potion.blindness.id" -> net.minecraft.world.effect.MobEffects.BLINDNESS;
-            case "Potion.confusion.id" -> net.minecraft.world.effect.MobEffects.CONFUSION;
-            case "Potion.damageBoost.id" -> net.minecraft.world.effect.MobEffects.DAMAGE_BOOST;
-            case "Potion.digSlowdown.id" -> net.minecraft.world.effect.MobEffects.DIG_SLOWDOWN;
-            case "Potion.digSpeed.id" -> net.minecraft.world.effect.MobEffects.DIG_SPEED;
-            case "Potion.field_76444_x.id" -> net.minecraft.world.effect.MobEffects.ABSORPTION;
-            case "Potion.fireResistance.id" -> net.minecraft.world.effect.MobEffects.FIRE_RESISTANCE;
-            case "Potion.harm.id" -> net.minecraft.world.effect.MobEffects.HARM;
-            case "Potion.heal.id" -> net.minecraft.world.effect.MobEffects.HEAL;
-            case "Potion.hunger.id" -> net.minecraft.world.effect.MobEffects.HUNGER;
-            case "Potion.invisibility.id" -> net.minecraft.world.effect.MobEffects.INVISIBILITY;
-            case "Potion.jump.id" -> net.minecraft.world.effect.MobEffects.JUMP;
-            case "Potion.moveSlowdown.id" -> net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN;
-            case "Potion.moveSpeed.id" -> net.minecraft.world.effect.MobEffects.MOVEMENT_SPEED;
-            case "Potion.nightVision.id" -> net.minecraft.world.effect.MobEffects.NIGHT_VISION;
-            case "Potion.poison.id" -> net.minecraft.world.effect.MobEffects.POISON;
-            case "Potion.regeneration.id" -> net.minecraft.world.effect.MobEffects.REGENERATION;
-            case "Potion.resistance.id" -> net.minecraft.world.effect.MobEffects.DAMAGE_RESISTANCE;
-            case "Potion.waterBreathing.id" -> net.minecraft.world.effect.MobEffects.WATER_BREATHING;
-            case "Potion.weakness.id" -> net.minecraft.world.effect.MobEffects.WEAKNESS;
+            case "Potion.blindness.id" -> gregtech.engine.effect.MobEffectCompat.vanillaId("blindness");
+            case "Potion.confusion.id" -> gregtech.engine.effect.MobEffectCompat.vanillaId("nausea");
+            case "Potion.damageBoost.id" -> gregtech.engine.effect.MobEffectCompat.vanillaId("strength");
+            case "Potion.digSlowdown.id" -> gregtech.engine.effect.MobEffectCompat.vanillaId("mining_fatigue");
+            case "Potion.digSpeed.id" -> gregtech.engine.effect.MobEffectCompat.vanillaId("haste");
+            case "Potion.field_76444_x.id" -> gregtech.engine.effect.MobEffectCompat.vanillaId("absorption");
+            case "Potion.fireResistance.id" -> gregtech.engine.effect.MobEffectCompat.vanillaId("fire_resistance");
+            case "Potion.harm.id" -> gregtech.engine.effect.MobEffectCompat.vanillaId("instant_damage");
+            case "Potion.heal.id" -> gregtech.engine.effect.MobEffectCompat.vanillaId("instant_health");
+            case "Potion.hunger.id" -> gregtech.engine.effect.MobEffectCompat.vanillaId("hunger");
+            case "Potion.invisibility.id" -> gregtech.engine.effect.MobEffectCompat.vanillaId("invisibility");
+            case "Potion.jump.id" -> gregtech.engine.effect.MobEffectCompat.vanillaId("jump_boost");
+            case "Potion.moveSlowdown.id" -> gregtech.engine.effect.MobEffectCompat.vanillaId("slowness");
+            case "Potion.moveSpeed.id" -> gregtech.engine.effect.MobEffectCompat.vanillaId("speed");
+            case "Potion.nightVision.id" -> gregtech.engine.effect.MobEffectCompat.vanillaId("night_vision");
+            case "Potion.poison.id" -> gregtech.engine.effect.MobEffectCompat.vanillaId("poison");
+            case "Potion.regeneration.id" -> gregtech.engine.effect.MobEffectCompat.vanillaId("regeneration");
+            case "Potion.resistance.id" -> gregtech.engine.effect.MobEffectCompat.vanillaId("resistance");
+            case "Potion.waterBreathing.id" -> gregtech.engine.effect.MobEffectCompat.vanillaId("water_breathing");
+            case "Potion.weakness.id" -> gregtech.engine.effect.MobEffectCompat.vanillaId("weakness");
             default -> null;
         };
     }
 
     private static void potionEffects(Player player, net.minecraft.world.item.ItemStack potion) {
-//? if >=1.21.1 {
-        /*var effects = potion.getOrDefault(net.minecraft.core.component.DataComponents.POTION_CONTENTS,
-                net.minecraft.world.item.alchemy.PotionContents.EMPTY).getAllEffects();
-*///?} else {
-        var effects = net.minecraft.world.item.alchemy.PotionUtils.getMobEffects(potion);
-//?}
-        for (var effect : effects) {
-//? if >=1.21.1 {
-            /*var type = effect.getEffect().value();
-*///?} else {
-            var type = effect.getEffect();
-//?}
-            if (type.isInstantenous()) type.applyInstantenousEffect(player, player, player, effect.getAmplifier(), 1.0);
-            else player.addEffect(new net.minecraft.world.effect.MobEffectInstance(effect));
+        for (var effect : gregtech.engine.effect.MobEffectCompat.potionEffects(potion)) {
+            gregtech.engine.effect.MobEffectCompat.applyInstance(player, effect);
         }
     }
 
@@ -243,21 +227,13 @@ public final class GTDrinks {
         if (row != null) {
         if (row.extinguish()) player.clearFire();
         if (row.milk()) {
-//? if >=1.21.1 {
-            /*player.removeEffectsCuredBy(net.neoforged.neoforge.common.EffectCures.MILK);
-*///?} else {
-            player.curePotionEffects(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.MILK_BUCKET));
-//?}
+            gregtech.engine.effect.MobEffectCompat.cureWithMilk(player);
         }
         for (var effect : row.effects()) {
-            var type = effectType(effect.sourceId());
-            if (type != null && player.getRandom().nextInt(100) < effect.chance()) {
-//? if >=1.21.1 {
-                /*if (type.value().isInstantenous()) type.value().applyInstantenousEffect(player, player, player, effect.amplifier(), 1.0);
-*///?} else {
-                if (type.isInstantenous()) type.applyInstantenousEffect(player, player, player, effect.amplifier(), 1.0);
-//?}
-                else player.addEffect(new net.minecraft.world.effect.MobEffectInstance(type, effect.duration(), effect.amplifier(), false, !row.invisibleParticles()));
+            var id = effectId(effect.sourceId());
+            if (id != null && player.getRandom().nextInt(100) < effect.chance()) {
+                gregtech.engine.effect.MobEffectCompat.applyOrTrigger(
+                        player, id, effect.duration(), effect.amplifier(), false, !row.invisibleParticles());
             }
         }
         if (row.explosive()) {

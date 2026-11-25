@@ -1,6 +1,6 @@
 package gregtech.content.nuclear;
+import gregtech.engine.effect.MobEffectCompat;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.effect.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.tags.TagKey;
 import net.minecraft.core.registries.Registries;
@@ -35,22 +35,18 @@ public final class ReactorRadiation {
             return true;
         }
         int amplifier = (int) Math.min(5, 5L * level / 7);
-        add(entity, MobEffects.MOVEMENT_SLOWDOWN, 140, level, dose, amplifier);
-        add(entity, MobEffects.DIG_SLOWDOWN, 150, level, dose, amplifier);
-        add(entity, MobEffects.CONFUSION, 130, level, dose, amplifier);
-        add(entity, MobEffects.WEAKNESS, 150, level, dose, amplifier);
-        add(entity, MobEffects.HUNGER, 130, level, dose, amplifier);
-        add(entity, MobEffects.WITHER, 130, level, dose, amplifier);
+        add(entity, MobEffectCompat.vanillaId("slowness"), 140, level, dose, amplifier);
+        add(entity, MobEffectCompat.vanillaId("mining_fatigue"), 150, level, dose, amplifier);
+        add(entity, MobEffectCompat.vanillaId("nausea"), 130, level, dose, amplifier);
+        add(entity, MobEffectCompat.vanillaId("weakness"), 150, level, dose, amplifier);
+        add(entity, MobEffectCompat.vanillaId("hunger"), 130, level, dose, amplifier);
+        add(entity, MobEffectCompat.vanillaId("wither"), 130, level, dose, amplifier);
         return true;
     }
-//? if >=1.21.1 {
-    /*private static void add(LivingEntity entity, net.minecraft.core.Holder<MobEffect> effect, int factor, int level, int dose, int amplifier) {
-*///?} else {
-    private static void add(LivingEntity entity, MobEffect effect, int factor, int level, int dose, int amplifier) {
-//?}
-        var previous = entity.getEffect(effect);
+
+    private static void add(LivingEntity entity, ResourceLocation effect, int factor, int level, int dose, int amplifier) {
         long duration = (long) Math.min(Integer.MAX_VALUE, (double) factor * level * dose);
-        duration = Math.min(Integer.MAX_VALUE, duration + (previous == null ? 0 : Math.max(0, previous.getDuration())));
-        entity.addEffect(new MobEffectInstance(effect, (int) duration, amplifier));
+        duration = Math.min(Integer.MAX_VALUE, duration + MobEffectCompat.remainingDuration(entity, effect));
+        MobEffectCompat.apply(entity, effect, (int) duration, amplifier, false, true);
     }
 }

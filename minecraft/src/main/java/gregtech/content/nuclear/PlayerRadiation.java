@@ -52,15 +52,8 @@ public final class PlayerRadiation {
         }
         if (value < 50) return;
         int amplifier = value >= SEVERE_DOSE ? 2 : value >= 75 ? 1 : 0;
-//? if >=1.21.1 {
-        /*for (var effect : java.util.List.of(MobEffects.CONFUSION,
+        for (var effect : java.util.List.of(MobEffects.CONFUSION,
                 MobEffects.HUNGER, MobEffects.MOVEMENT_SLOWDOWN, MobEffects.DIG_SLOWDOWN, MobEffects.WEAKNESS)) {
-*///?} else {
-        for (var effect : new net.minecraft.world.effect.MobEffect[] {
-            MobEffects.CONFUSION,
-            MobEffects.HUNGER, MobEffects.MOVEMENT_SLOWDOWN, MobEffects.DIG_SLOWDOWN, MobEffects.WEAKNESS
-        }) {
-//?}
             player.addEffect(new MobEffectInstance(effect, 100, amplifier));
         }
     }
