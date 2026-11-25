@@ -1,14 +1,16 @@
 package gregtech.content.block.machine;
 
-import gregtech.engine.tool.MachineRotationType;
 import gregtech.content.block.GTHorizontalDirectionalBlock;
-import gregtech.engine.tool.GTToolHelper;
-import gregtech.engine.tool.ToolInteractionSpec;
-import gregtech.engine.tool.ToolInteractionTarget;
-import gregtech.engine.tool.ToolInteractions;
 import gregtech.content.blockentity.machine.OriginalLargeBoilerControllerBlockEntity;
 import gregtech.content.multiblock.OriginalLargeBoilerSpecs;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.engine.tool.GTToolHelper;
+import gregtech.engine.tool.MachineRotationType;
+import gregtech.engine.tool.ToolInteractionSpec;
+import gregtech.engine.tool.ToolInteractionTarget;
+import gregtech.engine.tool.ToolInteractions;
+import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -32,9 +34,6 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
-import javax.annotation.Nullable;
-import java.util.List;
-
 /** Material-specific GT6 large boiler main barometer, original IDs 17201–17205. */
 public final class OriginalLargeBoilerControllerBlock extends GTHorizontalDirectionalBlock
         implements gregtech.engine.multiblock.StructurePreviewSource, ToolInteractionTarget {
@@ -46,11 +45,13 @@ public final class OriginalLargeBoilerControllerBlock extends GTHorizontalDirect
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
-    public OriginalLargeBoilerSpecs.Variant variant() { return variant; }
+    public OriginalLargeBoilerSpecs.Variant variant() {
+        return variant;
+    }
 
     @Override
-    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (ToolInteractions.use(state, level, pos, player, hand, hit))
             return InteractionResult.sidedSuccess(level.isClientSide);
         if (!(level.getBlockEntity(pos) instanceof OriginalLargeBoilerControllerBlockEntity boiler))
@@ -65,40 +66,57 @@ public final class OriginalLargeBoilerControllerBlock extends GTHorizontalDirect
         return InteractionResult.PASS;
     }
 
-    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
     }
-    @Nullable @Override public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+
+    @Nullable
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return defaultBlockState()
+                .setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
-    @Override public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+
+    @Override
+    public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return GTToolHelper.isMachineWrench(tool)
-                ? ToolInteractionSpec.facing(FACING, MachineRotationType.HORIZONTAL) : null;
+                ? ToolInteractionSpec.facing(FACING, MachineRotationType.HORIZONTAL)
+                : null;
     }
-    @Override public void toolStateChanged(Level level, BlockPos pos, BlockState state) {
+
+    @Override
+    public void toolStateChanged(Level level, BlockPos pos, BlockState state) {
         if (level.getBlockEntity(pos) instanceof OriginalLargeBoilerControllerBlockEntity boiler)
             gregtech.engine.multiblock.tracking.StructureTracking.invalidate(boiler);
     }
-    @Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new OriginalLargeBoilerControllerBlockEntity(pos, state);
     }
-    @Nullable @Override @SuppressWarnings("unchecked")
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state,
-                                                                   BlockEntityType<T> type) {
+
+    @Nullable
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide || type != GTBlockEntities.ORIGINAL_LARGE_BOILER.get()) return null;
         return (world, pos, current, be) -> OriginalLargeBoilerControllerBlockEntity.serverTick(
                 world, pos, current, (OriginalLargeBoilerControllerBlockEntity) be);
     }
 
     @Override
-    protected void appendTooltip(ItemStack stack, @Nullable BlockGetter level,
-            List<Component> tooltip, TooltipFlag flag) {
+    protected void appendTooltip(
+            ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
         var data = gregtech.engine.stack.BlockEntityData.read(stack);
         int efficiency = data != null && data.contains("gt.efficiency") ? data.getInt("gt.efficiency") : 10000;
-        gregtech.client.FunctionalBlockTooltips.appendLargeBoiler(variant.originalId(), efficiency, getExplosionResistance(), tooltip);
+        gregtech.client.FunctionalBlockTooltips.appendLargeBoiler(
+                variant.originalId(), efficiency, getExplosionResistance(), tooltip);
     }
 
-    @Override public List<ItemStack> getDrops(BlockState state, LootParams.Builder context) {
+    @Override
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder context) {
         var entity = context.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
         if (entity instanceof OriginalLargeBoilerControllerBlockEntity boiler && boiler.barometerValue() > 4)
             return List.of();
@@ -107,22 +125,28 @@ public final class OriginalLargeBoilerControllerBlock extends GTHorizontalDirect
             gregtech.engine.stack.BlockEntityData.write(drop, boiler.saveItemConfig());
         return List.of(drop);
     }
-    @Override protected ItemStack onGetCloneItemStack(BlockState state, @Nullable HitResult target,
-            BlockGetter level, BlockPos pos, @Nullable Player player) {
+
+    @Override
+    protected ItemStack onGetCloneItemStack(
+            BlockState state, @Nullable HitResult target, BlockGetter level, BlockPos pos, @Nullable Player player) {
         ItemStack stack = new ItemStack(this);
         if (level.getBlockEntity(pos) instanceof OriginalLargeBoilerControllerBlockEntity boiler)
             gregtech.engine.stack.BlockEntityData.write(stack, boiler.saveItemConfig());
         return stack;
     }
-    @Override public void setPlacedBy(Level level, BlockPos pos, BlockState state,
-                                      @Nullable LivingEntity placer, ItemStack stack) {
+
+    @Override
+    public void setPlacedBy(
+            Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         var saved = gregtech.engine.stack.BlockEntityData.read(stack);
         if (saved != null && level.getBlockEntity(pos) instanceof OriginalLargeBoilerControllerBlockEntity boiler)
             boiler.loadItemConfig(saved);
     }
+
     @Override
     protected void onPlayerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-        if (!level.isClientSide && !player.isCreative()
+        if (!level.isClientSide
+                && !player.isCreative()
                 && level.getBlockEntity(pos) instanceof OriginalLargeBoilerControllerBlockEntity boiler
                 && boiler.barometerValue() > 4) boiler.explode();
     }

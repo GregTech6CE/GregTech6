@@ -1,70 +1,113 @@
 package gregtech.content.block.energy;
 
-import net.minecraft.core.Direction;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.block.state.StateDefinition;
-import gregtech.engine.GTWaterloggable;
-import gregtech.content.energy.PortableBatterySpec;
+import gregtech.content.block.GTBlock;
 import gregtech.content.blockentity.energy.ChemicalBatteryBlockEntity;
+import gregtech.content.energy.PortableBatterySpec;
 import gregtech.content.item.ChemicalBatteryItem;
+import gregtech.engine.GTWaterloggable;
+import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.*;
-import javax.annotation.Nullable;
-import java.util.List;
 
-import gregtech.content.block.GTBlock;
 public final class ChemicalBatteryBlock extends GTBlock implements EntityBlock, SimpleWaterloggedBlock {
     @Override
-    protected net.minecraft.world.InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
-            net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
-        var tool=player.getItemInHand(hand);
-        if (!gregtech.engine.tool.GTToolHelper.matchesTool(tool,gregtech.engine.tool.GTToolType.MAGNIFYING_GLASS))
+    protected net.minecraft.world.InteractionResult useBlock(
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            Player player,
+            net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
+        var tool = player.getItemInHand(hand);
+        if (!gregtech.engine.tool.GTToolHelper.matchesTool(tool, gregtech.engine.tool.GTToolType.MAGNIFYING_GLASS))
             return net.minecraft.world.InteractionResult.PASS;
-        if (!level.isClientSide&&level.getBlockEntity(pos) instanceof ChemicalBatteryBlockEntity be) {
-            player.displayClientMessage(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.portable_battery.energy",be.stored(),spec.capacity(),spec.energyType().getShortName()),true);
-            gregtech.engine.tool.GTToolHelper.damageForToolClickReturn(tool,1,player,
-                    hand==net.minecraft.world.InteractionHand.MAIN_HAND?net.minecraft.world.entity.EquipmentSlot.MAINHAND:net.minecraft.world.entity.EquipmentSlot.OFFHAND);
+        if (!level.isClientSide && level.getBlockEntity(pos) instanceof ChemicalBatteryBlockEntity be) {
+            player.displayClientMessage(
+                    net.minecraft.network.chat.Component.translatable(
+                            "tooltip.gt6ce.portable_battery.energy",
+                            be.stored(),
+                            spec.capacity(),
+                            spec.energyType().getShortName()),
+                    true);
+            gregtech.engine.tool.GTToolHelper.damageForToolClickReturn(
+                    tool,
+                    1,
+                    player,
+                    hand == net.minecraft.world.InteractionHand.MAIN_HAND
+                            ? net.minecraft.world.entity.EquipmentSlot.MAINHAND
+                            : net.minecraft.world.entity.EquipmentSlot.OFFHAND);
         }
         return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
     }
 
     private final PortableBatterySpec spec;
     private final VoxelShape shape;
-    public ChemicalBatteryBlock(PortableBatterySpec spec){
-        super(Properties.of().mapColor(net.minecraft.world.level.material.MapColor.METAL).strength(0.5f,3f).sound(SoundType.METAL).noOcclusion());
+
+    public ChemicalBatteryBlock(PortableBatterySpec spec) {
+        super(Properties.of()
+                .mapColor(net.minecraft.world.level.material.MapColor.METAL)
+                .strength(0.5f, 3f)
+                .sound(SoundType.METAL)
+                .noOcclusion());
         registerDefaultState(defaultBlockState().setValue(GTWaterloggable.WATERLOGGED, false));
-        this.spec=spec;shape=Block.box(spec.inset(),0,spec.inset(),16-spec.inset(),spec.height(),16-spec.inset());
+        this.spec = spec;
+        shape = Block.box(spec.inset(), 0, spec.inset(), 16 - spec.inset(), spec.height(), 16 - spec.inset());
     }
-    public PortableBatterySpec spec(){return spec;}
-    @Override public RenderShape getRenderShape(BlockState state) {
+
+    public PortableBatterySpec spec() {
+        return spec;
+    }
+
+    @Override
+    public RenderShape getRenderShape(BlockState state) {
         return spec.barIndicator() ? RenderShape.MODEL : RenderShape.ENTITYBLOCK_ANIMATED;
     }
-    @Override public VoxelShape getShape(BlockState s,BlockGetter l,BlockPos p,CollisionContext c){return shape;}
-    @Override public BlockEntity newBlockEntity(BlockPos p,BlockState s){return new ChemicalBatteryBlockEntity(p,s);}
-    @Override public void setPlacedBy(Level l,BlockPos p,BlockState s,@javax.annotation.Nullable LivingEntity player,ItemStack stack){
-        if (l.getBlockEntity(p) instanceof ChemicalBatteryBlockEntity be&&stack.getItem() instanceof ChemicalBatteryItem item)be.setCharge(item.stored(stack));
+
+    @Override
+    public VoxelShape getShape(BlockState s, BlockGetter l, BlockPos p, CollisionContext c) {
+        return shape;
     }
-    @Override public List<ItemStack> getDrops(BlockState s,LootParams.Builder loot){
-        var result=super.getDrops(s,loot);
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos p, BlockState s) {
+        return new ChemicalBatteryBlockEntity(p, s);
+    }
+
+    @Override
+    public void setPlacedBy(
+            Level l, BlockPos p, BlockState s, @javax.annotation.Nullable LivingEntity player, ItemStack stack) {
+        if (l.getBlockEntity(p) instanceof ChemicalBatteryBlockEntity be
+                && stack.getItem() instanceof ChemicalBatteryItem item) be.setCharge(item.stored(stack));
+    }
+
+    @Override
+    public List<ItemStack> getDrops(BlockState s, LootParams.Builder loot) {
+        var result = super.getDrops(s, loot);
         if (loot.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof ChemicalBatteryBlockEntity be)
-            for (var drop:result)if (drop.is(asItem()))((ChemicalBatteryItem)drop.getItem()).setCharge(drop,be.stored());
+            for (var drop : result)
+                if (drop.is(asItem())) ((ChemicalBatteryItem) drop.getItem()).setCharge(drop, be.stored());
         return result;
     }
+
     @Override
-    protected ItemStack onGetCloneItemStack(BlockState state, @Nullable HitResult target,
-            BlockGetter level, BlockPos pos, @Nullable Player player) {
-        return level.getBlockEntity(pos) instanceof ChemicalBatteryBlockEntity be?be.asItem():new ItemStack(this);
+    protected ItemStack onGetCloneItemStack(
+            BlockState state, @Nullable HitResult target, BlockGetter level, BlockPos pos, @Nullable Player player) {
+        return level.getBlockEntity(pos) instanceof ChemicalBatteryBlockEntity be ? be.asItem() : new ItemStack(this);
     }
 
     @Override
@@ -79,8 +122,13 @@ public final class ChemicalBatteryBlock extends GTBlock implements EntityBlock, 
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
-            LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+    public BlockState updateShape(
+            BlockState state,
+            Direction side,
+            BlockState neighbor,
+            LevelAccessor level,
+            BlockPos pos,
+            BlockPos neighborPos) {
         GTWaterloggable.updateShape(state, level, pos);
         return super.updateShape(state, side, neighbor, level, pos, neighborPos);
     }

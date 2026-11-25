@@ -1,29 +1,32 @@
 package gregtech.content.block.misc;
 
-import net.minecraft.core.Direction;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
-import gregtech.engine.GTWaterloggable;
+import gregtech.content.block.GTBlock;
 import gregtech.content.blockentity.misc.PileBlockEntity;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.engine.GTWaterloggable;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
@@ -33,10 +36,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import gregtech.content.block.GTBlock;
 /**
  * GT6's loose ingot / plate / gem-plate piles on the dungeon floor.
  *
@@ -136,7 +135,8 @@ public class PileBlock extends GTBlock implements EntityBlock, SimpleWaterlogged
     public PileBlock(Kind kind, Properties properties) {
         super(properties);
         this.kind = kind;
-        registerDefaultState(this.stateDefinition.any().setValue(STACK, 0).setValue(GTWaterloggable.WATERLOGGED, false));
+        registerDefaultState(
+                this.stateDefinition.any().setValue(STACK, 0).setValue(GTWaterloggable.WATERLOGGED, false));
     }
 
     @Override
@@ -154,13 +154,14 @@ public class PileBlock extends GTBlock implements EntityBlock, SimpleWaterlogged
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         int count = state.getValue(STACK);
-        int height=gregtech.content.block.MaterialPileRules.outlineHeight(kind==Kind.INGOT,count);
+        int height = gregtech.content.block.MaterialPileRules.outlineHeight(kind == Kind.INGOT, count);
         return Block.box(0, 0, 0, 16, height, 16);
     }
 
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        int height=gregtech.content.block.MaterialPileRules.collisionHeight(kind==Kind.INGOT,state.getValue(STACK));
+        int height =
+                gregtech.content.block.MaterialPileRules.collisionHeight(kind == Kind.INGOT, state.getValue(STACK));
         return height == 0 ? Shapes.empty() : Block.box(0, 0, 0, 16, height, 16);
     }
 
@@ -182,8 +183,8 @@ public class PileBlock extends GTBlock implements EntityBlock, SimpleWaterlogged
      * empties its pile removes that block, since in GT6 the pile is its items.</p>
      */
     @Override
-    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!(level.getBlockEntity(pos) instanceof PileBlockEntity pile)) return InteractionResult.PASS;
         // GT6: `if (isClientSide()) return T;` (MultiTileEntityPlaceable) - the client never
         // decides, it only reports the click as handled.
@@ -194,7 +195,7 @@ public class PileBlock extends GTBlock implements EntityBlock, SimpleWaterlogged
         // form. The port's emptiness branch below replaces GT6's `ST.invalid(mStack) -> setToAir()`.
         if (pile.canAccept(held)) {
             int moved = pile.add(held);
-            if (moved <= 0) return InteractionResult.PASS;   // a full pile takes nothing
+            if (moved <= 0) return InteractionResult.PASS; // a full pile takes nothing
             // GT6's MultiTileEntityPlaceable shrinks the held stack unconditionally here.
             held.shrink(moved);
             playCollect(level, pos);
@@ -277,8 +278,8 @@ public class PileBlock extends GTBlock implements EntityBlock, SimpleWaterlogged
 
     /** GT6's middle-click returns one of the material item represented by the pile. */
     @Override
-    protected ItemStack onGetCloneItemStack(BlockState state, @Nullable HitResult target,
-            BlockGetter level, BlockPos pos, @Nullable Player player) {
+    protected ItemStack onGetCloneItemStack(
+            BlockState state, @Nullable HitResult target, BlockGetter level, BlockPos pos, @Nullable Player player) {
         if (level.getBlockEntity(pos) instanceof PileBlockEntity pile && !pile.isEmpty()) {
             return pile.stored().copyWithCount(1);
         }
@@ -297,8 +298,13 @@ public class PileBlock extends GTBlock implements EntityBlock, SimpleWaterlogged
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
-            LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+    public BlockState updateShape(
+            BlockState state,
+            Direction side,
+            BlockState neighbor,
+            LevelAccessor level,
+            BlockPos pos,
+            BlockPos neighborPos) {
         GTWaterloggable.updateShape(state, level, pos);
         return super.updateShape(state, side, neighbor, level, pos, neighborPos);
     }

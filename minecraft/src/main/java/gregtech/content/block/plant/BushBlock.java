@@ -1,12 +1,10 @@
 package gregtech.content.block.plant;
 
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
-import gregtech.engine.GTWaterloggable;
+import gregtech.content.block.GTBlock;
 import gregtech.content.blockentity.BushBlockEntity;
 import gregtech.content.plant.GTBerryBushes;
+import gregtech.engine.GTWaterloggable;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -18,15 +16,18 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
@@ -35,9 +36,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
-import gregtech.content.block.GTBlock;
 /**
  * GT6's berry bush ({@code MultiTileEntityBush}, multi-tile 32759).
  *
@@ -53,8 +51,8 @@ import gregtech.content.block.GTBlock;
 public class BushBlock extends GTBlock implements EntityBlock, SimpleWaterloggedBlock {
     /** GT6 {@code onBlockActivated3}: harvest when ripe, otherwise take a berry as the bush's type. */
     @Override
-    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (level.isClientSide) return InteractionResult.SUCCESS;
         if (!(level.getBlockEntity(pos) instanceof BushBlockEntity bush)) return InteractionResult.PASS;
         if (!bush.berryId().isEmpty()) {
@@ -70,7 +68,8 @@ public class BushBlock extends GTBlock implements EntityBlock, SimpleWaterlogged
         }
         // A berryless bush adopts the berry the player is holding.
         BerryLookup lookup = BerryLookup.current(player.getItemInHand(hand));
-        if (lookup == null || gregtech.content.registry.GTBushes.byBerry(lookup.id())==null) return InteractionResult.PASS;
+        if (lookup == null || gregtech.content.registry.GTBushes.byBerry(lookup.id()) == null)
+            return InteractionResult.PASS;
         bush.setBerry(lookup.id());
         return InteractionResult.CONSUME;
     }
@@ -81,7 +80,9 @@ public class BushBlock extends GTBlock implements EntityBlock, SimpleWaterlogged
     /** 0..5 are the supporting direction; 6 is an independent rooted core. */
     public static final IntegerProperty SUPPORT = IntegerProperty.create("support", 0, 6);
 
-    public static boolean isCore(BlockState state) { return state.getValue(SUPPORT) == 6; }
+    public static boolean isCore(BlockState state) {
+        return state.getValue(SUPPORT) == 6;
+    }
 
     private static VoxelShape shape(BlockState state, boolean collision) {
         if (isCore(state)) return net.minecraft.world.phys.shapes.Shapes.block();
@@ -97,28 +98,44 @@ public class BushBlock extends GTBlock implements EntityBlock, SimpleWaterlogged
     }
 
     private final String berryId;
-    public BushBlock(Properties properties) { this("",properties); }
-    public BushBlock(String berryId,Properties properties) {
-        super(properties);
-        this.berryId=berryId;
 
-        registerDefaultState(stateDefinition.any().setValue(STAGE, 0).setValue(SUPPORT, 6).setValue(GTWaterloggable.WATERLOGGED, false));
+    public BushBlock(Properties properties) {
+        this("", properties);
     }
 
-    @Override public net.minecraft.network.chat.MutableComponent getName() {
+    public BushBlock(String berryId, Properties properties) {
+        super(properties);
+        this.berryId = berryId;
+
+        registerDefaultState(stateDefinition
+                .any()
+                .setValue(STAGE, 0)
+                .setValue(SUPPORT, 6)
+                .setValue(GTWaterloggable.WATERLOGGED, false));
+    }
+
+    @Override
+    public net.minecraft.network.chat.MutableComponent getName() {
         // GT6 32759 keeps one name; BushBlockItem shows the localized output separately.
         return net.minecraft.network.chat.Component.translatable("block.gt6ce.bush");
     }
 
-    public String berryId() { return berryId; }
+    public String berryId() {
+        return berryId;
+    }
+
     public int tintColour(int tint, int stage) {
-        var type=GTBerryBushes.byId(berryId);
-        return tint==0 ? type==null?GTBerryBushes.NO_BERRY_COLOUR:type.bush() : GTBerryBushes.stageColour(type,stage);
+        var type = GTBerryBushes.byId(berryId);
+        return tint == 0
+                ? type == null ? GTBerryBushes.NO_BERRY_COLOUR : type.bush()
+                : GTBerryBushes.stageColour(type, stage);
     }
 
     public int inventoryColour(int tint) {
-        var type=GTBerryBushes.byId(berryId);
-        return tint==0 ? type==null?GTBerryBushes.NO_BERRY_COLOUR:type.bush() : GTBerryBushes.inventoryColour(type);
+        var type = GTBerryBushes.byId(berryId);
+        return tint == 0
+                ? type == null ? GTBerryBushes.NO_BERRY_COLOUR : type.bush()
+                : GTBerryBushes.inventoryColour(type);
     }
 
     @Override
@@ -141,12 +158,16 @@ public class BushBlock extends GTBlock implements EntityBlock, SimpleWaterlogged
     @Override
     public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
         if (isCore(state)) return isPlantableGround(level.getBlockState(pos.below()));
-        return level.getBlockState(pos.relative(Direction.from3DDataValue(state.getValue(SUPPORT)))).getBlock() instanceof BushBlock;
+        return level.getBlockState(pos.relative(Direction.from3DDataValue(state.getValue(SUPPORT))))
+                        .getBlock()
+                instanceof BushBlock;
     }
 
     /** GT6 {@code BlocksGT.plantableGreens}: grass/dirt-like ground the bush grows on. */
     public static boolean isPlantableGround(BlockState state) {
-        return state.is(net.minecraft.tags.BlockTags.DIRT) || state.is(net.minecraft.world.level.block.Blocks.MOSS_BLOCK) || state.is(net.minecraft.world.level.block.Blocks.FARMLAND);
+        return state.is(net.minecraft.tags.BlockTags.DIRT)
+                || state.is(net.minecraft.world.level.block.Blocks.MOSS_BLOCK)
+                || state.is(net.minecraft.world.level.block.Blocks.FARMLAND);
     }
 
     @Override
@@ -154,14 +175,23 @@ public class BushBlock extends GTBlock implements EntityBlock, SimpleWaterlogged
         Direction support = context.getClickedFace().getOpposite();
         BlockPos parentPos = context.getClickedPos().relative(support);
         BlockState parent = context.getLevel().getBlockState(parentPos);
-        if (parent.getBlock() instanceof BushBlock && isCore(parent)
+        if (parent.getBlock() instanceof BushBlock
+                && isCore(parent)
                 && context.getLevel().getBlockEntity(parentPos) instanceof BushBlockEntity bush) {
             String planted = berryId.isEmpty() ? packedBerry(context.getItemInHand()) : berryId;
             if ((planted.isEmpty() || planted.equals(bush.berryId()))
-                    && gregtech.content.registry.GTBushes.byBerry(bush.berryId())!=null)
-                return GTWaterloggable.getStateForPlacement(gregtech.content.registry.GTBushes.byBerry(bush.berryId()).defaultBlockState().setValue(SUPPORT, support.get3DDataValue()), context);
+                    && gregtech.content.registry.GTBushes.byBerry(bush.berryId()) != null)
+                return GTWaterloggable.getStateForPlacement(
+                        gregtech.content.registry.GTBushes.byBerry(bush.berryId())
+                                .defaultBlockState()
+                                .setValue(SUPPORT, support.get3DDataValue()),
+                        context);
         }
-        return GTWaterloggable.getStateForPlacement(defaultBlockState().canSurvive(context.getLevel(), context.getClickedPos()) ? defaultBlockState() : null, context);
+        return GTWaterloggable.getStateForPlacement(
+                defaultBlockState().canSurvive(context.getLevel(), context.getClickedPos())
+                        ? defaultBlockState()
+                        : null,
+                context);
     }
 
     private static String packedBerry(ItemStack stack) {
@@ -176,12 +206,15 @@ public class BushBlock extends GTBlock implements EntityBlock, SimpleWaterlogged
     /** New drops are ordinary variant items. Decode old stacks only at the legacy boundary. */
     private ItemStack packed(@Nullable BlockEntity entity) {
         if (berryId.isEmpty() && entity instanceof BushBlockEntity bush) {
-            var variant=gregtech.content.registry.GTBushes.byBerry(bush.berryId());
-            if (variant!=null)return new ItemStack(variant);
+            var variant = gregtech.content.registry.GTBushes.byBerry(bush.berryId());
+            if (variant != null) return new ItemStack(variant);
             if (!bush.berryId().isEmpty()) {
                 // Preserve an unmapped legacy/external output rather than silently changing it.
-                var data=new CompoundTag();data.putString("berry",bush.berryId());
-                var stack=new ItemStack(this);gregtech.engine.stack.BlockEntityData.write(stack,data,bush.getType());return stack;
+                var data = new CompoundTag();
+                data.putString("berry", bush.berryId());
+                var stack = new ItemStack(this);
+                gregtech.engine.stack.BlockEntityData.write(stack, data, bush.getType());
+                return stack;
             }
         }
         return new ItemStack(this);
@@ -193,14 +226,14 @@ public class BushBlock extends GTBlock implements EntityBlock, SimpleWaterlogged
     }
 
     @Override
-    protected ItemStack onGetCloneItemStack(BlockState state, @Nullable HitResult target, BlockGetter level,
-            BlockPos pos, @Nullable Player player) {
+    protected ItemStack onGetCloneItemStack(
+            BlockState state, @Nullable HitResult target, BlockGetter level, BlockPos pos, @Nullable Player player) {
         return packed(level.getBlockEntity(pos));
     }
 
     @Override
-    public void setPlacedBy(Level level, BlockPos pos, BlockState state,
-                            @Nullable LivingEntity placer, ItemStack stack) {
+    public void setPlacedBy(
+            Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
         if (!berryId.isEmpty()) {
             if (level.getBlockEntity(pos) instanceof BushBlockEntity bush) bush.refreshSupport();
@@ -214,10 +247,13 @@ public class BushBlock extends GTBlock implements EntityBlock, SimpleWaterlogged
     }
 
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide ? null : (l, p, s, be) -> {
-            if (be instanceof BushBlockEntity bush) bush.tick();
-        };
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, BlockEntityType<T> type) {
+        return level.isClientSide
+                ? null
+                : (l, p, s, be) -> {
+                    if (be instanceof BushBlockEntity bush) bush.tick();
+                };
     }
 
     /** Small holder so the interaction can report the berry id without exposing the table type. */
@@ -234,8 +270,13 @@ public class BushBlock extends GTBlock implements EntityBlock, SimpleWaterlogged
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
-            LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+    public BlockState updateShape(
+            BlockState state,
+            Direction side,
+            BlockState neighbor,
+            LevelAccessor level,
+            BlockPos pos,
+            BlockPos neighborPos) {
         GTWaterloggable.updateShape(state, level, pos);
         return super.updateShape(state, side, neighbor, level, pos, neighborPos);
     }

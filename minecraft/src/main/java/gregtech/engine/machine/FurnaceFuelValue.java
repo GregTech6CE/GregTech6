@@ -2,9 +2,9 @@ package gregtech.engine.machine;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
-import gregtech.engine.material.ItemMaterialRegistry;
-import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.GregTechConstants;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.platform.LoaderHooks;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
@@ -35,7 +35,8 @@ public final class FurnaceFuelValue {
                 .map(data -> {
                     long sum = 0;
                     for (var c : data.components()) {
-                        long value = getBurnValue(c.material(), data.components().size() == 1 ? data.prefix() : null, c.amount());
+                        long value = getBurnValue(
+                                c.material(), data.components().size() == 1 ? data.prefix() : null, c.amount());
                         if (value <= 0) return 0L; // A wooden handle does not make an iron tool furnace fuel.
                         sum += value;
                     }
@@ -57,7 +58,8 @@ public final class FurnaceFuelValue {
         if (time != null) return time;
         if (stack.getItem() instanceof gregtech.engine.material.MaterialFormItem form) {
             long total = 0;
-            for (var part : gregtech.engine.material.MaterialChemistry.prefixMaterialWeights(form.getMaterial(), form.getPrefix()))
+            for (var part : gregtech.engine.material.MaterialChemistry.prefixMaterialWeights(
+                    form.getMaterial(), form.getPrefix()))
                 total += getBurnValue(part.material(), form.getPrefix(), part.amount());
             return (int) clampFuelValue(total);
         }
@@ -66,7 +68,9 @@ public final class FurnaceFuelValue {
             return (int) MaterialFuelRules.blockBurnValue(block.material(), block.prefix());
         var data = ItemMaterialRegistry.get(stack).orElse(null);
         // MT declares 100 ticks per U of bark; dry bark is its half-U item.
-        if (data != null && data.components().size() == 1 && data.material().resolve().getName().equals("Bark"))
+        if (data != null
+                && data.components().size() == 1
+                && data.material().resolve().getName().equals("Bark"))
             return (int) Math.min(32000L, 100L * data.amount() / GTValues.U);
         return null;
     }

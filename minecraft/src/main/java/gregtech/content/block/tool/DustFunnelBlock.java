@@ -1,6 +1,9 @@
 package gregtech.content.block.tool;
 
+import gregtech.content.block.GTBlock;
 import gregtech.content.blockentity.tool.DustFunnelBlockEntity;
+import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -28,19 +31,17 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import javax.annotation.Nullable;
-import java.util.List;
-
-import gregtech.content.block.GTBlock;
 /** GT6 Dust Funnel: combines dust sizes and sends the selected form downward. */
 public class DustFunnelBlock extends GTBlock implements EntityBlock {
 
     /** GT6 output forms in toggle order: blockDust, dust, dustSmall, dustTiny, dustDiv72. */
     public static final IntegerProperty MODE = IntegerProperty.create("mode", 0, 4);
+
     private static final String MODE_TAG = "gt.mode";
 
     // GT6 bounds: full top half plus four corner legs; the spout narrows one pixel per mode.
     private static final VoxelShape[] SHAPES = new VoxelShape[5];
+
     static {
         for (int mode = 0; mode < SHAPES.length; mode++) {
             int inset = 2 + mode;
@@ -55,8 +56,8 @@ public class DustFunnelBlock extends GTBlock implements EntityBlock {
     }
 
     @Override
-    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         // both hands fire use(); handling the off hand double-triggers
         if (hand == InteractionHand.OFF_HAND) return InteractionResult.PASS;
         if (!(level.getBlockEntity(pos) instanceof DustFunnelBlockEntity funnel)) return InteractionResult.PASS;
@@ -76,8 +77,8 @@ public class DustFunnelBlock extends GTBlock implements EntityBlock {
             } else if (!held.isEmpty() && hit.getDirection() == net.minecraft.core.Direction.UP) {
                 int taken = funnel.insert(held);
                 if (taken > 0 && !player.getAbilities().instabuild) held.shrink(taken);
-                else if (taken == 0) player.displayClientMessage(
-                        Component.translatable("message.gt6ce.dust_funnel.only_dusts"), true);
+                else if (taken == 0)
+                    player.displayClientMessage(Component.translatable("message.gt6ce.dust_funnel.only_dusts"), true);
             }
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
@@ -112,14 +113,15 @@ public class DustFunnelBlock extends GTBlock implements EntityBlock {
     @Nullable
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide || type != gregtech.content.registry.GTBlockEntities.DUST_FUNNEL.get()) return null;
         return (BlockEntityTicker<T>) (BlockEntityTicker<DustFunnelBlockEntity>) DustFunnelBlockEntity::serverTick;
     }
+
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (!state.is(newState.getBlock())
-                && level.getBlockEntity(pos) instanceof DustFunnelBlockEntity funnel) {
+        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof DustFunnelBlockEntity funnel) {
             funnel.dropContents();
         }
         super.onRemove(state, level, pos, newState, isMoving);
@@ -132,8 +134,8 @@ public class DustFunnelBlock extends GTBlock implements EntityBlock {
     }
 
     @Override
-    protected ItemStack onGetCloneItemStack(BlockState state, @Nullable HitResult target,
-            BlockGetter level, BlockPos pos, @Nullable Player player) {
+    protected ItemStack onGetCloneItemStack(
+            BlockState state, @Nullable HitResult target, BlockGetter level, BlockPos pos, @Nullable Player player) {
         return withMode(asItem(), state.getValue(MODE));
     }
 
@@ -159,11 +161,17 @@ public class DustFunnelBlock extends GTBlock implements EntityBlock {
     }
 
     @Override
-    protected void appendTooltip(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
+    protected void appendTooltip(
+            ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(Component.translatable("gt.tooltip.dust_funnel.1").withStyle(net.minecraft.ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("gt.lang.nogui.rightclick.interact").append(" (")
-                .append(Component.translatable("gt.lang.face.top")).append(")").withStyle(net.minecraft.ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("gt.lang.use.pincers.to.take").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
-        tooltip.add(Component.translatable("gt.lang.use.monkey.wrench.to.toggle.outputs").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
+        tooltip.add(Component.translatable("gt.lang.nogui.rightclick.interact")
+                .append(" (")
+                .append(Component.translatable("gt.lang.face.top"))
+                .append(")")
+                .withStyle(net.minecraft.ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("gt.lang.use.pincers.to.take")
+                .withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
+        tooltip.add(Component.translatable("gt.lang.use.monkey.wrench.to.toggle.outputs")
+                .withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
     }
 }

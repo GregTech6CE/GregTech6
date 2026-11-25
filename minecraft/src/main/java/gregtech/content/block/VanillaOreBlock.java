@@ -1,10 +1,11 @@
 package gregtech.content.block;
 
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
 import gregtech.content.worldgen.OreHarvest;
+import gregtech.engine.material.GTMaterialRegistry;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -15,16 +16,28 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 
-import java.util.List;
-
 /** The sixteen GT6 {@code BlockVanillaOresA} variants, each an ordinary 2U stone ore. */
 public final class VanillaOreBlock extends IconSetBlock {
     /** In GT6 metadata order: material, required pickaxe level, stone-hardness multiplier, burn, XP. */
-    public record Spec(String icon, String material, int harvestLevel, float hardnessMultiplier,
-                       int burnLevel, int minXp, int maxXp) {}
+    public record Spec(
+            String icon,
+            String material,
+            int harvestLevel,
+            float hardnessMultiplier,
+            int burnLevel,
+            int minXp,
+            int maxXp) {}
 
-    public static final List<Spec> SPECS = SpecialOreDefinitions.vanilla().stream().map(s -> new Spec(s.icon(), s.material(),
-            s.harvestLevel(), s.hardnessMultiplier(), s.burnLevel(), s.minXp(), s.maxXp())).toList();
+    public static final List<Spec> SPECS = SpecialOreDefinitions.vanilla().stream()
+            .map(s -> new Spec(
+                    s.icon(),
+                    s.material(),
+                    s.harvestLevel(),
+                    s.hardnessMultiplier(),
+                    s.burnLevel(),
+                    s.minXp(),
+                    s.maxXp()))
+            .toList();
 
     public static Spec spec(String iconName) {
         for (Spec spec : SPECS) if (spec.icon().equals(iconName)) return spec;
@@ -38,8 +51,13 @@ public final class VanillaOreBlock extends IconSetBlock {
         this.spec = spec;
     }
 
-    public Spec oreSpec() { return spec; }
-    public GTMaterial material() { return GTMaterialRegistry.get(spec.material()); }
+    public Spec oreSpec() {
+        return spec;
+    }
+
+    public GTMaterial material() {
+        return GTMaterialRegistry.get(spec.material());
+    }
 
     /** GT6: one raw ore, or 1..Fortune+1 raw ores; Silk Touch keeps the 2U block. */
     @Override
@@ -53,8 +71,13 @@ public final class VanillaOreBlock extends IconSetBlock {
     }
 
     @Override
-    protected int onGetExpDrop(BlockState state, LevelReader level, RandomSource random, BlockPos pos,
-                               int fortuneLevel, int silkTouchLevel) {
+    protected int onGetExpDrop(
+            BlockState state,
+            LevelReader level,
+            RandomSource random,
+            BlockPos pos,
+            int fortuneLevel,
+            int silkTouchLevel) {
         return silkTouchLevel > 0 ? 0 : spec.minXp() + random.nextInt(spec.maxXp() - spec.minXp() + 1);
     }
 
@@ -69,8 +92,8 @@ public final class VanillaOreBlock extends IconSetBlock {
     }
 
     @Override
-    public float getExplosionResistance(BlockState state, BlockGetter level, BlockPos pos,
-                                        net.minecraft.world.level.Explosion explosion) {
+    public float getExplosionResistance(
+            BlockState state, BlockGetter level, BlockPos pos, net.minecraft.world.level.Explosion explosion) {
         return Blocks.STONE.getExplosionResistance();
     }
 }
