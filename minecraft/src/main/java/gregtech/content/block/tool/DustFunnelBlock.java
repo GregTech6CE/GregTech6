@@ -23,6 +23,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -131,12 +132,8 @@ public class DustFunnelBlock extends GTBlock implements EntityBlock {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public ItemStack getCloneItemStack(BlockState state, net.minecraft.world.phys.HitResult hit,
-                                      net.minecraft.world.level.LevelReader level, BlockPos pos, Player player) {
-*///?} else {
-    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
-//?}
+    protected ItemStack onGetCloneItemStack(BlockState state, @Nullable HitResult target,
+            BlockGetter level, BlockPos pos, @Nullable Player player) {
         return withMode(asItem(), state.getValue(MODE));
     }
 

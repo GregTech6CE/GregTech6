@@ -8,14 +8,19 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import gregtech.GregTech;
 import net.minecraft.network.FriendlyByteBuf;
 //?}
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.phys.HitResult;
 //? if >=1.21.1 {
 /**///?} else {
 import net.minecraftforge.network.NetworkHooks;
@@ -26,6 +31,7 @@ import org.slf4j.LoggerFactory;
 import java.lang.StackWalker.Option;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
+import javax.annotation.Nullable;
 
 /**
  * Platform shim. NeoForge has a class with the same name and the same methods.
@@ -162,6 +168,19 @@ public final class Mc {
 *///?} else {
         stack.setHoverName(name);
 //?}
+    }
+
+    /**
+     * The stack a player picks when they middle-click this block.
+     *
+     * <p>Forge 1.20.1 exposes the hook through {@code IForgeBlockState} and NeoForge 1.21.1 through
+     * {@code IBlockStateExtension}; both dispatch to the block's own {@code getCloneItemStack}, and
+     * {@code LevelReader} narrows to the 1.20.1 {@code BlockGetter} parameter, so one call serves
+     * both nodes.</p>
+     */
+    public static ItemStack cloneItemStack(BlockState state, @Nullable HitResult target,
+            LevelReader level, BlockPos pos, @Nullable Player player) {
+        return state.getCloneItemStack(target, level, pos, player);
     }
 
 //? if >=1.21.1 {

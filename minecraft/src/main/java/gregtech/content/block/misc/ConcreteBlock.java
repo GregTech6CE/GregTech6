@@ -24,7 +24,9 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Set;
 
@@ -86,11 +88,8 @@ public class ConcreteBlock extends GTBlock {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public ItemStack getCloneItemStack(BlockState state,net.minecraft.world.phys.HitResult hit,net.minecraft.world.level.LevelReader level,BlockPos pos,net.minecraft.world.entity.player.Player player) {
-*///?} else {
-    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
-//?}
+    protected ItemStack onGetCloneItemStack(BlockState state, @Nullable HitResult target,
+            BlockGetter level, BlockPos pos, @Nullable Player player) {
         return coloredItem(this, FixedConstructionColor.colorOf(state));
     }
 

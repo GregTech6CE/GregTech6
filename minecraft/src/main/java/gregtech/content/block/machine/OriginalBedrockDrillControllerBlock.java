@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 //? if >=1.21.1 {
 /*
 *///?} else {
@@ -113,14 +114,9 @@ public final class OriginalBedrockDrillControllerBlock extends GTBlock implement
         return List.of(stack);
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    public ItemStack getCloneItemStack(BlockState state, net.minecraft.world.phys.HitResult hit, net.minecraft.world.level.LevelReader level,
-            BlockPos pos, net.minecraft.world.entity.player.Player player) {
-*///?} else {
     @Override
-    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
-//?}
+    protected ItemStack onGetCloneItemStack(BlockState state, @Nullable HitResult target,
+            BlockGetter level, BlockPos pos, @Nullable Player player) {
         ItemStack stack = new ItemStack(this);
         if (level.getBlockEntity(pos) instanceof BedrockDrillControllerBlockEntity drill) {
             var data = gregtech.content.cover.ComponentCoverFallback.forItem(drill,

@@ -19,7 +19,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.*;
+import javax.annotation.Nullable;
 import java.util.List;
 
 import gregtech.content.block.GTBlock;
@@ -70,11 +72,9 @@ public final class PortableContainerBlock extends GTBlock implements EntityBlock
         BlockEntity be = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
         return List.of(be instanceof PortableContainerBlockEntity vessel ? vessel.contents() : new ItemStack(this));
     }
-//? if >=1.21.1 {
-    /*@Override public ItemStack getCloneItemStack(BlockState state,net.minecraft.world.phys.HitResult target,LevelReader level,BlockPos pos,Player player) {
-*///?} else {
-    @Override public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
-//?}
+    @Override
+    protected ItemStack onGetCloneItemStack(BlockState state, @Nullable HitResult target,
+            BlockGetter level, BlockPos pos, @Nullable Player player) {
         return level.getBlockEntity(pos) instanceof PortableContainerBlockEntity vessel ? vessel.contents() : new ItemStack(this);
     }
 

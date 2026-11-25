@@ -5,6 +5,7 @@ import gregtech.content.registry.GTBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
@@ -15,6 +16,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.HitResult;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -51,11 +53,8 @@ public final class OriginalLightningRodControllerBlock extends GTBlock implement
         return List.of(stack);
     }
 
-//? if >=1.21.1 {
-    /*@Override public ItemStack getCloneItemStack(BlockState state,net.minecraft.world.phys.HitResult hit,net.minecraft.world.level.LevelReader level,BlockPos pos,net.minecraft.world.entity.player.Player player) {
-*///?} else {
-    @Override public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
-//?}
+    @Override protected ItemStack onGetCloneItemStack(BlockState state, @Nullable HitResult target,
+            BlockGetter level, BlockPos pos, @Nullable Player player) {
         ItemStack stack = new ItemStack(this);
         if (level.getBlockEntity(pos) instanceof LightningRodControllerBlockEntity rod) {
             var data = gregtech.content.cover.ComponentCoverFallback.forItem(rod,

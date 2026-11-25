@@ -6,6 +6,7 @@ import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
 import gregtech.content.blockentity.machine.MoldBasinBlockEntity;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 
@@ -97,11 +98,7 @@ public class MoldBasinBlock extends Block implements EntityBlock, GTMachineBlock
         if (!level.isClientSide && GTToolHelper.isMachineWrench(tool)) {
             level.playSound(null, pos, GTSounds.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
             if (GTToolHelper.canCollectMachineDrop(tool, state)) {
-//? if >=1.21.1 {
-                /*ItemStack machine = getCloneItemStack(state,null,level,pos,player);
-*///?} else {
-                ItemStack machine = getCloneItemStack(level, pos, state);
-//?}
+                ItemStack machine = Mc.cloneItemStack(state, null, level, pos, player);
                 gregtech.content.cover.CoverDrops.capture(state,(net.minecraft.server.level.ServerLevel)level,blockEntity,java.util.List.of(machine));
                 if (!machine.isEmpty()) {
                     if (!player.getInventory().add(machine)) {

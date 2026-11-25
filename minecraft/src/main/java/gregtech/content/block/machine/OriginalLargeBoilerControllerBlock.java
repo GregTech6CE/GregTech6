@@ -30,6 +30,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -106,11 +107,8 @@ public final class OriginalLargeBoilerControllerBlock extends GTHorizontalDirect
             gregtech.engine.stack.BlockEntityData.write(drop, boiler.saveItemConfig());
         return List.of(drop);
     }
-//? if >=1.21.1 {
-    /*@Override public ItemStack getCloneItemStack(BlockState state,net.minecraft.world.phys.HitResult target,net.minecraft.world.level.LevelReader level,BlockPos pos,Player player) {
-*///?} else {
-    @Override public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
-//?}
+    @Override protected ItemStack onGetCloneItemStack(BlockState state, @Nullable HitResult target,
+            BlockGetter level, BlockPos pos, @Nullable Player player) {
         ItemStack stack = new ItemStack(this);
         if (level.getBlockEntity(pos) instanceof OriginalLargeBoilerControllerBlockEntity boiler)
             gregtech.engine.stack.BlockEntityData.write(stack, boiler.saveItemConfig());

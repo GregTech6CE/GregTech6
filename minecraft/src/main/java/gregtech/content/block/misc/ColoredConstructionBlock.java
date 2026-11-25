@@ -1,6 +1,7 @@
 package gregtech.content.block.misc;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
@@ -10,6 +11,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.phys.HitResult;
+import javax.annotation.Nullable;
 import java.util.List;
 
 import gregtech.content.block.GTBlock;
@@ -33,11 +36,9 @@ public class ColoredConstructionBlock extends GTBlock {
     @Override public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         return List.of(ConcreteBlock.coloredItem(this, FixedConstructionColor.colorOf(state)));
     }
-//? if >=1.21.1 {
-    /*@Override public ItemStack getCloneItemStack(BlockState state, net.minecraft.world.phys.HitResult hit, net.minecraft.world.level.LevelReader level, BlockPos pos, net.minecraft.world.entity.player.Player player) {
-*///?} else {
-    @Override public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
-//?}
+    @Override
+    protected ItemStack onGetCloneItemStack(BlockState state, @Nullable HitResult target,
+            BlockGetter level, BlockPos pos, @Nullable Player player) {
         return ConcreteBlock.coloredItem(this, FixedConstructionColor.colorOf(state));
     }
 }

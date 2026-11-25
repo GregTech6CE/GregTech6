@@ -7,6 +7,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -17,6 +18,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -82,12 +84,8 @@ public class FluidSpringBlock extends GTBlock implements EntityBlock {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public ItemStack getCloneItemStack(BlockState state, net.minecraft.world.phys.HitResult hit, net.minecraft.world.level.LevelReader level,
-            BlockPos pos, net.minecraft.world.entity.player.Player player) {
-*///?} else {
-    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
-//?}
+    protected ItemStack onGetCloneItemStack(BlockState state, @Nullable HitResult target, BlockGetter level,
+            BlockPos pos, @Nullable Player player) {
         return packed(level.getBlockEntity(pos));
     }
 

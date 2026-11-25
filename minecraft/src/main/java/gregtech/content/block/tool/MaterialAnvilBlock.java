@@ -20,6 +20,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -59,11 +62,11 @@ public final class MaterialAnvilBlock extends ShapedToolBlock implements EntityB
     @Override public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         return List.of(packed(builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY)));
     }
-//? if >=1.21.1 {
-    /*@Override public ItemStack getCloneItemStack(BlockState state,net.minecraft.world.phys.HitResult hit,LevelReader level,BlockPos pos,Player player) { return packed(level.getBlockEntity(pos)); }
-*///?} else {
-    @Override public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) { return packed(level.getBlockEntity(pos)); }
-//?}
+    @Override
+    protected ItemStack onGetCloneItemStack(BlockState state, @Nullable HitResult target,
+            BlockGetter level, BlockPos pos, @Nullable Player player) {
+        return packed(level.getBlockEntity(pos));
+    }
 
     @Override
     protected void appendTooltip(ItemStack stack, BlockGetter level, List<net.minecraft.network.chat.Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {

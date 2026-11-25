@@ -26,6 +26,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
@@ -103,12 +104,8 @@ public final class SandwichBlock extends GTBlock implements EntityBlock, SimpleW
         if (level.getBlockEntity(pos) instanceof SandwichBlockEntity sandwich) sandwich.normalizePlacedItem();
     }
 
-//? if >=1.21.1 {
-    /*@Override public ItemStack getCloneItemStack(BlockState state, net.minecraft.world.phys.HitResult hit,
-            LevelReader level, BlockPos pos, Player player) {
-*///?} else {
-    @Override public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
-//?}
+    @Override protected ItemStack onGetCloneItemStack(BlockState state, @Nullable HitResult target,
+            BlockGetter level, BlockPos pos, @Nullable Player player) {
         return level.getBlockEntity(pos) instanceof SandwichBlockEntity sandwich
                 ? sandwich.sandwichItem(1) : new ItemStack(this);
     }

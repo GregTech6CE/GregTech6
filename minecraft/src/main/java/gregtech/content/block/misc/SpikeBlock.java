@@ -48,10 +48,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
+import javax.annotation.Nullable;
 
 import gregtech.content.block.GTBlock;
 /** Material and shape are registry identity; only mounting direction is block state. */
@@ -120,14 +123,15 @@ public final class SpikeBlock extends GTBlock implements ToolInteractionTarget, 
                 .setValue(FACING, context.getClickedFace().getOpposite()), context);
     }
 
-//? if >=1.21.1 {
-    /*@Override public ItemStack getCloneItemStack(BlockState state,net.minecraft.world.phys.HitResult hit,net.minecraft.world.level.LevelReader level,BlockPos pos,Player player){return new ItemStack(this);}
-    @Override public java.util.List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder){return java.util.List.of(new ItemStack(this));}
-*///?} else {
-    @Override public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
+    @Override
+    protected ItemStack onGetCloneItemStack(BlockState state, @Nullable HitResult target,
+            BlockGetter level, BlockPos pos, @Nullable Player player) {
         return new ItemStack(this);
     }
-//?}
+
+//? if >=1.21.1 {
+    /*@Override public java.util.List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder){return java.util.List.of(new ItemStack(this));}
+*///?}
 
     public static Mode itemMode(ItemStack stack) {
         return stack.getItem() instanceof net.minecraft.world.item.BlockItem item

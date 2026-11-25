@@ -20,6 +20,7 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.*;
+import javax.annotation.Nullable;
 import java.util.List;
 
 import gregtech.content.block.GTBlock;
@@ -59,12 +60,10 @@ public final class PowerCellBlock extends GTBlock implements EntityBlock, Simple
         if (loot.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof PowerCellBlockEntity be) return List.of(be.asItem());
         return List.of(new ItemStack(this));
     }
-//? if >=1.21.1 {
-    /*@Override public ItemStack getCloneItemStack(BlockState s,HitResult target,LevelReader l,BlockPos p,Player player){
-*///?} else {
-    @Override public ItemStack getCloneItemStack(BlockState s,HitResult target,BlockGetter l,BlockPos p,Player player){
-//?}
-        return l.getBlockEntity(p) instanceof PowerCellBlockEntity be?be.asItem():new ItemStack(this);
+    @Override
+    protected ItemStack onGetCloneItemStack(BlockState state, @Nullable HitResult target,
+            BlockGetter level, BlockPos pos, @Nullable Player player) {
+        return level.getBlockEntity(pos) instanceof PowerCellBlockEntity be?be.asItem():new ItemStack(this);
     }
 
     @Override
