@@ -8,9 +8,46 @@ repositories {
 
 dependencies {
     implementation 'com.google.code.gson:gson:2.11.0'
+    implementation project(':core')
     testImplementation platform('org.junit:junit-bom:5.11.4')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.register('sampleWorldgen', JavaExec) {
+    group = 'verification'
+    description = 'Export horizontal and vertical slices of the Overworld rock field.'
+    mainClass = 'gregtech.tools.worldgen.WorldgenSampler'
+    classpath = sourceSets.main.runtimeClasspath
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+    workingDir = rootProject.projectDir
+}
+
+tasks.register('surveyWorldgen', JavaExec) {
+    group = 'verification'
+    description = 'Simulate Overworld ore blocks and export mineral distribution by chunk.'
+    mainClass = 'gregtech.tools.worldgen.WorldgenSurvey'
+    classpath = sourceSets.main.runtimeClasspath
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+    workingDir = rootProject.projectDir
+}
+
+tasks.register('compareWorldgen', JavaExec) {
+    group = 'verification'
+    description = 'Compare mineral and rock counts from matching samples of generated chunks.'
+    mainClass = 'gregtech.tools.worldgen.WorldgenComparison'
+    classpath = sourceSets.main.runtimeClasspath
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+    workingDir = rootProject.projectDir
+}
+
+tasks.register('checkWorldgenDistribution', JavaExec) {
+    group = 'verification'
+    description = 'Check simulated or actual mineral P99 distances against explicit acceptance limits.'
+    mainClass = 'gregtech.tools.worldgen.WorldgenDistributionCheck'
+    classpath = sourceSets.main.runtimeClasspath
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+    workingDir = rootProject.projectDir
 }
 
 java {
