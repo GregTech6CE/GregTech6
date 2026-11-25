@@ -37,7 +37,8 @@ final class BatteryBoxNode implements MachineControl {
         energy.tick(time, level, pos);
         long offered = energy.offered();
         if (offered > 0) {
-            long sent = EnergyTransfer.emitEnergyToSide(spec.outType(), host.facing(), host.outRate(), offered, host);
+            long sent = EnergyTransfer.emitEnergyToSide(
+                    spec.outType(), host.facing(), host.effectiveOutputRate(), offered, host);
             energy.emitted(sent);
         }
         host.panels().afterTick();
