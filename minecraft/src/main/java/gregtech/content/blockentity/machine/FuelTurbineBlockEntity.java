@@ -24,7 +24,10 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
         gregtech.engine.multiblock.tracking.TrackedMultiblock {
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();
     private final gregtech.engine.multiblock.tracking.StructureDefinition.Declarative definition =
-            gregtech.engine.multiblock.tracking.LayoutStructures.fuel(this);
+            gregtech.engine.multiblock.tracking.LayoutStructures.definition(
+                    this,
+                    () -> gregtech.content.registry.MultiblockRegistration.layout(this),
+                    () -> declaration().casing().machineType());
 
     public FuelTurbineBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);

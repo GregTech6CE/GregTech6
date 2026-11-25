@@ -48,7 +48,12 @@ public final class StructureApiTestAddon implements AddonMachineContributor, Beh
                         .energy(EnergyInput.builder(EnergyType.EU, 32).capacity(1024).faces(MachineFace.values()).build())
                         .item(30, 9, BehaviorMachine.SlotRole.INPUT)
                         .fluid(1000, 30, 90, BehaviorMachine.SlotRole.INPUT)
-                        .gui("minecraft:textures/gui/container/furnace.png").guiSize(176, 256).build(), fuelMachine());
+                        .gui("minecraft:textures/gui/container/furnace.png").guiSize(176, 256).build(),
+                fuelMachine(), FuelGenerator.builder(MachineCasing.builder("turbine_api_test", "Iron")
+                                .machineType("test_fuel_turbine").build())
+                        .fuelMap("gt.recipe.fuels.engine").output(FuelOutput.builder(EnergyType.EU, 32).build())
+                        .multi().build().withStructure(StructureLayout.pattern("test_fuel_template").layer(0, "SA")
+                                .where('A', CellMatch.block("minecraft:stone"), StructureRole.CASING).build()));
     }
 
     /** Single-block fixture for the fuel generator's attachment access. */

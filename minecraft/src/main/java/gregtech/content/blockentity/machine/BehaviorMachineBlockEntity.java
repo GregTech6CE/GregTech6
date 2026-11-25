@@ -955,7 +955,13 @@ public class BehaviorMachineBlockEntity extends GTBlockEntity implements EnergyB
     }
 
     public gregtech.engine.multiblock.tracking.StructureDefinition.Declarative createStructureDefinition() {
-        return gregtech.engine.multiblock.tracking.LayoutStructures.behavior(this);
+        return createLayoutDefinition(this);
+    }
+
+    public static gregtech.engine.multiblock.tracking.StructureDefinition.Declarative createLayoutDefinition(
+            BehaviorMachineBlockEntity machine) {
+        return gregtech.engine.multiblock.tracking.LayoutStructures.definition(
+                machine, machine::trackedLayout, () -> machine.declaration().casing().machineType());
     }
 
     @Override public boolean isStructureOk() {

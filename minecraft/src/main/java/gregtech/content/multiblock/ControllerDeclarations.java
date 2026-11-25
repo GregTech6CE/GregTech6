@@ -192,7 +192,7 @@ public final class ControllerDeclarations {
                                 entity,
                                 name,
                                 LargeRecipeMachineBlockEntity.class,
-                                LayoutStructures::recipe,
+                                LargeRecipeMachineBlockEntity::createLayoutDefinition,
                                 () -> LargeMachineLayouts.layout(name)),
                         LargeRecipeMachineBlockEntity::new);
             }
@@ -219,7 +219,7 @@ public final class ControllerDeclarations {
                                 accepted.blockEntityPath(),
                                 name,
                                 BehaviorMachineBlockEntity.class,
-                                LayoutStructures::behavior,
+                                BehaviorMachineBlockEntity::createLayoutDefinition,
                                 () -> LargeMachineLayouts.layout(name)));
     }
 

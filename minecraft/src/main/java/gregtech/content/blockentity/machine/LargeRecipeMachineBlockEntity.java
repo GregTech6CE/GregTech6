@@ -291,7 +291,14 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
     }
     @Override public boolean structurePartsValid() { return validStructureParts(); }
     public StructureDefinition.Declarative createStructureDefinition() {
-        return LayoutStructures.recipe(this);
+        return createLayoutDefinition(this);
+    }
+
+    public static StructureDefinition.Declarative createLayoutDefinition(LargeRecipeMachineBlockEntity machine) {
+        return LayoutStructures.definition(machine, machine::trackedLayout, () -> {
+            var spec = machine.spec();
+            return spec == null ? null : spec.machineName();
+        });
     }
     @Override public boolean isStructureOk() { return StructureTracking.query(this); }
     @Override public boolean containsToolPosition(BlockPos pos) {

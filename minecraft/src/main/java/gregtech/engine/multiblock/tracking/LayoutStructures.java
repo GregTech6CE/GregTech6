@@ -1,7 +1,5 @@
 package gregtech.engine.multiblock.tracking;
 
-import gregtech.content.blockentity.machine.BehaviorMachineBlockEntity;
-import gregtech.content.blockentity.machine.LargeRecipeMachineBlockEntity;
 import gregtech.content.multiblock.LargeMachineLayouts;
 import java.util.function.Supplier;
 import net.minecraft.core.BlockPos;
@@ -20,17 +18,9 @@ public final class LayoutStructures {
         boolean matches(LargeMachineLayouts.Cell cell, Block expected, Block actual);
     }
 
-    public static StructureDefinition.Declarative recipe(LargeRecipeMachineBlockEntity machine) {
-        return new LayoutDefinition(machine, machine::trackedLayout);
-    }
-
-    public static StructureDefinition.Declarative behavior(BehaviorMachineBlockEntity machine) {
-        return new LayoutDefinition(machine, machine::trackedLayout);
-    }
-
-    public static StructureDefinition.Declarative fuel(
-            gregtech.content.blockentity.machine.FuelTurbineBlockEntity machine) {
-        return new LayoutDefinition(machine, () -> gregtech.content.registry.MultiblockRegistration.layout(machine));
+    public static StructureDefinition.Declarative definition(
+            TrackedMultiblock machine, Supplier<LargeMachineLayouts.Layout> layout, Supplier<String> overlayMachine) {
+        return new LayoutDefinition(machine, layout, overlayMachine);
     }
 
     public static Footprint of(
@@ -137,10 +127,15 @@ public final class LayoutStructures {
     private static final class LayoutDefinition implements StructureDefinition.Declarative {
         private final TrackedMultiblock machine;
         private final Supplier<LargeMachineLayouts.Layout> layout;
+        private final Supplier<String> overlayMachine;
 
-        private LayoutDefinition(TrackedMultiblock machine, Supplier<LargeMachineLayouts.Layout> layout) {
+        private LayoutDefinition(
+                TrackedMultiblock machine,
+                Supplier<LargeMachineLayouts.Layout> layout,
+                Supplier<String> overlayMachine) {
             this.machine = machine;
             this.layout = layout;
+            this.overlayMachine = overlayMachine;
         }
 
         @Override
@@ -176,13 +171,7 @@ public final class LayoutStructures {
 
         @Override
         public String overlayMachine() {
-            if (machine instanceof gregtech.content.blockentity.machine.LargeRecipeMachineBlockEntity recipe)
-                return recipe.spec() == null ? null : recipe.spec().machineName();
-            if (machine instanceof gregtech.content.blockentity.machine.BehaviorMachineBlockEntity behavior)
-                return behavior.declaration().casing().machineType();
-            if (machine instanceof gregtech.content.blockentity.machine.FuelTurbineBlockEntity fuel)
-                return fuel.declaration().casing().machineType();
-            return null;
+            return overlayMachine.get();
         }
 
         private static boolean tags(java.util.List<LargeMachineLayouts.Cell> cells) {

@@ -1,7 +1,9 @@
 package gregtech.gametest;
 
+import gregtech.content.blockentity.machine.LargeRecipeMachineBlockEntity;
 import gregtech.content.multiblock.ControllerDeclarations;
 import gregtech.content.multiblock.ControllerStructureLayouts;
+import gregtech.content.multiblock.LargeMachineParts;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.registry.GTMultiblocks;
 import gregtech.content.registry.MultiblockRegistration;
@@ -11,7 +13,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
@@ -24,6 +29,64 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 @GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class MultiblockDeclarationTests {
+    @GameTest(template = "test_empty", timeoutTicks = 20)
+    public static void registeredRecipeLayoutUsesTheDeclaredFactory(GameTestHelper helper) {
+        var block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "largecentrifuge_tungsten_steel"));
+        var registered = (LargeRecipeMachineBlockEntity) MultiblockRegistration.controllers().get(block);
+        var specialized = new LargeRecipeMachineBlockEntity(registered.getType(), BlockPos.ZERO, registered.getBlockState()) {
+            @Override
+            public StructureDefinition.Declarative createStructureDefinition() {
+                throw new AssertionError("The generic binding must use its declared layout factory");
+            }
+        };
+        var definition = specialized.structureDefinition();
+        specialized.setSpec(registered.spec());
+        helper.assertTrue("largecentrifuge".equals(definition.overlayMachine()),
+                "the generic recipe binding still resolves the controller's machine type");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = "controller_layout_epoch", timeoutTicks = 100)
+    public static void layoutEpochInvalidatesOnlyTheNamedUntaggedController(GameTestHelper helper) {
+        var centrifuge = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "largecentrifuge_tungsten_steel"));
+        var recipe = MultiblockRegistration.controllers().get(centrifuge);
+        helper.assertTrue(recipe != null && "largecentrifuge".equals(recipe.structureDefinition().overlayMachine()),
+                "the recipe controller supplies its machine type as the overlay key");
+        helper.assertTrue(StructurePlan.minimum(StructurePlan.compile(recipe)).size() == 17,
+                "the registered centrifuge uses both layers of its declared layout");
+
+        var level = helper.getLevel();
+        var behaviorPos = helper.absolutePos(new BlockPos(1, 1, 3));
+        var behaviorBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce_api_test", "ports_api_test"));
+        level.setBlockAndUpdate(behaviorPos, behaviorBlock.defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH));
+        var wall = LargeMachineParts.block(18009).defaultBlockState();
+        for (var pos : java.util.List.of(behaviorPos.east(), behaviorPos.east().above(), behaviorPos.east(2), behaviorPos.south()))
+            level.setBlockAndUpdate(pos, wall);
+        var behavior = (TrackedMultiblock) level.getBlockEntity(behaviorPos);
+        helper.assertTrue("ports_api_test".equals(behavior.structureDefinition().overlayMachine())
+                        && !behavior.structureDefinition().usesTags(),
+                "the behavior controller tracks its untagged ports layout");
+
+        var fuelPos = helper.absolutePos(new BlockPos(1, 1, 1));
+        var fuelBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce_api_test", "turbine_api_test"));
+        level.setBlockAndUpdate(fuelPos, fuelBlock.defaultBlockState());
+        level.setBlockAndUpdate(fuelPos.east(), Blocks.STONE.defaultBlockState());
+        var fuel = (TrackedMultiblock) level.getBlockEntity(fuelPos);
+        helper.assertTrue("test_fuel_turbine".equals(fuel.structureDefinition().overlayMachine())
+                        && !fuel.structureDefinition().usesTags(),
+                "the fuel controller uses its declared machine type, distinct from its block and layout template names");
+
+        helper.startSequence().thenWaitUntil(() -> helper.assertTrue(StructureTracking.query(fuel) && StructureTracking.query(behavior),
+                        "both untagged structures must form before the layout epoch changes"))
+                .thenExecute(() -> {
+                    StructureEpoch.bump(java.util.Set.of("test_fuel_turbine"));
+                    helper.assertFalse(StructureTracking.query(fuel), "the changed fuel machine immediately loses its formed state");
+                    helper.assertTrue(StructureTracking.query(behavior), "the unaffected behavior machine stays formed");
+                })
+                .thenWaitUntil(() -> helper.assertTrue(StructureTracking.query(fuel), "the fuel structure reforms on rescan"))
+                .thenSucceed();
+    }
+
     @GameTest(template = "test_empty", timeoutTicks = 100)
     public static void registeredControllersUseTheSameDeclaration(GameTestHelper helper) {
         var controllers = MultiblockRegistration.controllers();
