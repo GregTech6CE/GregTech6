@@ -3,36 +3,26 @@ package gregtech.content.recipe;
 import gregtech.GregTechConfig;
 import gregtech.content.item.GTToolItem;
 import gregtech.engine.tool.GTToolHelper;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
-import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.minecraft.world.level.Level;
-//? if >=1.21.1 {
-/*import net.minecraft.world.item.crafting.CraftingInput;
-import net.minecraft.core.HolderLookup;
-*///?} else {
-import net.minecraft.world.inventory.CraftingContainer;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
-//?}
+import org.jetbrains.annotations.Nullable;
 
 /** Optional vanilla-style grid repair, preserving GT head/handle and intrinsic enchantments. */
-public final class GTToolRepairRecipe extends CustomRecipe {
+public final class GTToolRepairRecipe extends GTCustomCraftingRecipe {
     public static final RecipeSerializer<GTToolRepairRecipe> SERIALIZER =
-            new SimpleCraftingRecipeSerializer<>(GTToolRepairRecipe::new);
+            CraftingRecipeCompat.simpleCustomSerializer(GTToolRepairRecipe::new);
 
-//? if >=1.21.1 {
-    /*public GTToolRepairRecipe(CraftingBookCategory category) { super(category); }
-    private static java.util.List<ItemStack> inputs(CraftingInput grid) {
+    public GTToolRepairRecipe(@Nullable ResourceLocation id, CraftingBookCategory category) {
+        super(id, category);
+    }
+
+    private static java.util.List<ItemStack> inputs(CraftingGridView grid) {
         int size = grid.size();
-*///?} else {
-    public GTToolRepairRecipe(ResourceLocation id, CraftingBookCategory category) { super(id, category); }
-    private static java.util.List<ItemStack> inputs(CraftingContainer grid) {
-        int size = grid.getContainerSize();
-//?}
         if (!GregTechConfig.Rule.TOOL_MERGING.enabled()) return java.util.List.of();
         var tools = new java.util.ArrayList<ItemStack>(2);
         for (int i = 0; i < size; i++) {
@@ -52,20 +42,12 @@ public final class GTToolRepairRecipe extends CustomRecipe {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public boolean matches(CraftingInput grid, Level level) {
-*///?} else {
-    public boolean matches(CraftingContainer grid, Level level) {
-//?}
+    protected boolean onMatches(CraftingGridView grid, Level level) {
         return !inputs(grid).isEmpty();
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public ItemStack assemble(CraftingInput grid, HolderLookup.Provider lookup) {
-*///?} else {
-    public ItemStack assemble(CraftingContainer grid, RegistryAccess lookup) {
-//?}
+    protected ItemStack onAssemble(CraftingGridView grid, HolderLookup.Provider lookup) {
         var tools = inputs(grid);
         if (tools.isEmpty()) return ItemStack.EMPTY;
         var first = tools.get(0);
@@ -81,13 +63,8 @@ public final class GTToolRepairRecipe extends CustomRecipe {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public NonNullList<ItemStack> getRemainingItems(CraftingInput grid) {
+    protected NonNullList<ItemStack> onGetRemainingItems(CraftingGridView grid) {
         return NonNullList.withSize(grid.size(), ItemStack.EMPTY);
-*///?} else {
-    public NonNullList<ItemStack> getRemainingItems(CraftingContainer grid) {
-        return NonNullList.withSize(grid.getContainerSize(), ItemStack.EMPTY);
-//?}
     }
 
     @Override public boolean canCraftInDimensions(int width, int height) { return width * height >= 2; }

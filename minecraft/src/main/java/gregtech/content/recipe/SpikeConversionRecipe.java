@@ -4,30 +4,16 @@ import gregtech.content.block.misc.SpikeBlock;
 import gregtech.content.item.SpikeBlockItem;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.level.Level;
-//? if >=1.21.1 {
-/*import com.mojang.serialization.MapCodec;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-*///?} else {
-import com.google.gson.JsonObject;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.CraftingContainer;
-//?}
 
 /** Convert between fixed and falling balls of the same material and family.
  * A dedicated serializer avoids changing the established tool_shapeless wire contract. */
-public final class SpikeConversionRecipe extends ShapelessRecipe
+public final class SpikeConversionRecipe extends GTShapelessCraftingRecipe
         implements gregtech.engine.recipe.AutocraftableCraftingRecipe {
     public SpikeConversionRecipe(ShapelessRecipe base) {
-//? if >=1.21.1 {
-        /*super(base.getGroup(), base.category(), base.getResultItem(RegistryAccess.EMPTY), base.getIngredients());
-*///?} else {
-        super(base.getId(), base.getGroup(), base.category(), base.getResultItem(RegistryAccess.EMPTY), base.getIngredients());
-//?}
+        super(base);
     }
 
     @Override public boolean isAutocraftableByGT() { return true; }
@@ -44,18 +30,11 @@ public final class SpikeConversionRecipe extends ShapelessRecipe
                 || (from == SpikeBlock.Mode.FALLING && to == SpikeBlock.Mode.OMNI));
     }
 
-//? if >=1.21.1 {
-    /*@Override public boolean matches(CraftingInput grid, Level level) {
-        if (!super.matches(grid, level)) return false;
+    @Override
+    protected boolean onMatches(CraftingGridView grid, Level level) {
+        if (!super.onMatches(grid, level)) return false;
         int occupied = 0;
         for (var stack : grid.items()) {
-*///?} else {
-    @Override public boolean matches(CraftingContainer grid, Level level) {
-        if (!super.matches(grid, level)) return false;
-        int occupied = 0;
-        for (int i = 0; i < grid.getContainerSize(); i++) {
-            var stack = grid.getItem(i);
-//?}
             if (stack.isEmpty()) continue;
             occupied++;
             if (!accepts(stack)) return false;
@@ -63,30 +42,8 @@ public final class SpikeConversionRecipe extends ShapelessRecipe
         return occupied == 1;
     }
 
-//? if >=1.21.1 {
-    /*public static final MapCodec<SpikeConversionRecipe> CODEC = new ShapelessRecipe.Serializer().codec()
-            .xmap(SpikeConversionRecipe::new, recipe -> recipe);
-*///?}
-
     @Override public RecipeSerializer<?> getSerializer() { return SERIALIZER; }
 
-    public static final RecipeSerializer<SpikeConversionRecipe> SERIALIZER = new RecipeSerializer<>() {
-//? if >=1.21.1 {
-        /*@Override public MapCodec<SpikeConversionRecipe> codec() { return CODEC; }
-        @Override public StreamCodec<RegistryFriendlyByteBuf, SpikeConversionRecipe> streamCodec() {
-            return ByteBufCodecs.fromCodecWithRegistries(CODEC.codec());
-        }
-*///?} else {
-        private final ShapelessRecipe.Serializer vanilla = new ShapelessRecipe.Serializer();
-        @Override public SpikeConversionRecipe fromJson(ResourceLocation id, JsonObject json) {
-            return new SpikeConversionRecipe(vanilla.fromJson(id, json));
-        }
-        @Override public SpikeConversionRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
-            return new SpikeConversionRecipe(vanilla.fromNetwork(id, buffer));
-        }
-        @Override public void toNetwork(FriendlyByteBuf buffer, SpikeConversionRecipe recipe) {
-            vanilla.toNetwork(buffer, recipe);
-        }
-//?}
-    };
+    public static final RecipeSerializer<SpikeConversionRecipe> SERIALIZER =
+            CraftingRecipeCompat.wrapShapelessSerializer(SpikeConversionRecipe::new, r -> r);
 }
