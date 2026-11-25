@@ -7,15 +7,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.material.Fluids;
 //? if >=1.21.1 {
-/*import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.item.alchemy.PotionContents;
-import net.neoforged.neoforge.fluids.FluidStack;
+/*import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 *///?} else {
-import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 //?}
@@ -36,7 +32,7 @@ public final class PotionBottleHandler implements IFluidHandlerItem {
         if (fluid.isEmpty()) return ItemStack.EMPTY;
         var plain = new FluidStack(fluid.getFluid(), fluid.getAmount());
         if (!StackCompat.sameFluid(fluid, plain)) return ItemStack.EMPTY;
-        if (fluid.getFluid() == Fluids.WATER) return waterBottle();
+        if (fluid.getFluid() == Fluids.WATER) return FluidCompat.waterBottle();
         if (fluid.getFluid() == gregtech.content.food.GTDrinks.fluidForField("Honey"))
             return new ItemStack(Items.HONEY_BOTTLE);
         var bottles = gregtech.content.data.generated.GTBottlesGen.ENTRIES;
@@ -46,14 +42,6 @@ public final class PotionBottleHandler implements IFluidHandlerItem {
                 return new ItemStack(item);
         }
         return ItemStack.EMPTY;
-    }
-
-    private static ItemStack waterBottle() {
-//? if >=1.21.1 {
-        /*return PotionContents.createItemStack(Items.POTION, Potions.WATER);
-*///?} else {
-        return PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER);
-//?}
     }
 
     /** The portion a filled container holds: one mercury unit (144 mB) or a 250 mB drink. */
@@ -72,13 +60,7 @@ public final class PotionBottleHandler implements IFluidHandlerItem {
             var fluid = bottle.fluid();
             return fluid == null ? FluidStack.EMPTY : new FluidStack(fluid, bottle.amount());
         }
-        if (!stack.is(Items.POTION)) return FluidStack.EMPTY;
-//? if >=1.21.1 {
-        /*var potion = stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).potion();
-        if (potion.isEmpty() || !potion.get().is(Potions.WATER)) return FluidStack.EMPTY;
-*///?} else {
-        if (PotionUtils.getPotion(stack) != Potions.WATER) return FluidStack.EMPTY;
-//?}
+        if (!FluidCompat.isWaterPotion(stack)) return FluidStack.EMPTY;
         return new FluidStack(Fluids.WATER, VanillaPotionBottling.AMOUNT);
     }
 

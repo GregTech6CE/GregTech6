@@ -1,5 +1,6 @@
 package gregtech.client.gui;
 
+import gregtech.engine.fluid.FluidCompat;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.engine.stack.StackCompat;
 import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
@@ -123,15 +124,9 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu implements 
 
         long[] amounts = new long[total], capacities = new long[total];
         for (int i = 0; i < total; i++) {
-
-//? if >=1.21.1 {
-/*            fluids[i] = net.neoforged.neoforge.fluids.FluidStack.OPTIONAL_STREAM_CODEC.decode(buf);
-*///?} else {
-            fluids[i] = buf.readFluidStack();
-//?}
+            fluids[i] = FluidCompat.readFluid(buf);
             amounts[i] = buf.readVarLong();
             capacities[i] = buf.readVarLong();
-
         }
         for (Slot slot : slots) {
             if (slot instanceof SlotFluid sf) {

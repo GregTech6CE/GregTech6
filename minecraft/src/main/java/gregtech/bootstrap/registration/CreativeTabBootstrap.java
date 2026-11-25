@@ -13,17 +13,21 @@ import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.prefix.BlockPrefixRegistry;
 import gregtech.engine.prefix.PrefixRegistry;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.material.Fluids;
 
 //? if >=1.21.1 {
 /*import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 @EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 *///?} else {
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -63,16 +67,11 @@ public final class CreativeTabBootstrap {
     /** Water carrier resolved against the tab event's own registry lookup. */
     private static ItemStack waterDisplay(BuildCreativeModeTabContentsEvent event) {
 //? if >=1.21.1 {
-        /*return gregtech.engine.fluid.FluidDisplayBinding.display(
-                new net.neoforged.neoforge.fluids.FluidStack(
-                        net.minecraft.world.level.material.Fluids.WATER, 1000),
-                event.getParameters().holders());
+        /*HolderLookup.Provider lookup = event.getParameters().holders();
 *///?} else {
-        return gregtech.engine.fluid.FluidDisplayBinding.display(
-                new net.minecraftforge.fluids.FluidStack(
-                        net.minecraft.world.level.material.Fluids.WATER, 1000),
-                null);
+        HolderLookup.Provider lookup = null;
 //?}
+        return gregtech.engine.fluid.FluidDisplayBinding.display(new FluidStack(Fluids.WATER, 1000), lookup);
     }
 
     private static void populatePrefix(BuildCreativeModeTabContentsEvent event, MaterialPrefix prefix) {

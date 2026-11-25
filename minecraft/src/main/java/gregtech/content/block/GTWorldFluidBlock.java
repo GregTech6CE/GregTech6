@@ -42,29 +42,10 @@ import java.util.function.Supplier;
  * block behaves like minecraft:water" must not do.
  *
  * <p>This subclass repeats those seven methods verbatim and reads the fluid through
- * {@link LiquidBlock#getFluid()} - the supplier Forge does keep - so the block behaves exactly like
- * vanilla {@code Blocks.WATER} again. Nothing else about {@code LiquidBlock} changes: same state
- * shape (level 0..15, source and falling), same collision, render shape, drops and flow handling.
- */
-
-/**
- * The {@link LiquidBlock} the port uses for the fluids it actually puts into the world (the oil
- * and gas springs).
- *
- * <p>Forge's {@code LiquidBlock(Supplier<? extends FlowingFluid>, Properties)} constructor - the one
- * a mod has to use, because the fluid needs the block to build its {@code createLegacyBlock} - leaves
- * the deprecated {@code private final FlowingFluid fluid} field at {@code null}
- * ({@code aconst_null; putfield fluid} in Forge 1.20.1-47.4.20, confirmed by reflection) while
- * {@code onPlace}, {@code neighborChanged}, {@code updateShape}, {@code isPathfindable},
- * {@code skipRendering}, {@code pickupBlock} and {@code getPickupSound} still read it directly. Any
- * of those paths therefore throws a {@code NullPointerException} as soon as such a block is placed
- * with {@code Level.setBlock} or gets a block update next to it, which is exactly what "the world
- * block behaves like minecraft:water" must not do.
- *
- * <p>This subclass repeats those seven methods verbatim and reads the fluid through
- * {@link LiquidBlock#fluid} - the supplier Forge does keep - so the block behaves exactly like
- * vanilla {@code Blocks.WATER} again. Nothing else about {@code LiquidBlock} changes: same state
- * shape (level 0..15, source and falling), same collision, render shape, drops and flow handling.
+ * {@link #sourceFluid()} ({@code LiquidBlock#getFluid()} on 1.20.1, {@code LiquidBlock#fluid} on
+ * 1.21.1) so the block behaves exactly like vanilla {@code Blocks.WATER} again. Nothing else about
+ * {@code LiquidBlock} changes: same state shape (level 0..15, source and falling), same collision,
+ * render shape, drops and flow handling.
  */
 public class GTWorldFluidBlock extends LiquidBlock {
 //? if >=1.21.1 {

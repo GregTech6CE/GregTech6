@@ -7,7 +7,6 @@ import gregtech.api.machine.BlockFace;
 import gregtech.engine.fluid.FluidContainerInteraction;
 import gregtech.engine.fluid.FluidHazards;
 import gregtech.engine.fluid.FluidTankGT;
-import gregtech.engine.fluid.FluidTransportEnvironment;
 import gregtech.engine.machine.TankSpec;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.content.transport.pipe.fluid.FluidPipeBlock;
@@ -93,19 +92,11 @@ public class TankBlockEntity extends GTBlockEntity implements IFluidHandler, gre
     private LazyOptional<IFluidHandler> handler = LazyOptional.of(() -> this);
 //?}
 
-//? if >=1.21.1 {
-    /*protected TankBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
-*///?} else {
-    public TankBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
-//?}
+    protected TankBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         this.spec = specFromState(state);
         this.tank = new FluidTankGT(spec.capacity())
-//? if >=1.21.1 {
-                /*.setOnChanged(this::contentsChanged)
-*///?} else {
-                .setOnChanged(this::setChanged)
-//?}
+                .setOnChanged(this::onContentsChanged)
                 .setMaxTemperature(spec.maxTemperature());
     }
 
@@ -141,11 +132,7 @@ public class TankBlockEntity extends GTBlockEntity implements IFluidHandler, gre
             // ambient temperature of the block entity. This also handles an over-hot fluid
             // restored from NBT or inserted through a nonstandard integration.
             if (fluidTemperature(fluid) >= spec.maxTemperature()) {
-//? if >=1.21.1 {
-                /*FluidTransportEnvironment.meltdown(level, worldPosition);
-*///?} else {
                 SmelteryBlockEntityHelper.meltdown(level, worldPosition);
-//?}
                 tank.setFluid(FluidStack.EMPTY);
                 return;
             }
@@ -232,11 +219,7 @@ public class TankBlockEntity extends GTBlockEntity implements IFluidHandler, gre
     }
 
     private long environmentTemperature() {
-//? if >=1.21.1 {
-        /*return FluidTransportEnvironment.environmentTemperature(level, worldPosition);
-*///?} else {
         return SmelteryBlockEntityHelper.environmentTemperature(level, worldPosition);
-//?}
     }
 
     /** Dump fluids to adjacent tanks when block is broken (Factorio-style). */
@@ -372,10 +355,10 @@ public class TankBlockEntity extends GTBlockEntity implements IFluidHandler, gre
 //?}
     }
 
-//? if >=1.21.1 {
-    /*public void contentsChanged(){
+    private void onContentsChanged() {
         setChanged();
-        if (level != null) {
+//? if >=1.21.1 {
+        /*if (level != null) {
             int blocked = blockedFluidMask();
             // The handler reads contents and covers live. Only output-side availability needs
             // rediscovery; invalidating it on every amount change discards neighbouring caches.
@@ -383,16 +366,20 @@ public class TankBlockEntity extends GTBlockEntity implements IFluidHandler, gre
             fluidAccessKnown = true;
             blockedFluidMask = blocked;
             if (accessChanged) level.invalidateCapabilities(worldPosition);
-            if (!level.isClientSide) level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),2);
+            if (!level.isClientSide) level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
         }
-*///?} else {
+*///?}
+    }
+
+//? if <1.21.1 {
     @Override
     public void invalidateCaps() {
         super.invalidateCaps();
         handler.invalidate();
-        componentFaceCaps.values().forEach(LazyOptional::invalidate);componentFaceCaps.clear();
-//?}
+        componentFaceCaps.values().forEach(LazyOptional::invalidate);
+        componentFaceCaps.clear();
     }
+//?}
 
     @Override
     public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
@@ -485,11 +472,7 @@ public class TankBlockEntity extends GTBlockEntity implements IFluidHandler, gre
 
     public void toggleAutoOutput() {
         autoOutput = !autoOutput;
-//? if >=1.21.1 {
-        /*contentsChanged();
-*///?} else {
-        setChanged();
-//?}
+        onContentsChanged();
     }
 
     /** Current soft-hammer action: unseal an empty barrel or toggle a filled one. */
