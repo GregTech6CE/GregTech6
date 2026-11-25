@@ -102,7 +102,7 @@ public class TankBlock extends GTBlock implements EntityBlock {
                         net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY)
                 instanceof TankBlockEntity tank) {
             var data = tank.saveItemData(builder.getLevel().registryAccess());
-            gregtech.engine.stack.BlockEntityData.write(stack, data);
+            gregtech.engine.stack.BlockEntityData.write(stack, data, tank.getType());
         }
         return java.util.List.of(stack);
     }

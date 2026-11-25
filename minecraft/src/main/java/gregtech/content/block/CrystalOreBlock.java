@@ -46,16 +46,8 @@ public final class CrystalOreBlock extends IconSetBlock implements DenseOreBlock
 
     /** GT6 {@code BlockCrystalOres.getExpDrop}: 3–6 XP, independent of Fortune. */
     @Override
-//? if >=1.21.1 {
-    /*public int getExpDrop(BlockState state, net.minecraft.world.level.LevelAccessor level, BlockPos pos,
-                          net.minecraft.world.level.block.entity.BlockEntity blockEntity,
-                          net.minecraft.world.entity.Entity breaker, ItemStack tool) {
-        RandomSource random = level.getRandom();
-        int silkTouchLevel = OreHarvest.from(level, tool).silkTouch() ? 1 : 0;
-*///?} else {
-    public int getExpDrop(BlockState state, LevelReader level, RandomSource random, BlockPos pos,
-                          int fortuneLevel, int silkTouchLevel) {
-//?}
+    protected int onGetExpDrop(BlockState state, LevelReader level, RandomSource random, BlockPos pos,
+                               int fortuneLevel, int silkTouchLevel) {
         return silkTouchLevel > 0 ? 0 : 3 + random.nextInt(4);
     }
 

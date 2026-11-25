@@ -53,16 +53,8 @@ public final class VanillaOreBlock extends IconSetBlock {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public int getExpDrop(BlockState state, net.minecraft.world.level.LevelAccessor level, BlockPos pos,
-                          net.minecraft.world.level.block.entity.BlockEntity blockEntity,
-                          net.minecraft.world.entity.Entity breaker, ItemStack tool) {
-        RandomSource random = level.getRandom();
-        int silkTouchLevel = OreHarvest.from(level, tool).silkTouch() ? 1 : 0;
-*///?} else {
-    public int getExpDrop(BlockState state, LevelReader level, RandomSource random, BlockPos pos,
-                          int fortuneLevel, int silkTouchLevel) {
-//?}
+    protected int onGetExpDrop(BlockState state, LevelReader level, RandomSource random, BlockPos pos,
+                               int fortuneLevel, int silkTouchLevel) {
         return silkTouchLevel > 0 ? 0 : spec.minXp() + random.nextInt(spec.maxXp() - spec.minXp() + 1);
     }
 

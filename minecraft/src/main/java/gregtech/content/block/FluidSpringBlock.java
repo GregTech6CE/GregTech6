@@ -67,11 +67,8 @@ public class FluidSpringBlock extends GTBlock implements EntityBlock {
                 var data = new CompoundTag();
                 data.putString("spring", be.fluidId());
                 data.putInt("amount", be.amount());
-//? if >=1.21.1 {
-                /*data.putString("id", net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(be.getType()).toString());
-*///?}
                 var stack = new ItemStack(this);
-                gregtech.engine.stack.BlockEntityData.write(stack, data);
+                gregtech.engine.stack.BlockEntityData.write(stack, data, be.getType());
                 return stack;
             }
         }

@@ -181,10 +181,7 @@ public class BushBlock extends GTBlock implements EntityBlock, SimpleWaterlogged
             if (!bush.berryId().isEmpty()) {
                 // Preserve an unmapped legacy/external output rather than silently changing it.
                 var data=new CompoundTag();data.putString("berry",bush.berryId());
-//? if >=1.21.1 {
-                /*data.putString("id",net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(bush.getType()).toString());
-*///?}
-                var stack=new ItemStack(this);gregtech.engine.stack.BlockEntityData.write(stack,data);return stack;
+                var stack=new ItemStack(this);gregtech.engine.stack.BlockEntityData.write(stack,data,bush.getType());return stack;
             }
         }
         return new ItemStack(this);

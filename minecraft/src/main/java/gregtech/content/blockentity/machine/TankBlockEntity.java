@@ -404,17 +404,13 @@ public class TankBlockEntity extends GTBlockEntity implements IFluidHandler, gre
             tag.remove("gt.painted");
         if (tank.getFluidLong().isEmpty() && tank.getAmount() == 0
                 && tank.baseCapacity() == spec.capacity()) tag.remove("gt.tank");
-//? if >=1.21.1 {
-        /*if (!tag.isEmpty()) tag.putString("id",
-                net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(getType()).toString());
-*///?} else {
-        // Forge creates these wrappers even when there is no persistent capability data.
+        // Forge writes these wrappers even when there is no persistent capability data, while
+        // NeoForge writes neither, so this pass only ever removes something on 1.20.1.
         // Never discard a nonempty wrapper, or an unexpected tag type from an integration.
         for (String key : java.util.List.of("ForgeCaps", "ForgeData")) {
             if (tag.contains(key, net.minecraft.nbt.Tag.TAG_COMPOUND) && tag.getCompound(key).isEmpty())
                 tag.remove(key);
         }
-//?}
         return tag;
     }
 
