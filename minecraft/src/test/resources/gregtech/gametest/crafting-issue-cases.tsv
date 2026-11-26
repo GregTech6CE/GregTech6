@@ -6,6 +6,12 @@
 155	gt6ce:smeltery_survival/burning_box_solid_brick	R	gt6ce:tool_shaped	-	gt6ce:burning_box_solid_brick	1	fill	firestarter tag instead of flint and steel
 176	prefix:form_conversion/blockdust_to_dust/	R	gt6ce:tool_shapeless	-	-	9	one@0/2x2	block dust unpacks to nine dust
 176	prefix:form_conversion/blockdust_to_dustsmall/	R	gt6ce:tool_shapeless	-	-	36	one@1/2x2	block dust unpacks to thirty-six small dust
+435	gt6ce:form_conversion/blockdust_to_dust/magnetite_1	R	gt6ce:tool_shapeless	-	gt6ce:dust_magnetite	9	one@0/2x2/gt6ce:sand_magnetite	magnetite black sand to dust
+435	gt6ce:form_conversion/blockdust_to_dustsmall/magnetite_1	R	gt6ce:tool_shapeless	-	gt6ce:dust_small_magnetite	36	one@1/2x2/gt6ce:sand_magnetite	magnetite black sand to small dust
+435	gt6ce:form_conversion/blockdust_to_dust/basalticmineralsand_1	R	gt6ce:tool_shapeless	-	gt6ce:dust_basalticmineralsand	9	one@0/2x2/gt6ce:sand_basalt_magnetite	basaltic black sand to dust
+435	gt6ce:form_conversion/blockdust_to_dustsmall/basalticmineralsand_1	R	gt6ce:tool_shapeless	-	gt6ce:dust_small_basalticmineralsand	36	one@1/2x2/gt6ce:sand_basalt_magnetite	basaltic black sand to small dust
+435	gt6ce:form_conversion/blockdust_to_dust/graniticmineralsand_1	R	gt6ce:tool_shapeless	-	gt6ce:dust_graniticmineralsand	9	one@0/2x2/gt6ce:sand_granite_magnetite	granitic black sand to dust
+435	gt6ce:form_conversion/blockdust_to_dustsmall/graniticmineralsand_1	R	gt6ce:tool_shapeless	-	gt6ce:dust_small_graniticmineralsand	36	one@1/2x2/gt6ce:sand_granite_magnetite	granitic black sand to small dust
 209	prefix:form_conversion/blockingot_to_ingot/	R	gt6ce:tool_shapeless	-	-	9	one@0/2x2	block ingot in even slot
 209	prefix:form_conversion/blockingot_to_chunkgt/	R	gt6ce:tool_shapeless	-	-	36	one@1/2x2	block ingot in odd slot
 209	prefix:form_conversion/blockingot_to_ingot/	R	gt6ce:tool_shapeless	-	-	9	one@4/3x3	3x3 center slot

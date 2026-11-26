@@ -3,6 +3,7 @@ package gregtech.engine.material;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialProperty;
+import gregtech.content.block.BlackSandBlock;
 import gregtech.content.block.MaterialBlockLike;
 import gregtech.content.block.OreBlock;
 import gregtech.content.block.energy.ElectricWireBlock;
@@ -236,6 +237,9 @@ public final class ItemMaterialForms {
                 return new ItemMaterialForm(
                         prefix, material.material().resolve().getName());
             }
+            if (block instanceof BlackSandBlock sand)
+                return new ItemMaterialForm(
+                        "blockDust", sand.material().resolve().getName());
             if (block instanceof ElectricWireBlock wire && !wire.spec().insulated())
                 return new ItemMaterialForm(
                         String.format(Locale.ROOT, "wireGt%02d", wire.spec().size()),

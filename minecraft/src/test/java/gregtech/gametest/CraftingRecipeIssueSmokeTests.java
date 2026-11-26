@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +43,7 @@ public final class CraftingRecipeIssueSmokeTests {
     // Runtime rows only. Static source checks for the remaining fixed issues live in the core
     // crafting-issue-static-cases table; this table is the runtime authority for match/assemble.
     private static final Set<String> RUNTIME_ISSUES = Set.of(
-            "2", "148", "151", "155", "157", "176", "209", "312", "326", "345", "346", "352", "398");
+            "2", "148", "151", "155", "157", "176", "209", "312", "326", "345", "346", "352", "398", "435");
 
     // Checks the table covers every runtime issue.
     @GameTest(template = "test_empty", batch = "crafting_issue_smoke", timeoutTicks = 600)
@@ -154,7 +155,7 @@ public final class CraftingRecipeIssueSmokeTests {
         }
     }
 
-    // Resolves an exact recipe id or the first matching prefix row.
+    // Resolves an exact recipe id or the lowest eligible recipe id with the prefix.
     private static Found resolve(GameTestHelper helper, Row row) {
         if (row.recipe().startsWith("prefix:")) {
             var prefix = row.recipe().substring("prefix:".length());
@@ -163,7 +164,7 @@ public final class CraftingRecipeIssueSmokeTests {
                             && found.id().getPath().startsWith(prefix))
                     .filter(found -> row.type().isEmpty() || serializerId(found.recipe()).equals(row.type()))
                     .filter(found -> hasIngredient(found.recipe()))
-                    .findFirst()
+                    .min(Comparator.comparing(Found::id))
                     .orElseThrow(() -> new AssertionError(label(row) + " no recipe for prefix " + prefix));
         }
         var id = ResourceLocation.tryParse(row.recipe());
