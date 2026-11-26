@@ -245,11 +245,27 @@ mixin {
     config 'gregtech.mixins.json'
 }
 
-// The refmap aggregates every mixin. A partial Java compile can remove it or
-// regenerate only the changed mixins, although development launches still work.
+def mixinMappingsFile = layout.buildDirectory.file('tmp/compileJava/compileJava-mappings.tsrg')
+
+// The refmap and shadow mappings aggregate every mixin. A partial Java compile can drop them,
+// and Gradle build-cache hits omit compileJava-mappings.tsrg unless all MixinGradle outputs
+// are declared explicitly on compileJava.
 tasks.named('compileJava', JavaCompile).configure {
     options.incremental = false
     outputs.file(layout.buildDirectory.file('tmp/compileJava/gregtech.refmap.json'))
+    outputs.file(layout.buildDirectory.file('tmp/compileJava/compileJava-refmap.json'))
+    outputs.file(mixinMappingsFile)
+}
+
+// MixinGradle's ConfigureReobfTask skips missing extra mapping files; fail fast if omitted.
+tasks.matching { it.name == 'reobfJar' }.configureEach {
+    inputs.file(mixinMappingsFile)
+    doFirst {
+        def tsrg = mixinMappingsFile.get().asFile
+        if (!tsrg.isFile() || tsrg.length() == 0L) {
+            throw new GradleException("Missing MixinGradle shadow mappings: ${tsrg}")
+        }
+    }
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
@@ -331,7 +347,249 @@ def distributionJar = tasks.register('distributionJar', Jar) {
         manifest.from(platformManifest)
     }
 }
-tasks.named('assemble').configure { dependsOn distributionJar }
+
+def verifyPackagedMixins = tasks.register('verifyPackagedMixins') {
+    dependsOn distributionJar
+    def jarOutput = distributionJar.flatMap { it.archiveFile }
+    def stampFile = layout.buildDirectory.file('tmp/verifyPackagedMixins/verified.txt')
+    inputs.file(jarOutput)
+    inputs.file(mixinMappingsFile)
+    outputs.file(stampFile)
+    doLast {
+        def jarFile = jarOutput.get().asFile
+        def tsrgFile = mixinMappingsFile.get().asFile
+        if (!tsrgFile.isFile() || tsrgFile.length() == 0L) {
+            throw new GradleException("Missing or empty MixinGradle TSRG mappings: ${tsrgFile}")
+        }
+        def srgPattern = ~/^[fm]_\d+_$/
+        def objectMethods = ['equals', 'hashCode', 'toString'] as Set
+        def parsedClasses = [:]
+        def inspectClass = { java.util.zip.ZipFile zip, String internalName ->
+            if (parsedClasses.containsKey(internalName)) return parsedClasses[internalName]
+            def entry = zip.getEntry("${internalName}.class")
+            if (entry == null) {
+                throw new GradleException("Missing mixin class in distribution JAR: ${internalName}.class")
+            }
+            def targets = [] as Set
+            def fields = [] as Set
+            def methods = [] as Set
+            def shadowFields = []
+            def shadowMethods = []
+            zip.getInputStream(entry).withCloseable { stream ->
+                def data = new java.io.DataInputStream(new java.io.BufferedInputStream(stream))
+                if ((data.readInt() & 0xFFFFFFFFL) != 0xCAFEBABEL) {
+                    throw new GradleException("Invalid classfile magic in ${internalName}.class")
+                }
+                data.readUnsignedShort()
+                data.readUnsignedShort()
+                int cpCount = data.readUnsignedShort()
+                def pool = new Object[cpCount]
+                for (int i = 1; i < cpCount; i++) {
+                    int tag = data.readUnsignedByte()
+                    switch (tag) {
+                        case 1:
+                            pool[i] = data.readUTF()
+                            break
+                        case 3:
+                            pool[i] = data.readInt()
+                            break
+                        case 4:
+                            pool[i] = data.readFloat()
+                            break
+                        case 5:
+                        case 6:
+                            data.readLong()
+                            i++
+                            break
+                        case 7:
+                        case 8:
+                        case 16:
+                        case 19:
+                        case 20:
+                            pool[i] = data.readUnsignedShort()
+                            break
+                        case 9:
+                        case 10:
+                        case 11:
+                        case 12:
+                        case 17:
+                        case 18:
+                            data.readInt()
+                            break
+                        case 15:
+                            data.readUnsignedByte()
+                            data.readUnsignedShort()
+                            break
+                        default:
+                            throw new GradleException("Unsupported constant pool tag ${tag} in ${internalName}.class")
+                    }
+                }
+                data.readUnsignedShort() // access_flags
+                data.readUnsignedShort() // this_class
+                data.readUnsignedShort() // super_class
+                int ifaces = data.readUnsignedShort()
+                for (int i = 0; i < ifaces; i++) data.readUnsignedShort()
+
+                def readElementValue
+                def readAnnotation
+                readElementValue = { java.io.DataInputStream dis ->
+                    String tag = String.valueOf((char) dis.readUnsignedByte())
+                    switch (tag) {
+                        case 'B': case 'C': case 'D': case 'F': case 'I': case 'J': case 'S': case 'Z': case 's':
+                            return pool[dis.readUnsignedShort()]
+                        case 'e':
+                            dis.readInt()
+                            return null
+                        case 'c':
+                            String desc = (String) pool[dis.readUnsignedShort()]
+                            return (desc.startsWith('L') && desc.endsWith(';')) ? desc.substring(1, desc.length() - 1) : desc
+                        case '@':
+                            return readAnnotation(dis).values
+                        case '[':
+                            int len = dis.readUnsignedShort()
+                            def list = []
+                            for (int k = 0; k < len; k++) list << readElementValue(dis)
+                            return list
+                        default:
+                            throw new GradleException("Unsupported annotation tag '${tag}' in ${internalName}.class")
+                    }
+                }
+                readAnnotation = { java.io.DataInputStream dis ->
+                    String type = (String) pool[dis.readUnsignedShort()]
+                    int pairs = dis.readUnsignedShort()
+                    def values = [:]
+                    for (int k = 0; k < pairs; k++) {
+                        String key = (String) pool[dis.readUnsignedShort()]
+                        values[key] = readElementValue(dis)
+                    }
+                    return [type: type, values: values]
+                }
+                def readAnnotations = { java.io.DataInputStream dis ->
+                    int attrCount = dis.readUnsignedShort()
+                    def annots = []
+                    for (int i = 0; i < attrCount; i++) {
+                        String attrName = (String) pool[dis.readUnsignedShort()]
+                        int attrLen = dis.readInt()
+                        if (attrName == 'RuntimeInvisibleAnnotations' || attrName == 'RuntimeVisibleAnnotations') {
+                            byte[] raw = new byte[attrLen]
+                            dis.readFully(raw)
+                            def sub = new java.io.DataInputStream(new java.io.ByteArrayInputStream(raw))
+                            int annCount = sub.readUnsignedShort()
+                            for (int j = 0; j < annCount; j++) annots << readAnnotation(sub)
+                        } else {
+                            dis.readFully(new byte[attrLen])
+                        }
+                    }
+                    return annots
+                }
+
+                int fieldCount = data.readUnsignedShort()
+                for (int i = 0; i < fieldCount; i++) {
+                    data.readUnsignedShort()
+                    String name = (String) pool[data.readUnsignedShort()]
+                    data.readUnsignedShort()
+                    fields << name
+                    def annots = readAnnotations(data)
+                    def shadow = annots.find { it.type == 'Lorg/spongepowered/asm/mixin/Shadow;' }
+                    if (shadow != null) {
+                        def remap = shadow.values.containsKey('remap') ? ((shadow.values.remap as Number).intValue() != 0) : true
+                        shadowFields << [name: name, remap: remap]
+                    }
+                }
+
+                int methodCount = data.readUnsignedShort()
+                for (int i = 0; i < methodCount; i++) {
+                    data.readUnsignedShort()
+                    String name = (String) pool[data.readUnsignedShort()]
+                    String desc = (String) pool[data.readUnsignedShort()]
+                    methods << "${name}${desc}".toString()
+                    def annots = readAnnotations(data)
+                    def shadow = annots.find { it.type == 'Lorg/spongepowered/asm/mixin/Shadow;' }
+                    if (shadow != null) {
+                        def remap = shadow.values.containsKey('remap') ? ((shadow.values.remap as Number).intValue() != 0) : true
+                        shadowMethods << [name: name, desc: desc, remap: remap]
+                    }
+                }
+
+                def classAnnots = readAnnotations(data)
+                def mixinAnn = classAnnots.find { it.type == 'Lorg/spongepowered/asm/mixin/Mixin;' }
+                if (mixinAnn != null) {
+                    (mixinAnn.values.value ?: []).each { if (it instanceof String) targets << it }
+                    (mixinAnn.values.targets ?: []).each { if (it instanceof String) targets << it.replace('.', '/') }
+                }
+            }
+            def meta = [targets: targets, fields: fields, methods: methods, shadowFields: shadowFields, shadowMethods: shadowMethods]
+            parsedClasses[internalName] = meta
+            return meta
+        }
+
+        new java.util.zip.ZipFile(jarFile).withCloseable { zip ->
+            def configEntry = zip.getEntry('gregtech.mixins.json')
+            if (configEntry == null) throw new GradleException('Missing gregtech.mixins.json in distribution JAR')
+            def config = zip.getInputStream(configEntry).withCloseable { new groovy.json.JsonSlurper().parse(it) }
+            if (!config.refmap) throw new GradleException('gregtech.mixins.json does not declare a refmap')
+            def refmapEntry = zip.getEntry(config.refmap.toString())
+            if (refmapEntry == null) throw new GradleException("Missing refmap ${config.refmap} in distribution JAR")
+            def refmap = zip.getInputStream(refmapEntry).withCloseable { new groovy.json.JsonSlurper().parse(it) }
+            if (!(refmap.mappings instanceof Map) || refmap.mappings.isEmpty()) {
+                throw new GradleException("Refmap ${config.refmap} has empty mappings")
+            }
+
+            def pkg = config.package ? config.package.toString().replace('.', '/') + '/' : ''
+            def declared = ((config.mixins ?: []) + (config.client ?: []))
+            def unobfuscated = []
+            declared.each { mixinName ->
+                def internal = "${pkg}${mixinName.toString().replace('.', '/')}"
+                def meta = inspectClass(zip, internal)
+                if (meta.targets.any { it.startsWith('net/minecraft/') }) {
+                    meta.shadowFields.findAll { it.remap && !(it.name ==~ srgPattern) }.each {
+                        unobfuscated << "${internal}.${it.name} (field)"
+                    }
+                    meta.shadowMethods.findAll { it.remap && !objectMethods.contains(it.name) && !(it.name ==~ srgPattern) }.each {
+                        unobfuscated << "${internal}.${it.name}${it.desc} (method)"
+                    }
+                }
+            }
+            if (!unobfuscated.isEmpty()) {
+                throw new GradleException("Un-reobfuscated @Shadow members targeting net/minecraft/: ${unobfuscated.take(10).join(', ')}")
+            }
+
+            def tsrgCount = 0
+            tsrgFile.readLines('UTF-8').each { raw ->
+                def line = raw.trim()
+                if (!line || line.startsWith('#')) return
+                def parts = line.split(/\s+/)
+                if (parts.length == 3) {
+                    tsrgCount++
+                    def meta = inspectClass(zip, parts[0])
+                    if (!meta.fields.contains(parts[2])) {
+                        throw new GradleException("Missing SRG @Shadow field ${parts[0]}.${parts[2]} (from ${parts[1]})")
+                    }
+                    if (parts[1] != parts[2] && meta.fields.contains(parts[1])) {
+                        throw new GradleException("Un-reobfuscated @Shadow field ${parts[0]}.${parts[1]} still present")
+                    }
+                } else if (parts.length == 4) {
+                    tsrgCount++
+                    def meta = inspectClass(zip, parts[0])
+                    if (!meta.methods.contains("${parts[3]}${parts[2]}".toString())) {
+                        throw new GradleException("Missing SRG @Shadow method ${parts[0]}.${parts[3]}${parts[2]} (from ${parts[1]})")
+                    }
+                    if (parts[1] != parts[3] && meta.methods.contains("${parts[1]}${parts[2]}".toString())) {
+                        throw new GradleException("Un-reobfuscated @Shadow method ${parts[0]}.${parts[1]}${parts[2]} still present")
+                    }
+                }
+            }
+            if (tsrgCount == 0) {
+                throw new GradleException("No member mappings found in ${tsrgFile}")
+            }
+            def out = stampFile.get().asFile
+            out.parentFile.mkdirs()
+            out.setText("verified=${declared.size()} mixins, ${refmap.mappings.size()} refmap entries, ${tsrgCount} tsrg mappings\n", 'UTF-8')
+        }
+    }
+}
+tasks.named('assemble').configure { dependsOn verifyPackagedMixins }
+tasks.named('check').configure { dependsOn verifyPackagedMixins }
 
 // However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing:
 // tasks.named('publish').configure {
