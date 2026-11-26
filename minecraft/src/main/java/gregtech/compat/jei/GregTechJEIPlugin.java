@@ -4,16 +4,18 @@ import gregtech.client.gui.MachineContainerScreen;
 import gregtech.client.gui.RecipeViewerNavigation;
 import gregtech.compat.common.MaterialUnitTagDisplay;
 import gregtech.compat.common.MoldChiselDisplay;
-import gregtech.compat.common.OreGenerationClient;
 import gregtech.compat.common.RecipeMachines;
 import gregtech.compat.common.RecipeViewerIcons;
+import gregtech.compat.common.RecipeViewerRefresh;
 import gregtech.content.block.misc.AdvancedCraftingTableBlock;
 import gregtech.content.item.CatalogVisibility;
 import gregtech.content.loot.LootViewerData;
 import gregtech.content.multiblock.MultiblockInfoData;
+import gregtech.content.multiblock.StructureLayoutOverlayRuntime;
 import gregtech.content.recipe.MachineRecipeOverlay;
 import gregtech.content.recipe.ToolAssemblyCatalog;
 import gregtech.content.registry.GTFluidItems;
+import gregtech.content.worldgen.OreGenerationSummary;
 import gregtech.engine.fluid.FluidContainerDisplayBinding;
 import gregtech.engine.fluid.FluidDisplayBinding;
 import gregtech.engine.recipe.Recipe;
@@ -23,14 +25,18 @@ import gregtech.platform.LoaderHooks;
 import gregtech.platform.Mc;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.recipe.IRecipeManager;
+import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
@@ -69,6 +75,8 @@ public final class GregTechJEIPlugin implements IModPlugin {
     public void onRuntimeUnavailable() {
         if (active == this) active = null;
         runtime = null;
+        atlasPages.forEach(Pages::clear);
+        structures.clear();
         RecipeViewerNavigation.clearJei();
     }
 
@@ -98,6 +106,67 @@ public final class GregTechJEIPlugin implements IModPlugin {
     private mezz.jei.api.runtime.IJeiRuntime runtime;
     private final Map<RecipeMap, List<Recipe>> shownRows = new LinkedHashMap<>();
     private final Map<RecipeMap, Set<Recipe>> knownRows = new LinkedHashMap<>();
+
+    private final List<Pages<OreGenerationSummary, ?>> atlasPages = List.of(
+            new Pages<>(WorldgenInfoCategories.VEIN_TYPE, WorldgenInfoCategories::buildVeins),
+            new Pages<>(WorldgenInfoCategories.SMALL_ORE_TYPE, WorldgenInfoCategories::buildSmallOres),
+            new Pages<>(WorldgenInfoCategories.LAYER_TYPE, WorldgenInfoCategories::buildLayers),
+            new Pages<>(WorldgenInfoCategories.BEDROCK_TYPE, WorldgenInfoCategories::buildBedrockOres));
+    private final Pages<Map<String, String>, MultiblockInfoData.Info> structures =
+            new Pages<>(MultiblockInfoCategory.TYPE, MultiblockInfoData::recipes);
+
+    /** JEI retains hidden recipes. Reuse registered instances when a server returns to an earlier configuration. */
+    private static final class Pages<K, T> {
+        private final RecipeType<T> type;
+        private final Supplier<List<T>> build;
+        private final Map<K, List<T>> registered = new HashMap<>();
+        private List<T> visible = List.of();
+
+        private Pages(RecipeType<T> type, Supplier<List<T>> build) {
+            this.type = type;
+            this.build = build;
+        }
+
+        void clear() {
+            registered.clear();
+            visible = List.of();
+        }
+
+        void register(IRecipeRegistration registration, K key) {
+            clear();
+            visible = build.get();
+            registered.put(key, visible);
+            registration.addRecipes(type, visible);
+        }
+
+        void show(IRecipeManager manager, K key) {
+            List<T> next = registered.get(key);
+            if (next == visible) return;
+            boolean known = next != null;
+            if (!known) next = build.get();
+            manager.hideRecipes(type, visible);
+            if (known) {
+                manager.unhideRecipes(type, next);
+            } else {
+                manager.addRecipes(type, next);
+                registered.put(key, next);
+            }
+            visible = next;
+        }
+    }
+
+    public static boolean refreshPages(boolean atlas, boolean layouts) {
+        var plugin = active;
+        if (plugin == null || plugin.runtime == null) return false;
+        var manager = plugin.runtime.getRecipeManager();
+        if (atlas) {
+            var build = RecipeViewerRefresh.beginBuild();
+            for (var pages : plugin.atlasPages) pages.show(manager, build.summary());
+            RecipeViewerRefresh.finishBuild(build);
+        }
+        if (layouts) plugin.structures.show(manager, StructureLayoutOverlayRuntime.documents());
+        return true;
+    }
 
     /** Normal JEI reload discovers the current maps through registerRecipes. */
     public static void overlayChanged() {}
@@ -207,13 +276,10 @@ public final class GregTechJEIPlugin implements IModPlugin {
             if (LoaderHooks.isModLoaded("emi")) return;
             registration.addRecipes(LootInfoCategories.LOOT, LootViewerData.lootGroups());
             registration.addRecipes(LootInfoCategories.MOBS, LootViewerData.mobGroups());
-            registration.addRecipes(MultiblockInfoCategory.TYPE, MultiblockInfoData.recipes());
-            var atlas = OreGenerationClient.beginBuild();
-            registration.addRecipes(WorldgenInfoCategories.VEIN_TYPE, WorldgenInfoCategories.buildVeins());
-            registration.addRecipes(WorldgenInfoCategories.SMALL_ORE_TYPE, WorldgenInfoCategories.buildSmallOres());
-            registration.addRecipes(WorldgenInfoCategories.LAYER_TYPE, WorldgenInfoCategories.buildLayers());
-            registration.addRecipes(WorldgenInfoCategories.BEDROCK_TYPE, WorldgenInfoCategories.buildBedrockOres());
-            OreGenerationClient.finishBuild(atlas);
+            structures.register(registration, StructureLayoutOverlayRuntime.documents());
+            var atlas = RecipeViewerRefresh.beginBuild();
+            for (var pages : atlasPages) pages.register(registration, atlas.summary());
+            RecipeViewerRefresh.finishBuild(atlas);
             registration.addRecipes(ToolAssemblyCategory.TYPE, ToolAssemblyCatalog.build());
             registration.addRecipes(MoldChiselCategory.TYPE, MoldChiselDisplay.recipes());
             var unitTags = MaterialUnitTagDisplay.entries();

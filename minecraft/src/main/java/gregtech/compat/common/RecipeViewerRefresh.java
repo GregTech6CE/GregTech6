@@ -1,61 +1,93 @@
 package gregtech.compat.common;
 
+import gregtech.content.worldgen.OreGenerationSummary;
+import gregtech.engine.mod.GregTechIdentity;
 import gregtech.platform.LoaderHooks;
-import gregtech.platform.Mc;
+import gregtech.compat.emi.GregTechEMIPlugin;
+import gregtech.compat.jei.GregTechJEIPlugin;
 import net.minecraft.client.Minecraft;
 //? if >=1.21.1 {
-/*import static net.neoforged.neoforge.common.NeoForge.EVENT_BUS;
-import net.neoforged.neoforge.client.event.RecipesUpdatedEvent;
+/*import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 *///?} else {
-import net.minecraftforge.client.event.RecipesUpdatedEvent;
-import static net.minecraftforge.common.MinecraftForge.EVENT_BUS;
-import net.minecraftforge.event.TagsUpdatedEvent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 //?}
 
-/** Reloads the viewer that owns the native atlas pages after server data changes. */
+/** Refreshes stale atlas pages and discards the previous server's data on disconnect. */
+@EventBusSubscriber(modid = GregTechIdentity.MOD_ID, value = Dist.CLIENT)
 public final class RecipeViewerRefresh {
-    private static boolean emiFailed;
-    private static boolean jeiFailed;
+    private static long generation;
+    private static boolean structuresChanged;
+    private static Build built;
+    private static OreGenerationSummary checked;
 
     private RecipeViewerRefresh() {}
 
-    static boolean ready() {
-        if (emiFailed || !LoaderHooks.isModLoaded("emi")) return true;
-        try {
-            var manager = Class.forName("dev.emi.emi.runtime.EmiReloadManager");
-            if (!(boolean) manager.getMethod("isLoaded").invoke(null)) return false;
-            return Class.forName("dev.emi.emi.registry.EmiRecipes").getField("activeWorker").get(null) == null;
-        } catch (ReflectiveOperationException | RuntimeException | LinkageError failure) {
-            emiFailed = true;
-            Mc.logger().warn("Cannot check EMI reload state", failure);
-            return true;
-        }
+    /** The snapshot at the start of a native JEI or EMI atlas registration. */
+    public record Build(long generation, OreGenerationSummary summary) {}
+
+    public static synchronized Build beginBuild() {
+        built = null;
+        checked = null;
+        return new Build(++generation, OreGenerationSummary.current());
     }
 
-    public static void refresh() {
-        var minecraft = Minecraft.getInstance();
-        var connection = minecraft.getConnection();
-        if (connection == null) return;
-        if (LoaderHooks.isModLoaded("emi")) {
-            if (emiFailed) return;
-            try {
-                Class.forName("dev.emi.emi.runtime.EmiReloadManager").getMethod("reload").invoke(null);
-            } catch (ReflectiveOperationException | RuntimeException | LinkageError failure) {
-                emiFailed = true;
-                Mc.logger().warn("Cannot refresh EMI display data", failure);
-            }
-        } else if (!jeiFailed && LoaderHooks.isModLoaded("jei")) {
-            try {
-                EVENT_BUS.post(new RecipesUpdatedEvent(connection.getRecipeManager()));
-                //? if <1.21.1 {
-                // JEI 15 waits for both recipes and tags before rebuilding its runtime.
-                EVENT_BUS.post(new TagsUpdatedEvent(
-                        connection.registryAccess(), true, minecraft.isLocalServer()));
-                //?}
-            } catch (RuntimeException | LinkageError failure) {
-                jeiFailed = true;
-                Mc.logger().warn("Cannot refresh JEI display data", failure);
-            }
+    public static synchronized void finishBuild(Build build) {
+        // EMI may finish an asynchronous registration after disconnect or a newer registration.
+        if (build.generation() != generation) return;
+        built = build;
+        checked = null;
+    }
+
+    public static void invalidateStructures() {
+        structuresChanged = true;
+    }
+
+    private static synchronized boolean staleAtlas() {
+        var latest = OreGenerationSummary.received();
+        if (built == null || latest == null || latest == checked) return false;
+        if (latest.equals(built.summary())) {
+            checked = latest;
+            return false;
         }
+        return true;
+    }
+
+    @SubscribeEvent
+    //? if >=1.21.1 {
+    /*public static void tick(ClientTickEvent.Post event) {
+    *///?} else {
+    public static void tick(TickEvent.ClientTickEvent event) {
+        if (event.phase != TickEvent.Phase.END) return;
+    //?}
+        if (Minecraft.getInstance().getConnection() == null) return;
+        boolean atlas = staleAtlas();
+        if (!atlas && !structuresChanged) return;
+        if (LoaderHooks.isModLoaded("emi")) {
+            if (!GregTechEMIPlugin.readyToReload()) return;
+            GregTechEMIPlugin.reload();
+        } else if (LoaderHooks.isModLoaded("jei")) {
+            if (!GregTechJEIPlugin.refreshPages(atlas, structuresChanged)) return;
+        }
+        synchronized (RecipeViewerRefresh.class) {
+            checked = OreGenerationSummary.received();
+        }
+        structuresChanged = false;
+    }
+
+    @SubscribeEvent
+    public static synchronized void disconnected(ClientPlayerNetworkEvent.LoggingOut event) {
+        generation++;
+        built = null;
+        checked = null;
+        structuresChanged = false;
+        OreGenerationSummary.acceptClientSummary(null);
     }
 }

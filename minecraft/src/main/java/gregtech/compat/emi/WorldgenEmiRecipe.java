@@ -4,8 +4,8 @@ import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.*;
 import dev.emi.emi.api.stack.*;
 import dev.emi.emi.api.widget.WidgetHolder;
-import gregtech.compat.common.OreGenerationClient;
 import gregtech.compat.common.RecipeViewerIcons;
+import gregtech.compat.common.RecipeViewerRefresh;
 import gregtech.compat.common.WorldgenInfoData;
 import java.util.*;
 import net.minecraft.client.Minecraft;
@@ -73,7 +73,7 @@ public final class WorldgenEmiRecipe implements EmiRecipe {
     }
 
     public static void register(EmiRegistry registry) {
-        var atlas = OreGenerationClient.beginBuild();
+        var atlas = RecipeViewerRefresh.beginBuild();
         var veins = category(registry, "ore_veins", "ore_veins", RecipeViewerIcons.item("ore_iridium"));
         int index = 0;
         for (var vein : WorldgenInfoData.buildVeins()) {
@@ -140,7 +140,7 @@ public final class WorldgenEmiRecipe implements EmiRecipe {
                     .withAliases(WorldgenInfoData.bedrockAliases(ore))
                     .withOutputTooltips(List.of(WorldgenInfoData.oreSourceCaptions(ore.material()))));
         }
-        OreGenerationClient.finishBuild(atlas);
+        RecipeViewerRefresh.finishBuild(atlas);
     }
 
     @Override

@@ -39,15 +39,42 @@ public final class GregTechEMIPlugin implements EmiPlugin {
         long generation = gregtech.content.recipe.MachineRecipeOverlay.generation();
         net.minecraft.client.Minecraft.getInstance().execute(() -> {
             if (generation != gregtech.content.recipe.MachineRecipeOverlay.generation()) return;
-            try {
-                Class.forName("dev.emi.emi.runtime.EmiReloadManager")
-                        .getMethod("reload")
-                        .invoke(null);
-            } catch (ReflectiveOperationException failure) {
-                com.mojang.logging.LogUtils.getLogger()
-                        .error("[gregtech] Could not reload EMI after overlay failure", failure);
-            }
+            reload();
         });
+    }
+
+    private static boolean reloadFailed;
+
+    public static boolean readyToReload() {
+        if (reloadFailed) return true;
+        try {
+            var manager = Class.forName("dev.emi.emi.runtime.EmiReloadManager");
+            // In EMI 1.1.24 the recipe index can still be baking after plugin registration has finished.
+            return (boolean) manager.getMethod("isLoaded").invoke(null)
+                    && Class.forName("dev.emi.emi.registry.EmiRecipes")
+                                    .getField("activeWorker")
+                                    .get(null)
+                            == null;
+        } catch (ReflectiveOperationException | RuntimeException | LinkageError error) {
+            disableReload(error);
+            return true;
+        }
+    }
+
+    public static void reload() {
+        if (reloadFailed) return;
+        try {
+            Class.forName("dev.emi.emi.runtime.EmiReloadManager")
+                    .getMethod("reload")
+                    .invoke(null);
+        } catch (ReflectiveOperationException | RuntimeException | LinkageError error) {
+            disableReload(error);
+        }
+    }
+
+    private static void disableReload(Throwable error) {
+        reloadFailed = true;
+        com.mojang.logging.LogUtils.getLogger().warn("Cannot refresh EMI recipes", error);
     }
 
     @Override
