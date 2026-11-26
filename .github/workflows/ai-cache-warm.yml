@@ -1,0 +1,17 @@
+name: AI Cache Warm
+
+# 定时保活薄壳：频率与权限在本仓声明，预热逻辑复用组织仓的可复用工作流。
+# 缓存写入只发生在可信的定时与手动触发，issue 分析执行层保持只读缓存。
+on:
+  schedule:
+    # 每 4 天一次，稳定短于缓存 7 天未用的淘汰窗口。
+    - cron: '0 4 */4 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  warm:
+    if: vars.BOT_ENABLED != 'false'
+    uses: GregTech6CE/.github/.github/workflows/ai-cache-warm.yml@master
