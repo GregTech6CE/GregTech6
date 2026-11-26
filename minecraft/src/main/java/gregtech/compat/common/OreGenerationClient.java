@@ -1,4 +1,4 @@
-package gregtech.client;
+package gregtech.compat.common;
 
 import gregtech.content.worldgen.OreGenerationSummary;
 import gregtech.engine.mod.GregTechIdentity;
@@ -8,24 +8,21 @@ import net.minecraft.client.Minecraft;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 *///?} else {
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 //?}
 
 /** Refreshes stale atlas pages and discards the previous server's data on disconnect. */
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid = GregTechIdentity.MOD_ID, value = Dist.CLIENT)
-*///?} else {
-@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, value = Dist.CLIENT)
-//?}
+@EventBusSubscriber(modid = GregTechIdentity.MOD_ID, value = Dist.CLIENT)
 public final class OreGenerationClient {
     private static long generation;
     private static Build built;
-    private static OreGenerationSummary requested;
-    private static boolean dirty;
+    private static OreGenerationSummary checked;
 
     private OreGenerationClient() {}
 
@@ -34,7 +31,7 @@ public final class OreGenerationClient {
 
     public static synchronized Build beginBuild() {
         built = null;
-        requested = null;
+        checked = null;
         return new Build(++generation, OreGenerationSummary.current());
     }
 
@@ -42,34 +39,28 @@ public final class OreGenerationClient {
         // EMI may finish an asynchronous registration after disconnect or a newer registration.
         if (build.generation() != generation) return;
         built = build;
-        dirty = true;
-    }
-
-    public static synchronized void accept(OreGenerationSummary summary) {
-        OreGenerationSummary.acceptClientSummary(summary);
-        dirty = true;
+        checked = null;
     }
 
     private static synchronized boolean needsRefresh() {
-        if (!dirty || built == null) return false;
-        var current = OreGenerationSummary.current();
-        if (current.equals(built.summary()) || current.equals(requested)) {
-            dirty = false;
+        var latest = OreGenerationSummary.received();
+        if (built == null || latest == null || latest == checked) return false;
+        if (latest.equals(built.summary()) || latest.equals(checked)) {
+            checked = latest;
             return false;
         }
-        // EMI registers these pages before its asynchronous recipe index has finished baking.
+        // EMI registers its pages before its asynchronous recipe index has finished baking.
         if (!RecipeViewerRefresh.ready()) return false;
-        dirty = false;
-        requested = current;
+        checked = latest;
         return true;
     }
 
     @SubscribeEvent
     //? if >=1.21.1 {
-    /*public static void tick(net.neoforged.neoforge.client.event.ClientTickEvent.Post event) {
+    /*public static void tick(ClientTickEvent.Post event) {
     *///?} else {
-    public static void tick(net.minecraftforge.event.TickEvent.ClientTickEvent event) {
-        if (event.phase != net.minecraftforge.event.TickEvent.Phase.END) return;
+    public static void tick(TickEvent.ClientTickEvent event) {
+        if (event.phase != TickEvent.Phase.END) return;
     //?}
         if (Minecraft.getInstance().getConnection() != null && needsRefresh()) RecipeViewerRefresh.refresh();
     }
@@ -78,8 +69,7 @@ public final class OreGenerationClient {
     public static synchronized void disconnected(ClientPlayerNetworkEvent.LoggingOut event) {
         generation++;
         built = null;
-        requested = null;
-        dirty = false;
+        checked = null;
         OreGenerationSummary.acceptClientSummary(null);
     }
 }

@@ -136,6 +136,8 @@ public final class WorldgenComparison {
         try (var input = Files.newBufferedReader(directory.resolve("sample.properties"))) {
             properties.load(input);
         }
+        if (!Boolean.parseBoolean(properties.getProperty("complete", "true")))
+            throw new IOException("Incomplete sample in " + directory + ". See skipped.csv");
         var region = new Region(
                 Long.parseLong(properties.getProperty("seed")),
                 Objects.requireNonNull(properties.getProperty("dimension"), "Missing sample dimension"),
@@ -151,18 +153,15 @@ public final class WorldgenComparison {
         var heatmap = mineral.isEmpty() ? null : new WorldgenHeatmap(region.chunks());
         var minerals = new TreeMap<String, Mineral>();
         try (var input = Files.newBufferedReader(directory.resolve("ores.csv"))) {
-            if (!"chunk_x,chunk_z,material,normal,poor,bedrock,raw_pebbles".equals(input.readLine()))
+            if (!OreSampleRow.HEADER.equals(input.readLine()))
                 throw new IllegalArgumentException("Unexpected ore sample header in " + directory);
             for (String row; (row = input.readLine()) != null; ) {
-                var column = row.split(",", -1);
-                if (column.length != 7 || column[2].isBlank())
-                    throw new IllegalArgumentException("Invalid ore row in " + directory + ": " + row);
-                int chunk = region.chunkIndex(Integer.parseInt(column[0]), Integer.parseInt(column[1]));
-                long normal = count(column[3]), poor = count(column[4]), bedrock = count(column[5]);
-                long pebbles = count(column[6]);
-                minerals.computeIfAbsent(column[2], key -> new Mineral()).add(chunk, normal, poor, bedrock, pebbles);
-                if (heatmap != null && ("*".equals(mineral) || mineral.equalsIgnoreCase(column[2])))
-                    heatmap.add(chunk, normal, poor, bedrock, pebbles);
+                var parsed = OreSampleRow.decode(row);
+                int chunk = region.chunkIndex(parsed.x(), parsed.z());
+                minerals.computeIfAbsent(parsed.material(), key -> new Mineral())
+                        .add(chunk, parsed.normal(), parsed.poor(), parsed.bedrock(), parsed.rawPebbles());
+                if (heatmap != null && ("*".equals(mineral) || mineral.equalsIgnoreCase(parsed.material())))
+                    heatmap.add(chunk, parsed.normal(), parsed.poor(), parsed.bedrock(), parsed.rawPebbles());
             }
         }
         var rocks = new TreeMap<String, Long>();

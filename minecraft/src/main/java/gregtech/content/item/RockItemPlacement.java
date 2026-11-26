@@ -4,11 +4,14 @@ import gregtech.content.block.RockBlock;
 import gregtech.content.blockentity.RockBlockEntity;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTBlocks;
+import gregtech.engine.GTWaterloggable;
+import gregtech.engine.material.MaterialEquivalence;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -19,7 +22,7 @@ public final class RockItemPlacement {
 
     public static InteractionResult place(UseOnContext use) {
         ItemStack stack = use.getItemInHand();
-        var form = gregtech.engine.material.MaterialEquivalence.form(stack);
+        var form = MaterialEquivalence.form(stack);
         if (use.getPlayer() == null
                 || !use.getPlayer().isShiftKeyDown()
                 || form == null
@@ -35,7 +38,7 @@ public final class RockItemPlacement {
     public static InteractionResult placeFlint(UseOnContext use) {
         if (use.getPlayer() == null
                 || !use.getPlayer().isShiftKeyDown()
-                || !use.getItemInHand().is(net.minecraft.world.item.Items.FLINT)) return InteractionResult.PASS;
+                || !use.getItemInHand().is(Items.FLINT)) return InteractionResult.PASS;
         return placeLooseRock(use, null, "minecraft:flint");
     }
 
@@ -50,13 +53,8 @@ public final class RockItemPlacement {
                         RockBlock.APPEARANCE,
                         "minecraft:flint".equals(itemId) ? RockBlock.Appearance.FLINT : RockBlock.Appearance.MATERIAL)
                 .setValue(
-                        gregtech.engine.GTWaterloggable.WATERLOGGED,
-                        gregtech.engine.GTWaterloggable.isWaterForLogging(
-                                context.getLevel().getFluidState(context.getClickedPos())))
-                .setValue(
-                        RockBlock.GROUND,
-                        RockBlock.Ground.of(context.getLevel()
-                                .getBlockState(context.getClickedPos().below())));
+                        GTWaterloggable.WATERLOGGED,
+                        GTWaterloggable.isWaterForLogging(context.getLevel().getFluidState(context.getClickedPos())));
         return GroundItemPlacement.place(
                 context,
                 state,

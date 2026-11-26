@@ -93,13 +93,13 @@ public final class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration>
 
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-        if (!GregTechConfig.Worldgen.GEOLOGY.enabled() || !GTWorldgenDefaults.STONE_LAYERS) return false;
+        if (!GregTechConfig.Worldgen.GEOLOGY.enabled()) return false;
         WorldGenLevel level = context.level();
         long seed = level.getSeed();
         var origin = context.origin();
         var chunk = level.getChunk(origin.getX() >> 4, origin.getZ() >> 4);
         int minY = level.getMinBuildHeight();
-        int maxY = StoneLayerScan.maxScanY(minY, level.getMaxBuildHeight(), chunk.getHighestFilledSectionIndex());
+        int maxY = StoneLayerField.maxScanY(minY, level.getMaxBuildHeight(), chunk.getHighestFilledSectionIndex());
         if (maxY < minY) return false;
         int minX = chunk.getPos().getMinBlockX();
         int minZ = chunk.getPos().getMinBlockZ();
@@ -166,14 +166,14 @@ public final class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration>
                     } else if (kind == Host.REPLACEABLE) {
                         support.set(x, y - 1, z);
                         long positionSeed = WorldgenHash.at(seed, x, y, z);
-                        if (surfaceRocks
-                                && y > minY
+                        if (y > minY
                                 && surface.canPlaceRocks()
                                 && chunk.getBlockState(support).isFaceSturdy(level, support, Direction.UP)
                                 && SurfaceRockRules.roll(positionSeed)) {
                             var pebble = SurfaceRockRules.pebble(
                                     surface, positionSeed, GTStoneLayerFeature::crushingMaterial);
-                            changed |= GTRockPlacement.placeStratum(level, cursor, pebble);
+                            if (pebble.shouldPlace(surfaceRocks))
+                                changed |= GTRockPlacement.placeStratum(level, cursor, pebble);
                         }
                         surface.gap();
                     } else if (block instanceof GTStoneBlock stone && naturalVariant(stone.variant())) {

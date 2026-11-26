@@ -1,5 +1,11 @@
 package gregtech;
 
+import gregtech.content.worldgen.BoundaryGemOres;
+import gregtech.content.worldgen.GTBedrockOres;
+import java.util.List;
+import java.util.function.IntSupplier;
+import java.util.function.Supplier;
+
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.BooleanSupplier;
@@ -105,7 +111,7 @@ public final class GregTechConfig {
     private static final BooleanSupplier FLUID_IDLE_SCHEDULING = option(COMMON,
             "performance.fluid_idle_scheduling", true,
             "Skip the server tick for fluid pipes that are completely idle: no stored fluid, no backflow mask, no covers and no residual heat. Distribution math and timing are unchanged; disable to tick every loaded pipe for comparison and diagnosis.");
-    private static final java.util.function.Supplier<FluidDistribution> FLUID_DISTRIBUTION = enumOption(COMMON,
+    private static final Supplier<FluidDistribution> FLUID_DISTRIBUTION = enumOption(COMMON,
             "fluid.distribution", FluidDistribution.LOCAL,
             "How fluid moves between the pipes of one component.",
             "LOCAL (default): original GT6 per-tick six-neighbour diffusion. Each pipe moves fluid one hop toward its local target level and pressure share.",
@@ -216,9 +222,9 @@ public final class GregTechConfig {
         GLOWTUS_PROBABILITY("worldgen.surface.glowtus.Probability", 2, 1, 1000000),
         SPRING_PROBABILITY("worldgen.fluid_springs_probability", 100, 1, 1000000),
         BEDROCK_DENSITY("worldgen.bedrock.DensityPercent",
-                gregtech.content.worldgen.GTWorldgenDefaults.BEDROCK_DENSITY_PERCENT, 0, 400),
+                GTBedrockOres.DEFAULT_DENSITY_PERCENT, 0, 400),
         BOUNDARY_GEM_PROBABILITY("worldgen.geology_settings.BoundaryGemProbability",
-                gregtech.content.worldgen.BoundaryGemOres.CHANCE_DIVISOR, 1, 1000000),
+                BoundaryGemOres.CHANCE_DIVISOR, 1, 1000000),
         OCEAN_HEIGHT("worldgen.water.ocean.Height", 63, -64, 319),
         RIVER_HEIGHT("worldgen.water.river.Height", 63, -64, 319),
         DUNGEON_PROBABILITY("worldgen.dungeon.Probability", 100, 1, 1000000),
@@ -242,7 +248,7 @@ public final class GregTechConfig {
     }
 
     private static final Map<Rule, BooleanSupplier> RULES = ruleSettings();
-    private static final Map<Number, java.util.function.IntSupplier> NUMBERS = numberSettings();
+    private static final Map<Number, IntSupplier> NUMBERS = numberSettings();
 
     private static Map<Rule, BooleanSupplier> ruleSettings() {
         var settings = new EnumMap<Rule, BooleanSupplier>(Rule.class);
@@ -267,8 +273,8 @@ public final class GregTechConfig {
         return settings;
     }
 
-    private static Map<Number, java.util.function.IntSupplier> numberSettings() {
-        var settings = new EnumMap<Number, java.util.function.IntSupplier>(Number.class);
+    private static Map<Number, IntSupplier> numberSettings() {
+        var settings = new EnumMap<Number, IntSupplier>(Number.class);
         for (Number number : Number.values()) {
             var value = COMMON.worldRestart().comment(number.key.substring(number.key.lastIndexOf('.') + 1),
                     number == Number.BEDROCK_DENSITY ? "Percent of the usual per-mineral bedrock ore chance. Set to 0 to disable random deposits."
@@ -283,24 +289,24 @@ public final class GregTechConfig {
         return settings;
     }
 
-    private static final java.util.function.Supplier<java.util.List<? extends String>> DISABLED_LOOT =
+    private static final Supplier<List<? extends String>> DISABLED_LOOT =
             strings("worldgen.loot.disabled", "Disabled loot: category|item spec, or category|*.");
-    private static final java.util.function.Supplier<java.util.List<? extends String>> DISABLED_BEDROCK_ORES =
+    private static final Supplier<List<? extends String>> DISABLED_BEDROCK_ORES =
             strings("worldgen.bedrock.DisabledOres", "Disabled natural bedrock ore names or material names. Use * to disable all natural deposits.");
-    private static final java.util.function.Supplier<java.util.List<? extends String>> DISABLED_BEDROCK_DEPTHS =
+    private static final Supplier<List<? extends String>> DISABLED_BEDROCK_DEPTHS =
             strings("worldgen.bedrock.DisabledDepths", "Disabled natural bedrock ore groups: shallow, deep, neutral.");
-    private static final java.util.function.Supplier<java.util.List<? extends String>> BEDROCK_CHANCE_OVERRIDES =
+    private static final Supplier<List<? extends String>> BEDROCK_CHANCE_OVERRIDES =
             strings("worldgen.bedrock.ChanceOverrides", "Override the final chance divisor before applying DensityPercent. Use material=divisor or deposit_name=divisor, for example gold=32000 or gold_b=16000.");
-    private static final java.util.function.Supplier<java.util.List<? extends String>> DISABLED_RECIPES =
+    private static final Supplier<List<? extends String>> DISABLED_RECIPES =
             strings("recipes.disabled", "Disabled recipes: namespace:path.");
-    private static final java.util.function.Supplier<java.util.List<? extends String>> DISABLED_TOOLS =
+    private static final Supplier<List<? extends String>> DISABLED_TOOLS =
             strings("recipes.toolrecipes.disabled_materials", "Disabled tool recipe materials.");
-    private static final java.util.function.Supplier<java.util.List<? extends String>> DISABLED_HEADS =
+    private static final Supplier<List<? extends String>> DISABLED_HEADS =
             strings("recipes.toolheadrecipe.disabled_materials", "Disabled tool head recipe materials.");
 
-    private static java.util.function.Supplier<java.util.List<? extends String>> strings(String key, String comment) {
-        var value = COMMON.worldRestart().comment(comment, "Restart required.").defineListAllowEmpty(java.util.List.of(key.split("\\.")), java.util.List.<String>of(), entry -> entry instanceof String);
-        return () -> { try { return value.get(); } catch (IllegalStateException notLoaded) { return java.util.List.of(); } };
+    private static Supplier<List<? extends String>> strings(String key, String comment) {
+        var value = COMMON.worldRestart().comment(comment, "Restart required.").defineListAllowEmpty(List.of(key.split("\\.")), List.<String>of(), entry -> entry instanceof String);
+        return () -> { try { return value.get(); } catch (IllegalStateException notLoaded) { return List.of(); } };
     }
 
     public static boolean fallenLogEnabled(String id) {
@@ -316,11 +322,11 @@ public final class GregTechConfig {
         return !disabled.contains(category + "|*") && !disabled.contains(category + "|" + spec);
     }
 
-    public static java.util.List<? extends String> disabledBedrockOres() { return DISABLED_BEDROCK_ORES.get(); }
+    public static List<? extends String> disabledBedrockOres() { return DISABLED_BEDROCK_ORES.get(); }
 
-    public static java.util.List<? extends String> disabledBedrockDepths() { return DISABLED_BEDROCK_DEPTHS.get(); }
+    public static List<? extends String> disabledBedrockDepths() { return DISABLED_BEDROCK_DEPTHS.get(); }
 
-    public static java.util.List<? extends String> bedrockChanceOverrides() { return BEDROCK_CHANCE_OVERRIDES.get(); }
+    public static List<? extends String> bedrockChanceOverrides() { return BEDROCK_CHANCE_OVERRIDES.get(); }
 
     public static boolean recipeEnabled(String id) { return !DISABLED_RECIPES.get().contains(id); }
 
@@ -367,9 +373,9 @@ public final class GregTechConfig {
     }
 
 //? if >=1.21.1 {
-    /*private static java.util.function.Supplier<FluidDistribution> enumOption(ModConfigSpec.Builder builder,
+    /*private static Supplier<FluidDistribution> enumOption(ModConfigSpec.Builder builder,
 *///?} else {
-    private static java.util.function.Supplier<FluidDistribution> enumOption(ForgeConfigSpec.Builder builder,
+    private static Supplier<FluidDistribution> enumOption(ForgeConfigSpec.Builder builder,
 //?}
                                                                               String key, FluidDistribution initial,
                                                                               String... description) {

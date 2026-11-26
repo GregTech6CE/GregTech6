@@ -5,6 +5,7 @@ import gregtech.api.material.GTMaterial;
 import gregtech.content.block.OreBlock;
 import gregtech.content.block.OreHostStone;
 import gregtech.content.block.RockOreBlock;
+import gregtech.content.block.stone.StoneType;
 import gregtech.content.block.stone.StoneVariant;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.material.generated.OreMaterials;
@@ -23,6 +24,7 @@ import gregtech.content.worldgen.OreVeinLayout;
 import gregtech.content.worldgen.SpecialOreDeposits;
 import gregtech.content.worldgen.StoneLayerField;
 import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.material.MaterialPresentation;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.platform.Mc;
 import java.util.ArrayList;
@@ -32,8 +34,8 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
@@ -59,7 +61,25 @@ public class WorldgenInfoData {
             StratumInfo layer,
             HeightRange reserve,
             boolean subregional,
-            SpecialSite site) {}
+            SpecialSite site) {
+        static VeinInfo special(String name, HeightRange heights, SpecialSite site) {
+            return new VeinInfo(
+                    name,
+                    OreVeinDeclaration.OVERWORLD,
+                    heights.min(),
+                    heights.max(),
+                    0,
+                    0,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    false,
+                    site);
+        }
+    }
 
     public record SmallOreInfo(List<OrePreview> ores, List<Component> captions) {
         public List<ItemStack> aliases() {
@@ -92,7 +112,7 @@ public class WorldgenInfoData {
         for (String dimension : OreSourceCatalog.current().veinDimensions()) {
             var generation = summary.dimensions().get(dimension);
             if (generation == null || !generation.veins()) continue;
-            var veins = GTOreVeins.activeVeins(dimension);
+            var veins = OreSourceCatalog.current().veins(dimension);
             int totalWeight = GTOreVeins.selectionWeight(dimension, veins);
             for (GTOreVeins.OreVein v : veins) {
                 var heights = v.heights(dimension).intersect(generation.heights());
@@ -307,21 +327,7 @@ public class WorldgenInfoData {
         captions.addAll(details);
         var site = new SpecialSite(
                 hosts, ores.stream().filter(ore -> !ore.stack().isEmpty()).toList(), List.copyOf(captions));
-        return new VeinInfo(
-                name,
-                OreVeinDeclaration.OVERWORLD,
-                heights.min(),
-                heights.max(),
-                0,
-                0,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                false,
-                site);
+        return VeinInfo.special(name, heights, site);
     }
 
     private record StratumKey(
@@ -329,13 +335,12 @@ public class WorldgenInfoData {
 
     private static ItemStack layerStone(GTStoneLayersGen.LayerDef layer) {
         if (layer.stoneType() != null) {
-            var type = gregtech.content.block.stone.StoneType.valueOf(layer.stoneType());
-            return new ItemStack(gregtech.content.registry.GTBlocks.getStoneState(
-                            type, gregtech.content.block.stone.StoneVariant.STONE)
-                    .getBlock());
+            var type = StoneType.valueOf(layer.stoneType());
+            return new ItemStack(
+                    GTBlocks.getStoneState(type, StoneVariant.STONE).getBlock());
         }
         if (layer.blockId() != null) {
-            Item item = BuiltInRegistries.ITEM.get(layerBlockId(layer));
+            Item item = Mc.item(layerBlockId(layer));
             if (item != Items.AIR) return new ItemStack(item);
         }
         return new ItemStack(Items.STONE);
@@ -360,14 +365,12 @@ public class WorldgenInfoData {
 
     private static Component materialName(String name) {
         GTMaterial material = GTMaterialRegistry.get(name).resolve();
-        return material.isValid()
-                ? gregtech.engine.material.MaterialPresentation.name(material)
-                : Component.literal(name);
+        return material.isValid() ? MaterialPresentation.name(material) : Component.literal(name);
     }
 
     private static void appendStratumOres(
             List<VeinInfo> out,
-            java.util.Set<StratumKey> seen,
+            Set<StratumKey> seen,
             String above,
             String below,
             boolean bothSides,
@@ -487,7 +490,7 @@ public class WorldgenInfoData {
         grouped.forEach((ore, captions) -> {
             ItemStack stack = ore.blockId().isEmpty()
                     ? withHost(oreStack(ore.material()), hosts)
-                    : new ItemStack(BuiltInRegistries.BLOCK.get(ResourceLocation.parse(ore.blockId())));
+                    : new ItemStack(Mc.block(ResourceLocation.parse(ore.blockId())));
             if (!stack.isEmpty()) result.add(new OrePreview(stack, List.copyOf(captions), ore.material()));
         });
         return result;
@@ -699,8 +702,7 @@ public class WorldgenInfoData {
 
     public static ItemStack bedrockOreStack(GTMaterial material) {
         var stack = oreStack(material);
-        if (stack.getItem() instanceof net.minecraft.world.item.BlockItem item
-                && item.getBlock() instanceof OreBlock ore)
+        if (stack.getItem() instanceof BlockItem item && item.getBlock() instanceof OreBlock ore)
             return OreBlock.withStone(stack, ore.stateFor(OreHostStone.BEDROCK));
         return stack;
     }

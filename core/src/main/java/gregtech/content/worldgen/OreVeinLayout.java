@@ -20,12 +20,6 @@ public final class OreVeinLayout {
 
     private OreVeinLayout() {}
 
-    public static int height(String dimension, int declaredY) {
-        return OreVeinDeclaration.OVERWORLD.equals(dimension)
-                ? MineralWorldgenRules.overworldHeight(declaredY, MineralWorldgenRules.LEGACY_ORE_FLOOR)
-                : declaredY;
-    }
-
     public enum Shape {
         VEINED,
         LAYERED,
@@ -132,11 +126,6 @@ public final class OreVeinLayout {
     }
 
     /** Each regional vein gets a slot. Subregional veins get one slot in each quadrant. */
-    public static List<Center> regionalCenters(
-            long worldSeed, int regionX, int regionZ, List<OreVein> veins, int totalWeight) {
-        return regionalCenters(worldSeed, regionX, regionZ, regionCells(veins), veins, List.of(), veins, totalWeight);
-    }
-
     private static List<Center> regionalCenters(
             long worldSeed,
             int regionX,

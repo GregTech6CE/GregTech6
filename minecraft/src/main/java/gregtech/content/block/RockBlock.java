@@ -7,6 +7,7 @@ import gregtech.engine.GTWaterloggable;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.MaterialStackItemHelper;
 import java.util.List;
+import java.util.Locale;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.StringRepresentable;
@@ -17,9 +18,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -58,46 +59,6 @@ public class RockBlock extends GTBlock implements EntityBlock, SimpleWaterlogged
 
     private static final VoxelShape SHAPE = box(3.0, 0.0, 3.0, 13.0, 4.0, 13.0);
 
-    /** Visual family of the block the rock is lying on. */
-    public enum Ground implements StringRepresentable {
-        STONE("stone"),
-        SAND("sand"),
-        RED_SAND("red_sand"),
-        GRAVEL("gravel"),
-        DEEPSLATE("deepslate"),
-        GRANITE("granite"),
-        DIORITE("diorite"),
-        ANDESITE("andesite"),
-        NETHERRACK("netherrack"),
-        END_STONE("end_stone");
-
-        private final String name;
-
-        Ground(String name) {
-            this.name = name;
-        }
-
-        @Override
-        public String getSerializedName() {
-            return name;
-        }
-
-        /** Visual family for an arbitrary supporting block state. */
-        public static Ground of(BlockState below) {
-            if (below.is(Blocks.SAND) || below.is(Blocks.SANDSTONE)) return SAND;
-            if (below.is(Blocks.RED_SAND) || below.is(Blocks.RED_SANDSTONE)) return RED_SAND;
-            if (below.is(Blocks.GRAVEL)) return GRAVEL;
-            if (below.is(Blocks.DEEPSLATE) || below.is(Blocks.TUFF) || below.is(Blocks.COBBLED_DEEPSLATE))
-                return DEEPSLATE;
-            if (below.is(Blocks.GRANITE)) return GRANITE;
-            if (below.is(Blocks.DIORITE)) return DIORITE;
-            if (below.is(Blocks.ANDESITE)) return ANDESITE;
-            if (below.is(Blocks.NETHERRACK)) return NETHERRACK;
-            if (below.is(Blocks.END_STONE)) return END_STONE;
-            return STONE;
-        }
-    }
-
     /** The state is sent before block entity data, including to other players watching placement. */
     public enum Appearance implements StringRepresentable {
         MATERIAL,
@@ -106,25 +67,23 @@ public class RockBlock extends GTBlock implements EntityBlock, SimpleWaterlogged
 
         @Override
         public String getSerializedName() {
-            return name().toLowerCase(java.util.Locale.ROOT);
+            return name().toLowerCase(Locale.ROOT);
         }
     }
 
     public static final EnumProperty<Appearance> APPEARANCE = EnumProperty.create("appearance", Appearance.class);
-    public static final EnumProperty<Ground> GROUND = EnumProperty.create("ground", Ground.class);
 
     public RockBlock(Properties properties) {
         super(properties);
         registerDefaultState(stateDefinition
                 .any()
-                .setValue(GROUND, Ground.STONE)
                 .setValue(APPEARANCE, Appearance.MATERIAL)
                 .setValue(GTWaterloggable.WATERLOGGED, false));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(GROUND, APPEARANCE, GTWaterloggable.WATERLOGGED);
+        builder.add(APPEARANCE, GTWaterloggable.WATERLOGGED);
     }
 
     @Override
@@ -158,7 +117,7 @@ public class RockBlock extends GTBlock implements EntityBlock, SimpleWaterlogged
             BlockState state,
             Direction side,
             BlockState neighbour,
-            net.minecraft.world.level.LevelAccessor level,
+            LevelAccessor level,
             BlockPos pos,
             BlockPos neighbourPos) {
         if (!canSurvive(state, level, pos)) return getFluidState(state).createLegacyBlock();

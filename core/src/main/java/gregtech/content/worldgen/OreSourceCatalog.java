@@ -3,6 +3,7 @@ package gregtech.content.worldgen;
 import gregtech.api.addon.worldgen.OreVeinDeclaration;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialProperty;
+import gregtech.content.material.generated.OreMaterials;
 import gregtech.content.worldgen.GTBedrockOres.BedrockOre;
 import gregtech.content.worldgen.GTBedrockOres.Depth;
 import gregtech.content.worldgen.GTOreVeins.HeightRange;
@@ -66,13 +67,6 @@ public final class OreSourceCatalog {
         }
     }
 
-    private record BedrockDefinition(String dimension, BedrockOre ore, int order) {}
-
-    private static final class Mineral {
-        private final Set<Source> sources = new LinkedHashSet<>();
-        private final List<BedrockDefinition> bedrock = new ArrayList<>();
-    }
-
     private static final String OVERWORLD = OreVeinDeclaration.OVERWORLD;
     private static final String NETHER = OreVeinDeclaration.NETHER;
     private static final String END = OreVeinDeclaration.END;
@@ -99,22 +93,9 @@ public final class OreSourceCatalog {
         regionalPlans = Map.copyOf(plans);
         smallOres = freeze(builder.smallOres);
         oreForms = Collections.unmodifiableSet(builder.oreForms);
-        var byMaterial = new LinkedHashMap<GTMaterial, Set<Source>>();
-        builder.minerals.forEach(
-                (material, entry) -> byMaterial.put(material, Collections.unmodifiableSet(entry.sources)));
-        sources = Collections.unmodifiableMap(byMaterial);
-
-        var deposits = builder.minerals.values().stream()
-                .flatMap(mineral -> mineral.bedrock.stream())
-                .sorted(Comparator.comparingInt(BedrockDefinition::order))
-                .toList();
-        var byDimension = new LinkedHashMap<String, List<BedrockOre>>();
-        for (BedrockDefinition entry : deposits) {
-            byDimension
-                    .computeIfAbsent(entry.dimension(), key -> new ArrayList<>())
-                    .add(entry.ore());
-        }
-        bedrock = freeze(byDimension);
+        builder.sources.replaceAll((material, entries) -> Collections.unmodifiableSet(entries));
+        sources = Collections.unmodifiableMap(builder.sources);
+        bedrock = freeze(builder.bedrock);
     }
 
     /** Available after the material definitions and their links have been installed. */
@@ -226,58 +207,66 @@ public final class OreSourceCatalog {
 
     static OreSourceCatalog build(Map<String, List<OreVein>> addonVeins, Map<String, List<SmallOre>> addonSmallOres) {
         var builder = new Builder();
-        for (OreVein vein : GTOreVeins.OVERWORLD_VEINS) {
-            builder.vein(OVERWORLD, vein, GTOreVeins.overworldVeinEnabled(vein));
-        }
-        for (OreVein vein : GTOreVeins.END_VEINS) builder.vein(END, vein, true);
-        addonVeins.forEach((dimension, rows) -> rows.forEach(vein -> builder.vein(dimension, vein, true)));
+        for (OreVein vein : GTOreVeins.OVERWORLD_VEINS) builder.vein(OVERWORLD, vein);
+        for (OreVein vein : GTOreVeins.END_VEINS) builder.vein(END, vein);
+        addonVeins.forEach((dimension, rows) -> rows.forEach(vein -> builder.vein(dimension, vein)));
         GTOreVeins.OVERWORLD_SMALL_ORES.forEach(ore -> builder.smallOre(OVERWORLD, ore));
         GTOreVeins.NETHER_SMALL_ORES.forEach(ore -> builder.smallOre(NETHER, ore));
         GTOreVeins.END_SMALL_ORES.forEach(ore -> builder.smallOre(END, ore));
         addonSmallOres.forEach((dimension, rows) -> rows.forEach(ore -> builder.smallOre(dimension, ore)));
 
-        if (GTWorldgenDefaults.STONE_LAYERS) {
-            for (var layer : StoneLayerField.layers()) {
-                if (layer.blockId() != null && layer.blockId().startsWith("block_ore_")) {
-                    int minY = layer.noDeep() ? StoneLayerField.SHALLOW_LAYER_MIN_Y : -64;
-                    builder.source(
-                            GTMaterialRegistry.get(layer.material()),
-                            new Source(
-                                    OVERWORLD,
-                                    Kind.SEAM,
-                                    layer.material(),
-                                    new HeightRange(minY, 319),
-                                    layer.blockId()));
-                }
-                for (var ore : layer.ores()) builder.stratum(Kind.LAYER, layer.material(), ore, layer.noDeep());
+        for (var layer : StoneLayerField.layers()) {
+            if (layer.isOreSeam()) {
+                int minY = layer.noDeep() ? StoneLayerField.SHALLOW_LAYER_MIN_Y : -64;
+                builder.source(
+                        GTMaterialRegistry.get(layer.material()),
+                        new Source(
+                                OVERWORLD, Kind.SEAM, layer.material(), new HeightRange(minY, 319), layer.blockId()));
             }
-            for (var contact : GTStoneLayersGen.CONTACTS) {
-                String name = contact.materialA() + "/" + contact.materialB();
-                for (var ore : contact.ores()) builder.stratum(Kind.CONTACT, name, ore, false);
-            }
-            var gems = new Source(OVERWORLD, Kind.BOUNDARY_GEM, "boundary_gems", new HeightRange(-64, 319), "");
-            BoundaryGemOres.MATERIALS.forEach(material -> builder.source(material, gems));
+            for (var ore : layer.ores()) builder.stratum(Kind.LAYER, layer.material(), ore, layer.noDeep());
         }
-        GTBedrockOres.register(builder);
+        for (var contact : GTStoneLayersGen.CONTACTS) {
+            String name = contact.materialA() + "/" + contact.materialB();
+            for (var ore : contact.ores()) builder.stratum(Kind.CONTACT, name, ore, false);
+        }
+        var gems = new Source(OVERWORLD, Kind.BOUNDARY_GEM, "boundary_gems", new HeightRange(-64, 319), "");
+        BoundaryGemOres.MATERIALS.forEach(material -> builder.source(material, gems));
+        builder.deriveOverworldBedrock();
+        GTBedrockOres.registerNether(builder);
         builder.specialDeposits();
         return new OreSourceCatalog(builder, addonVeins);
     }
 
     static final class Builder {
         private final Set<GTMaterial> oreForms = new LinkedHashSet<>();
-        private final Map<GTMaterial, Mineral> minerals = new LinkedHashMap<>();
+        private final Map<GTMaterial, Set<Source>> sources = new LinkedHashMap<>();
+        private final Map<String, List<BedrockOre>> bedrock = new LinkedHashMap<>();
         private final Map<String, List<OreVein>> veins = new LinkedHashMap<>();
         private final Map<String, List<SmallOre>> smallOres = new LinkedHashMap<>();
-        private int bedrockOrder;
+        private final Map<GTMaterial, Integer> primaryWeights = new LinkedHashMap<>();
 
-        private void vein(String dimension, OreVein vein, boolean enabled) {
-            if (enabled)
-                veins.computeIfAbsent(dimension, key -> new ArrayList<>()).add(vein);
+        private void deriveOverworldBedrock() {
+            var candidates = new LinkedHashSet<>(primaryWeights.keySet());
+            candidates.addAll(GTBedrockOres.historicalMaterials());
+            for (var material : candidates.stream()
+                    .sorted(Comparator.comparing(GTMaterial::getName))
+                    .toList()) {
+                for (var option : GTBedrockOres.overworld(material, primaryWeights.getOrDefault(material, 0))) {
+                    bedrock(OVERWORLD, option.name(), material, option.divisor(), option.flower());
+                }
+            }
+        }
+
+        private void vein(String dimension, OreVein vein) {
+            veins.computeIfAbsent(dimension, key -> new ArrayList<>()).add(vein);
+            if (OVERWORLD.equals(dimension)) {
+                primaryWeights.merge(vein.top().resolve(), vein.weight(), Math::max);
+                primaryWeights.merge(vein.bottom().resolve(), vein.weight(), Math::max);
+            }
             var heights = vein.heights(dimension);
             var source = new Source(dimension, Kind.VEIN, vein.name(), heights, "");
             for (GTMaterial material : List.of(vein.top(), vein.bottom(), vein.between(), vein.spread())) {
-                if (enabled) source(material, source);
-                else oreForms.add(validMaterial(material, vein.name()));
+                source(material, source);
             }
         }
 
@@ -301,9 +290,7 @@ public final class OreSourceCatalog {
             var field = new Source(OVERWORLD, Kind.COLTAN_FIELD, "coltan_field", SpecialOreDeposits.COLTAN_HEIGHTS, "");
             SpecialOreDeposits.COLTAN_ROLLS.forEach(material -> source(material, field));
             var floor = new HeightRange(-64, -64);
-            source(
-                    gregtech.content.material.generated.OreMaterials.Coltan,
-                    new Source(OVERWORLD, Kind.COLTAN_BEDROCK, "coltan_centre", floor, ""));
+            source(OreMaterials.Coltan, new Source(OVERWORLD, Kind.COLTAN_BEDROCK, "coltan_centre", floor, ""));
             for (var pylon : SpecialOreDeposits.OCEAN_PYLONS) {
                 source(
                         pylon.material(),
@@ -322,16 +309,14 @@ public final class OreSourceCatalog {
             GTMaterial resolved = validMaterial(material, name);
             int floor = OVERWORLD.equals(dimension) ? -64 : 0;
             source(resolved, new Source(dimension, Kind.BEDROCK, name, new HeightRange(floor, floor), ""));
-            minerals.computeIfAbsent(resolved, key -> new Mineral())
-                    .bedrock
-                    .add(new BedrockDefinition(
-                            dimension, new BedrockOre(name, resolved, chance, flower), bedrockOrder++));
+            bedrock.computeIfAbsent(dimension, key -> new ArrayList<>())
+                    .add(new BedrockOre(name, resolved, chance, flower));
         }
 
         private void source(GTMaterial material, Source source) {
             GTMaterial resolved = validMaterial(material, source.name());
             if (source.kind() != Kind.SEAM) oreForms.add(resolved);
-            minerals.computeIfAbsent(resolved, key -> new Mineral()).sources.add(source);
+            sources.computeIfAbsent(resolved, key -> new LinkedHashSet<>()).add(source);
         }
 
         private static GTMaterial validMaterial(GTMaterial material, String source) {

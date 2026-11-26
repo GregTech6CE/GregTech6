@@ -36,5 +36,3 @@
 
 `python tools/recipes/audit_recipes.py --converted minecraft/versions/1.21.1-neoforge/build/generated/recipe-resources`
 会交叉检查生成树与源配方、源标签是否一一对应。
-
-`:buildtools:sampleWorldgen` 导出岩层剖面，`:buildtools:surveyWorldgen` 模拟矿物分布，`:buildtools:compareWorldgen` 比较实际区块样本，`:buildtools:checkWorldgenDistribution` 按指定 P99 上限验收多种子的模拟或实际区块样本。参数和输出格式见[世界生成工具](../worldgen/README.md)。

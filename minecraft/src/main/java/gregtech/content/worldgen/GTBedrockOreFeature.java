@@ -11,6 +11,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
@@ -40,15 +41,55 @@ public final class GTBedrockOreFeature extends Feature<NoneFeatureConfiguration>
         if (underRoof && context.chunkGenerator() instanceof NoiseBasedChunkGenerator generator)
             terrainTop = Math.min(terrainTop, generator.getMinY() + generator.getGenDepth() - 1);
         boolean placed = false;
-        for (var ore : ores) {
-            if (!MineralWorldgenRules.bedrockHit(
-                    seed, chunk.x, chunk.z, ore.name(), ore.chance(), generation.density())) continue;
-            if (!placeVein(level, context.random(), chunk.getMinBlockX(), chunk.getMinBlockZ(), ore.material()))
-                continue;
-            BedrockIndicatorPlacement.place(level, chunk, ore, context.random(), terrainTop, underRoof);
-            placed = true;
+        for (int cx = chunk.x - 1; cx <= chunk.x + 1; cx++) {
+            for (int cz = chunk.z - 1; cz <= chunk.z + 1; cz++) {
+                boolean local = cx == chunk.x && cz == chunk.z;
+                for (var ore : ores) {
+                    if (!MineralWorldgenRules.bedrockHit(seed, cx, cz, ore.name(), ore.chance(), generation.density()))
+                        continue;
+                    var origin = new ChunkPos(cx, cz);
+                    long depositSeed = MineralWorldgenRules.bedrockDepositSeed(seed, cx, cz, ore.name());
+                    if (!enabledAt(level, context.chunkGenerator(), origin)) continue;
+                    if (local) {
+                        if (!placeVein(
+                                level,
+                                RandomSource.create(depositSeed),
+                                origin.getMinBlockX(),
+                                origin.getMinBlockZ(),
+                                ore.material())) continue;
+                        placed = true;
+                    } else if (!OreBlock.isBedrockFloor(level.getBlockState(new BlockPos(
+                            origin.getMinBlockX() + 8, level.getMinBuildHeight(), origin.getMinBlockZ() + 8)))) {
+                        continue;
+                    }
+                    placed |= BedrockIndicatorPlacement.place(
+                                    level, origin, chunk, ore, depositSeed ^ 0x494E444943415445L, terrainTop, underRoof)
+                            != 0;
+                }
+            }
         }
         return placed;
+    }
+
+    private static boolean enabledAt(WorldGenLevel level, ChunkGenerator generator, ChunkPos origin) {
+        var center = new BlockPos(origin.getMiddleBlockX(), level.getMinBuildHeight(), origin.getMiddleBlockZ());
+        for (var step :
+                generator.getBiomeGenerationSettings(level.getBiome(center)).features())
+            for (var holder : step)
+                if (holder.value().feature().value().feature() instanceof GTBedrockOreFeature) return true;
+        return false;
+    }
+
+    /** When both features roll in this chunk, reserve the floor for the deposit and its markers. */
+    static boolean reservesSpringSite(WorldGenLevel level, ChunkGenerator generator, ChunkPos chunk) {
+        String dimension = level.getLevel().dimension().location().toString();
+        var generation =
+                GTBedrockOreDimensions.generation(dimension, OreGenerationSummary.ordinarySources(level, generator));
+        long seed = MineralWorldgenRules.bedrockSeed(level.getSeed(), dimension);
+        for (var ore : generation.ores())
+            if (MineralWorldgenRules.bedrockHit(seed, chunk.x, chunk.z, ore.name(), ore.chance(), generation.density()))
+                return enabledAt(level, generator, chunk);
+        return false;
     }
 
     /** Common placement for naturally selected, dungeon and coltan veins. */

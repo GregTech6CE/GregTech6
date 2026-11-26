@@ -79,21 +79,18 @@ final class WorldgenLocate {
 
     private WorldgenLocate() {}
 
-    static LiteralArgumentBuilder<CommandSourceStack> command() {
-        var locate = literal("locate");
+    static LiteralArgumentBuilder<CommandSourceStack> command(String literalName) {
+        var locate = literal(literalName).requires(source -> source.hasPermission(2));
         for (var kind : Kind.values()) {
             var radius = argument("radius_chunks", IntegerArgumentType.integer(1, MAX_RADIUS))
                     .suggests((context, builder) ->
                             SharedSuggestionProvider.suggest(List.of("32", "64", "128", "256", "512"), builder))
-                    .executes(ctx -> search(ctx, kind, IntegerArgumentType.getInteger(ctx, "radius_chunks"), false))
-                    .then(literal("saved")
-                            .executes(ctx ->
-                                    search(ctx, kind, IntegerArgumentType.getInteger(ctx, "radius_chunks"), true)));
+                    .executes(ctx -> search(ctx, kind, IntegerArgumentType.getInteger(ctx, "radius_chunks")));
             locate.then(literal(kind.name().toLowerCase(Locale.ROOT))
                     .then(argument("material", StringArgumentType.word())
                             .suggests((ctx, builder) -> SharedSuggestionProvider.suggest(
                                     names(ctx.getSource().getLevel(), kind), builder))
-                            .executes(ctx -> search(ctx, kind, DEFAULT_RADIUS, false))
+                            .executes(ctx -> search(ctx, kind, DEFAULT_RADIUS))
                             .then(radius)));
         }
         return locate;
@@ -138,13 +135,12 @@ final class WorldgenLocate {
         return GTStoneLayerFeature.layerStone(index) == null ? "Stone" : GTStoneLayerFeature.layerMaterial(index);
     }
 
-    private static Target target(
-            ServerLevel level, Kind kind, String query, OreGenerationSummary summary, boolean savedOnly) {
+    private static Target target(ServerLevel level, Kind kind, String query, OreGenerationSummary summary) {
         var blocks = new HashSet<Block>();
         String dimension = level.dimension().location().toString();
         if (kind == Kind.LAYER) {
             var active = summary.dimensions().get(dimension);
-            if (!savedOnly && (active == null || !active.strata())) return null;
+            if (active == null || !active.strata()) return null;
             String name = null;
             if ("Deepslate".equalsIgnoreCase(query)) {
                 blocks.add(Blocks.DEEPSLATE);
@@ -161,16 +157,13 @@ final class WorldgenLocate {
         for (var material : OreSourceCatalog.current().materialsWithSources()) {
             if (!material.getName().equalsIgnoreCase(query)) continue;
             var sources = OreSourceCatalog.current().sources(material).stream()
-                    .filter(source -> savedOnly
-                            ? (kind == Kind.BEDROCK_ORE) == bedrock(source.kind())
-                            : active(source, kind, dimension, summary))
+                    .filter(source -> active(source, kind, dimension, summary))
                     .toList();
             if (sources.isEmpty()) return null;
             for (var source : sources) {
                 if (source.blockId().isEmpty()) continue;
                 var id = source.blockId();
-                var block = Mc.block(
-                        id.contains(":") ? net.minecraft.resources.ResourceLocation.parse(id) : Mc.gregtechId(id));
+                var block = Mc.block(id.contains(":") ? Mc.parseId(id) : Mc.gregtechId(id));
                 if (block != null && block != Blocks.AIR) blocks.add(block);
             }
             return new Target(kind, material.getName(), blocks, sources, material.resolve());
@@ -178,13 +171,13 @@ final class WorldgenLocate {
         return null;
     }
 
-    private static int search(CommandContext<CommandSourceStack> ctx, Kind kind, int radius, boolean savedOnly) {
+    private static int search(CommandContext<CommandSourceStack> ctx, Kind kind, int radius) {
         var source = ctx.getSource();
         var level = source.getLevel();
         var server = level.getServer();
         String query = StringArgumentType.getString(ctx, "material");
         var summary = OreGenerationSummary.capture(server);
-        var target = target(level, kind, query, summary, savedOnly);
+        var target = target(level, kind, query, summary);
         if (target == null) {
             source.sendFailure(
                     message("unknown", query, level.dimension().location().toString()));
@@ -206,11 +199,8 @@ final class WorldgenLocate {
             source.sendSuccess(() -> message("searching", target.name(), radius), false);
             CompletableFuture.supplyAsync(
                             () -> {
-                                if (!savedOnly) {
-                                    var planned = WorldgenProspecting.find(level, summary, target, area, checked);
-                                    if (planned != null) return new Hit(planned, "planned");
-                                }
-                                return SavedWorldgenBlocks.find(level, area, target, checked);
+                                var pos = WorldgenProspecting.find(level, summary, target, area, checked);
+                                return new Hit(pos, pos == null ? "missing" : "planned");
                             },
                             Util.backgroundExecutor())
                     .whenComplete((result, error) -> {

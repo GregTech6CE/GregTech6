@@ -7,6 +7,7 @@ import gregtech.api.material.GTMaterial;
 import gregtech.content.material.generated.OreMaterials;
 import gregtech.content.worldgen.BoundaryGemOres;
 import gregtech.content.worldgen.GTBedrockOres.BedrockOre;
+import gregtech.content.worldgen.GTOreVeins.HeightRange;
 import gregtech.content.worldgen.GTOreVeins.SmallOre;
 import gregtech.content.worldgen.MineralWorldgenRules;
 import gregtech.content.worldgen.OreVeinLayout.Body;
@@ -16,7 +17,7 @@ import gregtech.content.worldgen.StratumOreRules;
 import gregtech.content.worldgen.WorldgenHash;
 import java.util.Arrays;
 import java.util.List;
-import java.util.SplittableRandom;
+import java.util.Random;
 import java.util.function.IntUnaryOperator;
 
 /** One synthetic Overworld column of rock, reused for each chunk in the survey. */
@@ -59,17 +60,27 @@ final class OreSurveyChunk implements StratumOreRules.Placer, MineralWorldgenRul
         int minZ = chunkZ << 4;
         strata(field, minX, minZ, layerVolumes);
         for (var body : veins) vein(body, minX, minZ);
-        scatteredOres(smallOres, random(chunkX, chunkZ, 2));
-        coltan(minX, minZ, random(chunkX, chunkZ, 3));
-        var random = random(chunkX, chunkZ, 4);
+        var terrain = new HeightRange(BOTTOM + 1, top);
+        MineralWorldgenRules.OrePlacer placer =
+                (x, y, z, material, small) -> scatter(x, y, z, material, small ? POOR : NORMAL);
+        for (var ore : smallOres) ore.scatter(seed, DIMENSION, minX, minZ, terrain, placer);
+        long fieldSeed = MineralWorldgenRules.coltanFieldSeed(seed, minX, minZ);
+        if ((coltan.x() & ~15) == minX && (coltan.z() & ~15) == minZ)
+            basalVein(
+                    minX,
+                    minZ,
+                    OreMaterials.Coltan,
+                    new Random(MineralWorldgenRules.coltanCoreSeed(fieldSeed))::nextInt);
+        SpecialOreDeposits.scatterColtan(fieldSeed, coltan, minX, minZ, terrain, placer);
         for (var ore : bedrock) {
             if (MineralWorldgenRules.bedrockHit(bedrockSeed, chunkX, chunkZ, ore.name(), ore.chance(), 100))
-                basalVein(minX, minZ, ore.material(), random);
+                basalVein(
+                        minX,
+                        minZ,
+                        ore.material(),
+                        new Random(MineralWorldgenRules.bedrockDepositSeed(bedrockSeed, chunkX, chunkZ, ore.name()))
+                                ::nextInt);
         }
-    }
-
-    private IntUnaryOperator random(int chunkX, int chunkZ, int phase) {
-        return new SplittableRandom(WorldgenHash.at(seed, chunkX, phase, chunkZ))::nextInt;
     }
 
     private void strata(StoneLayerField.Samples field, int minX, int minZ, WorldgenSurvey.LayerVolumes volumes) {
@@ -121,46 +132,6 @@ final class OreSurveyChunk implements StratumOreRules.Placer, MineralWorldgenRul
                         put(position, material, ore.small() ? POOR : NORMAL);
                 }
             }
-        }
-    }
-
-    private void scatteredOres(List<SmallOre> ores, IntUnaryOperator random) {
-        for (var ore : ores) {
-            var heights = ore.heights(DIMENSION, BOTTOM + 1, top);
-            if (heights.isEmpty()) continue;
-            int attempts = MineralWorldgenRules.scatterAttempts(ore.amount(), random);
-            for (int i = 0; i < attempts; i++) {
-                int x = random.applyAsInt(16);
-                int y = ore.distribution().sample(heights.min(), heights.max(), random);
-                int z = random.applyAsInt(16);
-                scatter(x, y, z, ore.material(), POOR);
-            }
-        }
-    }
-
-    private void coltan(int minX, int minZ, IntUnaryOperator random) {
-        if ((coltan.x() & ~15) == minX && (coltan.z() & ~15) == minZ)
-            basalVein(minX, minZ, OreMaterials.Coltan, random);
-        long distance = MineralWorldgenRules.distanceSquared(coltan.x(), coltan.z(), minX, minZ);
-        int radius = SpecialOreDeposits.COLTAN_RADIUS;
-        if (distance > radius * radius) return;
-        coltanScatter(random, POOR);
-        int fullRadius = SpecialOreDeposits.COLTAN_FULL_ORE_RADIUS;
-        if (distance <= fullRadius * fullRadius) coltanScatter(random, NORMAL);
-    }
-
-    private void coltanScatter(IntUnaryOperator random, byte form) {
-        var heights = SpecialOreDeposits.COLTAN_HEIGHTS;
-        int low = Math.max(BOTTOM + 1, heights.min());
-        int high = Math.min(top, heights.max());
-        if (high < low) return;
-        var materials = SpecialOreDeposits.COLTAN_ROLLS;
-        int attempts = MineralWorldgenRules.scatterAttempts(SpecialOreDeposits.COLTAN_AMOUNT, random);
-        for (int i = 0; i < attempts; i++) {
-            int x = random.applyAsInt(16);
-            int z = random.applyAsInt(16);
-            int y = low + random.applyAsInt(high - low + 1);
-            scatter(x, y, z, materials.get(random.applyAsInt(materials.size())), form);
         }
     }
 

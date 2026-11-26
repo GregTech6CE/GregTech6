@@ -98,11 +98,9 @@ public final class GTRockPlacement {
             boolean rawOre,
             boolean waterlogged,
             RockBlock.Appearance appearance) {
-        BlockState ground = level.getBlockState(pos.below());
         BlockState rockState = GTBlocks.ROCK
                 .get()
                 .defaultBlockState()
-                .setValue(RockBlock.GROUND, RockBlock.Ground.of(ground))
                 .setValue(RockBlock.APPEARANCE, appearance)
                 .setValue(GTWaterloggable.WATERLOGGED, waterlogged);
         if (!level.setBlock(pos, rockState, 2)) return false;

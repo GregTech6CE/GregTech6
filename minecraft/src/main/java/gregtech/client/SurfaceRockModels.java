@@ -1,5 +1,7 @@
 package gregtech.client;
 
+import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
+
 import com.google.common.base.Suppliers;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialProperty;
@@ -84,9 +86,19 @@ public final class SurfaceRockModels {
         }
     }
 
-    private record Skin(BakedModel shape, @Nullable TextureAtlasSprite sprite, int tint, @Nullable TextureAtlasSprite overlay, int overlayTint) {
-        Skin(BakedModel shape) { this(shape, null, -1, null, -1); }
-        Skin(BakedModel shape, TextureAtlasSprite sprite, int tint) { this(shape, sprite, tint, null, -1); }
+    private record Skin(
+            BakedModel shape,
+            @Nullable TextureAtlasSprite sprite,
+            int tint,
+            @Nullable TextureAtlasSprite overlay,
+            int overlayTint) {
+        Skin(BakedModel shape) {
+            this(shape, null, -1, null, -1);
+        }
+
+        Skin(BakedModel shape, TextureAtlasSprite sprite, int tint) {
+            this(shape, sprite, tint, null, -1);
+        }
     }
 
     /** One palette per model bake; no per-position or per-world entries survive a resource reload. */
@@ -154,13 +166,13 @@ public final class SurfaceRockModels {
             GTMaterial material = GTMaterialRegistry.get(name).resolve();
             if (!material.isValid() || material.getTextureSet() == null) return new Skin(raw);
             var texture = BlockMaterialIcons.resolveTexture(material.getTextureSet(), "blockraw");
-            var atlas = Minecraft.getInstance().getTextureAtlas(net.minecraft.world.inventory.InventoryMenu.BLOCK_ATLAS);
+            var atlas = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS);
             var image = atlas.apply(texture);
-            if (image.contents().name().equals(net.minecraft.client.renderer.texture.MissingTextureAtlasSprite.getLocation()))
+            if (image.contents().name().equals(MissingTextureAtlasSprite.getLocation()))
                 return new Skin(raw);
             var detail = BlockMaterialIcons.resolveOverlayTexture(material.getTextureSet(), "blockraw");
             var overlay = detail == null ? null : atlas.apply(detail);
-            if (overlay != null && overlay.contents().name().equals(net.minecraft.client.renderer.texture.MissingTextureAtlasSprite.getLocation()))
+            if (overlay != null && overlay.contents().name().equals(MissingTextureAtlasSprite.getLocation()))
                 overlay = null;
             return new Skin(raw, image, 0, overlay, -1);
         }

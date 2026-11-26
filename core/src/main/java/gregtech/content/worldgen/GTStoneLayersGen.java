@@ -23,7 +23,11 @@ public final class GTStoneLayersGen {
      * ore seam (GT6 BlockRockOres) or an explicit vanilla rock, or null. Both null keeps the host.
      * noDeep layers use deepslate below the shallow layer threshold.
      */
-    public record LayerDef(String stoneType, String blockId, String material, boolean noDeep, List<OreDef> ores) {}
+    public record LayerDef(String stoneType, String blockId, String material, boolean noDeep, List<OreDef> ores) {
+        public boolean isOreSeam() {
+            return blockId != null && blockId.startsWith("block_ore_");
+        }
+    }
 
     public record ContactDef(boolean bothSides, String materialA, String materialB, List<OreDef> ores) {}
 

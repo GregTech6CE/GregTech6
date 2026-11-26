@@ -3,7 +3,6 @@ import gregtech.platform.Mc;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
@@ -180,8 +179,4 @@ public class GTPitFeature extends Feature<NoneFeatureConfiguration> {
     private static ResourceLocation id(String path) {
         return ResourceLocation.withDefaultNamespace(path);
     }
-
-    /** Registry key of the configured feature (data file {@code worldgen/configured_feature/gt_pits.json}). */
-    public static final ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> CONFIGURED =
-            ResourceKey.create(Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_pits"));
 }

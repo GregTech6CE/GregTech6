@@ -70,7 +70,11 @@ public final class SurfaceRockRules {
         }
     }
 
-    public record Pebble(String material, boolean indicator) {}
+    public record Pebble(String material, boolean indicator) {
+        public boolean shouldPlace(boolean surfaceRocks) {
+            return indicator || surfaceRocks;
+        }
+    }
 
     /** On half the eligible positions, the rock reports the last exposed ore. */
     public static Pebble pebble(ColumnState state, long positionSeed, UnaryOperator<String> targetCrushing) {

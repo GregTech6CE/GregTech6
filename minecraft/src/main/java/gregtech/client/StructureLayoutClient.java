@@ -1,5 +1,6 @@
 package gregtech.client;
 
+import gregtech.compat.common.RecipeViewerRefresh;
 import gregtech.content.multiblock.StructureLayoutOverlayRuntime;
 import gregtech.network.PacketSyncStructureLayouts;
 

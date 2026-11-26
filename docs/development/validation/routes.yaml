@@ -19,7 +19,7 @@ routes:
     checks: [junit, api-contracts]
 
   # 根构建与 CI
-  - paths: ["build.gradle"]
+  - paths: ["build.gradle", "settings.gradle"]
     packages: [api, platforms]
     checks: [junit, format]
   - paths: [".github/workflows/build.yml"]
@@ -41,6 +41,9 @@ routes:
     checks: [junit, assemble, format]
   # 构建期资源转换器与配方数据工具
   - paths: ["tools/buildtools/**"]
+    packages: [content]
+    checks: [junit, format]
+  - paths: ["tools/README.md", "tools/worldgen/**"]
     packages: [content]
     checks: [junit, format]
   - paths: ["tools/recipes/**"]

@@ -1,8 +1,6 @@
 package gregtech.tools.worldgen;
 
 import gregtech.api.mod.ModData;
-import gregtech.content.worldgen.GTCellNoise;
-import gregtech.content.worldgen.GTStoneLayersGen;
 import gregtech.content.worldgen.OreSourceCatalog;
 import gregtech.content.worldgen.StoneLayerField;
 import gregtech.engine.material.GTMaterialRegistry;
@@ -21,8 +19,8 @@ import javax.imageio.ImageIO;
 public final class WorldgenSampler {
     static final int BOTTOM = -64;
     static final int TOP = 319;
-    private static final int OLD_BOTTOM = -47;
-    private static final int OLD_TOP = 143;
+
+    record Layer(String material, boolean noDeep, boolean hasOre) {}
 
     record Area(int centerX, int centerZ, int width, int sliceY) {
         int minX() {
@@ -78,15 +76,18 @@ public final class WorldgenSampler {
     }
 
     public static void main(String[] args) throws IOException {
-        if (args.length < 6 || args.length > 7) {
+        if (args.length < 6 || args.length > 8) {
             throw new IllegalArgumentException(
-                    "Expected: seed output centerX centerZ width sliceY [--legacy|--mineral=name]");
+                    "Expected: seed output centerX centerZ width sliceY [--legacy [--heights=heights.csv]|--mineral=name]");
         }
-        String option = args.length == 7 ? args[6] : "";
+        String option = args.length > 6 ? args[6] : "";
         boolean legacy = option.equals("--legacy");
         String mineral = option.startsWith("--mineral=") ? option.substring("--mineral=".length()) : "";
         if (!option.isEmpty() && !legacy && mineral.isBlank())
             throw new IllegalArgumentException("Unknown option " + option);
+        if (args.length == 8 && (!legacy || !args[7].startsWith("--heights="))) {
+            throw new IllegalArgumentException("The legacy height map must be supplied as --heights=path");
+        }
         long seed = Long.parseLong(args[0]);
         Path output = Path.of(args[1]);
         var area = new Area(
@@ -101,8 +102,15 @@ public final class WorldgenSampler {
         }
 
         var field = new StoneLayerField(seed);
-        var oldField = legacy ? new GTCellNoise(seed) : null;
-        List<GTStoneLayersGen.LayerDef> layers = legacy ? GTStoneLayersGen.LAYERS : StoneLayerField.layers();
+        var oldField = legacy ? new LegacyStrata(seed, args.length == 8 ? Path.of(args[7].substring(10)) : null) : null;
+        var layers = legacy
+                ? oldField.layers()
+                : StoneLayerField.layers().stream()
+                        .map(layer -> new Layer(
+                                layer.material(),
+                                layer.noDeep(),
+                                layer.isOreSeam() || !layer.ores().isEmpty()))
+                        .toList();
         int[] palette = new int[layers.size() + 1];
         palette[0] = color("Host");
         for (int i = 0; i < layers.size(); i++)
@@ -116,7 +124,7 @@ public final class WorldgenSampler {
             for (int dz = 0; dz < width; dz++) {
                 int z = area.minZ() + dz;
                 int layer = legacy
-                        ? oldIndex(oldField, x, sliceY, z)
+                        ? oldField.index(x, sliceY, z)
                         : field.column(x, z).layerIndex(sliceY);
                 horizontal.put(dx, dz, layer);
             }
@@ -137,7 +145,7 @@ public final class WorldgenSampler {
     }
 
     private static LayerImage vertical(
-            Path output, Area area, Axis axis, StoneLayerField field, GTCellNoise oldField, int[] palette)
+            Path output, Area area, Axis axis, StoneLayerField field, LegacyStrata oldField, int[] palette)
             throws IOException {
         int width = area.width();
         var section = new LayerImage(axis.file, width, TOP - BOTTOM + 1, palette);
@@ -153,7 +161,7 @@ public final class WorldgenSampler {
             int x = axis.x(area, offset);
             int z = axis.z(area, offset);
             for (int y = BOTTOM; y <= TOP; y++) {
-                int layer = samples == null ? oldIndex(oldField, x, y, z) : samples.layerIndex(x, y, z);
+                int layer = samples == null ? oldField.index(x, y, z) : samples.layerIndex(x, y, z);
                 section.put(offset, TOP - y, layer);
                 if (samples != null) {
                     samples.contacts(x, y, z, contacts);
@@ -176,8 +184,7 @@ public final class WorldgenSampler {
         return section;
     }
 
-    private static void writeLayers(Path output, List<GTStoneLayersGen.LayerDef> layers, List<LayerImage> images)
-            throws IOException {
+    private static void writeLayers(Path output, List<Layer> layers, List<LayerImage> images) throws IOException {
         Map<String, int[]> counts = new TreeMap<>();
         var summary = new StringBuilder("slice,catalog_empty_blocks,total_blocks\n");
         var csv = new StringBuilder("material,rgb");
@@ -196,7 +203,7 @@ public final class WorldgenSampler {
                 if (count == 0) continue;
                 String material = i == 0 ? "Host" : layers.get(i - 1).material();
                 counts.computeIfAbsent(material, ignored -> new int[images.size()])[plane] += count;
-                if (i > 0 && layers.get(i - 1).ores().isEmpty()) barren += count;
+                if (i > 0 && !layers.get(i - 1).hasOre()) barren += count;
             }
             summary.append(image.name)
                     .append(',')
@@ -243,15 +250,6 @@ public final class WorldgenSampler {
         int size() {
             return image.getWidth() * image.getHeight();
         }
-    }
-
-    private static int oldIndex(GTCellNoise field, int x, int y, int z) {
-        if (y < OLD_BOTTOM || y > OLD_TOP) return -1;
-        int index = field.get(x, y, z, GTStoneLayersGen.LAYERS.size());
-        return y < StoneLayerField.SHALLOW_LAYER_MIN_Y
-                        && GTStoneLayersGen.LAYERS.get(index).noDeep()
-                ? -1
-                : index;
     }
 
     private static int color(String material) {

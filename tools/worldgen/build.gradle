@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+}
+
+repositories { mavenCentral() }
+
+dependencies {
+    implementation project(':core')
+    implementation 'net.kyori:adventure-nbt:4.17.0'
+    implementation 'org.lz4:lz4-java:1.8.0'
+    testImplementation platform('org.junit:junit-bom:5.11.4')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+tasks.named('test') { useJUnitPlatform() }
+
+[sampleWorldgen: 'WorldgenSampler', surveyWorldgen: 'WorldgenSurvey',
+ scanSave: 'WorldgenSaveScanner', compareWorldgen: 'WorldgenComparison',
+ checkWorldgenDistribution: 'WorldgenDistributionCheck'].each { command, entry ->
+    tasks.register(command, JavaExec) {
+        group = 'worldgen'
+        mainClass = 'gregtech.tools.worldgen.' + entry
+        classpath = sourceSets.main.runtimeClasspath
+        javaLauncher = javaToolchains.launcherFor(java.toolchain)
+        workingDir = rootProject.projectDir
+    }
+}

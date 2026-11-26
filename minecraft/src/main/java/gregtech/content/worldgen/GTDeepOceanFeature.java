@@ -4,9 +4,6 @@ import gregtech.content.block.OreHostStone;
 import gregtech.content.block.stone.StoneVariant;
 import gregtech.content.registry.GTBlocks;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.WorldGenLevel;
@@ -105,9 +102,4 @@ public class GTDeepOceanFeature extends Feature<NoneFeatureConfiguration> {
     public static boolean isWater(BlockState state) {
         return state.is(Blocks.WATER);
     }
-
-    /** Registry key of the configured feature (data file {@code worldgen/configured_feature/gt_deep_ocean.json}). */
-    public static final ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> CONFIGURED =
-            ResourceKey.create(
-                    Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_deep_ocean"));
 }

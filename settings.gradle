@@ -22,6 +22,8 @@ include 'api', 'core'
 // Build-time resource conversion shared by the build and its tests; never shipped in the mod.
 include 'buildtools'
 project(':buildtools').projectDir = file('tools/buildtools')
+include 'worldgen-tools'
+project(':worldgen-tools').projectDir = file('tools/worldgen')
 project(':api').projectDir = file('api/common')
 include 'api-platform'
 project(':api-platform').projectDir = file('api/minecraft')

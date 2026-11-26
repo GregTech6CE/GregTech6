@@ -1,6 +1,10 @@
 package gregtech.content.worldgen;
 
+import gregtech.api.addon.worldgen.OreVeinDeclaration;
+import gregtech.api.material.GTMaterial;
+import java.util.List;
 import java.util.Random;
+import java.util.function.IntUnaryOperator;
 
 /** Shared mineral and bedrock geometry helpers; platform sinks own block identity and placement. */
 public final class MineralWorldgenRules {
@@ -8,6 +12,12 @@ public final class MineralWorldgenRules {
     public static final int LEGACY_ORE_FLOOR = -48;
 
     private MineralWorldgenRules() {}
+
+    public static int legacyHeight(String dimension, int declaredY) {
+        return OreVeinDeclaration.OVERWORLD.equals(dimension)
+                ? MineralWorldgenRules.overworldHeight(declaredY, MineralWorldgenRules.LEGACY_ORE_FLOOR)
+                : declaredY;
+    }
 
     public static int overworldHeight(int oldY, int floor) {
         if (oldY >= HEIGHT_ANCHOR_Y) return oldY;
@@ -25,7 +35,7 @@ public final class MineralWorldgenRules {
     }
 
     /** Zero-based weighted draw. A roll beyond all real weights represents an empty cell. */
-    public static GTOreVeins.OreVein selectVein(java.util.List<GTOreVeins.OreVein> veins, int roll) {
+    public static GTOreVeins.OreVein selectVein(List<GTOreVeins.OreVein> veins, int roll) {
         if (roll < 0) throw new IllegalArgumentException("Negative ore vein roll");
         for (var vein : veins) {
             if (roll < vein.weight()) return vein;
@@ -41,7 +51,24 @@ public final class MineralWorldgenRules {
         return new Point((int) (r.nextGaussian() * 1500), (int) (r.nextGaussian() * 1500));
     }
 
-    public static int scatterAttempts(int amount, java.util.function.IntUnaryOperator random) {
+    @FunctionalInterface
+    public interface OrePlacer {
+        boolean place(int x, int y, int z, GTMaterial material, boolean small);
+    }
+
+    public static long coltanFieldSeed(long seed, int minX, int minZ) {
+        return WorldgenHash.at(seed ^ 0x434F4C54414EL, minX, minZ);
+    }
+
+    public static long coltanCoreSeed(long fieldSeed) {
+        return fieldSeed ^ 0x434F5245L;
+    }
+
+    public static long bedrockDepositSeed(long dimensionSeed, int chunkX, int chunkZ, String name) {
+        return WorldgenHash.at(dimensionSeed, chunkX, name.hashCode(), chunkZ);
+    }
+
+    public static int scatterAttempts(int amount, IntUnaryOperator random) {
         return Math.max(1, amount / 2 + random.applyAsInt(1 + amount) / 2);
     }
 
@@ -68,8 +95,8 @@ public final class MineralWorldgenRules {
 
     public record Tier(int fromL, int toL, int radius) {}
 
-    public static final java.util.List<Tier> PYLON_TIERS =
-            java.util.List.of(new Tier(8, 10, 0), new Tier(5, 7, 1), new Tier(2, 4, 2), new Tier(0, 1, 3));
+    public static final List<Tier> PYLON_TIERS =
+            List.of(new Tier(8, 10, 0), new Tier(5, 7, 1), new Tier(2, 4, 2), new Tier(0, 1, 3));
     private static final int[] MUFFIN_INNER = {5, 4, 2, 1, 0, 2, 5}, MUFFIN_OUTER = {11, 12, 14, 15, 16, 14, 11};
 
     public interface VeinSink {
@@ -85,13 +112,7 @@ public final class MineralWorldgenRules {
     }
 
     public static boolean bedrockVein(
-            int minX,
-            int minZ,
-            int floor,
-            int tailLimit,
-            boolean prepare,
-            java.util.function.IntUnaryOperator random,
-            VeinSink sink) {
+            int minX, int minZ, int floor, int tailLimit, boolean prepare, IntUnaryOperator random, VeinSink sink) {
         if (!sink.isBedrockFloor(minX + 8, floor, minZ + 8)) return false;
         boolean core = placeBedrockCore(sink, minX + 6 + random.applyAsInt(4), floor, minZ + 6 + random.applyAsInt(4));
         for (int x = 5; x < 11 && !core; x++) {

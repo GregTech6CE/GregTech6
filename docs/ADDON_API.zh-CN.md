@@ -71,7 +71,7 @@ API 1.9 同期将宿主内部的 `SpecialProcessMethods` 移至 `gregtech.conten
 
 API 1.11 为矿脉和小矿增加绝对高度声明。使用新构造器的附属可通过 `GregTechAddons.apiVersion() >= 1011` 检查宿主支持。
 
-在 `AddonMaterialContributor.oreVeins()` 和 `smallOres()` 中返回声明。已有构造器继续使用原版 GT6 的 `0..255` 坐标，主世界按旧规则换算。新构造器在最后接收 `HeightCoordinates.ABSOLUTE`，允许直接指定现代 Y 范围。运行时会按目标维度地形高度裁剪。
+在 `AddonMaterialContributor.oreVeins()` 和 `smallOres()` 中返回声明。已有构造器继续使用原版 GT6 的 `0..255` 坐标，主世界按旧规则换算。API 1.11（1011）新增 `HeightCoordinates` 枚举，在 `OreVeinDeclaration` 与 `SmallOreDeclaration` 的 record 末尾增加 `coordinates`。原 11 参数和 6 参数构造器仍可供已编译的附属调用，并委托给同一套注册流程。通过反射枚举 record 组件会多出一个字段，按组件构造实例时应读取新签名。选 `ABSOLUTE` 时，两端点均可取 −2032～2031 且包含端点，落矿前按地形裁剪。旧坐标散矿沿用转换后左闭右开的高度区间。
 
 ```java
 new SmallOreDeclaration("deep_iron", SmallOreDeclaration.OVERWORLD,

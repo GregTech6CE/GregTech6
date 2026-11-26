@@ -49,6 +49,36 @@ final class WorldgenHeatmap {
         values[chunk] = Math.addExact(values[chunk], amount);
     }
 
+    void writeSingle(Path output, Region region, String mineral, int issues) throws IOException {
+        int cell = Math.max(1, 288 / region.side()), panel = region.side() * cell;
+        int width = 2 * panel + 3 * MARGIN, height = 2 * panel + 130;
+        try (var svg = Files.newBufferedWriter(output)) {
+            svg.write("<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"" + width + "\" height=\"" + height + "\">");
+            rect(svg, 0, 0, width, height, "#17191e");
+            svg.write("<g font-family=\"sans-serif\" fill=\"#e8ebf1\">");
+            String material = "*".equals(mineral) ? "All minerals" : mineral;
+            text(svg, MARGIN, 25, 18, material + " · " + region.dimension());
+            text(
+                    svg,
+                    MARGIN,
+                    47,
+                    12,
+                    "Origin chunk (" + region.originX() + ", " + region.originZ() + ") · "
+                            + (issues == 0
+                                    ? "Complete sample"
+                                    : "Incomplete: " + issues + " skipped entries (see skipped.csv)"));
+            for (var form : Form.values()) {
+                int x = MARGIN + (form.ordinal() % 2) * (panel + MARGIN);
+                int y = 83 + (form.ordinal() / 2) * (panel + 33);
+                var values = counts[form.ordinal()];
+                long max = Arrays.stream(values).max().orElse(0);
+                text(svg, x, y - 5, 12, form.label + " · max " + max);
+                drawPanel(svg, region, x, y, cell, values, max);
+            }
+            svg.write("</g></svg>\n");
+        }
+    }
+
     static void write(Path output, String material, Sample baseline, Sample candidate) throws IOException {
         var region = baseline.region();
         int cell = Math.max(1, 288 / region.side());

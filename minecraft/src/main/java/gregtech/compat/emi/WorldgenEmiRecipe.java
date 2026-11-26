@@ -4,6 +4,8 @@ import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.*;
 import dev.emi.emi.api.stack.*;
 import dev.emi.emi.api.widget.WidgetHolder;
+import gregtech.compat.common.OreGenerationClient;
+import gregtech.compat.common.RecipeViewerIcons;
 import gregtech.compat.common.WorldgenInfoData;
 import java.util.*;
 import net.minecraft.client.Minecraft;
@@ -71,9 +73,8 @@ public final class WorldgenEmiRecipe implements EmiRecipe {
     }
 
     public static void register(EmiRegistry registry) {
-        var atlas = gregtech.client.OreGenerationClient.beginBuild();
-        var veins = category(
-                registry, "ore_veins", "ore_veins", gregtech.compat.common.RecipeViewerIcons.item("ore_iridium"));
+        var atlas = OreGenerationClient.beginBuild();
+        var veins = category(registry, "ore_veins", "ore_veins", RecipeViewerIcons.item("ore_iridium"));
         int index = 0;
         for (var vein : WorldgenInfoData.buildVeins()) {
             var previews = WorldgenInfoData.veinPreviews(vein);
@@ -92,11 +93,7 @@ public final class WorldgenEmiRecipe implements EmiRecipe {
                             .map(WorldgenInfoData.OrePreview::tooltip)
                             .toList()));
         }
-        var small = category(
-                registry,
-                "small_ores_info",
-                "small_ores",
-                gregtech.compat.common.RecipeViewerIcons.item("ore_small_iridium"));
+        var small = category(registry, "small_ores_info", "small_ores", RecipeViewerIcons.item("ore_small_iridium"));
         index = 0;
         for (var ore : WorldgenInfoData.buildSmallOres()) {
             registry.addRecipe(new WorldgenEmiRecipe(
@@ -112,11 +109,7 @@ public final class WorldgenEmiRecipe implements EmiRecipe {
                             .map(WorldgenInfoData.OrePreview::tooltip)
                             .toList()));
         }
-        var layers = category(
-                registry,
-                "stone_layers_info",
-                "stone_layers",
-                gregtech.compat.common.RecipeViewerIcons.item("block_ore_salt"));
+        var layers = category(registry, "stone_layers_info", "stone_layers", RecipeViewerIcons.item("block_ore_salt"));
         index = 0;
         for (var layer : WorldgenInfoData.buildLayers()) {
             var previews = WorldgenInfoData.layerPreviews(layer);
@@ -135,8 +128,7 @@ public final class WorldgenEmiRecipe implements EmiRecipe {
                             .map(WorldgenInfoData.OrePreview::tooltip)
                             .toList()));
         }
-        var bedrock = category(
-                registry, "bedrock_ores", "bedrock_ores", gregtech.compat.common.RecipeViewerIcons.bedrockOre());
+        var bedrock = category(registry, "bedrock_ores", "bedrock_ores", RecipeViewerIcons.bedrockOre());
         index = 0;
         for (var ore : WorldgenInfoData.buildBedrockOres()) {
             registry.addRecipe(new WorldgenEmiRecipe(
@@ -148,7 +140,7 @@ public final class WorldgenEmiRecipe implements EmiRecipe {
                     .withAliases(WorldgenInfoData.bedrockAliases(ore))
                     .withOutputTooltips(List.of(WorldgenInfoData.oreSourceCaptions(ore.material()))));
         }
-        gregtech.client.OreGenerationClient.finishBuild(atlas);
+        OreGenerationClient.finishBuild(atlas);
     }
 
     @Override

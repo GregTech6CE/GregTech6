@@ -38,10 +38,6 @@ public final class BakedModelMap {
         return usable(rawGet(new ModelResourceLocation(id, variant)));
     }
 
-    public BakedModel getState(ResourceLocation id, BlockState state) {
-        return usable(rawGet(BlockModelShaper.stateToModelLocation(id, state)));
-    }
-
     /** 1.20.1 keeps a plain {@link ResourceLocation} key for {@code RegisterAdditional} entries. */
     public BakedModel getPlain(ResourceLocation id) {
         return usable(rawGet(id));

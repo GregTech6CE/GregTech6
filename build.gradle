@@ -33,7 +33,7 @@ if (System.getenv('CI') == null) {
 }
 def requestedRatchet = providers.gradleProperty('spotlessRatchet').orNull
 if (requestedRatchet != null) spotlessRatchet = requestedRatchet ?: null
-def spotlessProjects = [':core', ':buildtools', ':minecraft', ':minecraft:1.20.1-forge', ':minecraft:1.21.1-neoforge']
+def spotlessProjects = [':core', ':buildtools', ':worldgen-tools', ':minecraft', ':minecraft:1.20.1-forge', ':minecraft:1.21.1-neoforge']
 configure(spotlessProjects.collect { project(it) }) { spotlessProject ->
     // Spotless resolves the formatter and its transitive dependencies from this project's
     // repositories. Core and the shared Minecraft project have no repository of their own;

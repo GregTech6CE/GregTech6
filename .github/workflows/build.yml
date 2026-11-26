@@ -9,6 +9,7 @@ on:
       - 'minecraft/**'
       - 'gradle/**'
       - 'tools/buildtools/**'
+      - 'tools/worldgen/**'
       - 'tools/comments/**'
       - 'tools/resources/**'
       - 'gradlew'
@@ -56,7 +57,7 @@ jobs:
           fi
           python tools/comments/check_comment_refs.py --diff "$range"
       - name: JUnit and formatting
-        run: ./gradlew --no-daemon --stacktrace :api:check :core:check :buildtools:check :minecraft:spotlessCheck
+        run: ./gradlew --no-daemon --stacktrace :api:check :core:check :buildtools:check :worldgen-tools:check :minecraft:spotlessCheck
 
   build:
     name: Build ${{ matrix.minecraft }} ${{ matrix.loader }}

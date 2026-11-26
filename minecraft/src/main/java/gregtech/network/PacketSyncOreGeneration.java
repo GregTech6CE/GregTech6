@@ -23,17 +23,13 @@ import net.neoforged.neoforge.network.registration.NetworkRegistry;
 import java.util.function.Supplier;
 import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.PacketDistributor;
 //?}
 
 /** The ore atlas follows the same login and reload sequence as the recipes and tags. */
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid = GregTechIdentity.MOD_ID)
-*///?} else {
-@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID)
-//?}
+@EventBusSubscriber(modid = GregTechIdentity.MOD_ID)
 public record PacketSyncOreGeneration(OreGenerationSummary summary)
 //? if >=1.21.1 {
 /*        implements CustomPacketPayload
@@ -58,7 +54,7 @@ public record PacketSyncOreGeneration(OreGenerationSummary summary)
     //?}
 
     public void apply() {
-        gregtech.client.OreGenerationClient.accept(summary);
+        OreGenerationSummary.acceptClientSummary(summary);
     }
 
     public static void encode(PacketSyncOreGeneration packet, FriendlyByteBuf buffer) {

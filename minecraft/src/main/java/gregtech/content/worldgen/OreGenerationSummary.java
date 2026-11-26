@@ -74,11 +74,7 @@ public record OreGenerationSummary(
         }
 
         private Dimension ordinary(HeightRange heights, boolean geology) {
-            return new Dimension(
-                    heights,
-                    geology && veins,
-                    geology && smallOres,
-                    geology && GTWorldgenDefaults.STONE_LAYERS && strata);
+            return new Dimension(heights, geology && veins, geology && smallOres, geology && strata);
         }
     }
 
@@ -200,6 +196,10 @@ public record OreGenerationSummary(
         clientSummary = summary;
     }
 
+    public static OreGenerationSummary received() {
+        return clientSummary;
+    }
+
     /** Uses the connected world's summary when available and a catalog preview otherwise. */
     public static OreGenerationSummary current() {
         var installed = clientSummary;
@@ -217,7 +217,7 @@ public record OreGenerationSummary(
                             OreSourceCatalog.defaultTerrain(name),
                             catalog.veinDimensions().contains(name),
                             catalog.smallOreDimensions().contains(name),
-                            GTWorldgenDefaults.STONE_LAYERS && OreVeinDeclaration.OVERWORLD.equals(name)));
+                            OreVeinDeclaration.OVERWORLD.equals(name)));
         }
         var bedrock = new LinkedHashMap<String, BedrockTable>();
         for (String name : catalog.bedrockDimensions()) {
@@ -230,7 +230,7 @@ public record OreGenerationSummary(
                 dimensions,
                 BoundaryGemOres.CHANCE_DIVISOR,
                 bedrock,
-                GTWorldgenDefaults.BEDROCK_DENSITY_PERCENT,
+                GTBedrockOres.DEFAULT_DENSITY_PERCENT,
                 Set.of(),
                 special);
     }

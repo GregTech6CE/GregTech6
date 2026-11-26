@@ -1,14 +1,19 @@
 package gregtech.content.worldgen;
 
 import static gregtech.api.addon.worldgen.OreVeinDeclaration.NETHER;
-import static gregtech.api.addon.worldgen.OreVeinDeclaration.OVERWORLD;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.content.material.Materials;
 import gregtech.content.material.generated.OreMaterials;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 /** Bedrock-specific eligibility, indicator flowers and baseline rarity from GT6 Loader_Worldgen. */
 public final class GTBedrockOres {
+    public static final int DEFAULT_DENSITY_PERCENT = 100;
+
     private GTBedrockOres() {}
 
     public enum Depth {
@@ -27,41 +32,79 @@ public final class GTBedrockOres {
         }
     }
 
-    static void register(OreSourceCatalog.Builder catalog) {
-        catalog.bedrock(OVERWORLD, "diamond", Materials.Diamond, 128000, "flower_pandanus_candelabrum");
-        catalog.bedrock(OVERWORLD, "tungstate", OreMaterials.Tungstate, 96000, "flower_tungstus");
-        catalog.bedrock(OVERWORLD, "ferberite", OreMaterials.Ferberite, 96000, "flower_tungstus");
-        catalog.bedrock(OVERWORLD, "wolframite", OreMaterials.Wolframite, 96000, "flower_tungstus");
-        catalog.bedrock(OVERWORLD, "stolzite", OreMaterials.Stolzite, 96000, "flower_tungstus");
-        catalog.bedrock(OVERWORLD, "scheelite", OreMaterials.Scheelite, 96000, "flower_tungstus");
-        catalog.bedrock(OVERWORLD, "huebnerite", OreMaterials.Huebnerite, 96000, "flower_tungstus");
-        catalog.bedrock(OVERWORLD, "russellite", OreMaterials.Russellite, 96000, "flower_tungstus");
-        catalog.bedrock(OVERWORLD, "pinalite", OreMaterials.Pinalite, 96000, "flower_tungstus");
-        catalog.bedrock(OVERWORLD, "uraninite", OreMaterials.Uraninite, 60000, "flower_tufted_evening_primrose");
-        catalog.bedrock(OVERWORLD, "pitchblende", OreMaterials.Pitchblende, 60000, "flower_thompsons_locoweed");
-        catalog.bedrock(OVERWORLD, "gold_a", Materials.Gold, 32000, "flower_altered_andesite_buckwheat");
-        catalog.bedrock(OVERWORLD, "gold_b", Materials.Gold, 32000, "flower_desert_trumpet");
-        catalog.bedrock(OVERWORLD, "cooperite", OreMaterials.Cooperite, 16000, "flower_narcissus_sheldonia");
-        catalog.bedrock(OVERWORLD, "copper", Materials.Copper, 16000, "flower_copper_plant");
-        catalog.bedrock(OVERWORLD, "monazite", Materials.Monazite, 16000, "flower_vindicator_flower");
-        catalog.bedrock(OVERWORLD, "powellite", OreMaterials.Powellite, 14000, "flower_orechid");
-        catalog.bedrock(OVERWORLD, "bastnasite", OreMaterials.Bastnasite, 8000, "flower_vindicator_flower");
-        catalog.bedrock(OVERWORLD, "arsenopyrite", OreMaterials.Arsenopyrite, 8000, "flower_sagebrush");
-        catalog.bedrock(OVERWORLD, "redstone", Materials.Redstone, 7000, "flower_prince_s_plume");
-        catalog.bedrock(OVERWORLD, "vanadium", Materials.VanadiumPentoxide, 6000, "flower_orechid");
-        catalog.bedrock(OVERWORLD, "galena", OreMaterials.Galena, 6000, "flower_crosby_buckwheat");
-        catalog.bedrock(OVERWORLD, "coal", Materials.Coal, 5000, "flower_orechid");
-        catalog.bedrock(OVERWORLD, "graphite", Materials.Graphite, 5000, "flower_orechid");
-        catalog.bedrock(OVERWORLD, "stibnite", OreMaterials.Stibnite, 4000, "flower_four_wing_saltbush");
-        catalog.bedrock(OVERWORLD, "hematite", Materials.Hematite, 4000, "flower_orechid");
-        catalog.bedrock(OVERWORLD, "sphalerite", OreMaterials.Sphalerite, 3000, "flower_viola_calaminaria");
-        catalog.bedrock(OVERWORLD, "smithsonite", OreMaterials.Smithsonite, 3000, "flower_viola_calaminaria");
-        catalog.bedrock(OVERWORLD, "pentlandite", OreMaterials.Pentlandite, 3000, "flower_thlaspi_lereschianum");
-        catalog.bedrock(OVERWORLD, "saltpeter", Materials.Niter, 3000, "flower_orechid");
-        catalog.bedrock(OVERWORLD, "bauxite", OreMaterials.Bauxite, 2000, "flower_orechid");
-        catalog.bedrock(OVERWORLD, "cassiterite", OreMaterials.Cassiterite, 2000, "flower_orechid");
-        catalog.bedrock(OVERWORLD, "chalcopyrite", OreMaterials.Chalcopyrite, 2000, "flower_alpine_catchfly");
+    /** Historical overrides keep rare deposits, flower pairs and existing per-ore configuration keys. */
+    record DepositOverride(String name, int divisor, String flower) {}
 
+    private static final Map<GTMaterial, List<DepositOverride>> OVERRIDES = Map.ofEntries(
+            Map.entry(
+                    Materials.Diamond, List.of(new DepositOverride("diamond", 128000, "flower_pandanus_candelabrum"))),
+            Map.entry(OreMaterials.Tungstate, List.of(new DepositOverride("tungstate", 96000, "flower_tungstus"))),
+            Map.entry(OreMaterials.Ferberite, List.of(new DepositOverride("ferberite", 96000, "flower_tungstus"))),
+            Map.entry(OreMaterials.Wolframite, List.of(new DepositOverride("wolframite", 96000, "flower_tungstus"))),
+            Map.entry(OreMaterials.Stolzite, List.of(new DepositOverride("stolzite", 96000, "flower_tungstus"))),
+            Map.entry(OreMaterials.Scheelite, List.of(new DepositOverride("scheelite", 96000, "flower_tungstus"))),
+            Map.entry(OreMaterials.Huebnerite, List.of(new DepositOverride("huebnerite", 96000, "flower_tungstus"))),
+            Map.entry(OreMaterials.Russellite, List.of(new DepositOverride("russellite", 96000, "flower_tungstus"))),
+            Map.entry(OreMaterials.Pinalite, List.of(new DepositOverride("pinalite", 96000, "flower_tungstus"))),
+            Map.entry(
+                    OreMaterials.Uraninite,
+                    List.of(new DepositOverride("uraninite", 60000, "flower_tufted_evening_primrose"))),
+            Map.entry(
+                    OreMaterials.Pitchblende,
+                    List.of(new DepositOverride("pitchblende", 60000, "flower_thompsons_locoweed"))),
+            Map.entry(
+                    Materials.Gold,
+                    List.of(
+                            new DepositOverride("gold_a", 32000, "flower_altered_andesite_buckwheat"),
+                            new DepositOverride("gold_b", 32000, "flower_desert_trumpet"))),
+            Map.entry(
+                    OreMaterials.Cooperite,
+                    List.of(new DepositOverride("cooperite", 16000, "flower_narcissus_sheldonia"))),
+            Map.entry(Materials.Copper, List.of(new DepositOverride("copper", 16000, "flower_copper_plant"))),
+            Map.entry(Materials.Monazite, List.of(new DepositOverride("monazite", 16000, "flower_vindicator_flower"))),
+            Map.entry(OreMaterials.Powellite, List.of(new DepositOverride("powellite", 14000, "flower_orechid"))),
+            Map.entry(
+                    OreMaterials.Bastnasite,
+                    List.of(new DepositOverride("bastnasite", 8000, "flower_vindicator_flower"))),
+            Map.entry(
+                    OreMaterials.Arsenopyrite, List.of(new DepositOverride("arsenopyrite", 8000, "flower_sagebrush"))),
+            Map.entry(Materials.Redstone, List.of(new DepositOverride("redstone", 7000, "flower_prince_s_plume"))),
+            Map.entry(Materials.VanadiumPentoxide, List.of(new DepositOverride("vanadium", 6000, "flower_orechid"))),
+            Map.entry(OreMaterials.Galena, List.of(new DepositOverride("galena", 6000, "flower_crosby_buckwheat"))),
+            Map.entry(Materials.Coal, List.of(new DepositOverride("coal", 5000, "flower_orechid"))),
+            Map.entry(Materials.Graphite, List.of(new DepositOverride("graphite", 5000, "flower_orechid"))),
+            Map.entry(
+                    OreMaterials.Stibnite, List.of(new DepositOverride("stibnite", 4000, "flower_four_wing_saltbush"))),
+            Map.entry(Materials.Hematite, List.of(new DepositOverride("hematite", 4000, "flower_orechid"))),
+            Map.entry(
+                    OreMaterials.Sphalerite,
+                    List.of(new DepositOverride("sphalerite", 3000, "flower_viola_calaminaria"))),
+            Map.entry(
+                    OreMaterials.Smithsonite,
+                    List.of(new DepositOverride("smithsonite", 3000, "flower_viola_calaminaria"))),
+            Map.entry(
+                    OreMaterials.Pentlandite,
+                    List.of(new DepositOverride("pentlandite", 3000, "flower_thlaspi_lereschianum"))),
+            Map.entry(Materials.Niter, List.of(new DepositOverride("saltpeter", 3000, "flower_orechid"))),
+            Map.entry(OreMaterials.Bauxite, List.of(new DepositOverride("bauxite", 2000, "flower_orechid"))),
+            Map.entry(OreMaterials.Cassiterite, List.of(new DepositOverride("cassiterite", 2000, "flower_orechid"))),
+            Map.entry(
+                    OreMaterials.Chalcopyrite,
+                    List.of(new DepositOverride("chalcopyrite", 2000, "flower_alpine_catchfly"))));
+
+    static Set<GTMaterial> historicalMaterials() {
+        return OVERRIDES.keySet();
+    }
+
+    static List<DepositOverride> overworld(GTMaterial material, int primaryVeinWeight) {
+        var overrides = OVERRIDES.get(material);
+        if (overrides != null) return overrides;
+        if (primaryVeinWeight == 0) return List.of();
+        int divisor = Math.max(8000, 1_600_000 / primaryVeinWeight);
+        return List.of(new DepositOverride(material.getName().toLowerCase(Locale.ROOT), divisor, null));
+    }
+
+    static void registerNether(OreSourceCatalog.Builder catalog) {
         catalog.bedrock(NETHER, "glowstone", Materials.Glowstone, 4000, null);
         catalog.bedrock(NETHER, "netherquartz", Materials.NetherQuartz, 2000, null);
         catalog.bedrock(NETHER, "ancientdebris", Materials.AncientDebris, 4000, null);

@@ -45,6 +45,7 @@ issue  source  kind  target  expected
 ./gradlew :api:test
 ./gradlew :core:test
 ./gradlew :buildtools:test
+./gradlew :worldgen-tools:test
 ./gradlew :api-platform:1.20.1-forge:test
 ./gradlew :api-platform:1.21.1-neoforge:test
 

@@ -103,9 +103,7 @@ public final class WorldgenSurvey {
         ores.forEach(material -> minerals.put(material, new Mineral()));
         var layers = StoneLayerField.layers();
         var seams = layers.stream()
-                .map(layer -> layer.blockId() != null && layer.blockId().startsWith("block_ore_")
-                        ? GTMaterialRegistry.get(layer.material())
-                        : null)
+                .map(layer -> layer.isOreSeam() ? GTMaterialRegistry.get(layer.material()) : null)
                 .toArray(GTMaterial[]::new);
         var volumes = new LayerVolumes(layers.size(), BOTTOM + 1, area.top());
         var field = new StoneLayerField(seed);

@@ -2,16 +2,17 @@ package gregtech.content.worldgen;
 
 import static gregtech.content.worldgen.FluidSpringRules.SPRINGS;
 
+import gregtech.GregTechConfig;
 import gregtech.content.block.GTGrassBlock;
 import gregtech.content.block.OreBlock;
 import gregtech.content.registry.GTFluidSprings;
 import gregtech.content.worldgen.FluidSpringRules.Spring;
 import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
@@ -37,19 +38,24 @@ public class GTFluidSpringsFeature extends Feature<NoneFeatureConfiguration> {
 
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-        if (!gregtech.GregTechConfig.Worldgen.FLUID_SPRINGS.enabled()) return false;
+        if (!GregTechConfig.Worldgen.FLUID_SPRINGS.enabled()) return false;
         WorldGenLevel level = context.level();
-        RandomSource random = context.random();
+        long seed = WorldgenHash.at(
+                level.getSeed() ^ 0x535052494E47L,
+                context.origin().getX() >> 4,
+                context.origin().getZ() >> 4);
+        RandomSource random = RandomSource.create(seed);
         if (level.getLevel().dimension() != Level.OVERWORLD) return false;
         Spring spring = SPRINGS.get(random.nextInt(SPRINGS.size()));
         // GT6: `aRandom.nextInt(mProbability) != 0` → return.
-        if (random.nextInt(Math.max(
-                        1, gregtech.GregTechConfig.Number.SPRING_PROBABILITY.value() * (spring.probability() / 100)))
+        if (random.nextInt(Math.max(1, GregTechConfig.Number.SPRING_PROBABILITY.value() * (spring.probability() / 100)))
                 != 0) return false;
         int minX = context.origin().getX() & ~15;
         int minZ = context.origin().getZ() & ~15;
+        if (GTBedrockOreFeature.reservesSpringSite(level, context.chunkGenerator(), new ChunkPos(context.origin())))
+            return false;
         if (!carve(level, minX, minZ, spring, random)) return false;
-        indicators(level, minX, minZ, spring, random);
+        indicators(level, minX, minZ, spring, RandomSource.create(seed ^ 0x4752415353L));
         return true;
     }
 
@@ -58,7 +64,7 @@ public class GTFluidSpringsFeature extends Feature<NoneFeatureConfiguration> {
      * where the space is free, the spring's block at layer {@code i} for {@code i &gt; 0}, and a
      * spring tile entity every 1/16 columns that sit on bedrock.
      */
-    public static boolean carve(WorldGenLevel level, int minX, int minZ, Spring spring, RandomSource random) {
+    private static boolean carve(WorldGenLevel level, int minX, int minZ, Spring spring, RandomSource random) {
         int base = level.getMinBuildHeight();
         // WorldgenFluidSpring shares the chunk with bedrock ores only when no deposit has claimed it.
         if (!GTBedrockOreFeature.canPlaceSpringField(level, minX, minZ)) return false;
@@ -112,7 +118,7 @@ public class GTFluidSpringsFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     /** Places GT6's spring tile entity on a bedrock column. */
-    public static boolean placeSpring(WorldGenLevel level, BlockPos pos, Spring spring) {
+    private static boolean placeSpring(WorldGenLevel level, BlockPos pos, Spring spring) {
         var variant = GTFluidSprings.byFluid(spring.fluidId());
         return variant != null
                 && pos.getY() == level.getMinBuildHeight()
@@ -121,7 +127,7 @@ public class GTFluidSpringsFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     /** GT6's surface indicator: up to six patches of GT6 grass above the field. */
-    public static boolean indicators(WorldGenLevel level, int minX, int minZ, Spring spring, RandomSource random) {
+    private static boolean indicators(WorldGenLevel level, int minX, int minZ, Spring spring, RandomSource random) {
         Block indicator = indicatorBlock(spring.indicatorType());
         if (indicator == null) return false;
         boolean placed = false;
@@ -144,7 +150,7 @@ public class GTFluidSpringsFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     private static boolean isIndicatorGround(BlockState state) {
-        return state.is(Blocks.GRASS_BLOCK) || state.getBlock() instanceof GTGrassBlock;
+        return state.is(BlockTags.DIRT) || state.is(BlockTags.SAND) || state.getBlock() instanceof GTGrassBlock;
     }
 
     /**
@@ -153,7 +159,7 @@ public class GTFluidSpringsFeature extends Feature<NoneFeatureConfiguration> {
      * icon set carries those textures as {@code grassblock_yellow}, {@code grassblock_brown} and
      * {@code grassblock_normal}.
      */
-    public static Block indicatorBlock(int indicatorType) {
+    private static Block indicatorBlock(int indicatorType) {
         String id = switch (indicatorType) {
             case 1 -> "grassblock_yellow";
             case 2 -> "grassblock_brown";
@@ -169,14 +175,4 @@ public class GTFluidSpringsFeature extends Feature<NoneFeatureConfiguration> {
         Block block = Mc.block(ResourceLocation.parse(id));
         return block == null || block == Blocks.AIR ? null : block.defaultBlockState();
     }
-
-    /** The spring block a placed spring uses (kept for the tests and tools). */
-    public static Block springBlock() {
-        return GTFluidSprings.FLUID_SPRING.get();
-    }
-
-    /** Registry key of the configured feature (data file {@code worldgen/configured_feature/gt_fluid_springs.json}). */
-    public static final ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> CONFIGURED =
-            ResourceKey.create(
-                    Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_fluid_springs"));
 }

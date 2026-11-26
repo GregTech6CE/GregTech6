@@ -1,9 +1,0 @@
-package gregtech.content.worldgen;
-
-/** GT6 default mode: CS.GENERATE_STONE and GT6WorldGenerator. */
-public final class GTWorldgenDefaults {
-    private GTWorldgenDefaults() {}
-
-    public static final boolean STONE_LAYERS = true;
-    public static final int BEDROCK_DENSITY_PERCENT = 100;
-}

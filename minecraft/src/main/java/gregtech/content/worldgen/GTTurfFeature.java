@@ -2,8 +2,6 @@ package gregtech.content.worldgen;
 import gregtech.platform.Mc;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
@@ -128,9 +126,4 @@ public class GTTurfFeature extends Feature<NoneFeatureConfiguration> {
         return state.is(BlockTags.LOGS) || state.is(BlockTags.PLANKS)
                 || state.is(Blocks.MELON) || state.is(Blocks.PUMPKIN);
     }
-
-    /** Registry key of the configured feature (data file {@code worldgen/configured_feature/gt_turf.json}). */
-    public static final ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> CONFIGURED =
-            ResourceKey.create(Registries.CONFIGURED_FEATURE,
-                    ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_turf"));
 }

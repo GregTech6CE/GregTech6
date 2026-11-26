@@ -1,33 +1,48 @@
-# 世界生成调试
+# 世界生成勘探与离线工具
 
-## 游戏内命令
+## 游戏内定位
 
-以下命令需要二级管理权限。在聊天栏输入 `/gt6ce worldgen` 后可按 Tab 补全。
+需要 2 级命令权限。两个入口接受相同的参数，按 Tab 可补全当前维度启用的材料和搜索半径。
 
-| 子命令 | 用途 |
-| --- | --- |
-| `inspect` | 查看当前区块的岩层、实际矿物、地表指示物和规划矿脉。 |
-| `locate <ore\|layer\|bedrock_ore> <材料> [区块半径] [saved]` | 先查附近已加载的方块，再按种子推算候选位置或查已保存区块。半径默认 256，范围 1～512。 |
-| `profile [x\|z [宽度]]` | 导出当前位置的实际地质剖面与规划岩层，宽度 1～512 格。 |
-| `sample <半径>` | 统计半径 0～8 区块内已加载的矿物数量、高度及距离。 |
-| `export <边长>` | 从当前区块向正 X、正 Z 导出 1×1 至 64×64 个区块，一次只运行一个导出任务。 |
-
-`/gt6ce worldgen locate ore Chromite 128 saved` 只查实际方块。后台最多读取 2,048 个已保存区块。损坏的区段会记入服务端日志，其他区段继续搜索。定位不会生成新区块。
-
-`/gt6ce worldgen export 5` 会分批读取 25 个区块。导出期间需要保持目标区域已加载。结果保存到存档的 `gt6ce-worldgen/chunk-sample-*/`，包含各区块的 `ores.csv`、各岩石的 `rocks.csv` 和最后写入的 `sample.properties`。区块缺失时命令会报告坐标并终止本次导出。
-
-## 离线工具
-
-从仓库根目录运行，使用 JDK 17。以下参数给出一组可直接复用的例子。
-
-```powershell
-.\gradlew.bat :buildtools:sampleWorldgen '--args=73 work/worldgen/layers 0 0 512 -35'
-.\gradlew.bat :buildtools:surveyWorldgen '--args=42 work/worldgen/survey-42 120 120 64 143'
-.\gradlew.bat :buildtools:compareWorldgen '--args=work/worldgen/compare 12 work/worldgen/old work/worldgen/new --mineral=Chromite'
-.\gradlew.bat :buildtools:checkWorldgenDistribution '--args=work/worldgen/check Chromite=512 work/worldgen/survey-42'
+```text
+/gt6ce worldgen locate ore Chromite 128
+/locate gt6ce ore Chromite 128
 ```
 
-- `sampleWorldgen` 按种子、中心 X/Z、宽度和 Y 输出岩层切片。最后可加 `--legacy` 对照旧岩层。
-- `surveyWorldgen` 在指定区块起点、边长和地表高度下模拟主世界矿物分布，输出各矿的数量与距离。
-- `compareWorldgen` 读取同种子、同维度和同范围的两份实际导出。第二个参数指定统计起点排除的边缘区块数。可用 `--mineral` 输出指定矿物的热力图。
-- `checkWorldgenDistribution` 按材料检查到普通矿的第 99 百分位距离，阈值单位为格。可追加多个种子的报告。比较区块生成速度时，应使用实际生成到完整区块的耗时。
+将 `ore` 换成 `bedrock_ore` 可查基岩矿，换成 `layer` 可查岩层。半径单位为区块，默认 256，范围 1～512。先检查周围 3 区块内已加载的实际方块，再在指定半径内按种子和生成配置寻找候选。聊天结果标明实际方块或生成候选，点击坐标可填入传送命令。未探索区域的候选受地形与可替换方块影响。
+
+## 扫描已有存档
+
+关闭世界或使用已停止写入的存档副本。从仓库根目录运行，输出选一个全新的目录。下面读取从区块 (0, 0) 开始的 16×16 个区块，并为铬铁矿画热力图。
+
+```powershell
+.\gradlew.bat :worldgen-tools:scanSave '--args="D:/Minecraft/saves/Example" reports/chromite minecraft:overworld 0 0 16 Chromite'
+```
+
+`scanSave <存档> <输出目录> <维度 ID> <起点区块 X> <起点区块 Z> <边长 1～256> [材料]` 支持两端存档、原版和自定义维度。省略材料会在图中合计所有识别到的矿种。数据表始终包含扫描到的全部 GT 矿物。
+
+| 输出 | 内容 |
+| --- | --- |
+| `ore-map.svg`、`ores.csv` | 按区块统计普通矿、贫矿、基岩矿和地表粗矿。 |
+| `markers.csv`、`rocks.csv` | 石子的坐标、外观、材料和物品，以及已识别岩石的体积。指示石和同材料普通石子分别记录。 |
+| `heights.csv`、`skipped.csv` | 区块最高非空区段，以及未保存、不完整或不可读的区块与区段。 |
+| `sample.properties` | 种子、维度、区域和完整标记，数据写完后生成。有缺失的区域可查看热力图，比较工具只接受完整样本。 |
+
+对两个版本生成的存档分别运行 `scanSave`，选择同一种子、维度、起点和边长，把结果目录分别命名为 `reports/old`、`reports/new`。下面排除边缘 2 个区块的统计起点，输出两个版本的矿量、岩石体积和最近矿点距离分位数。
+
+```powershell
+.\gradlew.bat :worldgen-tools:compareWorldgen '--args=reports/comparison 2 reports/old reports/new --mineral=Chromite'
+```
+
+## 按种子预览
+
+```powershell
+.\gradlew.bat :worldgen-tools:sampleWorldgen '--args=73 reports/layers 0 0 512 -35 --mineral=Chromite'
+.\gradlew.bat :worldgen-tools:sampleWorldgen '--args=73 reports/legacy 0 0 512 -35 --legacy'
+.\gradlew.bat :worldgen-tools:surveyWorldgen '--args=73 reports/survey 0 0 32 143'
+.\gradlew.bat :worldgen-tools:checkWorldgenDistribution '--args=reports/check Chromite=512 reports/survey'
+```
+
+`sampleWorldgen` 的参数为种子、输出、中心方块 X/Z、边长和切片 Y，输出水平及两个垂直剖面。旧版对照读取 `9b64bc17d` 的原始岩层顺序和矿物标记，默认假设岩石延续到世界顶。已有覆盖整个切片的存档扫描时可在 `--legacy` 后加 `--heights=reports/chromite/heights.csv`，按实际最高非空区段截断。
+
+`surveyWorldgen` 使用相同的矿源、岩层和选点规则，在指定区块区域和地表高度的连续岩体中计算矿量与距离。洞穴、海洋和玩家改造留给存档扫描统计。`checkWorldgenDistribution` 可接受多个种子或扫描样本，检查普通矿的第 99 百分位距离，阈值单位为方块。

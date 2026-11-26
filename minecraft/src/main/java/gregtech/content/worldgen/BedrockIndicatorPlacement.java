@@ -14,11 +14,6 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-//? if >=1.21.1 {
-/*import net.minecraft.world.level.chunk.status.ChunkStatus;
-*///?} else {
-import net.minecraft.world.level.chunk.ChunkStatus;
-//?}
 import net.minecraft.world.level.levelgen.Heightmap;
 import org.jetbrains.annotations.Nullable;
 
@@ -28,9 +23,10 @@ final class BedrockIndicatorPlacement {
 
     static int place(
             WorldGenLevel level,
-            ChunkPos chunk,
+            ChunkPos origin,
+            ChunkPos target,
             GTBedrockOres.BedrockOre ore,
-            RandomSource random,
+            long seed,
             int terrainTop,
             boolean underRoof) {
         Block flower = ore.flowerId() == null ? null : Mc.block(Mc.gregtechId(ore.flowerId()));
@@ -40,28 +36,19 @@ final class BedrockIndicatorPlacement {
         ResourceLocation rawId = raw.isEmpty() ? null : Mc.itemId(raw.getItem());
         if (flowerState == null && rawId == null) return 0;
         String rawItem = rawId == null ? null : rawId.toString();
-        return BedrockIndicatorRules.scatter(
-                chunk.getMinBlockX() + 8,
-                chunk.getMinBlockZ() + 8,
-                random::nextInt,
-                (x, z) -> {
-                    if (!canPlaceInChunk(level, chunk, x >> 4, z >> 4)) return false;
+        return BedrockIndicatorRules.scatterInto(
+                origin.x, origin.z, target.x, target.z, RandomSource.create(seed)::nextInt, (x, z) -> {
                     return underRoof
                             ? placeUnderground(level, x, z, material.getName(), rawItem, terrainTop)
-                            : placeColumn(level, x, z, flowerState, material.getName(), rawItem, random);
+                            : placeColumn(
+                                    level,
+                                    x,
+                                    z,
+                                    flowerState,
+                                    material.getName(),
+                                    rawItem,
+                                    WorldgenHash.roll(WorldgenHash.at(seed, x, z), 4) != 0);
                 });
-    }
-
-    private static boolean canPlaceInChunk(WorldGenLevel level, ChunkPos origin, int chunkX, int chunkZ) {
-        if (chunkX == origin.x && chunkZ == origin.z) return true;
-        if (!level.hasChunk(chunkX, chunkZ)) return false;
-        var target = level.getChunk(chunkX, chunkZ);
-        // The outer ring may cross the chunk edge. Decorated protochunks can still be writable.
-//? if >=1.21.1 {
-        /*return !target.getPersistedStatus().isOrAfter(ChunkStatus.FEATURES);
-*///?} else {
-        return !target.getStatus().isOrAfter(ChunkStatus.FEATURES);
-//?}
     }
 
     private static boolean placeColumn(
@@ -71,7 +58,7 @@ final class BedrockIndicatorPlacement {
             @Nullable BlockState flower,
             String material,
             @Nullable String rawItem,
-            RandomSource random) {
+            boolean preferFlower) {
         int surface = level.getHeight(Heightmap.Types.WORLD_SURFACE, x, z) - 1;
         var supportPos = new BlockPos.MutableBlockPos(x, surface, z);
         for (int y = surface; y >= level.getMinBuildHeight(); y--) {
@@ -84,7 +71,7 @@ final class BedrockIndicatorPlacement {
             BlockPos pos = supportPos.above();
             if (level.isOutsideBuildHeight(pos) || !GTRocksFeature.replaceable(level.getBlockState(pos))) return false;
             if (flower != null
-                    && (rawItem == null || random.nextInt(4) != 0)
+                    && (rawItem == null || preferFlower)
                     && flower.canSurvive(level, pos)
                     && level.setBlock(pos, flower, Block.UPDATE_CLIENTS)) {
                 return true;

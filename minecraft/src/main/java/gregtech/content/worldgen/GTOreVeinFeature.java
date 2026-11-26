@@ -36,8 +36,7 @@ public final class GTOreVeinFeature extends Feature<NoneFeatureConfiguration> {
         WorldGenLevel level = context.level();
         ChunkPos chunkPos = new ChunkPos(context.origin());
         ChunkAccess chunk = level.getChunk(chunkPos.x, chunkPos.z);
-        boolean indicators = GregTechConfig.Worldgen.SURFACE_ROCKS.enabled();
-        return visitPlans(level, context.chunkGenerator(), chunkPos, body -> placeBody(level, chunk, body, indicators));
+        return visitPlans(level, context.chunkGenerator(), chunkPos, body -> placeBody(level, chunk, body));
     }
 
     /** Visits every planned body whose bounds touch the chunk. Returns whether any visitor call succeeds. */
@@ -127,8 +126,7 @@ public final class GTOreVeinFeature extends Feature<NoneFeatureConfiguration> {
                 && center.z() - radius <= chunk.getMaxBlockZ();
     }
 
-    private static boolean placeBody(
-            WorldGenLevel level, ChunkAccess chunk, OreVeinLayout.Body body, boolean indicators) {
+    private static boolean placeBody(WorldGenLevel level, ChunkAccess chunk, OreVeinLayout.Body body) {
         var center = body.center();
         ChunkPos pos = chunk.getPos();
         int r = body.radius();
@@ -156,7 +154,7 @@ public final class GTOreVeinFeature extends Feature<NoneFeatureConfiguration> {
                     GTMaterial lastOre = placeColumn(level, chunk, column, cursor.set(x, 0, z), offset, primary, cores);
                     if (lastOre == null) continue;
                     placed = true;
-                    if (indicators && !centerChunk && (regional && !indicator || indicatorRoll(center, x, z))) {
+                    if (!centerChunk && (regional && !indicator || indicatorRoll(center, x, z))) {
                         indicator |= GTRockPlacement.placeVeinMarker(level, chunk, x, z, lastOre);
                     }
                 }
@@ -174,7 +172,7 @@ public final class GTOreVeinFeature extends Feature<NoneFeatureConfiguration> {
                     core = recoverCore(level, chunk, body, material, cursor);
                     placed |= core != null;
                 }
-                if (indicators && core != null) placeNearbyMarker(level, chunk, core, material);
+                if (core != null) placeNearbyMarker(level, chunk, core, material);
             }
         }
         return placed;

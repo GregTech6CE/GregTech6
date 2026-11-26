@@ -49,6 +49,17 @@ public final class StoneLayerField {
         return LAYERS;
     }
 
+    /**
+     * Inclusive upper Y bound for scanning a chunk, extending one block above the highest filled
+     * 16-block section so rocks resting directly on section boundaries (e.g. Y=63 or Y=143) are
+     * still visited. Returns {@code minBuildHeight - 1} when the chunk has no filled sections.
+     */
+    public static int maxScanY(int minBuildHeight, int maxBuildHeight, int highestFilledSectionIndex) {
+        if (highestFilledSectionIndex < 0) return minBuildHeight - 1;
+        int sectionTopNext = minBuildHeight + (highestFilledSectionIndex + 1) * 16;
+        return Math.min(maxBuildHeight - 1, sectionTopNext);
+    }
+
     public Column column(int x, int z) {
         double fold = noise(seed ^ 0x85EBCA77L, x, z, 112);
         double stretch = noise(seed ^ 0x27D4EB2FL, x, z, 192);
@@ -143,7 +154,7 @@ public final class StoneLayerField {
             var scores = new RegionScores();
             for (int dx = 0; dx < width + CORE_DEPTH * 2; dx++) {
                 for (int dz = 0; dz < paddedDepth; dz++) {
-                    field.column(minX + dx, minZ + dz).fill(minY, layers, dx * row + dz * height, height, scores, null);
+                    field.column(minX + dx, minZ + dz).fill(minY, layers, dx * row + dz * height, height, scores);
                 }
             }
             for (Face face : FACES) steps[face.ordinal()] = face.x * row + face.y + face.z * height;
@@ -194,10 +205,6 @@ public final class StoneLayerField {
             this.stretch = stretch;
         }
 
-        public Province province(int y) {
-            return provinceOf(regionAt(y, null));
-        }
-
         /** The ordinary or deep layer at Y. Both game generation and offline tools use this selection. */
         public int layerIndex(int y) {
             long region = regionAt(y, null);
@@ -209,18 +216,10 @@ public final class StoneLayerField {
 
         /** Fill the requested range, reusing the selection while the column stays inside one layer. */
         public void fill(int firstY, int[] samples, int length) {
-            fill(firstY, samples, 0, length, new RegionScores(), null);
+            fill(firstY, samples, 0, length, new RegionScores());
         }
 
-        /** Samples the rock and its province for each height in a vertical profile. */
-        public void fill(int firstY, int[] layers, Province[] provinces) {
-            if (layers.length != provinces.length)
-                throw new IllegalArgumentException("Layer and province arrays must have the same length");
-            fill(firstY, layers, 0, layers.length, new RegionScores(), provinces);
-        }
-
-        private void fill(
-                int firstY, int[] samples, int offset, int length, RegionScores scores, Province[] provinces) {
+        private void fill(int firstY, int[] samples, int offset, int length, RegionScores scores) {
             if (length <= 0) return;
             long region = regionAt(firstY, scores);
             long lastRegion = scores.closest(firstY + length - 1);
@@ -229,7 +228,6 @@ public final class StoneLayerField {
                 int to = region == lastRegion ? length : firstDifferentRegion(firstY, from, length - 1, region, scores);
                 Province province = provinceOf(region);
                 fillRegion(region, province, firstY + from, samples, offset + from, to - from);
-                if (provinces != null) Arrays.fill(provinces, offset + from, offset + to, province);
                 from = to;
                 if (from < length) region = scores.closest(firstY + from);
             }
