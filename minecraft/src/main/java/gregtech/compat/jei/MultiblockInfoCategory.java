@@ -1,7 +1,8 @@
 package gregtech.compat.jei;
 
-import gregtech.compat.common.PreviewViewport;
-import gregtech.engine.multiblock.*;
+import gregtech.client.PreviewViewport;
+import gregtech.content.multiblock.MultiblockInfoData;
+import gregtech.content.multiblock.MultiblockInfoData.Info;
 import java.util.*;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -14,8 +15,7 @@ import net.minecraft.core.*;
 import net.minecraft.network.chat.Component;
 
 /** Assembly diagrams are derived from the same geometry used by the controllers. */
-public final class MultiblockInfoCategory extends MultiblockInfoData
-        implements IRecipeCategory<MultiblockInfoCategory.Info> {
+public final class MultiblockInfoCategory implements IRecipeCategory<Info> {
 
     public static final RecipeType<Info> TYPE = RecipeType.create("gt6ce", "multiblock_assembly", Info.class);
     private final IDrawable background, icon, slot;

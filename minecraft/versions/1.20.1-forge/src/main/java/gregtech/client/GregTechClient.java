@@ -13,7 +13,7 @@ import gregtech.content.item.FluidDisplayItemLike;
 import gregtech.content.registry.*;
 import gregtech.content.transport.pipe.fluid.FluidPipeBlock;
 import gregtech.content.transport.pipe.item.ItemPipeBlock;
-import gregtech.engine.fluid.FluidRenderLayers;
+import gregtech.content.fluid.FluidDefinitions;
 import gregtech.engine.machine.EngineType;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -948,31 +948,12 @@ public final class GregTechClient {
         // (ItemBlockRenderTypes.java, default RenderType.solid()), so a separate
         // fluid stayed on the opaque solid layer - "the liquid still is not transparent like vanilla
         // water". The flowing variants are fluids of their own, so they are registered too: the
-        // five spring IDs and their flowing variants share this registry policy. setRenderLayer may
+        // world fluid sources and their flowing variants share this registry policy. setRenderLayer may
         // only be called while the client mod loader is still loading (checkClientLoading,
         // ItemBlockRenderTypes.java), i.e. here, directly from the event, not from enqueueWork.
-        for (var registration : FluidRenderLayers.worldFluidLayers().entrySet()) {
-            Fluid fluid = ForgeRegistries.FLUIDS.getValue(GregTech.id(registration.getKey()));
-            if (fluid == null) {
-                throw new IllegalStateException(
-                        "GT world fluid is missing its registered fluid: " + registration.getKey());
-            }
-            ItemBlockRenderTypes.setRenderLayer(
-                    fluid,
-                    FluidRenderLayers.isTranslucent(registration.getValue())
-                            ? RenderType.translucent()
-                            : RenderType.solid());
-            // Lighter-than-air world fluids render through their top-anchored block models rather
-            // than the liquid renderer, so the block itself also has to be translucent.
-            net.minecraft.world.level.block.Block block =
-                    fluid.defaultFluidState().createLegacyBlock().getBlock();
-            if (block != net.minecraft.world.level.block.Blocks.AIR) {
-                ItemBlockRenderTypes.setRenderLayer(block, RenderType.translucent());
-            }
-            if (ItemBlockRenderTypes.getRenderLayer(fluid.defaultFluidState()) != RenderType.translucent()) {
-                throw new IllegalStateException(
-                        "GT world fluid was not registered for translucent rendering: " + registration.getKey());
-            }
+        for (String path : FluidDefinitions.worldFluidPaths()) {
+            registerWorldFluidRenderLayer(path);
+            registerWorldFluidRenderLayer(path + "_flowing");
         }
 
         event.enqueueWork(() -> {
@@ -1003,6 +984,26 @@ public final class GregTechClient {
             MenuScreens.register(GTMenuTypes.BUMBLIARY.get(), gregtech.client.gui.BumbliaryScreen::new);
             MenuScreens.register(GTMenuTypes.ADVANCED_BUMBLIARY.get(), gregtech.client.gui.BumbliaryScreen::new);
         });
+    }
+
+    private static void registerWorldFluidRenderLayer(String path) {
+        Fluid fluid = ForgeRegistries.FLUIDS.getValue(GregTech.id(path));
+        if (fluid == null) {
+            throw new IllegalStateException(
+                    "GT world fluid is missing its registered fluid: " + path);
+        }
+        ItemBlockRenderTypes.setRenderLayer(fluid, RenderType.translucent());
+        // Lighter-than-air world fluids render through their top-anchored block models rather
+        // than the liquid renderer, so the block itself also has to be translucent.
+        net.minecraft.world.level.block.Block block =
+                fluid.defaultFluidState().createLegacyBlock().getBlock();
+        if (block != net.minecraft.world.level.block.Blocks.AIR) {
+            ItemBlockRenderTypes.setRenderLayer(block, RenderType.translucent());
+        }
+        if (ItemBlockRenderTypes.getRenderLayer(fluid.defaultFluidState()) != RenderType.translucent()) {
+            throw new IllegalStateException(
+                    "GT world fluid was not registered for translucent rendering: " + path);
+        }
     }
 
     private static int steamPressureColor(int state) {

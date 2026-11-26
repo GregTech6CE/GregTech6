@@ -1,9 +1,8 @@
-package gregtech.compat.jei;
+package gregtech.client;
 
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.math.Axis;
-import gregtech.compat.common.PreviewViewport;
 import gregtech.util.PreviewCamera;
 import java.util.Map;
 import net.minecraft.client.Minecraft;

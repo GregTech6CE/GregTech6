@@ -4,6 +4,7 @@ import gregtech.GregTech;
 import gregtech.bootstrap.InitializationStep;
 import gregtech.content.block.GTWorldFluidBlock;
 import gregtech.content.data.RegisteredFluids;
+import gregtech.content.fluid.FluidDefinitions;
 import gregtech.content.item.FluidItem;
 import gregtech.content.registry.ContentRegistrar;
 import gregtech.content.registry.GTFluidItems;
@@ -11,7 +12,6 @@ import gregtech.content.registry.GTFluids;
 import gregtech.content.registry.GTGasFluid;
 import gregtech.content.registry.RegisteredBlock;
 import gregtech.engine.fluid.FluidPhysicalProperties;
-import gregtech.engine.fluid.FluidRenderLayers;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import net.minecraft.world.item.Item;
@@ -36,7 +36,7 @@ public record FluidBootstrap() implements InitializationStep {
      * Loader_Worldgen) place oil and natural gas into the world, so those need a
      * {@link LiquidBlock}.
      */
-    private static final Set<String> WORLD_FLUID_PATHS = FluidRenderLayers.worldFluidPaths();
+    private static final Set<String> WORLD_FLUID_PATHS = Set.copyOf(FluidDefinitions.worldFluidPaths());
 
     /** Both the block and the fluid reference each other, so both sides stay lazy. */
     private static ForgeFlowingFluid.Properties properties(
@@ -53,7 +53,7 @@ public record FluidBootstrap() implements InitializationStep {
 
     @Override
     public void run() {
-        gregtech.content.fluid.FluidDefinitions.prepare();
+        FluidDefinitions.prepare();
         var registrar = ContentRegistrar.shared();
 
         java.util.Set<String> seenPaths = new java.util.HashSet<>();

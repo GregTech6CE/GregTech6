@@ -1,4 +1,4 @@
-package gregtech.compat.jei;
+package gregtech.client;
 
 import java.util.Collection;
 import java.util.List;

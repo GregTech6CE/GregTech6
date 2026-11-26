@@ -4,7 +4,7 @@ import com.google.gson.JsonParser;
 import com.mojang.serialization.JsonOps;
 import gregtech.content.hazard.WorldFluidEffects;
 import gregtech.content.worldgen.FluidSpringRules;
-import gregtech.engine.fluid.FluidRenderLayers;
+import gregtech.content.fluid.FluidDefinitions;
 import gregtech.engine.fluid.LegacyWorldWater;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
@@ -65,7 +65,7 @@ public final class LegacyWaterTests {
                 BuiltInRegistries.BLOCK.containsKey(ResourceLocation.parse("gt6ce:fluid_spring_watergeothermal")),
                 "spring registered");
         helper.assertTrue(FluidSpringRules.byFluid(id.toString()) != null, "spring included in world generation");
-        helper.assertTrue(FluidRenderLayers.worldFluidPaths().contains("watergeothermal"), "world render layer");
+        helper.assertTrue(FluidDefinitions.worldFluidPaths().contains("watergeothermal"), "world fluid definition");
         helper.assertTrue(WorldFluidEffects.bathingRows(fluid).size() == 2, "geothermal bathing effects restored");
         helper.assertTrue(LegacyWorldWater.fluid("watergeothermal") == null, "geothermal is not migrated to water");
         helper.succeed();

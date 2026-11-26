@@ -1,6 +1,7 @@
 package gregtech.compat.jei;
 
 import gregtech.compat.common.RecipeMachines;
+import gregtech.content.multiblock.MultiblockInfoData;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.platform.Mc;
@@ -192,7 +193,7 @@ public final class GregTechJEIPlugin implements IModPlugin {
         if (!net.minecraftforge.fml.ModList.get().isLoaded("emi")) {
 //?}
 
-        registration.addRecipes(MultiblockInfoCategory.TYPE,MultiblockInfoCategory.recipes());
+        registration.addRecipes(MultiblockInfoCategory.TYPE,MultiblockInfoData.recipes());
         registration.addRecipes(WorldgenInfoCategories.VEIN_TYPE, WorldgenInfoCategories.buildVeins());
         registration.addRecipes(WorldgenInfoCategories.SMALL_ORE_TYPE, WorldgenInfoCategories.buildSmallOres());
         registration.addRecipes(WorldgenInfoCategories.LAYER_TYPE, WorldgenInfoCategories.buildLayers());

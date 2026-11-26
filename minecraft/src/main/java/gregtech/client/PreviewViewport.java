@@ -1,4 +1,4 @@
-package gregtech.compat.common;
+package gregtech.client;
 
 import org.joml.Matrix4fc;
 import org.joml.Vector3f;

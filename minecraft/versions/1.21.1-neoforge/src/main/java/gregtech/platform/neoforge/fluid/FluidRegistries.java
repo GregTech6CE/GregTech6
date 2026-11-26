@@ -11,7 +11,6 @@ import gregtech.content.registry.GTGasFluid;
 import gregtech.content.registry.RegisteredBlock;
 import gregtech.content.registry.RegisteredItem;
 import gregtech.engine.fluid.FluidPhysicalProperties;
-import gregtech.engine.fluid.FluidRenderLayers;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -67,7 +66,7 @@ public final class FluidRegistries {
             // Negative density is the original's densityDir = -1: these fluids rise instead of
             // falling. Air itself is density 0, so nothing neutrally buoyant is included.
             boolean lighterThanAir = FluidPhysicalProperties.density(entry) < 0;
-            if (FluidRenderLayers.worldFluidPaths().contains(path)) {
+            if (FluidDefinitions.worldFluidPaths().contains(path)) {
                 var holder = registrar.blockWithoutItem(
                         REGISTRY_NAMESPACE,
                         path,
