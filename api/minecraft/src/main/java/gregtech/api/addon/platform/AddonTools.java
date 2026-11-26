@@ -14,6 +14,11 @@ public final class AddonTools {
         return AddonPlatform.services().matchesTool(stack, tool);
     }
 
+    /** Actual head on an assembled hand or electric tool, including its native default when applicable. */
+    public static java.util.Optional<gregtech.api.addon.material.MaterialKey> headMaterial(ItemStack stack) {
+        return stack == null || stack.isEmpty() ? java.util.Optional.empty() : AddonPlatform.services().toolHead(stack);
+    }
+
     public static boolean isMagnifyingGlass(ItemStack stack) {
         return matches(stack, AddonTool.MAGNIFYING_GLASS);
     }

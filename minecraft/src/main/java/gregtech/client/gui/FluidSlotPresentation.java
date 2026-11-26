@@ -25,7 +25,7 @@ public final class FluidSlotPresentation {
     }
 
     public static List<Component> viewerTooltip(FluidStack fluid, long amount) {
-        return tooltip(fluid, amount, -1, true);
+        return tooltip(fluid, amount, -1, net.minecraft.client.Minecraft.getInstance().options.advancedItemTooltips);
     }
 
     private static List<Component> tooltip(FluidStack fluid, long amount, long capacity, boolean advanced) {
@@ -35,7 +35,7 @@ public final class FluidSlotPresentation {
         var entry = GTFluids.entryForFluid(fluid.getFluid());
         result.add(entry == null ? fluid.getDisplayName()
                 : GTFluidType.describe(entry, RegisteredFluids.sanitizePath(entry.registryName())));
-        result.addAll(GTFluidType.describeTooltip(fluid, amount, capacity, advanced));
+        result.addAll(GTFluidType.describeTooltip(fluid, amount, capacity, advanced, capacity < 0));
         return result;
     }
 

@@ -50,6 +50,10 @@ public final class AddonPlatform {
         /** Integrated circuit {@code configuration}, or an empty stack when that item is not registered yet. */
         ItemStack selectorTag(int configuration);
 
+        java.util.Optional<gregtech.api.addon.material.MaterialKey> toolHead(ItemStack stack);
+
+        void visitMaterialProducts(java.util.function.BiConsumer<gregtech.api.addon.material.MaterialKey, ItemStack> visitor);
+
         boolean matchesTool(ItemStack stack, AddonTool tool);
 
         void damageTool(ItemStack stack, int amount, LivingEntity user, EquipmentSlot slot);

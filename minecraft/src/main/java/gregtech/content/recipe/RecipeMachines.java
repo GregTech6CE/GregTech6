@@ -1,4 +1,4 @@
-package gregtech.compat.common;
+package gregtech.content.recipe;
 
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.registry.BehaviorMachineRegistration;

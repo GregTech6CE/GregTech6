@@ -5,8 +5,10 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 //? if >=1.21.1 {
 /*import net.minecraft.core.component.DataComponentPatch;
+import net.neoforged.neoforge.fluids.FluidStack;
 *///?} else {
 import net.minecraft.nbt.CompoundTag;
+import net.minecraftforge.fluids.FluidStack;
 //?}
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -50,9 +52,9 @@ final class FluidDisplayEmiStack extends EmiStack {
     @Override public List<Component> getTooltipText() {
         var type = (net.minecraft.world.level.material.Fluid) fluid.getKey();
 //? if >=1.21.1 {
-        /*var stack = new net.neoforged.neoforge.fluids.FluidStack(type.builtInRegistryHolder(), 1, fluid.getComponentChanges());
+        /*var stack = new FluidStack(type.builtInRegistryHolder(), 1, fluid.getComponentChanges());
 *///?} else {
-        var stack = new net.minecraftforge.fluids.FluidStack(type, 1, fluid.getNbt());
+        var stack = new FluidStack(type, 1, fluid.getNbt());
 //?}
         return gregtech.client.gui.FluidSlotPresentation.viewerTooltip(stack, amount);
     }

@@ -1,6 +1,7 @@
 package gregtech.engine.addon;
 
 import gregtech.api.addon.material.GregTechMaterials;
+import gregtech.api.addon.material.MaterialKey;
 import gregtech.api.addon.platform.AddonPlatform;
 import gregtech.api.addon.platform.AddonTool;
 import gregtech.api.addon.platform.EnergyBlock;
@@ -106,6 +107,37 @@ public final class AddonPlatformServices {
             SelectorTags.require(configuration);
             Item item = GTTechnological.selectorTag(configuration);
             return item == null ? ItemStack.EMPTY : new ItemStack(item);
+        }
+
+        @Override
+        public java.util.Optional<MaterialKey> toolHead(ItemStack stack) {
+            GTMaterial head;
+            if (stack.getItem() instanceof gregtech.content.item.ElectricToolItem electric)
+                head = electric.headMaterial(stack);
+            else if (stack.getItem() instanceof gregtech.content.item.GTToolItem) head = GTToolHelper.getHead(stack);
+            else return java.util.Optional.empty();
+            return head.isValid()
+                    ? java.util.Optional.of(new MaterialKey(head.resolve().getName()))
+                    : java.util.Optional.empty();
+        }
+
+        @Override
+        public void visitMaterialProducts(java.util.function.BiConsumer<MaterialKey, ItemStack> visitor) {
+            gregtech.content.registry.GTFluidPipes.all()
+                    .forEach(h -> product(visitor, h.get().spec().material(), h.get()));
+            gregtech.content.registry.GTItemPipes.all()
+                    .forEach(h -> product(visitor, h.get().spec().material(), h.get()));
+            gregtech.content.registry.GTWires.all()
+                    .forEach(h -> product(visitor, h.get().spec().material(), h.get()));
+            gregtech.content.registry.GTSignalWires.all()
+                    .forEach(h -> product(visitor, h.get().material(), h.get()));
+        }
+
+        private static void product(
+                java.util.function.BiConsumer<MaterialKey, ItemStack> visitor,
+                GTMaterial material,
+                net.minecraft.world.level.ItemLike product) {
+            visitor.accept(new MaterialKey(material.resolve().getName()), new ItemStack(product));
         }
 
         @Override

@@ -130,8 +130,11 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
             }
             fluidSlot.setFluidRenderer(Math.max(1, fluid.getAmount()),false,16,16);
             fluidSlot.addTooltipCallback((view,tooltip)->view.getDisplayedIngredient(FLUID_STACK).ifPresent(shown -> {
-                tooltip.clear();
-                tooltip.addAll(gregtech.client.gui.FluidSlotPresentation.viewerTooltip(shown, presence ? 0 : shown.getAmount()));
+                var details = gregtech.client.gui.FluidSlotPresentation.viewerTooltip(
+                        shown, presence ? 0 : shown.getAmount());
+                for (int line = 1; line < details.size(); line++) {
+                    if (!tooltip.contains(details.get(line))) tooltip.add(details.get(line));
+                }
             }));
             if (catalyst) fluidSlot.addTooltipCallback((view,tooltip)->tooltip.add(gregtech.engine.fluid.FluidUnits.text(
                     presence ? "gt6ce.jei.fluid_presence" : "gt6ce.jei.catalyst")));

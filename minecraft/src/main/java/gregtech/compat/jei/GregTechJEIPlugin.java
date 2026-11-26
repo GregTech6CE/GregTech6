@@ -1,7 +1,8 @@
 package gregtech.compat.jei;
 
-import gregtech.compat.common.RecipeMachines;
+import gregtech.content.recipe.RecipeMachines;
 import gregtech.content.multiblock.MultiblockInfoData;
+import gregtech.compat.common.MaterialAtlas;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.platform.Mc;
@@ -34,13 +35,13 @@ public final class GregTechJEIPlugin implements IModPlugin {
             runtime.getRecipesGui().showTypes(java.util.List.of(RecipeMapCategory.recipeType(map)));
             return true;
         });
-        var legacy = net.minecraft.core.registries.BuiltInRegistries.ITEM.stream()
-                .filter(item -> {
-                    var stack = new ItemStack(item);
-                    return item instanceof gregtech.content.item.FluidDisplayItemLike || !gregtech.content.item.CatalogVisibility.visible(stack);
-                })
-                .map(ItemStack::new).toList();
-        runtime.getIngredientManager().removeIngredientsAtRuntime(mezz.jei.api.constants.VanillaTypes.ITEM_STACK, legacy);
+        var ingredients = runtime.getIngredientManager();
+        var type = mezz.jei.api.constants.VanillaTypes.ITEM_STACK;
+        var legacy = ingredients.getAllIngredients(type).stream()
+                .filter(stack -> stack.getItem() instanceof gregtech.content.item.FluidDisplayItemLike
+                        || !gregtech.content.item.CatalogVisibility.visible(stack))
+                .toList();
+        ingredients.removeIngredientsAtRuntime(type, legacy);
     }
 
     @Override public void onRuntimeUnavailable() {
@@ -69,8 +70,14 @@ public final class GregTechJEIPlugin implements IModPlugin {
     private final Map<RecipeMap, RecipeMapCategory> categories = new LinkedHashMap<>();
     private static volatile GregTechJEIPlugin active;
     private mezz.jei.api.runtime.IJeiRuntime runtime;
+
+    public static mezz.jei.api.runtime.IIngredientManager ingredients() {
+        return active.runtime.getIngredientManager();
+    }
     private final Map<RecipeMap, List<Recipe>> shownRows = new LinkedHashMap<>();
     private final Map<RecipeMap, java.util.Set<Recipe>> knownRows = new LinkedHashMap<>();
+    private final java.util.Set<MaterialAtlas.Page> knownOrePages = new java.util.LinkedHashSet<>();
+    private MaterialAtlas atlas;
 
     /** Normal JEI reload discovers the current maps through registerRecipes. */
     public static void overlayChanged() {}
@@ -84,11 +91,16 @@ public final class GregTechJEIPlugin implements IModPlugin {
             if (active != plugin || plugin.runtime == null
                     || generation != gregtech.content.recipe.MachineRecipeOverlay.generation()) return;
             var manager = plugin.runtime.getRecipeManager();
+            if (plugin.atlas == null) return;
+            plugin.atlas.clearMachineRecipes();
             for (var entry : plugin.shownRows.entrySet()) {
                 var map = entry.getKey();
                 var type = RecipeMapCategory.recipeType(map);
                 List<Recipe> now = new ArrayList<>();
-                for (Recipe row : map.allRecipes()) if (row.enabled && !row.hidden) now.add(row);
+                map.visitDisplayRows((row, index) -> {
+                    now.add(row);
+                    plugin.atlas.accept(map, row, index);
+                });
                 var removed = new ArrayList<>(entry.getValue());
                 removed.removeAll(now);
                 manager.hideRecipes(type, removed);
@@ -99,6 +111,15 @@ public final class GregTechJEIPlugin implements IModPlugin {
                 known.addAll(now);
                 entry.setValue(now);
             }
+            var type = AtlasCategory.type(MaterialAtlas.Kind.ORE);
+            var pages = plugin.atlas.pages(MaterialAtlas.Kind.ORE);
+            var current = java.util.Set.copyOf(pages);
+            // JEI indexes ingredients at registration. Hide or restore the original indexed page.
+            manager.hideRecipes(type, plugin.knownOrePages.stream().filter(p -> !current.contains(p)).toList());
+            manager.unhideRecipes(type, plugin.knownOrePages.stream().filter(current::contains).toList());
+            var added = pages.stream().filter(p -> !plugin.knownOrePages.contains(p)).toList();
+            if (!added.isEmpty()) manager.addRecipes(type, added);
+            plugin.knownOrePages.addAll(added);
         });
     }
 
@@ -119,7 +140,7 @@ public final class GregTechJEIPlugin implements IModPlugin {
         for (var family : MaterialUnitTagCategory.FAMILIES)
             registration.addRecipeCategories(new MaterialUnitTagCategory(guiHelper, family));
         for (RecipeMap map : RecipeMap.RECIPE_MAP_LIST) {
-            if (!map.viewerAllowed
+            if (map == gregtech.content.data.MachineRecipeMaps.ByProductList || !map.viewerAllowed
                     || map.recipeRows.stream().noneMatch(recipe -> recipe.enabled && !recipe.hidden)
                             && !map.hasDynamicEnumeration()) continue;
             var category = new RecipeMapCategory(guiHelper, map, iconFor(map));
@@ -135,6 +156,8 @@ public final class GregTechJEIPlugin implements IModPlugin {
                 new WorldgenInfoCategories.SmallOreCategory(guiHelper),
                 new WorldgenInfoCategories.LayerCategory(guiHelper),
                 new WorldgenInfoCategories.BedrockCategory(guiHelper));
+        for (var kind : gregtech.compat.common.MaterialAtlas.Kind.values())
+            registration.addRecipeCategories(new AtlasCategory(guiHelper, kind, () -> runtime));
     }
 
     @Override
@@ -170,6 +193,8 @@ public final class GregTechJEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
+        atlas = null;
+        knownOrePages.clear();
         shownRows.clear();
         knownRows.clear();
         gregtech.engine.fluid.FluidContainerDisplayBinding.invalidate();
@@ -180,52 +205,31 @@ public final class GregTechJEIPlugin implements IModPlugin {
         // EMI has its own native pages. Its JEI bridge must not import a second copy.
 
 //? if >=1.21.1 {
-/*        if (!net.neoforged.fml.ModList.get().isLoaded("emi")) {
-*///?} else {
-        if (!net.minecraftforge.fml.ModList.get().isLoaded("emi")) {
-//?}
-
-            registration.addRecipes(LootInfoCategories.LOOT, gregtech.content.loot.LootViewerData.lootGroups());
-            registration.addRecipes(LootInfoCategories.MOBS, gregtech.content.loot.LootViewerData.mobGroups());
-        }
-
-//? if >=1.21.1 {
-/*        if (!net.neoforged.fml.ModList.get().isLoaded("emi")) {
-*///?} else {
-        if (!net.minecraftforge.fml.ModList.get().isLoaded("emi")) {
-//?}
-
-        registration.addRecipes(MultiblockInfoCategory.TYPE,MultiblockInfoData.recipes());
-        registration.addRecipes(WorldgenInfoCategories.VEIN_TYPE, WorldgenInfoCategories.buildVeins());
-        registration.addRecipes(WorldgenInfoCategories.SMALL_ORE_TYPE, WorldgenInfoCategories.buildSmallOres());
-        registration.addRecipes(WorldgenInfoCategories.LAYER_TYPE, WorldgenInfoCategories.buildLayers());
-        registration.addRecipes(WorldgenInfoCategories.BEDROCK_TYPE, WorldgenInfoCategories.buildBedrockOres());
-        }
-
-//? if >=1.21.1 {
-/*        if (!net.neoforged.fml.ModList.get().isLoaded("emi"))
-*///?} else {
-        if (!net.minecraftforge.fml.ModList.get().isLoaded("emi"))
-//?}
-
-            registration.addRecipes(ToolAssemblyCategory.TYPE, gregtech.content.recipe.ToolAssemblyCatalog.build());
-        // EMI registers these same rows natively; keep JEI's bridge from duplicating them.
-
-//? if >=1.21.1 {
 /*        if (net.neoforged.fml.ModList.get().isLoaded("emi")) return;
 *///?} else {
         if (net.minecraftforge.fml.ModList.get().isLoaded("emi")) return;
 //?}
 
+        registration.addRecipes(LootInfoCategories.LOOT, gregtech.content.loot.LootViewerData.lootGroups());
+        registration.addRecipes(LootInfoCategories.MOBS, gregtech.content.loot.LootViewerData.mobGroups());
+        registration.addRecipes(MultiblockInfoCategory.TYPE,MultiblockInfoData.recipes());
+        registration.addRecipes(WorldgenInfoCategories.VEIN_TYPE, WorldgenInfoCategories.buildVeins());
+        registration.addRecipes(WorldgenInfoCategories.SMALL_ORE_TYPE, WorldgenInfoCategories.buildSmallOres());
+        registration.addRecipes(WorldgenInfoCategories.LAYER_TYPE, WorldgenInfoCategories.buildLayers());
+        registration.addRecipes(WorldgenInfoCategories.BEDROCK_TYPE, WorldgenInfoCategories.buildBedrockOres());
+        var assemblies = gregtech.content.recipe.ToolAssemblyCatalog.build();
+        registration.addRecipes(ToolAssemblyCategory.TYPE, assemblies);
+        atlas = new MaterialAtlas(assemblies, machines);
         registration.addRecipes(MoldChiselCategory.TYPE, gregtech.compat.common.MoldChiselDisplay.recipes());
         var unitTags = gregtech.compat.common.MaterialUnitTagDisplay.entries();
         for (var family : MaterialUnitTagCategory.FAMILIES)
             registration.addRecipes(MaterialUnitTagCategory.type(family), MaterialUnitTagCategory.pages(family, unitTags));
         for (Map.Entry<RecipeMap, RecipeMapCategory> entry : categories.entrySet()) {
             List<Recipe> recipes = new ArrayList<>();
-            for (Recipe recipe : entry.getKey().allRecipes()) {
-                if (recipe.enabled && !recipe.hidden) recipes.add(recipe);
-            }
+            entry.getKey().visitDisplayRows((row, index) -> {
+                recipes.add(row);
+                atlas.accept(entry.getKey(), row, index);
+            });
             shownRows.put(entry.getKey(), List.copyOf(recipes));
             var known = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<Recipe, Boolean>());
             known.addAll(recipes);
@@ -235,6 +239,11 @@ public final class GregTechJEIPlugin implements IModPlugin {
                 registration.addRecipes(entry.getValue().getRecipeType(),recipes);
                 shown += recipes.size();
             }
+        }
+        for (var kind : MaterialAtlas.Kind.values()) {
+            var pages = atlas.pages(kind);
+            registration.addRecipes(AtlasCategory.type(kind), pages);
+            if (kind == MaterialAtlas.Kind.ORE) knownOrePages.addAll(pages);
         }
         } finally {
             if (Integer.getInteger("gregtech.materialScale", 0) > 0) {

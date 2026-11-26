@@ -1,7 +1,7 @@
 package gregtech.client;
 
-import gregtech.compat.common.RecipeMachines;
 import gregtech.content.multiblock.MultiblockInfoData;
+import gregtech.content.recipe.RecipeMachines;
 import gregtech.util.PreviewCamera;
 import java.util.*;
 import net.minecraft.client.Minecraft;

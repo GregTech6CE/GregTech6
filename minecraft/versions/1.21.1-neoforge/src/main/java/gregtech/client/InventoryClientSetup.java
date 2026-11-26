@@ -8,6 +8,12 @@ public final class InventoryClientSetup {
     private InventoryClientSetup() {}
 
     @net.neoforged.bus.api.SubscribeEvent
+    public static void tooltipFactories(
+            net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent event) {
+        event.register(gregtech.compat.common.AtlasRecipeCard.class, card -> card);
+    }
+
+    @net.neoforged.bus.api.SubscribeEvent
     public static void screens(net.neoforged.neoforge.client.event.RegisterMenuScreensEvent event) {
         event.register(gregtech.content.registry.GTMenuTypes.METAL_CHEST.get(), gregtech.client.gui.HopperScreen::new);
         event.register(gregtech.content.registry.GTMenuTypes.STORAGE_15.get(), gregtech.client.gui.HopperScreen::new);

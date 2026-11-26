@@ -3,6 +3,7 @@
 package gregtech.api.addon.platform;
 
 import gregtech.api.addon.material.GregTechMaterials;
+import gregtech.api.addon.material.MaterialKey;
 import gregtech.api.addon.recipe.SelectorTags;
 import net.minecraft.world.item.ItemStack;
 
@@ -30,6 +31,11 @@ public final class AddonItems {
     public static GregTechMaterials.StackComposition composition(ItemStack stack) {
         if (stack == null || stack.isEmpty()) return GregTechMaterials.StackComposition.EMPTY;
         return AddonPlatform.services().composition(stack);
+    }
+
+    /** Pipes, wires and cables grouped by the registry's canonical material. Each stack is a detached copy. */
+    public static void visitMaterialProducts(java.util.function.BiConsumer<MaterialKey, ItemStack> visitor) {
+        AddonPlatform.services().visitMaterialProducts(java.util.Objects.requireNonNull(visitor));
     }
 
     /** Programmed circuit {@code n} ({@code integrated_circuit_n}), count 1. Outside 0..24 fails. */

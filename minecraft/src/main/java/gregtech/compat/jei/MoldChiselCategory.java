@@ -13,7 +13,7 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 
-public final class MoldChiselCategory implements IRecipeCategory<MoldChiselDisplay.Info> {
+public final class MoldChiselCategory implements IRecipeCategory<MoldChiselDisplay.Info>, RecipeBorderPreference {
     public static final RecipeType<MoldChiselDisplay.Info> TYPE =
             RecipeType.create("gt6ce", "mold_chisel", MoldChiselDisplay.Info.class);
     private final IDrawable background, icon;
@@ -26,6 +26,10 @@ public final class MoldChiselCategory implements IRecipeCategory<MoldChiselDispl
     @Override
     public RecipeType<MoldChiselDisplay.Info> getRecipeType() {
         return TYPE;
+    }
+
+    public boolean needsRecipeBorder() {
+        return false;
     }
 
     @Override
