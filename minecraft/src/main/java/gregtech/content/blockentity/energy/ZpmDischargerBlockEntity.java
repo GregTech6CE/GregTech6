@@ -4,6 +4,9 @@ import gregtech.content.block.energy.ZpmDischargerBlock;
 import gregtech.content.energy.ZpmEnergy;
 import gregtech.content.data.GregTechTags;
 import gregtech.engine.energy.EnergyTransfer;
+import gregtech.engine.stack.BlockEntityData;
+import gregtech.engine.stack.HandlerNbt;
+import gregtech.engine.stack.RegistryContext;
 import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
@@ -21,6 +24,8 @@ import javax.annotation.Nullable;
 
 /** GT6 11170/11171: one artifact, QU buffer, one front packet per tick. */
 public final class ZpmDischargerBlockEntity extends GTEnergyBlockEntity implements gregtech.api.platform.machine.MachineControl.Provider {
+    public static final String INVENTORY_KEY = "gt.zpm.inventory";
+
     private long buffer;
     private boolean stopped;
     private boolean emitted;
@@ -50,6 +55,18 @@ public final class ZpmDischargerBlockEntity extends GTEnergyBlockEntity implemen
 //?}
     public ZpmDischargerBlockEntity(BlockPos p,BlockState s){super(gregtech.content.registry.GTBlockEntities.ZPM_DISCHARGER.get(),p,s);}
     public IItemHandler inventory(){return inventory;}
+    public static boolean hasPackedModule(ItemStack stack, @Nullable HolderLookup.Provider lookup) {
+        var data = BlockEntityData.read(stack);
+        if (data == null || !data.contains(INVENTORY_KEY, net.minecraft.nbt.Tag.TAG_COMPOUND)) return false;
+        var inventory = new ItemStackHandler(1);
+        HandlerNbt.load(data, INVENTORY_KEY, inventory, RegistryContext.orCurrent(lookup));
+        return isLoadedModule(inventory.getStackInSlot(0));
+    }
+
+    private static boolean isLoadedModule(ItemStack stack) {
+        return ZpmEnergy.isModule(stack) && stack.getCount() == 1;
+    }
+
     public boolean stopped(){return stopped;}
     public void toggleStopped(){stopped=!stopped;setChanged();}
     public GregTechTags.Tag outputType(){return ((ZpmDischargerBlock)getBlockState().getBlock()).electric()?GregTechTags.Energy.EU:GregTechTags.Energy.QU;}
@@ -59,7 +76,7 @@ public final class ZpmDischargerBlockEntity extends GTEnergyBlockEntity implemen
         if (level==null||level.isClientSide)return;
         emitted=false;
         var module=inventory.getStackInSlot(0);
-        boolean loaded=ZpmEnergy.isModule(module)&&module.getCount()==1;
+        boolean loaded=isLoadedModule(module);
         if (tick++%20==0&&loaded&&buffer<ZpmEnergy.PACKET*80){
             long taken=gregtech.engine.energy.ZpmWorkRules.refillAmount(buffer,ZpmEnergy.stored(module));
             if (taken>0){ZpmEnergy.set(module,ZpmEnergy.stored(module)-taken);buffer+=taken;setChanged();}
@@ -94,13 +111,13 @@ public final class ZpmDischargerBlockEntity extends GTEnergyBlockEntity implemen
 //?}
     @Override protected void saveData(CompoundTag t,@Nullable HolderLookup.Provider lookup){
         super.saveData(t,lookup);
-        t.put("gt.zpm.inventory",gregtech.engine.stack.HandlerNbt.save(inventory, lookup));
+        t.put(INVENTORY_KEY, HandlerNbt.save(inventory, lookup));
         t.putLong("gt.zpm.buffer",buffer);
         t.putBoolean("gt.stopped",stopped);
     }
     @Override protected void loadData(CompoundTag t,@Nullable HolderLookup.Provider lookup){
         super.loadData(t,lookup);
-        if (t.contains("gt.zpm.inventory"))gregtech.engine.stack.HandlerNbt.load(inventory, t.getCompound("gt.zpm.inventory"), lookup);
+        if (t.contains(INVENTORY_KEY)) HandlerNbt.load(inventory, t.getCompound(INVENTORY_KEY), lookup);
         buffer=gregtech.engine.energy.ZpmWorkRules.savedBuffer(t.getLong("gt.zpm.buffer"));
         stopped=t.getBoolean("gt.stopped");
     }

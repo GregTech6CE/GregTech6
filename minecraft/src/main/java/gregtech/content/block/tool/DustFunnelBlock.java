@@ -2,6 +2,8 @@ package gregtech.content.block.tool;
 
 import gregtech.content.block.GTBlock;
 import gregtech.content.blockentity.tool.DustFunnelBlockEntity;
+import gregtech.content.registry.GTBlockEntities;
+import gregtech.engine.stack.BlockEntityData;
 import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
@@ -115,7 +117,7 @@ public class DustFunnelBlock extends GTBlock implements EntityBlock {
     @SuppressWarnings("unchecked")
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
             Level level, BlockState state, BlockEntityType<T> type) {
-        if (level.isClientSide || type != gregtech.content.registry.GTBlockEntities.DUST_FUNNEL.get()) return null;
+        if (level.isClientSide || type != GTBlockEntities.DUST_FUNNEL.get()) return null;
         return (BlockEntityTicker<T>) (BlockEntityTicker<DustFunnelBlockEntity>) DustFunnelBlockEntity::serverTick;
     }
 
@@ -139,7 +141,7 @@ public class DustFunnelBlock extends GTBlock implements EntityBlock {
         return withMode(asItem(), state.getValue(MODE));
     }
 
-    private static int itemMode(ItemStack stack) {
+    public static int itemMode(ItemStack stack) {
         CompoundTag data = blockEntityTag(stack);
         return data == null ? 0 : Math.floorMod(data.getInt(MODE_TAG), 5);
     }
@@ -151,13 +153,13 @@ public class DustFunnelBlock extends GTBlock implements EntityBlock {
         if (mode == 0) return stack;
         CompoundTag data = new CompoundTag();
         data.putInt(MODE_TAG, Math.floorMod(mode, 5));
-        gregtech.engine.stack.BlockEntityData.write(stack, data);
+        BlockEntityData.write(stack, data, GTBlockEntities.DUST_FUNNEL.get());
         return stack;
     }
 
     @Nullable
     private static CompoundTag blockEntityTag(ItemStack stack) {
-        return gregtech.engine.stack.BlockEntityData.read(stack);
+        return BlockEntityData.read(stack);
     }
 
     @Override

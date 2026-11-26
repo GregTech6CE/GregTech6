@@ -23,8 +23,9 @@ import org.slf4j.Logger;
  * <p>The model classes keep their static handlers; this class owns the only
  * {@code @SubscribeEvent} declarations and the only ordering. Block-item transforms are captured
  * first, every NORMAL map mutator follows, then the LOW portable-fluid pass, and finally the
- * LOWEST alpha pass that also rebuilds the tool resolver, followed by the bottle crate item renderer. Nothing here may be wrapped in
- * {@code SetupOnce}: F3+T and resource-pack reloads repeat the whole bake.</p>
+ * LOWEST alpha pass, which rebuilds the tool resolver before installing the saved-state item
+ * models. Nothing here may be wrapped in {@code SetupOnce}: F3+T and resource-pack reloads repeat
+ * the whole bake.</p>
  */
 //? if >=1.21.1 {
 /*@EventBusSubscriber(modid = GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -86,6 +87,7 @@ public final class ClientModelBootstrap {
     public static void modifyBakingResultLowest(ModelEvent.ModifyBakingResult event) {
         ConfiguredAlphaModels.models(event);
         BottleCrateItemRenderer.models(event);
+        SavedBlockItemModels.models(BakedModelMap.of(event.getModels()));
     }
 
 //? if >=1.21.1 {

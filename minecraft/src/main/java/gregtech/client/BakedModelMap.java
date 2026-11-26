@@ -70,6 +70,10 @@ public final class BakedModelMap {
         models.put(new ModelResourceLocation(id, variant), model);
     }
 
+    public BakedModel getState(ResourceLocation blockId, BlockState state) {
+        return usable(rawGet(BlockModelShaper.stateToModelLocation(blockId, state)));
+    }
+
     public void putState(ResourceLocation blockId, BlockState state, BakedModel model) {
         models.put(BlockModelShaper.stateToModelLocation(blockId, state), model);
     }
