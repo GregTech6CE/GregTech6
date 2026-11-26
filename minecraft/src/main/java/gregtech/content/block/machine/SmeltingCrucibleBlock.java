@@ -179,7 +179,9 @@ public class SmeltingCrucibleBlock extends GTBlock implements EntityBlock, GTMac
         if (player.getMainHandItem().getItem() instanceof gregtech.content.item.ElectricToolItem electric)
             return gregtech.content.tool.ElectricWrenchHarvest.canHarvest(electric, player.getMainHandItem(), state);
         ItemStack tool = player.getMainHandItem();
-        if (GTToolHelper.isMachineWrench(tool)) return true;
+        if (GTToolHelper.isMachineWrench(tool)) {
+            return GTToolHelper.isMachineHarvestTool(tool, state);
+        }
         if (tool.getItem() instanceof PickaxeItem) return true;
         if (GTToolHelper.matchesTool(tool, GTToolType.PICKAXE)) return true;
         return super.canHarvestBlock(state, level, pos, player);
@@ -191,6 +193,7 @@ public class SmeltingCrucibleBlock extends GTBlock implements EntityBlock, GTMac
             return super.getDestroyProgress(state, player, level, pos);
         ItemStack tool = player.getMainHandItem();
         if (GTToolHelper.isMachineWrench(tool)) {
+            if (!GTToolHelper.isMachineHarvestTool(tool, state)) return 0.0F;
             float hardness = state.getDestroySpeed(level, pos);
             if (hardness < 0) return 0;
             return GTToolHelper.getMachineHarvestSpeed(tool) / hardness / 30.0F;

@@ -118,15 +118,20 @@ public final class SmelteryInteractionHandler {
         }
     }
 
-    /** Play wrench sound when a machine block is dismantled with a wrench. */
+    /** Check wrench quality on the server before a machine is dismantled. */
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
         if (event.getLevel().isClientSide()) return;
-        if (!(event.getState().getBlock() instanceof GTMachineBlock)) return;
+        var state = event.getState();
+        if (!(state.getBlock() instanceof GTMachineBlock)) return;
         Player player = event.getPlayer();
-        if (GTToolHelper.isMachineWrench(player.getMainHandItem())) {
-            event.getLevel().playSound(null, event.getPos(), GTSounds.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+        ItemStack tool = player.getMainHandItem();
+        if (!GTToolHelper.isMachineWrench(tool)) return;
+        if (!player.isCreative() && !GTToolHelper.isMachineHarvestTool(tool, state)) {
+            event.setCanceled(true);
+            return;
         }
+        event.getLevel().playSound(null, event.getPos(), GTSounds.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
     }
 
 //? if >=1.21.1 {

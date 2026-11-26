@@ -21,6 +21,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -64,6 +65,42 @@ public final class ToolParityRegressionTests {
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 20)
     public static void handDrillSapHoleCostsTenDurabilityInOffHand(GameTestHelper helper) {
         assertSapHoleCostsTenDurability(helper, InteractionHand.OFF_HAND);
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 20)
+    public static void machineDismantlingRequiresWrenchQuality(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        ServerPlayer player = survivalPlayer(helper);
+        BlockPos pos = helper.absolutePos(new BlockPos(1, 1, 1));
+        ItemStack steel = GTToolItem.create(
+                GTToolType.WRENCH, GT6Materials.Compounds.Steel, GT6Materials.Woods.Spruce);
+        ItemStack adamantium = GTToolItem.create(
+                GTToolType.WRENCH, GT6Materials.Elements.Ad, GT6Materials.Woods.Spruce);
+
+        for (String id : new String[] {
+                "smelting_crucible_ad", "mold_ad", "mold_basin_ad", "crucible_crossing_ad", "crucible_faucet_ad"
+        }) {
+            Block block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
+            BlockState state = block.defaultBlockState();
+            level.setBlockAndUpdate(pos, state);
+            player.setItemInHand(InteractionHand.MAIN_HAND, steel);
+            helper.assertFalse(state.canHarvestBlock(level, pos, player), id + " rejects the low-quality wrench");
+            helper.assertTrue(state.getDestroyProgress(player, level, pos) == 0.0F,
+                    id + " gives the low-quality wrench zero progress");
+            helper.assertFalse(GTToolHelper.canCollectMachineDrop(steel, state),
+                    id + " cannot be collected with the low-quality wrench");
+            helper.assertFalse(player.gameMode.destroyBlock(pos), id + " rejects the server-side break");
+            helper.assertTrue(level.getBlockState(pos).is(block), id + " remains in the world");
+
+            player.setItemInHand(InteractionHand.MAIN_HAND, adamantium);
+            helper.assertTrue(state.canHarvestBlock(level, pos, player)
+                    && state.getDestroyProgress(player, level, pos) > 0.0F
+                    && GTToolHelper.canCollectMachineDrop(adamantium, state),
+                    id + " accepts a wrench of sufficient quality at all harvest checks");
+            helper.assertTrue(player.gameMode.destroyBlock(pos), id + " can be dismantled");
+            helper.assertTrue(player.getInventory().countItem(block.asItem()) > 0, id + " is recovered");
+        }
+        helper.succeed();
     }
 
     /** GT6 {@code BlockTreeLogA} drills the sap hole for a 1000 return, i.e. ten durability. */

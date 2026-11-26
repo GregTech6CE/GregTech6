@@ -290,12 +290,13 @@ public final class GTToolHelper {
         if (!isUsable(stack)) {
             return false;
         }
+        if (isMachineWrench(stack) && isMachineHarvestTarget(state)) return isMachineHarvestTool(stack, state);
         if (isSpecialHarvestTool(stack, state)) return true;
         GTToolType type = getType(stack);
         if (!type.isMiningTool() || !type.canHarvest(state)) {
             return false;
         }
-        if (!state.requiresCorrectToolForDrops()) {
+        if (!state.requiresCorrectToolForDrops() && !isMachineWrench(stack)) {
             return true;
         }
         return getHarvestLevel(stack) >= requiredHarvestLevel(state);
@@ -304,6 +305,7 @@ public final class GTToolHelper {
     public static boolean isCorrectToolForDrops(ItemStack stack, BlockState state) {
         var oreDecision=gregtech.content.data.OreHostHarvest.decision(stack,state);
         if (oreDecision.isPresent())return oreDecision.get();
+        if (isMachineWrench(stack) && isMachineHarvestTarget(state)) return isMachineHarvestTool(stack, state);
         if (isSpecialHarvestTool(stack, state)) return true;
         if (!isUsable(stack)) {
             return false;
@@ -312,7 +314,7 @@ public final class GTToolHelper {
         if (type.harvestTag() == null || !state.is(type.harvestTag())) {
             return false;
         }
-        if (!state.requiresCorrectToolForDrops()) {
+        if (!state.requiresCorrectToolForDrops() && !isMachineWrench(stack)) {
             return true;
         }
         return getHarvestLevel(stack) >= requiredHarvestLevel(state);
@@ -342,12 +344,14 @@ public final class GTToolHelper {
         return matchesTool(stack, GTToolType.WIRE_CUTTER);
     }
 
-    public static boolean isMachineHarvestTool(ItemStack stack, BlockState state) {
+    public static boolean isMachineHarvestTarget(BlockState state) {
+        return state.getBlock() instanceof gregtech.engine.machine.GTMachineBlock;
+    }
 
-        if (stack.getItem() instanceof PoweredToolItem electric)
-            return state.getBlock() instanceof gregtech.engine.machine.GTMachineBlock
-                    && electric.canHarvest(stack, state);
-        return state.getBlock() instanceof gregtech.engine.machine.GTMachineBlock && isMachineWrench(stack);
+    public static boolean isMachineHarvestTool(ItemStack stack, BlockState state) {
+        if (!isMachineHarvestTarget(state)) return false;
+        if (stack.getItem() instanceof PoweredToolItem electric) return electric.canHarvest(stack, state);
+        return wrenchReachesQuality(stack, requiredHarvestLevel(state));
     }
 
     /** GT6 {@code canCollectDropsDirectly} for wrench-dismantleable machines. */
@@ -415,15 +419,15 @@ public final class GTToolHelper {
         // GT6 GT_Tool_Wrench.isMinableBlock lists these vanilla blocks, BlockBaseBars and the
         // redstoneLight material group (the aUtil* tool blocks) for the wrench directly, in
         // addition to the block's own pickaxe/axe harvest tool.
+        if (stack.getItem() instanceof PoweredToolItem electric)
+            return electric.canHarvest(stack, state);
+
         if (isMachineWrench(stack)
                 && (wrenchMinableVanilla(state)
                 || state.getBlock() instanceof gregtech.content.block.misc.BarsBlock
                 || state.getBlock() instanceof gregtech.content.block.tool.DustFunnelBlock)) {
-            return true;
+            return wrenchReachesQuality(stack, requiredHarvestLevel(state));
         }
-
-        if (stack.getItem() instanceof PoweredToolItem electric)
-            return electric.canHarvest(stack, state);
 
         if (!isUsable(stack)) return false;
         // GT6 soft hammers can harvest redstoneLight blocks despite their mining-tool classification.
@@ -438,8 +442,7 @@ public final class GTToolHelper {
         if (id==null || !id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return false;
         return switch (tool) {
             case SWORD -> matchesTool(stack, GTToolType.SWORD);
-            case WRENCH -> isMachineWrench(stack) && (!state.requiresCorrectToolForDrops()
-                    || getHarvestLevel(stack) >= requiredHarvestLevel(state));
+            case WRENCH -> wrenchReachesQuality(stack, requiredHarvestLevel(state));
             case CROWBAR -> matchesTool(stack, GTToolType.CROWBAR);
             case CUTTER -> isWireCutter(stack);
             case SHEARS -> matchesTool(stack,GTToolType.SCISSORS) || matchesTool(stack,GTToolType.BRANCH_CUTTER);
@@ -465,17 +468,9 @@ public final class GTToolHelper {
         if (state.getBlock() instanceof gregtech.content.block.misc.SpikeBlock)
             return gregtech.content.data.SpikeHarvestPolicy.level(state);
         int materialLevel=gregtech.content.data.BlockHarvestPolicy.level(state.getBlock());
-        if (materialLevel>3) return materialLevel;
-        if (state.is(BlockTags.NEEDS_DIAMOND_TOOL)) {
-            return 3;
-        }
-        if (state.is(BlockTags.NEEDS_IRON_TOOL)) {
-            return 2;
-        }
-        if (state.is(BlockTags.NEEDS_STONE_TOOL)) {
-            return 1;
-        }
-        return 0;
+        int vanillaLevel = state.is(BlockTags.NEEDS_DIAMOND_TOOL) ? 3
+                : state.is(BlockTags.NEEDS_IRON_TOOL) ? 2 : state.is(BlockTags.NEEDS_STONE_TOOL) ? 1 : 0;
+        return Math.max(materialLevel, vanillaLevel);
     }
 
     private static boolean isCreative(LivingEntity user) {
