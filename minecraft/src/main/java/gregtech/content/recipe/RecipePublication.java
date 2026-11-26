@@ -8,13 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
-//? if >=1.21.1 {
-/*import net.minecraft.world.item.crafting.RecipeHolder;
-*///?}
 
 /**
  * The one ordered publication of generated crafting and furnace rows.
@@ -51,11 +46,7 @@ public final class RecipePublication {
         boolean alreadyPublished = applied != null && applied.size() == current.size() && applied.containsAll(current);
         if (alreadyPublished && !tagsUpdated) return;
         RegistryAccess access = server.registryAccess();
-//? if >=1.21.1 {
-        /*var working = new RecipeManager(access);
-*///?} else {
-        var working = new RecipeManager();
-//?}
+        var working = CraftingRecipeCompat.newScratchRecipeManager(access);
         working.replaceRecipes(manager.getRecipes());
         if (!alreadyPublished) {
             for (var contribution : CONTRIBUTIONS) contribution.apply(working, access);
@@ -84,27 +75,12 @@ public final class RecipePublication {
 
     /** Drops source rows that a generated row already covers; input rows keep the first identity. */
     private static void dedup(RecipeManager manager, RegistryAccess access) {
-//? if >=1.21.1 {
-        /*var deduped = new ArrayList<RecipeHolder<?>>(manager.getRecipes());
-*///?} else {
-        var deduped = new ArrayList<Recipe<?>>(manager.getRecipes());
-//?}
-        int duplicates =
-                FormConversionCraftingRecipeInjector.dedupGenerated(deduped, access, RecipePublication::idOf, RecipePublication::valueOf);
+        int duplicates = CraftingRecipeCompat.dedupRecipes(manager, access);
         if (duplicates > 0) {
-            manager.replaceRecipes(deduped);
             com.mojang.logging.LogUtils.getLogger()
                     .info("[gregtech] Removed {} duplicate source crafting rows", duplicates);
         }
     }
-
-//? if >=1.21.1 {
-    /*private static ResourceLocation idOf(Object entry) { return ((RecipeHolder<?>) entry).id(); }
-    private static Recipe<?> valueOf(Object entry) { return ((RecipeHolder<?>) entry).value(); }
-*///?} else {
-    private static ResourceLocation idOf(Object entry) { return ((Recipe<?>) entry).getId(); }
-    private static Recipe<?> valueOf(Object entry) { return (Recipe<?>) entry; }
-//?}
 
     /** Drops the generation snapshot after the server stops; the next world starts fresh. */
     static void clear() {

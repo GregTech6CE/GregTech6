@@ -1,12 +1,16 @@
 package gregtech.content.recipe;
 
 import com.google.gson.JsonElement;
+import java.util.ArrayList;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
@@ -18,6 +22,7 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.crafting.RecipeHolder;
 *///?} else {
 import com.google.gson.JsonObject;
 import net.minecraft.network.FriendlyByteBuf;
@@ -71,6 +76,18 @@ public final class CraftingRecipeCompat {
 
     public static JsonElement ingredientToJson(Ingredient ingredient) {
         return Ingredient.CODEC.encodeStart(JsonOps.INSTANCE, ingredient).getOrThrow();
+    }
+
+    public static RecipeManager newScratchRecipeManager(RegistryAccess access) {
+        return new RecipeManager(access);
+    }
+
+    public static int dedupRecipes(RecipeManager manager, RegistryAccess access) {
+        var deduped = new ArrayList<RecipeHolder<?>>(manager.getRecipes());
+        int duplicates = FormConversionCraftingRecipeInjector.dedupGenerated(
+                deduped, access, entry -> ((RecipeHolder<?>) entry).id(), entry -> ((RecipeHolder<?>) entry).value());
+        if (duplicates > 0) manager.replaceRecipes(deduped);
+        return duplicates;
     }
 *///?} else {
     public static <T extends ShapelessRecipe> RecipeSerializer<T> wrapShapelessSerializer(
@@ -128,6 +145,18 @@ public final class CraftingRecipeCompat {
 
     public static JsonElement ingredientToJson(Ingredient ingredient) {
         return ingredient.toJson();
+    }
+
+    public static RecipeManager newScratchRecipeManager(RegistryAccess access) {
+        return new RecipeManager();
+    }
+
+    public static int dedupRecipes(RecipeManager manager, RegistryAccess access) {
+        var deduped = new ArrayList<Recipe<?>>(manager.getRecipes());
+        int duplicates = FormConversionCraftingRecipeInjector.dedupGenerated(
+                deduped, access, entry -> ((Recipe<?>) entry).getId(), entry -> (Recipe<?>) entry);
+        if (duplicates > 0) manager.replaceRecipes(deduped);
+        return duplicates;
     }
 //?}
 }
