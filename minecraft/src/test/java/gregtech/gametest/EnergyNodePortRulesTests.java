@@ -11,7 +11,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DirectionalBlock;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.gametest.GameTestHolder;
@@ -66,7 +65,7 @@ public final class EnergyNodePortRulesTests {
                 .kind(EnergyNodeSpec.Kind.STORAGE).deviceType(EnergyNodeSpec.DeviceType.BUFFERED)
                 .texture("test").input(eu, 8).output(eu, 0).capacity(16).name("Test Storage").build();
         var pos = helper.absolutePos(new BlockPos(1, 1, 1));
-        var state = Blocks.STONE.defaultBlockState();
+        var state = BuiltInRegistries.BLOCK.get(Mc.gregtechId("energy_storage_lv")).defaultBlockState();
         var node = new EnergyNodeBlockEntity(pos, state);
         node.setSpec(spec);
         node.setLevel(helper.getLevel());
