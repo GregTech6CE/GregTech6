@@ -9,11 +9,11 @@ import gregtech.content.block.energy.ElectricWireBlock;
 import gregtech.content.block.machine.*;
 import gregtech.content.blockentity.machine.KineticSteamEngineBlockEntity;
 import gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity;
+import gregtech.content.fluid.FluidDefinitions;
 import gregtech.content.item.FluidDisplayItemLike;
 import gregtech.content.registry.*;
 import gregtech.content.transport.pipe.fluid.FluidPipeBlock;
 import gregtech.content.transport.pipe.item.ItemPipeBlock;
-import gregtech.content.fluid.FluidDefinitions;
 import gregtech.engine.machine.EngineType;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -967,7 +967,8 @@ public final class GregTechClient {
             MenuScreens.register(GTMenuTypes.GARBAGE_DUMP.get(), HopperScreen::new);
             MenuScreens.register(GTMenuTypes.BASIC_MACHINE.get(), BasicMachineScreen::new);
             MenuScreens.register(GTMenuTypes.BEHAVIOR_MACHINE.get(), (MenuScreens.ScreenConstructor<
-                            gregtech.engine.inventory.menu.BehaviorMachineMenu, gregtech.client.gui.BehaviorMachineHostScreen>)
+                            gregtech.engine.inventory.menu.BehaviorMachineMenu,
+                            gregtech.client.gui.BehaviorMachineHostScreen>)
                     (menu, inventory, title) -> {
                         var machine = menu.machine();
                         net.minecraft.client.gui.screens.Screen custom = BehaviorMachineClients.screen(
@@ -989,8 +990,7 @@ public final class GregTechClient {
     private static void registerWorldFluidRenderLayer(String path) {
         Fluid fluid = ForgeRegistries.FLUIDS.getValue(GregTech.id(path));
         if (fluid == null) {
-            throw new IllegalStateException(
-                    "GT world fluid is missing its registered fluid: " + path);
+            throw new IllegalStateException("GT world fluid is missing its registered fluid: " + path);
         }
         ItemBlockRenderTypes.setRenderLayer(fluid, RenderType.translucent());
         // Lighter-than-air world fluids render through their top-anchored block models rather
@@ -1001,8 +1001,7 @@ public final class GregTechClient {
             ItemBlockRenderTypes.setRenderLayer(block, RenderType.translucent());
         }
         if (ItemBlockRenderTypes.getRenderLayer(fluid.defaultFluidState()) != RenderType.translucent()) {
-            throw new IllegalStateException(
-                    "GT world fluid was not registered for translucent rendering: " + path);
+            throw new IllegalStateException("GT world fluid was not registered for translucent rendering: " + path);
         }
     }
 

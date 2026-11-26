@@ -2,9 +2,9 @@ package gregtech.gametest;
 
 import com.google.gson.JsonParser;
 import com.mojang.serialization.JsonOps;
+import gregtech.content.fluid.FluidDefinitions;
 import gregtech.content.hazard.WorldFluidEffects;
 import gregtech.content.worldgen.FluidSpringRules;
-import gregtech.content.fluid.FluidDefinitions;
 import gregtech.engine.fluid.LegacyWorldWater;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;

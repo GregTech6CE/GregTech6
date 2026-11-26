@@ -1,6 +1,5 @@
 package gregtech.engine.inventory;
 
-import gregtech.engine.inventory.menu.AdvancedCraftingMenu;
 import gregtech.content.block.inventory.DrawerQuadBlock;
 import gregtech.content.block.machine.BasicMachineBlock;
 import gregtech.content.block.machine.FunctionalPartInteraction;
@@ -13,6 +12,7 @@ import gregtech.content.blockentity.inventory.SafeBlockEntity;
 import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.blockentity.machine.BehaviorMachineBlockEntity;
 import gregtech.content.blockentity.machine.FunctionalPartRuntime;
+import gregtech.engine.inventory.menu.AdvancedCraftingMenu;
 import gregtech.platform.Mc;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
