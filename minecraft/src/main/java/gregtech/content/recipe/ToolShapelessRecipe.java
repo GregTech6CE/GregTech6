@@ -1,40 +1,30 @@
 package gregtech.content.recipe;
 
-//? if >=1.21.1 {
-//?} else {
-import com.google.gson.JsonObject;
-//?}
+import gregtech.content.item.GTToolItem;
 import gregtech.engine.material.ItemMaterialForms;
 import gregtech.engine.stack.StackCompat;
 import gregtech.engine.tool.GTToolHelper;
-import gregtech.content.item.GTToolItem;
-import gregtech.content.recipe.FormConversionSelector;
-//? if >=1.21.1 {
-/*import com.mojang.serialization.MapCodec;
-*///?} else {
-//?}
 import net.minecraft.core.NonNullList;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.ShapelessRecipe;
+import net.minecraft.world.level.Level;
 //? if >=1.21.1 {
-/*import net.minecraft.network.RegistryFriendlyByteBuf;
+/*import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 *///?} else {
-import net.minecraft.core.RegistryAccess;
+import com.google.gson.JsonObject;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.CraftingContainer;
 //?}
-import net.minecraft.world.item.ItemStack;
-//? if >=1.21.1 {
-/*import net.minecraft.world.item.crafting.*;
-*///?} else {
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.ShapelessRecipe;
-//?}
-import net.minecraft.world.level.Level;
 
 /** Original CR shapeless rows: ordinary GT tool container crafting wears and returns the tool. */
-public final class ToolShapelessRecipe extends ShapelessRecipe implements gregtech.engine.recipe.AutocraftableCraftingRecipe {
+public final class ToolShapelessRecipe extends GTShapelessCraftingRecipe
+        implements gregtech.engine.recipe.AutocraftableCraftingRecipe {
     private final boolean autocraftable, requireEmptyFluidContainers;
     private final FormConversionSelector formSelector;
     private final FormConversionPlacement formPlacement;
@@ -72,13 +62,8 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements gregte
 
     public ToolShapelessRecipe(ShapelessRecipe base, boolean autocraftable, FormConversionSelector formSelector,
             String conversionInput, String conversionMaterial, boolean requireEmptyFluidContainers, FormConversionPlacement formPlacement) {
-//? if >=1.21.1 {
-        /*super(base.getGroup(), base.category(), base.getResultItem(net.minecraft.core.RegistryAccess.EMPTY), expand(base).getIngredients());
+        super(expand(base));
         this.autocraftable = autocraftable;
-*///?} else {
-        super(base.getId(), base.getGroup(), base.category(), base.getResultItem(RegistryAccess.EMPTY), expand(base).getIngredients());
-        this.autocraftable = autocraftable;
-//?}
         this.requireEmptyFluidContainers = requireEmptyFluidContainers;
         this.formSelector = formSelector;
         this.formPlacement = java.util.Objects.requireNonNull(formPlacement);
@@ -91,23 +76,11 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements gregte
         base.getIngredients().replaceAll(CraftingTools::expand);
         return base;
     }
-//? if >=1.21.1 {
-    /*@Override
-    public boolean matches(CraftingInput grid, Level level) {
-        if (!super.matches(grid, level)) return false;
-        for (var stack : grid.items()) {
-*///?} else {
+
     @Override
-    public boolean matches(CraftingContainer grid, Level level) {
-        if (!super.matches(grid, level)) return false;
-        int first = -1, occupied = 0;
-        for (int i = 0; i < grid.getContainerSize(); i++) {
-            var stack = grid.getItem(i);
-            if (!stack.isEmpty()) {
-                if (first < 0) first = i;
-                occupied++;
-            }
-//?}
+    protected boolean onMatches(CraftingGridView grid, Level level) {
+        if (!super.onMatches(grid, level)) return false;
+        for (var stack : grid.items()) {
             if (!stack.isEmpty() && !conversionInput.isEmpty()
                     && !ItemMaterialForms.matches(conversionInput, conversionMaterial, stack)) return false;
             if (requireEmptyFluidContainers && (gregtech.engine.material.ItemMaterialRegistry.hasStoredContents(stack)
@@ -118,30 +91,18 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements gregte
                     && !electric.canInteract(stack)) return false;
             if (!gregtech.content.item.behavior.BehaviorLighter.usableForCrafting(stack)) return false;
         }
-//? if >=1.21.1 {
-        /*if (formSelector.variants() == 0) return true;
-        var position = (CraftingFormPosition) grid;
-        return formPlacement.matches(formSelector, position.gregtech$formGridSize(), position.gregtech$formFirstSlot(), grid.ingredientCount());
-*///?} else {
-        return formPlacement.matches(formSelector, grid.getContainerSize(), first, occupied);
-//?}
+        if (formSelector.variants() == 0) return true;
+        return formPlacement.matches(formSelector, grid.formGridSize(), grid.formFirstSlot(), grid.occupiedCount());
     }
     @Override
     public boolean canCraftInDimensions(int width, int height) {
         return super.canCraftInDimensions(width, height) && width * height >= formSelector.minimumGridSize();
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    public NonNullList<ItemStack> getRemainingItems(CraftingInput grid) {
-        var remaining = super.getRemainingItems(grid);
-        for (int i = 0; i < grid.size(); i++) {
-*///?} else {
     @Override
-    public NonNullList<ItemStack> getRemainingItems(CraftingContainer grid) {
-        var remaining = super.getRemainingItems(grid);
-        for (int i = 0; i < grid.getContainerSize(); i++) {
-//?}
+    protected NonNullList<ItemStack> onGetRemainingItems(CraftingGridView grid) {
+        var remaining = super.onGetRemainingItems(grid);
+        for (int i = 0; i < grid.size(); i++) {
             var stack = grid.getItem(i);
             if (stack.getItem() instanceof gregtech.content.item.ElectricToolItem electric) {
                 // Charge and wear the returned tool; the shaped row already used this rule.
@@ -169,28 +130,27 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements gregte
     }
 
 //? if >=1.21.1 {
-    /*public static final MapCodec<ToolShapelessRecipe> CODEC = com.mojang.serialization.codecs.RecordCodecBuilder.mapCodec(instance -> instance.group(
+    /*public static final MapCodec<ToolShapelessRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             new ShapelessRecipe.Serializer().codec().forGetter((ToolShapelessRecipe recipe) -> recipe),
-            com.mojang.serialization.Codec.BOOL.optionalFieldOf("gregtech_autocraftable",
+            Codec.BOOL.optionalFieldOf("gregtech_autocraftable",
                     true).forGetter((ToolShapelessRecipe recipe) -> recipe.autocraftable),
-            com.mojang.serialization.Codec.intRange(0, Integer.MAX_VALUE).optionalFieldOf("gregtech_form_variants",
+            Codec.intRange(0, Integer.MAX_VALUE).optionalFieldOf("gregtech_form_variants",
                     0).forGetter((ToolShapelessRecipe recipe) -> recipe.formSelector.variants()),
-            com.mojang.serialization.Codec.intRange(0, Integer.MAX_VALUE).optionalFieldOf("gregtech_form_offset",
+            Codec.intRange(0, Integer.MAX_VALUE).optionalFieldOf("gregtech_form_offset",
                     0).forGetter((ToolShapelessRecipe recipe) -> recipe.formSelector.offset()),
-            com.mojang.serialization.Codec.STRING.optionalFieldOf("gregtech_form_input",
+            Codec.STRING.optionalFieldOf("gregtech_form_input",
                     "").forGetter((ToolShapelessRecipe recipe) -> recipe.conversionInput),
-            com.mojang.serialization.Codec.STRING.optionalFieldOf("gregtech_form_material",
+            Codec.STRING.optionalFieldOf("gregtech_form_material",
                     "").forGetter((ToolShapelessRecipe recipe) -> recipe.conversionMaterial),
-            com.mojang.serialization.Codec.BOOL.optionalFieldOf("require_empty_fluid_containers",
+            Codec.BOOL.optionalFieldOf("require_empty_fluid_containers",
                     false).forGetter((ToolShapelessRecipe recipe) -> recipe.requireEmptyFluidContainers),
             FormConversionPlacement.CODEC.optionalFieldOf("gregtech_form_placement", FormConversionPlacement.FIXED)
                     .forGetter((ToolShapelessRecipe recipe) -> recipe.formPlacement)
     ).apply(instance, (base, auto, variants, offset, input, material, empty, placement) -> new ToolShapelessRecipe(base, auto,
             new FormConversionSelector(variants, offset), input, material, empty, placement)));
-*///?}
+
     public static final RecipeSerializer<ToolShapelessRecipe> SERIALIZER = new RecipeSerializer<>() {
-//? if >=1.21.1 {
-        /*@Override
+        @Override
         public MapCodec<ToolShapelessRecipe> codec() {
             return CODEC;
         }
@@ -199,7 +159,9 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements gregte
         public StreamCodec<RegistryFriendlyByteBuf, ToolShapelessRecipe> streamCodec() {
             return ByteBufCodecs.fromCodecWithRegistries(CODEC.codec());
         }
+    };
 *///?} else {
+    public static final RecipeSerializer<ToolShapelessRecipe> SERIALIZER = new RecipeSerializer<>() {
         private final ShapelessRecipe.Serializer vanilla = new ShapelessRecipe.Serializer();
 
         @Override
@@ -231,6 +193,6 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements gregte
             buffer.writeBoolean(recipe.requireEmptyFluidContainers);
             buffer.writeEnum(recipe.formPlacement);
         }
-//?}
     };
+//?}
 }

@@ -1,29 +1,29 @@
 package gregtech.content.recipe;
-import com.google.gson.JsonElement;
-//? if >=1.21.1 {
-/*import com.mojang.serialization.*;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-*///?} else {
-import com.google.gson.JsonObject;
-//?}
+
+import gregtech.content.item.GTToolItem;
 import gregtech.engine.stack.StackCompat;
 import gregtech.engine.tool.GTToolHelper;
-import gregtech.content.item.GTToolItem;
-import net.minecraft.core.*;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.level.Level;
 //? if >=1.21.1 {
-/*import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.*;
+/*import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 *///?} else {
+import com.google.gson.JsonObject;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.CraftingContainer;
 //?}
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.*;
-import net.minecraft.world.level.Level;
 
 /** Normal shaped crafting, with usable GT tools returned with the specified GT6 durability cost. */
-public class ToolShapedRecipe extends ShapedRecipe implements gregtech.engine.recipe.AutocraftableCraftingRecipe {
+public class ToolShapedRecipe extends GTShapedCraftingRecipe implements gregtech.engine.recipe.AutocraftableCraftingRecipe {
     private final boolean autocraftable;
     private final String constructionColor;
     private final boolean allowMirror;
@@ -59,12 +59,7 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.engine.re
     /** {@code expandTools} stays off for a base that already carries expanded GT tool ingredients. */
     private ToolShapedRecipe(ShapedRecipe base, boolean allowMirror, boolean requireEmptyFluidContainers, boolean autocraftable,
             String constructionColor, boolean expandTools) {
-//? if >=1.21.1 {
-        /*super(base.getGroup(), base.category(), base.pattern, base.getResultItem(RegistryAccess.EMPTY), base.showNotification());
-*///?} else {
-        super(base.getId(), base.getGroup(), base.category(), base.getWidth(), base.getHeight(), base.getIngredients(),
-                base.getResultItem(RegistryAccess.EMPTY));
-//?}
+        super(base);
         if (expandTools) getIngredients().replaceAll(CraftingTools::expand);
         this.allowMirror = allowMirror;
         this.requireEmptyFluidContainers = requireEmptyFluidContainers;
@@ -86,7 +81,7 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.engine.re
         // Do not resolve tag ingredients here: recipe parsing precedes native tag binding.
         // Peeking at all getItems() arrays would cache empty screw tags for this reload.
         getIngredients().replaceAll(ingredient -> {
-            var json = ingredientJson(ingredient);
+            var json = CraftingRecipeCompat.ingredientToJson(ingredient);
             if (!json.isJsonObject() || !json.getAsJsonObject().has("item")) return ingredient;
             var item = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse(
                     json.getAsJsonObject().get("item").getAsString()));
@@ -97,174 +92,62 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.engine.re
         });
     }
 
-//? if >=1.21.1 {
-    /*private static JsonElement ingredientJson(Ingredient ingredient) {
-        return Ingredient.CODEC.encodeStart(com.mojang.serialization.JsonOps.INSTANCE, ingredient).getOrThrow();
-    }
-
     @Override
-    public boolean matches(CraftingInput input, Level level) {
-        if (!(allowMirror ? super.matches(input, level)
-                : matchesUnmirrored(input))) return false;
+    protected boolean onMatches(CraftingGridView grid, Level level) {
+        if (!(allowMirror ? super.onMatches(grid, level) : matchesUnmirrored(grid))) return false;
         if (!constructionColor.isEmpty()) {
             boolean color = false;
-            for (int i = 0; i < input.size(); i++)
-                if (coloredConstruction(input.getItem(i)))
+            for (int i = 0; i < grid.size(); i++) {
+                if (coloredConstruction(grid.getItem(i))) {
                     color |= constructionColor.equals(
-                            gregtech.content.block.misc.ColoredConstructionBlock.itemColor(input.getItem(i)).getName());
-            if (!color) return false;
-        }
-        return toolsUsable(input);
-    }
-
-    /^* Every GT tool in the grid has to be a usable tool of its own type. ^/
-    protected boolean toolsUsable(CraftingInput input) {
-        for (int i = 0; i < input.size(); i++) {
-            var stack = input.getItem(i);
-            if (!gregtech.content.item.behavior.BehaviorLighter.usableForCrafting(stack)) return false;
-            if (requireEmptyFluidContainers && gregtech.engine.material.ItemMaterialRegistry.hasStoredContents(stack)) return false;
-            if (requireEmptyFluidContainers && !StackCompat.fluidContained(stack).isEmpty()) return false;
-            if ((stack.getItem() instanceof gregtech.content.item.GTToolItem
-                    || stack.getItem() instanceof gregtech.content.item.ElectricToolItem)
-                    && !gregtech.engine.tool.GTToolHelper.matchesTool(stack,
-                    gregtech.engine.tool.GTToolHelper.getType(stack))) return false;
-        }
-        return true;
-    }
-
-    private boolean matchesUnmirrored(CraftingInput input) {
-        for (int left = 0; left <= input.width() - getWidth(); left++)
-            for (int top = 0; top <= input.height() - getHeight(); top++) {
-                boolean ok = true;
-                for (int y = 0; y < input.height() && ok; y++)
-                    for (int x = 0; x < input.width(); x++) {
-                        int dx = x - left, dy = y - top;
-                        var ingredient = dx >= 0 && dy >= 0 && dx < getWidth() && dy < getHeight()
-                                ? getIngredients().get(dx + dy * getWidth()) : Ingredient.EMPTY;
-                        if (!ingredient.test(input.getItem(x + y * input.width()))) {
-                            ok = false;
-                            break;
-                        }
-                    }
-                if (ok) return true;
-            }
-        return false;
-    }
-
-    @Override
-    public NonNullList<ItemStack> getRemainingItems(CraftingInput input) {
-        var result = super.getRemainingItems(input);
-        for (int i = 0; i < input.size(); i++) {
-            var original = input.getItem(i);
-            if (original.getItem() instanceof gregtech.content.item.ElectricToolItem electric) {
-                var copy = original.copyWithCount(1);
-                electric.consumeInteractionEnergy(
-                        copy, gregtech.content.tool.ElectricToolWear.craftEnergy(electric), null);
-                result.set(i, gregtech.content.tool.ElectricToolWear.broken(electric, copy) ? ItemStack.EMPTY : copy);
-                continue;
-            }
-            int cost = GTToolHelper.craftDamage(original);
-            if (cost <= 0) continue;
-            var copy = original.copyWithCount(1);
-            long damage = (long) copy.getDamageValue() + cost;
-            if (damage >= copy.getMaxDamage()) result.set(i, ItemStack.EMPTY);
-            else {
-                copy.setDamageValue((int) damage);
-                result.set(i, copy);
-            }
-        }
-        drainFiniteIngredients(input, result);
-        return result;
-    }
-
-    /^* Return finite vessels only from the matched slots, including offsets and permitted mirrors. ^/
-    private void drainFiniteIngredients(CraftingInput input, NonNullList<ItemStack> remains) {
-        if (getIngredients().stream().noneMatch(i -> i.getCustomIngredient() instanceof FiniteBottleFillingRecipe.ContainerIngredient
-                || i.getCustomIngredient() instanceof QuarterFluidCraftingIngredient)) return;
-        for (int left = 0; left <= input.width() - getWidth(); left++)
-            for (int top = 0; top <= input.height() - getHeight(); top++)
-                for (int mirror = 0; mirror <= (allowMirror ? 1 : 0); mirror++) {
-                    Ingredient[] mapped = new Ingredient[input.size()];
-                    boolean matched = true;
-                    for (int y = 0; y < input.height() && matched; y++)
-                        for (int x = 0; x < input.width(); x++) {
-                            int dx = x - left, dy = y - top;
-                            var ingredient = dx >= 0 && dy >= 0 && dx < getWidth() && dy < getHeight()
-                                    ? getIngredients().get((mirror == 1 ? getWidth() - 1 - dx : dx)
-                                            + dy * getWidth()) : Ingredient.EMPTY;
-                            int slot = x + y * input.width();
-                            mapped[slot] = ingredient;
-                            if (!ingredient.test(input.getItem(slot))) {
-                                matched = false;
-                                break;
-                            }
-                        }
-                    if (!matched) continue;
-                    for (int slot = 0; slot < mapped.length; slot++)
-                        if (mapped[slot].getCustomIngredient() instanceof FiniteBottleFillingRecipe.ContainerIngredient)
-                            remains.set(slot, FiniteBottleFillingRecipe.ContainerIngredient.drainOne(input.getItem(slot)));
-                        else if (mapped[slot].getCustomIngredient() instanceof QuarterFluidCraftingIngredient quarter)
-                            remains.set(slot, quarter.drainOne(input.getItem(slot)));
-                    return;
+                            gregtech.content.block.misc.ColoredConstructionBlock.itemColor(grid.getItem(i)).getName());
                 }
-    }
-*///?} else {
-    private static JsonElement ingredientJson(Ingredient ingredient) {
-        return ingredient.toJson();
-    }
-
-    @Override
-    public boolean matches(CraftingContainer inventory, Level level) {
-        if (!(allowMirror ? super.matches(inventory, level)
-                : matchesUnmirrored(inventory))) return false;
-        if (!constructionColor.isEmpty()) {
-            boolean color = false;
-            for (int i = 0; i < inventory.getContainerSize(); i++)
-                if (coloredConstruction(inventory.getItem(i)))
-                    color |= constructionColor.equals(
-                            gregtech.content.block.misc.ColoredConstructionBlock.itemColor(inventory.getItem(i)).getName());
+            }
             if (!color) return false;
         }
-        return toolsUsable(inventory);
+        return toolsUsable(grid);
     }
 
     /** Every GT tool in the grid has to be a usable tool of its own type. */
-    protected boolean toolsUsable(CraftingContainer inventory) {
-        for (int slot = 0; slot < inventory.getContainerSize(); slot++) {
-            var stack = inventory.getItem(slot);
+    protected boolean toolsUsable(CraftingGridView grid) {
+        for (int slot = 0; slot < grid.size(); slot++) {
+            var stack = grid.getItem(slot);
             if (!gregtech.content.item.behavior.BehaviorLighter.usableForCrafting(stack)) return false;
             if (requireEmptyFluidContainers && gregtech.engine.material.ItemMaterialRegistry.hasStoredContents(stack)) return false;
             if (requireEmptyFluidContainers && !StackCompat.fluidContained(stack).isEmpty()) return false;
-            if ((stack.getItem() instanceof GTToolItem || stack.getItem() instanceof gregtech.content.item.ElectricToolItem)
+            if ((stack.getItem() instanceof GTToolItem
+                            || stack.getItem() instanceof gregtech.content.item.ElectricToolItem)
                     && !GTToolHelper.matchesTool(stack, GTToolHelper.getType(stack))) return false;
         }
         return true;
     }
 
-    private boolean matchesUnmirrored(CraftingContainer inventory) {
-        for (int left = 0; left <= inventory.getWidth() - getWidth(); left++)
-            for (int top = 0; top <= inventory.getHeight() - getHeight(); top++) {
-                boolean matches = true;
-                for (int y = 0; y < inventory.getHeight() && matches; y++)
-                    for (int x = 0; x < inventory.getWidth(); x++) {
+    private boolean matchesUnmirrored(CraftingGridView grid) {
+        for (int left = 0; left <= grid.width() - getWidth(); left++) {
+            for (int top = 0; top <= grid.height() - getHeight(); top++) {
+                boolean ok = true;
+                for (int y = 0; y < grid.height() && ok; y++) {
+                    for (int x = 0; x < grid.width(); x++) {
                         int dx = x - left, dy = y - top;
                         var ingredient = dx >= 0 && dy >= 0 && dx < getWidth() && dy < getHeight()
                                 ? getIngredients().get(dx + dy * getWidth()) : Ingredient.EMPTY;
-                        if (!ingredient.test(inventory.getItem(x + y * inventory.getWidth()))) {
-                            matches = false;
+                        if (!ingredient.test(grid.getItem(x + y * grid.width()))) {
+                            ok = false;
                             break;
                         }
                     }
-                if (matches) return true;
+                }
+                if (ok) return true;
             }
+        }
         return false;
     }
 
     @Override
-    public NonNullList<ItemStack> getRemainingItems(CraftingContainer inventory) {
-        var result = super.getRemainingItems(inventory);
-        for (int slot = 0; slot < inventory.getContainerSize(); slot++) {
-            var original = inventory.getItem(slot);
+    protected NonNullList<ItemStack> onGetRemainingItems(CraftingGridView grid) {
+        var result = super.onGetRemainingItems(grid);
+        for (int slot = 0; slot < grid.size(); slot++) {
+            var original = grid.getItem(slot);
             if (original.getItem() instanceof gregtech.content.item.ElectricToolItem electric) {
                 var copy = original.copyWithCount(1);
                 electric.consumeInteractionEnergy(
@@ -274,8 +157,7 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.engine.re
             }
             int cost = GTToolHelper.craftDamage(original);
             if (cost <= 0) continue;
-            var copy = original.copy();
-            copy.setCount(1);
+            var copy = original.copyWithCount(1);
             long damage = (long) copy.getDamageValue() + cost;
             if (damage >= copy.getMaxDamage()) result.set(slot, ItemStack.EMPTY);
             else {
@@ -283,42 +165,49 @@ public class ToolShapedRecipe extends ShapedRecipe implements gregtech.engine.re
                 result.set(slot, copy);
             }
         }
-        drainFiniteIngredients(inventory, result);
+        drainFiniteIngredients(grid, result);
         return result;
     }
 
-    /** Return vessels only at the matched fluid slots, respecting offsets and mirror policy. */
-    private void drainFiniteIngredients(CraftingContainer inventory, NonNullList<ItemStack> remains) {
-        if (getIngredients().stream().noneMatch(i -> i instanceof FiniteBottleFillingRecipe.ContainerIngredient
-                || i instanceof QuarterFluidCraftingIngredient)) return;
-        for (int left = 0; left <= inventory.getWidth() - getWidth(); left++)
-            for (int top = 0; top <= inventory.getHeight() - getHeight(); top++)
+    /** Return finite vessels only from the matched slots, including offsets and permitted mirrors. */
+    private void drainFiniteIngredients(CraftingGridView grid, NonNullList<ItemStack> remains) {
+        if (getIngredients().stream()
+                .map(CraftingRecipeCompat::customIngredientOf)
+                .noneMatch(i -> i instanceof FiniteBottleFillingRecipe.ContainerIngredient
+                        || i instanceof QuarterFluidCraftingIngredient)) return;
+        for (int left = 0; left <= grid.width() - getWidth(); left++) {
+            for (int top = 0; top <= grid.height() - getHeight(); top++) {
                 for (int mirror = 0; mirror <= (allowMirror ? 1 : 0); mirror++) {
-                    Ingredient[] mapped = new Ingredient[inventory.getContainerSize()];
+                    Ingredient[] mapped = new Ingredient[grid.size()];
                     boolean matched = true;
-                    for (int y = 0; y < inventory.getHeight() && matched; y++)
-                        for (int x = 0; x < inventory.getWidth(); x++) {
+                    for (int y = 0; y < grid.height() && matched; y++) {
+                        for (int x = 0; x < grid.width(); x++) {
                             int dx = x - left, dy = y - top;
                             var ingredient = dx >= 0 && dy >= 0 && dx < getWidth() && dy < getHeight()
                                     ? getIngredients().get((mirror == 1 ? getWidth() - 1 - dx : dx)
                                             + dy * getWidth()) : Ingredient.EMPTY;
-                            int slot = x + y * inventory.getWidth();
+                            int slot = x + y * grid.width();
                             mapped[slot] = ingredient;
-                            if (!ingredient.test(inventory.getItem(slot))) {
+                            if (!ingredient.test(grid.getItem(slot))) {
                                 matched = false;
                                 break;
                             }
                         }
+                    }
                     if (!matched) continue;
-                    for (int slot = 0; slot < mapped.length; slot++)
-                        if (mapped[slot] instanceof FiniteBottleFillingRecipe.ContainerIngredient)
-                            remains.set(slot, FiniteBottleFillingRecipe.ContainerIngredient.drainOne(inventory.getItem(slot)));
-                        else if (mapped[slot] instanceof QuarterFluidCraftingIngredient quarter)
-                            remains.set(slot, quarter.drainOne(inventory.getItem(slot)));
+                    for (int slot = 0; slot < mapped.length; slot++) {
+                        var custom = CraftingRecipeCompat.customIngredientOf(mapped[slot]);
+                        if (custom instanceof FiniteBottleFillingRecipe.ContainerIngredient) {
+                            remains.set(slot, FiniteBottleFillingRecipe.ContainerIngredient.drainOne(grid.getItem(slot)));
+                        } else if (custom instanceof QuarterFluidCraftingIngredient quarter) {
+                            remains.set(slot, quarter.drainOne(grid.getItem(slot)));
+                        }
+                    }
                     return;
                 }
+            }
+        }
     }
-//?}
 
     public String constructionColor() {
         return constructionColor;

@@ -1,51 +1,28 @@
 package gregtech.content.recipe;
-import gregtech.engine.mod.GregTechIdentity;
 
-//? if >=1.21.1 {
-//?} else {
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-//?}
-import gregtech.engine.fluid.FluidDisplayBinding;
 import gregtech.content.item.FluidDisplayItemLike;
 import gregtech.content.registry.GTFluids;
-//? if >=1.21.1 {
-/*import com.mojang.serialization.MapCodec;
-*///?} else {
-//?}
+import gregtech.engine.fluid.FluidDisplayBinding;
+import gregtech.engine.mod.GregTechIdentity;
 import net.minecraft.core.NonNullList;
-//? if >=1.21.1 {
-/*import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-*///?} else {
-import net.minecraft.network.FriendlyByteBuf;
-//?}
 import net.minecraft.resources.ResourceLocation;
-//? if >=1.21.1 {
-//?} else {
-import net.minecraft.world.inventory.CraftingContainer;
-//?}
 import net.minecraft.world.item.ItemStack;
-//? if >=1.21.1 {
-/*import net.minecraft.world.item.crafting.*;
-import net.neoforged.neoforge.common.crafting.ICustomIngredient;
-import net.neoforged.neoforge.common.crafting.IngredientType;
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.FluidUtil;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-*///?} else {
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
+//? if >=1.21.1 {
+/*import com.mojang.serialization.MapCodec;
+import net.neoforged.neoforge.common.crafting.ICustomIngredient;
+import net.neoforged.neoforge.common.crafting.IngredientType;
+import net.neoforged.neoforge.fluids.FluidStack;
+*///?} else {
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.common.crafting.AbstractIngredient;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.IIngredientSerializer;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import org.jetbrains.annotations.Nullable;
 //?}
 
 /**
@@ -62,31 +39,9 @@ public final class CreosoteAxleRecipe extends ToolShapedRecipe {
 
     public static ContainerIngredient creosote() { return IngredientHolder.VALUE; }
 
-//? if >=1.21.1 {
-    /*public static final MapCodec<CreosoteAxleRecipe> CODEC = new ShapedRecipe.Serializer().codec()
-            .xmap(CreosoteAxleRecipe::new, recipe -> recipe);
-*///?}
-    public static final RecipeSerializer<CreosoteAxleRecipe> SERIALIZER = new RecipeSerializer<>() {
-//? if >=1.21.1 {
-        /*public MapCodec<CreosoteAxleRecipe> codec() { return CODEC; }
-        public StreamCodec<RegistryFriendlyByteBuf, CreosoteAxleRecipe> streamCodec() {
-            return ByteBufCodecs.fromCodecWithRegistries(CODEC.codec());
-*///?} else {
-        private final ShapedRecipe.Serializer vanilla = new ShapedRecipe.Serializer();
+    public static final RecipeSerializer<CreosoteAxleRecipe> SERIALIZER =
+            CraftingRecipeCompat.wrapShapedSerializer(CreosoteAxleRecipe::new, r -> r);
 
-        @Override public CreosoteAxleRecipe fromJson(ResourceLocation id, JsonObject json) {
-            return new CreosoteAxleRecipe(vanilla.fromJson(id, json));
-        }
-
-        @Override public CreosoteAxleRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
-            return new CreosoteAxleRecipe(vanilla.fromNetwork(id, buffer));
-        }
-
-        @Override public void toNetwork(FriendlyByteBuf buffer, CreosoteAxleRecipe recipe) {
-            vanilla.toNetwork(buffer, recipe);
-//?}
-        }
-    };
     public CreosoteAxleRecipe(ShapedRecipe base) {
         super(base, false);
     }
@@ -95,17 +50,11 @@ public final class CreosoteAxleRecipe extends ToolShapedRecipe {
         return SERIALIZER;
     }
 
-//? if >=1.21.1 {
-    /*@Override public NonNullList<ItemStack> getRemainingItems(CraftingInput input) {
-        var remains = super.getRemainingItems(input);
-        for (int slot = 0; slot < input.size(); slot++) {
-            var original = input.getItem(slot);
-*///?} else {
-    @Override public NonNullList<ItemStack> getRemainingItems(CraftingContainer inventory) {
-        NonNullList<ItemStack> remains = super.getRemainingItems(inventory);
-        for (int slot = 0; slot < inventory.getContainerSize(); slot++) {
-            ItemStack original = inventory.getItem(slot);
-//?}
+    @Override
+    protected NonNullList<ItemStack> onGetRemainingItems(CraftingGridView grid) {
+        var remains = super.onGetRemainingItems(grid);
+        for (int slot = 0; slot < grid.size(); slot++) {
+            var original = grid.getItem(slot);
             if (creosote().test(original)) remains.set(slot, ContainerIngredient.drainOne(original));
         }
         return remains;
