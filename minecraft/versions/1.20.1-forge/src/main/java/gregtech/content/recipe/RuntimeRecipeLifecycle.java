@@ -17,14 +17,14 @@ public final class RuntimeRecipeLifecycle {
     static {
         RecipePublication.register((manager, access) -> {
             BottleFillingRecipeInjector.apply(manager, access);
-            ConstructionCraftingRecipeInjector.apply(manager, access);
+            ConstructionCraftingRecipeInjector.add(GeneratedCraftingSink.runtime(manager));
             FormConversionCraftingRecipeInjector.apply(manager, access);
             HandToolCraftingRecipeInjector.apply(manager, access);
-            StoneCraftingRecipeInjector.apply(manager, access);
+            StoneCraftingRecipeInjector.add(GeneratedCraftingSink.runtime(manager));
             ToolCraftingRecipeInjector.apply(manager, access);
             TrackRecipeInjector.apply(manager, access);
-            WoodCraftingRecipeInjector.apply(manager, access);
-            BedrockFlowerCraftingRecipeInjector.apply(manager, access);
+            WoodCraftingRuntimeInjector.apply(manager, access);
+            BedrockFlowerCraftingRecipeInjector.add(GeneratedCraftingSink.runtime(manager));
         });
     }
 

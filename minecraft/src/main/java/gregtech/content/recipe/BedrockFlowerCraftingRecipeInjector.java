@@ -1,38 +1,19 @@
 package gregtech.content.recipe;
 
-//? if >=1.21.1 {
-/*import java.util.Map;
-import gregtech.content.data.OriginalCraftingJson;
-import net.minecraft.core.registries.BuiltInRegistries;
-*///?} else {
-import gregtech.GregTech;
-//?}
-import gregtech.engine.material.GTMaterialRegistry;
-import gregtech.engine.tool.GTToolType;
-import gregtech.content.plant.BedrockFlowers;
 import gregtech.content.data.MaterialPrefix;
-
-//? if >=1.21.1 {
-//?} else {
-import gregtech.content.recipe.RuntimeRecipeLifecycle;
-//?}
-import gregtech.content.recipe.ToolShapedRecipe;
+import gregtech.content.plant.BedrockFlowers;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTToolItems;
+import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.mod.GregTechIdentity;
+import gregtech.engine.tool.GTToolType;
 import gregtech.platform.Mc;
-import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
+import java.util.List;
+import java.util.Map;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraft.world.item.crafting.ShapedRecipe;
-import net.minecraft.world.item.crafting.ShapelessRecipe;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /** GT6 BlockFlowersA/B shapeless dyes and B-family hand-cut wooden sticks. */
 public final class BedrockFlowerCraftingRecipeInjector {
@@ -43,24 +24,18 @@ public final class BedrockFlowerCraftingRecipeInjector {
 
     private BedrockFlowerCraftingRecipeInjector() {}
 
-//? if >=1.21.1 {
-    /*public static void add(Map<ResourceLocation, byte[]> recipes) {
-*///?} else {
-    public static void apply(RecipeManager manager, RegistryAccess access) {
-        List<Recipe<?>> recipes = new ArrayList<>(manager.getRecipes());
-//?}
+    public static void add(GeneratedCraftingSink sink) {
         int added = 0;
         for (BedrockFlowers.Flower flower : BedrockFlowers.ALL) {
             ItemStack input = flower(flower);
             ItemStack output = shapelessOutput(flower);
             if (!output.isEmpty()) {
-//? if >=1.21.1 {
-                /*OriginalCraftingJson.shapeless(recipes, id(flower, "hand"), "gt.bedrock_flowers", CraftingBookCategory.MISC, output, List.of(Ingredient.of(input.getItem())));
-*///?} else {
-                recipes.add(new ShapelessRecipe(id(flower, "hand"), "gt.bedrock_flowers",
-                        CraftingBookCategory.MISC, output,
-                        NonNullList.of(Ingredient.EMPTY, Ingredient.of(input.getItem()))));
-//?}
+                sink.shapeless(
+                        id(flower, "hand"),
+                        "gt.bedrock_flowers",
+                        CraftingBookCategory.MISC,
+                        output,
+                        List.of(Ingredient.of(input.getItem())));
                 added++;
             }
             if (flower.family() == 'B' && (flower.meta() == 0 || flower.meta() == 1)) {
@@ -68,27 +43,20 @@ public final class BedrockFlowerCraftingRecipeInjector {
                 for (GTToolType tool : new GTToolType[]{GTToolType.SAW, GTToolType.KNIFE}) {
                     var toolItem = GTToolItems.get(tool);
                     if (toolItem == null) throw new IllegalStateException("Missing flower crafting tool " + tool);
-                    var ingredients = NonNullList.withSize(2, Ingredient.EMPTY);
-                    ingredients.set(0, Ingredient.of(toolItem));
-                    ingredients.set(1, Ingredient.of(input.getItem()));
-//? if >=1.21.1 {
-                    /*OriginalCraftingJson.shaped(recipes, id(flower, tool.id()), "gt.bedrock_flowers", CraftingBookCategory.MISC, twoSticks.copy(), new String[]{"T", "F"}, Map.of('T', ingredients.get(0), 'F', ingredients.get(1)), false);
-*///?} else {
-                    ShapedRecipe base = new ShapedRecipe(id(flower, tool.id()), "gt.bedrock_flowers",
-                            CraftingBookCategory.MISC, 1, 2, ingredients, twoSticks.copy());
-                    recipes.add(new ToolShapedRecipe(base, false));
-//?}
+                    sink.shaped(
+                            id(flower, tool.id()),
+                            "gt.bedrock_flowers",
+                            CraftingBookCategory.MISC,
+                            twoSticks.copy(),
+                            new String[]{"T", "F"},
+                            Map.of('T', Ingredient.of(toolItem), 'F', Ingredient.of(input.getItem())),
+                            false);
                     added++;
                 }
             }
         }
-//? if >=1.21.1 {
-
-        /*com.mojang.logging.LogUtils.getLogger().info("Registered {} GT6 bedrock flower crafting recipes", added);
-*///?} else {
-        RuntimeRecipeLifecycle.replaceGenerated(manager, recipes);
-        GregTech.LOGGER.info("Registered {} GT6 bedrock flower crafting recipes", added);
-//?}
+        sink.commit();
+        Mc.logger().info("Registered {} GT6 bedrock flower crafting recipes", added);
     }
 
     private static ItemStack shapelessOutput(BedrockFlowers.Flower flower) {
@@ -115,13 +83,13 @@ public final class BedrockFlowerCraftingRecipeInjector {
     }
 
     private static ItemStack flower(BedrockFlowers.Flower entry) {
-        var item = Mc.item(
-                ResourceLocation.fromNamespaceAndPath("gt6ce", entry.id()));
+        var item = Mc.item(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, entry.id()));
         if (item == null) throw new IllegalStateException("Missing GT6 flower " + entry.id());
         return new ItemStack(item);
     }
 
     private static ResourceLocation id(BedrockFlowers.Flower flower, String process) {
-        return ResourceLocation.fromNamespaceAndPath("gt6ce", "bedrock_flowers/" + flower.id() + "/" + process);
+        return ResourceLocation.fromNamespaceAndPath(
+                GregTechIdentity.REGISTRY_NAMESPACE, "bedrock_flowers/" + flower.id() + "/" + process);
     }
 }

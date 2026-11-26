@@ -1,31 +1,22 @@
 package gregtech.content.recipe;
 
-//? if >=1.21.1 {
-/*import gregtech.content.data.OriginalCraftingJson;
-*///?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTConstructionVariants;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTToolItems;
 import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.mod.GregTechIdentity;
 import gregtech.engine.tool.GTToolType;
 import gregtech.platform.Mc;
-import net.minecraft.core.NonNullList;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.block.Block;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * The remaining rows of GT6's shared block constructors that the port never carried.
@@ -65,47 +56,29 @@ public final class ConstructionCraftingRecipeInjector {
     /** Rows GT6 has but a palette of the port cannot express, with the reason. */
     public static List<String> skipped() { return List.copyOf(SKIPPED); }
 
-//? if >=1.21.1 {
-    /*public static void add(Map<ResourceLocation, byte[]> recipes) {
-*///?} else {
-    public static void apply(RecipeManager manager, net.minecraft.core.RegistryAccess access) {
-        List<Recipe<?>> recipes = new ArrayList<>(manager.getRecipes());
-//?}
+    public static void add(GeneratedCraftingSink sink) {
         REGISTERED.clear();
         SKIPPED.clear();
         int added = 0;
-        for (String family : SLAB_FAMILIES) added += slabFamily(recipes, family);
-        added += reinforcedConcrete(recipes);
-//? if >=1.21.1 {
-        /*com.mojang.logging.LogUtils.getLogger().info("Registered {} GT6 construction crafting rows ({} skipped)",
-*///?} else {
-        if (added > 0) RuntimeRecipeLifecycle.replaceGenerated(manager, recipes);
-        GregTech.LOGGER.info("Registered {} GT6 construction crafting rows ({} skipped)",
-//?}
-                added, SKIPPED.size());
+        for (String family : SLAB_FAMILIES) added += slabFamily(sink, family);
+        added += reinforcedConcrete(sink);
+        if (added > 0) sink.commit();
+        Mc.logger().info("Registered {} GT6 construction crafting rows ({} skipped)", added, SKIPPED.size());
         for (String reason : SKIPPED) Mc.logger().debug("[gregtech] construction row skipped: {}", reason);
     }
 
     /** The sixteen colour pairs of one family: GT6's {@code BlockColored} metas. */
-//? if >=1.21.1 {
-    /*private static int slabFamily(Map<ResourceLocation, byte[]> recipes, String family) {
-*///?} else {
-    private static int slabFamily(List<Recipe<?>> recipes, String family) {
-//?}
+    private static int slabFamily(GeneratedCraftingSink sink, String family) {
         int added = 0;
         for (DyeColor color : DyeColor.values()) {
-            added += slabPair(recipes, family, color.getName(),
+            added += slabPair(sink, family, color.getName(),
                     GTConstructionVariants.coloredBlock(family, color),
                     GTConstructionVariants.coloredBlock(family + "_slab", color));
         }
         return added;
     }
 
-//? if >=1.21.1 {
-    /*private static int slabPair(Map<ResourceLocation, byte[]> recipes, String family, String key,
-*///?} else {
-    private static int slabPair(List<Recipe<?>> recipes, String family, String key,
-//?}
+    private static int slabPair(GeneratedCraftingSink sink, String family, String key,
                                 Block full, Block slab) {
         String path = "construction/" + family + "/" + key;
         if (full == null || slab == null) {
@@ -115,20 +88,16 @@ public final class ConstructionCraftingRecipeInjector {
         ItemStack fullStack = new ItemStack(full);
         ItemStack slabStack = new ItemStack(slab);
         int added = 0;
-        added += shaped(recipes, path + "/slabs_to_block", new String[]{"X", "X"},
+        added += shaped(sink, path + "/slabs_to_block", new String[]{"X", "X"},
                 Map.of('X', Ingredient.of(slabStack)), fullStack, false);
-        added += shaped(recipes, path + "/block_to_slab_by_saw", new String[]{"sX"},
+        added += shaped(sink, path + "/block_to_slab_by_saw", new String[]{"sX"},
                 Map.of('X', Ingredient.of(fullStack), 's', Ingredient.of(tool(GTToolType.SAW))),
                 copy(slabStack, 2), false);
         return added;
     }
 
     /** GT6 {@code Loader_Blocks}: one mirrored iron-stick row per concrete colour. */
-//? if >=1.21.1 {
-    /*private static int reinforcedConcrete(Map<ResourceLocation, byte[]> recipes) {
-*///?} else {
-    private static int reinforcedConcrete(List<Recipe<?>> recipes) {
-//?}
+    private static int reinforcedConcrete(GeneratedCraftingSink sink) {
         ItemStack stick = GTItems.getStack(MaterialPrefix.stick, GTMaterialRegistry.get("Iron"), 1);
         ItemStack drill = tool(GTToolType.HAND_DRILL);
         if (stick.isEmpty() || drill.isEmpty()) {
@@ -143,7 +112,7 @@ public final class ConstructionCraftingRecipeInjector {
                 SKIPPED.add("concrete_reinforced/" + color.getName() + ": the palette has no concrete pair");
                 continue;
             }
-            added += shaped(recipes, "construction/concrete_reinforced/" + color.getName() + "/from_stick_and_concrete",
+            added += shaped(sink, "construction/concrete_reinforced/" + color.getName() + "/from_stick_and_concrete",
                     new String[]{"Se", "X "},
                     Map.of('X', Ingredient.of(new ItemStack(concrete)),
                             'S', Ingredient.of(stick),
@@ -155,11 +124,7 @@ public final class ConstructionCraftingRecipeInjector {
 
     // ── recipe helpers ────────────────────────────────────────────────────
 
-//? if >=1.21.1 {
-    /*private static int shaped(Map<ResourceLocation, byte[]> recipes, String path, String[] pattern,
-*///?} else {
-    private static int shaped(List<Recipe<?>> recipes, String path, String[] pattern,
-//?}
+    private static int shaped(GeneratedCraftingSink sink, String path, String[] pattern,
                               Map<Character, Ingredient> key, ItemStack output, boolean allowMirror) {
         if (output.isEmpty()) {
             SKIPPED.add(path + ": the palette has no form for this output");
@@ -167,7 +132,6 @@ public final class ConstructionCraftingRecipeInjector {
         }
         int width = pattern[0].length();
         int height = pattern.length;
-        NonNullList<Ingredient> ingredients = NonNullList.withSize(width * height, Ingredient.EMPTY);
         for (int y = 0; y < height; y++) {
             if (pattern[y].length() != width) return 0;
             for (int x = 0; x < width; x++) {
@@ -178,18 +142,10 @@ public final class ConstructionCraftingRecipeInjector {
                     SKIPPED.add(path + ": the palette has no form for key '" + symbol + "'");
                     return 0;
                 }
-                ingredients.set(x + y * width, ingredient);
             }
         }
-//? if >=1.21.1 {
-        /*ResourceLocation id = ResourceLocation.fromNamespaceAndPath("gt6ce", path);
-        OriginalCraftingJson.shaped(recipes, id, "gt.construction", CraftingBookCategory.BUILDING, output.copy(), pattern, key, allowMirror);
-*///?} else {
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, path);
-        ShapedRecipe base = new ShapedRecipe(id, "gt.construction", CraftingBookCategory.BUILDING,
-                width, height, ingredients, output.copy());
-        recipes.add(new ToolShapedRecipe(base, allowMirror));
-//?}
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, path);
+        sink.shaped(id, "gt.construction", CraftingBookCategory.BUILDING, output.copy(), pattern, key, allowMirror);
         REGISTERED.add(id.toString());
         return 1;
     }

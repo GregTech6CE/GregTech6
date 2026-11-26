@@ -1,34 +1,25 @@
 package gregtech.content.recipe;
 
-//? if >=1.21.1 {
-/*import gregtech.content.data.OriginalCraftingJson;
-*///?} else {
-import gregtech.GregTech;
-//?}
-import gregtech.engine.tool.GTToolType;
 import gregtech.content.block.stone.StoneType;
 import gregtech.content.block.stone.StoneVariant;
 import gregtech.content.data.MaterialPrefix;
-import gregtech.content.recipe.ToolShapedRecipe;
 import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTToolItems;
+import gregtech.engine.mod.GregTechIdentity;
+import gregtech.engine.tool.GTToolType;
 import gregtech.platform.Mc;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.ShapedRecipe;
-import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.level.block.Block;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * GT6 {@code BlockStones} — the crafting-grid rows of every masonry variant of every rock type.
@@ -84,33 +75,20 @@ public final class StoneCraftingRecipeInjector {
     /** Rows GT6 has but a rock of the port cannot express, with the reason. */
     public static List<String> skipped() { return List.copyOf(SKIPPED); }
 
-//? if >=1.21.1 {
-    /*public static void add(Map<ResourceLocation, byte[]> recipes) {
-*///?} else {
-    public static void apply(RecipeManager manager, net.minecraft.core.RegistryAccess access) {
-        List<Recipe<?>> recipes = new ArrayList<>(manager.getRecipes());
-//?}
+    public static void add(GeneratedCraftingSink sink) {
         REGISTERED.clear();
         SKIPPED.clear();
         int added = 0;
-        for (StoneType type : StoneType.values()) added += rock(recipes, type);
-//? if >=1.21.1 {
-
-        /*com.mojang.logging.LogUtils.getLogger().info("Registered {} GT6 masonry crafting rows for {} rock types ({} skipped)",
-*///?} else {
-        if (added > 0) gregtech.content.recipe.RuntimeRecipeLifecycle.replaceGenerated(manager, recipes);
-        GregTech.LOGGER.info("Registered {} GT6 masonry crafting rows for {} rock types ({} skipped)",
-//?}
+        for (StoneType type : StoneType.values()) added += rock(sink, type);
+        if (added > 0) sink.commit();
+        Mc.logger().info(
+                "Registered {} GT6 masonry crafting rows for {} rock types ({} skipped)",
                 added, StoneType.values().length, SKIPPED.size());
         for (String reason : SKIPPED) Mc.logger().debug("[gregtech] masonry row skipped: {}", reason);
     }
 
     /** Every row of one rock type, exactly in GT6's order. */
-//? if >=1.21.1 {
-    /*private static int rock(Map<ResourceLocation, byte[]> recipes, StoneType type) {
-*///?} else {
-    private static int rock(List<Recipe<?>> recipes, StoneType type) {
-//?}
+    private static int rock(GeneratedCraftingSink sink, StoneType type) {
         String path = type.registryId();
         ItemStack rock = item(type, StoneVariant.STONE, MaterialPrefix.rockGt);
         ItemStack stone = block(type, StoneVariant.STONE);
@@ -140,20 +118,20 @@ public final class StoneCraftingRecipeInjector {
         Ingredient saw = Ingredient.of(tool(GTToolType.SAW));
 
         int added = 0;
-        added += shaped(recipes, path + "/rocks_to_cobble", new String[]{"XX", "XX"},
+        added += shaped(sink, path + "/rocks_to_cobble", new String[]{"XX", "XX"},
                 Map.of('X', Ingredient.of(rock)), cobble, false);
-        added += shaped(recipes, path + "/stone_to_small_gear", new String[]{"X ", " f"},
+        added += shaped(sink, path + "/stone_to_small_gear", new String[]{"X ", " f"},
                 Map.of('X', Ingredient.of(stone), 'f', file), smallGear, false);
-        added += shaped(recipes, path + "/rocks_to_stairs", new String[]{" X", "XX"},
+        added += shaped(sink, path + "/rocks_to_stairs", new String[]{" X", "XX"},
                 Map.of('X', Ingredient.of(rock)), new ItemStack(Items.STONE_STAIRS), true);
-        added += shaped(recipes, path + "/rocks_to_cobble_slab", new String[]{"  ", "XX"},
+        added += shaped(sink, path + "/rocks_to_cobble_slab", new String[]{"  ", "XX"},
                 Map.of('X', Ingredient.of(rock)), cobbleSlab, false);
 
-        added += shaped(recipes, path + "/cobble_to_slabs", new String[]{"  ", "XX"},
+        added += shaped(sink, path + "/cobble_to_slabs", new String[]{"  ", "XX"},
                 Map.of('X', Ingredient.of(cobble)), copy(cobbleSlab, 4), false);
-        added += shaped(recipes, path + "/cobble_to_stairs", new String[]{" X", "XX"},
+        added += shaped(sink, path + "/cobble_to_stairs", new String[]{" X", "XX"},
                 Map.of('X', Ingredient.of(cobble)), new ItemStack(Items.COBBLESTONE_STAIRS, 4), true);
-        added += shaped(recipes, path + "/cobble_to_wall", new String[]{"XXX", "XXX"},
+        added += shaped(sink, path + "/cobble_to_wall", new String[]{"XXX", "XXX"},
                 Map.of('X', Ingredient.of(cobble)), new ItemStack(Items.COBBLESTONE_WALL, 6), true);
 
         // GT6 BlockMetaType — every full block and its slab pair, whatever the variant group.
@@ -162,44 +140,44 @@ public final class StoneCraftingRecipeInjector {
             ItemStack half = slab(type, variant);
             if (full.isEmpty() || half.isEmpty()) continue;
             String base = path + "/" + variant.registrySuffix();
-            added += shaped(recipes, base + "_slabs_to_block", new String[]{"X", "X"},
+            added += shaped(sink, base + "_slabs_to_block", new String[]{"X", "X"},
                     Map.of('X', Ingredient.of(half)), full, false);
-            added += shaped(recipes, base + "_to_slab_by_saw", new String[]{"sX"},
+            added += shaped(sink, base + "_to_slab_by_saw", new String[]{"sX"},
                     Map.of('X', Ingredient.of(full), 's', saw), copy(half, 2), false);
         }
 
-        added += shaped(recipes, path + "/bricks_cracked_by_chisel", new String[]{"y", "X"},
+        added += shaped(sink, path + "/bricks_cracked_by_chisel", new String[]{"y", "X"},
                 Map.of('X', Ingredient.of(bricks), 'y', chisel), cracked, false);
-        added += shaped(recipes, path + "/bricks_cracked_by_hammer", new String[]{"h", "X"},
+        added += shaped(sink, path + "/bricks_cracked_by_hammer", new String[]{"h", "X"},
                 Map.of('X', Ingredient.of(bricks), 'h', hammer), cracked, false);
         // GT6's 'e' key is OreDictToolNames.drill (CR); the port registers no drill tool, so
         // this row cannot be built.
         SKIPPED.add(path + "/bricks_reinforced: GT6's key 'e' is the drill tool, which the port does not register");
-        added += shaped(recipes, path + "/bricks_redstone", new String[]{"Dh", "X "},
+        added += shaped(sink, path + "/bricks_redstone", new String[]{"Dh", "X "},
                 Map.of('X', Ingredient.of(bricks), 'D', Ingredient.of(redstone),
                         'h', hammer), redstoneBricks, false);
 
-        added += shaped(recipes, path + "/smooth_chiseled", new String[]{"y", "X"},
+        added += shaped(sink, path + "/smooth_chiseled", new String[]{"y", "X"},
                 Map.of('X', Ingredient.of(smooth), 'y', chisel), chiseled, false);
-        added += shaped(recipes, path + "/smooth_to_bricks", new String[]{"XX", "XX"},
+        added += shaped(sink, path + "/smooth_to_bricks", new String[]{"XX", "XX"},
                 Map.of('X', Ingredient.of(smooth)), copy(bricks, 4), false);
-        added += shaped(recipes, path + "/smooth_to_tiles", new String[]{"X", "X"},
+        added += shaped(sink, path + "/smooth_to_tiles", new String[]{"X", "X"},
                 Map.of('X', Ingredient.of(smooth)), copy(tiles, 2), false);
-        added += shaped(recipes, path + "/smooth_to_small_tiles", new String[]{"XX"},
+        added += shaped(sink, path + "/smooth_to_small_tiles", new String[]{"XX"},
                 Map.of('X', Ingredient.of(smooth)), copy(smallTiles, 2), false);
-        added += shaped(recipes, path + "/smooth_to_small_bricks", new String[]{"X ", " X"},
+        added += shaped(sink, path + "/smooth_to_small_bricks", new String[]{"X ", " X"},
                 Map.of('X', Ingredient.of(smooth)), copy(smallBricks, 2), false);
-        added += shaped(recipes, path + "/smooth_to_windmill_tiles", new String[]{" X", "X "},
+        added += shaped(sink, path + "/smooth_to_windmill_tiles", new String[]{" X", "X "},
                 Map.of('X', Ingredient.of(smooth)), copy(windmillA, 2), false);
 
-        added += shapeless(recipes, path + "/tiles_to_square_bricks", tiles, squareBricks);
-        added += shapeless(recipes, path + "/square_bricks_to_tiles", squareBricks, tiles);
-        added += shapeless(recipes, path + "/windmill_tiles_a_to_b", windmillA, windmillB);
-        added += shapeless(recipes, path + "/windmill_tiles_b_to_a", windmillB, windmillA);
+        added += shapeless(sink, path + "/tiles_to_square_bricks", tiles, squareBricks);
+        added += shapeless(sink, path + "/square_bricks_to_tiles", squareBricks, tiles);
+        added += shapeless(sink, path + "/windmill_tiles_a_to_b", windmillA, windmillB);
+        added += shapeless(sink, path + "/windmill_tiles_b_to_a", windmillB, windmillA);
 
-        added += shapeless(recipes, path + "/mossy_cobblestone_from_vine", vine, cobble, cobbleMossy);
-        added += shapeless(recipes, path + "/mossy_bricks_from_vine", vine, bricks, bricksMossy);
-        added += shapeless(recipes, path + "/mossy_cracked_bricks_from_vine", vine, cracked, bricksMossy);
+        added += shapeless(sink, path + "/mossy_cobblestone_from_vine", vine, cobble, cobbleMossy);
+        added += shapeless(sink, path + "/mossy_bricks_from_vine", vine, bricks, bricksMossy);
+        added += shapeless(sink, path + "/mossy_cracked_bricks_from_vine", vine, cracked, bricksMossy);
         // GT6 RM.growmoss (RM) writes a second shapeless row per group using its own moss
         // item (OD.itemMoss), which the port does not register.
         for (String clean : new String[]{"cobblestone", "bricks", "cracked_bricks"}) {
@@ -210,11 +188,7 @@ public final class StoneCraftingRecipeInjector {
 
     // ── recipe helpers ────────────────────────────────────────────────────
 
-//? if >=1.21.1 {
-    /*private static int shaped(Map<ResourceLocation, byte[]> recipes, String path, String[] pattern,
-*///?} else {
-    private static int shaped(List<Recipe<?>> recipes, String path, String[] pattern,
-//?}
+    private static int shaped(GeneratedCraftingSink sink, String path, String[] pattern,
                               Map<Character, Ingredient> key, ItemStack output, boolean allowMirror) {
         if (output.isEmpty()) {
             SKIPPED.add(path + ": the rock has no form for this output");
@@ -222,7 +196,6 @@ public final class StoneCraftingRecipeInjector {
         }
         int width = pattern[0].length();
         int height = pattern.length;
-        NonNullList<Ingredient> ingredients = NonNullList.withSize(width * height, Ingredient.EMPTY);
         for (int y = 0; y < height; y++) {
             if (pattern[y].length() != width) return 0;
             for (int x = 0; x < width; x++) {
@@ -233,27 +206,15 @@ public final class StoneCraftingRecipeInjector {
                     SKIPPED.add(path + ": the rock has no form for key '" + symbol + "'");
                     return 0;
                 }
-                ingredients.set(x + y * width, ingredient);
             }
         }
-//? if >=1.21.1 {
-        /*ResourceLocation id = ResourceLocation.fromNamespaceAndPath("gt6ce", "stone/" + path);
-        OriginalCraftingJson.shaped(recipes, id, "gt.stone", CraftingBookCategory.BUILDING, output.copy(), pattern, key, allowMirror);
-*///?} else {
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, "stone/" + path);
-        ShapedRecipe base = new ShapedRecipe(id, "gt.stone", CraftingBookCategory.BUILDING,
-                width, height, ingredients, output.copy());
-        recipes.add(new ToolShapedRecipe(base, allowMirror));
-//?}
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, "stone/" + path);
+        sink.shaped(id, "gt.stone", CraftingBookCategory.BUILDING, output.copy(), pattern, key, allowMirror);
         REGISTERED.add(id.toString());
         return 1;
     }
 
-//? if >=1.21.1 {
-    /*private static int shapeless(Map<ResourceLocation, byte[]> recipes, String path, ItemStack... stacks) {
-*///?} else {
-    private static int shapeless(List<Recipe<?>> recipes, String path, ItemStack... stacks) {
-//?}
+    private static int shapeless(GeneratedCraftingSink sink, String path, ItemStack... stacks) {
         if (stacks.length < 2) return 0;
         ItemStack output = stacks[stacks.length - 1];
         if (output.isEmpty()) {
@@ -268,13 +229,8 @@ public final class StoneCraftingRecipeInjector {
             }
             ingredients.add(Ingredient.of(stacks[i]));
         }
-//? if >=1.21.1 {
-        /*ResourceLocation id = ResourceLocation.fromNamespaceAndPath("gt6ce", "stone/" + path);
-        OriginalCraftingJson.shapeless(recipes, id, "gt.stone", CraftingBookCategory.BUILDING, output.copy(), ingredients);
-*///?} else {
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, "stone/" + path);
-        recipes.add(new ShapelessRecipe(id, "gt.stone", CraftingBookCategory.BUILDING, output.copy(), ingredients));
-//?}
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, "stone/" + path);
+        sink.shapeless(id, "gt.stone", CraftingBookCategory.BUILDING, output.copy(), ingredients);
         REGISTERED.add(id.toString());
         return 1;
     }
