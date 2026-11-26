@@ -80,7 +80,9 @@ public final class ManualToolRecipePack {
         OriginalHandCraftingRows.add(generated);
         gregtech.content.recipe.ConstructionCraftingRecipeInjector.add(
                 gregtech.content.recipe.GeneratedCraftingSink.datapack(generated));
-        gregtech.content.recipe.FormConversionCraftingRecipeInjector.add(generated);
+        gregtech.content.recipe.FormConversionCraftingRecipeInjector.add(
+                gregtech.content.recipe.GeneratedCraftingSink.datapack(generated),
+                gregtech.engine.material.ItemMaterialForms.nativeAliases());
         gregtech.content.recipe.StoneCraftingRecipeInjector.add(
                 gregtech.content.recipe.GeneratedCraftingSink.datapack(generated));
         gregtech.content.recipe.BedrockFlowerCraftingRecipeInjector.add(

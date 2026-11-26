@@ -18,7 +18,7 @@ public final class RuntimeRecipeLifecycle {
         RecipePublication.register((manager, access) -> {
             BottleFillingRecipeInjector.apply(manager, access);
             ConstructionCraftingRecipeInjector.add(GeneratedCraftingSink.runtime(manager));
-            FormConversionCraftingRecipeInjector.apply(manager, access);
+            FormConversionRuntimeInjector.apply(manager, access);
             HandToolCraftingRecipeInjector.apply(manager, access);
             StoneCraftingRecipeInjector.add(GeneratedCraftingSink.runtime(manager));
             ToolCraftingRecipeInjector.apply(manager, access);

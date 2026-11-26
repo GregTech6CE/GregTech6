@@ -11,7 +11,7 @@ import net.neoforged.neoforge.event.server.ServerStartedEvent;
 public final class OvenRecipeLifecycle {
     static {
         RecipePublication.register((manager, access) -> {
-            FormConversionCraftingRecipeInjector.replacePlain(manager, access);
+            FormConversionRecipeReplacement.replacePlain(manager, access);
             TrackRecipeReplacement.removeConflicts(manager, access);
         });
     }
