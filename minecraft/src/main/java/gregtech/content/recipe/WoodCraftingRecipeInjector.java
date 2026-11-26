@@ -1,7 +1,6 @@
 package gregtech.content.recipe;
 
 import gregtech.content.block.wood.WoodSpecies;
-import gregtech.content.recipe.WoodCraftingRow.IngredientSpec;
 import gregtech.content.recipe.WoodCraftingRow.Item;
 import gregtech.content.recipe.WoodCraftingRow.ItemSpec;
 import gregtech.content.recipe.WoodCraftingRow.MaterialForm;
@@ -38,10 +37,11 @@ public final class WoodCraftingRecipeInjector {
                     : GTItems.getStack(form.prefix(), material, 1);
         }
         if (spec instanceof Tool tool) {
-            var item = GTToolItems.get(switch (tool) {
-                case SAW -> GTToolType.SAW;
-                case FILE -> GTToolType.FILE;
-            });
+            var item = GTToolItems.get(
+                    switch (tool) {
+                        case SAW -> GTToolType.SAW;
+                        case FILE -> GTToolType.FILE;
+                    });
             return item == null ? ItemStack.EMPTY : new ItemStack(item);
         }
         var wood = (WoodBlock) spec;

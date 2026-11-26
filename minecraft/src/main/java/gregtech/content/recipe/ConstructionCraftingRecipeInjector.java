@@ -51,10 +51,14 @@ public final class ConstructionCraftingRecipeInjector {
     private ConstructionCraftingRecipeInjector() {}
 
     /** Recipe ids the last server start added, for tests and reports. */
-    public static List<String> registeredIds() { return List.copyOf(REGISTERED); }
+    public static List<String> registeredIds() {
+        return List.copyOf(REGISTERED);
+    }
 
     /** Rows GT6 has but a palette of the port cannot express, with the reason. */
-    public static List<String> skipped() { return List.copyOf(SKIPPED); }
+    public static List<String> skipped() {
+        return List.copyOf(SKIPPED);
+    }
 
     public static void add(GeneratedCraftingSink sink) {
         REGISTERED.clear();
@@ -71,15 +75,17 @@ public final class ConstructionCraftingRecipeInjector {
     private static int slabFamily(GeneratedCraftingSink sink, String family) {
         int added = 0;
         for (DyeColor color : DyeColor.values()) {
-            added += slabPair(sink, family, color.getName(),
+            added += slabPair(
+                    sink,
+                    family,
+                    color.getName(),
                     GTConstructionVariants.coloredBlock(family, color),
                     GTConstructionVariants.coloredBlock(family + "_slab", color));
         }
         return added;
     }
 
-    private static int slabPair(GeneratedCraftingSink sink, String family, String key,
-                                Block full, Block slab) {
+    private static int slabPair(GeneratedCraftingSink sink, String family, String key, Block full, Block slab) {
         String path = "construction/" + family + "/" + key;
         if (full == null || slab == null) {
             SKIPPED.add(path + ": the family has no full block and slab pair");
@@ -88,11 +94,20 @@ public final class ConstructionCraftingRecipeInjector {
         ItemStack fullStack = new ItemStack(full);
         ItemStack slabStack = new ItemStack(slab);
         int added = 0;
-        added += shaped(sink, path + "/slabs_to_block", new String[]{"X", "X"},
-                Map.of('X', Ingredient.of(slabStack)), fullStack, false);
-        added += shaped(sink, path + "/block_to_slab_by_saw", new String[]{"sX"},
+        added += shaped(
+                sink,
+                path + "/slabs_to_block",
+                new String[] {"X", "X"},
+                Map.of('X', Ingredient.of(slabStack)),
+                fullStack,
+                false);
+        added += shaped(
+                sink,
+                path + "/block_to_slab_by_saw",
+                new String[] {"sX"},
                 Map.of('X', Ingredient.of(fullStack), 's', Ingredient.of(tool(GTToolType.SAW))),
-                copy(slabStack, 2), false);
+                copy(slabStack, 2),
+                false);
         return added;
     }
 
@@ -112,20 +127,32 @@ public final class ConstructionCraftingRecipeInjector {
                 SKIPPED.add("concrete_reinforced/" + color.getName() + ": the palette has no concrete pair");
                 continue;
             }
-            added += shaped(sink, "construction/concrete_reinforced/" + color.getName() + "/from_stick_and_concrete",
-                    new String[]{"Se", "X "},
-                    Map.of('X', Ingredient.of(new ItemStack(concrete)),
-                            'S', Ingredient.of(stick),
-                            'e', Ingredient.of(drill)),
-                    new ItemStack(reinforced), true);
+            added += shaped(
+                    sink,
+                    "construction/concrete_reinforced/" + color.getName() + "/from_stick_and_concrete",
+                    new String[] {"Se", "X "},
+                    Map.of(
+                            'X',
+                            Ingredient.of(new ItemStack(concrete)),
+                            'S',
+                            Ingredient.of(stick),
+                            'e',
+                            Ingredient.of(drill)),
+                    new ItemStack(reinforced),
+                    true);
         }
         return added;
     }
 
     // ── recipe helpers ────────────────────────────────────────────────────
 
-    private static int shaped(GeneratedCraftingSink sink, String path, String[] pattern,
-                              Map<Character, Ingredient> key, ItemStack output, boolean allowMirror) {
+    private static int shaped(
+            GeneratedCraftingSink sink,
+            String path,
+            String[] pattern,
+            Map<Character, Ingredient> key,
+            ItemStack output,
+            boolean allowMirror) {
         if (output.isEmpty()) {
             SKIPPED.add(path + ": the palette has no form for this output");
             return 0;

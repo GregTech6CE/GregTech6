@@ -18,7 +18,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 /** GT6 BlockFlowersA/B shapeless dyes and B-family hand-cut wooden sticks. */
 public final class BedrockFlowerCraftingRecipeInjector {
     private static final String[] A_DUST = {
-            "Yellow", "Yellow", "Magenta", "Yellow", "Pink", "White", "LightBlue", "Brown"
+        "Yellow", "Yellow", "Magenta", "Yellow", "Pink", "White", "LightBlue", "Brown"
     };
     private static final String[] B_DUST = {"Yellow", "Pink", "Yellow", "Purple"};
 
@@ -40,7 +40,7 @@ public final class BedrockFlowerCraftingRecipeInjector {
             }
             if (flower.family() == 'B' && (flower.meta() == 0 || flower.meta() == 1)) {
                 ItemStack twoSticks = stick(flower, 2);
-                for (GTToolType tool : new GTToolType[]{GTToolType.SAW, GTToolType.KNIFE}) {
+                for (GTToolType tool : new GTToolType[] {GTToolType.SAW, GTToolType.KNIFE}) {
                     var toolItem = GTToolItems.get(tool);
                     if (toolItem == null) throw new IllegalStateException("Missing flower crafting tool " + tool);
                     sink.shaped(
@@ -48,7 +48,7 @@ public final class BedrockFlowerCraftingRecipeInjector {
                             "gt.bedrock_flowers",
                             CraftingBookCategory.MISC,
                             twoSticks.copy(),
-                            new String[]{"T", "F"},
+                            new String[] {"T", "F"},
                             Map.of('T', Ingredient.of(toolItem), 'F', Ingredient.of(input.getItem())),
                             false);
                     added++;
@@ -60,12 +60,9 @@ public final class BedrockFlowerCraftingRecipeInjector {
     }
 
     private static ItemStack shapelessOutput(BedrockFlowers.Flower flower) {
-        if (flower.family() == 'A' && flower.meta() < A_DUST.length)
-            return dust(A_DUST[flower.meta()]);
-        if (flower.family() == 'B' && (flower.meta() == 0 || flower.meta() == 1))
-            return stick(flower, 1);
-        if (flower.family() == 'B' && flower.meta() >= 2 && flower.meta() <= 5)
-            return dust(B_DUST[flower.meta() - 2]);
+        if (flower.family() == 'A' && flower.meta() < A_DUST.length) return dust(A_DUST[flower.meta()]);
+        if (flower.family() == 'B' && (flower.meta() == 0 || flower.meta() == 1)) return stick(flower, 1);
+        if (flower.family() == 'B' && flower.meta() >= 2 && flower.meta() <= 5) return dust(B_DUST[flower.meta() - 2]);
         return ItemStack.EMPTY;
     }
 

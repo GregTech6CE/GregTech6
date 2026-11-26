@@ -36,42 +36,56 @@ import net.minecraft.world.item.crafting.Recipe;
 public final class FormConversionCraftingRecipeInjector {
     private static final List<String> REGISTERED = new ArrayList<>();
     /** Source constructor replacement rules also guard plain recipes added after the reload lifecycle. */
-    public static boolean disallowsPlainRecipe(ResourceLocation id,
-                                               net.minecraft.world.item.crafting.CraftingRecipe recipe,
-                                               net.minecraft.core.RegistryAccess access) {
-        return CraftingMaterialForms.replaces(recipe, access, id != null && id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE));
+    public static boolean disallowsPlainRecipe(
+            ResourceLocation id,
+            net.minecraft.world.item.crafting.CraftingRecipe recipe,
+            net.minecraft.core.RegistryAccess access) {
+        return CraftingMaterialForms.replaces(
+                recipe,
+                access,
+                id != null && id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE));
     }
 
-    public static boolean disallowsPlainRecipe(net.minecraft.world.item.crafting.CraftingRecipe recipe,
-                                               net.minecraft.core.RegistryAccess access) {
+    public static boolean disallowsPlainRecipe(
+            net.minecraft.world.item.crafting.CraftingRecipe recipe, net.minecraft.core.RegistryAccess access) {
         return CraftingMaterialForms.replaces(recipe, access);
     }
 
     private FormConversionCraftingRecipeInjector() {}
 
     /** Recipe ids registered by the last server start, for diagnostics and tests. */
-    public static synchronized List<String> registeredIds() { return List.copyOf(REGISTERED); }
+    public static synchronized List<String> registeredIds() {
+        return List.copyOf(REGISTERED);
+    }
 
-    static synchronized Set<String> snapshotRegistered() { return new HashSet<>(REGISTERED); }
+    static synchronized Set<String> snapshotRegistered() {
+        return new HashSet<>(REGISTERED);
+    }
 
     static synchronized void removeRegisteredWithPrefix(String prefix) {
         REGISTERED.removeIf(id -> id.startsWith(prefix));
     }
 
-    static synchronized void recordRegistered(String id) { REGISTERED.add(id); }
+    static synchronized void recordRegistered(String id) {
+        REGISTERED.add(id);
+    }
 
     public static List<String> skipped() {
-        return ItemMaterialForms.contains("rawOreChunk") ? List.of() : List.of(
-                "rawOreChunk (:553/:576): no external tagged item; GT6 registers no item for this Harder Ores prefix");
+        return ItemMaterialForms.contains("rawOreChunk")
+                ? List.of()
+                : List.of(
+                        "rawOreChunk (:553/:576): no external tagged item; GT6 registers no item for this Harder Ores prefix");
     }
 
     /**
      * Removes source rows that duplicate a generated row with the same result and first ingredient
      * of every slot. Only the known source families are considered; unrelated recipes stay untouched.
      */
-    static int dedupGenerated(List<?> recipes, net.minecraft.core.RegistryAccess access,
-                                      java.util.function.Function<Object, ResourceLocation> idOf,
-                                      java.util.function.Function<Object, Recipe<?>> valueOf) {
+    static int dedupGenerated(
+            List<?> recipes,
+            net.minecraft.core.RegistryAccess access,
+            java.util.function.Function<Object, ResourceLocation> idOf,
+            java.util.function.Function<Object, Recipe<?>> valueOf) {
         var targets = new java.util.HashSet<net.minecraft.world.item.Item>();
         for (var entry : recipes) {
             if (!isDedupSource(idOf.apply(entry))) continue;
@@ -89,14 +103,21 @@ public final class FormConversionCraftingRecipeInjector {
             if (result.isEmpty() || !targets.contains(result.getItem())) continue;
             var key = new StringBuilder();
             key.append(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(result.getItem()))
-                    .append('x').append(result.getCount()).append('|');
+                    .append('x')
+                    .append(result.getCount())
+                    .append('|');
             if (crafting instanceof net.minecraft.world.item.crafting.ShapedRecipe shaped)
-                key.append("shape:").append(shaped.getWidth()).append('x').append(shaped.getHeight()).append('|');
+                key.append("shape:")
+                        .append(shaped.getWidth())
+                        .append('x')
+                        .append(shaped.getHeight())
+                        .append('|');
             for (var ingredient : crafting.getIngredients()) {
                 var items = ingredient.getItems();
-                key.append(items.length == 0
-                        ? "[]"
-                        : net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(items[0].getItem()));
+                key.append(
+                        items.length == 0
+                                ? "[]"
+                                : net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(items[0].getItem()));
                 key.append('/');
             }
             groups.computeIfAbsent(key.toString(), unused -> new ArrayList<>()).add(entry);
@@ -134,8 +155,7 @@ public final class FormConversionCraftingRecipeInjector {
                 || path.startsWith("fusion/");
     }
 
-    public static synchronized void add(
-            GeneratedCraftingSink sink, Map<ItemMaterialForm, List<Item>> aliases) {
+    public static synchronized void add(GeneratedCraftingSink sink, Map<ItemMaterialForm, List<Item>> aliases) {
         REGISTERED.clear();
 
         for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
@@ -155,33 +175,40 @@ public final class FormConversionCraftingRecipeInjector {
         int pipeSizes = registerPipeSizes(sink);
         if (!REGISTERED.isEmpty() || wireSizes > 0 || pipeSizes > 0) sink.commit();
         if (sink.isDatapack()) {
-            Mc.logger().info(
-                    "[gregtech] Native material grid recipes generated={} wire-size={} pipe-size={}",
-                    sink.writtenCount(),
-                    wireSizes,
-                    pipeSizes);
+            Mc.logger()
+                    .info(
+                            "[gregtech] Native material grid recipes generated={} wire-size={} pipe-size={}",
+                            sink.writtenCount(),
+                            wireSizes,
+                            pipeSizes);
         }
-        Mc.logger().info(
-                "Registered {} crafting-grid material form conversions from GT6"
-                        + " AdvancedCraftingXToY/1ToY ({} GT6 pairs skipped: {})",
-                REGISTERED.size(),
-                skipped().size(),
-                skipped());
+        Mc.logger()
+                .info(
+                        "Registered {} crafting-grid material form conversions from GT6"
+                                + " AdvancedCraftingXToY/1ToY ({} GT6 pairs skipped: {})",
+                        REGISTERED.size(),
+                        skipped().size(),
+                        skipped());
     }
 
     /** All standard/dense prefix aliases, including actual vanilla ore blocks ({@code Loader_Recipes_Handlers}). */
-    private static void registerOreConversions(
-            GeneratedCraftingSink sink, Map<ItemMaterialForm, List<Item>> aliases) {
+    private static void registerOreConversions(GeneratedCraftingSink sink, Map<ItemMaterialForm, List<Item>> aliases) {
         for (var entry : aliases.entrySet()) {
             var form = entry.getKey();
-            int count = ItemMaterialForm.STANDARD_ORES.contains(form.prefix()) ? 1
+            int count = ItemMaterialForm.STANDARD_ORES.contains(form.prefix())
+                    ? 1
                     : ItemMaterialForm.DENSE_ORES.contains(form.prefix()) ? 2 : 0;
             if (count == 0 || entry.getValue().isEmpty()) continue;
             var material = GTMaterialRegistry.get(form.material()).resolve();
             var output = GTItems.getStack(MaterialPrefix.oreRaw, material, count);
             if (output.isEmpty()) continue;
-            register(sink, aliases, new Conversion(form.prefix(), 1, "oreRaw", count, true), material,
-                    new ItemStack(entry.getValue().get(0)), output);
+            register(
+                    sink,
+                    aliases,
+                    new Conversion(form.prefix(), 1, "oreRaw", count, true),
+                    material,
+                    new ItemStack(entry.getValue().get(0)),
+                    output);
         }
     }
 
@@ -192,8 +219,7 @@ public final class FormConversionCraftingRecipeInjector {
      * variants run on the Loom and the Unboxinator). The port's wires are blocks, not material-prefix
      * items, so these rows are built from the wire registry instead of the prefix tables.
      */
-    private static int registerWireSizes(
-            GeneratedCraftingSink sink, Map<ItemMaterialForm, List<Item>> aliases) {
+    private static int registerWireSizes(GeneratedCraftingSink sink, Map<ItemMaterialForm, List<Item>> aliases) {
         java.util.Map<String, java.util.Map<Integer, net.minecraft.world.item.Item>> families =
                 new java.util.LinkedHashMap<>();
         for (var entry : gregtech.content.registry.GTWires.allWires()) {
@@ -218,10 +244,23 @@ public final class FormConversionCraftingRecipeInjector {
                     if (smallItem == null) continue;
                     int amount = big / small;
                     // The source guards only XToY; the reverse 1ToY also allows 10..16 outputs.
-                    if (amount < 10) added += recipe(sink, aliases, new ItemStack(smallItem, amount), new ItemStack(bigItem),
-                            "wire_sizes/" + sanitize(family.getKey()) + "_" + small + "_to_" + big, false, FormConversionSelector.NONE);
-                    added += recipe(sink, aliases, new ItemStack(bigItem), new ItemStack(smallItem, amount),
-                            "wire_sizes/" + sanitize(family.getKey()) + "_" + big + "_to_" + small, false, selector);
+                    if (amount < 10)
+                        added += recipe(
+                                sink,
+                                aliases,
+                                new ItemStack(smallItem, amount),
+                                new ItemStack(bigItem),
+                                "wire_sizes/" + sanitize(family.getKey()) + "_" + small + "_to_" + big,
+                                false,
+                                FormConversionSelector.NONE);
+                    added += recipe(
+                            sink,
+                            aliases,
+                            new ItemStack(bigItem),
+                            new ItemStack(smallItem, amount),
+                            "wire_sizes/" + sanitize(family.getKey()) + "_" + big + "_to_" + small,
+                            false,
+                            selector);
                 }
             }
         }
@@ -234,66 +273,110 @@ public final class FormConversionCraftingRecipeInjector {
      * Boxinator's job, {@code Loader_Recipes_Handlers}).
      */
     private static int registerPipeSizes(GeneratedCraftingSink sink) {
-        java.util.Map<String, java.util.Map<gregtech.engine.machine.PipeSpec.PipeSize,
-                net.minecraft.world.item.Item>> families = new java.util.LinkedHashMap<>();
+        java.util.Map<String, java.util.Map<gregtech.engine.machine.PipeSpec.PipeSize, net.minecraft.world.item.Item>>
+                families = new java.util.LinkedHashMap<>();
         for (var holder : gregtech.content.registry.GTFluidPipes.all()) {
             if (!holder.isBound()) continue;
             var spec = holder.get().spec();
-            families.computeIfAbsent(spec.material().getName(), ignored -> new java.util.EnumMap<>(
-                    gregtech.engine.machine.PipeSpec.PipeSize.class))
+            families.computeIfAbsent(
+                            spec.material().getName(),
+                            ignored -> new java.util.EnumMap<>(gregtech.engine.machine.PipeSpec.PipeSize.class))
                     .put(spec.size(), holder.get().asItem());
         }
         int added = 0;
         for (var family : families.entrySet()) {
-            added += pipe(sink, family, gregtech.engine.machine.PipeSpec.PipeSize.QUADRUPLE,
-                    gregtech.engine.machine.PipeSpec.PipeSize.MEDIUM, 4);
-            added += pipe(sink, family, gregtech.engine.machine.PipeSpec.PipeSize.NONUPLE,
-                    gregtech.engine.machine.PipeSpec.PipeSize.SMALL, 9);
+            added += pipe(
+                    sink,
+                    family,
+                    gregtech.engine.machine.PipeSpec.PipeSize.QUADRUPLE,
+                    gregtech.engine.machine.PipeSpec.PipeSize.MEDIUM,
+                    4);
+            added += pipe(
+                    sink,
+                    family,
+                    gregtech.engine.machine.PipeSpec.PipeSize.NONUPLE,
+                    gregtech.engine.machine.PipeSpec.PipeSize.SMALL,
+                    9);
         }
         return added;
     }
 
-    private static int pipe(GeneratedCraftingSink sink,
-                            java.util.Map.Entry<String, java.util.Map<
-                                    gregtech.engine.machine.PipeSpec.PipeSize,
-                                    net.minecraft.world.item.Item>> family,
-                            gregtech.engine.machine.PipeSpec.PipeSize from,
-                            gregtech.engine.machine.PipeSpec.PipeSize to, int count) {
+    private static int pipe(
+            GeneratedCraftingSink sink,
+            java.util.Map.Entry<
+                            String,
+                            java.util.Map<gregtech.engine.machine.PipeSpec.PipeSize, net.minecraft.world.item.Item>>
+                    family,
+            gregtech.engine.machine.PipeSpec.PipeSize from,
+            gregtech.engine.machine.PipeSpec.PipeSize to,
+            int count) {
         var big = family.getValue().get(from);
         var small = family.getValue().get(to);
         if (big == null || small == null) return 0;
-        return recipe(sink, Map.of(), new ItemStack(big), new ItemStack(small, count),
-                "pipe_sizes/" + sanitize(family.getKey()) + "_" + from.name().toLowerCase() + "_to_" + count
-                        + "x_" + to.name().toLowerCase(), true, FormConversionSelector.NONE);
+        return recipe(
+                sink,
+                Map.of(),
+                new ItemStack(big),
+                new ItemStack(small, count),
+                "pipe_sizes/" + sanitize(family.getKey()) + "_" + from.name().toLowerCase() + "_to_" + count + "x_"
+                        + to.name().toLowerCase(),
+                true,
+                FormConversionSelector.NONE);
     }
 
-    private static int recipe(GeneratedCraftingSink sink, Map<ItemMaterialForm, List<Item>> aliases, ItemStack input, ItemStack output, String path,
-                              boolean autocraftable, FormConversionSelector selector) {
-        NonNullList<Ingredient> ingredients = NonNullList.withSize(input.getCount(),
+    private static int recipe(
+            GeneratedCraftingSink sink,
+            Map<ItemMaterialForm, List<Item>> aliases,
+            ItemStack input,
+            ItemStack output,
+            String path,
+            boolean autocraftable,
+            FormConversionSelector selector) {
+        NonNullList<Ingredient> ingredients = NonNullList.withSize(
+                input.getCount(),
                 autocraftable ? Ingredient.of(input) : CraftingMaterialForms.ingredient(input, aliases));
         var inputForm = autocraftable ? null : ItemMaterialForms.form(input);
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, path);
         ItemStack result = ItemMaterialForms.canonical(output.copy());
         if (!autocraftable && inputForm != null) {
-            sink.orderedFormConversion(id, "gt.wire_sizes", CraftingBookCategory.MISC,
-                    result, ingredients, selector, inputForm.prefix(), inputForm.material());
+            sink.orderedFormConversion(
+                    id,
+                    "gt.wire_sizes",
+                    CraftingBookCategory.MISC,
+                    result,
+                    ingredients,
+                    selector,
+                    inputForm.prefix(),
+                    inputForm.material());
         } else {
-            sink.toolShapeless(id, "gt.wire_sizes", CraftingBookCategory.MISC,
-                    result, ingredients, autocraftable, selector);
+            sink.toolShapeless(
+                    id, "gt.wire_sizes", CraftingBookCategory.MISC, result, ingredients, autocraftable, selector);
         }
         REGISTERED.add(id.toString());
         return 1;
     }
 
-    private static void register(GeneratedCraftingSink sink, Map<ItemMaterialForm, List<Item>> aliases, Conversion conversion, GTMaterial material,
-                                 ItemStack input, ItemStack output) {
-        NonNullList<Ingredient> ingredients = NonNullList.withSize(conversion.inputCount(),
-                CraftingMaterialForms.ingredient(input, aliases));
+    private static void register(
+            GeneratedCraftingSink sink,
+            Map<ItemMaterialForm, List<Item>> aliases,
+            Conversion conversion,
+            GTMaterial material,
+            ItemStack input,
+            ItemStack output) {
+        NonNullList<Ingredient> ingredients =
+                NonNullList.withSize(conversion.inputCount(), CraftingMaterialForms.ingredient(input, aliases));
         ItemStack result = ItemMaterialForms.canonical(output.copy());
         ResourceLocation id = conversionId(conversion, material);
         // Loader_Recipes_Handlers passes F to both conversion classes.
-        sink.orderedFormConversion(id, "gt.form_conversion", CraftingBookCategory.MISC, result, ingredients,
-                OriginalFormConversions.selector(conversion), conversion.input(), material.resolve().getName());
+        sink.orderedFormConversion(
+                id,
+                "gt.form_conversion",
+                CraftingBookCategory.MISC,
+                result,
+                ingredients,
+                OriginalFormConversions.selector(conversion),
+                conversion.input(),
+                material.resolve().getName());
         REGISTERED.add(id.toString());
     }
 
@@ -304,7 +387,8 @@ public final class FormConversionCraftingRecipeInjector {
                         + sanitize(material.getName()) + "_" + conversion.inputCount());
     }
 
-    static ItemStack item(Map<ItemMaterialForm, List<Item>> aliases, String prefixName, GTMaterial material, int count) {
+    static ItemStack item(
+            Map<ItemMaterialForm, List<Item>> aliases, String prefixName, GTMaterial material, int count) {
         MaterialPrefix prefix = PrefixRegistry.byName(prefixName);
         if (prefix != null) {
             var stack = GTItems.getStack(prefix, material, count);
@@ -313,7 +397,10 @@ public final class FormConversionCraftingRecipeInjector {
         BlockMaterialPrefix block = BlockPrefixRegistry.byName(prefixName);
         if (block != null) {
             var stack = GTBlocks.getStack(block, material);
-            if (!stack.isEmpty()) { stack.setCount(count); return stack; }
+            if (!stack.isEmpty()) {
+                stack.setCount(count);
+                return stack;
+            }
         }
         return ItemMaterialForms.stack(aliases, prefixName, material, count);
     }
@@ -327,5 +414,4 @@ public final class FormConversionCraftingRecipeInjector {
         }
         return builder.toString();
     }
-
 }

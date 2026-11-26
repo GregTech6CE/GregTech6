@@ -70,10 +70,14 @@ public final class StoneCraftingRecipeInjector {
     private StoneCraftingRecipeInjector() {}
 
     /** Recipe ids the last server start added, for tests and reports. */
-    public static List<String> registeredIds() { return List.copyOf(REGISTERED); }
+    public static List<String> registeredIds() {
+        return List.copyOf(REGISTERED);
+    }
 
     /** Rows GT6 has but a rock of the port cannot express, with the reason. */
-    public static List<String> skipped() { return List.copyOf(SKIPPED); }
+    public static List<String> skipped() {
+        return List.copyOf(SKIPPED);
+    }
 
     public static void add(GeneratedCraftingSink sink) {
         REGISTERED.clear();
@@ -81,9 +85,12 @@ public final class StoneCraftingRecipeInjector {
         int added = 0;
         for (StoneType type : StoneType.values()) added += rock(sink, type);
         if (added > 0) sink.commit();
-        Mc.logger().info(
-                "Registered {} GT6 masonry crafting rows for {} rock types ({} skipped)",
-                added, StoneType.values().length, SKIPPED.size());
+        Mc.logger()
+                .info(
+                        "Registered {} GT6 masonry crafting rows for {} rock types ({} skipped)",
+                        added,
+                        StoneType.values().length,
+                        SKIPPED.size());
         for (String reason : SKIPPED) Mc.logger().debug("[gregtech] masonry row skipped: {}", reason);
     }
 
@@ -118,21 +125,56 @@ public final class StoneCraftingRecipeInjector {
         Ingredient saw = Ingredient.of(tool(GTToolType.SAW));
 
         int added = 0;
-        added += shaped(sink, path + "/rocks_to_cobble", new String[]{"XX", "XX"},
-                Map.of('X', Ingredient.of(rock)), cobble, false);
-        added += shaped(sink, path + "/stone_to_small_gear", new String[]{"X ", " f"},
-                Map.of('X', Ingredient.of(stone), 'f', file), smallGear, false);
-        added += shaped(sink, path + "/rocks_to_stairs", new String[]{" X", "XX"},
-                Map.of('X', Ingredient.of(rock)), new ItemStack(Items.STONE_STAIRS), true);
-        added += shaped(sink, path + "/rocks_to_cobble_slab", new String[]{"  ", "XX"},
-                Map.of('X', Ingredient.of(rock)), cobbleSlab, false);
+        added += shaped(
+                sink,
+                path + "/rocks_to_cobble",
+                new String[] {"XX", "XX"},
+                Map.of('X', Ingredient.of(rock)),
+                cobble,
+                false);
+        added += shaped(
+                sink,
+                path + "/stone_to_small_gear",
+                new String[] {"X ", " f"},
+                Map.of('X', Ingredient.of(stone), 'f', file),
+                smallGear,
+                false);
+        added += shaped(
+                sink,
+                path + "/rocks_to_stairs",
+                new String[] {" X", "XX"},
+                Map.of('X', Ingredient.of(rock)),
+                new ItemStack(Items.STONE_STAIRS),
+                true);
+        added += shaped(
+                sink,
+                path + "/rocks_to_cobble_slab",
+                new String[] {"  ", "XX"},
+                Map.of('X', Ingredient.of(rock)),
+                cobbleSlab,
+                false);
 
-        added += shaped(sink, path + "/cobble_to_slabs", new String[]{"  ", "XX"},
-                Map.of('X', Ingredient.of(cobble)), copy(cobbleSlab, 4), false);
-        added += shaped(sink, path + "/cobble_to_stairs", new String[]{" X", "XX"},
-                Map.of('X', Ingredient.of(cobble)), new ItemStack(Items.COBBLESTONE_STAIRS, 4), true);
-        added += shaped(sink, path + "/cobble_to_wall", new String[]{"XXX", "XXX"},
-                Map.of('X', Ingredient.of(cobble)), new ItemStack(Items.COBBLESTONE_WALL, 6), true);
+        added += shaped(
+                sink,
+                path + "/cobble_to_slabs",
+                new String[] {"  ", "XX"},
+                Map.of('X', Ingredient.of(cobble)),
+                copy(cobbleSlab, 4),
+                false);
+        added += shaped(
+                sink,
+                path + "/cobble_to_stairs",
+                new String[] {" X", "XX"},
+                Map.of('X', Ingredient.of(cobble)),
+                new ItemStack(Items.COBBLESTONE_STAIRS, 4),
+                true);
+        added += shaped(
+                sink,
+                path + "/cobble_to_wall",
+                new String[] {"XXX", "XXX"},
+                Map.of('X', Ingredient.of(cobble)),
+                new ItemStack(Items.COBBLESTONE_WALL, 6),
+                true);
 
         // GT6 BlockMetaType — every full block and its slab pair, whatever the variant group.
         for (StoneVariant variant : StoneVariant.values()) {
@@ -140,35 +182,89 @@ public final class StoneCraftingRecipeInjector {
             ItemStack half = slab(type, variant);
             if (full.isEmpty() || half.isEmpty()) continue;
             String base = path + "/" + variant.registrySuffix();
-            added += shaped(sink, base + "_slabs_to_block", new String[]{"X", "X"},
-                    Map.of('X', Ingredient.of(half)), full, false);
-            added += shaped(sink, base + "_to_slab_by_saw", new String[]{"sX"},
-                    Map.of('X', Ingredient.of(full), 's', saw), copy(half, 2), false);
+            added += shaped(
+                    sink,
+                    base + "_slabs_to_block",
+                    new String[] {"X", "X"},
+                    Map.of('X', Ingredient.of(half)),
+                    full,
+                    false);
+            added += shaped(
+                    sink,
+                    base + "_to_slab_by_saw",
+                    new String[] {"sX"},
+                    Map.of('X', Ingredient.of(full), 's', saw),
+                    copy(half, 2),
+                    false);
         }
 
-        added += shaped(sink, path + "/bricks_cracked_by_chisel", new String[]{"y", "X"},
-                Map.of('X', Ingredient.of(bricks), 'y', chisel), cracked, false);
-        added += shaped(sink, path + "/bricks_cracked_by_hammer", new String[]{"h", "X"},
-                Map.of('X', Ingredient.of(bricks), 'h', hammer), cracked, false);
+        added += shaped(
+                sink,
+                path + "/bricks_cracked_by_chisel",
+                new String[] {"y", "X"},
+                Map.of('X', Ingredient.of(bricks), 'y', chisel),
+                cracked,
+                false);
+        added += shaped(
+                sink,
+                path + "/bricks_cracked_by_hammer",
+                new String[] {"h", "X"},
+                Map.of('X', Ingredient.of(bricks), 'h', hammer),
+                cracked,
+                false);
         // GT6's 'e' key is OreDictToolNames.drill (CR); the port registers no drill tool, so
         // this row cannot be built.
         SKIPPED.add(path + "/bricks_reinforced: GT6's key 'e' is the drill tool, which the port does not register");
-        added += shaped(sink, path + "/bricks_redstone", new String[]{"Dh", "X "},
-                Map.of('X', Ingredient.of(bricks), 'D', Ingredient.of(redstone),
-                        'h', hammer), redstoneBricks, false);
+        added += shaped(
+                sink,
+                path + "/bricks_redstone",
+                new String[] {"Dh", "X "},
+                Map.of('X', Ingredient.of(bricks), 'D', Ingredient.of(redstone), 'h', hammer),
+                redstoneBricks,
+                false);
 
-        added += shaped(sink, path + "/smooth_chiseled", new String[]{"y", "X"},
-                Map.of('X', Ingredient.of(smooth), 'y', chisel), chiseled, false);
-        added += shaped(sink, path + "/smooth_to_bricks", new String[]{"XX", "XX"},
-                Map.of('X', Ingredient.of(smooth)), copy(bricks, 4), false);
-        added += shaped(sink, path + "/smooth_to_tiles", new String[]{"X", "X"},
-                Map.of('X', Ingredient.of(smooth)), copy(tiles, 2), false);
-        added += shaped(sink, path + "/smooth_to_small_tiles", new String[]{"XX"},
-                Map.of('X', Ingredient.of(smooth)), copy(smallTiles, 2), false);
-        added += shaped(sink, path + "/smooth_to_small_bricks", new String[]{"X ", " X"},
-                Map.of('X', Ingredient.of(smooth)), copy(smallBricks, 2), false);
-        added += shaped(sink, path + "/smooth_to_windmill_tiles", new String[]{" X", "X "},
-                Map.of('X', Ingredient.of(smooth)), copy(windmillA, 2), false);
+        added += shaped(
+                sink,
+                path + "/smooth_chiseled",
+                new String[] {"y", "X"},
+                Map.of('X', Ingredient.of(smooth), 'y', chisel),
+                chiseled,
+                false);
+        added += shaped(
+                sink,
+                path + "/smooth_to_bricks",
+                new String[] {"XX", "XX"},
+                Map.of('X', Ingredient.of(smooth)),
+                copy(bricks, 4),
+                false);
+        added += shaped(
+                sink,
+                path + "/smooth_to_tiles",
+                new String[] {"X", "X"},
+                Map.of('X', Ingredient.of(smooth)),
+                copy(tiles, 2),
+                false);
+        added += shaped(
+                sink,
+                path + "/smooth_to_small_tiles",
+                new String[] {"XX"},
+                Map.of('X', Ingredient.of(smooth)),
+                copy(smallTiles, 2),
+                false);
+        added += shaped(
+                sink,
+                path + "/smooth_to_small_bricks",
+                new String[] {"X ", " X"},
+                Map.of('X', Ingredient.of(smooth)),
+                copy(smallBricks, 2),
+                false);
+        added += shaped(
+                sink,
+                path + "/smooth_to_windmill_tiles",
+                new String[] {" X", "X "},
+                Map.of('X', Ingredient.of(smooth)),
+                copy(windmillA, 2),
+                false);
 
         added += shapeless(sink, path + "/tiles_to_square_bricks", tiles, squareBricks);
         added += shapeless(sink, path + "/square_bricks_to_tiles", squareBricks, tiles);
@@ -180,7 +276,7 @@ public final class StoneCraftingRecipeInjector {
         added += shapeless(sink, path + "/mossy_cracked_bricks_from_vine", vine, cracked, bricksMossy);
         // GT6 RM.growmoss (RM) writes a second shapeless row per group using its own moss
         // item (OD.itemMoss), which the port does not register.
-        for (String clean : new String[]{"cobblestone", "bricks", "cracked_bricks"}) {
+        for (String clean : new String[] {"cobblestone", "bricks", "cracked_bricks"}) {
             SKIPPED.add(path + "/mossy_" + clean + "_from_moss: GT6's moss item is not registered");
         }
         return added;
@@ -188,8 +284,13 @@ public final class StoneCraftingRecipeInjector {
 
     // ── recipe helpers ────────────────────────────────────────────────────
 
-    private static int shaped(GeneratedCraftingSink sink, String path, String[] pattern,
-                              Map<Character, Ingredient> key, ItemStack output, boolean allowMirror) {
+    private static int shaped(
+            GeneratedCraftingSink sink,
+            String path,
+            String[] pattern,
+            Map<Character, Ingredient> key,
+            ItemStack output,
+            boolean allowMirror) {
         if (output.isEmpty()) {
             SKIPPED.add(path + ": the rock has no form for this output");
             return 0;
@@ -208,7 +309,8 @@ public final class StoneCraftingRecipeInjector {
                 }
             }
         }
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, "stone/" + path);
+        ResourceLocation id =
+                ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, "stone/" + path);
         sink.shaped(id, "gt.stone", CraftingBookCategory.BUILDING, output.copy(), pattern, key, allowMirror);
         REGISTERED.add(id.toString());
         return 1;
@@ -229,7 +331,8 @@ public final class StoneCraftingRecipeInjector {
             }
             ingredients.add(Ingredient.of(stacks[i]));
         }
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, "stone/" + path);
+        ResourceLocation id =
+                ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, "stone/" + path);
         sink.shapeless(id, "gt.stone", CraftingBookCategory.BUILDING, output.copy(), ingredients);
         REGISTERED.add(id.toString());
         return 1;

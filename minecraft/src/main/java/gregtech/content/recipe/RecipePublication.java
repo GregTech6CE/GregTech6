@@ -64,7 +64,9 @@ public final class RecipePublication {
         for (var map : gregtech.engine.recipe.RecipeMap.RECIPE_MAP_LIST) map.invalidateLookup();
         MachineRecipeLifecycle.prebuild(server);
         com.mojang.logging.LogUtils.getLogger()
-                .info("[gregtech] Published GT runtime recipes: {} rows", manager.getRecipes().size());
+                .info(
+                        "[gregtech] Published GT runtime recipes: {} rows",
+                        manager.getRecipes().size());
     }
 
     private static void commitOverlay() {
