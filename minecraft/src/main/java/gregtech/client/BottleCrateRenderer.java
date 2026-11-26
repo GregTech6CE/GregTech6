@@ -12,7 +12,9 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.core.Direction;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import java.util.function.IntFunction;
 import net.minecraft.world.item.PotionItem;
 
 //? if >=1.21.1 {
@@ -22,8 +24,6 @@ import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.phys.AABB;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.FluidUtil;
 *///?} else {
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 //?}
@@ -36,9 +36,13 @@ public final class BottleCrateRenderer implements BlockEntityRenderer<BottleCrat
     public BottleCrateRenderer(BlockEntityRendererProvider.Context context) {}
 
     @Override public void render(BottleCrateBlockEntity crate,float partial,PoseStack pose,MultiBufferSource buffers,int light,int overlay) {
+        renderBottles(crate.items()::getStackInSlot, pose, buffers, light);
+    }
+
+    static void renderBottles(IntFunction<ItemStack> bottles, PoseStack pose, MultiBufferSource buffers, int light) {
         var out=buffers.getBuffer(RenderType.entityCutout(TextureAtlas.LOCATION_BLOCKS));
-        for (int slot=0;slot<9;slot++) {
-            var stack=crate.items().getStackInSlot(slot); if (stack.isEmpty()) continue;
+        for (int slot=0;slot<BottleCrateBlockEntity.SLOTS;slot++) {
+            var stack=bottles.apply(slot); if (stack.isEmpty()) continue;
             var fluid=gregtech.content.food.BottleContents.resolve(stack); if (fluid.isEmpty()) continue;
             var properties=IClientFluidTypeExtensions.of(fluid.getFluid());
             var texture=properties.getStillTexture(fluid); if (texture==null) continue;
@@ -57,7 +61,7 @@ public final class BottleCrateRenderer implements BlockEntityRenderer<BottleCrat
         for (int pass=0;pass<3;pass++) {
             String texture=pass==0?"sides":pass==1?"top":"cap";
             out=buffers.getBuffer(RenderType.entityCutout(Mc.gregtechId("textures/block/iconsets/bottlecrate_bottle_"+texture+".png")));
-            for (int slot=0;slot<9;slot++) if (!crate.items().getStackInSlot(slot).isEmpty()) {
+            for (int slot=0;slot<BottleCrateBlockEntity.SLOTS;slot++) if (!bottles.apply(slot).isEmpty()) {
                 if (pass==0) for (int part=1;part<=2;part++) surface(pose.last(),out,BottleCrateGeometry.bounds(slot,part),0,1,0,1,0xFFFFFF,light,false,false);
                 else surface(pose.last(),out,BottleCrateGeometry.bounds(slot,pass),0,1,0,1,0xFFFFFF,light,true,true);
             }
