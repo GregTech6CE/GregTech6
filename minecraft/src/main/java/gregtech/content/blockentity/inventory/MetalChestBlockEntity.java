@@ -1,6 +1,6 @@
 package gregtech.content.blockentity.inventory;
 
-import gregtech.client.gui.MetalChestMenu;
+import gregtech.engine.inventory.menu.MetalChestMenu;
 import gregtech.content.blockentity.GTBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

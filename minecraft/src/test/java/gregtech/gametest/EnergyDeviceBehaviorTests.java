@@ -249,11 +249,11 @@ public final class EnergyDeviceBehaviorTests {
     @GameTest(template = "test_empty")
     public static void deviceQueriesFollowTheBoundSpec(GameTestHelper helper) {
         var pos = helper.absolutePos(new BlockPos(1, 1, 1));
-        var node = new EnergyNodeBlockEntity(pos, Blocks.STONE.defaultBlockState());
+        var node = new EnergyNodeBlockEntity(pos, energyBlock("electric_cooler_lv").defaultBlockState());
         helper.assertTrue(!node.isTransformer() && !node.isOriginalMotor() && !node.isTurbine(),
-                "queries are safe before binding a spec");
+                "a plain device is none of the special node kinds");
         helper.assertTrue(node.deviceMenu() == null && node.batteryStatus() == null && node.steamStatus() == null,
-                "an unbound node has no device-specific view or menu");
+                "a plain device has no device-specific view or menu");
 
         var transformer = (EnergyNodeBlock) BuiltInRegistries.BLOCK.get(Mc.gregtechId("rotation_transformer_wood"));
         node.setSpec(transformer.spec());

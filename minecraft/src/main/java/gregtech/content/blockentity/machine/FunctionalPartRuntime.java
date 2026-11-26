@@ -30,9 +30,13 @@ import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 //?}
 
 import javax.annotation.Nullable;
@@ -153,28 +157,15 @@ public final class FunctionalPartRuntime {
         host.syncToClient();
     }
 
-//? if >=1.21.1 {
-/*    public net.neoforged.neoforge.items.IItemHandler items(Direction side) {
-*///?} else {
-    public net.minecraftforge.items.IItemHandler items(Direction side) {
-//?}
+    public IItemHandler items(Direction side) {
         if (slots == null) return null;
         int index = side == null ? 6 : side.ordinal();
         if (sided[index] == null) sided[index] = new Sided(side);
-//? if >=1.21.1 {
-/*        return (net.neoforged.neoforge.items.IItemHandler) sided[index];
-*///?} else {
-        return (net.minecraftforge.items.IItemHandler) sided[index];
-//?}
+        return (IItemHandler) sided[index];
     }
 
-//? if >=1.21.1 {
-/*    public net.neoforged.neoforge.items.IItemHandler inventory() { return items; }
+    public IItemHandler inventory() { return items; }
     public IFluidHandler fluids(Direction side) {
-*///?} else {
-    public net.minecraftforge.items.IItemHandler inventory() { return items; }
-    public IFluidHandler fluids(Direction side) {
-//?}
         if (tanks.length == 0) return null;
         int index = side == null ? 6 : side.ordinal();
         if (fluidSided[index] == null) fluidSided[index] = new SidedFluid(side);
@@ -286,11 +277,7 @@ public final class FunctionalPartRuntime {
             items.setStackInSlot(slot, NbtCompat.readItem(list.getCompound(slot), lookup));
     }
 
-//? if >=1.21.1 {
-/*    private final class Slots extends net.neoforged.neoforge.items.ItemStackHandler {
-*///?} else {
-    private final class Slots extends net.minecraftforge.items.ItemStackHandler {
-//?}
+    private final class Slots extends ItemStackHandler {
         Slots(int count) { super(count); }
 
         @Override public int getSlotLimit(int slot) { return slots == null ? 0 : slots.stackLimit(); }
@@ -308,11 +295,7 @@ public final class FunctionalPartRuntime {
         }
     }
 
-//? if >=1.21.1 {
-/*    private final class Sided implements net.neoforged.neoforge.items.IItemHandler {
-*///?} else {
-    private final class Sided implements net.minecraftforge.items.IItemHandler {
-//?}
+    private final class Sided implements IItemHandler {
         private final Direction side;
 
         Sided(Direction side) { this.side = side; }

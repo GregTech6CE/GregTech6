@@ -3,7 +3,7 @@ package gregtech.content.blockentity.inventory;
 import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.engine.inventory.BlockContents;
 import gregtech.content.block.inventory.DrawerQuadBlock;
-import gregtech.client.gui.HopperContainerMenu;
+import gregtech.engine.inventory.menu.HopperContainerMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -80,7 +80,7 @@ public class DrawerQuadBlockEntity extends GTBlockEntity implements BlockContent
     }
     public HopperContainerMenu createMenu(int page, int id, Inventory playerInventory) {
         if (page < 0 || page >= COMPARTMENTS) throw new IllegalArgumentException("Invalid drawer page " + page);
-        return new gregtech.client.gui.StorageContainerMenu(id, playerInventory,
+        return new gregtech.engine.inventory.menu.StorageContainerMenu(id, playerInventory,
                 view(IntStream.range(page * PAGE_SIZE, (page + 1) * PAGE_SIZE).toArray()), this::inventoryChanged) {
             @Override public boolean stillValid(Player player) {
                 return !isRemoved() && level != null && level.getBlockEntity(worldPosition) == DrawerQuadBlockEntity.this

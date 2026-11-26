@@ -6,9 +6,11 @@ import gregtech.content.registry.GTFluidItems;
 import gregtech.engine.stack.NbtCompat;
 import gregtech.engine.stack.RegistryContext;
 import gregtech.engine.stack.StackData;
+import gregtech.platform.Mc;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluids;
 import org.jetbrains.annotations.Nullable;
@@ -43,34 +45,27 @@ public final class FluidDisplayBinding {
 //? if >=1.21.1 {
         /*// The payload is saved against this lookup; without one the fluid cannot be encoded.
         if (lookup == null) return ItemStack.EMPTY;
-        var fluidId = BuiltInRegistries.FLUID.getKey(fluid.getFluid());
-        net.minecraft.world.item.Item carrierItem = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(
-                fluidId.getNamespace(), "fluid_item_" + fluidId.getPath()));
+*///?}
+        var source = ContainerFluidIdentity.source(fluid.getFluid());
+        var fluidId = BuiltInRegistries.FLUID.getKey(source);
+        Item carrierItem = fluidId != null && !"minecraft".equals(fluidId.getNamespace())
+                ? BuiltInRegistries.ITEM.get(Mc.id(fluidId.getNamespace(), "fluid_item_" + fluidId.getPath()))
+                : null;
         if (!(carrierItem instanceof FluidDisplayItemLike)) {
             carrierItem = GTFluidItems.generic();
-            if (carrierItem == null)
+            if (carrierItem == null) {
                 for (var handle : GTFluidItems.allEntries()) {
-                    if (!(handle.get() instanceof FluidDisplayItemLike)) continue;
-                    carrierItem = handle.get();
-                    break;
+                    if (handle.isPresent() && handle.get() instanceof FluidDisplayItemLike) {
+                        carrierItem = handle.get();
+                        break;
+                    }
                 }
+            }
         }
         if (!(carrierItem instanceof FluidDisplayItemLike)) return ItemStack.EMPTY;
         var displayStack = new ItemStack(carrierItem);
         StackData.update(displayStack, tag -> tag.put(TAG, NbtCompat.saveFluid(fluid, lookup)));
         return displayStack;
-*///?} else {
-        var fluidKey = net.minecraftforge.registries.ForgeRegistries.FLUIDS.getKey(fluid.getFluid());
-        net.minecraft.world.item.Item carrierItem = fluidKey != null && !"minecraft".equals(fluidKey.getNamespace())
-                ? GTFluidItems.forFluid(fluid.getFluid())
-                : null;
-        if (carrierItem == null) carrierItem = GTFluidItems.generic();
-        if (carrierItem == null) carrierItem = GTFluidItems.getFirst();
-        if (carrierItem == null) return ItemStack.EMPTY;
-        var stack = new ItemStack(carrierItem);
-        StackData.update(stack, tag -> tag.put(TAG, NbtCompat.saveFluid(fluid, lookup)));
-        return stack;
-//?}
     }
 
     public static FluidStack resolve(ItemStack stack, @Nullable HolderLookup.Provider lookup) {
@@ -88,10 +83,6 @@ public final class FluidDisplayBinding {
     /** Amount is presentation data, not a JEI fluid subtype. */
     public static String subtype(ItemStack stack, @Nullable HolderLookup.Provider lookup) {
         var fluid = resolve(stack, lookup);
-//? if >=1.21.1 {
-        /*return fluid.isEmpty() ? "empty" : BuiltInRegistries.FLUID.getKey(fluid.getFluid()) + "/" + fluid.getComponentsPatch();
-*///?} else {
-        return fluid.isEmpty() ? "empty" : BuiltInRegistries.FLUID.getKey(fluid.getFluid()) + "/" + (fluid.hasTag() ? fluid.getTag().toString() : "");
-//?}
+        return fluid.isEmpty() ? "empty" : BuiltInRegistries.FLUID.getKey(fluid.getFluid()) + "/" + FluidCompat.metadataKey(fluid);
     }
 }

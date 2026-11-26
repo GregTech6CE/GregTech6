@@ -1,6 +1,7 @@
 package gregtech.content.tool;
 
 import gregtech.content.item.ElectricToolItem;
+import gregtech.platform.LoaderHooks;
 import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -88,11 +89,7 @@ public final class ElectricChainsawHarvest {
         block.destroy(level,pos,state);
         var before=stack.copy();
         tool.mineBlock(stack,level,state,pos,player);
-//? if >=1.21.1 {
-        /*if (stack.isEmpty()) net.neoforged.neoforge.event.EventHooks.onPlayerDestroyItem(player,before,net.minecraft.world.InteractionHand.MAIN_HAND);
-*///?} else {
-        if (stack.isEmpty()) net.minecraftforge.event.ForgeEventFactory.onPlayerDestroyItem(player,before,net.minecraft.world.InteractionHand.MAIN_HAND);
-//?}
+        if (stack.isEmpty()) LoaderHooks.onPlayerDestroyItem(player,before,net.minecraft.world.InteractionHand.MAIN_HAND);
         for (var drop:drops) if (!drop.isEmpty()) Block.popResource(level,pos,drop);
         state.spawnAfterBreak(level,pos,before,true);
         player.awardStat(Stats.BLOCK_MINED.get(block));player.causeFoodExhaustion(.005F);

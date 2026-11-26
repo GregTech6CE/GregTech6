@@ -1,4 +1,4 @@
-package gregtech.compat.jei;
+package gregtech.client;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
 //? if >=1.21.1 {

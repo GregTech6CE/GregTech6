@@ -2,10 +2,14 @@
  * Adapted from MultiTileEntityItemInternal.addInformation, ItemBlockBase and LH.getToolTipHarvest. */
 package gregtech.client;
 
-import gregtech.engine.block.OriginalBlockTooltipRules;
 import gregtech.content.block.BookShelfBlock;
 import gregtech.content.cover.CoverItems;
 import gregtech.content.data.BlockHarvestPolicy;
+import gregtech.engine.block.OriginalBlockTooltipRules;
+import gregtech.engine.stack.NbtCompat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -20,30 +24,38 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.EmptyBlockGetter;
 import net.minecraft.world.level.block.Block;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Set;
 
 /** Native block/item boundary for the original common rows; never creates hover-time tile entities. */
 public final class CommonBlockTooltips {
     private CommonBlockTooltips() {}
+
     private static final String HARVEST = "gt.lang.tool.to.harvest";
     private static final String FLAMMABLE = "gt.lang.flammable";
     private static final String UNCOVER = "gt.lang.use.crowbar.to.uncover";
     private static final String ENCHANT = "gt.lang.enchantment.bonus";
-    private static final Component HAND_HARVEST = Component.translatable("tooltip.gt6ce.ui.hand_harvest").withStyle(ChatFormatting.DARK_GRAY);
-    private static final Set<String> OLD_HARVEST = Set.of(HARVEST, "tooltip.gt6ce.ore.hand_harvest_preferred",
-            "tooltip.gt6ce.machine.harvest_wrench", "tooltip.gt6ce.machine.harvest_wrench_short",
-            "tooltip.gt6ce.machine.harvest_axe", "tooltip.gt6ce.machine.harvest_shears",
-            "tooltip.gt6ce.machine.harvest.tool_label", "tooltip.gt6ce.machine.hand_harvest",
-            "tooltip.gt6ce.crucible.harvest_pickaxe", "tooltip.gt6ce.wire.harvest_tool",
+    private static final Component HAND_HARVEST =
+            Component.translatable("tooltip.gt6ce.ui.hand_harvest").withStyle(ChatFormatting.DARK_GRAY);
+    private static final Set<String> OLD_HARVEST = Set.of(
+            HARVEST,
+            "tooltip.gt6ce.ore.hand_harvest_preferred",
+            "tooltip.gt6ce.machine.harvest_wrench",
+            "tooltip.gt6ce.machine.harvest_wrench_short",
+            "tooltip.gt6ce.machine.harvest_axe",
+            "tooltip.gt6ce.machine.harvest_shears",
+            "tooltip.gt6ce.machine.harvest.tool_label",
+            "tooltip.gt6ce.machine.hand_harvest",
+            "tooltip.gt6ce.crucible.harvest_pickaxe",
+            "tooltip.gt6ce.wire.harvest_tool",
             "gt.lang.harvest.shovel");
     private static final Set<String> FLAME_KEYS = Set.of(FLAMMABLE, "tooltip.gt6ce.flammable");
 
     public static void append(ItemStack stack, List<Component> lines) {
         if (stack.isEmpty() || !(stack.getItem() instanceof BlockItem item)) return;
         Block block = item.getBlock();
-        if (!BuiltInRegistries.BLOCK.getKey(block).getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return;
+        if (!BuiltInRegistries.BLOCK
+                .getKey(block)
+                .getNamespace()
+                .equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return;
         boolean flammable = lines.stream().anyMatch(line -> containsAnyKey(line, FLAME_KEYS));
         var state = block.defaultBlockState();
         var ore = gregtech.content.data.OreHostPhysics.itemParams(stack);
@@ -51,23 +63,31 @@ public final class CommonBlockTooltips {
             flammable |= state.getFlammability(EmptyBlockGetter.INSTANCE, BlockPos.ZERO, side) > 0;
         // Native tooltip events include the item name at index0. Keep player names/lore intact.
         Component name = lines.isEmpty() ? null : lines.get(0);
-        Component blast = lines.stream().filter(line -> line != name
-                && containsAnyKey(line, Set.of("gt.lang.blastresistance"))).findFirst().orElse(null);
-        lines.removeIf(line -> line != name && (containsAnyKey(line, OLD_HARVEST) || containsAnyKey(line, FLAME_KEYS)
-                || containsAnyKey(line, Set.of("gt.lang.blastresistance"))
-                || line.getContents().equals(HAND_HARVEST.getContents()) && line.getStyle().equals(HAND_HARVEST.getStyle())));
+        Component blast = lines.stream()
+                .filter(line -> line != name && containsAnyKey(line, Set.of("gt.lang.blastresistance")))
+                .findFirst()
+                .orElse(null);
+        lines.removeIf(line -> line != name
+                && (containsAnyKey(line, OLD_HARVEST)
+                        || containsAnyKey(line, FLAME_KEYS)
+                        || containsAnyKey(line, Set.of("gt.lang.blastresistance"))
+                        || line.getContents().equals(HAND_HARVEST.getContents())
+                                && line.getStyle().equals(HAND_HARVEST.getStyle())));
         var rows = new ArrayList<Component>();
-        var track = gregtech.content.registry.GTTrackBlocks.get(BuiltInRegistries.BLOCK.getKey(block).getPath());
+        var track = gregtech.content.registry.GTTrackBlocks.get(
+                BuiltInRegistries.BLOCK.getKey(block).getPath());
         if (track != null || block instanceof gregtech.content.block.misc.RoadStripeRailBlock) {
             float speed = track == null ? 0.5F : track.speed();
             if (!containsKey(lines, "gt.lang.railspeed"))
-                rows.add(Component.translatable("gt.lang.railspeed").withStyle(ChatFormatting.AQUA)
-                        .append(Component.literal(Float.toString(Math.min(10, speed / 0.4F)) + "x").withStyle(ChatFormatting.GREEN)));
+                rows.add(Component.translatable("gt.lang.railspeed")
+                        .withStyle(ChatFormatting.AQUA)
+                        .append(Component.literal(Float.toString(Math.min(10, speed / 0.4F)) + "x")
+                                .withStyle(ChatFormatting.GREEN)));
         }
         if (flammable) rows.add(Component.translatable(FLAMMABLE).withStyle(ChatFormatting.RED));
         boolean spawnProof = block instanceof gregtech.content.block.stone.GTStoneSlabBlock
                 || block instanceof gregtech.content.block.stone.GTStoneBlock stone
-                    && !gregtech.content.block.stone.StoneVariantFlags.spawnsCreatures(stone.variant())
+                        && !gregtech.content.block.stone.StoneVariantFlags.spawnsCreatures(stone.variant())
                 || block instanceof gregtech.content.block.misc.CFoamBlock
                 || block instanceof gregtech.content.block.misc.CFoamSlabBlock
                 || block instanceof gregtech.content.block.misc.ConcreteBlock
@@ -84,38 +104,62 @@ public final class CommonBlockTooltips {
             TooltipHelper.appendBlastResistance(block.getExplosionResistance(), rows);
         // Display actual source drop policy for reviewed ore states, not the old LH adventure-exempt flag.
         // Preferred shovel remains visible, but hand-droppable sediment must not advertise a mandatory tier.
-        rows.add(ore.isPresent() ? (!ore.get().requiresToolForDrops()
-                ? Component.translatable("tooltip.gt6ce.ore.hand_harvest_preferred",
-                    Component.translatable(OriginalBlockTooltipRules.harvestToolKey(ore.get().tool())).withStyle(ChatFormatting.WHITE))
-                    .withStyle(ChatFormatting.DARK_GRAY)
-                : harvestLine(BlockHarvestPolicy.Tool.valueOf(ore.get().tool()), false, ore.get().harvest()))
-                : block instanceof gregtech.content.block.OreBlock
-                        && gregtech.content.block.OreBlock.stoneOfStack(stack).isSediment()
-                    ? harvestLine(BlockHarvestPolicy.Tool.SHOVEL, BlockHarvestPolicy.handHarvestable(block),
-                            BlockHarvestPolicy.level(block))
-                    : harvestLine(block));
+        rows.add(
+                ore.isPresent()
+                        ? (!ore.get().requiresToolForDrops()
+                                ? Component.translatable(
+                                                "tooltip.gt6ce.ore.hand_harvest_preferred",
+                                                Component.translatable(OriginalBlockTooltipRules.harvestToolKey(
+                                                                ore.get().tool()))
+                                                        .withStyle(ChatFormatting.WHITE))
+                                        .withStyle(ChatFormatting.DARK_GRAY)
+                                : harvestLine(
+                                        BlockHarvestPolicy.Tool.valueOf(
+                                                ore.get().tool()),
+                                        false,
+                                        ore.get().harvest()))
+                        : block instanceof gregtech.content.block.OreBlock
+                                        && gregtech.content.block.OreBlock.stoneOfStack(stack)
+                                                .isSediment()
+                                ? harvestLine(
+                                        BlockHarvestPolicy.Tool.SHOVEL,
+                                        BlockHarvestPolicy.handHarvestable(block),
+                                        BlockHarvestPolicy.level(block))
+                                : harvestLine(block));
         int insertion = lines.size();
-        for (int i = 0; i < lines.size(); i++) if (containsAnyKey(lines.get(i),
-                Set.of("tooltip.gt6ce.contained_materials", "tooltip.gt6ce.f3h_hint"))) {
-            insertion = i; break;
-        }
+        for (int i = 0; i < lines.size(); i++)
+            if (containsAnyKey(lines.get(i), Set.of("tooltip.gt6ce.contained_materials", "tooltip.gt6ce.f3h_hint"))) {
+                insertion = i;
+                break;
+            }
         lines.addAll(insertion, rows);
     }
 
     public static Component harvestLine(Block block) {
-        return harvestLine(BlockHarvestPolicy.tool(block), BlockHarvestPolicy.handHarvestable(block), BlockHarvestPolicy.level(block));
+        return harvestLine(
+                BlockHarvestPolicy.tool(block),
+                BlockHarvestPolicy.handHarvestable(block),
+                BlockHarvestPolicy.level(block));
     }
+
     private static Component harvestLine(BlockHarvestPolicy.Tool tool, boolean hand, int level) {
         String toolKey = OriginalBlockTooltipRules.harvestToolKey(tool.name());
         if (hand) {
-            return toolKey == null ? HAND_HARVEST.copy()
-                    : Component.translatable("tooltip.gt6ce.ore.hand_harvest_preferred",
-                            Component.translatable(toolKey).withStyle(ChatFormatting.WHITE))
+            return toolKey == null
+                    ? HAND_HARVEST.copy()
+                    : Component.translatable(
+                                    "tooltip.gt6ce.ore.hand_harvest_preferred",
+                                    Component.translatable(toolKey).withStyle(ChatFormatting.WHITE))
                             .withStyle(ChatFormatting.DARK_GRAY);
         }
-        MutableComponent row = Component.translatable(HARVEST).withStyle(ChatFormatting.DARK_GRAY)
-                .append(": ").append(toolKey == null ? Component.translatable("tooltip.gt6ce.ui.unknown").withStyle(ChatFormatting.WHITE)
-                        : Component.translatable(toolKey).withStyle(ChatFormatting.WHITE));
+        MutableComponent row = Component.translatable(HARVEST)
+                .withStyle(ChatFormatting.DARK_GRAY)
+                .append(": ")
+                .append(
+                        toolKey == null
+                                ? Component.translatable("tooltip.gt6ce.ui.unknown")
+                                        .withStyle(ChatFormatting.WHITE)
+                                : Component.translatable(toolKey).withStyle(ChatFormatting.WHITE));
         if (toolKey != null && OriginalBlockTooltipRules.showHarvestLevel(level)) {
             var tier = Component.literal(" (" + level).withStyle(ChatFormatting.WHITE);
             String material = OriginalBlockTooltipRules.harvestTierMaterial(level);
@@ -137,15 +181,10 @@ public final class CommonBlockTooltips {
     private static boolean savedCover(CompoundTag data, String key) {
         if (!data.contains(key, Tag.TAG_COMPOUND)) return false;
         CompoundTag face = data.getCompound(key);
-//? if >=1.21.1 {
-        /*// Native ItemStack.CODEC defaults an absent count to1 and restricts explicit counts to1..99.
-        int count = face.contains("count") ? face.getInt("count") : 1;
-        if (count < 1 || count > 99) return false;
-*///?} else {
-        if (!face.contains("Count", Tag.TAG_ANY_NUMERIC) || face.getByte("Count") <= 0) return false;
-//?}
+        if (!NbtCompat.hasValidSerializedItemCount(face)) return false;
         ResourceLocation id = ResourceLocation.tryParse(face.getString("id"));
-        return id != null && BuiltInRegistries.ITEM.containsKey(id)
+        return id != null
+                && BuiltInRegistries.ITEM.containsKey(id)
                 && CoverItems.isCover(new ItemStack(BuiltInRegistries.ITEM.get(id)));
     }
 
@@ -156,8 +195,10 @@ public final class CommonBlockTooltips {
     public static boolean containsKey(List<Component> lines, String key) {
         return lines.stream().anyMatch(line -> containsAnyKey(line, Set.of(key)));
     }
+
     private static boolean containsAnyKey(Component line, Set<String> keys) {
-        if (line.getContents() instanceof TranslatableContents contents && keys.contains(contents.getKey())) return true;
+        if (line.getContents() instanceof TranslatableContents contents && keys.contains(contents.getKey()))
+            return true;
         return line.getSiblings().stream().anyMatch(sibling -> containsAnyKey(sibling, keys));
     }
 }

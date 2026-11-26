@@ -108,13 +108,13 @@ public final class MultiblockDeclarationTests {
             helper.assertTrue(expected.equals(preview), "Preview cells or roles differ: " + id);
         }
         helper.assertTrue(discovered > 0, "No built-in multiblocks were checked");
-        var recipes = gregtech.compat.jei.MultiblockInfoData.recipes();
+        var recipes = gregtech.content.multiblock.MultiblockInfoData.recipes();
         var items = new java.util.HashSet<net.minecraft.world.item.Item>();
         for (var info : recipes) helper.assertTrue(items.add(info.controller().getItem()), "Duplicate controller item page");
         var lightning = recipes.stream().filter(info -> info.blocks().values().stream()
                 .anyMatch(stack -> stack.is(gregtech.content.multiblock.LargeMachineParts.block(18104).asItem())))
                 .findFirst().orElseThrow(() -> new AssertionError("Lightning preview lost its optional rod"));
-        helper.assertTrue(gregtech.compat.jei.MultiblockInfoData.parts(lightning).stream()
+        helper.assertTrue(gregtech.content.multiblock.MultiblockInfoData.parts(lightning).stream()
                 .anyMatch(stack -> stack.is(gregtech.content.multiblock.LargeMachineParts.block(18104).asItem()) && stack.getCount() == 1),
                 "Lightning materials lost the example rod");
         System.out.println("MULTIBLOCK_DECLARATIONS controllers=" + discovered);

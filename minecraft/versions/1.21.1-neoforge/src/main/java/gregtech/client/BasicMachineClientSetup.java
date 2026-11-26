@@ -22,7 +22,8 @@ public final class BasicMachineClientSetup {
         event.register(GTMenuTypes.BASIC_MACHINE.get(), BasicMachineScreen::new);
         event.register(
                 GTMenuTypes.BEHAVIOR_MACHINE.get(), (net.minecraft.client.gui.screens.MenuScreens.ScreenConstructor<
-                                gregtech.client.gui.BehaviorMachineMenu, gregtech.client.gui.BehaviorMachineHostScreen>)
+                                gregtech.engine.inventory.menu.BehaviorMachineMenu,
+                                gregtech.client.gui.BehaviorMachineHostScreen>)
                         (menu, inventory, title) -> {
                             var machine = menu.machine();
                             net.minecraft.client.gui.screens.Screen custom = BehaviorMachineClients.screen(

@@ -17,6 +17,7 @@ import gregtech.engine.machine.MachineDirections;
 import gregtech.engine.machine.MachineEnergyPort;
 import gregtech.engine.machine.MachineInventory;
 import gregtech.engine.machine.MachineItemHandler;
+import gregtech.engine.multiblock.BoundMachinePort;
 import gregtech.content.cover.CoverUtilityBehaviors.FilterAction;
 import gregtech.content.cover.MachineCoverSpec;
 import gregtech.engine.recipe.Recipe;
@@ -24,7 +25,7 @@ import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.block.machine.BasicMachineBlock;
 import gregtech.content.block.machine.GTFacingMachineBlock;
 import gregtech.content.blockentity.GTEnergyBlockEntity;
-import gregtech.client.gui.BasicMachineContainerMenu;
+import gregtech.engine.inventory.menu.BasicMachineContainerMenu;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.GregTechTags;
 import net.minecraft.core.BlockPos;
@@ -80,11 +81,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     private final BasicMachineIOPorts ioPorts = new BasicMachineIOPorts(this);
 
 
-//? if >=1.21.1 {
-/*    private final net.neoforged.neoforge.items.ItemStackHandler autocraftingProgram = new net.neoforged.neoforge.items.ItemStackHandler(1) {
-*///?} else {
-    private final net.minecraftforge.items.ItemStackHandler autocraftingProgram = new net.minecraftforge.items.ItemStackHandler(1) {
-//?}
+    private final ItemStackHandler autocraftingProgram = new ItemStackHandler(1) {
 
         @Override public boolean isItemValid(int slot, ItemStack stack) {
             return gregtech.content.recipe.AutocraftingRecipes.isProgram(stack);
@@ -92,11 +89,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         @Override protected void onContentsChanged(int slot) { inventoryChanged(); }
     };
 
-//? if >=1.21.1 {
-/*    public net.neoforged.neoforge.items.IItemHandler autocraftingProgram() { return autocraftingProgram; }
-*///?} else {
-    public net.minecraftforge.items.IItemHandler autocraftingProgram() { return autocraftingProgram; }
-//?}
+    public IItemHandler autocraftingProgram() { return autocraftingProgram; }
 
 
     private FaceConfig faceConfig = FaceConfig.ALL_SIDES;
@@ -397,11 +390,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             if (!level.hasChunkAt(adj)) continue;
             BlockEntity be = level.getBlockEntity(adj);
 
-//? if >=1.21.1 {
-/*            if (be instanceof gregtech.engine.multiblock.BoundMachinePort part && part.isBoundTo(worldPosition)) continue;
-*///?} else {
-            if (be instanceof MultiblockPortBlockEntity part && part.isBoundTo(worldPosition)) continue;
-//?}
+            if (be instanceof BoundMachinePort part && part.isBoundTo(worldPosition)) continue;
 
             IEnergyBlock source = EnergyBlockViews.view(be);
             if (source == null) continue;
@@ -424,11 +413,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             BlockPos adj = pos.relative(absDir);
             if (!level.hasChunkAt(adj)) continue;
             BlockEntity be = level.getBlockEntity(adj);
-//? if >=1.21.1 {
-/*            if (be instanceof gregtech.engine.multiblock.BoundMachinePort part && part.isBoundTo(worldPosition)) continue;
-*///?} else {
-            if (be instanceof MultiblockPortBlockEntity part && part.isBoundTo(worldPosition)) continue;
-//?}
+            if (be instanceof BoundMachinePort part && part.isBoundTo(worldPosition)) continue;
             IEnergyBlock source = EnergyBlockViews.view(be);
             if (source == null || !source.isEnergyEmittingTo(auxTag, absDir.getOpposite(), false)) continue;
             long offered = source.getEnergyOffered(auxTag, absDir.getOpposite(), auxSize);

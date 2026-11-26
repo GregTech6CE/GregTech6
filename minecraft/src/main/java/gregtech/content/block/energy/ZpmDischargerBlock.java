@@ -86,6 +86,7 @@ public final class ZpmDischargerBlock extends AutoToolBlock {
                     z,
                     gregtech.engine.stack.NbtCompat.saveForBlockItem(
                             z, b.getLevel().registryAccess()));
+            if (z.inventory().getStackInSlot(0).isEmpty()) data.remove(ZpmDischargerBlockEntity.INVENTORY_KEY);
             data.remove("gt.zpm.buffer");
             data.remove("gt.stopped");
             gregtech.engine.stack.BlockEntityData.write(stack, data);

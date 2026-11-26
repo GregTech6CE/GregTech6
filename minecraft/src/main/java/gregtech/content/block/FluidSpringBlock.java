@@ -2,11 +2,13 @@ package gregtech.content.block;
 
 import gregtech.content.blockentity.FluidSpringBlockEntity;
 import gregtech.platform.Mc;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -17,9 +19,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 /**
  * GT6's fluid spring block ({@code MultiTileEntityFluidSpring}).
@@ -45,8 +46,11 @@ public class FluidSpringBlock extends GTBlock implements EntityBlock {
     }
 
     @Override
-    protected void appendTooltip(ItemStack stack, @Nullable BlockGetter level,
-            List<net.minecraft.network.chat.Component> lines, net.minecraft.world.item.TooltipFlag flag) {
+    protected void appendTooltip(
+            ItemStack stack,
+            @Nullable BlockGetter level,
+            List<net.minecraft.network.chat.Component> lines,
+            net.minecraft.world.item.TooltipFlag flag) {
         lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.ui.spring"));
     }
 
@@ -65,11 +69,8 @@ public class FluidSpringBlock extends GTBlock implements EntityBlock {
                 var data = new CompoundTag();
                 data.putString("spring", be.fluidId());
                 data.putInt("amount", be.amount());
-//? if >=1.21.1 {
-                /*data.putString("id", net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(be.getType()).toString());
-*///?}
                 var stack = new ItemStack(this);
-                gregtech.engine.stack.BlockEntityData.write(stack, data);
+                gregtech.engine.stack.BlockEntityData.write(stack, data, be.getType());
                 return stack;
             }
         }
@@ -82,34 +83,32 @@ public class FluidSpringBlock extends GTBlock implements EntityBlock {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public ItemStack getCloneItemStack(BlockState state, net.minecraft.world.phys.HitResult hit, net.minecraft.world.level.LevelReader level,
-            BlockPos pos, net.minecraft.world.entity.player.Player player) {
-*///?} else {
-    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
-//?}
+    protected ItemStack onGetCloneItemStack(
+            BlockState state, @Nullable HitResult target, BlockGetter level, BlockPos pos, @Nullable Player player) {
         return packed(level.getBlockEntity(pos));
     }
 
     @Override
-    public void setPlacedBy(Level level, BlockPos pos, BlockState state,
-            @Nullable LivingEntity placer, ItemStack stack) {
+    public void setPlacedBy(
+            Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
         if (spring != null) return;
         CompoundTag data = gregtech.engine.stack.BlockEntityData.read(stack);
-        if (data == null || !data.contains("spring", Tag.TAG_STRING)
-                || !data.contains("amount", Tag.TAG_INT)) return;
+        if (data == null || !data.contains("spring", Tag.TAG_STRING) || !data.contains("amount", Tag.TAG_INT)) return;
         ResourceLocation fluidId = ResourceLocation.tryParse(data.getString("spring"));
         if (fluidId == null || data.getInt("amount") <= 0) return;
         if (!Mc.hasFluid(fluidId)) return;
         if (level.getBlockEntity(pos) instanceof FluidSpringBlockEntity spring)
-        spring.setSpring(fluidId.toString(), data.getInt("amount"));
+            spring.setSpring(fluidId.toString(), data.getInt("amount"));
     }
 
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide ? null : (l, p, s, be) -> {
-            if (be instanceof FluidSpringBlockEntity spring) spring.tick();
-        };
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, BlockEntityType<T> type) {
+        return level.isClientSide
+                ? null
+                : (l, p, s, be) -> {
+                    if (be instanceof FluidSpringBlockEntity spring) spring.tick();
+                };
     }
 }

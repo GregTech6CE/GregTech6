@@ -29,8 +29,10 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 //? if >=1.21.1 {
-/*import net.neoforged.neoforge.items.ItemHandlerHelper;
+/*import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemHandlerHelper;
 *///?} else {
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 //?}
 import org.jetbrains.annotations.Nullable;
@@ -46,11 +48,7 @@ public class SolidBurningBoxBlockEntity extends GTFacingMachineBlockEntity imple
     private static final int FUEL_SLOT = 0;
     private static final int ASH_SLOT = 1;
 
-//? if >=1.21.1 {
-    /*private final net.neoforged.neoforge.items.IItemHandler automation = new net.neoforged.neoforge.items.IItemHandler() {
-*///?} else {
-    private final net.minecraftforge.items.IItemHandler automation = new net.minecraftforge.items.IItemHandler() {
-//?}
+    private final IItemHandler automation = new IItemHandler() {
         @Override public int getSlots() { return 2; }
         @Override public ItemStack getStackInSlot(int slot) { return inventory.getStackInSlot(slot); }
         @Override public int getSlotLimit(int slot) { return inventory.getSlotLimit(slot); }

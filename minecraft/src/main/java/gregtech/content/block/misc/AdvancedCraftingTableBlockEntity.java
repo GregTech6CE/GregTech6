@@ -2,9 +2,10 @@ package gregtech.content.block.misc;
 
 import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.engine.inventory.BlockContents;
-import gregtech.client.gui.HopperContainerMenu;
+import gregtech.engine.inventory.menu.HopperContainerMenu;
 import gregtech.engine.stack.StackCompat;
 import gregtech.engine.stack.NbtCompat;
+import gregtech.platform.LoaderHooks;
 import gregtech.platform.Mc;
 import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
@@ -325,11 +326,7 @@ public class AdvancedCraftingTableBlockEntity extends GTBlockEntity implements B
         inventoryChanged();
         ItemStack result = plan.output.copy();
         result.onCraftedBy(level, player, result.getCount());
-//? if >=1.21.1 {
-        /*net.neoforged.neoforge.event.EventHooks.firePlayerCraftingEvent(player, result.copy(), plan.grid);
-*///?} else {
-        net.minecraftforge.event.ForgeEventFactory.firePlayerCraftingEvent(player, result.copy(), plan.grid);
-//?}
+        LoaderHooks.firePlayerCraftingEvent(player, result.copy(), plan.grid);
         if (player instanceof net.minecraft.server.level.ServerPlayer sp) sp.awardRecipes(java.util.List.of(plan.recipe));
         return result;
     }
@@ -367,7 +364,7 @@ public class AdvancedCraftingTableBlockEntity extends GTBlockEntity implements B
     }
 
     public HopperContainerMenu storageMenu(int id, Inventory player) {
-        return new gregtech.client.gui.StorageContainerMenu(id, player, view(IntStream.range(35, 71).toArray(), false), this::inventoryChanged) {
+        return new gregtech.engine.inventory.menu.StorageContainerMenu(id, player, view(IntStream.range(35, 71).toArray(), false), this::inventoryChanged) {
 
             @Override
             public boolean stillValid(Player p) {

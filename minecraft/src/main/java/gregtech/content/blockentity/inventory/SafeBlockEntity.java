@@ -151,7 +151,7 @@ public class SafeBlockEntity extends GTBlockEntity {
         setChanged();
     }
 
-    public gregtech.client.gui.HopperContainerMenu createMenu(
+    public gregtech.engine.inventory.menu.HopperContainerMenu createMenu(
             int id, net.minecraft.world.entity.player.Inventory playerInventory) {
         if (!playerInventory.player.isSpectator()) {
             // Keep contents from older 27-slot test saves; refill the 15-slot inventory as room becomes available.
@@ -163,7 +163,7 @@ public class SafeBlockEntity extends GTBlockEntity {
             setChanged();
             generateDungeonLoot();
         }
-        return new gregtech.client.gui.StorageContainerMenu(id, playerInventory, inventory) {
+        return new gregtech.engine.inventory.menu.StorageContainerMenu(id, playerInventory, inventory) {
             @Override
             public boolean stillValid(Player player) {
                 return !isRemoved()

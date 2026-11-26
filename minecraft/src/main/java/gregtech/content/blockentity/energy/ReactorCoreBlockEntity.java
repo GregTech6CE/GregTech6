@@ -17,11 +17,13 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.items.IItemHandler;
 *///?} else {
 import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.IItemHandler;
 //?}
 import java.util.*;
 
@@ -290,11 +292,7 @@ public class ReactorCoreBlockEntity extends GTBlockEntity implements BlockConten
     }
 
     /** Automation may only touch stopped slots; direct player insertion stops the whole core. */
-//? if >=1.21.1 {
-    /*public final net.neoforged.neoforge.items.IItemHandler items = new net.neoforged.neoforge.items.IItemHandler() {
-*///?} else {
-    public final net.minecraftforge.items.IItemHandler items = new net.minecraftforge.items.IItemHandler() {
-//?}
+    public final IItemHandler items = new IItemHandler() {
         public int getSlots() {
             return rods.length;
         }

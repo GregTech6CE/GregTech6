@@ -1,6 +1,6 @@
 package gregtech.content.blockentity.inventory;
 
-import gregtech.client.gui.GarbageDumpContainerMenu;
+import gregtech.engine.inventory.menu.GarbageDumpContainerMenu;
 import gregtech.content.world.GarbageData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

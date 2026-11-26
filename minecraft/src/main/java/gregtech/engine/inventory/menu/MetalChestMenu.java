@@ -1,4 +1,4 @@
-package gregtech.client.gui;
+package gregtech.engine.inventory.menu;
 
 import gregtech.content.blockentity.inventory.MetalChestBlockEntity;
 import gregtech.content.registry.GTMenuTypes;

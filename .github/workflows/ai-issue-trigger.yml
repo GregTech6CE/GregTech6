@@ -17,7 +17,7 @@ on:
         required: true
         type: string
       dry_run:
-        description: 为 true 时只跑 fetch/gate/analysis、不发评论
+        description: 为 true 时只跑 gate/analysis、不发评论
         required: false
         default: "false"
         type: string

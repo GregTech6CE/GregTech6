@@ -1,10 +1,11 @@
 package gregtech.content.block;
 
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
 import gregtech.content.worldgen.OreHarvest;
+import gregtech.engine.material.GTMaterialRegistry;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
@@ -12,8 +13,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
-
-import java.util.List;
 
 /**
  * GT6 {@code BlockCrystalOres}: the twelve Nether crystal variants are dense ores, not
@@ -46,22 +45,19 @@ public final class CrystalOreBlock extends IconSetBlock implements DenseOreBlock
 
     /** GT6 {@code BlockCrystalOres.getExpDrop}: 3–6 XP, independent of Fortune. */
     @Override
-//? if >=1.21.1 {
-    /*public int getExpDrop(BlockState state, net.minecraft.world.level.LevelAccessor level, BlockPos pos,
-                          net.minecraft.world.level.block.entity.BlockEntity blockEntity,
-                          net.minecraft.world.entity.Entity breaker, ItemStack tool) {
-        RandomSource random = level.getRandom();
-        int silkTouchLevel = OreHarvest.from(level, tool).silkTouch() ? 1 : 0;
-*///?} else {
-    public int getExpDrop(BlockState state, LevelReader level, RandomSource random, BlockPos pos,
-                          int fortuneLevel, int silkTouchLevel) {
-//?}
+    protected int onGetExpDrop(
+            BlockState state,
+            LevelReader level,
+            RandomSource random,
+            BlockPos pos,
+            int fortuneLevel,
+            int silkTouchLevel) {
         return silkTouchLevel > 0 ? 0 : 3 + random.nextInt(4);
     }
 
     @Override
-    public float getExplosionResistance(BlockState state, BlockGetter level, BlockPos pos,
-                                        net.minecraft.world.level.Explosion explosion) {
+    public float getExplosionResistance(
+            BlockState state, BlockGetter level, BlockPos pos, net.minecraft.world.level.Explosion explosion) {
         // Original delegates both hardness and blast resistance to vanilla glowstone.
         return net.minecraft.world.level.block.Blocks.GLOWSTONE.getExplosionResistance();
     }

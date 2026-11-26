@@ -1,5 +1,7 @@
 package gregtech.client.gui;
 
+import gregtech.engine.inventory.menu.BasicMachineContainerMenu;
+import gregtech.engine.inventory.menu.SlotFluid;
 
 
 import net.minecraft.client.Minecraft;

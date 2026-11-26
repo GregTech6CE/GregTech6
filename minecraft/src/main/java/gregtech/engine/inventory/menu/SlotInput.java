@@ -1,4 +1,4 @@
-package gregtech.client.gui;
+package gregtech.engine.inventory.menu;
 
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
@@ -9,15 +9,15 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 //?}
 
-/** Output slot — items can be taken but not placed by the player. */
-public class SlotOutput extends SlotItemHandler {
+/** Input slot — items can be freely inserted and extracted by the player. */
+public class SlotInput extends SlotItemHandler {
     private final Runnable onChanged;
 
-    public SlotOutput(IItemHandler handler, int index, int x, int y) {
+    public SlotInput(IItemHandler handler, int index, int x, int y) {
         this(handler, index, x, y, () -> {});
     }
 
-    public SlotOutput(IItemHandler handler, int index, int x, int y, Runnable onChanged) {
+    public SlotInput(IItemHandler handler, int index, int x, int y, Runnable onChanged) {
         super(handler, index, x, y);
         this.onChanged = onChanged;
     }
@@ -30,11 +30,6 @@ public class SlotOutput extends SlotItemHandler {
 
     @Override
     public boolean mayPlace(ItemStack stack) {
-        return false;
-    }
-
-    @Override
-    public boolean mayPickup(net.minecraft.world.entity.player.Player player) {
         return true;
     }
 }

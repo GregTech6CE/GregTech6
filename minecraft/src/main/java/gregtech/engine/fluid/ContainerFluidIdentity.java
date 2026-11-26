@@ -21,10 +21,6 @@ public final class ContainerFluidIdentity {
         if (stack.isEmpty()) return stack;
         Fluid source = source(stack.getFluid());
         if (source == stack.getFluid()) return stack;
-//? if >=1.21.1 {
-        /*return new FluidStack(source.builtInRegistryHolder(), stack.getAmount(), stack.getComponentsPatch());
-*///?} else {
-        return new FluidStack(source, stack.getAmount(), stack.getTag() == null ? null : stack.getTag().copy());
-//?}
+        return FluidCompat.withFluid(stack, source);
     }
 }

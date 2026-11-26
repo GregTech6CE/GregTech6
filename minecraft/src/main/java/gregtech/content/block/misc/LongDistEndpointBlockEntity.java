@@ -25,6 +25,12 @@ import java.util.*;
 
 import javax.annotation.Nullable;
 
+//? if >=1.21.1 {
+/*import net.neoforged.neoforge.fluids.FluidStack;
+*///?} else {
+import net.minecraftforge.fluids.FluidStack;
+//?}
+
 /** Resolves a cached remote item/fluid endpoint; the base class forwards its sided capabilities. */
 public class LongDistEndpointBlockEntity extends gregtech.content.blockentity.CapabilityRelayBlockEntity implements gregtech.api.platform.machine.MachineControl.Provider {
     private long temperature;
@@ -171,13 +177,8 @@ public class LongDistEndpointBlockEntity extends gregtech.content.blockentity.Ca
     protected boolean supportsFluidExtraction() {
         return false;
     }
-//? if >=1.21.1 {
-    /*@Override
-    protected boolean permitsFluid(Direction side, net.neoforged.neoforge.fluids.FluidStack stack) {
-*///?} else {
     @Override
-    protected boolean permitsFluid(Direction side, net.minecraftforge.fluids.FluidStack stack) {
-//?}
+    protected boolean permitsFluid(Direction side, FluidStack stack) {
         if (stack.isEmpty()) return false;
         var entry = gregtech.content.registry.GTFluids.entryForFluid(stack.getFluid());
         return (entry == null ? stack.getFluid().getFluidType().getTemperature(stack) : entry.temperature()) <= temperature;

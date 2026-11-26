@@ -1,5 +1,6 @@
 package gregtech.client.gui;
 
+import gregtech.engine.inventory.menu.FilterMenu;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;

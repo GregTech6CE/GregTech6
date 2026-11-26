@@ -1,12 +1,9 @@
 package gregtech.content.block.misc;
 
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
-import gregtech.engine.GTWaterloggable;
+import gregtech.content.block.GTBlock;
 import gregtech.content.blockentity.misc.SandwichBlockEntity;
+import gregtech.engine.GTWaterloggable;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -21,18 +18,19 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
-import gregtech.content.block.GTBlock;
 /** GT6 MultiTileEntitySandwich: layered food that can also provide redstone. */
 public final class SandwichBlock extends GTBlock implements EntityBlock, SimpleWaterloggedBlock {
     private static final VoxelShape DEFAULT_SHAPE = Block.box(1, 0, 1, 15, 1, 15);
@@ -43,8 +41,8 @@ public final class SandwichBlock extends GTBlock implements EntityBlock, SimpleW
     }
 
     @Override
-    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!(level.getBlockEntity(pos) instanceof SandwichBlockEntity sandwich)) return InteractionResult.PASS;
         ItemStack held = player.getItemInHand(hand);
         if (held.isEmpty()) return InteractionResult.CONSUME;
@@ -63,75 +61,108 @@ public final class SandwichBlock extends GTBlock implements EntityBlock, SimpleW
         return InteractionResult.CONSUME;
     }
 
-    @Override public RenderShape getRenderShape(BlockState state) { return RenderShape.ENTITYBLOCK_ANIMATED; }
+    @Override
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.ENTITYBLOCK_ANIMATED;
+    }
 
-    @Nullable @Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new SandwichBlockEntity(pos, state);
     }
 
-    @Override public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return level.getBlockEntity(pos) instanceof SandwichBlockEntity sandwich
-                ? Block.box(1, 0, 1, 15, sandwich.sizePixels(), 15) : DEFAULT_SHAPE;
+                ? Block.box(1, 0, 1, 15, sandwich.sizePixels(), 15)
+                : DEFAULT_SHAPE;
     }
 
-    @Override public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    @Override
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return getShape(state, level, pos, context);
     }
 
-    @Override public int getLightBlock(BlockState state, BlockGetter level, BlockPos pos) { return 0; }
+    @Override
+    public int getLightBlock(BlockState state, BlockGetter level, BlockPos pos) {
+        return 0;
+    }
 
-    @Override public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+    @Override
+    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
         return level.getBlockState(pos.below()).isFaceSturdy(level, pos.below(), Direction.UP);
     }
 
-    @Override public BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext context) {
-        return GTWaterloggable.getStateForPlacement(canSurvive(defaultBlockState(), context.getLevel(), context.getClickedPos())
-                ? defaultBlockState() : null, context);
+    @Override
+    public BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext context) {
+        return GTWaterloggable.getStateForPlacement(
+                canSurvive(defaultBlockState(), context.getLevel(), context.getClickedPos())
+                        ? defaultBlockState()
+                        : null,
+                context);
     }
 
-    @Override public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState,
-            net.minecraft.world.level.LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+    @Override
+    public BlockState updateShape(
+            BlockState state,
+            Direction direction,
+            BlockState neighborState,
+            net.minecraft.world.level.LevelAccessor level,
+            BlockPos pos,
+            BlockPos neighborPos) {
         GTWaterloggable.updateShape(state, level, pos);
         return direction == Direction.DOWN && !canSurvive(state, level, pos)
                 ? net.minecraft.world.level.block.Blocks.AIR.defaultBlockState()
                 : super.updateShape(state, direction, neighborState, level, pos, neighborPos);
     }
 
-    @Override public void setPlacedBy(Level level, BlockPos pos, BlockState state,
-            @Nullable net.minecraft.world.entity.LivingEntity player, ItemStack stack) {
+    @Override
+    public void setPlacedBy(
+            Level level,
+            BlockPos pos,
+            BlockState state,
+            @Nullable net.minecraft.world.entity.LivingEntity player,
+            ItemStack stack) {
         super.setPlacedBy(level, pos, state, player, stack);
         if (level.getBlockEntity(pos) instanceof SandwichBlockEntity sandwich) sandwich.normalizePlacedItem();
     }
 
-//? if >=1.21.1 {
-    /*@Override public ItemStack getCloneItemStack(BlockState state, net.minecraft.world.phys.HitResult hit,
-            LevelReader level, BlockPos pos, Player player) {
-*///?} else {
-    @Override public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
-//?}
+    @Override
+    protected ItemStack onGetCloneItemStack(
+            BlockState state, @Nullable HitResult target, BlockGetter level, BlockPos pos, @Nullable Player player) {
         return level.getBlockEntity(pos) instanceof SandwichBlockEntity sandwich
-                ? sandwich.sandwichItem(1) : new ItemStack(this);
+                ? sandwich.sandwichItem(1)
+                : new ItemStack(this);
     }
 
-    @Override public boolean isSignalSource(BlockState state) { return true; }
-
-    @Override public int getSignal(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-        return level.getBlockEntity(pos) instanceof SandwichBlockEntity sandwich
-                ? sandwich.redstoneSignal() : 0;
+    @Override
+    public boolean isSignalSource(BlockState state) {
+        return true;
     }
 
-    @Override public int getDirectSignal(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+    @Override
+    public int getSignal(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+        return level.getBlockEntity(pos) instanceof SandwichBlockEntity sandwich ? sandwich.redstoneSignal() : 0;
+    }
+
+    @Override
+    public int getDirectSignal(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
         return getSignal(state, level, pos, direction);
     }
 
-    @Override public boolean hasAnalogOutputSignal(BlockState state) { return true; }
-
-    @Override public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
-        return level.getBlockEntity(pos) instanceof SandwichBlockEntity sandwich
-                ? sandwich.comparatorSignal() : 0;
+    @Override
+    public boolean hasAnalogOutputSignal(BlockState state) {
+        return true;
     }
 
-    @Override public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
+    @Override
+    public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+        return level.getBlockEntity(pos) instanceof SandwichBlockEntity sandwich ? sandwich.comparatorSignal() : 0;
+    }
+
+    @Override
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         if (builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof SandwichBlockEntity sandwich) {
             ItemStack drop = sandwich.consumeDrop();
             return drop.isEmpty() ? List.of() : List.of(drop);
@@ -139,7 +170,8 @@ public final class SandwichBlock extends GTBlock implements EntityBlock, SimpleW
         return List.of(new ItemStack(this));
     }
 
-    @Override public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof SandwichBlockEntity sandwich) {
             ItemStack drop = sandwich.consumeDrop();
             if (!drop.isEmpty()) popResource(level, pos, drop);

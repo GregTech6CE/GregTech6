@@ -29,10 +29,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 //? if >=1.21.1 {
-
-
-
 /*import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemHandlerHelper;
 import net.neoforged.neoforge.items.ItemStackHandler;
 *///?} else {
@@ -40,6 +38,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 //?}
@@ -76,11 +75,7 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
     public ItemStack fuelForInspection() { return inventory.getSlots() > 0 ? inventory.getStackInSlot(0).copy() : ItemStack.EMPTY; }
     public ItemStack ashForInspection() { return inventory.getSlots() > 1 ? inventory.getStackInSlot(1).copy() : ItemStack.EMPTY; }
     public ItemStack pendingAshForInspection() { return pendingAsh == null ? ItemStack.EMPTY : pendingAsh.copy(); }
-//? if >=1.21.1 {
-    /*private final net.neoforged.neoforge.items.IItemHandler automation = new net.neoforged.neoforge.items.IItemHandler() {
-*///?} else {
-    private final net.minecraftforge.items.IItemHandler automation = new net.minecraftforge.items.IItemHandler() {
-//?}
+    private final IItemHandler automation = new IItemHandler() {
         public int getSlots() { return inventory == null ? 0 : inventory.getSlots(); }
         public ItemStack getStackInSlot(int slot) { return inventory.getStackInSlot(slot); }
         public int getSlotLimit(int slot) { return inventory.getSlotLimit(slot); }

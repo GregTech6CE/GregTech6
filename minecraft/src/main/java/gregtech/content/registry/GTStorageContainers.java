@@ -54,7 +54,7 @@ public final class GTStorageContainers {
                         .noOcclusion()
                         .strength(.5f, 2f)
                         .sound(SoundType.WOOD)),
-                bare -> new BlockItem(bare, new Item.Properties().stacksTo(16)));
+                bare -> new BottleCrateBlockItem(bare, new Item.Properties().stacksTo(16)));
 
         BOTTLE_CRATES.add(BOTTLE_CRATE);
         for (var spec : gregtech.content.storage.BottleCrateVariants.WOODS) {
@@ -69,7 +69,7 @@ public final class GTStorageContainers {
                                     .noOcclusion()
                                     .strength(.5f, 2f)
                                     .sound(net.minecraft.world.level.block.SoundType.WOOD)),
-                    bare -> new BlockItem(bare, new Item.Properties().stacksTo(16)));
+                    bare -> new BottleCrateBlockItem(bare, new Item.Properties().stacksTo(16)));
             BOTTLE_CRATES.add(crate);
         }
         for (var spec : GTStorageMetals.ALL) {
@@ -86,7 +86,7 @@ public final class GTStorageContainers {
                                     .strength(.5f, spec.resistance())
                                     .sound(net.minecraft.world.level.block.SoundType.METAL)
                                     .requiresCorrectToolForDrops()),
-                    bare -> new BlockItem(bare, new Item.Properties().stacksTo(16)));
+                    bare -> new BottleCrateBlockItem(bare, new Item.Properties().stacksTo(16)));
             BOTTLE_CRATES.add(crate);
         }
         for (var spec : GTStorageMetals.ALL) {

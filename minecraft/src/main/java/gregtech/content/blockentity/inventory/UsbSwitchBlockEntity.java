@@ -3,7 +3,7 @@ package gregtech.content.blockentity.inventory;
 import gregtech.engine.data.UsbDataPort;
 import gregtech.api.platform.machine.MachineControl;
 import gregtech.content.block.inventory.UsbSwitchBlock;
-import gregtech.client.gui.DataSwitchMenu;
+import gregtech.engine.inventory.menu.DataSwitchMenu;
 import gregtech.content.cover.PanelCover;
 import gregtech.content.cover.PanelCoverHost;
 import gregtech.content.cover.PanelCoverRuntime;
@@ -144,17 +144,10 @@ public class UsbSwitchBlockEntity extends GTBlockEntity
 //?}
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    public net.neoforged.neoforge.items.IItemHandler componentItems(Direction side) {
-        return items;
-    }
-*///?} else {
     @Override
-    public net.minecraftforge.items.IItemHandler componentItems(Direction side) {
+    public IItemHandler componentItems(Direction side) {
         return items;
     }
-//?}
     public UsbSwitchBlock.Kind kind() {
         return kind;
     }

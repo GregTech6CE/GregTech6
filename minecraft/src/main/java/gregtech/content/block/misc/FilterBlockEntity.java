@@ -147,7 +147,7 @@ public class FilterBlockEntity extends CapabilityRelayBlockEntity implements Men
 
     @Override
     public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
-        return new gregtech.client.gui.FilterMenu(id, inventory, this);
+        return new gregtech.engine.inventory.menu.FilterMenu(id, inventory, this);
     }
 
     @Override

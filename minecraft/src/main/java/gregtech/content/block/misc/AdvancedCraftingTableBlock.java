@@ -72,7 +72,7 @@ public class AdvancedCraftingTableBlock extends GTHorizontalDirectionalBlock
         if (!level.isClientSide)
             player.openMenu(new net.minecraft.world.SimpleMenuProvider(
                     (id, inv, p) -> upper
-                            ? new gregtech.client.gui.AdvancedCraftingMenu(id, inv, table)
+                            ? new gregtech.engine.inventory.menu.AdvancedCraftingMenu(id, inv, table)
                             : table.storageMenu(id, inv),
                     net.minecraft.network.chat.Component.translatable(getDescriptionId())));
         return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);

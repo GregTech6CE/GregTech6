@@ -163,7 +163,7 @@ public final class MultiblockBehaviorApiTests {
                             var hit = new net.minecraft.world.phys.BlockHitResult(part.getCenter(), Direction.UP, part, false);
                             var result = player.gameMode.useItemOn(player, level, net.minecraft.world.item.ItemStack.EMPTY, hand, hit);
                             helper.assertTrue(result.consumesAction(), "Part click was not handled: " + part);
-                            helper.assertTrue(player.containerMenu instanceof gregtech.client.gui.BehaviorMachineMenu menu
+                            helper.assertTrue(player.containerMenu instanceof gregtech.engine.inventory.menu.BehaviorMachineMenu menu
                                     && menu.machine() == machine && menu.stillValid(player), "Part opened the wrong menu or closed it immediately");
                             player.closeContainer();
                         }

@@ -10,6 +10,7 @@ import gregtech.engine.tool.ToolInteractions;
 import gregtech.engine.tool.MachineRotationType;
 import gregtech.content.material.Materials;
 import gregtech.content.damage.GTDamageTypes;
+import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -19,11 +20,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-//? if >=1.21.1 {
-/*import net.minecraft.tags.EntityTypeTags;
-*///?} else {
-import net.minecraft.world.entity.MobType;
-//?}
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.EnderMan;
@@ -48,10 +44,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
+import javax.annotation.Nullable;
 
 import gregtech.content.block.GTBlock;
 /** Material and shape are registry identity; only mounting direction is block state. */
@@ -120,14 +119,15 @@ public final class SpikeBlock extends GTBlock implements ToolInteractionTarget, 
                 .setValue(FACING, context.getClickedFace().getOpposite()), context);
     }
 
-//? if >=1.21.1 {
-    /*@Override public ItemStack getCloneItemStack(BlockState state,net.minecraft.world.phys.HitResult hit,net.minecraft.world.level.LevelReader level,BlockPos pos,Player player){return new ItemStack(this);}
-    @Override public java.util.List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder){return java.util.List.of(new ItemStack(this));}
-*///?} else {
-    @Override public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
+    @Override
+    protected ItemStack onGetCloneItemStack(BlockState state, @Nullable HitResult target,
+            BlockGetter level, BlockPos pos, @Nullable Player player) {
         return new ItemStack(this);
     }
-//?}
+
+//? if >=1.21.1 {
+    /*@Override public java.util.List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder){return java.util.List.of(new ItemStack(this));}
+*///?}
 
     public static Mode itemMode(ItemStack stack) {
         return stack.getItem() instanceof net.minecraft.world.item.BlockItem item
@@ -205,11 +205,9 @@ public final class SpikeBlock extends GTBlock implements ToolInteractionTarget, 
 
     /** Exact GT6 damage table without TFC's optional ×80 health compatibility multiplier. */
     public float damageFor(BlockState state, LivingEntity living) {
-//? if >=1.21.1 {
-        /*return gregtech.content.block.SpikeRules.damage(family.name(),secondary,mode!=Mode.WALL,living instanceof IronGolem,living instanceof Skeleton,living instanceof Slime,living.getType().is(EntityTypeTags.ARTHROPOD),living.getType().is(EntityTypeTags.UNDEAD),isEnderOrWere(living));
-*///?} else {
-        return gregtech.content.block.SpikeRules.damage(family.name(),secondary,mode!=Mode.WALL,living instanceof IronGolem,living instanceof Skeleton,living instanceof Slime,living.getMobType()==MobType.ARTHROPOD,living.getMobType()==MobType.UNDEAD,isEnderOrWere(living));
-//?}
+        return gregtech.content.block.SpikeRules.damage(family.name(), secondary, mode != Mode.WALL,
+                living instanceof IronGolem, living instanceof Skeleton, living instanceof Slime,
+                Mc.isArthropod(living), Mc.isUndead(living), isEnderOrWere(living));
     }
 
     private static boolean isEnderOrWere(LivingEntity living) {

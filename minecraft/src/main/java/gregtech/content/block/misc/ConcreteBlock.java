@@ -1,10 +1,14 @@
 package gregtech.content.block.misc;
 
-import gregtech.engine.tool.GTToolHelper;
-import gregtech.engine.tool.GTToolType;
-import gregtech.engine.material.MaterialEquivalence;
+import gregtech.content.block.GTBlock;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTConstructionBlocks;
+import gregtech.engine.material.MaterialEquivalence;
+import gregtech.engine.tool.GTToolHelper;
+import gregtech.engine.tool.GTToolType;
+import java.util.List;
+import java.util.Set;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
@@ -24,31 +28,34 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 
-import java.util.List;
-import java.util.Set;
-
-import gregtech.content.block.GTBlock;
 /**
  * GT6 concrete/reinforced-concrete behavior. Retained palette IDs read the old color state;
  * {@link FixedConstructionBlocks.Concrete} stores the color in each registered identity.
  */
 public class ConcreteBlock extends GTBlock {
     public static final EnumProperty<DyeColor> COLOR = EnumProperty.create("color", DyeColor.class);
-    private static final TagKey<Item> IRON_RODS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", "rods/iron"));
-    private static final TagKey<Item> STEEL_RODS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", "rods/steel"));
+    private static final TagKey<Item> IRON_RODS =
+            ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", "rods/iron"));
+    private static final TagKey<Item> STEEL_RODS =
+            ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", "rods/steel"));
     // GT6 ANY.Iron accepts these iron/steel material aliases for its stick form.
-    private static final Set<String> IRON_FAMILY=gregtech.content.block.ConstructionRules.IRON_FAMILY;
+    private static final Set<String> IRON_FAMILY = gregtech.content.block.ConstructionRules.IRON_FAMILY;
     private final boolean reinforced;
 
     public ConcreteBlock(boolean reinforced, Properties properties) {
         super(properties.isValidSpawn((s, l, p, e) -> false));
         this.reinforced = reinforced;
-        registerDefaultState(stateDefinition.any().hasProperty(COLOR)
-                ? stateDefinition.any().setValue(COLOR, DyeColor.LIGHT_GRAY) : stateDefinition.any());
+        registerDefaultState(
+                stateDefinition.any().hasProperty(COLOR)
+                        ? stateDefinition.any().setValue(COLOR, DyeColor.LIGHT_GRAY)
+                        : stateDefinition.any());
     }
 
-    public boolean reinforced() { return reinforced; }
+    public boolean reinforced() {
+        return reinforced;
+    }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -86,11 +93,8 @@ public class ConcreteBlock extends GTBlock {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public ItemStack getCloneItemStack(BlockState state,net.minecraft.world.phys.HitResult hit,net.minecraft.world.level.LevelReader level,BlockPos pos,net.minecraft.world.entity.player.Player player) {
-*///?} else {
-    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
-//?}
+    protected ItemStack onGetCloneItemStack(
+            BlockState state, @Nullable HitResult target, BlockGetter level, BlockPos pos, @Nullable Player player) {
         return coloredItem(this, FixedConstructionColor.colorOf(state));
     }
 
@@ -106,23 +110,32 @@ public class ConcreteBlock extends GTBlock {
     private static boolean ironFamilyRod(ItemStack stack) {
         if (stack.is(IRON_RODS) || stack.is(STEEL_RODS)) return true;
         var form = MaterialEquivalence.form(stack);
-        return form != null && form.prefix() == MaterialPrefix.stick
+        return form != null
+                && form.prefix() == MaterialPrefix.stick
                 && IRON_FAMILY.contains(form.material().getName());
     }
 
     /** GT6 BlockConcrete: drill-click consumes one iron/steel stick and preserves the dye. */
     @Override
-    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (reinforced || !GTToolHelper.matchesTool(player.getItemInHand(hand), GTToolType.HAND_DRILL))
             return InteractionResult.PASS;
         int slot = rodSlot(player);
         if (slot < 0) return InteractionResult.PASS;
         if (level.isClientSide) return InteractionResult.SUCCESS;
-        if (!level.setBlock(pos, FixedConstructionColor.recolor(GTConstructionBlocks.CONCRETE_REINFORCED.get().defaultBlockState(),
-                FixedConstructionColor.colorOf(state)), Block.UPDATE_ALL)) return InteractionResult.FAIL;
-        if (!player.getAbilities().instabuild) player.getInventory().getItem(slot).shrink(1);
-        GTToolHelper.damageForToolClickReturn(player.getItemInHand(hand), 10000, player,
+        if (!level.setBlock(
+                pos,
+                FixedConstructionColor.recolor(
+                        GTConstructionBlocks.CONCRETE_REINFORCED.get().defaultBlockState(),
+                        FixedConstructionColor.colorOf(state)),
+                Block.UPDATE_ALL)) return InteractionResult.FAIL;
+        if (!player.getAbilities().instabuild)
+            player.getInventory().getItem(slot).shrink(1);
+        GTToolHelper.damageForToolClickReturn(
+                player.getItemInHand(hand),
+                10000,
+                player,
                 hand == InteractionHand.OFF_HAND
                         ? net.minecraft.world.entity.EquipmentSlot.OFFHAND
                         : net.minecraft.world.entity.EquipmentSlot.MAINHAND);

@@ -1,10 +1,12 @@
 package gregtech.content.block;
 
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
 import gregtech.content.worldgen.OreHarvest;
+import gregtech.engine.material.GTMaterialRegistry;
+import java.util.List;
+import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
@@ -13,16 +15,18 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 
-import java.util.List;
-import java.util.Map;
-
 /** The nine GT6 {@code BlockRockOres} variants generated as overworld layers and Nether quartz. */
 public final class RockOreBlock extends IconSetBlock implements DenseOreBlock {
     public record Spec(String material, int harvestLevel, float hardnessMultiplier, boolean flammable) {}
 
-    private static final Map<String, Spec> SPECS = SpecialOreDefinitions.rocks().entrySet().stream().collect(
-            java.util.stream.Collectors.toUnmodifiableMap(Map.Entry::getKey, e -> new Spec(e.getValue().material(),
-                    e.getValue().harvestLevel(), e.getValue().hardnessMultiplier(), e.getValue().flammable())));
+    private static final Map<String, Spec> SPECS = SpecialOreDefinitions.rocks().entrySet().stream()
+            .collect(java.util.stream.Collectors.toUnmodifiableMap(
+                    Map.Entry::getKey,
+                    e -> new Spec(
+                            e.getValue().material(),
+                            e.getValue().harvestLevel(),
+                            e.getValue().hardnessMultiplier(),
+                            e.getValue().flammable())));
 
     public static Spec spec(String iconName) {
         return SPECS.get(iconName);
@@ -58,34 +62,30 @@ public final class RockOreBlock extends IconSetBlock implements DenseOreBlock {
 
     /** GT6 rock ores have a one-in-eight chance to grant one XP. */
     @Override
-//? if >=1.21.1 {
-    /*public int getExpDrop(BlockState state, net.minecraft.world.level.LevelAccessor level, BlockPos pos,
-                          net.minecraft.world.level.block.entity.BlockEntity blockEntity,
-                          net.minecraft.world.entity.Entity breaker, ItemStack tool) {
-        RandomSource random = level.getRandom();
-        int silkTouchLevel = OreHarvest.from(level, tool).silkTouch() ? 1 : 0;
-*///?} else {
-    public int getExpDrop(BlockState state, LevelReader level, RandomSource random, BlockPos pos,
-                          int fortuneLevel, int silkTouchLevel) {
-//?}
+    protected int onGetExpDrop(
+            BlockState state,
+            LevelReader level,
+            RandomSource random,
+            BlockPos pos,
+            int fortuneLevel,
+            int silkTouchLevel) {
         return silkTouchLevel == 0 && random.nextInt(8) == 0 ? 1 : 0;
     }
 
     @Override
-    public int getFlammability(BlockState state, BlockGetter level, BlockPos pos,
-                               net.minecraft.core.Direction face) {
+    public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, net.minecraft.core.Direction face) {
         return spec.flammable() ? 30 : 0;
     }
 
     @Override
-    public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos,
-                                  net.minecraft.core.Direction face) {
+    public int getFireSpreadSpeed(
+            BlockState state, BlockGetter level, BlockPos pos, net.minecraft.core.Direction face) {
         return 0;
     }
 
     @Override
-    public float getExplosionResistance(BlockState state, BlockGetter level, BlockPos pos,
-                                        net.minecraft.world.level.Explosion explosion) {
+    public float getExplosionResistance(
+            BlockState state, BlockGetter level, BlockPos pos, net.minecraft.world.level.Explosion explosion) {
         return net.minecraft.world.level.block.Blocks.STONE.getExplosionResistance();
     }
 }

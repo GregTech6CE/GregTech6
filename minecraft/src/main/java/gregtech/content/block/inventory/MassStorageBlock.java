@@ -1,9 +1,11 @@
 package gregtech.content.block.inventory;
 
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.inventory.MassStorageFace;
 import gregtech.content.block.GTHorizontalDirectionalBlock;
 import gregtech.content.blockentity.inventory.MassStorageBlockEntity;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -15,8 +17,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -25,9 +28,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
+import net.minecraft.world.phys.HitResult;
 
 /** Bulk-storage front interaction, mode tools, tape packing and harvest; remaining tool gap: ALIGN-136. */
 public class MassStorageBlock extends GTHorizontalDirectionalBlock
@@ -46,8 +47,8 @@ public class MassStorageBlock extends GTHorizontalDirectionalBlock
     }
 
     @Override
-    protected InteractionResult useBlock(BlockState state, Level level, BlockPos pos,
-            Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useBlock(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         // both hands fire use(); handling the off hand double-triggers
         // (insert+extract in one click, double withdrawals, armor swap-backs)
         if (hand == InteractionHand.OFF_HAND || !(level.getBlockEntity(pos) instanceof MassStorageBlockEntity store))
@@ -63,8 +64,8 @@ public class MassStorageBlock extends GTHorizontalDirectionalBlock
         if (useStorageModeTool(store, player, held)) return InteractionResult.sidedSuccess(level.isClientSide);
         if (store.isPacked()) return InteractionResult.PASS;
         if (hit.getDirection() != state.getValue(FACING)) return InteractionResult.PASS;
-        double x = gregtech.engine.inventory.MassStorageFace.x(state.getValue(FACING),
-                hit.getLocation().x - pos.getX(), hit.getLocation().z - pos.getZ());
+        double x = gregtech.engine.inventory.MassStorageFace.x(
+                state.getValue(FACING), hit.getLocation().x - pos.getX(), hit.getLocation().z - pos.getZ());
         double y = 16 * (1 - (hit.getLocation().y - pos.getY()));
         if (!gregtech.engine.inventory.MassStorageFace.active(x, y)) return InteractionResult.PASS;
         int requested = gregtech.engine.inventory.MassStorageFace.withdrawal(x, y);
@@ -90,14 +91,19 @@ public class MassStorageBlock extends GTHorizontalDirectionalBlock
         }
         if (player.isShiftKeyDown()) {
             if (!level.isClientSide) {
-                player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gt6ce.mass_storage.status",
-                        store.stored(), store.template().isEmpty()
-                                ? net.minecraft.network.chat.Component.translatable("gui.gt6ce.empty")
-                                : store.template().getHoverName()), true);
+                player.displayClientMessage(
+                        net.minecraft.network.chat.Component.translatable(
+                                "message.gt6ce.mass_storage.status",
+                                store.stored(),
+                                store.template().isEmpty()
+                                        ? net.minecraft.network.chat.Component.translatable("gui.gt6ce.empty")
+                                        : store.template().getHoverName()),
+                        true);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
-        if (!level.isClientSide && !store.template().isEmpty()
+        if (!level.isClientSide
+                && !store.template().isEmpty()
                 && gregtech.engine.inventory.MassStorageFace.depositInventory(x, y)) {
             for (ItemStack stack : player.getInventory().items) {
                 int inserted = store.insert(stack);
@@ -110,7 +116,9 @@ public class MassStorageBlock extends GTHorizontalDirectionalBlock
 
     /** GT6 casing material of this variant (drives the tint), null for the legacy block. */
     @Nullable
-    public GTMaterial material() { return material; }
+    public GTMaterial material() {
+        return material;
+    }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -119,7 +127,8 @@ public class MassStorageBlock extends GTHorizontalDirectionalBlock
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+        return defaultBlockState()
+                .setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
 
     @Nullable
@@ -166,41 +175,43 @@ public class MassStorageBlock extends GTHorizontalDirectionalBlock
 
     /** Source creative pick retains the complete state, including untaped inventory and fractions. */
     @Override
-//? if >=1.21.1 {
-    /*public ItemStack getCloneItemStack(BlockState state, net.minecraft.world.phys.HitResult hit,
-            net.minecraft.world.level.LevelReader level, BlockPos pos, Player player) {
-        return packedClone(level.getBlockEntity(pos), level.registryAccess());
+    protected ItemStack onGetCloneItemStack(
+            BlockState state, @Nullable HitResult target, BlockGetter level, BlockPos pos, @Nullable Player player) {
+        return packedClone(
+                level.getBlockEntity(pos), level instanceof LevelReader reader ? reader.registryAccess() : null);
     }
-*///?} else {
-    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
-        return packedClone(level.getBlockEntity(pos), null);
-    }
-//?}
 
     @Override
-    protected void appendTooltip(ItemStack stack, @javax.annotation.Nullable BlockGetter level,
-            @javax.annotation.Nullable HolderLookup.Provider registries, List<Component> tooltip, TooltipFlag flag) {
+    protected void appendTooltip(
+            ItemStack stack,
+            @javax.annotation.Nullable BlockGetter level,
+            @javax.annotation.Nullable HolderLookup.Provider registries,
+            List<Component> tooltip,
+            TooltipFlag flag) {
         gregtech.client.StorageBlockTooltips.massStorage(stack, tooltip, registries);
     }
 
-    public long capacity() { return gregtech.content.storage.OriginalStorageTooltipData.MASS_CAPACITY; }
+    public long capacity() {
+        return gregtech.content.storage.OriginalStorageTooltipData.MASS_CAPACITY;
+    }
 
     /** GT6 {@code TileEntityBase09FacingSingle}: the wrench re-aims the front on the 3x3 grid. */
     @Override
     public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return gregtech.engine.tool.GTToolHelper.matchesTool(tool, gregtech.engine.tool.GTToolType.WRENCH)
-                ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING,
-                        gregtech.engine.tool.MachineRotationType.HORIZONTAL)
+                ? gregtech.engine.tool.ToolInteractionSpec.facing(
+                        FACING, gregtech.engine.tool.MachineRotationType.HORIZONTAL)
                 : null;
     }
 
     /** Direct withdrawals enter the player's inventory; only a full-inventory remainder is dropped. */
     private static void deliverWithdrawal(Player player, ItemStack stack) {
-        ItemStack remainder = gregtech.engine.inventory.ItemHandlerCompat.insertPlayerMainInventory(player, stack, false);
+        ItemStack remainder =
+                gregtech.engine.inventory.ItemHandlerCompat.insertPlayerMainInventory(player, stack, false);
         if (remainder.getCount() != stack.getCount()) player.getInventory().setChanged();
         if (!remainder.isEmpty()) {
-            var drop = new net.minecraft.world.entity.item.ItemEntity(player.level(), player.getX(),
-                    player.getY() + .5, player.getZ(), remainder);
+            var drop = new net.minecraft.world.entity.item.ItemEntity(
+                    player.level(), player.getX(), player.getY() + .5, player.getZ(), remainder);
             drop.setNoPickUpDelay();
             drop.setTarget(player.getUUID());
             player.level().addFreshEntity(drop);
@@ -208,10 +219,8 @@ public class MassStorageBlock extends GTHorizontalDirectionalBlock
     }
 
     private static boolean isUnpackingTool(ItemStack held) {
-        return (gregtech.engine.tool.GTToolHelper.matchesTool(held,
-                gregtech.engine.tool.GTToolType.SCISSORS)
-                || gregtech.engine.tool.GTToolHelper.matchesTool(held,
-                gregtech.engine.tool.GTToolType.KNIFE));
+        return (gregtech.engine.tool.GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.SCISSORS)
+                || gregtech.engine.tool.GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.KNIFE));
     }
 
     private static boolean useStorageModeTool(MassStorageBlockEntity store, Player player, ItemStack held) {
@@ -223,10 +232,14 @@ public class MassStorageBlock extends GTHorizontalDirectionalBlock
             String key;
             if (monkey) {
                 store.toggleAutoOutput();
-                key = store.autoOutput() ? "message.gt6ce.storage.auto_output_on" : "message.gt6ce.storage.auto_output_off";
+                key = store.autoOutput()
+                        ? "message.gt6ce.storage.auto_output_on"
+                        : "message.gt6ce.storage.auto_output_off";
             } else if (cutter) {
                 store.toggleOverflow();
-                key = store.emitsOverflow() ? "message.gt6ce.storage.overflow_on" : "message.gt6ce.storage.overflow_off";
+                key = store.emitsOverflow()
+                        ? "message.gt6ce.storage.overflow_on"
+                        : "message.gt6ce.storage.overflow_off";
             } else {
                 store.toggleFilterReset();
                 key = store.resetsFilter() ? "message.gt6ce.storage.filter_reset" : "message.gt6ce.storage.filter_keep";

@@ -3,10 +3,24 @@ package gregtech.content.fluid;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.data.FluidCatalog;
 import gregtech.engine.material.GTMaterialRegistry;
+import java.util.List;
 
 /** Static and material-derived fluid definitions, prepared before Forge registration. */
 public final class FluidDefinitions {
+    private static final List<String> WORLD_FLUID_PATHS = List.of(
+            "liquid_extra_heavy_oil",
+            "liquid_heavy_oil",
+            "liquid_medium_oil",
+            "liquid_light_oil",
+            "gas_natural_gas",
+            "watergeothermal");
+
     private FluidDefinitions() {}
+
+    /** Registry paths of the source fluids that have world blocks. */
+    public static List<String> worldFluidPaths() {
+        return WORLD_FLUID_PATHS;
+    }
 
     public static void prepare() {
         FluidCatalog.bootstrap();

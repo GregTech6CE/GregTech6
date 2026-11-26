@@ -14,11 +14,7 @@ import java.util.*;
 /** Controllers retain storage; formed parts expose only the role assigned by their definition. */
 public interface MultiblockPortOwner extends StructureController {
     boolean isStructureOk();
-//? if >=1.21.1 {
-    /*default net.neoforged.neoforge.items.IItemHandler portItems(MultiblockLayout.Role role) { return null; }
-*///?} else {
-    default net.minecraftforge.items.IItemHandler portItems(MultiblockLayout.Role role) { return null; }
-//?}
+    default IItemHandler portItems(MultiblockLayout.Role role) { return null; }
     IFluidHandler portFluids(MultiblockLayout.Role role);
     /** Port side is relative to the controller; it need not share the controller block's IO faces. */
     default IItemHandler portItems(MultiblockLayout.Role role, MachineFace face) { return portItems(role); }

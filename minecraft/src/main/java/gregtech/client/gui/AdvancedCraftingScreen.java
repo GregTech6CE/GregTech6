@@ -1,4 +1,6 @@
 package gregtech.client.gui;
+
+import gregtech.engine.inventory.menu.AdvancedCraftingMenu;
 import net.minecraft.resources.ResourceLocation;
 
 import net.minecraft.client.gui.GuiGraphics;

@@ -4,7 +4,7 @@ import gregtech.engine.machine.HopperSpec;
 import gregtech.engine.machine.ITileEntityAdjacentInventoryUpdatable;
 import gregtech.content.block.machine.HopperBlock;
 import gregtech.content.blockentity.GTBlockEntity;
-import gregtech.client.gui.HopperContainerMenu;
+import gregtech.engine.inventory.menu.HopperContainerMenu;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.registry.GTMenuTypes;
 import gregtech.engine.stack.StackCompat;

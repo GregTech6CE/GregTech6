@@ -9,7 +9,7 @@ conditional block along two orthogonal axes:
   - disposition: BASE_CLASS | REMOVE | FACADE | FOLLOW_BODY | FLOOR_KEEP
 
 Plan A permanent floor items (Capability exposure/query & imports, pure
-Loader 1:1 package swaps in imports and FQCNs, third-party mod compat under
+Loader 1:1 package swaps in top-level imports, third-party mod compat under
 compat/, and Mixins under mixin/) are classified as FLOOR_KEEP and separated
 from the Actionable Backlog.
 """
@@ -122,7 +122,7 @@ MC_API_RE = re.compile(
     r"MobEffects|MobEffectInstance|getEffect\(\)|isInstantenous|FoodProperties|"
     r"saturationModifier|saturationMod|alwaysEdible|alwaysEat|getNutrition|nutrition\(|getSaturationModifier|"
     r"igniteForSeconds|setSecondsOnFire|getPotted|getContent|AbstractArrow|"
-    r"ArmorItem|BucketItem|FluidTank|NativeMachineTankData|gt6ce:zpm_module|"
+    r"ArmorItem|BucketItem|bucket\.content\b|bucket\.getFluid\(|\bgetFluid\(\)|FluidTank|NativeMachineTankData|gt6ce:zpm_module|"
     r"tags/items|tags/item|\"recipe/\"|\"recipes/\"|c:glass_blocks|c:leathers|"
     r"AbstractPackResources|readMetaAndCreate|BlockEntityWithoutLevelRenderer|"
     r"FallingBlock|SandBlock|TransparentBlock|GlassBlock|MenuProvider|"
@@ -607,8 +607,6 @@ def _classify_block(
         return "SELF_DEFECT", "REMOVE", "Wave 2a", "dead-or-identical-branch"
     if (not th_code or not el_code) and is_pure_annotation(th_code or el_code):
         return "SELF_DEFECT", "REMOVE", "Wave 2a", "one-sided-annotation"
-    if ctx.class_name == "GTWorldFluidBlock" and "fluid" in both_str and not BE_LIFECYCLE_RE.search(both_str):
-        return "SELF_DEFECT", "REMOVE", "Wave 2a", "redundant-fluid-accessor"
 
     # 2. Plan A Permanent Floor -> FLOOR_KEEP / Floor
     if "/mixin/" in ctx.rel_path:
@@ -619,8 +617,9 @@ def _classify_block(
     if CAP_RE.search(both_str):
         return "LOADER", "FLOOR_KEEP", "Floor", "capability-api"
     if is_pure_loader_package_rename(th_str, el_str):
-        reason = "pure-loader-1to1-import" if imp_only else "pure-loader-1to1-fqcn"
-        return "LOADER", "FLOOR_KEEP", "Floor", reason
+        if imp_only:
+            return "LOADER", "FLOOR_KEEP", "Floor", "pure-loader-1to1-import"
+        return "SELF_DEFECT", "REMOVE", "Wave 2c", "pure-loader-1to1-fqcn"
     if CUSTOM_INGREDIENT_RE.search(both_str):
         return "LOADER", "FLOOR_KEEP", "Floor", "custom-ingredient-api"
     if LEGACY_SAVE_MIGRATION_RE.search(both_str):

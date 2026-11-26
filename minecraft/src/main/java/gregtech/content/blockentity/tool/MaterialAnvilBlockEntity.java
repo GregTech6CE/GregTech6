@@ -16,17 +16,18 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
 import javax.annotation.Nullable;
+//? if >=1.21.1 {
+/*import net.neoforged.neoforge.items.IItemHandler;
+*///?} else {
+import net.minecraftforge.items.IItemHandler;
+//?}
 
 /** Two workpieces and persisted GT6 durability units. Failed recipes never consume either. */
 public final class MaterialAnvilBlockEntity extends GTBlockEntity implements gregtech.engine.inventory.BlockContents, PoweredToolTarget {
     private final ItemStack[] work = {ItemStack.EMPTY, ItemStack.EMPTY};
     private long durability;
     public long remainingDurability() { return durability; }
-//? if >=1.21.1 {
-    /*private final net.neoforged.neoforge.items.IItemHandler input = new net.neoforged.neoforge.items.IItemHandler() {
-*///?} else {
-    private final net.minecraftforge.items.IItemHandler input = new net.minecraftforge.items.IItemHandler() {
-//?}
+    private final IItemHandler input = new IItemHandler() {
         @Override public int getSlots() { return 2; }
         @Override public ItemStack getStackInSlot(int slot) { return workpiece(slot); }
         @Override public int getSlotLimit(int slot) { return slot >= 0 && slot < 2 ? 64 : 0; }

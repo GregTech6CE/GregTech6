@@ -1,33 +1,22 @@
 package gregtech.content.recipe;
 
 import gregtech.api.material.GTMaterial;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.item.GTToolItem;
+import gregtech.content.material.Materials;
+import gregtech.content.registry.GTItems;
 import gregtech.engine.material.MaterialEquivalence;
 import gregtech.engine.tool.GTToolType;
 import gregtech.engine.tool.ToolAssemblyRules;
-import gregtech.content.material.Materials;
-import gregtech.content.data.MaterialPrefix;
-import gregtech.content.item.GTToolItem;
-import gregtech.content.registry.GTItems;
+import javax.annotation.Nullable;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-//? if >=1.21.1 {
-/*import net.minecraft.core.HolderLookup.Provider;
-*///?} else {
-import net.minecraft.core.RegistryAccess;
-//?}
 import net.minecraft.resources.ResourceLocation;
-//? if >=1.21.1 {
-/*import net.minecraft.world.item.crafting.CraftingInput;
-*///?} else {
-import net.minecraft.world.inventory.CraftingContainer;
-//?}
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.level.Level;
-
-import javax.annotation.Nullable;
 
 /**
  * GT6's head + handle assembly ({@code AdvancedCraftingTool extends ShapelessOreRecipe},
@@ -44,53 +33,39 @@ import javax.annotation.Nullable;
  * {@code AdvancedCraftingTool(MAGNIFYING_GLASS, lens, typemin(1), MT.Glass)}) and the flint and
  * tinder ({@link GTFlintAndTinderRecipe}, shaped).</p>
  */
-public final class GTToolAssemblyRecipe extends ShapelessRecipe {
+public final class GTToolAssemblyRecipe extends GTShapelessCraftingRecipe {
 
     private final GTToolType type;
 
     public GTToolAssemblyRecipe(ResourceLocation id, GTToolType type) {
-//? if >=1.21.1 {
-        /*super("gt.tools", CraftingBookCategory.EQUIPMENT, displayResult(type),
-*///?} else {
-        super(id, "gt.tools", CraftingBookCategory.EQUIPMENT, displayResult(type),
-//?}
+        super(
+                id,
+                "gt.tools",
+                CraftingBookCategory.EQUIPMENT,
+                displayResult(type),
                 NonNullList.of(Ingredient.EMPTY, displayHead(type), displayHandle(type)));
         this.type = type;
     }
 
-    public GTToolType toolType() { return type; }
+    public GTToolType toolType() {
+        return type;
+    }
 
     @Override
-//? if >=1.21.1 {
-    /*public boolean matches(CraftingInput grid, Level level) {
-*///?} else {
-    public boolean matches(CraftingContainer grid, Level level) {
-//?}
+    protected boolean onMatches(CraftingGridView grid, Level level) {
         return readInputs(grid) != null;
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public ItemStack assemble(CraftingInput grid, net.minecraft.core.HolderLookup.Provider access) {
-*///?} else {
-    public ItemStack assemble(CraftingContainer grid, RegistryAccess access) {
-//?}
+    protected ItemStack onAssemble(CraftingGridView grid, HolderLookup.Provider access) {
         ToolAssemblyRules.Inputs inputs = readInputs(grid);
         return inputs == null ? ItemStack.EMPTY : GTToolItem.create(type, inputs.head(), inputs.handle());
     }
 
     @Nullable
-//? if >=1.21.1 {
-    /*private ToolAssemblyRules.Inputs readInputs(CraftingInput grid) {
-*///?} else {
-    private ToolAssemblyRules.Inputs readInputs(CraftingContainer grid) {
-//?}
+    private ToolAssemblyRules.Inputs readInputs(CraftingGridView grid) {
         var forms = new java.util.ArrayList<ToolAssemblyRules.Form>(2);
-//? if >=1.21.1 {
-        /*for (int slot = 0; slot < grid.size(); slot++) {
-*///?} else {
-        for (int slot = 0; slot < grid.getContainerSize(); slot++) {
-//?}
+        for (int slot = 0; slot < grid.size(); slot++) {
             ItemStack stack = grid.getItem(slot);
             if (stack.isEmpty()) continue;
             if (forms.size() == 2) return null;
@@ -123,7 +98,10 @@ public final class GTToolAssemblyRecipe extends ShapelessRecipe {
     }
 
     private static Ingredient displayHandle(GTToolType type) {
-        ItemStack stack = GTItems.getStack(MaterialPrefix.stick, gregtech.content.tool.OriginalToolMaterials.defaultHandle(displayHeadMaterial(type)), 1);
+        ItemStack stack = GTItems.getStack(
+                MaterialPrefix.stick,
+                gregtech.content.tool.OriginalToolMaterials.defaultHandle(displayHeadMaterial(type)),
+                1);
         return stack.isEmpty() ? Ingredient.EMPTY : Ingredient.of(stack);
     }
 
@@ -146,5 +124,4 @@ public final class GTToolAssemblyRecipe extends ShapelessRecipe {
                 && gregtech.content.tool.OriginalToolMaterials.acceptsAssemblyHead(type.definition(), material)
                 && !GTItems.getStack(prefix, material, 1).isEmpty();
     }
-
 }

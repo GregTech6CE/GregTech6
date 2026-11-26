@@ -1,14 +1,13 @@
 package gregtech.event;
 
-
-import gregtech.engine.machine.GTMachineBlock;
-import gregtech.engine.tool.GTToolHelper;
-import gregtech.engine.tool.GTToolType;
+import gregtech.content.block.machine.VesselInnerFaces;
 import gregtech.content.blockentity.machine.CrucibleFaucetBlockEntity;
 import gregtech.content.blockentity.machine.MoldBasinBlockEntity;
 import gregtech.content.blockentity.machine.MoldBlockEntity;
-
 import gregtech.content.registry.GTSounds;
+import gregtech.engine.machine.GTMachineBlock;
+import gregtech.engine.tool.GTToolHelper;
+import gregtech.engine.tool.GTToolType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -19,6 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
@@ -46,7 +46,7 @@ public final class SmelteryInteractionHandler {
         BlockPos pos = event.getPos();
         BlockEntity blockEntity = event.getLevel().getBlockEntity(pos);
         if (blockEntity == null) return;
-        net.minecraft.world.level.block.state.BlockState state = event.getLevel().getBlockState(pos);
+        BlockState state = event.getLevel().getBlockState(pos);
 
         Player player = event.getEntity();
         ItemStack held = player.getItemInHand(event.getHand());
@@ -118,15 +118,20 @@ public final class SmelteryInteractionHandler {
         }
     }
 
-    /** Play wrench sound when a machine block is dismantled with a wrench. */
+    /** Check wrench quality on the server before a machine is dismantled. */
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
         if (event.getLevel().isClientSide()) return;
-        if (!(event.getState().getBlock() instanceof GTMachineBlock)) return;
+        var state = event.getState();
+        if (!(state.getBlock() instanceof GTMachineBlock)) return;
         Player player = event.getPlayer();
-        if (GTToolHelper.isMachineWrench(player.getMainHandItem())) {
-            event.getLevel().playSound(null, event.getPos(), GTSounds.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+        ItemStack tool = player.getMainHandItem();
+        if (!GTToolHelper.isMachineWrench(tool)) return;
+        if (!player.isCreative() && !GTToolHelper.isMachineHarvestTool(tool, state)) {
+            event.setCanceled(true);
+            return;
         }
+        event.getLevel().playSound(null, event.getPos(), GTSounds.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
     }
 
 //? if >=1.21.1 {
@@ -243,9 +248,8 @@ public final class SmelteryInteractionHandler {
     }
 
     /** The open mouth and every inner wall face accept the vessel's own interaction. */
-    private static boolean topOrInnerFace(net.minecraft.world.level.block.state.BlockState state, BlockHitResult hit) {
-        return hit.getDirection() == Direction.UP
-                || gregtech.content.block.machine.VesselInnerFaces.isInnerFace(state, hit);
+    private static boolean topOrInnerFace(BlockState state, BlockHitResult hit) {
+        return hit.getDirection() == Direction.UP || VesselInnerFaces.isInnerFace(state, hit);
     }
 
     private static InteractionResult handleFaucetInteraction(CrucibleFaucetBlockEntity faucet, Player player,

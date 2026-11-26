@@ -4,9 +4,12 @@ import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.registry.GTManualStations;
 import gregtech.content.registry.GTMenuTypes;
 import gregtech.content.registry.GTStorageContainers;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 
 @EventBusSubscriber(
         modid = gregtech.engine.mod.GregTechIdentity.MOD_ID,
@@ -43,6 +46,19 @@ public final class StorageContainerClientSetup {
                             }
                         });
         e.registerBlockEntityRenderer(GTBlockEntities.BOTTLE_CRATE.get(), BottleCrateRenderer::new);
+    }
+
+    @SubscribeEvent
+    public static void extensions(RegisterClientExtensionsEvent event) {
+        var extensions = new IClientItemExtensions() {
+            @Override
+            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                return BottleCrateItemRenderer.instance();
+            }
+        };
+        for (var crate : GTStorageContainers.BOTTLE_CRATES) {
+            event.registerItem(extensions, crate.get().asItem());
+        }
     }
 
     @SubscribeEvent

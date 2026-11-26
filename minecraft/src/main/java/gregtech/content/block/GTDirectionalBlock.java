@@ -12,9 +12,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -115,5 +117,32 @@ public abstract class GTDirectionalBlock extends DirectionalBlock {
 
     /** Runs before vanilla {@code playerWillDestroy} handling across 1.20.1 / 1.21.1. */
     protected void onPlayerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+    }
+
+//? if >=1.21.1 {
+    /*@Override
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level,
+            BlockPos pos, Player player) {
+        ItemStack stack = onGetCloneItemStack(state, target, level, pos, player);
+        return stack != null ? stack : super.getCloneItemStack(state, target, level, pos, player);
+    }
+*///?} else {
+    @Override
+    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
+        ItemStack stack = onGetCloneItemStack(state, null, level, pos, null);
+        return stack != null ? stack : super.getCloneItemStack(level, pos, state);
+    }
+//?}
+
+    /**
+     * Handles block pick-block cloning across 1.20.1 / 1.21.1.
+     *
+     * <p>Returning {@code null} delegates back to vanilla {@code getCloneItemStack} defaults.
+     * On 1.20.1, {@code target} and {@code player} are {@code null}.</p>
+     */
+    @Nullable
+    protected ItemStack onGetCloneItemStack(BlockState state, @Nullable HitResult target,
+            BlockGetter level, BlockPos pos, @Nullable Player player) {
+        return null;
     }
 }

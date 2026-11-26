@@ -92,6 +92,19 @@ public final class NbtCompat {
     }
 *///?}
 
+    /**
+     * Whether {@code tag} has a valid serialized item count for the active node's item format:
+     * 1.21.1 {@code count} in 1..99 (defaulting to 1 when absent), or 1.20.1 numeric {@code Count} byte > 0.
+     */
+    public static boolean hasValidSerializedItemCount(CompoundTag tag) {
+//? if >=1.21.1 {
+/*        int count = tag.contains("count") ? tag.getInt("count") : 1;
+        return count >= 1 && count <= 99;
+*///?} else {
+        return tag.contains("Count", Tag.TAG_ANY_NUMERIC) && tag.getByte("Count") > 0;
+//?}
+    }
+
     /** Saved form of a fluid stack (empty stacks encode cleanly on both nodes). */
     public static Tag saveFluid(FluidStack stack, HolderLookup.Provider lookup) {
 //? if >=1.21.1 {

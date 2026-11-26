@@ -1,5 +1,6 @@
 package gregtech.content.cover;
 
+import gregtech.content.blockentity.energy.ZpmDischargerBlockEntity;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -93,15 +94,13 @@ public final class CoverDrops {
         return tag;
     }
 
-    /**
-     * Machine items keep only block configuration that placement restores, never runtime contents.
-     * Add a key here only when the block's own drop path writes it and its load path reads it back.
-     */
-    private static final java.util.Set<String> MACHINE_ITEM_KEYS = java.util.Set.of("gt.mold.shape");
-
-    private static void keepMachineItemData(CompoundTag tag) {
-        for (String key : new ArrayList<>(tag.getAllKeys()))
-            if (!MACHINE_ITEM_KEYS.contains(key) && !key.equals("id")) tag.remove(key);
+    private static void keepMachineItemData(BlockEntity owner, CompoundTag tag) {
+        for (String key : new ArrayList<>(tag.getAllKeys())) {
+            if (key.equals("id") || key.equals("gt.mold.shape")) continue;
+            if (owner instanceof ZpmDischargerBlockEntity && key.equals(ZpmDischargerBlockEntity.INVENTORY_KEY))
+                continue;
+            tag.remove(key);
+        }
     }
 
     /** Called on block replacement, not chunk unload; clearing slots makes native drop paths idempotent. */
@@ -135,8 +134,8 @@ public final class CoverDrops {
             if (tag == null) continue;
             // Preserve intentional contents of portable tanks, but never duplicate their covers.
             withoutCovers(tag);
-            // Machines drop empty shells; only their portable configuration survives.
-            if (machine) keepMachineItemData(tag);
+            // Retain only the data that the corresponding machine restores on placement.
+            if (machine) keepMachineItemData(owner, tag);
             boolean empty = tag.isEmpty() || tag.size() == 1 && tag.contains("id");
             if (empty) gregtech.engine.stack.BlockEntityData.remove(stack);
             else gregtech.engine.stack.BlockEntityData.write(stack, tag);

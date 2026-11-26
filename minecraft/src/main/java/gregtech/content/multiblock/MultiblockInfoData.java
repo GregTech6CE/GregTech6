@@ -1,14 +1,13 @@
-package gregtech.compat.jei;
+package gregtech.content.multiblock;
 
-import gregtech.content.multiblock.ControllerStructureLayouts;
 import gregtech.engine.multiblock.MultiblockLayout;
 import java.util.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 
 /** Both viewers consume the same compiled cells as structure validation and the building wand. */
-public class MultiblockInfoData {
-    protected MultiblockInfoData() {}
+public final class MultiblockInfoData {
+    private MultiblockInfoData() {}
 
     public record Info(
             ItemStack controller,

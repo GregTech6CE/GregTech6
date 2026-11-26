@@ -1,5 +1,6 @@
 package gregtech.content.tool;
 
+import gregtech.platform.LoaderHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -16,11 +17,6 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-//? if >=1.21.1 {
-/*import net.neoforged.neoforge.event.EventHooks;
-*///?} else {
-import net.minecraftforge.event.ForgeEventFactory;
-//?}
 import java.util.ArrayList;
 
 /** GT6 MultiTileEntityDynamite.DynamiteExplosion: fixed volume, full drops, fortune and no item damage. */
@@ -35,11 +31,7 @@ public final class DynamiteExplosion extends Explosion {
     }
     public static void detonate(ServerLevel world, BlockPos center, float resistance, int fortune) {
         var blast=new DynamiteExplosion(world,center,resistance,fortune);
-//? if >=1.21.1 {
-        /*if (EventHooks.onExplosionStart(world,blast)) return;
-*///?} else {
-        if (ForgeEventFactory.onExplosionStart(world,blast)) return;
-//?}
+        if (LoaderHooks.onExplosionStart(world,blast)) return;
         blast.explode();
         blast.finalizeExplosion(true);
     }
@@ -51,13 +43,8 @@ public final class DynamiteExplosion extends Explosion {
         }
         var point=Vec3.atCenterOf(center);
         var entities=new ArrayList<Entity>(world.getEntities(null,new AABB(point.x-2,point.y-2,point.z-2,point.x+2,point.y+2,point.z+2)));
-//? if >=1.21.1 {
-        /*EventHooks.onExplosionDetonate(world,this,entities,1);
+        LoaderHooks.onExplosionDetonate(world,this,entities,1);
         for (var entity:entities) if (!(entity instanceof ItemEntity)) entity.hurt(world.damageSources().explosion(this),2*resistance);
-*///?} else {
-        ForgeEventFactory.onExplosionDetonate(world,this,entities,1);
-        for (var entity:entities) if (!(entity instanceof ItemEntity)) entity.hurt(getDamageSource(),2*resistance);
-//?}
     }
     @Override public void finalizeExplosion(boolean effects) {
 //? if >=1.21.1 {

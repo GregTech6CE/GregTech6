@@ -45,9 +45,13 @@ public final class BlockHarvestEvents {
    // Unknown tiers/boolean-only adapters retain the complete preexisting handler below.
    // Their numeric source-quality parity is unknown, not a reason for a new denial.
   }
+  var stack=event.getEntity().getMainHandItem();
+  if (GTToolHelper.isMachineWrench(stack) && GTToolHelper.isMachineHarvestTarget(event.getTargetBlock())) {
+   event.setCanHarvest(GTToolHelper.isMachineHarvestTool(stack,event.getTargetBlock()));
+   return;
+  }
   var original=BlockHarvestPolicy.source(event.getTargetBlock().getBlock());
   if (original.isPresent() && original.get().handHarvestable()){event.setCanHarvest(true);return;}
-  var stack=event.getEntity().getMainHandItem();
   // Some port constructors lacked requiresCorrectToolForDrops. Source groups still require
   // their matching tool; a permissive native constructor must not bypass that contract.
   if (original.isPresent()) event.setCanHarvest(stack.isCorrectToolForDrops(event.getTargetBlock()));

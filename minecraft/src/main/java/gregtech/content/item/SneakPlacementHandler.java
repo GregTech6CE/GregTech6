@@ -1,5 +1,6 @@
 package gregtech.content.item;
 
+import gregtech.content.block.machine.VesselInnerFaces;
 import gregtech.content.block.misc.PilePlacementHandler;
 import gregtech.content.food.SandwichPlacementHandler;
 import gregtech.content.registry.GTBlocks;
@@ -47,10 +48,11 @@ public final class SneakPlacementHandler {
         var hit = event.getHitVec();
         // Loose items must not be dropped into a formed large crucible: the useItem denial in
         // CrucibleInteractionHandler cannot stop the sneak-click placement owned by this handler.
-        if (gregtech.content.block.machine.VesselInnerFaces.isFormedLargeCrucibleCavityTarget(
+        if (VesselInnerFaces.isFormedLargeCrucibleCavityTarget(
                         level.getBlockState(event.getPos()), level.getBlockEntity(event.getPos()), hit)
-                || gregtech.content.block.machine.VesselInnerFaces.isFormedLargeCrucibleAdjacentCavity(level, hit))
+                || VesselInnerFaces.isFormedLargeCrucibleAdjacentCavity(level, hit)) {
             return;
+        }
         InteractionResult result = tryPlace(level, event.getEntity(), event.getHand(), hit);
         if (result != InteractionResult.PASS) {
             event.setCanceled(true);
