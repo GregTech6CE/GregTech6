@@ -654,6 +654,8 @@ public final class StoneMaterials {
                 .properties(
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
+                        MaterialProperty.GENERATE_ORE,
+                        MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.GENERATE_PLANT,
                         MaterialProperty.GENERATE_PLATE,
                         MaterialProperty.GENERATE_PROJECTILE,

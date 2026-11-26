@@ -5,6 +5,7 @@ import static gregtech.tools.worldgen.WorldgenSampler.TOP;
 
 import gregtech.api.addon.worldgen.OreVeinDeclaration;
 import gregtech.api.material.GTMaterial;
+import gregtech.content.worldgen.GTOreVeins;
 import gregtech.content.worldgen.MineralWorldgenRules;
 import gregtech.content.worldgen.OreSourceCatalog;
 import gregtech.content.worldgen.OreVeinLayout;
@@ -71,7 +72,7 @@ final class OreWorldgenReport {
                                 || center.z() < minZ - OreVeinLayout.MAX_RADIUS
                                 || center.z() > maxZ + OreVeinLayout.MAX_RADIUS) continue;
                         var heights = vein.heights(DIMENSION);
-                        var body = center.body(heights.min(), heights.max(), BOTTOM, TOP);
+                        var body = center.body(heights.intersect(new GTOreVeins.HeightRange(BOTTOM, TOP)));
                         if (body == null) continue;
                         pointCsv.append("%s,%s,%d,%d,%d,%s%n"
                                 .formatted(

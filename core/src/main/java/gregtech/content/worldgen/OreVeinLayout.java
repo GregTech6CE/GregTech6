@@ -6,6 +6,7 @@ import static gregtech.content.worldgen.WorldgenHash.roll;
 
 import gregtech.api.addon.worldgen.OreVeinDeclaration;
 import gregtech.api.material.GTMaterial;
+import gregtech.content.worldgen.GTOreVeins.HeightRange;
 import gregtech.content.worldgen.GTOreVeins.OreVein;
 import java.util.ArrayList;
 import java.util.List;
@@ -138,36 +139,25 @@ public final class OreVeinLayout {
         long regionSeed = at(worldSeed ^ 0xBBE0563303A4615FL, regionX, regionZ);
         var guaranteed = new OreVein[side * side];
         int[] order = cellOrder(regionSeed, side);
-        int sharedSlot = 0;
-        for (OreVein vein : veins) {
-            // A vein exclusive to the four subregions leaves the existing shuffle order intact.
-            if (vein.subregional() && vein.weight() == 0) continue;
-            if (!vein.subregional()) guaranteed[order[sharedSlot]] = vein;
-            sharedSlot++;
-        }
-
-        var displaced = new ArrayList<OreVein>();
         int[] edges = {0, side / 2, side};
         for (OreVein vein : veins) {
             if (!vein.subregional()) continue;
-            long seed = regionSeed ^ mix(vein.name().hashCode());
+            long seed = WorldgenHash.named(regionSeed, vein.name());
             for (int x = 0; x < 2; x++) {
                 for (int z = 0; z < 2; z++) {
                     int cell = subregionCell(guaranteed, seed, side, edges[x], edges[x + 1], edges[z], edges[z + 1]);
-                    if (guaranteed[cell] != null) displaced.add(guaranteed[cell]);
                     guaranteed[cell] = vein;
                 }
             }
         }
 
         int slot = 0;
-        for (OreVein vein : displaced) {
-            while (guaranteed[order[slot]] != null) slot++;
-            guaranteed[order[slot++]] = vein;
-        }
-        for (OreVein vein : additions) {
-            while (guaranteed[order[slot]] != null) slot++;
-            guaranteed[order[slot++]] = vein;
+        for (var group : List.of(veins, additions)) {
+            for (OreVein vein : group) {
+                if (vein.subregional()) continue;
+                while (guaranteed[order[slot]] != null) slot++;
+                guaranteed[order[slot++]] = vein;
+            }
         }
 
         var centers = new ArrayList<Center>();
@@ -188,17 +178,13 @@ public final class OreVeinLayout {
     private static int subregionCell(OreVein[] planned, long seed, int side, int minX, int maxX, int minZ, int maxZ) {
         int best = -1;
         long bestScore = Long.MAX_VALUE;
-        // Prefer a vacant cell even if an occupied cell is closer to the center.
-        long occupiedPenalty = 32L * side * side;
         for (int x = minX; x < maxX; x++) {
             for (int z = minZ; z < maxZ; z++) {
                 int cell = x * side + z;
-                OreVein current = planned[cell];
-                if (current != null && current.subregional()) continue;
+                if (planned[cell] != null) continue;
                 long dx = 2L * x - minX - maxX + 1;
                 long dz = 2L * z - minZ - maxZ + 1;
                 long score = (dx * dx + dz * dz) * 8 + roll(at(seed, x, z), 32);
-                if (current != null) score += occupiedPenalty;
                 if (score >= bestScore) continue;
                 best = cell;
                 bestScore = score;
@@ -227,11 +213,26 @@ public final class OreVeinLayout {
             return 5 + Math.min(MAX_RADIUS - 5, (int) (2L * vein.size() / 3));
         }
 
-        /** Null if this vein's declared range is entirely outside the dimension. */
-        public Body body(int minY, int maxY, int worldMinY, int worldMaxY) {
-            int low = Math.max(minY, worldMinY);
-            int high = Math.min(maxY, worldMaxY);
-            if (high < low) return null;
+        /** Largest continuous usable band in a column, clipped to the vein's allowed depths. */
+        public Body fit(int x, int z, HeightRange range, List<HeightRange> bands, boolean reserve) {
+            if (bands.isEmpty()) return null;
+            int surface = bands.get(bands.size() - 1).max();
+            var usable = reserve
+                    ? GTOreVeins.reservePlacement(range, surface)
+                    : new HeightRange(range.min(), Math.min(range.max(), surface - GTOreVeins.SURFACE_MARGIN));
+            HeightRange best = null;
+            for (var band : bands) {
+                var intersection = band.intersect(usable);
+                if (!intersection.isEmpty()
+                        && (best == null || intersection.max() - intersection.min() > best.max() - best.min()))
+                    best = intersection;
+            }
+            return best == null ? null : new Center(vein, x, z, seed, guaranteed).body(best);
+        }
+
+        public Body body(HeightRange band) {
+            if (band.isEmpty()) return null;
+            int low = band.min(), high = band.max();
             Shape shape = Shape.forVein(vein.name());
             int maxHalfHeight = switch (shape) {
                 case VEINED -> 9;
@@ -242,20 +243,11 @@ public final class OreVeinLayout {
             int halfHeight = Math.min(maxHalfHeight, (high - low) / 2);
             int y = low + halfHeight + roll(mix(seed ^ 3), high - low - 2 * halfHeight + 1);
             double yaw = roll(mix(seed ^ 4), 360) * (Math.PI / 180.0);
-            return new Body(this, shape, radius(), y, halfHeight, Math.cos(yaw), Math.sin(yaw), low, high);
+            return new Body(this, shape, radius(), y, halfHeight, Math.cos(yaw), Math.sin(yaw));
         }
     }
 
-    public record Body(
-            Center center,
-            Shape shape,
-            int radius,
-            int centerY,
-            int halfHeight,
-            double cos,
-            double sin,
-            int placementMinY,
-            int placementMaxY) {
+    public record Body(Center center, Shape shape, int radius, int centerY, int halfHeight, double cos, double sin) {
         public int minY() {
             return centerY - halfHeight;
         }
@@ -296,8 +288,12 @@ public final class OreVeinLayout {
                 }
                 default -> throw new AssertionError(shape);
             }
-            if (Math.min(primary, secondary) > 1) return null;
-            return new Column(this, primary, secondary, heightShift, at(center.seed(), x, z));
+            // A guaranteed deposit has a compact mixed core in its geometry, even in a one-block band.
+            Role core = center.guaranteed() && Math.abs(x - center.x()) <= 1 && Math.abs(z - center.z()) <= 1
+                    ? ROLES[((x - center.x()) & 1) + 2 * ((z - center.z()) & 1)]
+                    : null;
+            if (core == null && Math.min(primary, secondary) > 1) return null;
+            return new Column(this, primary, secondary, heightShift, at(center.seed(), x, z), core);
         }
     }
 
@@ -330,9 +326,10 @@ public final class OreVeinLayout {
                 .toArray(Sample[]::new);
     }
 
-    public record Column(Body body, double primary, double secondary, double heightShift, long seed) {
+    public record Column(Body body, double primary, double secondary, double heightShift, long seed, Role core) {
         public Sample sample(int y) {
             if (y < body.minY() || y > body.maxY()) return null;
+            if (core != null && Math.abs(y - body.centerY()) <= 1) return CORE[core.ordinal()];
             double v = (y - body.centerY()) / (double) Math.max(1, body.halfHeight()) - heightShift;
             double distance = switch (body.shape()) {
                 case VEINED -> Math.min(primary + sq(v / 0.62), secondary + sq((v + 0.16) / 0.53));
@@ -345,8 +342,8 @@ public final class OreVeinLayout {
             int density = 43 + 6 * Math.min(6, body.center().vein().density()) - (int) (25 * distance);
             if (roll(random, 100) >= density) return null;
             Role role;
-            if (body.halfHeight() == 0) role = ROLES[roll(random >>> 12, ROLES.length)];
-            else if (roll(random >>> 12, 7) == 0) role = Role.SPREAD;
+            if (body.halfHeight() == 0) role = ROLES[roll(mix(~random), ROLES.length)];
+            else if (roll(mix(~random), 7) == 0) role = Role.SPREAD;
             else if (v < -0.18) role = Role.BOTTOM;
             else if (v > 0.18) role = Role.TOP;
             else role = Role.BETWEEN;

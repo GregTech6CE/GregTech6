@@ -433,7 +433,7 @@ public class WorldgenInfoData {
             HeightRange terrain) {
         var ores = new ArrayList<StratumOre>();
         for (var def : definitions) {
-            if (summary.disabledStratumBlocks().contains(def.blockId())) continue;
+            if (!def.providesOre() || summary.disabledStratumBlocks().contains(def.blockId())) continue;
             GTMaterial material = GTMaterialRegistry.get(def.material()).resolve();
             if (!material.isValid()) continue;
             int min = MineralWorldgenRules.stratumOreMinY(def);

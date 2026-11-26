@@ -18,6 +18,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.NoiseColumn;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
 /** Samples the installed generation plans without reading or generating chunks. */
 final class WorldgenProspecting {
@@ -26,8 +27,7 @@ final class WorldgenProspecting {
     static BlockPos find(ServerLevel level, OreGenerationSummary summary, Target target, Area area, Set<Long> checked) {
         String dim = level.dimension().location().toString();
         long seed = level.getSeed();
-        if (target.kind() == WorldgenLocate.Kind.LAYER)
-            return layer(level, summary.dimensions().get(dim).heights(), target, area, checked);
+        if (target.kind() == WorldgenLocate.Kind.LAYER) return sample(level, summary, target, area, checked);
         if (target.kind() == WorldgenLocate.Kind.BEDROCK_ORE) return bedrock(seed, dim, summary, target, area, checked);
         var center = vein(level, dim, summary, target, area, checked);
         for (var source : target.sources()) {
@@ -37,7 +37,7 @@ final class WorldgenProspecting {
                 center = closer(center, new BlockPos(p.x(), (band.min() + band.max()) / 2, p.z()), area, checked);
             }
         }
-        return center;
+        return center != null ? center : sample(level, summary, target, area, checked);
     }
 
     private static BlockPos bedrock(
@@ -81,7 +81,9 @@ final class WorldgenProspecting {
         var types = new HashSet<String>();
         for (var source : target.sources()) if (source.kind() == Kind.VEIN) types.add(source.name());
         if (types.isEmpty()) return null;
-        var terrain = summary.dimensions().get(dim).heights();
+        var dimension = summary.dimensions().get(dim);
+        var terrain = dimension.heights();
+        var strata = dimension.strata() ? new StoneLayerField(level.getSeed()) : null;
         var catalog = OreSourceCatalog.current();
         var regions = catalog.regionalPlans(dim);
         var veins = catalog.veins(dim);
@@ -115,26 +117,88 @@ final class WorldgenProspecting {
             var center = site.center();
             var range = center.vein().heights(dim);
             var body = site.plan() == null
-                    ? center.body(range.min(), range.max(), terrain.min(), terrain.max())
-                    : VeinTerrain.locate(
-                            level,
-                            level.getChunkSource().getGenerator(),
-                            dim,
-                            site.plan(),
-                            terrain,
-                            site.regionX(),
-                            site.regionZ(),
-                            center);
-            if (body != null)
-                best = closer(
-                        best,
-                        new BlockPos(
-                                body.center().x(), body.centerY(), body.center().z()),
-                        area,
-                        checked);
+                    ? center.body(range.intersect(terrain))
+                    : VeinTerrain.region(level, site.plan(), terrain, site.regionX(), site.regionZ())
+                            .body(level, level.getChunkSource().getGenerator(), center);
+            if (body != null) best = veinOre(level, body, target, area, checked, strata, summary);
             if (best != null) break;
         }
         return best;
+    }
+
+    private static BlockPos veinOre(
+            ServerLevel level,
+            OreVeinLayout.Body body,
+            Target target,
+            Area area,
+            Set<Long> checked,
+            StoneLayerField strata,
+            OreGenerationSummary summary) {
+        var center = body.center();
+        var anchor = new BlockPos(center.x(), body.centerY(), center.z());
+        for (var pos : BlockPos.spiralAround(anchor, body.radius(), Direction.EAST, Direction.SOUTH)) {
+            int x = pos.getX(), z = pos.getZ();
+            if (!area.contains(x, z) || checked.contains(ChunkPos.asLong(x >> 4, z >> 4))) continue;
+            var column = body.column(x, z);
+            if (column == null) continue;
+            NoiseColumn terrain = null;
+            StoneLayerField.Samples layers = null;
+            for (int y = body.minY(); y <= body.maxY(); y++) {
+                var ore = column.sample(y);
+                if (ore == null || ore.role().material(center.vein()).resolve() != target.material()) continue;
+                if (terrain == null) terrain = terrain(level, x, z);
+                if (strata != null && layers == null) layers = strata.sample(x, z, 1, 1, body.minY(), body.maxY());
+                if (acceptsOre(level, layers, summary, target, terrain.getBlock(y), x, y, z))
+                    return new BlockPos(x, y, z);
+            }
+        }
+        return null;
+    }
+
+    private static boolean acceptsOre(
+            ServerLevel level,
+            StoneLayerField.Samples layers,
+            OreGenerationSummary summary,
+            Target target,
+            BlockState ground,
+            int x,
+            int y,
+            int z) {
+        if (layers == null || !GTStoneLayerFeature.naturalLayerHost(ground))
+            return GTOreBlockResolver.oreHost(ground) != null;
+        int layer = layers.layerIndex(x, y, z);
+        var background = GTStoneLayerFeature.layerHost(ground, layer);
+        if (GTOreBlockResolver.oreHost(background) == null) return target.test(background);
+        var contacts = new StoneLayerField.Contacts();
+        layers.contacts(x, y, z, contacts);
+        long seed = WorldgenHash.at(level.getSeed(), x, y, z);
+        var ore = stratumOre(layer, y, contacts, seed, true, summary);
+        if (ore != null) return ore.material() == target.material();
+        if (contacts.nearest() != 1) return true;
+        var gem = BoundaryGemOres.choose(seed, summary.boundaryGemDivisor());
+        return gem == null || gem == target.material();
+    }
+
+    private static StratumOreRules.Ore stratumOre(
+            int layer,
+            int y,
+            StoneLayerField.Contacts contacts,
+            long seed,
+            boolean host,
+            OreGenerationSummary summary) {
+        return StratumOreRules.place(
+                layer,
+                y,
+                contacts,
+                seed,
+                (entry, small) -> entry.blockId().isEmpty()
+                        ? host
+                        : !summary.disabledStratumBlocks().contains(entry.blockId()));
+    }
+
+    private static NoiseColumn terrain(ServerLevel level, int x, int z) {
+        var source = level.getChunkSource();
+        return source.getGenerator().getBaseColumn(x, z, level, source.randomState());
     }
 
     private static void addSite(
@@ -145,17 +209,18 @@ final class WorldgenProspecting {
             sites.add(new Site(center, plan, rx, rz, horizontalDistance(center.x(), center.z(), area)));
     }
 
-    private static BlockPos layer(ServerLevel level, HeightRange heights, Target target, Area area, Set<Long> checked) {
-        var field = new StoneLayerField(level.getSeed());
-        boolean[] matches = new boolean[StoneLayerField.layers().size()];
-        for (int i = 0; i < matches.length; i++) {
-            var layer = GTStoneLayerFeature.layerStone(i);
-            matches[i] = layer == null
-                    ? target.blocks().contains(Blocks.STONE) || target.blocks().contains(Blocks.DEEPSLATE)
-                    : target.test(layer);
-        }
+    private static BlockPos sample(
+            ServerLevel level, OreGenerationSummary summary, Target target, Area area, Set<Long> checked) {
+        String dimension = level.dimension().location().toString();
+        var active = summary.dimensions().get(dimension);
+        if (active == null) return null;
+        var strata = new Strata(level.getSeed(), active.heights(), summary, target);
+        var smallOres = OreSourceCatalog.current().smallOres(dimension).stream()
+                .filter(ore -> active.smallOres() && ore.material().resolve() == target.material())
+                .toList();
+        if (!strata.enabled() && smallOres.isEmpty()) return null;
         var center = new ChunkPos(area.origin());
-        int[] column = new int[heights.max() - heights.min() + 1];
+        // Sample every nearby chunk, then spread the remaining columns across the requested radius.
         int farStep = Math.max(1, (area.radius() + 31) / 32);
         for (int pass = 0; pass < 2; pass++) {
             int step = pass == 0 ? 1 : farStep;
@@ -163,30 +228,124 @@ final class WorldgenProspecting {
             for (var offset : BlockPos.spiralAround(BlockPos.ZERO, rings, Direction.EAST, Direction.SOUTH)) {
                 int dx = offset.getX() * step, dz = offset.getZ() * step;
                 if (pass == 1 && Math.max(Math.abs(dx), Math.abs(dz)) <= 8) continue;
-                int x = ((center.x + dx) << 4) + 8, z = ((center.z + dz) << 4) + 8;
-                if (!area.contains(x, z) || checked.contains(ChunkPos.asLong(x >> 4, z >> 4))) continue;
-                field.column(x, z).fill(heights.min(), column, column.length);
-                NoiseColumn terrain = null;
-                BlockPos best = null;
-                for (int i = 0; i < column.length; i++) {
-                    if (!matches[column[i]]) continue;
-                    if (terrain == null)
-                        terrain = level.getChunkSource()
-                                .getGenerator()
-                                .getBaseColumn(
-                                        x, z, level, level.getChunkSource().randomState());
-                    int y = heights.min() + i;
-                    var ground = terrain.getBlock(y);
-                    if (!GTStoneLayerFeature.naturalLayerHost(ground)) continue;
-                    if (GTStoneLayerFeature.layerStone(column[i]) == null && !target.test(ground)) continue;
-                    if (best == null
-                            || Math.abs(y - area.origin().getY())
-                                    < Math.abs(best.getY() - area.origin().getY())) best = new BlockPos(x, y, z);
+                int cx = center.x + dx, cz = center.z + dz;
+                if (checked.contains(ChunkPos.asLong(cx, cz))) continue;
+                int x = Math.max(area.minX(), Math.min(area.maxX(), (cx << 4) + 8));
+                int z = Math.max(area.minZ(), Math.min(area.maxZ(), (cz << 4) + 8));
+                if ((x >> 4) != cx || (z >> 4) != cz || !area.contains(x, z)) continue;
+                BlockPos hit = strata.enabled()
+                        ? strata.find(level, target, area.origin().getY(), x, z)
+                        : null;
+                if (hit != null) return hit;
+                for (var ore : smallOres) {
+                    var found = new BlockPos.MutableBlockPos();
+                    if (ore.scatter(
+                            level.getSeed(),
+                            dimension,
+                            cx << 4,
+                            cz << 4,
+                            active.heights(),
+                            (bx, y, bz, material, small) -> {
+                                if (!area.contains(bx, bz)) return false;
+                                var layers = active.strata() ? strata.field.sample(bx, bz, 1, 1, y, y) : null;
+                                if (!acceptsOre(
+                                        level,
+                                        layers,
+                                        summary,
+                                        target,
+                                        terrain(level, bx, bz).getBlock(y),
+                                        bx,
+                                        y,
+                                        bz)) return false;
+                                found.set(bx, y, bz);
+                                return true;
+                            })) return found.immutable();
                 }
-                if (best != null) return best;
             }
         }
         return null;
+    }
+
+    private static final class Strata {
+        private final StoneLayerField field;
+        private final HeightRange heights;
+        private final boolean[] layers = new boolean[StoneLayerField.layers().size()];
+        private final int[] column;
+        private final OreGenerationSummary summary;
+        private final boolean gems;
+
+        Strata(long seed, HeightRange terrain, OreGenerationSummary summary, Target target) {
+            this.summary = summary;
+            field = new StoneLayerField(seed);
+            int low = Integer.MAX_VALUE, high = Integer.MIN_VALUE;
+            boolean boundary = false;
+            for (var source : target.sources()) {
+                switch (source.kind()) {
+                    case LAYER, CONTACT, SEAM, BOUNDARY_GEM -> {
+                        low = Math.min(low, source.heights().min());
+                        high = Math.max(high, source.heights().max());
+                        boundary |= source.kind() == Kind.BOUNDARY_GEM;
+                    }
+                    default -> {}
+                }
+            }
+            gems = boundary;
+            heights = target.kind() == WorldgenLocate.Kind.LAYER
+                    ? terrain
+                    : terrain.intersect(new HeightRange(low, high));
+            column = new int[heights.isEmpty() ? 0 : heights.max() - heights.min() + 1];
+            if (!enabled()) return;
+            for (int i = 0; i < layers.length; i++) {
+                var stone = GTStoneLayerFeature.layerStone(i);
+                if (target.kind() == WorldgenLocate.Kind.LAYER)
+                    layers[i] = stone == null
+                            ? target.blocks().contains(Blocks.STONE)
+                                    || target.blocks().contains(Blocks.DEEPSLATE)
+                            : target.test(stone);
+                else
+                    layers[i] = gems
+                            || stone != null && target.test(stone)
+                            || StratumOreRules.canProvide(i, target.material());
+            }
+        }
+
+        boolean enabled() {
+            return column.length > 0;
+        }
+
+        private BlockPos find(ServerLevel level, Target target, int originY, int x, int z) {
+            field.column(x, z).fill(heights.min(), column, column.length);
+            StoneLayerField.Samples samples = null;
+            var contacts = new StoneLayerField.Contacts();
+            NoiseColumn terrain = null;
+            BlockPos best = null;
+            for (int i = 0; i < column.length; i++) {
+                int rock = column[i], y = heights.min() + i;
+                if (!layers[rock] || best != null && Math.abs(y - originY) >= Math.abs(best.getY() - originY)) continue;
+                BlockState stone = GTStoneLayerFeature.layerStone(rock);
+                if (target.kind() == WorldgenLocate.Kind.ORE) {
+                    if (samples == null) samples = field.sample(x, z, 1, 1, heights.min(), heights.max());
+                    samples.contacts(x, y, z, contacts);
+                    boolean host = stone == null || GTOreBlockResolver.stoneOf(stone) != null;
+                    long seed = WorldgenHash.at(level.getSeed(), x, y, z);
+                    var ore = stratumOre(rock, y, contacts, seed, host, summary);
+                    if (ore != null) {
+                        if (ore.material() != target.material()) continue;
+                    } else if ((stone == null || !target.test(stone))
+                            && !(gems
+                                    && host
+                                    && contacts.nearest() == 1
+                                    && BoundaryGemOres.choose(seed, summary.boundaryGemDivisor()) == target.material()))
+                        continue;
+                }
+                if (terrain == null) terrain = terrain(level, x, z);
+                var ground = terrain.getBlock(y);
+                if (!GTStoneLayerFeature.naturalLayerHost(ground)) continue;
+                if (target.kind() == WorldgenLocate.Kind.LAYER && stone == null && !target.test(ground)) continue;
+                best = new BlockPos(x, y, z);
+            }
+            return best;
+        }
     }
 
     private static BlockPos closer(BlockPos best, BlockPos pos, Area area, Set<Long> checked) {

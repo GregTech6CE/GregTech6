@@ -250,6 +250,7 @@ public final class WorldgenSurvey {
         for (int i = 0; i < area.size(); i++) chunks.add(new ArrayList<>());
         int reach = OreVeinLayout.MAX_RADIUS;
         var terrain = new HeightRange(BOTTOM + 1, area.top());
+        var rock = List.of(terrain);
         for (var plan : catalog.regionalPlans(DIMENSION)) {
             int region = plan.cells() * OreVeinLayout.CELL_SIZE;
             int minX = (int) Math.floorDiv(16L * area.x() - reach, region);
@@ -260,13 +261,15 @@ public final class WorldgenSurvey {
                 for (int rz = minZ; rz <= maxZ; rz++) {
                     for (var center : plan.centers(seed, rx, rz)) {
                         var band = center.vein().heights(DIMENSION).intersect(terrain);
-                        if (band.isEmpty() && center.guaranteed()) {
-                            band = GTOreVeins.reserveHeights(
-                                            DIMENSION, center.vein().name(), terrain)
-                                    .map(reserve -> GTOreVeins.reservePlacement(reserve, area.top()))
-                                    .orElse(band);
+                        var body = center.guaranteed()
+                                ? center.fit(center.x(), center.z(), band, rock, false)
+                                : center.body(band);
+                        if (body == null && center.guaranteed()) {
+                            var reserve = GTOreVeins.reserveHeights(
+                                    DIMENSION, center.vein().name(), terrain);
+                            if (reserve.isPresent())
+                                body = center.fit(center.x(), center.z(), reserve.get(), rock, true);
                         }
-                        var body = center.body(band.min(), band.max(), terrain.min(), terrain.max());
                         if (body != null) addBody(chunks, area, body);
                     }
                 }

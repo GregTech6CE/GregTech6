@@ -4,7 +4,7 @@
   "commands.gt6ce.worldgen.locate.unknown": "当前维度 %2$s 的此类生成表中没有 %1$s。按 Tab 查看可选材料。",
   "commands.gt6ce.worldgen.locate.busy": "已有一个世界生成查询正在进行。",
   "commands.gt6ce.worldgen.locate.searching": "正在 %2$s 区块半径内查找%1$s……",
-  "commands.gt6ce.worldgen.locate.missing": "未找到附近的%s方块或半径 %s 区块内的生成候选。",
+  "commands.gt6ce.worldgen.locate.missing": "附近已加载区块未发现%1$s，半径 %2$s 区块内的勘探抽样也未命中。",
   "commands.gt6ce.worldgen.locate.error": "读取世界生成数据失败，详见服务端日志。",
   "tooltip.gt6ce.composition_scaled_damage": "材料数量已按剩余耐久计算",
   "tooltip.gt6ce.composition_stored_contents": "回收材料前请清空内部物品或流体",

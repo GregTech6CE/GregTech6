@@ -56,12 +56,7 @@ public final class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration>
             @Nullable BlockState stone,
             @Nullable BlockState cobble,
             @Nullable BlockState mossy,
-            String surfaceMaterial) {
-        private Layer {
-            if (stone != null && stone.getBlock() instanceof GTStoneBlock gtStone)
-                surfaceMaterial = gtStone.stoneMaterial().getName();
-        }
-    }
+            String surfaceMaterial) {}
 
     private enum Host {
         NATURAL,
@@ -79,12 +74,13 @@ public final class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration>
         return Catalog.LAYERS.get(index).stone();
     }
 
-    static String layerMaterial(int index) {
-        return Catalog.LAYERS.get(index).surfaceMaterial();
-    }
-
     static boolean naturalLayerHost(BlockState state) {
         return classify(state) == Host.NATURAL;
+    }
+
+    static BlockState layerHost(BlockState terrain, int index) {
+        var stone = layerStone(index);
+        return stone != null && naturalLayerHost(terrain) ? stone : terrain;
     }
 
     public GTStoneLayerFeature() {
@@ -283,7 +279,7 @@ public final class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration>
                     GTBlocks.getStoneState(type, StoneVariant.STONE),
                     GTBlocks.getStoneState(type, StoneVariant.COBBLE),
                     GTBlocks.getStoneState(type, StoneVariant.COBBLE_MOSSY),
-                    def.material());
+                    def.surfaceMaterial());
         }
         BlockState stone = null;
         if (def.blockId() != null) {
@@ -291,6 +287,6 @@ public final class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration>
                     ResourceLocation.parse(def.blockId().contains(":") ? def.blockId() : "gt6ce:" + def.blockId()));
             if (block != null && block != Blocks.AIR) stone = block.defaultBlockState();
         }
-        return new Layer(stone, null, null, def.material());
+        return new Layer(stone, null, null, def.surfaceMaterial());
     }
 }

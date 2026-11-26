@@ -42,38 +42,56 @@ public final class StratumOreRules {
         }
     }
 
-    private static final class Catalog {
-        private static final List<List<Ore>> LAYERS = StoneLayerField.layers().stream()
+    static final class Catalog {
+        private final List<List<Ore>> layers = StoneLayerField.layers().stream()
                 .map(layer -> resolve(layer.ores()))
                 .toList();
-        private static final ContactTable CONTACTS = resolveContacts();
+        private final ContactTable contacts = resolveContacts();
     }
 
     private StratumOreRules() {}
 
     public static List<Ore> layerOres(int rock) {
-        return Catalog.LAYERS.get(rock);
+        return OreSourceCatalog.current().strata.layers.get(rock);
+    }
+
+    public static boolean canProvide(int layer, GTMaterial material) {
+        var catalog = OreSourceCatalog.current().strata;
+        if (catalog.layers.get(layer).stream().anyMatch(ore -> ore.material() == material)) return true;
+        var pairs = catalog.contacts.pairs();
+        int count = catalog.layers.size();
+        for (int other = 0; other < count; other++) {
+            var above = pairs[other * count + layer];
+            var below = pairs[layer * count + other];
+            if (containsMaterial(above, material) || containsMaterial(below, material)) return true;
+        }
+        return false;
+    }
+
+    private static boolean containsMaterial(ContactOres contact, GTMaterial material) {
+        return contact != null && contact.vertical().stream().anyMatch(ore -> ore.material() == material);
     }
 
     public static Ore place(int rock, int y, Contacts contacts, long positionSeed, Placer placer) {
-        if (Catalog.CONTACTS.occursAt(rock, y) && contacts.nearest() <= CONTACT_DEPTH) {
-            Ore contact = placeContact(rock, y, contacts, positionSeed ^ CONTACT_SALT, placer);
+        var catalog = OreSourceCatalog.current().strata;
+        if (catalog.contacts.occursAt(rock, y) && contacts.nearest() <= CONTACT_DEPTH) {
+            Ore contact = placeContact(catalog, rock, y, contacts, positionSeed ^ CONTACT_SALT, placer);
             if (contact != null) return contact;
         }
-        return placeOres(layerOres(rock), y, contacts, 0, positionSeed ^ LAYER_SALT, placer);
+        return placeOres(catalog.layers.get(rock), y, contacts, 0, positionSeed ^ LAYER_SALT, placer);
     }
 
-    private static Ore placeContact(int rock, int y, Contacts contacts, long seed, Placer placer) {
+    private static Ore placeContact(Catalog catalog, int rock, int y, Contacts contacts, long seed, Placer placer) {
         int closest = CONTACT_DEPTH + 1;
         List<Ore> selected = List.of();
-        int count = Catalog.LAYERS.size();
+        int count = catalog.layers.size();
         for (Face face : FACES) {
             int distance = contacts.distance(face);
             if (distance == 0 || distance >= closest) continue;
             int other = contacts.opposingLayer(face);
             int first = face == Face.ABOVE ? other : rock;
             int second = face == Face.ABOVE ? rock : other;
-            ContactOres entry = Catalog.CONTACTS.pairs()[first * count + second];
+            ContactOres entry = catalog.contacts.pairs()[first * count + second];
             if (entry == null) continue;
             var candidates = face.vertical() ? entry.vertical() : entry.lateral();
             if (!occursAt(candidates, y)) continue;
@@ -149,7 +167,7 @@ public final class StratumOreRules {
         var ores = new ArrayList<Ore>(defs.size());
         for (var def : defs) {
             var material = GTMaterialRegistry.get(def.material());
-            if (!material.isValid()) continue;
+            if (def.providesOre() && !material.isValid()) continue;
             ores.add(new Ore(
                     material,
                     def.indicators(),

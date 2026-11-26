@@ -65,7 +65,7 @@ public final class MineralWorldgenRules {
     }
 
     public static long bedrockDepositSeed(long dimensionSeed, int chunkX, int chunkZ, String name) {
-        return WorldgenHash.at(dimensionSeed, chunkX, name.hashCode(), chunkZ);
+        return WorldgenHash.at(WorldgenHash.named(dimensionSeed ^ 0x4445504F534954L, name), chunkX, chunkZ);
     }
 
     public static int scatterAttempts(int amount, IntUnaryOperator random) {
@@ -80,7 +80,7 @@ public final class MineralWorldgenRules {
 
     public static boolean bedrockHit(long seed, int chunkX, int chunkZ, String name, int divisor, int densityPercent) {
         if (divisor <= 0 || densityPercent <= 0) return false;
-        long roll = WorldgenHash.at(seed ^ WorldgenHash.mix(name.hashCode()), chunkX, chunkZ);
+        long roll = WorldgenHash.at(WorldgenHash.named(seed, name), chunkX, chunkZ);
         return Long.remainderUnsigned(roll, (long) divisor * 100) < densityPercent;
     }
 
@@ -90,7 +90,7 @@ public final class MineralWorldgenRules {
     }
 
     public static long bedrockSeed(long worldSeed, String dimension) {
-        return WorldgenHash.mix(worldSeed ^ dimension.hashCode() ^ 0xBED7E5L);
+        return WorldgenHash.named(worldSeed ^ 0xBED7E5L, dimension);
     }
 
     public record Tier(int fromL, int toL, int radius) {}

@@ -7,19 +7,14 @@ import gregtech.content.block.OreBlock;
 import gregtech.content.worldgen.GTOreVeins.HeightRange;
 import gregtech.content.worldgen.GTOreVeins.OreVein;
 import gregtech.content.worldgen.OreVeinLayout.RegionalPlan;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Predicate;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -36,43 +31,24 @@ public final class GTOreVeinFeature extends Feature<NoneFeatureConfiguration> {
         WorldGenLevel level = context.level();
         ChunkPos chunkPos = new ChunkPos(context.origin());
         ChunkAccess chunk = level.getChunk(chunkPos.x, chunkPos.z);
-        return visitPlans(level, context.chunkGenerator(), chunkPos, body -> placeBody(level, chunk, body));
-    }
-
-    /** Visits every planned body whose bounds touch the chunk. Returns whether any visitor call succeeds. */
-    static boolean visitPlans(
-            WorldGenLevel level,
-            ChunkGenerator chunkGenerator,
-            ChunkPos chunkPos,
-            Predicate<OreVeinLayout.Body> visitor) {
+        ChunkGenerator chunkGenerator = context.chunkGenerator();
         String dimension = level.getLevel().dimension().location().toString();
         var catalog = OreSourceCatalog.current();
         var veins = catalog.veins(dimension);
         if (veins.isEmpty()) return false;
         var terrain = OreGenerationSummary.terrainHeights(level, chunkGenerator);
-        boolean placed = OreVeinDeclaration.END.equals(dimension)
-                && visitWeighted(
-                        level.getSeed(),
-                        chunkPos,
-                        dimension,
-                        veins,
-                        GTOreVeins.selectionWeight(dimension, veins),
-                        terrain,
-                        visitor);
+        boolean placed =
+                OreVeinDeclaration.END.equals(dimension) && placeWeighted(level, chunk, dimension, veins, terrain);
         for (var plan : catalog.regionalPlans(dimension)) {
-            placed |= visitRegions(level, chunkPos, chunkGenerator, dimension, plan, terrain, visitor);
+            placed |= placeRegionVeins(level, chunk, chunkGenerator, plan, terrain);
         }
         return placed;
     }
 
-    private static boolean visitWeighted(
-            long seed,
-            ChunkPos chunkPos,
-            String dimension,
-            List<OreVein> veins,
-            int weight,
-            HeightRange terrain,
-            Predicate<OreVeinLayout.Body> visitor) {
+    private static boolean placeWeighted(
+            WorldGenLevel level, ChunkAccess chunk, String dimension, List<OreVein> veins, HeightRange terrain) {
+        ChunkPos chunkPos = chunk.getPos();
+        int weight = GTOreVeins.selectionWeight(dimension, veins);
         int cellSize = OreVeinLayout.CELL_SIZE;
         int radius = OreVeinLayout.MAX_RADIUS;
         boolean placed = false;
@@ -82,24 +58,19 @@ public final class GTOreVeinFeature extends Feature<NoneFeatureConfiguration> {
             for (int cellZ = Math.floorDiv(chunkPos.getMinBlockZ() - radius, cellSize);
                     cellZ <= Math.floorDiv(chunkPos.getMaxBlockZ() + radius, cellSize);
                     cellZ++) {
-                var center = OreVeinLayout.weightedCenter(seed, cellX, cellZ, veins, weight);
+                var center = OreVeinLayout.weightedCenter(level.getSeed(), cellX, cellZ, veins, weight);
                 if (center == null) continue;
                 var range = center.vein().heights(dimension);
-                var body = center.body(range.min(), range.max(), terrain.min(), terrain.max());
-                if (body != null && touches(body, chunkPos)) placed |= visitor.test(body);
+                var body = center.body(range.intersect(terrain));
+                if (body != null && touches(body, chunkPos)) placed |= placeBody(level, chunk, body);
             }
         }
         return placed;
     }
 
-    private static boolean visitRegions(
-            WorldGenLevel level,
-            ChunkPos pos,
-            ChunkGenerator generator,
-            String dimension,
-            RegionalPlan plan,
-            HeightRange bounds,
-            Predicate<OreVeinLayout.Body> visitor) {
+    private static boolean placeRegionVeins(
+            WorldGenLevel level, ChunkAccess chunk, ChunkGenerator generator, RegionalPlan plan, HeightRange bounds) {
+        ChunkPos pos = chunk.getPos();
         int side = plan.cells() * OreVeinLayout.CELL_SIZE;
         int radius = OreVeinLayout.MAX_RADIUS;
         boolean placed = false;
@@ -109,8 +80,10 @@ public final class GTOreVeinFeature extends Feature<NoneFeatureConfiguration> {
             for (int z = Math.floorDiv(pos.getMinBlockZ() - radius, side);
                     z <= Math.floorDiv(pos.getMaxBlockZ() + radius, side);
                     z++) {
-                for (var body : VeinTerrain.candidates(level, generator, dimension, plan, bounds, x, z, pos)) {
-                    if (touches(body, pos)) placed |= visitor.test(body);
+                var region = VeinTerrain.region(level, plan, bounds, x, z);
+                for (var center : region.centers()) {
+                    var body = region.body(level, generator, center);
+                    if (body != null && touches(body, pos)) placed |= placeBody(level, chunk, body);
                 }
             }
         }
@@ -135,122 +108,32 @@ public final class GTOreVeinFeature extends Feature<NoneFeatureConfiguration> {
         int maxX = Math.min(pos.getMaxBlockX(), center.x() + r);
         int maxZ = Math.min(pos.getMaxBlockZ(), center.z() + r);
         var cursor = new BlockPos.MutableBlockPos();
-        GTMaterial primary = center.vein().top().resolve();
-        boolean regional = center.guaranteed();
-        boolean centerChunk = regional && pos.x == (center.x() >> 4) && pos.z == (center.z() >> 4);
-        Map<GTMaterial, BlockPos> cores = centerChunk ? new HashMap<>(4) : null;
-        boolean indicator = false;
+        boolean centerChunk = center.guaranteed() && pos.x == (center.x() >> 4) && pos.z == (center.z() >> 4);
+        var indicated = new HashSet<GTMaterial>();
         boolean placed = false;
-        // Overworld-like deposits may be truncated by terrain or caves. Retry within this chunk's legal hosts.
-        for (int pass = 0; pass < (regional ? 2 : 1); pass++) {
-            boolean shift = pass == 1;
-            if (shift && placed) break;
-            for (int x = minX; x <= maxX; x++) {
-                for (int z = minZ; z <= maxZ; z++) {
-                    var column = body.column(x, z);
-                    if (column == null) continue;
-                    int offset = shift ? recoveryOffset(chunk, body, column, cursor.set(x, 0, z)) : 0;
-                    if (offset == Integer.MIN_VALUE) continue;
-                    GTMaterial lastOre = placeColumn(level, chunk, column, cursor.set(x, 0, z), offset, primary, cores);
-                    if (lastOre == null) continue;
+        for (int x = minX; x <= maxX; x++) {
+            for (int z = minZ; z <= maxZ; z++) {
+                var column = body.column(x, z);
+                if (column == null) continue;
+                boolean mayMark = centerChunk
+                        || center.guaranteed() && indicated.isEmpty()
+                        || WorldgenHash.roll(WorldgenHash.at(center.seed() ^ 0xC13FA9A902A6328FL, x, z), 128) == 0;
+                for (int y = body.minY(); y <= body.maxY(); y++) {
+                    var sample = column.sample(y);
+                    if (sample == null) continue;
+                    GTMaterial material = sample.role().material(center.vein()).resolve();
+                    cursor.set(x, y, z);
+                    if (!placeOre(level, chunk, cursor, chunk.getBlockState(cursor), material, sample.small()))
+                        continue;
                     placed = true;
-                    if (!centerChunk && (regional && !indicator || indicatorRoll(center, x, z))) {
-                        indicator |= GTRockPlacement.placeVeinMarker(level, chunk, x, z, lastOre);
+                    if (mayMark && (!centerChunk || !sample.small()) && !indicated.contains(material)) {
+                        mayMark = false;
+                        if (GTRockPlacement.placeVeinMarker(level, chunk, x, z, material)) indicated.add(material);
                     }
                 }
             }
         }
-        if (cores != null) {
-            // The valuable minerals can be in any layer of a mixed deposit, including the dispersed role.
-            var vein = center.vein();
-            var handled = new HashSet<GTMaterial>(4);
-            for (GTMaterial role : List.of(vein.top(), vein.between(), vein.bottom(), vein.spread())) {
-                GTMaterial material = role.resolve();
-                if (!handled.add(material)) continue;
-                BlockPos core = cores.get(material);
-                if (core == null) {
-                    core = recoverCore(level, chunk, body, material, cursor);
-                    placed |= core != null;
-                }
-                if (core != null) placeNearbyMarker(level, chunk, core, material);
-            }
-        }
         return placed;
-    }
-
-    private static void placeNearbyMarker(
-            WorldGenLevel level, ChunkAccess chunk, BlockPos anchor, GTMaterial material) {
-        // Search neighboring columns without writing into another chunk.
-        for (BlockPos candidate : BlockPos.spiralAround(anchor, 15, Direction.EAST, Direction.SOUTH)) {
-            if (inChunk(chunk.getPos(), candidate)
-                    && GTRockPlacement.placeVeinMarker(level, chunk, candidate.getX(), candidate.getZ(), material))
-                return;
-        }
-    }
-
-    private static boolean indicatorRoll(OreVeinLayout.Center center, int x, int z) {
-        return WorldgenHash.roll(WorldgenHash.at(center.seed() ^ 0xC13FA9A902A6328FL, x, z), 128) == 0;
-    }
-
-    private static GTMaterial placeColumn(
-            WorldGenLevel level,
-            ChunkAccess chunk,
-            OreVeinLayout.Column column,
-            BlockPos.MutableBlockPos cursor,
-            int offset,
-            GTMaterial primary,
-            Map<GTMaterial, BlockPos> cores) {
-        var body = column.body();
-        var vein = body.center().vein();
-        GTMaterial lastOre = null;
-        int minY = Math.max(body.minY(), body.placementMinY() - offset);
-        int maxY = Math.min(body.maxY(), body.placementMaxY() - offset);
-        for (int y = minY; y <= maxY; y++) {
-            var sample = column.sample(y);
-            if (sample == null) continue;
-            GTMaterial material = sample.role().material(vein).resolve();
-            cursor.setY(y + offset);
-            var host = chunk.getBlockState(cursor);
-            if (!placeOre(level, chunk, cursor, host, material, sample.small())) continue;
-            if (cores != null
-                    && (!sample.small() || host.getBlock() instanceof OreBlock ore && !ore.isSmall())
-                    && !cores.containsKey(material)) {
-                cores.put(material, cursor.immutable());
-            }
-            if (lastOre != primary) lastOre = material;
-        }
-        return lastOre;
-    }
-
-    private static int recoveryOffset(
-            ChunkAccess chunk, OreVeinLayout.Body body, OreVeinLayout.Column column, BlockPos.MutableBlockPos cursor) {
-        int surface = chunk.getHeight(Heightmap.Types.OCEAN_FLOOR, cursor.getX() & 15, cursor.getZ() & 15);
-        int bestSampleY = Integer.MIN_VALUE;
-        for (int distance = 0; distance <= body.halfHeight(); distance++) {
-            if (column.sample(body.centerY() - distance) != null) {
-                bestSampleY = body.centerY() - distance;
-                break;
-            }
-            if (distance == 0 || column.sample(body.centerY() + distance) == null) continue;
-            bestSampleY = body.centerY() + distance;
-            break;
-        }
-        if (bestSampleY == Integer.MIN_VALUE) return Integer.MIN_VALUE;
-        int maxY = Math.min(surface, body.placementMaxY());
-        int minY = body.placementMinY();
-        if (maxY < minY) return Integer.MIN_VALUE;
-        int anchor = Math.max(minY, Math.min(maxY, body.centerY()));
-        // Look around the scheduled center first, then towards deeper natural rock.
-        for (int radius = 0; radius <= Math.max(maxY - anchor, anchor - minY); radius++) {
-            if (anchor - radius >= minY
-                    && GTOreBlockResolver.oreHost(chunk.getBlockState(cursor.setY(anchor - radius))) != null)
-                return anchor - radius - bestSampleY;
-            if (radius > 0
-                    && anchor + radius <= maxY
-                    && GTOreBlockResolver.oreHost(chunk.getBlockState(cursor.setY(anchor + radius))) != null)
-                return anchor + radius - bestSampleY;
-        }
-        return Integer.MIN_VALUE;
     }
 
     private static boolean placeOre(
@@ -265,63 +148,5 @@ public final class GTOreVeinFeature extends Feature<NoneFeatureConfiguration> {
             placement = GTOreBlockResolver.resolve(host, material, small);
         }
         return placement != null && GTOreBlockResolver.setInChunk(level, chunk, pos, placement.state());
-    }
-
-    private static BlockPos recoverCore(
-            WorldGenLevel level,
-            ChunkAccess chunk,
-            OreVeinLayout.Body body,
-            GTMaterial material,
-            BlockPos.MutableBlockPos cursor) {
-        var center = body.center();
-        var anchor = new BlockPos(center.x(), body.centerY(), center.z());
-        for (BlockPos column : BlockPos.spiralAround(anchor, 15, Direction.EAST, Direction.SOUTH)) {
-            if (!inChunk(chunk.getPos(), column)) continue;
-            var core = recoverCoreInColumn(level, chunk, body, material, cursor.set(column));
-            if (core != null) {
-                growCore(level, chunk, body, material, core);
-                return core;
-            }
-        }
-        return null;
-    }
-
-    private static BlockPos recoverCoreInColumn(
-            WorldGenLevel level,
-            ChunkAccess chunk,
-            OreVeinLayout.Body body,
-            GTMaterial material,
-            BlockPos.MutableBlockPos cursor) {
-        int surface = chunk.getHeight(Heightmap.Types.OCEAN_FLOOR, cursor.getX() & 15, cursor.getZ() & 15);
-        int min = body.placementMinY();
-        int max = Math.min(surface, body.placementMaxY());
-        if (max < min) return null;
-        int start = Math.max(min, Math.min(max, body.centerY()));
-        for (int depth = 0; depth <= Math.max(start - min, max - start); depth++) {
-            int low = start - depth;
-            if (low >= min && placeOre(level, chunk, cursor.setY(low), chunk.getBlockState(cursor), material, false))
-                return cursor.immutable();
-            int high = start + depth;
-            if (depth > 0
-                    && high <= max
-                    && placeOre(level, chunk, cursor.setY(high), chunk.getBlockState(cursor), material, false))
-                return cursor.immutable();
-        }
-        return null;
-    }
-
-    private static boolean inChunk(ChunkPos chunk, BlockPos pos) {
-        return chunk.x == (pos.getX() >> 4) && chunk.z == (pos.getZ() >> 4);
-    }
-
-    private static void growCore(
-            WorldGenLevel level, ChunkAccess chunk, OreVeinLayout.Body body, GTMaterial material, BlockPos core) {
-        for (var side : Direction.values()) {
-            BlockPos next = core.relative(side);
-            if (!inChunk(chunk.getPos(), next)
-                    || next.getY() < body.placementMinY()
-                    || next.getY() > body.placementMaxY()) continue;
-            placeOre(level, chunk, next, chunk.getBlockState(next), material, false);
-        }
     }
 }

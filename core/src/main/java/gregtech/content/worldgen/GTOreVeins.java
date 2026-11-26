@@ -101,9 +101,10 @@ public final class GTOreVeins {
                 int minZ,
                 HeightRange terrain,
                 MineralWorldgenRules.OrePlacer placer) {
-            var range = heights(dimension, terrain.min(), terrain.max());
-            if (range.isEmpty()) return false;
-            var random = new Random(WorldgenHash.at(worldSeed ^ dimension.hashCode(), minX, name.hashCode(), minZ));
+            var range = heights(dimension, Integer.MIN_VALUE, Integer.MAX_VALUE);
+            if (range.intersect(terrain).isEmpty()) return false;
+            var random = new Random(
+                    WorldgenHash.at(WorldgenHash.named(WorldgenHash.named(worldSeed, dimension), name), minX, minZ));
             IntUnaryOperator roll = random::nextInt;
             int attempts = MineralWorldgenRules.scatterAttempts(amount, roll);
             boolean placed = false;
@@ -111,7 +112,7 @@ public final class GTOreVeins {
                 int x = minX + random.nextInt(16);
                 int y = distribution.sample(range.min(), range.max(), roll);
                 int z = minZ + random.nextInt(16);
-                placed |= placer.place(x, y, z, material, true);
+                if (y >= terrain.min() && y <= terrain.max()) placed |= placer.place(x, y, z, material, true);
             }
             return placed;
         }
@@ -514,7 +515,8 @@ public final class GTOreVeins {
     }
 
     public static int selectionWeight(String dimension, List<OreVein> veins) {
-        int weight = OreVeinDeclaration.END.equals(dimension) ? END_EMPTY_VEIN_WEIGHT : 0;
+        // Addon dimensions start with empty cells too, so a lone low-weight declaration stays rare.
+        int weight = OreVeinDeclaration.OVERWORLD.equals(dimension) ? 0 : EMPTY_VEIN_WEIGHT;
         for (var vein : veins) weight = Math.addExact(weight, vein.weight());
         return weight;
     }
@@ -633,7 +635,7 @@ public final class GTOreVeins {
                     Materials.Trinium,
                     Materials.Trinium));
     /** Reduced End vein weights remain empty rolls instead of increasing the other veins. */
-    public static final int END_EMPTY_VEIN_WEIGHT = (170 - 17) + (100 - 10);
+    private static final int EMPTY_VEIN_WEIGHT = (170 - 17) + (100 - 10);
 
     /** GT6 small ores flagged {@code GEN_NETHER}. */
     public static final List<SmallOre> NETHER_SMALL_ORES = List.of(

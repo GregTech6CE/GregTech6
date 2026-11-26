@@ -25,7 +25,8 @@ public final class AddonOreVeins {
 
     public static void publish(
             List<Submission> submissions, Function<String, GTMaterial> lookup, Set<GTMaterial> declaredOreForms) {
-        var materials = new OreMaterials(lookup, declaredOreForms);
+        var builtins = OreSourceCatalog.installBuiltins();
+        var materials = new OreMaterials(lookup, declaredOreForms, builtins);
         var taken = new HashMap<Key, String>();
         claimBuiltIn(taken);
         var veinBuckets = new LinkedHashMap<String, List<OreVein>>();
@@ -66,9 +67,9 @@ public final class AddonOreVeins {
             }
         }
         for (var entry : veinBuckets.entrySet()) {
-            fit(entry.getKey(), entry.getValue());
+            fit(entry.getKey(), entry.getValue(), builtins);
         }
-        OreSourceCatalog.publish(veinBuckets, smallBuckets);
+        OreSourceCatalog.publish(builtins, veinBuckets, smallBuckets);
     }
 
     private static void claimBuiltIn(Map<Key, String> taken) {
@@ -92,24 +93,14 @@ public final class AddonOreVeins {
                 "Addon '" + addonId + "' " + label + " '" + name + "' for " + dimension + " is already " + previous);
     }
 
-    /** Built-in entries of the dimension count toward its weight total; other dimensions are addon-only. */
-    private static void fit(String dimension, List<OreVein> added) {
-        long sum;
-        if (OreVeinDeclaration.OVERWORLD.equals(dimension)) sum = weight(GTOreVeins.OVERWORLD_VEINS, 0);
-        else if (OreVeinDeclaration.END.equals(dimension))
-            sum = weight(GTOreVeins.END_VEINS, GTOreVeins.END_EMPTY_VEIN_WEIGHT);
-        else sum = 0;
-        for (OreVein vein : added) sum = Math.addExact(sum, vein.weight());
+    private static void fit(String dimension, List<OreVein> added, OreSourceCatalog builtins) {
+        long sum = GTOreVeins.selectionWeight(dimension, builtins.veins(dimension));
+        for (OreVein vein : added) sum += vein.weight();
         if (sum > Integer.MAX_VALUE) throw new IllegalStateException("Ore vein weights do not fit in an int");
     }
 
-    private static long weight(List<OreVein> veins, int emptyWeight) {
-        long sum = emptyWeight;
-        for (OreVein vein : veins) sum = Math.addExact(sum, vein.weight());
-        return sum;
-    }
-
-    private record OreMaterials(Function<String, GTMaterial> lookup, Set<GTMaterial> declaredOreForms) {
+    private record OreMaterials(
+            Function<String, GTMaterial> lookup, Set<GTMaterial> declaredOreForms, OreSourceCatalog builtins) {
         private GTMaterial resolve(String addonId, String vein, String name) {
             GTMaterial found = lookup.apply(name);
             if (!found.isValid())
@@ -121,7 +112,7 @@ public final class AddonOreVeins {
                         + "' cannot use hidden material '" + material.getName() + "'");
             if (declaredOreForms.contains(material)
                     || material.has(MaterialProperty.GENERATE_ORE)
-                    || OreSourceCatalog.hasBuiltinOreForm(material)) return material;
+                    || builtins.hasOreForm(material)) return material;
             throw new IllegalStateException(
                     "Addon '" + addonId + "' ore vein '" + vein + "' material '" + material.getName() + "' has no ore");
         }

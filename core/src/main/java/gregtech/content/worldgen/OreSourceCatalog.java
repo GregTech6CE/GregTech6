@@ -71,12 +71,9 @@ public final class OreSourceCatalog {
     private static final String NETHER = OreVeinDeclaration.NETHER;
     private static final String END = OreVeinDeclaration.END;
 
-    private static final class Builtins {
-        private static final OreSourceCatalog CATALOG = build(Map.of(), Map.of());
-    }
-
     private static volatile OreSourceCatalog linked;
 
+    final StratumOreRules.Catalog strata;
     private final Set<GTMaterial> oreForms;
     private final Map<GTMaterial, Set<Source>> sources;
     private final Map<String, List<BedrockOre>> bedrock;
@@ -84,7 +81,8 @@ public final class OreSourceCatalog {
     private final Map<String, List<RegionalPlan>> regionalPlans;
     private final Map<String, List<SmallOre>> smallOres;
 
-    private OreSourceCatalog(Builder builder, Map<String, List<OreVein>> addonVeins) {
+    private OreSourceCatalog(Builder builder, Map<String, List<OreVein>> addonVeins, StratumOreRules.Catalog strata) {
+        this.strata = strata;
         veins = freeze(builder.veins);
         var plans = new LinkedHashMap<String, List<RegionalPlan>>();
         veins.forEach((dimension, entries) -> plans.put(
@@ -101,15 +99,24 @@ public final class OreSourceCatalog {
     /** Available after the material definitions and their links have been installed. */
     public static OreSourceCatalog current() {
         OreSourceCatalog catalog = linked;
-        return catalog == null ? Builtins.CATALOG : catalog;
+        if (catalog == null) throw new IllegalStateException("Ore sources have not been linked yet");
+        return catalog;
     }
 
-    static void publish(Map<String, List<OreVein>> veins, Map<String, List<SmallOre>> smallOres) {
-        linked = veins.isEmpty() && smallOres.isEmpty() ? Builtins.CATALOG : build(veins, smallOres);
+    static OreSourceCatalog installBuiltins() {
+        GTMaterialRegistry.requireCatalogInstalled();
+        var builtins = build(Map.of(), Map.of(), new StratumOreRules.Catalog());
+        if (linked == null) linked = builtins;
+        return builtins;
     }
 
-    static boolean hasBuiltinOreForm(GTMaterial material) {
-        return Builtins.CATALOG.oreForms.contains(material);
+    static void publish(
+            OreSourceCatalog builtins, Map<String, List<OreVein>> veins, Map<String, List<SmallOre>> smallOres) {
+        linked = veins.isEmpty() && smallOres.isEmpty() ? builtins : build(veins, smallOres, builtins.strata);
+    }
+
+    boolean hasOreForm(GTMaterial material) {
+        return oreForms.contains(material);
     }
 
     /** Forms must exist even when the server disables their world generation. */
@@ -183,7 +190,7 @@ public final class OreSourceCatalog {
             Geology geology,
             HeightRange terrain,
             Predicate<Source> active) {
-        int highestMinY = Integer.MIN_VALUE;
+        int depthBalance = 0;
         for (Source source : ordinarySources) {
             if (!source.dimension().equals(OVERWORLD)
                     || !source.enabled(geology)
@@ -194,18 +201,22 @@ public final class OreSourceCatalog {
             var heights = source.availableHeights(terrain);
             if (heights.isEmpty()) continue;
             int minY = source.kind() == Kind.SEAM ? MineralWorldgenRules.HEIGHT_ANCHOR_Y : heights.min();
-            highestMinY = Math.max(highestMinY, minY);
+            if (minY < 0) depthBalance--;
+            else if (minY >= MineralWorldgenRules.HEIGHT_ANCHOR_Y) depthBalance++;
         }
-        if (highestMinY >= MineralWorldgenRules.HEIGHT_ANCHOR_Y) {
+        if (depthBalance > 0) {
             return new BedrockOre(ore.name(), ore.material(), ore.chance() * 5 / 4, ore.flowerId(), Depth.SHALLOW);
         }
-        if (highestMinY != Integer.MIN_VALUE && highestMinY < 0) {
+        if (depthBalance < 0) {
             return new BedrockOre(ore.name(), ore.material(), ore.chance() * 3 / 4, ore.flowerId(), Depth.DEEP);
         }
         return ore;
     }
 
-    static OreSourceCatalog build(Map<String, List<OreVein>> addonVeins, Map<String, List<SmallOre>> addonSmallOres) {
+    private static OreSourceCatalog build(
+            Map<String, List<OreVein>> addonVeins,
+            Map<String, List<SmallOre>> addonSmallOres,
+            StratumOreRules.Catalog strata) {
         var builder = new Builder();
         for (OreVein vein : GTOreVeins.OVERWORLD_VEINS) builder.vein(OVERWORLD, vein);
         for (OreVein vein : GTOreVeins.END_VEINS) builder.vein(END, vein);
@@ -234,7 +245,7 @@ public final class OreSourceCatalog {
         builder.deriveOverworldBedrock();
         GTBedrockOres.registerNether(builder);
         builder.specialDeposits();
-        return new OreSourceCatalog(builder, addonVeins);
+        return new OreSourceCatalog(builder, addonVeins, strata);
     }
 
     static final class Builder {
@@ -277,6 +288,7 @@ public final class OreSourceCatalog {
         }
 
         private void stratum(Kind kind, String host, GTStoneLayersGen.OreDef ore, boolean shallow) {
+            if (!ore.providesOre()) return;
             int min = MineralWorldgenRules.stratumOreMinY(ore);
             if (shallow) min = Math.max(min, StoneLayerField.SHALLOW_LAYER_MIN_Y);
             var heights = new HeightRange(min, MineralWorldgenRules.stratumOreMaxY(ore));

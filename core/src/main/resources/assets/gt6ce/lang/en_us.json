@@ -4,7 +4,7 @@
   "commands.gt6ce.worldgen.locate.unknown": "No active %s entry for this search in %s. Press Tab for available names.",
   "commands.gt6ce.worldgen.locate.busy": "A world generation search is already running.",
   "commands.gt6ce.worldgen.locate.searching": "Looking for %s within %s chunks…",
-  "commands.gt6ce.worldgen.locate.missing": "No nearby block or generation candidate for %s within %s chunks.",
+  "commands.gt6ce.worldgen.locate.missing": "No %1$s found in nearby loaded chunks or in samples within %2$s chunks.",
   "commands.gt6ce.worldgen.locate.error": "Could not read world generation data. See the server log.",
   "tooltip.gt6ce.composition_scaled_damage": "Material amounts account for remaining durability",
   "tooltip.gt6ce.composition_stored_contents": "Empty the stored contents before material recovery",

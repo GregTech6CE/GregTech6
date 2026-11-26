@@ -428,8 +428,11 @@ public final class StoneLayerField {
             var deep = new ArrayList<Integer>();
             for (int i = 0; i < regularLayers; i++) {
                 var layer = LAYERS.get(i);
-                if (matches(layer, province)) shallow.add(i);
-                if (deepRock(layer, province)) deep.add(i);
+                if (i == ANTHRACITE || i == LIGNITE || !matches(layer, province)) continue;
+                for (int n = 0; n < layer.weight(); n++) {
+                    shallow.add(i);
+                    if (deepRock(layer)) deep.add(i);
+                }
             }
             deep.add(DEEPSLATE);
             deep.add(DEEPSLATE);
@@ -442,30 +445,35 @@ public final class StoneLayerField {
     }
 
     private static boolean matches(GTStoneLayersGen.LayerDef layer, Province province) {
-        if (layer.noDeep()) return province == Province.SEDIMENTARY;
+        if (layer.isOreSeam()) return province == Province.SEDIMENTARY;
         if (layer.stoneType() == null) {
-            return switch (layer.material()) {
+            return switch (layer.surfaceMaterial()) {
                 case "Chert" -> province == Province.SEDIMENTARY;
                 case "Pumice", "Dacite" -> province == Province.IGNEOUS;
                 default -> true;
             };
         }
         return switch (layer.stoneType()) {
-            case "BASALT", "KOMATIITE", "KIMBERLITE", "ANDESITE", "DIORITE" -> province == Province.IGNEOUS;
-            case "LIMESTONE", "SHALE", "GYPSUM", "SALT" -> province == Province.SEDIMENTARY;
-            case "MARBLE", "GREENSCHIST", "BLUESCHIST" -> province == Province.METAMORPHIC;
+            case "BASALT",
+                    "KOMATIITE",
+                    "KIMBERLITE",
+                    "ANDESITE",
+                    "DIORITE",
+                    "GRANITE",
+                    "GRANITE_BLACK",
+                    "GRANITE_RED" -> province == Province.IGNEOUS;
+            case "LIMESTONE", "SHALE" -> province == Province.SEDIMENTARY;
+            case "MARBLE", "GREENSCHIST", "BLUESCHIST", "SLATE", "QUARTZITE" -> province == Province.METAMORPHIC;
             default -> true;
         };
     }
 
-    private static boolean deepRock(GTStoneLayersGen.LayerDef layer, Province province) {
+    private static boolean deepRock(GTStoneLayersGen.LayerDef layer) {
         if (layer.noDeep()) return false;
-        if (!layer.ores().isEmpty() && matches(layer, province)) return true;
-        if (layer.stoneType() == null) return false;
+        if (layer.stoneType() == null) return !layer.ores().isEmpty();
         return switch (layer.stoneType()) {
-            case "GRANITE_BLACK", "GRANITE_RED", "SLATE" -> true;
-            case "BASALT", "KIMBERLITE", "KOMATIITE", "QUARTZITE", "BLUESCHIST" -> matches(layer, province);
-            default -> false;
+            case "LIMESTONE", "SHALE" -> false;
+            default -> true;
         };
     }
 }

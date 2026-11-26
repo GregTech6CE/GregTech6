@@ -117,7 +117,7 @@ final class WorldgenLocate {
             var active = summary.dimensions().get(dimension);
             if (active == null || !active.strata()) return result;
             for (int i = 0; i < StoneLayerField.layers().size(); i++) {
-                if (GTStoneLayerFeature.layerStone(i) != null) result.add(GTStoneLayerFeature.layerMaterial(i));
+                if (GTStoneLayerFeature.layerStone(i) != null) result.add(layerName(i));
                 else {
                     result.add("Stone");
                     result.add("Deepslate");
@@ -131,8 +131,8 @@ final class WorldgenLocate {
         return result;
     }
 
-    static String layerName(int index) {
-        return GTStoneLayerFeature.layerStone(index) == null ? "Stone" : GTStoneLayerFeature.layerMaterial(index);
+    private static String layerName(int index) {
+        return StoneLayerField.layers().get(index).material();
     }
 
     private static Target target(ServerLevel level, Kind kind, String query, OreGenerationSummary summary) {

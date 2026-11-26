@@ -25,9 +25,9 @@ final class WorldgenNames {
     }
 
     static void checkAbsoluteHeight(String name, int minY, int maxY) {
-        if (minY < MIN_MODERN_Y || maxY > MAX_MODERN_Y || minY >= maxY)
+        if (minY < MIN_MODERN_Y || maxY > MAX_MODERN_Y || minY > maxY)
             throw new IllegalArgumentException("'" + name + "' absolute Y range must sit inside "
-                    + MIN_MODERN_Y + ".." + MAX_MODERN_Y + ", with min below max");
+                    + MIN_MODERN_Y + ".." + MAX_MODERN_Y + ", with min at or below max");
     }
 
     /** Any resource location, so addon dimensions are usable. */
