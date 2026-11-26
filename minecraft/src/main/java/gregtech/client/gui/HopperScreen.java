@@ -1,4 +1,6 @@
 package gregtech.client.gui;
+
+import gregtech.engine.inventory.menu.HopperContainerMenu;
 import gregtech.platform.Mc;
 
 

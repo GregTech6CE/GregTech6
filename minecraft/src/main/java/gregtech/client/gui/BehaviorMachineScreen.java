@@ -1,5 +1,6 @@
 package gregtech.client.gui;
 
+import gregtech.engine.inventory.menu.BehaviorMachineMenu;
 import gregtech.api.addon.platform.BehaviorMachineGui;
 
 import gregtech.api.addon.machine.BehaviorMachine;

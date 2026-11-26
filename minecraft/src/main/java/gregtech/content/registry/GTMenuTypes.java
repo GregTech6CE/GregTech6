@@ -2,17 +2,17 @@ package gregtech.content.registry;
 
 import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
-import gregtech.client.gui.AdvancedCraftingMenu;
-import gregtech.client.gui.BasicMachineContainerMenu;
-import gregtech.client.gui.BehaviorMachineMenu;
-import gregtech.client.gui.BumbliaryContainerMenu;
-import gregtech.client.gui.DataSwitchMenu;
-import gregtech.client.gui.FilterMenu;
-import gregtech.client.gui.GarbageDumpContainerMenu;
-import gregtech.client.gui.HopperContainerMenu;
-import gregtech.client.gui.MetalChestMenu;
-import gregtech.client.gui.PartMenu;
-import gregtech.client.gui.StorageContainerMenu;
+import gregtech.engine.inventory.menu.AdvancedCraftingMenu;
+import gregtech.engine.inventory.menu.BasicMachineContainerMenu;
+import gregtech.engine.inventory.menu.BehaviorMachineMenu;
+import gregtech.engine.inventory.menu.BumbliaryContainerMenu;
+import gregtech.engine.inventory.menu.DataSwitchMenu;
+import gregtech.engine.inventory.menu.FilterMenu;
+import gregtech.engine.inventory.menu.GarbageDumpContainerMenu;
+import gregtech.engine.inventory.menu.HopperContainerMenu;
+import gregtech.engine.inventory.menu.MetalChestMenu;
+import gregtech.engine.inventory.menu.PartMenu;
+import gregtech.engine.inventory.menu.StorageContainerMenu;
 import gregtech.content.block.inventory.UsbSwitchBlock;
 import java.util.HashMap;
 import java.util.Map;

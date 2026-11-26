@@ -1,6 +1,6 @@
 package gregtech.content.blockentity.inventory;
 
-import gregtech.client.gui.HopperContainerMenu;
+import gregtech.engine.inventory.menu.HopperContainerMenu;
 import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.registry.GTMenuTypes;
 import gregtech.content.world.GarbageData;

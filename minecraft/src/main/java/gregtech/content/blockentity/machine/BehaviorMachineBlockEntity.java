@@ -32,7 +32,7 @@ import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.content.block.machine.BehaviorMachineBlock;
 import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.content.blockentity.machine.BehaviorMachineTanks.Tank;
-import gregtech.client.gui.BehaviorMachineMenu;
+import gregtech.engine.inventory.menu.BehaviorMachineMenu;
 import gregtech.content.data.GregTechTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

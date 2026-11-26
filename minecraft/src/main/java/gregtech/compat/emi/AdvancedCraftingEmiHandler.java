@@ -3,7 +3,7 @@ package gregtech.compat.emi;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories;
 import dev.emi.emi.api.recipe.handler.StandardRecipeHandler;
-import gregtech.client.gui.AdvancedCraftingMenu;
+import gregtech.engine.inventory.menu.AdvancedCraftingMenu;
 import java.util.List;
 import net.minecraft.world.inventory.Slot;
 

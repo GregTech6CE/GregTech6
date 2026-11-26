@@ -25,7 +25,7 @@ import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.block.machine.BasicMachineBlock;
 import gregtech.content.block.machine.GTFacingMachineBlock;
 import gregtech.content.blockentity.GTEnergyBlockEntity;
-import gregtech.client.gui.BasicMachineContainerMenu;
+import gregtech.engine.inventory.menu.BasicMachineContainerMenu;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.GregTechTags;
 import net.minecraft.core.BlockPos;

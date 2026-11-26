@@ -1,6 +1,6 @@
 package gregtech.content.block.machine;
 
-import gregtech.client.gui.PartMenu;
+import gregtech.engine.inventory.menu.PartMenu;
 import gregtech.content.blockentity.machine.FunctionalPartRuntime;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;

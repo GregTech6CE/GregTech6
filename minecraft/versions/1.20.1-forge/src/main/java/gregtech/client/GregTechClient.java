@@ -986,7 +986,7 @@ public final class GregTechClient {
             MenuScreens.register(GTMenuTypes.GARBAGE_DUMP.get(), HopperScreen::new);
             MenuScreens.register(GTMenuTypes.BASIC_MACHINE.get(), BasicMachineScreen::new);
             MenuScreens.register(GTMenuTypes.BEHAVIOR_MACHINE.get(), (MenuScreens.ScreenConstructor<
-                            gregtech.client.gui.BehaviorMachineMenu, gregtech.client.gui.BehaviorMachineHostScreen>)
+                            gregtech.engine.inventory.menu.BehaviorMachineMenu, gregtech.client.gui.BehaviorMachineHostScreen>)
                     (menu, inventory, title) -> {
                         var machine = menu.machine();
                         net.minecraft.client.gui.screens.Screen custom = BehaviorMachineClients.screen(

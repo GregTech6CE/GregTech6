@@ -1,4 +1,4 @@
-package gregtech.client.gui;
+package gregtech.engine.inventory.menu;
 
 import gregtech.engine.fluid.FluidCompat;
 import gregtech.engine.recipe.RecipeMap;

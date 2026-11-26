@@ -1,6 +1,6 @@
 package gregtech.engine.inventory;
 
-import gregtech.client.gui.AdvancedCraftingMenu;
+import gregtech.engine.inventory.menu.AdvancedCraftingMenu;
 import gregtech.content.block.inventory.DrawerQuadBlock;
 import gregtech.content.block.machine.BasicMachineBlock;
 import gregtech.content.block.machine.FunctionalPartInteraction;

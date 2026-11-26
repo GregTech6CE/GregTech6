@@ -1,5 +1,6 @@
 package gregtech.client.gui;
 
+import gregtech.engine.inventory.menu.DataSwitchMenu;
 import gregtech.content.block.inventory.UsbSwitchBlock;
 import gregtech.platform.Mc;
 import net.minecraft.client.gui.GuiGraphics;

@@ -1,5 +1,6 @@
 package gregtech.client.gui;
 
+import gregtech.engine.inventory.menu.BehaviorMachineMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;

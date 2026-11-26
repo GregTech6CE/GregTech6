@@ -1,4 +1,4 @@
-package gregtech.client.gui;
+package gregtech.engine.inventory.menu;
 
 import gregtech.content.registry.GTMenuTypes;
 import net.minecraft.world.Container;

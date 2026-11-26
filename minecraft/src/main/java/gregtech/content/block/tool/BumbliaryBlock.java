@@ -119,7 +119,7 @@ public class BumbliaryBlock extends ShapedToolBlock implements EntityBlock {
                     boolean scoopMode = scoop || player.isCreative();
                     serverPlayer.openMenu(new net.minecraft.world.SimpleMenuProvider(
                             (id, inventory, user) ->
-                                    new gregtech.client.gui.BumbliaryContainerMenu(id, inventory, machine, scoopMode),
+                                    new gregtech.engine.inventory.menu.BumbliaryContainerMenu(id, inventory, machine, scoopMode),
                             machine.getDisplayName()));
                     if (scoop)
                         GTToolHelper.damageForToolClickReturn(

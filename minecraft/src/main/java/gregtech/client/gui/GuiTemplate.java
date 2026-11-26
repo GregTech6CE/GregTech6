@@ -1,5 +1,6 @@
 package gregtech.client.gui;
 
+import gregtech.engine.inventory.menu.SlotFluid;
 import java.util.List;
 import net.minecraft.client.gui.GuiGraphics;
 

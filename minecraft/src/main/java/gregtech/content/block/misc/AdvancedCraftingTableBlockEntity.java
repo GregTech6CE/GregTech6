@@ -2,7 +2,7 @@ package gregtech.content.block.misc;
 
 import gregtech.content.blockentity.GTBlockEntity;
 import gregtech.engine.inventory.BlockContents;
-import gregtech.client.gui.HopperContainerMenu;
+import gregtech.engine.inventory.menu.HopperContainerMenu;
 import gregtech.engine.stack.StackCompat;
 import gregtech.engine.stack.NbtCompat;
 import gregtech.platform.LoaderHooks;
@@ -364,7 +364,7 @@ public class AdvancedCraftingTableBlockEntity extends GTBlockEntity implements B
     }
 
     public HopperContainerMenu storageMenu(int id, Inventory player) {
-        return new gregtech.client.gui.StorageContainerMenu(id, player, view(IntStream.range(35, 71).toArray(), false), this::inventoryChanged) {
+        return new gregtech.engine.inventory.menu.StorageContainerMenu(id, player, view(IntStream.range(35, 71).toArray(), false), this::inventoryChanged) {
 
             @Override
             public boolean stillValid(Player p) {

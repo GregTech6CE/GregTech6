@@ -701,7 +701,7 @@ public class BumbliaryBlockEntity extends GTBlockEntity implements MenuProvider,
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
-        return new gregtech.client.gui.BumbliaryContainerMenu(containerId, playerInventory, this, player.isCreative());
+        return new gregtech.engine.inventory.menu.BumbliaryContainerMenu(containerId, playerInventory, this, player.isCreative());
     }
 
     /**: only a living, currently working queen defends the machine. */

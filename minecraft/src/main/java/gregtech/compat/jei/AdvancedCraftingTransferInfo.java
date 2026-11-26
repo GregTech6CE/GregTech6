@@ -1,6 +1,6 @@
 package gregtech.compat.jei;
 
-import gregtech.client.gui.AdvancedCraftingMenu;
+import gregtech.engine.inventory.menu.AdvancedCraftingMenu;
 import gregtech.content.registry.GTMenuTypes;
 import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.recipe.RecipeType;

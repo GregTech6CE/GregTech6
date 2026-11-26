@@ -1,4 +1,4 @@
-package gregtech.client.gui;
+package gregtech.engine.inventory.menu;
 
 import net.minecraft.world.inventory.ContainerData;
 

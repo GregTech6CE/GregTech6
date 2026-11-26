@@ -1,14 +1,13 @@
 package gregtech.network;
+
+import gregtech.engine.inventory.menu.BasicMachineContainerMenu;
+import gregtech.engine.inventory.menu.SlotFluid;
 //? if >=1.21.1 {
-/*import gregtech.client.gui.*;
-import net.minecraft.network.RegistryFriendlyByteBuf;
+/*import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 *///?} else {
-
-import gregtech.client.gui.BasicMachineContainerMenu;
-import gregtech.client.gui.SlotFluid;
 import net.minecraft.network.FriendlyByteBuf;
 //?}
 import net.minecraft.world.inventory.AbstractContainerMenu;

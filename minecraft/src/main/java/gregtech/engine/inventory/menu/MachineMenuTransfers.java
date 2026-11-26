@@ -1,4 +1,4 @@
-package gregtech.client.gui;
+package gregtech.engine.inventory.menu;
 
 import gregtech.engine.stack.StackCompat;
 import java.util.List;

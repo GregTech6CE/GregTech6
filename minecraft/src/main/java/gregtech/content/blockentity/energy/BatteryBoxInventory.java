@@ -1,6 +1,6 @@
 package gregtech.content.blockentity.energy;
 
-import gregtech.client.gui.HopperContainerMenu;
+import gregtech.engine.inventory.menu.HopperContainerMenu;
 import gregtech.content.cover.ComponentCoverRuntime;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.energy.BatteryBoxEnergy;
