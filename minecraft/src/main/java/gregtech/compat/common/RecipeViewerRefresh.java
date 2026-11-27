@@ -1,10 +1,12 @@
 package gregtech.compat.common;
 
+import gregtech.content.multiblock.ControllerStructureLayouts;
+import gregtech.engine.multiblock.tracking.StructurePlan;
+import java.util.List;
+import net.minecraft.world.level.block.Block;
 import gregtech.content.worldgen.OreGenerationSummary;
 import gregtech.engine.mod.GregTechIdentity;
-import gregtech.platform.LoaderHooks;
-import gregtech.compat.emi.GregTechEMIPlugin;
-import gregtech.compat.jei.GregTechJEIPlugin;
+import java.util.Map;
 import net.minecraft.client.Minecraft;
 //? if >=1.21.1 {
 /*import net.neoforged.api.distmarker.Dist;
@@ -24,40 +26,34 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 @EventBusSubscriber(modid = GregTechIdentity.MOD_ID, value = Dist.CLIENT)
 public final class RecipeViewerRefresh {
     private static long generation;
-    private static boolean structuresChanged;
     private static Build built;
     private static OreGenerationSummary checked;
+    private static Runnable refresh;
 
     private RecipeViewerRefresh() {}
 
-    /** The snapshot at the start of a native JEI or EMI atlas registration. */
-    public record Build(long generation, OreGenerationSummary summary) {}
+    /** The inputs used by one viewer registration. An older registration cannot replace a newer one. */
+    public record Build(long generation, OreGenerationSummary summary, Map<Block, List<StructurePlan.Cell>> layouts) {}
 
     public static synchronized Build beginBuild() {
-        built = null;
-        checked = null;
-        return new Build(++generation, OreGenerationSummary.current());
+        return new Build(++generation, OreGenerationSummary.current(), ControllerStructureLayouts.plans());
     }
 
-    public static synchronized void finishBuild(Build build) {
-        // EMI may finish an asynchronous registration after disconnect or a newer registration.
+    public static synchronized void finishBuild(Build build, Runnable refreshPages) {
         if (build.generation() != generation) return;
         built = build;
-        checked = null;
+        checked = build.summary();
+        refresh = refreshPages;
     }
 
-    public static void invalidateStructures() {
-        structuresChanged = true;
-    }
-
-    private static synchronized boolean staleAtlas() {
+    private static synchronized Runnable pendingRefresh() {
         var latest = OreGenerationSummary.received();
-        if (built == null || latest == null || latest == checked) return false;
-        if (latest.equals(built.summary())) {
+        if (built == null) return latest == null ? null : refresh;
+        if (latest != null && latest != checked) {
+            if (!latest.equals(built.summary())) return refresh;
             checked = latest;
-            return false;
         }
-        return true;
+        return built.layouts() == ControllerStructureLayouts.plans() ? null : refresh;
     }
 
     @SubscribeEvent
@@ -68,18 +64,8 @@ public final class RecipeViewerRefresh {
         if (event.phase != TickEvent.Phase.END) return;
     //?}
         if (Minecraft.getInstance().getConnection() == null) return;
-        boolean atlas = staleAtlas();
-        if (!atlas && !structuresChanged) return;
-        if (LoaderHooks.isModLoaded("emi")) {
-            if (!GregTechEMIPlugin.readyToReload()) return;
-            GregTechEMIPlugin.reload();
-        } else if (LoaderHooks.isModLoaded("jei")) {
-            if (!GregTechJEIPlugin.refreshPages(atlas, structuresChanged)) return;
-        }
-        synchronized (RecipeViewerRefresh.class) {
-            checked = OreGenerationSummary.received();
-        }
-        structuresChanged = false;
+        var refreshPages = pendingRefresh();
+        if (refreshPages != null) refreshPages.run();
     }
 
     @SubscribeEvent
@@ -87,7 +73,6 @@ public final class RecipeViewerRefresh {
         generation++;
         built = null;
         checked = null;
-        structuresChanged = false;
         OreGenerationSummary.acceptClientSummary(null);
     }
 }

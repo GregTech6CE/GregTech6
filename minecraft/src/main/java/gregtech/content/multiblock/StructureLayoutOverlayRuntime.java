@@ -1,27 +1,31 @@
 package gregtech.content.multiblock;
 
-import com.mojang.logging.LogUtils;
 import gregtech.api.multiblock.CellMatch;
+import gregtech.api.multiblock.LayoutCell;
+import gregtech.api.multiblock.StructureLayout;
+import gregtech.content.registry.MultiblockRegistration;
 import gregtech.engine.addon.AddonMachines;
 import gregtech.engine.kubejs.StructureLayoutDocuments;
+import gregtech.platform.Mc;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import org.slf4j.Logger;
 
 /** Reloads addon structure layouts from {@code gt6ce_layouts} and keeps the text sent to clients. */
 public final class StructureLayoutOverlayRuntime {
-    private static final Logger LOGGER = LogUtils.getLogger();
-    private static Map<String, String> documents = Map.of();
-    private static java.util.Set<String> lastAffected = java.util.Set.of();
+    private static final Logger LOGGER = Mc.logger();
+    private static volatile Map<String, String> documents = Map.of();
+    private static volatile Set<String> lastAffected = Set.of();
     private static int logged;
 
     private StructureLayoutOverlayRuntime() {}
@@ -31,7 +35,7 @@ public final class StructureLayoutOverlayRuntime {
     }
 
     /** Machine names whose layout changed in the most recent install. */
-    public static java.util.Set<String> lastAffected() {
+    public static Set<String> lastAffected() {
         return lastAffected;
     }
 
@@ -67,7 +71,6 @@ public final class StructureLayoutOverlayRuntime {
     }
 
     private static void install(Map<String, String> next) {
-        var previous = new HashSet<>(SharedLargeMachineLayouts.overlaid());
         var layouts = new LinkedHashMap<String, SharedLargeMachineLayouts.Layout>();
         var accepted = new TreeMap<String, String>();
         for (var entry : next.entrySet()) {
@@ -80,14 +83,18 @@ public final class StructureLayoutOverlayRuntime {
                 warn(entry.getKey() + " " + failure.getMessage());
             }
         }
-        SharedLargeMachineLayouts.overlayLayouts(layouts);
-        documents = Map.copyOf(accepted);
-        previous.addAll(accepted.keySet());
-        lastAffected = java.util.Set.copyOf(previous);
-        LargeMachineLayouts.forget(previous);
+        synchronized (ControllerStructureLayouts.class) {
+            var affected = new HashSet<>(SharedLargeMachineLayouts.overlaid());
+            SharedLargeMachineLayouts.overlayLayouts(layouts);
+            affected.addAll(accepted.keySet());
+            lastAffected = Set.copyOf(affected);
+            LargeMachineLayouts.forget(affected);
+            ControllerStructureLayouts.invalidate();
+            documents = Map.copyOf(accepted);
+        }
     }
 
-    private static boolean accept(String source, gregtech.api.multiblock.StructureLayout layout) {
+    private static boolean accept(String source, StructureLayout layout) {
         if (!SharedLargeMachineLayouts.replaceable(layout.name())) {
             warn(source + " does not replace an addon layout");
             return false;
@@ -98,29 +105,22 @@ public final class StructureLayoutOverlayRuntime {
                 return false;
             }
         }
-        gregtech.content.registry.MultiblockRegistration.validatePorts(
-                layout.name(), AddonMachines.sharedLayout(source, layout));
+        MultiblockRegistration.validatePorts(layout.name(), AddonMachines.sharedLayout(source, layout));
         return true;
     }
 
-    private static java.util.List<gregtech.api.multiblock.LayoutCell> allCells(
-            gregtech.api.multiblock.StructureLayout layout) {
+    private static List<LayoutCell> allCells(StructureLayout layout) {
         var out = new ArrayList<>(layout.cells());
         for (var repeat : layout.repeats()) out.addAll(repeat.cells());
         return out;
     }
 
     private static boolean known(CellMatch match) {
-        if (match instanceof CellMatch.Block block) return registered(block.id());
+        if (match instanceof CellMatch.Block block) return Mc.hasBlock(ResourceLocation.parse(block.id()));
         if (match instanceof CellMatch.OneOf one) {
             for (CellMatch member : one.members()) if (!known(member)) return false;
         }
         return true;
-    }
-
-    private static boolean registered(String id) {
-        var name = ResourceLocation.parse(id);
-        return BuiltInRegistries.BLOCK.containsKey(name);
     }
 
     private static String machine(ResourceLocation id) {

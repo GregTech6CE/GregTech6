@@ -11,13 +11,13 @@ import gregtech.content.block.misc.AdvancedCraftingTableBlock;
 import gregtech.content.item.CatalogVisibility;
 import gregtech.content.loot.LootViewerData;
 import gregtech.content.multiblock.MultiblockInfoData;
-import gregtech.content.multiblock.StructureLayoutOverlayRuntime;
 import gregtech.content.recipe.MachineRecipeOverlay;
 import gregtech.content.recipe.ToolAssemblyCatalog;
 import gregtech.content.registry.GTFluidItems;
 import gregtech.content.worldgen.OreGenerationSummary;
 import gregtech.engine.fluid.FluidContainerDisplayBinding;
 import gregtech.engine.fluid.FluidDisplayBinding;
+import gregtech.engine.multiblock.tracking.StructurePlan;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.engine.recipe.UsbRecipeDisplayBinding;
@@ -31,19 +31,28 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Supplier;
+import java.util.function.Function;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.constants.RecipeTypes;
+import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.gui.handlers.IGuiContainerHandler;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IRecipeManager;
 import mezz.jei.api.recipe.RecipeType;
+import mezz.jei.api.registration.IGuiHandlerRegistration;
+import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.IRecipeTransferRegistration;
+import mezz.jei.api.registration.ISubtypeRegistration;
+import mezz.jei.api.registration.IVanillaCategoryExtensionRegistration;
+import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Rect2i;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 
 /**
  * JEI integration for GT6: one generic {@link RecipeMapCategory} per {@link RecipeMap}
@@ -55,7 +64,7 @@ import net.minecraft.world.item.ItemStack;
 @JeiPlugin
 public final class GregTechJEIPlugin implements IModPlugin {
     @Override
-    public void onRuntimeAvailable(mezz.jei.api.runtime.IJeiRuntime runtime) {
+    public void onRuntimeAvailable(IJeiRuntime runtime) {
         this.runtime = runtime;
         active = this;
         RecipeViewerNavigation.registerJei(map -> {
@@ -63,12 +72,11 @@ public final class GregTechJEIPlugin implements IModPlugin {
             runtime.getRecipesGui().showTypes(List.of(RecipeMapCategory.recipeType(map)));
             return true;
         });
-        var legacy = BuiltInRegistries.ITEM.stream()
+        var legacy = Mc.itemStream()
                 .filter(item -> !CatalogVisibility.visible(new ItemStack(item)))
                 .map(ItemStack::new)
                 .toList();
-        runtime.getIngredientManager()
-                .removeIngredientsAtRuntime(mezz.jei.api.constants.VanillaTypes.ITEM_STACK, legacy);
+        runtime.getIngredientManager().removeIngredientsAtRuntime(VanillaTypes.ITEM_STACK, legacy);
     }
 
     @Override
@@ -81,10 +89,9 @@ public final class GregTechJEIPlugin implements IModPlugin {
     }
 
     @Override
-    public void registerGuiHandlers(mezz.jei.api.registration.IGuiHandlerRegistration registration) {
+    public void registerGuiHandlers(IGuiHandlerRegistration registration) {
         registration.addGenericGuiContainerHandler(
-                MachineContainerScreen.class,
-                new mezz.jei.api.gui.handlers.IGuiContainerHandler<MachineContainerScreen<?>>() {
+                MachineContainerScreen.class, new IGuiContainerHandler<MachineContainerScreen<?>>() {
                     @Override
                     public List<Rect2i> getGuiExtraAreas(MachineContainerScreen<?> screen) {
                         var tab = screen.titleBounds();
@@ -94,8 +101,7 @@ public final class GregTechJEIPlugin implements IModPlugin {
     }
 
     @Override
-    public void registerVanillaCategoryExtensions(
-            mezz.jei.api.registration.IVanillaCategoryExtensionRegistration registration) {
+    public void registerVanillaCategoryExtensions(IVanillaCategoryExtensionRegistration registration) {
         ToolCraftingDisplay.register(registration);
     }
 
@@ -103,7 +109,7 @@ public final class GregTechJEIPlugin implements IModPlugin {
     private final Map<RecipeMap, RecipeMapCategory> categories = new LinkedHashMap<>();
 
     private static volatile GregTechJEIPlugin active;
-    private mezz.jei.api.runtime.IJeiRuntime runtime;
+    private IJeiRuntime runtime;
     private final Map<RecipeMap, List<Recipe>> shownRows = new LinkedHashMap<>();
     private final Map<RecipeMap, Set<Recipe>> knownRows = new LinkedHashMap<>();
 
@@ -112,17 +118,17 @@ public final class GregTechJEIPlugin implements IModPlugin {
             new Pages<>(WorldgenInfoCategories.SMALL_ORE_TYPE, WorldgenInfoCategories::buildSmallOres),
             new Pages<>(WorldgenInfoCategories.LAYER_TYPE, WorldgenInfoCategories::buildLayers),
             new Pages<>(WorldgenInfoCategories.BEDROCK_TYPE, WorldgenInfoCategories::buildBedrockOres));
-    private final Pages<Map<String, String>, MultiblockInfoData.Info> structures =
+    private final Pages<Map<Block, List<StructurePlan.Cell>>, MultiblockInfoData.Info> structures =
             new Pages<>(MultiblockInfoCategory.TYPE, MultiblockInfoData::recipes);
 
     /** JEI retains hidden recipes. Reuse registered instances when a server returns to an earlier configuration. */
     private static final class Pages<K, T> {
         private final RecipeType<T> type;
-        private final Supplier<List<T>> build;
+        private final Function<K, List<T>> build;
         private final Map<K, List<T>> registered = new HashMap<>();
         private List<T> visible = List.of();
 
-        private Pages(RecipeType<T> type, Supplier<List<T>> build) {
+        private Pages(RecipeType<T> type, Function<K, List<T>> build) {
             this.type = type;
             this.build = build;
         }
@@ -134,7 +140,7 @@ public final class GregTechJEIPlugin implements IModPlugin {
 
         void register(IRecipeRegistration registration, K key) {
             clear();
-            visible = build.get();
+            visible = build.apply(key);
             registered.put(key, visible);
             registration.addRecipes(type, visible);
         }
@@ -143,7 +149,7 @@ public final class GregTechJEIPlugin implements IModPlugin {
             List<T> next = registered.get(key);
             if (next == visible) return;
             boolean known = next != null;
-            if (!known) next = build.get();
+            if (!known) next = build.apply(key);
             manager.hideRecipes(type, visible);
             if (known) {
                 manager.unhideRecipes(type, next);
@@ -155,17 +161,14 @@ public final class GregTechJEIPlugin implements IModPlugin {
         }
     }
 
-    public static boolean refreshPages(boolean atlas, boolean layouts) {
+    private static void refreshPages() {
         var plugin = active;
-        if (plugin == null || plugin.runtime == null) return false;
+        if (plugin == null || plugin.runtime == null) return;
+        var build = RecipeViewerRefresh.beginBuild();
         var manager = plugin.runtime.getRecipeManager();
-        if (atlas) {
-            var build = RecipeViewerRefresh.beginBuild();
-            for (var pages : plugin.atlasPages) pages.show(manager, build.summary());
-            RecipeViewerRefresh.finishBuild(build);
-        }
-        if (layouts) plugin.structures.show(manager, StructureLayoutOverlayRuntime.documents());
-        return true;
+        for (var pages : plugin.atlasPages) pages.show(manager, build.summary());
+        plugin.structures.show(manager, build.layouts());
+        RecipeViewerRefresh.finishBuild(build, GregTechJEIPlugin::refreshPages);
     }
 
     /** Normal JEI reload discovers the current maps through registerRecipes. */
@@ -201,7 +204,6 @@ public final class GregTechJEIPlugin implements IModPlugin {
 
     @Override
     public ResourceLocation getPluginUid() {
-
         return Mc.gregtechId("jei_plugin");
     }
 
@@ -233,11 +235,11 @@ public final class GregTechJEIPlugin implements IModPlugin {
     }
 
     @Override
-    public void registerRecipeCatalysts(mezz.jei.api.registration.IRecipeCatalystRegistration registration) {
+    public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         for (var mold : MoldChiselDisplay.molds()) registration.addRecipeCatalyst(mold, MoldChiselCategory.TYPE);
-        for (var table : BuiltInRegistries.BLOCK)
+        for (var table : Mc.blocks())
             if (table instanceof AdvancedCraftingTableBlock)
-                registration.addRecipeCatalyst(new ItemStack(table), mezz.jei.api.constants.RecipeTypes.CRAFTING);
+                registration.addRecipeCatalyst(new ItemStack(table), RecipeTypes.CRAFTING);
         // Assembly controllers are recipe outputs, not catalysts for every structure in the category.
         // JEI indexes each controller and its construction parts in MultiblockInfoCategory.setRecipe.
         machines.forEach((map, stacks) -> {
@@ -247,12 +249,12 @@ public final class GregTechJEIPlugin implements IModPlugin {
     }
 
     @Override
-    public void registerRecipeTransferHandlers(mezz.jei.api.registration.IRecipeTransferRegistration registration) {
+    public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
         registration.addRecipeTransferHandler(new AdvancedCraftingTransferInfo());
     }
 
     @Override
-    public void registerItemSubtypes(mezz.jei.api.registration.ISubtypeRegistration registration) {
+    public void registerItemSubtypes(ISubtypeRegistration registration) {
         for (var item : UsbRecipeDisplayBinding.sticks())
             registration.registerSubtypeInterpreter(item, (stack, context) -> UsbRecipeDisplayBinding.subtype(stack));
 
@@ -276,10 +278,10 @@ public final class GregTechJEIPlugin implements IModPlugin {
             if (LoaderHooks.isModLoaded("emi")) return;
             registration.addRecipes(LootInfoCategories.LOOT, LootViewerData.lootGroups());
             registration.addRecipes(LootInfoCategories.MOBS, LootViewerData.mobGroups());
-            structures.register(registration, StructureLayoutOverlayRuntime.documents());
             var atlas = RecipeViewerRefresh.beginBuild();
+            structures.register(registration, atlas.layouts());
             for (var pages : atlasPages) pages.register(registration, atlas.summary());
-            RecipeViewerRefresh.finishBuild(atlas);
+            RecipeViewerRefresh.finishBuild(atlas, GregTechJEIPlugin::refreshPages);
             registration.addRecipes(ToolAssemblyCategory.TYPE, ToolAssemblyCatalog.build());
             registration.addRecipes(MoldChiselCategory.TYPE, MoldChiselDisplay.recipes());
             var unitTags = MaterialUnitTagDisplay.entries();
@@ -309,7 +311,7 @@ public final class GregTechJEIPlugin implements IModPlugin {
                                 "JEI_SCALE recipes {} ms {} items {} heapMb {}",
                                 shown,
                                 (System.nanoTime() - started) / 1_000_000L,
-                                BuiltInRegistries.ITEM.size(),
+                                Mc.itemStream().count(),
                                 (runtime.totalMemory() - runtime.freeMemory()) / 1_048_576L);
             }
         }

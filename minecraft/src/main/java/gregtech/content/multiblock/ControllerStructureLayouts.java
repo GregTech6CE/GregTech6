@@ -1,5 +1,6 @@
 package gregtech.content.multiblock;
 
+import gregtech.content.registry.MultiblockRegistration;
 import gregtech.engine.multiblock.tracking.*;
 import java.util.*;
 import net.minecraft.core.*;
@@ -12,16 +13,15 @@ public final class ControllerStructureLayouts {
     private static int epoch = -1;
     private static Map<Block, List<StructurePlan.Cell>> plans = Map.of();
 
-    public static void invalidate() {
+    public static synchronized void invalidate() {
         epoch = -1;
-        plans = Map.of();
     }
 
-    public static Map<Block, List<StructurePlan.Cell>> plans() {
-        if (epoch == StructureEpoch.get()) return plans;
+    public static synchronized Map<Block, List<StructurePlan.Cell>> plans() {
+        int current = StructureEpoch.get();
+        if (epoch == current) return plans;
         var next = new LinkedHashMap<Block, List<StructurePlan.Cell>>();
-        for (var entry :
-                gregtech.content.registry.MultiblockRegistration.controllers().entrySet()) {
+        for (var entry : MultiblockRegistration.controllers().entrySet()) {
             Block block = entry.getKey();
             var tracked = entry.getValue();
             var definition = tracked.structureDefinition();
@@ -35,8 +35,8 @@ public final class ControllerStructureLayouts {
                     .toList();
             if (!cells.isEmpty()) next.put(block, cells);
         }
-        plans = Collections.unmodifiableMap(next);
-        epoch = StructureEpoch.get();
+        if (!next.equals(plans)) plans = Collections.unmodifiableMap(next);
+        epoch = current;
         return plans;
     }
 

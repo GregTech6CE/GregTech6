@@ -90,6 +90,14 @@ public final class Mc {
 //?}
     }
 
+    public static boolean hasBlock(ResourceLocation id) {
+//? if >=1.21.1 {
+/*        return BuiltInRegistries.BLOCK.containsKey(id);
+*///?} else {
+        return ForgeRegistries.BLOCKS.containsKey(id);
+//?}
+    }
+
     public static Block block(ResourceLocation id) {
 //? if >=1.21.1 {
 /*        return BuiltInRegistries.BLOCK.get(id);

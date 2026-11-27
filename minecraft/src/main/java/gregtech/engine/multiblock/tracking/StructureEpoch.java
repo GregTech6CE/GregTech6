@@ -2,7 +2,7 @@ package gregtech.engine.multiblock.tracking;
 
 /** Layout generation. Incremented on every tag reload, including when the overlay text is unchanged. */
 public final class StructureEpoch {
-    private static int epoch;
+    private static volatile int epoch;
 
     private StructureEpoch() {}
 

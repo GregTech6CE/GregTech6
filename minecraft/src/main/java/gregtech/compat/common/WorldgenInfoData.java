@@ -34,6 +34,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Set;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -47,41 +48,94 @@ import net.minecraft.world.item.Items;
 public class WorldgenInfoData {
     protected WorldgenInfoData() {}
 
-    public record VeinInfo(
-            String name,
+    public sealed interface VeinInfo permits MixedVein, StratumInfo, SpecialSite {
+        OreGenerationSummary summary();
+
+        List<ItemStack> hosts();
+
+        List<OrePreview> previews();
+
+        List<Component> captions();
+
+        List<ItemStack> aliases();
+    }
+
+    private record MixedVein(
+            OreGenerationSummary summary,
+            GTOreVeins.OreVein vein,
             String dimension,
-            int minY,
-            int maxY,
-            int weight,
+            HeightRange heights,
             int totalWeight,
-            GTMaterial top,
-            GTMaterial bottom,
-            GTMaterial between,
-            GTMaterial spread,
-            StratumInfo layer,
-            HeightRange reserve,
-            boolean subregional,
-            SpecialSite site) {
-        static VeinInfo special(String name, HeightRange heights, SpecialSite site) {
-            return new VeinInfo(
-                    name,
-                    OreVeinDeclaration.OVERWORLD,
-                    heights.min(),
-                    heights.max(),
-                    0,
-                    0,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    false,
-                    site);
+            Optional<HeightRange> reserve)
+            implements VeinInfo {
+        private List<GTMaterial> materials() {
+            return List.of(vein.top(), vein.bottom(), vein.between(), vein.spread()).stream()
+                    .map(GTMaterial::resolve)
+                    .distinct()
+                    .toList();
+        }
+
+        @Override
+        public List<ItemStack> hosts() {
+            return List.of();
+        }
+
+        @Override
+        public List<OrePreview> previews() {
+            return materials().stream()
+                    .map(material -> new OrePreview(oreStack(material), List.of(), material))
+                    .filter(preview -> !preview.stack().isEmpty())
+                    .toList();
+        }
+
+        @Override
+        public List<ItemStack> aliases() {
+            var aliases = new ArrayList<ItemStack>();
+            for (GTMaterial material : materials()) addOreAliases(aliases, new OreIdentity(material, ""));
+            return aliases;
+        }
+
+        @Override
+        public List<Component> captions() {
+            double percent = 100.0 * vein.weight() / Math.max(1, totalWeight);
+            boolean end = OreVeinDeclaration.END.equals(dimension);
+            String label = end ? "chance" : "bonus_vein_share";
+            String shape = OreVeinLayout.Shape.forVein(vein.name()).name().toLowerCase(Locale.ROOT);
+            var name = Component.translatableWithFallback(
+                    "gt6ce.jei.vein." + vein.name(),
+                    MaterialPresentation.name(vein.top()).getString());
+            List<Component> lines = new ArrayList<>(List.of(
+                    Component.translatable("gt6ce.jei.info.vein_name", name),
+                    Component.translatable("gt6ce.jei.info.dimension", dimension)));
+            if (!heights.isEmpty()) {
+                lines.add(Component.translatable("gt6ce.jei.info.height", heights.min(), heights.max()));
+                if (vein.weight() > 0)
+                    lines.add(Component.translatable(
+                            "gt6ce.jei.info." + label, String.format(Locale.ROOT, "%.2f", percent)));
+            }
+            lines.add(Component.translatable(
+                    "gt6ce.jei.info.vein_shape", Component.translatable("gt6ce.jei.shape." + shape)));
+            var regional = OreSourceCatalog.current().regionalPlans(dimension).stream()
+                    .filter(plan -> plan.includes(vein.name()))
+                    .findFirst()
+                    .orElse(null);
+            if (regional != null) {
+                int cells = regional.cells();
+                String spacing =
+                        end ? "island_regional_vein" : vein.subregional() ? "subregional_vein" : "regional_vein";
+                lines.add(Component.translatable("gt6ce.jei.info." + spacing, cells * OreVeinLayout.CELL_SIZE));
+                if (reserve.isPresent()) {
+                    lines.add(Component.translatable(
+                            "gt6ce.jei.info.vein_reserve_height",
+                            reserve.get().min(),
+                            reserve.get().max()));
+                }
+            }
+            return lines;
         }
     }
 
-    public record SmallOreInfo(List<OrePreview> ores, List<Component> captions) {
+    public record SmallOreInfo(OreGenerationSummary summary, List<OrePreview> ores, List<Component> captions) {
         public List<ItemStack> aliases() {
             return ores.stream()
                     .flatMap(ore -> oreAliases(ore.material(), true).stream())
@@ -89,7 +143,7 @@ public class WorldgenInfoData {
         }
     }
 
-    public record LayerInfo(ItemStack stone, List<StratumOre> ores) {}
+    public record LayerInfo(OreGenerationSummary summary, ItemStack stone, List<StratumOre> ores) {}
 
     public static ItemStack oreStack(GTMaterial material) {
         return oreStack(material, false);
@@ -106,8 +160,7 @@ public class WorldgenInfoData {
                 : new ItemStack(placement.state().getBlock());
     }
 
-    public static List<VeinInfo> buildVeins() {
-        var summary = OreGenerationSummary.current();
+    public static List<VeinInfo> buildVeins(OreGenerationSummary summary) {
         List<VeinInfo> out = new ArrayList<>();
         for (String dimension : OreSourceCatalog.current().veinDimensions()) {
             var generation = summary.dimensions().get(dimension);
@@ -116,24 +169,9 @@ public class WorldgenInfoData {
             int totalWeight = GTOreVeins.selectionWeight(dimension, veins);
             for (GTOreVeins.OreVein v : veins) {
                 var heights = v.heights(dimension).intersect(generation.heights());
-                var reserve = GTOreVeins.reserveHeights(dimension, v.name(), generation.heights())
-                        .orElse(null);
-                if (heights.isEmpty() && reserve == null) continue;
-                out.add(new VeinInfo(
-                        v.name(),
-                        dimension,
-                        heights.min(),
-                        heights.max(),
-                        v.weight(),
-                        totalWeight,
-                        v.top(),
-                        v.bottom(),
-                        v.between(),
-                        v.spread(),
-                        null,
-                        reserve,
-                        v.subregional(),
-                        null));
+                var reserve = GTOreVeins.reserveHeights(dimension, v.name(), generation.heights());
+                if (!heights.isEmpty() || reserve.isPresent())
+                    out.add(new MixedVein(summary, v, dimension, heights, totalWeight, reserve));
             }
         }
         HeightRange stratumHeights = overworldStrata(summary);
@@ -142,6 +180,7 @@ public class WorldgenInfoData {
             for (GTStoneLayersGen.LayerDef layer : StoneLayerField.layers()) {
                 ItemStack stone = layerStone(layer);
                 appendStratumOres(
+                        summary,
                         out,
                         seen,
                         layer.material(),
@@ -163,6 +202,7 @@ public class WorldgenInfoData {
                         .addAll(contact.ores());
             }
             contacts.forEach((contact, ores) -> appendStratumOres(
+                    summary,
                     out,
                     seen,
                     contact.first(),
@@ -175,63 +215,68 @@ public class WorldgenInfoData {
         return out;
     }
 
-    public static List<Component> veinCaptions(VeinInfo vein) {
-        if (vein.site() != null) return vein.site().captions();
-        double percent = 100.0 * vein.weight() / Math.max(1, vein.totalWeight());
-        boolean end = OreVeinDeclaration.END.equals(vein.dimension());
-        String label = end ? "chance" : "bonus_vein_share";
-        String shape = OreVeinLayout.Shape.forVein(vein.name()).name().toLowerCase(Locale.ROOT);
-        var name = Component.translatableWithFallback("gt6ce.jei.vein." + vein.name(), vein.name());
-        List<Component> lines = new ArrayList<>(List.of(
-                Component.translatable("gt6ce.jei.info.vein_name", name),
-                Component.translatable("gt6ce.jei.info.dimension", vein.dimension())));
-        if (vein.minY() <= vein.maxY()) {
-            lines.add(Component.translatable("gt6ce.jei.info.height", vein.minY(), vein.maxY()));
-            if (vein.weight() > 0)
-                lines.add(
-                        Component.translatable("gt6ce.jei.info." + label, String.format(Locale.ROOT, "%.2f", percent)));
-        }
-        lines.add(Component.translatable(
-                "gt6ce.jei.info.vein_shape", Component.translatable("gt6ce.jei.shape." + shape)));
-        var regional = OreSourceCatalog.current().regionalPlans(vein.dimension()).stream()
-                .filter(plan -> plan.includes(vein.name()))
-                .findFirst()
-                .orElse(null);
-        if (regional != null) {
-            int cells = regional.cells();
-            String spacing = end ? "island_regional_vein" : vein.subregional() ? "subregional_vein" : "regional_vein";
-            lines.add(Component.translatable("gt6ce.jei.info." + spacing, cells * OreVeinLayout.CELL_SIZE));
-            if (vein.reserve() != null) {
-                lines.add(Component.translatable(
-                        "gt6ce.jei.info.vein_reserve_height",
-                        vein.reserve().min(),
-                        vein.reserve().max()));
-            }
-        }
-        return lines;
-    }
-
     public record StratumOre(GTMaterial material, int minY, int maxY, int chanceDiv, String blockId) {}
 
     public record OrePreview(ItemStack stack, List<Component> captions, GTMaterial material) {
-        public List<Component> tooltip() {
+        public List<Component> tooltip(OreGenerationSummary summary) {
             var lines = new ArrayList<>(captions);
-            lines.addAll(oreSourceCaptions(material));
+            lines.addAll(oreSourceCaptions(material, summary));
             return lines;
         }
     }
 
     private record OreIdentity(GTMaterial material, String blockId) {}
 
-    public record StratumInfo(Component host, boolean contact, List<ItemStack> stones, List<StratumOre> ores) {}
+    private record StratumInfo(
+            OreGenerationSummary summary,
+            Component host,
+            HeightRange heights,
+            List<ItemStack> hosts,
+            List<StratumOre> ores)
+            implements VeinInfo {
+        @Override
+        public List<OrePreview> previews() {
+            return stratumPreviews(ores, hosts);
+        }
 
-    public record SpecialSite(List<ItemStack> hosts, List<OrePreview> ores, List<Component> captions) {}
+        @Override
+        public List<Component> captions() {
+            return List.of(
+                    Component.translatable("gt6ce.jei.info.layer_stone", host),
+                    Component.translatable("gt6ce.jei.info.dimension", OreVeinDeclaration.OVERWORLD),
+                    Component.translatable("gt6ce.jei.info.height", heights.min(), heights.max()));
+        }
+
+        @Override
+        public List<ItemStack> aliases() {
+            return stratumAliases(hosts, ores);
+        }
+    }
+
+    private record SpecialSite(
+            OreGenerationSummary summary, List<ItemStack> hosts, List<OrePreview> previews, List<Component> captions)
+            implements VeinInfo {
+        @Override
+        public List<ItemStack> aliases() {
+            var aliases = new ArrayList<>(hosts);
+            var materials = new LinkedHashSet<GTMaterial>();
+            for (var ore : previews) {
+                if (materials.add(ore.material())) {
+                    aliases.addAll(oreAliases(ore.material(), false));
+                    aliases.addAll(oreAliases(ore.material(), true));
+                }
+                if (OreBlock.stoneOfStack(ore.stack()) == OreHostStone.BEDROCK)
+                    aliases.add(OreBlock.brokenStack(ore.material(), OreHostStone.STONE));
+            }
+            return aliases;
+        }
+    }
 
     private static void appendSpecialSites(List<VeinInfo> rows, OreGenerationSummary summary) {
         var active = summary.specialDeposits();
         var coltan = active.get(Kind.COLTAN_FIELD);
         var centre = active.get(Kind.COLTAN_BEDROCK);
-        if (coltan != null || centre != null) rows.add(coltanSite(coltan, centre));
+        if (coltan != null || centre != null) rows.add(coltanSite(summary, coltan, centre));
         var ocean = active.get(Kind.OCEAN_PYLON);
         if (ocean != null) {
             for (var pylon : SpecialOreDeposits.OCEAN_PYLONS) {
@@ -241,9 +286,8 @@ public class WorldgenInfoData {
                 var ore = withHost(oreStack(pylon.material()), hosts);
                 int divisor = SpecialOreDeposits.OCEAN_ORE_DIVISOR;
                 rows.add(specialSite(
-                        pylon.stone().registryId(),
+                        summary,
                         Kind.OCEAN_PYLON,
-                        ocean,
                         hosts,
                         List.of(new OrePreview(ore, List.of(), pylon.material())),
                         List.of(
@@ -268,9 +312,8 @@ public class WorldgenInfoData {
             }
             int rawY = floor.min() + SpecialOreDeposits.DUNGEON_RAW_ORE_OFFSET;
             rows.add(specialSite(
-                    "dungeon_mine",
+                    summary,
                     Kind.DUNGEON_BEDROCK,
-                    floor,
                     List.of(new ItemStack(Items.BEDROCK)),
                     ores,
                     List.of(
@@ -279,7 +322,7 @@ public class WorldgenInfoData {
         }
     }
 
-    private static VeinInfo coltanSite(HeightRange field, HeightRange centre) {
+    private static VeinInfo coltanSite(OreGenerationSummary summary, HeightRange field, HeightRange centre) {
         var ores = new ArrayList<OrePreview>();
         List<Component> captions = new ArrayList<>();
         if (field != null) {
@@ -300,13 +343,7 @@ public class WorldgenInfoData {
             ores.add(new OrePreview(bedrockOreStack(material), List.of(), material));
             captions.add(Component.translatable("gt6ce.jei.info.coltan_centre", centre.min()));
         }
-        return specialSite(
-                "coltan_field",
-                field == null ? Kind.COLTAN_BEDROCK : Kind.COLTAN_FIELD,
-                field == null ? centre : field,
-                List.of(),
-                ores,
-                captions);
+        return specialSite(summary, field == null ? Kind.COLTAN_BEDROCK : Kind.COLTAN_FIELD, List.of(), ores, captions);
     }
 
     private static Component siteMaterialRoll(List<GTMaterial> rolls, GTMaterial material) {
@@ -315,9 +352,8 @@ public class WorldgenInfoData {
     }
 
     private static VeinInfo specialSite(
-            String name,
+            OreGenerationSummary summary,
             Kind kind,
-            HeightRange heights,
             List<ItemStack> hosts,
             List<OrePreview> ores,
             List<Component> details) {
@@ -325,9 +361,11 @@ public class WorldgenInfoData {
         captions.add(sourceName(kind));
         captions.add(Component.translatable("gt6ce.jei.info.dimension", OreVeinDeclaration.OVERWORLD));
         captions.addAll(details);
-        var site = new SpecialSite(
-                hosts, ores.stream().filter(ore -> !ore.stack().isEmpty()).toList(), List.copyOf(captions));
-        return VeinInfo.special(name, heights, site);
+        return new SpecialSite(
+                summary,
+                hosts,
+                ores.stream().filter(ore -> !ore.stack().isEmpty()).toList(),
+                List.copyOf(captions));
     }
 
     private record StratumKey(
@@ -358,17 +396,13 @@ public class WorldgenInfoData {
         return List.copyOf(stones.values());
     }
 
-    public static List<ItemStack> veinHosts(VeinInfo vein) {
-        if (vein.site() != null) return vein.site().hosts();
-        return vein.layer() == null ? List.of() : vein.layer().stones();
-    }
-
     private static Component materialName(String name) {
         GTMaterial material = GTMaterialRegistry.get(name).resolve();
         return material.isValid() ? MaterialPresentation.name(material) : Component.literal(name);
     }
 
     private static void appendStratumOres(
+            OreGenerationSummary summary,
             List<VeinInfo> out,
             Set<StratumKey> seen,
             String above,
@@ -389,21 +423,7 @@ public class WorldgenInfoData {
                 : Component.translatable(contactKey, materialName(above), materialName(below));
         int min = ores.stream().mapToInt(StratumOre::minY).min().orElseThrow();
         int max = ores.stream().mapToInt(StratumOre::maxY).max().orElseThrow();
-        out.add(new VeinInfo(
-                above,
-                "minecraft:overworld",
-                min,
-                max,
-                0,
-                0,
-                null,
-                null,
-                null,
-                null,
-                new StratumInfo(host, below != null, stones, ores),
-                null,
-                false,
-                null));
+        out.add(new StratumInfo(summary, host, new HeightRange(min, max), stones, ores));
     }
 
     private static List<StratumOre> stratumOres(
@@ -445,28 +465,12 @@ public class WorldgenInfoData {
         return List.copyOf(ores);
     }
 
-    private static List<GTMaterial> veinMaterials(VeinInfo vein) {
-        return List.of(vein.top(), vein.bottom(), vein.between(), vein.spread()).stream()
-                .map(GTMaterial::resolve)
-                .distinct()
-                .toList();
-    }
-
     /** Search aliases, not additional guaranteed products. Small ores use the actual crushing target. */
     public static List<ItemStack> oreAliases(GTMaterial material, boolean small) {
         var prefix = small ? MaterialPrefix.crushed : MaterialPrefix.oreRaw;
         GTMaterial target = small ? material.getTargetCrushingMaterial().resolve() : material.resolve();
         ItemStack stack = GTItems.getStack(prefix, target);
         return stack.isEmpty() ? List.of() : List.of(stack);
-    }
-
-    public static List<OrePreview> veinPreviews(VeinInfo vein) {
-        if (vein.site() != null) return vein.site().ores();
-        if (vein.layer() != null) return stratumPreviews(vein.layer().ores(), veinHosts(vein));
-        return veinMaterials(vein).stream()
-                .map(material -> new OrePreview(oreStack(material), List.of(), material))
-                .filter(preview -> !preview.stack().isEmpty())
-                .toList();
     }
 
     public static List<OrePreview> layerPreviews(LayerInfo layer) {
@@ -496,10 +500,9 @@ public class WorldgenInfoData {
         return result;
     }
 
-    public static List<Component> oreSourceCaptions(GTMaterial material) {
+    public static List<Component> oreSourceCaptions(GTMaterial material, OreGenerationSummary summary) {
         var sources = OreSourceCatalog.current().sources(material);
         if (sources.isEmpty()) return List.of();
-        var summary = OreGenerationSummary.current();
         var available = new LinkedHashMap<String, EnumSet<OreSourceCatalog.Kind>>();
         for (var source : sources) {
             if (summary.includes(source)) {
@@ -534,33 +537,6 @@ public class WorldgenInfoData {
         return background == null ? stack : OreBlock.withStone(stack, ore.stateFor(background));
     }
 
-    public static List<ItemStack> veinAliases(VeinInfo vein) {
-        List<ItemStack> aliases = new ArrayList<>(veinHosts(vein));
-        if (vein.site() != null) {
-            var materials = new LinkedHashSet<GTMaterial>();
-            for (var ore : vein.site().ores()) {
-                if (materials.add(ore.material())) {
-                    aliases.addAll(oreAliases(ore.material(), false));
-                    aliases.addAll(oreAliases(ore.material(), true));
-                }
-                if (OreBlock.stoneOfStack(ore.stack()) == OreHostStone.BEDROCK) {
-                    aliases.add(OreBlock.brokenStack(ore.material(), OreHostStone.STONE));
-                }
-            }
-            return aliases;
-        }
-        if (vein.layer() != null) {
-            for (var ore : new LinkedHashSet<>(vein.layer().ores().stream()
-                    .map(entry -> new OreIdentity(entry.material(), entry.blockId()))
-                    .toList())) addOreAliases(aliases, ore);
-            return aliases;
-        }
-        for (GTMaterial material : veinMaterials(vein)) {
-            addOreAliases(aliases, new OreIdentity(material, ""));
-        }
-        return aliases;
-    }
-
     private static void addOreAliases(List<ItemStack> aliases, OreIdentity ore) {
         if (ore.blockId().startsWith("minecraft:")) {
             aliases.addAll(explicitAliases(ore.blockId()));
@@ -589,24 +565,18 @@ public class WorldgenInfoData {
     }
 
     public static List<ItemStack> layerAliases(LayerInfo layer) {
-        var aliases = new ArrayList<ItemStack>();
-        for (var ore : new LinkedHashSet<>(layer.ores().stream()
+        return stratumAliases(List.of(), layer.ores());
+    }
+
+    private static List<ItemStack> stratumAliases(List<ItemStack> hosts, List<StratumOre> ores) {
+        var aliases = new ArrayList<>(hosts);
+        for (var ore : new LinkedHashSet<>(ores.stream()
                 .map(entry -> new OreIdentity(entry.material(), entry.blockId()))
                 .toList())) addOreAliases(aliases, ore);
         return aliases;
     }
 
-    /** Captions shared by JEI and EMI; individual ore heights and rolls belong to their slots. */
-    public static List<Component> stratumCaptions(VeinInfo vein) {
-        StratumInfo info = vein.layer();
-        return List.of(
-                Component.translatable("gt6ce.jei.info.layer_stone", info.host()),
-                Component.translatable("gt6ce.jei.info.dimension", vein.dimension()),
-                Component.translatable("gt6ce.jei.info.height", vein.minY(), vein.maxY()));
-    }
-
-    public static List<SmallOreInfo> buildSmallOres() {
-        var summary = OreGenerationSummary.current();
+    public static List<SmallOreInfo> buildSmallOres(OreGenerationSummary summary) {
         List<SmallOreInfo> out = new ArrayList<>();
         var catalog = OreSourceCatalog.current();
         for (String dimension : catalog.smallOreDimensions()) {
@@ -623,6 +593,7 @@ public class WorldgenInfoData {
                 String attempts = min == max ? Integer.toString(min) : min + "–" + max;
                 String curve = ore.distribution() == GTOreVeins.Distribution.TRIANGLE ? "triangular" : "uniform";
                 out.add(new SmallOreInfo(
+                        summary,
                         List.of(new OrePreview(stack, List.of(), ore.material())),
                         List.of(
                                 Component.translatable("gt6ce.jei.info.dimension", dimension),
@@ -640,6 +611,7 @@ public class WorldgenInfoData {
                     .toList();
             if (!gems.isEmpty()) {
                 out.add(new SmallOreInfo(
+                        summary,
                         gems,
                         List.of(
                                 sourceName(Kind.BOUNDARY_GEM),
@@ -650,8 +622,7 @@ public class WorldgenInfoData {
         return out;
     }
 
-    public static List<LayerInfo> buildLayers() {
-        var summary = OreGenerationSummary.current();
+    public static List<LayerInfo> buildLayers(OreGenerationSummary summary) {
         HeightRange terrain = overworldStrata(summary);
         if (terrain == null) return List.of();
         var layers = new LinkedHashMap<Item, LinkedHashSet<StratumOre>>();
@@ -661,7 +632,7 @@ public class WorldgenInfoData {
                     .addAll(stratumOres(def, stone, false, summary, terrain));
         }
         return layers.entrySet().stream()
-                .map(entry -> new LayerInfo(new ItemStack(entry.getKey()), List.copyOf(entry.getValue())))
+                .map(entry -> new LayerInfo(summary, new ItemStack(entry.getKey()), List.copyOf(entry.getValue())))
                 .toList();
     }
 
@@ -676,10 +647,16 @@ public class WorldgenInfoData {
     }
 
     public record BedrockInfo(
-            String name, String dimension, GTMaterial material, int floor, int chance, int density, ItemStack flower) {}
+            OreGenerationSummary summary,
+            String name,
+            String dimension,
+            GTMaterial material,
+            int floor,
+            int chance,
+            int density,
+            ItemStack flower) {}
 
-    public static List<BedrockInfo> buildBedrockOres() {
-        var summary = OreGenerationSummary.current();
+    public static List<BedrockInfo> buildBedrockOres(OreGenerationSummary summary) {
         var catalog = OreSourceCatalog.current();
         List<BedrockInfo> out = new ArrayList<>();
         summary.bedrock().forEach((dimension, table) -> {
@@ -688,6 +665,7 @@ public class WorldgenInfoData {
                 if (chance == null) continue;
                 Item flower = ore.flowerId() == null ? Items.AIR : Mc.item(Mc.gregtechId(ore.flowerId()));
                 out.add(new BedrockInfo(
+                        summary,
                         ore.name(),
                         dimension,
                         ore.material(),

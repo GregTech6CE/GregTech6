@@ -1,10 +1,11 @@
 package gregtech.compat.jei;
 
+import gregtech.compat.common.RecipeViewerIcons;
 import gregtech.compat.common.WorldgenInfoData;
 import gregtech.content.worldgen.BoundaryGemOres;
+import gregtech.content.worldgen.OreGenerationSummary;
 import gregtech.engine.mod.GregTechIdentity;
 import java.util.ArrayList;
-import java.util.List;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
@@ -13,6 +14,7 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 
@@ -38,13 +40,13 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
         private final IDrawable background, icon, slot;
 
         public VeinCategory(IGuiHelper gui) {
-            int height = buildVeins().stream()
-                    .mapToInt(vein -> captionY(vein) + 10 * captions(vein).size())
+            int height = buildVeins(OreGenerationSummary.current()).stream()
+                    .mapToInt(vein -> captionY(vein) + 10 * vein.captions().size())
                     .max()
                     .orElse(84);
             this.background = gui.createBlankDrawable(176, height);
             this.slot = gui.getSlotDrawable();
-            this.icon = gui.createDrawableItemStack(gregtech.compat.common.RecipeViewerIcons.item("ore_iridium"));
+            this.icon = gui.createDrawableItemStack(RecipeViewerIcons.item("ore_iridium"));
         }
 
         @Override
@@ -69,19 +71,19 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
 
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, VeinInfo vein, IFocusGroup focuses) {
-            builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT).addItemStacks(veinAliases(vein));
-            var stones = veinHosts(vein);
+            builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT).addItemStacks(vein.aliases());
+            var stones = vein.hosts();
             for (int i = 0; i < stones.size(); i++) {
                 builder.addSlot(RecipeIngredientRole.CATALYST, 1 + (i % 8) * 18, 1 + (i / 8) * 18)
                         .setBackground(slot, -1, -1)
                         .addItemStack(stones.get(i));
             }
-            var previews = veinPreviews(vein);
-            var common = captions(vein);
+            var previews = vein.previews();
+            var common = vein.captions();
             for (int i = 0; i < previews.size(); i++) {
                 var preview = previews.get(i);
                 var captions = new ArrayList<>(common);
-                captions.addAll(preview.tooltip());
+                captions.addAll(preview.tooltip(vein.summary()));
                 int index = i + stones.size();
                 builder.addSlot(RecipeIngredientRole.OUTPUT, 1 + (index % 8) * 18, 1 + (index / 8) * 18)
                         .setBackground(slot, -1, -1)
@@ -92,21 +94,17 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
 
         @Override
         public void draw(VeinInfo vein, IRecipeSlotsView view, GuiGraphics g, double mx, double my) {
-            var font = net.minecraft.client.Minecraft.getInstance().font;
+            var font = Minecraft.getInstance().font;
             int y = captionY(vein);
-            for (Component caption : captions(vein)) {
+            for (Component caption : vein.captions()) {
                 g.drawString(font, font.plainSubstrByWidth(caption.getString(), 174), 1, y, 0xFF404040, false);
                 y += 10;
             }
         }
 
         private static int captionY(VeinInfo vein) {
-            int slots = veinPreviews(vein).size() + veinHosts(vein).size();
+            int slots = vein.previews().size() + vein.hosts().size();
             return 4 + Math.max(1, (slots + 7) / 8) * 18;
-        }
-
-        private static List<Component> captions(VeinInfo vein) {
-            return vein.layer() == null ? veinCaptions(vein) : stratumCaptions(vein);
         }
     }
 
@@ -119,7 +117,7 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
             int height = Math.max(62, 34 + poolRows * 18);
             this.background = gui.createBlankDrawable(176, height);
             this.slot = gui.getSlotDrawable();
-            this.icon = gui.createDrawableItemStack(gregtech.compat.common.RecipeViewerIcons.item("ore_small_iridium"));
+            this.icon = gui.createDrawableItemStack(RecipeViewerIcons.item("ore_small_iridium"));
         }
 
         @Override
@@ -148,7 +146,7 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
             for (int i = 0; i < ore.ores().size(); i++) {
                 var preview = ore.ores().get(i);
                 var captions = new ArrayList<>(ore.captions());
-                captions.addAll(preview.tooltip());
+                captions.addAll(preview.tooltip(ore.summary()));
                 builder.addSlot(RecipeIngredientRole.OUTPUT, 1 + (i % 8) * 18, 1 + (i / 8) * 18)
                         .setBackground(slot, -1, -1)
                         .addItemStack(preview.stack())
@@ -158,7 +156,7 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
 
         @Override
         public void draw(SmallOreInfo ore, IRecipeSlotsView view, GuiGraphics g, double mx, double my) {
-            var font = net.minecraft.client.Minecraft.getInstance().font;
+            var font = Minecraft.getInstance().font;
             int y = 4 + ((ore.ores().size() + 7) / 8) * 18;
             for (Component caption : ore.captions()) {
                 g.drawString(font, font.plainSubstrByWidth(caption.getString(), 174), 1, y, 0xFF404040, false);
@@ -174,13 +172,13 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
         public LayerCategory(IGuiHelper gui) {
             int rows = Math.max(
                     1,
-                    buildLayers().stream()
+                    buildLayers(OreGenerationSummary.current()).stream()
                             .mapToInt(layer -> (layerPreviews(layer).size() + 7) / 8)
                             .max()
                             .orElse(1));
             this.background = gui.createBlankDrawable(168, 20 + rows * 18);
             this.slot = gui.getSlotDrawable();
-            this.icon = gui.createDrawableItemStack(gregtech.compat.common.RecipeViewerIcons.item("block_ore_salt"));
+            this.icon = gui.createDrawableItemStack(RecipeViewerIcons.item("block_ore_salt"));
         }
 
         @Override
@@ -214,14 +212,14 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
                 builder.addSlot(RecipeIngredientRole.OUTPUT, 1 + (i % 8) * 18, 20 + (i / 8) * 18)
                         .setBackground(slot, -1, -1)
                         .addItemStack(ore.stack())
-                        .addTooltipCallback((view, tooltip) -> tooltip.addAll(ore.tooltip()));
+                        .addTooltipCallback((view, tooltip) -> tooltip.addAll(ore.tooltip(layer.summary())));
                 i++;
             }
         }
 
         @Override
         public void draw(LayerInfo layer, IRecipeSlotsView view, GuiGraphics g, double mx, double my) {
-            var font = net.minecraft.client.Minecraft.getInstance().font;
+            var font = Minecraft.getInstance().font;
             var title = Component.translatable(
                     "gt6ce.jei.info.layer_stone", layer.stone().getHoverName());
             g.drawString(font, font.plainSubstrByWidth(title.getString(), 144), 22, 5, 0xFF404040, false);
@@ -245,7 +243,7 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
         public BedrockCategory(IGuiHelper gui) {
             this.background = gui.createBlankDrawable(176, 66);
             this.slot = gui.getSlotDrawable();
-            this.icon = gui.createDrawableItemStack(gregtech.compat.common.RecipeViewerIcons.bedrockOre());
+            this.icon = gui.createDrawableItemStack(RecipeViewerIcons.bedrockOre());
         }
 
         @Override
@@ -274,7 +272,8 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
             builder.addSlot(RecipeIngredientRole.OUTPUT, 1, 1)
                     .setBackground(slot, -1, -1)
                     .addItemStack(bedrockOreStack(info.material()))
-                    .addTooltipCallback((view, tooltip) -> tooltip.addAll(oreSourceCaptions(info.material())));
+                    .addTooltipCallback(
+                            (view, tooltip) -> tooltip.addAll(oreSourceCaptions(info.material(), info.summary())));
             if (!info.flower().isEmpty())
                 builder.addSlot(RecipeIngredientRole.CATALYST, 21, 1)
                         .setBackground(slot, -1, -1)
@@ -283,7 +282,7 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
 
         @Override
         public void draw(BedrockInfo info, IRecipeSlotsView view, GuiGraphics g, double mx, double my) {
-            var font = net.minecraft.client.Minecraft.getInstance().font;
+            var font = Minecraft.getInstance().font;
             int y = 24;
             for (Component caption : bedrockCaptions(info)) {
                 g.drawString(font, caption, 1, y, 0xFF404040, false);

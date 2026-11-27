@@ -5,8 +5,8 @@ import dev.emi.emi.api.recipe.*;
 import dev.emi.emi.api.stack.*;
 import dev.emi.emi.api.widget.WidgetHolder;
 import gregtech.compat.common.RecipeViewerIcons;
-import gregtech.compat.common.RecipeViewerRefresh;
 import gregtech.compat.common.WorldgenInfoData;
+import gregtech.content.worldgen.OreGenerationSummary;
 import java.util.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -72,30 +72,27 @@ public final class WorldgenEmiRecipe implements EmiRecipe {
         return Component.translatable("gt6ce.jei.info." + key, args);
     }
 
-    public static void register(EmiRegistry registry) {
-        var atlas = RecipeViewerRefresh.beginBuild();
+    public static void register(EmiRegistry registry, OreGenerationSummary summary) {
         var veins = category(registry, "ore_veins", "ore_veins", RecipeViewerIcons.item("ore_iridium"));
         int index = 0;
-        for (var vein : WorldgenInfoData.buildVeins()) {
-            var previews = WorldgenInfoData.veinPreviews(vein);
+        for (var vein : WorldgenInfoData.buildVeins(summary)) {
+            var previews = vein.previews();
             registry.addRecipe(new WorldgenEmiRecipe(
                             veins,
                             index++,
                             previews.stream()
                                     .map(WorldgenInfoData.OrePreview::stack)
                                     .toList(),
-                            WorldgenInfoData.veinHosts(vein),
-                            vein.layer() == null
-                                    ? WorldgenInfoData.veinCaptions(vein)
-                                    : WorldgenInfoData.stratumCaptions(vein))
-                    .withAliases(WorldgenInfoData.veinAliases(vein))
+                            vein.hosts(),
+                            vein.captions())
+                    .withAliases(vein.aliases())
                     .withOutputTooltips(previews.stream()
-                            .map(WorldgenInfoData.OrePreview::tooltip)
+                            .map(preview -> preview.tooltip(summary))
                             .toList()));
         }
         var small = category(registry, "small_ores_info", "small_ores", RecipeViewerIcons.item("ore_small_iridium"));
         index = 0;
-        for (var ore : WorldgenInfoData.buildSmallOres()) {
+        for (var ore : WorldgenInfoData.buildSmallOres(summary)) {
             registry.addRecipe(new WorldgenEmiRecipe(
                             small,
                             index++,
@@ -106,12 +103,12 @@ public final class WorldgenEmiRecipe implements EmiRecipe {
                             ore.captions())
                     .withAliases(ore.aliases())
                     .withOutputTooltips(ore.ores().stream()
-                            .map(WorldgenInfoData.OrePreview::tooltip)
+                            .map(preview -> preview.tooltip(summary))
                             .toList()));
         }
         var layers = category(registry, "stone_layers_info", "stone_layers", RecipeViewerIcons.item("block_ore_salt"));
         index = 0;
-        for (var layer : WorldgenInfoData.buildLayers()) {
+        for (var layer : WorldgenInfoData.buildLayers(summary)) {
             var previews = WorldgenInfoData.layerPreviews(layer);
             registry.addRecipe(new WorldgenEmiRecipe(
                             layers,
@@ -125,12 +122,12 @@ public final class WorldgenEmiRecipe implements EmiRecipe {
                                     line(layer.ores().isEmpty() ? "layer_no_ores" : "layer_ores")))
                     .withAliases(WorldgenInfoData.layerAliases(layer))
                     .withOutputTooltips(previews.stream()
-                            .map(WorldgenInfoData.OrePreview::tooltip)
+                            .map(preview -> preview.tooltip(summary))
                             .toList()));
         }
         var bedrock = category(registry, "bedrock_ores", "bedrock_ores", RecipeViewerIcons.bedrockOre());
         index = 0;
-        for (var ore : WorldgenInfoData.buildBedrockOres()) {
+        for (var ore : WorldgenInfoData.buildBedrockOres(summary)) {
             registry.addRecipe(new WorldgenEmiRecipe(
                             bedrock,
                             index++,
@@ -138,9 +135,8 @@ public final class WorldgenEmiRecipe implements EmiRecipe {
                             List.of(ore.flower()),
                             WorldgenInfoData.bedrockCaptions(ore))
                     .withAliases(WorldgenInfoData.bedrockAliases(ore))
-                    .withOutputTooltips(List.of(WorldgenInfoData.oreSourceCaptions(ore.material()))));
+                    .withOutputTooltips(List.of(WorldgenInfoData.oreSourceCaptions(ore.material(), summary))));
         }
-        RecipeViewerRefresh.finishBuild(atlas);
     }
 
     @Override

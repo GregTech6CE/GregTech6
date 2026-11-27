@@ -205,33 +205,46 @@ public record OreGenerationSummary(
         var installed = clientSummary;
         if (installed != null) return installed;
         var overworldHeights = OreSourceCatalog.defaultTerrain(OreVeinDeclaration.OVERWORLD);
-        var special = specialDeposits(overworldHeights, overworldHeights, true, true, true, true);
+        boolean geology = GregTechConfig.Worldgen.GEOLOGY.enabled();
+        var special = specialDeposits(
+                overworldHeights,
+                overworldHeights,
+                geology,
+                geology,
+                GregTechConfig.Worldgen.BEDROCK_ORES.enabled(),
+                GregTechConfig.Worldgen.DUNGEONS.enabled() && GTDungeonGenerator.miningBedrockEnabled());
         var catalog = OreSourceCatalog.current();
         var names = new LinkedHashSet<>(catalog.veinDimensions());
         names.addAll(catalog.smallOreDimensions());
         var dimensions = new LinkedHashMap<String, Dimension>();
-        for (String name : names) {
-            dimensions.put(
-                    name,
-                    new Dimension(
-                            OreSourceCatalog.defaultTerrain(name),
-                            catalog.veinDimensions().contains(name),
-                            catalog.smallOreDimensions().contains(name),
-                            OreVeinDeclaration.OVERWORLD.equals(name)));
+        if (geology) {
+            for (String name : names) {
+                dimensions.put(
+                        name,
+                        new Dimension(
+                                OreSourceCatalog.defaultTerrain(name),
+                                catalog.veinDimensions().contains(name),
+                                catalog.smallOreDimensions().contains(name),
+                                OreVeinDeclaration.OVERWORLD.equals(name)));
+            }
         }
         var bedrock = new LinkedHashMap<String, BedrockTable>();
+        int density = 0;
         for (String name : catalog.bedrockDimensions()) {
-            var ores = catalog.bedrockOres(name, OreSourceCatalog.Geology.WITH_VANILLA_ORES);
-            bedrock.put(
-                    name,
-                    BedrockTable.from(OreSourceCatalog.defaultTerrain(name).min(), ores));
+            var generation = GTBedrockOreDimensions.generation(name, dimensions.get(name));
+            if (!generation.ores().isEmpty()) {
+                bedrock.put(
+                        name,
+                        BedrockTable.from(OreSourceCatalog.defaultTerrain(name).min(), generation.ores()));
+                density = generation.density();
+            }
         }
         return new OreGenerationSummary(
                 dimensions,
-                BoundaryGemOres.CHANCE_DIVISOR,
+                GregTechConfig.Number.BOUNDARY_GEM_PROBABILITY.value(),
                 bedrock,
-                GTBedrockOres.DEFAULT_DENSITY_PERCENT,
-                Set.of(),
+                density,
+                StoneLayerOrePlacement.disabledOutputs(),
                 special);
     }
 }

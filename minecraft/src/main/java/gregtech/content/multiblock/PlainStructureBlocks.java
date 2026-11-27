@@ -1,7 +1,8 @@
 package gregtech.content.multiblock;
 
-import com.mojang.logging.LogUtils;
+import gregtech.content.block.OreBlock;
 import gregtech.engine.addon.AddonMachines;
+import gregtech.platform.Mc;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -20,7 +21,7 @@ import org.slf4j.Logger;
 
 /** Block ids and tags named by addon layouts. Ids are resolved once registries exist. */
 public final class PlainStructureBlocks {
-    private static final Logger LOGGER = LogUtils.getLogger();
+    private static final Logger LOGGER = Mc.logger();
     private static final Map<String, Block> RESOLVED = new HashMap<>();
     private static final Set<String> EMPTY_TAG_WARNINGS = new HashSet<>();
 
@@ -29,19 +30,19 @@ public final class PlainStructureBlocks {
     /** Fails startup when a declared block id is not registered. Tags wait until a structure check. */
     public static void resolve() {
         if (!AddonMachines.installed()) return;
-        AddonMachines.requireKnownBlocks(name -> BuiltInRegistries.BLOCK.containsKey(location(name)));
+        AddonMachines.requireKnownBlocks(name -> Mc.hasBlock(location(name)));
         RESOLVED.clear();
         for (AddonMachines.PlainBlock block : AddonMachines.plainBlocks()) {
             if (block.name().startsWith("#")) continue;
-            RESOLVED.put(block.name(), BuiltInRegistries.BLOCK.get(location(block.name())));
+            RESOLVED.put(block.name(), Mc.block(location(block.name())));
         }
     }
 
     public static boolean matches(Level level, BlockPos pos, String plain, BlockState state) {
-        if (plain.equals(SpecialStructures.BEDROCK_FLOOR)) return gregtech.content.block.OreBlock.isBedrockFloor(state);
+        if (plain.equals(SpecialStructures.BEDROCK_FLOOR)) return OreBlock.isBedrockFloor(state);
         if (plain.startsWith(SpecialStructures.FIXED_BLOCK)) {
             var id = location(plain.substring(SpecialStructures.FIXED_BLOCK.length()));
-            return BuiltInRegistries.BLOCK.containsKey(id) && state.is(BuiltInRegistries.BLOCK.get(id));
+            return Mc.hasBlock(id) && state.is(Mc.block(id));
         }
         if (plain.equals("anyopaque")) return state.isSolidRender(level, pos);
         if (plain.startsWith("anyfluid")) {
@@ -78,7 +79,7 @@ public final class PlainStructureBlocks {
                 || plain.startsWith("#")) return null;
         if (plain.startsWith(SpecialStructures.FIXED_BLOCK)) {
             var id = location(plain.substring(SpecialStructures.FIXED_BLOCK.length()));
-            return BuiltInRegistries.BLOCK.containsKey(id) ? BuiltInRegistries.BLOCK.get(id) : null;
+            return Mc.hasBlock(id) ? Mc.block(id) : null;
         }
         return RESOLVED.get(plain);
     }
@@ -101,7 +102,7 @@ public final class PlainStructureBlocks {
         Block chosen = null;
         String chosenId = null;
         for (Holder<Block> holder : holders.get()) {
-            ResourceLocation id = BuiltInRegistries.BLOCK.getKey(holder.value());
+            ResourceLocation id = Mc.blockId(holder.value());
             if (id == null) continue;
             String text = id.toString();
             if (chosenId == null || text.compareTo(chosenId) < 0) {
