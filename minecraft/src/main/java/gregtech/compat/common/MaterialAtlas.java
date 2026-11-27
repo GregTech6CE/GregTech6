@@ -190,6 +190,12 @@ public final class MaterialAtlas {
                 .map(key -> GTMaterialRegistry.get(key.name())).orElse(null);
     }
 
+    public Page toolPage(ItemStack stack) {
+        var head = toolMaterial(stack);
+        var entry = head == null ? null : entries.get(head.resolve());
+        return entry == null || entry.icon.isEmpty() ? null : new Page(Kind.MATERIAL, entry);
+    }
+
     public record RouteKey(String stage, RecipeMap map, Item primaryOutput) {}
     private final Map<GTMaterial, Entry> entries = new LinkedHashMap<>();
     private final Map<Item, Entry> oreInputs = new IdentityHashMap<>();

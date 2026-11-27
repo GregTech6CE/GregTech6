@@ -23,12 +23,11 @@ import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
-public final class AtlasCategory implements IRecipeCategory<MaterialAtlas.Page>, RecipeBorderPreference {
+public final class AtlasCategory implements IRecipeCategory<MaterialAtlas.Page> {
     private final MaterialAtlas.Kind kind;
     private final RecipeType<MaterialAtlas.Page> type;
     private final IDrawable background, icon;
     private final Supplier<IJeiRuntime> runtime;
-    private int height = 138;
 
     AtlasCategory(IGuiHelper gui, MaterialAtlas.Kind kind, Supplier<IJeiRuntime> runtime) {
         this.kind = kind;
@@ -36,7 +35,7 @@ public final class AtlasCategory implements IRecipeCategory<MaterialAtlas.Page>,
         this.type = type(kind);
         this.background = new IDrawable() {
             @Override public int getWidth() { return AtlasPanel.WIDTH; }
-            @Override public int getHeight() { return height; }
+            @Override public int getHeight() { return panelHeight(); }
             @Override public void draw(GuiGraphics g, int x, int y) {}
         };
         this.icon = gui.createDrawableItemStack(kind.icon());
@@ -49,7 +48,7 @@ public final class AtlasCategory implements IRecipeCategory<MaterialAtlas.Page>,
     @Override public IDrawable getBackground() { return background; }
     @Override public IDrawable getIcon() { return icon; }
     @Override public void setRecipe(IRecipeLayoutBuilder builder, MaterialAtlas.Page page, IFocusGroup focuses) {
-        var stacks = page.lookup();
+        var stacks = page.lookup().stream().filter(stack -> MaterialAtlas.toolMaterial(stack) == null).toList();
         var inputs = builder.addInvisibleIngredients(RecipeIngredientRole.INPUT).addItemStacks(stacks);
         var outputs = builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT).addItemStacks(stacks);
         if (kind == MaterialAtlas.Kind.ORE) outputs.addItemStacks(page.byproducts());
@@ -71,53 +70,37 @@ public final class AtlasCategory implements IRecipeCategory<MaterialAtlas.Page>,
         if (fluid.isEmpty()) jei.getRecipesGui().show(factory.createFocus(role, ITEM_STACK, stack));
         else jei.getRecipesGui().show(factory.createFocus(role, FLUID_STACK, fluid));
     }
-    public boolean fitHeight(int available) {
-        // JEI 15 reserves four pixels on each side even when the border is hidden.
-        int padding = 8;
-        //? if >=1.21.1 {
-        /*if (!needsRecipeBorder()) padding = 0;
-        *///?}
-        int next = Math.max(AtlasPanel.TOP + 12, available - padding);
-        if (next == height) return false;
-        height = next;
-        return true;
+    private int panelHeight() {
+        var client = net.minecraft.client.Minecraft.getInstance();
+        return Math.max(64, Math.min(256, client.getWindow().getGuiScaledHeight() - 104));
     }
 
-    public boolean needsRecipeBorder() {
-        return kind != MaterialAtlas.Kind.ORE;
-    }
+    public boolean needsRecipeBorder() { return false; }
 
-    public record PreviewTarget(RecipeType<?> type, Object recipe) {
-        static PreviewTarget of(MaterialAtlas.Preview preview) {
-            if (preview instanceof MaterialAtlas.MachineRow row)
-                return new PreviewTarget(RecipeMapCategory.recipeType(row.map()), row.recipe());
-            var assembly = (MaterialAtlas.Assembly) preview;
-            if (assembly.tool() != null) return new PreviewTarget(ToolAssemblyCategory.TYPE, assembly.tool());
+    private void openProcess(MaterialAtlas.Preview preview) {
+        var jei = runtime.get();
+        if (jei == null) return;
+        if (preview instanceof MaterialAtlas.MachineRow row) {
+            show(jei, RecipeMapCategory.recipeType(row.map()), row.recipe());
+        } else if (preview instanceof MaterialAtlas.Assembly assembly) {
+            if (assembly.tool() != null) show(jei, ToolAssemblyCategory.TYPE, assembly.tool());
 //? if >=1.21.1 {
-            /*return new PreviewTarget(mezz.jei.api.constants.RecipeTypes.CRAFTING,
+            /*else show(jei, mezz.jei.api.constants.RecipeTypes.CRAFTING,
                     new net.minecraft.world.item.crafting.RecipeHolder<>(assembly.id(), assembly.crafting()));
 *///?} else {
-            return new PreviewTarget(mezz.jei.api.constants.RecipeTypes.CRAFTING, assembly.crafting());
+            else show(jei, mezz.jei.api.constants.RecipeTypes.CRAFTING, assembly.crafting());
 //?}
         }
     }
 
-    // JEI creates its ingredient lookup synchronously on the client thread.
-    private static PreviewTarget openingPreview;
-
-    public static PreviewTarget openingPreview() { return openingPreview; }
-
-    private void jump(ItemStack stack, MaterialAtlas.Preview preview) {
-        var previous = openingPreview;
-        openingPreview = PreviewTarget.of(preview);
-        try {
-            open(stack, false);
-        } finally {
-            openingPreview = previous;
-        }
+    private static <T> void show(IJeiRuntime jei, RecipeType<T> type, T recipe) {
+        var category = jei.getRecipeManager().getRecipeCategory(type);
+        jei.getRecipesGui().showRecipes(category, java.util.List.of(recipe), java.util.List.of());
     }
+
     @Override public void createRecipeExtras(IRecipeExtrasBuilder builder, MaterialAtlas.Page page, IFocusGroup focuses) {
-        var panel = new AtlasPanel(page, height, this::jump, () -> {
+        int height = panelHeight();
+        var panel = new AtlasPanel(page, height, this::openProcess, () -> {
             var jei = runtime.get();
             if (jei == null) return;
             var category = jei.getRecipeManager().getRecipeCategory(type(MaterialAtlas.Kind.MATERIAL));
@@ -143,6 +126,7 @@ public final class AtlasCategory implements IRecipeCategory<MaterialAtlas.Page>,
                             .ifPresent(tooltip::setIngredient);
                     tooltip.addAll(net.minecraft.client.gui.screens.Screen.getTooltipFromItem(client, stack));
                 }
+                if (panel.workstationAt(x, y) != null) tooltip.add(MaterialAtlas.label("open_process"));
                 var card = panel.card(x, y);
                 if (card != null) tooltip.add(card);
             }
@@ -155,13 +139,25 @@ public final class AtlasCategory implements IRecipeCategory<MaterialAtlas.Page>,
             @Override public ScreenRectangle getArea() { return new ScreenRectangle(0, 0, AtlasPanel.WIDTH, height); }
             @Override public boolean keyPressed(double x, double y, int key, int scan, int mods) {
                 var jei = runtime.get();
-                return jei != null && jei.getKeyMappings().getShowRecipe()
-                        .isActiveAndMatches(com.mojang.blaze3d.platform.InputConstants.getKey(key, scan)) && panel.jump(x, y);
+                var stack = panel.hovered(x, y);
+                if (jei == null || stack.isEmpty()) return false;
+                var input = com.mojang.blaze3d.platform.InputConstants.getKey(key, scan);
+                var mappings = jei.getKeyMappings();
+                boolean uses = mappings.getShowUses().isActiveAndMatches(input);
+                if (!uses && !mappings.getShowRecipe().isActiveAndMatches(input)) return false;
+                open(stack, uses);
+                return true;
             }
             @Override public boolean mouseClicked(double x, double y, int button) {
+                if (button != 0 && button != 1 || net.minecraft.client.gui.screens.Screen.hasShiftDown()
+                        || net.minecraft.client.gui.screens.Screen.hasControlDown()
+                        || net.minecraft.client.gui.screens.Screen.hasAltDown()) return false;
                 dragging = button == 0 && panel.scrollbar(x, y);
-                return dragging || panel.click(x, y, button,
-                        net.minecraft.client.gui.screens.Screen.hasShiftDown(), AtlasCategory.this::open);
+                if (dragging || button == 0 && panel.clickControl(x, y)) return true;
+                var stack = panel.hovered(x, y);
+                if (stack.isEmpty()) return false;
+                open(stack, button == 1);
+                return true;
             }
             @Override public boolean mouseReleased(double x, double y, int button) {
                 boolean wasDragging = dragging;

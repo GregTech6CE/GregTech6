@@ -5,9 +5,11 @@ import gregtech.api.material.GTValues;
 import gregtech.client.PreviewViewport;
 import gregtech.client.gui.GuiTemplates;
 import gregtech.compat.common.MaterialAtlas.*;
+import gregtech.content.data.MachineRecipeMaps;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeMap;
 import java.util.*;
-import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -20,11 +22,12 @@ public final class AtlasPanel {
     private final Page page;
     private final Cell header;
     private final List<Cell> cells = new ArrayList<>();
+    private final List<Station> stations = new ArrayList<>();
     private final List<Caption> captions = new ArrayList<>();
     private final List<Line> lines = new ArrayList<>();
     private int height, scroll, recipeRevision;
     private final int bottom;
-    private final BiConsumer<ItemStack, Preview> openRecipe;
+    private final Consumer<Preview> openRecipe;
     private final Runnable openMaterial;
     private AtlasRecipeCard card;
     private Cell cardCell;
@@ -32,6 +35,12 @@ public final class AtlasPanel {
     private record Caption(Component text, int x, int y, int width) {}
 
     private record Line(int x, int y, int right, int bottom) {}
+
+    private record Station(int x, int y, Preview recipe) {
+        boolean contains(double mouseX, double docY) {
+            return mouseX >= x && mouseX < x + 14 && docY >= y && docY < y + 14;
+        }
+    }
 
     private record Output(ItemStack stack, String detail) {
         @Override
@@ -47,7 +56,11 @@ public final class AtlasPanel {
         }
     }
 
-    private record Choice(MachineRow row, List<Output> outputs) {}
+    private record Choice(List<MachineRow> machines, List<Output> outputs) {
+        MachineRow row() {
+            return machines.get(0);
+        }
+    }
 
     private static final int OUTPUT_COLS = 3, OUTPUT_PITCH = 22, OUTPUT_ROW = 26;
     private static final int ARROW_WIDTH = 14, ARROW_HEIGHT = 12, ARROW_GAP = 3;
@@ -61,26 +74,35 @@ public final class AtlasPanel {
         final List<Choice> choices;
         int variant;
 
-        Cell(int x, int y, int width, ItemStack stack, Assembly assembly, Route route) {
+        Cell(int x, int y, int width, ItemStack stack, Assembly assembly) {
+            this(x, y, width, stack, assembly, null, List.of());
+        }
+
+        Cell(int x, int y, int width, ItemStack stack, Assembly assembly, Route route, List<Choice> choices) {
             this.x = x;
             this.y = y;
             this.width = width;
             this.stack = stack;
             this.assembly = assembly;
             this.route = route;
-            int max = 0;
-            if (route == null) choices = List.of();
-            else {
-                choices = new ArrayList<>();
-                var seenOutputs = new HashSet<ImmutableMultiset<Output>>();
-                for (var row : route.variants()) {
-                    var outputs = outputsOf(row);
-                    if (!seenOutputs.add(ImmutableMultiset.copyOf(outputs))) continue;
-                    choices.add(new Choice(row, outputs));
-                    max = Math.max(max, outputs.size());
-                }
-            }
+            this.choices = choices;
+            int max = choices.stream()
+                    .mapToInt(choice -> choice.outputs().size())
+                    .max()
+                    .orElse(0);
             outputRows = (max + OUTPUT_COLS - 1) / OUTPUT_COLS;
+        }
+
+        static List<Choice> choicesOf(Route route) {
+            var variants = new LinkedHashMap<ImmutableMultiset<Output>, Choice>();
+            for (var row : route.variants()) {
+                var outputs = outputsOf(row);
+                var choice = variants.computeIfAbsent(
+                        ImmutableMultiset.copyOf(outputs), key -> new Choice(new ArrayList<>(), outputs));
+                if (choice.machines().stream().noneMatch(machine -> machine.map() == row.map()))
+                    choice.machines().add(row);
+            }
+            return List.copyOf(variants.values());
         }
 
         private static List<Output> outputsOf(MachineRow row) {
@@ -137,13 +159,12 @@ public final class AtlasPanel {
         }
     }
 
-    public AtlasPanel(
-            Page page, int availableHeight, BiConsumer<ItemStack, Preview> openRecipe, Runnable openMaterial) {
+    public AtlasPanel(Page page, int availableHeight, Consumer<Preview> openRecipe, Runnable openMaterial) {
         this.bottom = availableHeight - 2;
         this.openRecipe = openRecipe;
         this.openMaterial = openMaterial;
         this.page = page;
-        header = new Cell(1, 2, 18, page.entry().icon(), null, null);
+        header = new Cell(1, 2, 18, page.entry().icon(), null);
         if (page.kind() == Kind.ORE) oreChart();
         else materialChart();
     }
@@ -154,24 +175,25 @@ public final class AtlasPanel {
     }
 
     private void grid(List<ItemStack> stacks, List<Assembly> tools) {
-        for (int i = 0; i < stacks.size(); i++)
-            cells.add(new Cell(
-                    3 + i % 9 * 18,
-                    height + i / 9 * 18,
-                    18,
-                    stacks.get(i),
-                    tools.isEmpty() ? null : tools.get(i),
-                    null));
-        height += (stacks.size() + 8) / 9 * 18 + 3;
+        for (int i = 0; i < stacks.size(); i++) {
+            int x = 3 + i % 5 * 33;
+            int y = height + i / 5 * 19;
+            var cell = new Cell(x, y, 18, stacks.get(i), tools.isEmpty() ? null : tools.get(i));
+            cells.add(cell);
+            var recipe = cell.recipe(page.entry());
+            if (recipe != null && !recipe.workstation().isEmpty()) stations.add(new Station(x + 18, y + 2, recipe));
+        }
+        height += (stacks.size() + 4) / 5 * 19 + 3;
     }
 
     private void materialChart() {
         Entry e = page.entry();
+        recipeRevision = e.recipeRevision;
         if (!e.material.getCompositionComponents().isEmpty()) {
             section(MaterialAtlas.label("composition"));
             for (var part : e.material.getCompositionComponents()) {
                 var ingredient = e.component(part.material());
-                if (ingredient != null) cells.add(new Cell(3, height, 18, ingredient.icon(), null, null));
+                if (ingredient != null) cells.add(new Cell(3, height, 18, ingredient.icon(), null));
                 var amount = java.math.BigDecimal.valueOf(part.amount())
                         .divide(java.math.BigDecimal.valueOf(GTValues.U), 4, java.math.RoundingMode.HALF_UP)
                         .stripTrailingZeros()
@@ -226,17 +248,14 @@ public final class AtlasPanel {
             int size = Math.min(18, Math.max(1, (RIGHT - 3) / byproducts.size()));
             int x = 3;
             for (var stack : byproducts) {
-                cells.add(new Cell(x, height, size, stack, null, null));
+                cells.add(new Cell(x, height, size, stack, null));
                 x += size;
             }
             height += size + 4;
         }
         for (var stage : MaterialAtlas.STAGES) {
             if (!MaterialAtlas.stage(stage).equals(stage)) continue;
-            var branches = entry.routes.entrySet().stream()
-                    .filter(r -> stage.equals(r.getKey().stage()))
-                    .map(Map.Entry::getValue)
-                    .toList();
+            var branches = processRoutes(entry, stage);
             if (branches.isEmpty()) continue;
             var forms = entry.forms.stream()
                     .filter(f ->
@@ -249,7 +268,7 @@ public final class AtlasPanel {
                     height += 18;
                     fx = 3;
                 }
-                cells.add(new Cell(fx, height, 18, form.stack(), null, null));
+                cells.add(new Cell(fx, height, 18, form.stack(), null));
                 fx += 18;
             }
             Component title = forms.get(0).stack().getHoverName();
@@ -273,15 +292,43 @@ public final class AtlasPanel {
                     lines.add(new Line(tip, mid, tip + 1, mid + 5));
                     lines.add(new Line(tip - 1, mid + 3, tip + 2, mid + 4));
                     var route = branches.get(i + j);
-                    var cell = new Cell(x, height + 7, 71, route.feed(), null, route);
-                    cells.add(cell);
-                    rowHeight = Math.max(rowHeight, cell.height());
+                    var choices = Cell.choicesOf(route);
+                    // Keep each device visible, including devices with different yields for the same process.
+                    var rows = route.variants().stream().anyMatch(row -> row.map() != route.map())
+                            ? choices.stream().map(List::of).toList()
+                            : List.of(choices);
+                    int y = height + 7;
+                    for (var variants : rows) {
+                        var cell = new Cell(x, y, 71, route.feed(), null, route, variants);
+                        cells.add(cell);
+                        if (y > height + 7) lines.add(new Line(x - 2, y + 7, x + 1, y + 8));
+                        y += cell.height() + 2;
+                    }
+                    if (rows.size() > 1) lines.add(new Line(x - 2, mid, x - 1, cells.get(cells.size() - 1).y + 8));
+                    rowHeight = Math.max(rowHeight, y - height - 9);
                 }
                 trunk = mid;
                 height += 10 + rowHeight;
             }
             height += 4;
         }
+    }
+
+    private static List<Route> processRoutes(Entry entry, String stage) {
+        record Process(RecipeMap family, net.minecraft.world.item.Item output) {}
+        var routes = new LinkedHashMap<Process, Route>();
+        entry.routes.forEach((key, route) -> {
+            if (!key.stage().equals(stage)) return;
+            var family = key.map();
+            if (family == MachineRecipeMaps.Hammer || family == MachineRecipeMaps.Anvil)
+                family = MachineRecipeMaps.Crusher;
+            if (family == MachineRecipeMaps.Mortar) family = MachineRecipeMaps.Shredder;
+            var group = routes.computeIfAbsent(
+                    new Process(family, key.primaryOutput()),
+                    ignored -> new Route(route.feed(), route.map(), new ArrayList<>()));
+            group.variants().addAll(route.variants());
+        });
+        return List.copyOf(routes.values());
     }
 
     private int limit() {
@@ -337,24 +384,34 @@ public final class AtlasPanel {
         return index < cell.choice().outputs().size() ? index : -1;
     }
 
-    public boolean click(double x, double y, int button, boolean shiftDown, BiConsumer<ItemStack, Boolean> open) {
-        if (button != 0 && button != 1) return false;
+    public Preview workstationAt(double x, double y) {
+        if (x < 0 || x >= RIGHT || y < TOP || y >= bottom) return null;
+        double docY = y - TOP + scroll;
+        for (var station : stations) {
+            if (station.contains(x, docY)) return station.recipe;
+        }
         var c = hit(x, y);
-        if (c == null) return false;
-        if (button == 0 && shiftDown && jump(x, y)) return true;
-        if (c == header && page.kind() == Kind.ORE && button == 0) {
+        if (c == null || c.route == null || docY >= c.y + 14) return null;
+        double dx = x - c.x - 1;
+        int index = (int) dx / 16;
+        return dx >= 0 && dx % 16 < 14 && index < c.choice().machines().size()
+                ? c.choice().machines().get(index)
+                : null;
+    }
+
+    public boolean clickControl(double x, double y) {
+        var recipe = workstationAt(x, y);
+        if (recipe != null) {
+            openRecipe.accept(recipe);
+            return true;
+        }
+        if (page.kind() == Kind.ORE && x >= 23 && x < RIGHT && y >= 1 && y < 11) {
             openMaterial.run();
             return true;
         }
-        var s = hovered(x, y);
-        if (!s.isEmpty()) {
-            open.accept(s, button == 1);
-            return true;
-        }
-        if (c.choices.size() < 2) return false;
-        double docY = y - TOP + scroll;
-        int direction = button == 0 ? c.arrowAt(x, docY) : 0;
-        if (docY < c.y + 14) direction = button == 0 ? 1 : -1;
+        var c = hit(x, y);
+        if (c == null || c.choices.size() < 2) return false;
+        int direction = c.arrowAt(x, y - TOP + scroll);
         if (direction == 0) return false;
         c.variant = Math.floorMod(c.variant + direction, c.choices.size());
         return true;
@@ -362,12 +419,14 @@ public final class AtlasPanel {
 
     public void draw(GuiGraphics g, double mouseX, double mouseY) {
         var e = page.entry();
-        if (page.kind() == Kind.ORE && recipeRevision != e.recipeRevision) {
+        if (recipeRevision != e.recipeRevision) {
             cells.clear();
+            stations.clear();
             captions.clear();
             lines.clear();
             height = 0;
-            oreChart();
+            if (page.kind() == Kind.ORE) oreChart();
+            else materialChart();
             position(scroll);
         }
         g.renderItem(e.icon(), 2, 3);
@@ -389,6 +448,7 @@ public final class AtlasPanel {
         g.enableScissor(region.left(), region.top(), region.right(), region.bottom());
         g.pose().popPose();
         var selected = hit(mouseX, mouseY);
+        var hoveredStation = workstationAt(mouseX, mouseY);
         try {
             g.pose().pushPose();
             g.pose().translate(0, TOP - scroll, 0);
@@ -400,14 +460,18 @@ public final class AtlasPanel {
                     if (c.route != null) {
                         var choice = c.choice();
                         var recipe = choice.row();
-                        if (!recipe.workstation().isEmpty()) {
+                        for (int i = 0; i < choice.machines().size(); i++) {
+                            var machine = choice.machines().get(i);
+                            int stationX = c.x + 1 + i * 16;
                             g.pose().pushPose();
-                            g.pose().translate(c.x + 1, c.y, 0);
+                            g.pose().translate(stationX, c.y, 0);
                             g.pose().scale(14f / 16, 14f / 16, 1);
-                            g.renderItem(recipe.workstation(), 0, 0);
+                            g.renderItem(machine.workstation(), 0, 0);
                             g.pose().popPose();
+                            if (selected == c && hoveredStation == machine)
+                                g.fill(stationX, c.y, stationX + 14, c.y + 14, 0x66ffffff);
                         }
-                        text(g, recipe.title(), c.x + 17, c.y + 3, c.width - 17);
+                        if (choice.machines().size() == 1) text(g, recipe.title(), c.x + 17, c.y + 3, c.width - 17);
                         for (int i = 0; i < choice.outputs().size(); i++) {
                             var output = choice.outputs().get(i);
                             int sx = c.x + 4 + i % OUTPUT_COLS * OUTPUT_PITCH;
@@ -443,6 +507,16 @@ public final class AtlasPanel {
                             g.fill(c.x + 1, c.y + 1, c.x + c.width - 1, c.y + c.height() - 1, 0x66ffffff);
                     }
                 }
+            for (var station : stations) {
+                if (!visible(station.y, 14)) continue;
+                g.pose().pushPose();
+                g.pose().translate(station.x + 2, station.y + 2, 0);
+                g.pose().scale(10f / 16, 10f / 16, 1);
+                g.renderItem(station.recipe.workstation(), 0, 0);
+                g.pose().popPose();
+                if (hoveredStation == station.recipe && station.contains(mouseX, mouseY - TOP + scroll))
+                    g.fill(station.x, station.y, station.x + 14, station.y + 14, 0x66ffffff);
+            }
             g.pose().popPose();
             g.flush();
         } finally {
@@ -486,6 +560,8 @@ public final class AtlasPanel {
     }
 
     public ItemStack hovered(double x, double y) {
+        var station = workstationAt(x, y);
+        if (station != null) return station.workstation();
         var cell = hit(x, y);
         if (cell == null) return ItemStack.EMPTY;
         if (cell.route == null) return cell.stack;
@@ -503,12 +579,5 @@ public final class AtlasPanel {
             cardCell = cell;
         }
         return card;
-    }
-
-    public boolean jump(double x, double y) {
-        var selected = card(x, y);
-        if (selected == null) return false;
-        openRecipe.accept(hovered(x, y), selected.preview());
-        return true;
     }
 }

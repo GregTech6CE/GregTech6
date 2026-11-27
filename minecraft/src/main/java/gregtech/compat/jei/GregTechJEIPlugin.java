@@ -71,8 +71,10 @@ public final class GregTechJEIPlugin implements IModPlugin {
     private static volatile GregTechJEIPlugin active;
     private mezz.jei.api.runtime.IJeiRuntime runtime;
 
-    public static mezz.jei.api.runtime.IIngredientManager ingredients() {
-        return active.runtime.getIngredientManager();
+    @Override
+    public void registerAdvanced(mezz.jei.api.registration.IAdvancedRegistration registration) {
+        registration.addTypedRecipeManagerPlugin(AtlasCategory.type(MaterialAtlas.Kind.MATERIAL),
+                new AtlasToolLookup(() -> atlas));
     }
     private final Map<RecipeMap, List<Recipe>> shownRows = new LinkedHashMap<>();
     private final Map<RecipeMap, java.util.Set<Recipe>> knownRows = new LinkedHashMap<>();

@@ -15,7 +15,6 @@ import net.minecraft.resources.ResourceLocation;
 public final class AtlasEmiRecipe implements EmiRecipe {
     private static final Comparison TOOL_HEAD =
             Comparison.compareData(stack -> MaterialAtlas.toolMaterial(stack.getItemStack()));
-    private static MaterialAtlas.Preview keyboardPreview;
     private final MaterialAtlas.Page page;
     private final EmiRecipeCategory category;
     private final List<EmiStack> lookups;
@@ -100,21 +99,14 @@ public final class AtlasEmiRecipe implements EmiRecipe {
         return net.minecraft.client.Minecraft.getInstance().getWindow().getGuiScaledHeight();
     }
 
-    public static void focusKeyboardPreview() {
-        if (keyboardPreview == null) return;
-        var target = EmiApi.getRecipeManager().getRecipe(keyboardPreview.id());
-        if (target != null) EmiApi.focusRecipe(target);
-    }
-
     @Override
     public void addWidgets(WidgetHolder widgets) {
         var panel = new AtlasPanel(
                 page,
                 widgets.getHeight(),
-                (stack, preview) -> {
-                    EmiApi.displayRecipes(ingredient(stack));
+                preview -> {
                     var target = EmiApi.getRecipeManager().getRecipe(preview.id());
-                    if (target != null) EmiApi.focusRecipe(target);
+                    if (target != null) EmiApi.displayRecipe(target);
                 },
                 () -> {
                     var id = ResourceLocation.fromNamespaceAndPath(
@@ -155,6 +147,9 @@ public final class AtlasEmiRecipe implements EmiRecipe {
                 var stack = panel.hovered(x, y);
                 if (stack.isEmpty()) return List.of();
                 var lines = new java.util.ArrayList<>(ingredient(stack).getTooltip());
+                if (panel.workstationAt(x, y) != null)
+                    lines.add(net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent.create(
+                            MaterialAtlas.label("open_process").getVisualOrderText()));
                 var card = panel.card(x, y);
                 if (card != null) lines.add(card);
                 return lines;
@@ -163,14 +158,18 @@ public final class AtlasEmiRecipe implements EmiRecipe {
             @Override
             public boolean keyPressed(int key, int scan, int modifiers) {
                 if (getStack().isEmpty()) return false;
-                var previous = keyboardPreview;
+                var screen = net.minecraft.client.Minecraft.getInstance().screen;
+                boolean handled = super.keyPressed(key, scan, modifiers);
+                if (handled) focusInResults(screen);
+                return handled;
+            }
+
+            private void focusInResults(net.minecraft.client.gui.screens.Screen previousScreen) {
+                if (net.minecraft.client.Minecraft.getInstance().screen == previousScreen) return;
                 var card = panel.card(mouseX, mouseY);
-                keyboardPreview = card == null ? null : card.preview();
-                try {
-                    return super.keyPressed(key, scan, modifiers);
-                } finally {
-                    keyboardPreview = previous;
-                }
+                if (card == null) return;
+                var target = EmiApi.getRecipeManager().getRecipe(card.preview().id());
+                if (target != null) EmiApi.focusRecipe(target);
             }
 
             @Override
@@ -193,12 +192,16 @@ public final class AtlasEmiRecipe implements EmiRecipe {
             public boolean mouseClicked(int x, int y, int button) {
                 mouseX = x;
                 mouseY = y;
-                return panel.click(
-                                x, y, button, net.minecraft.client.gui.screens.Screen.hasShiftDown(), (stack, uses) -> {
-                                    if (uses) EmiApi.displayUses(ingredient(stack));
-                                    else EmiApi.displayRecipes(ingredient(stack));
-                                })
-                        || (!getStack().isEmpty() && super.mouseClicked(x, y, button));
+                if (button == 0
+                        && !net.minecraft.client.gui.screens.Screen.hasShiftDown()
+                        && !net.minecraft.client.gui.screens.Screen.hasControlDown()
+                        && !net.minecraft.client.gui.screens.Screen.hasAltDown()
+                        && panel.clickControl(x, y)) return true;
+                if (getStack().isEmpty()) return false;
+                var screen = net.minecraft.client.Minecraft.getInstance().screen;
+                boolean handled = super.mouseClicked(x, y, button);
+                if (handled) focusInResults(screen);
+                return handled;
             }
         }
         widgets.add(new AtlasSlot());

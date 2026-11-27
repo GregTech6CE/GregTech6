@@ -20,13 +20,4 @@ public abstract class EmiStructureFocusMixin {
     private static void gregtech$focusControllerStructure(EmiIngredient ingredient, CallbackInfo callback) {
         StructureEmiRecipe.focusControllerUses(ingredient);
     }
-
-    @Inject(
-            method = "displayRecipes(Ldev/emi/emi/api/stack/EmiIngredient;)V",
-            at = @At("TAIL"),
-            require = 1,
-            remap = false)
-    private static void gregtech$focusAtlas(EmiIngredient ingredient, CallbackInfo callback) {
-        gregtech.compat.emi.AtlasEmiRecipe.focusKeyboardPreview();
-    }
 }
