@@ -5,6 +5,7 @@
     "gt6ce:gt_stone_layers",
     "gt6ce:gt_ore_veins",
     "gt6ce:gt_small_ores",
+    "gt6ce:gt_coltan",
     "gt6ce:gt_bedrock_ores"
   ],
   "step": "underground_ores"

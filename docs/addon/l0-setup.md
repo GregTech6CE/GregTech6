@@ -22,9 +22,9 @@
 
 | 产物坐标 | 内容与输出 |
 | --- | --- |
-| `gregtech:gt6ce-api:1.10.0` | Java 17 公共协议、模型、声明和宿主服务接口；`api/common/build/libs/` |
-| `gregtech:gt6ce-addon-sdk-1.20.1-forge:1.10.0` | Java 17、Mojang 名称的 Forge 游戏侧 API；对应节点 `build/addon-sdk/` |
-| `gregtech:gt6ce-addon-sdk-1.21.1-neoforge:1.10.0` | Java 21 的 NeoForge 游戏侧 API；对应节点 `build/addon-sdk/` |
+| `gregtech:gt6ce-api:1.11.0` | Java 17 公共协议、模型、声明和宿主服务接口；`api/common/build/libs/` |
+| `gregtech:gt6ce-addon-sdk-1.20.1-forge:1.11.0` | Java 17、Mojang 名称的 Forge 游戏侧 API；对应节点 `build/addon-sdk/` |
+| `gregtech:gt6ce-addon-sdk-1.21.1-neoforge:1.11.0` | Java 21 的 NeoForge 游戏侧 API；对应节点 `build/addon-sdk/` |
 
 这些是构建配置中的坐标，不表示已发布到公共 Maven 仓库。版本规则见下节[API 版本](#api-版本)。
 
@@ -38,7 +38,7 @@
 
 ## API 版本
 
-当前分支使用 API `1.10.0`，版本独立于模组版本，以 [api/common/build.gradle](../../api/common/build.gradle) 为准。`GregTechAddons.apiVersion()` 返回 `major * 1000 + minor`，1.10 为 `1010`。可以用 `GregTechAddons.apiVersion()` 或 `GregTechAddon.Context.apiVersion()` 判断特性版本，例如 1.10 使用 `>= 1010`。从旧版升级时，按[旧入口迁移](compatibility.md#旧入口迁移)更新代码，并使用匹配目标加载器和运行时构建的 SDK 重新编译附属。修改内联 API 时同步构建配置与 `GregTechAddons` 的版本。
+当前分支使用 API `1.11.0`，版本独立于模组版本，以 [api/common/build.gradle](../../api/common/build.gradle) 为准。`GregTechAddons.apiVersion()` 返回 `major * 1000 + minor`，1.11 为 `1011`。可以用 `GregTechAddons.apiVersion()` 或 `GregTechAddon.Context.apiVersion()` 判断特性版本，例如绝对矿脉高度使用 `>= 1011`。从旧版升级时，按[旧入口迁移](compatibility.md#旧入口迁移)更新代码，并使用匹配目标加载器和运行时构建的 SDK 重新编译附属。修改内联 API 时同步构建配置与 `GregTechAddons` 的版本。
 
 宿主专用的 `StructureGrid` 与 `RecipeMapSpec` 不属于附属契约：它们分别位于 `gregtech.content.multiblock` 与 `gregtech.content.recipe`，编码内置多方块几何和配方表，附属不应依赖。
 

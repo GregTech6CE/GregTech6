@@ -3,7 +3,6 @@ package gregtech.content.worldgen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
@@ -247,9 +246,4 @@ public class GTSurfaceFloraFeature extends Feature<NoneFeatureConfiguration> {
         Holder<Biome> biome = level.getBiome(new BlockPos(x, level.getSeaLevel(), z));
         return biome.unwrapKey().map(ResourceKey::location).orElse(null);
     }
-
-    /** Registry key of the configured feature (data file {@code worldgen/configured_feature/gt_surface_flora.json}). */
-    public static final ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> CONFIGURED =
-            ResourceKey.create(
-                    Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_surface_flora"));
 }

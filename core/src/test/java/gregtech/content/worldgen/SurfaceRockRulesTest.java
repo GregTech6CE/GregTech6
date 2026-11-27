@@ -30,8 +30,22 @@ class SurfaceRockRulesTest {
         state.replaced("GraniteRed");
         state.ore("Tetrahedrite", true);
         assertEquals("Tetrahedrite", state.lastOre());
-        assertEquals("crushed-Tetrahedrite", SurfaceRockRules.rockMaterial(state, () -> true, TARGET));
-        assertEquals("GraniteRed", SurfaceRockRules.rockMaterial(state, () -> false, TARGET));
+        assertEquals(
+                new SurfaceRockRules.Pebble("crushed-Tetrahedrite", true), SurfaceRockRules.pebble(state, 2, TARGET));
+        assertEquals(new SurfaceRockRules.Pebble("GraniteRed", false), SurfaceRockRules.pebble(state, 0, TARGET));
+    }
+
+    @Test
+    void anOreAndItsHostCanShareTheSameMaterial() {
+        var state = new SurfaceRockRules.ColumnState();
+        state.replaced("Gypsum");
+        state.ore("Gypsum", true);
+        assertEquals(
+                new SurfaceRockRules.Pebble("Gypsum", true),
+                SurfaceRockRules.pebble(state, 2, UnaryOperator.identity()));
+        assertEquals(
+                new SurfaceRockRules.Pebble("Gypsum", false),
+                SurfaceRockRules.pebble(state, 0, UnaryOperator.identity()));
     }
 
     @Test
@@ -40,7 +54,7 @@ class SurfaceRockRulesTest {
         state.replaced("GraniteRed");
         state.ore("Diamond", false);
         assertNull(state.lastOre());
-        assertEquals("GraniteRed", SurfaceRockRules.rockMaterial(state, () -> true, TARGET));
+        assertEquals(new SurfaceRockRules.Pebble("GraniteRed", false), SurfaceRockRules.pebble(state, 2, TARGET));
     }
 
     @Test
@@ -71,8 +85,8 @@ class SurfaceRockRulesTest {
 
     @Test
     void rollUsesOneIn128() {
-        assertTrue(SurfaceRockRules.roll(bound -> 0));
-        assertFalse(SurfaceRockRules.roll(bound -> 1));
+        assertTrue(SurfaceRockRules.roll(99));
+        assertFalse(SurfaceRockRules.roll(0));
         assertEquals(128, SurfaceRockRules.CHANCE_DIVISOR);
     }
 }

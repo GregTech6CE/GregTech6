@@ -1,13 +1,16 @@
 package gregtech.compat.emi;
 
+import dev.emi.emi.api.EmiApi;
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.*;
 import dev.emi.emi.api.stack.*;
 import dev.emi.emi.api.widget.*;
+import gregtech.client.MultiblockPreviewPanel;
 import gregtech.client.PreviewViewport;
+import gregtech.compat.common.RecipeViewerIcons;
 import gregtech.content.multiblock.MultiblockInfoData;
+import gregtech.platform.Mc;
 import java.util.*;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
@@ -16,7 +19,7 @@ public final class StructureEmiRecipe implements EmiRecipe {
     private static final EmiRecipeCategory CATEGORY =
             new EmiRecipeCategory(
                     ResourceLocation.fromNamespaceAndPath("gt6ce", "multiblock_assembly"),
-                    EmiStack.of(gregtech.compat.common.RecipeViewerIcons.item("distillation_tower_main"))) {
+                    EmiStack.of(RecipeViewerIcons.item("distillation_tower_main"))) {
                 @Override
                 public Component getName() {
                     return Component.translatable("gt6ce.jei.assembly");
@@ -34,9 +37,9 @@ public final class StructureEmiRecipe implements EmiRecipe {
         outputs = List.of(EmiStack.of(info.controller()));
     }
 
-    public static void register(EmiRegistry registry) {
+    public static void register(EmiRegistry registry, List<MultiblockInfoData.Info> recipes) {
         registry.addCategory(CATEGORY);
-        for (var info : MultiblockInfoData.recipes()) {
+        for (var info : recipes) {
             registry.addRecipe(new StructureEmiRecipe(info));
             registry.addWorkstation(CATEGORY, EmiStack.of(info.controller()));
         }
@@ -47,10 +50,10 @@ public final class StructureEmiRecipe implements EmiRecipe {
         var stacks = ingredient.getEmiStacks();
         if (stacks.size() != 1 || stacks.get(0).isEmpty()) return;
         var stack = stacks.get(0);
-        for (var recipe : dev.emi.emi.api.EmiApi.getRecipeManager().getRecipesByOutput(stack)) {
+        for (var recipe : EmiApi.getRecipeManager().getRecipesByOutput(stack)) {
             if (recipe instanceof StructureEmiRecipe structure
                     && stack.getItemStack().is(structure.info.controller().getItem())) {
-                dev.emi.emi.api.EmiApi.focusRecipe(structure);
+                EmiApi.focusRecipe(structure);
                 return;
             }
         }
@@ -63,12 +66,8 @@ public final class StructureEmiRecipe implements EmiRecipe {
 
     @Override
     public ResourceLocation getId() {
-        return ResourceLocation.fromNamespaceAndPath(
-                "gt6ce",
-                "/structure/"
-                        + BuiltInRegistries.ITEM
-                                .getKey(info.controller().getItem())
-                                .getPath());
+        return Mc.gregtechId(
+                "/structure/" + Mc.itemId(info.controller().getItem()).getPath());
     }
 
     @Override
@@ -98,7 +97,7 @@ public final class StructureEmiRecipe implements EmiRecipe {
 
     @Override
     public int getDisplayHeight() {
-        return gregtech.client.MultiblockPreviewPanel.preferredHeight();
+        return MultiblockPreviewPanel.preferredHeight();
     }
 
     public MultiblockInfoData.Info info() {
@@ -107,7 +106,7 @@ public final class StructureEmiRecipe implements EmiRecipe {
 
     @Override
     public void addWidgets(WidgetHolder widgets) {
-        var panel = new gregtech.client.MultiblockPreviewPanel(info, widgets.getHeight());
+        var panel = new MultiblockPreviewPanel(info, widgets.getHeight());
         widgets.addSlot(outputs.get(0), 0, 0).recipeContext(this);
         for (int i = 0; i < inputs.size(); i++) widgets.addSlot(inputs.get(i), 20 + i * 19, 0);
         widgets.add(new EmiInteractiveWidget() {

@@ -12,7 +12,6 @@ import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -78,7 +77,7 @@ import java.util.Set;
  *   <li>Only the overworld, nether and end passes exist — GT6's Erebus, Betweenlands, Atum, Aether,
  *       Alfheim, Twilight Forest and space passes have no dimension in this port.</li>
  *   <li>The surface walk starts at 1.20.1's heightmap instead of GT6's fixed {@code 206}.</li>
- *   <li>GT6's absolute Y values go through {@link GTWorldgenScale#remapY}, so the rock pocket stays in
+ *   <li>GT6's absolute Y values go through {@link MineralWorldgenRules#legacyHeight}, so the rock pocket stays in
  *       the same layer above bedrock now that the overworld is 128 blocks deeper (the nether and the
  *       end keep GT6's own values).</li>
  *   <li>GT6 stores the hive colour as an NBT int and tints on the fly; the port bakes sixteen colour
@@ -165,12 +164,12 @@ public class GTBumbleHivesFeature extends Feature<NoneFeatureConfiguration> {
 
     /**
      * GT6's rock-pocket pass: y = 8..27 above bedrock, natural rock, five solid
-     * sides. The band goes through {@link GTWorldgenScale#remapY} so it stays the same rock layer in
+     * sides. The band goes through {@link MineralWorldgenRules#legacyHeight} so it stays the same rock layer in
      * the 1.18+ deep world (the nether and the end keep GT6's own Y values).
      */
     public static boolean placeUnderground(WorldGenLevel level, int x, int z, RandomSource random) {
         for (int y = UNDERGROUND_MIN_Y; y < UNDERGROUND_MAX_Y; y++) {
-            BlockPos pos = new BlockPos(x, GTWorldgenScale.remapY(level, y), z);
+            BlockPos pos = new BlockPos(x, MineralWorldgenRules.legacyHeight(level.getLevel().dimension().location().toString(), y), z);
             BlockState state = level.getBlockState(pos);
             if (!GTPitFeature.isRock(state)) continue;
             if (!state.isSolidRender(level, pos)) continue;
@@ -207,7 +206,7 @@ public class GTBumbleHivesFeature extends Feature<NoneFeatureConfiguration> {
 
     /** GT6's nether pass: netherrack y = 16..111, five solid sides. */
     public static boolean placeNether(WorldGenLevel level, int x, int z, RandomSource random) {
-        int y = GTWorldgenScale.remapY(level, 16 + random.nextInt(96));
+        int y = MineralWorldgenRules.legacyHeight(level.getLevel().dimension().location().toString(), 16 + random.nextInt(96));
         BlockPos pos = new BlockPos(x, y, z);
         if (!level.getBlockState(pos).is(Blocks.NETHERRACK)) return false;
         if (!embedded(level, pos)) return false;
@@ -218,7 +217,7 @@ public class GTBumbleHivesFeature extends Feature<NoneFeatureConfiguration> {
     public static boolean placeEnd(WorldGenLevel level, int x, int z, RandomSource random) {
         if (random.nextInt(3) > 0) return false;
         for (int y = 16; y < 128; y++) {
-            BlockPos pos = new BlockPos(x, GTWorldgenScale.remapY(level, y), z);
+            BlockPos pos = new BlockPos(x, MineralWorldgenRules.legacyHeight(level.getLevel().dimension().location().toString(), y), z);
             if (!level.getBlockState(pos).is(Blocks.END_STONE)) continue;
             if (embedded(level, pos)) return placeHive(level, pos, END, random, null);
         }
@@ -386,9 +385,4 @@ public class GTBumbleHivesFeature extends Feature<NoneFeatureConfiguration> {
     /** GT6's y range for the overworld rock pocket. */
     public static final int UNDERGROUND_MIN_Y = 8;
     public static final int UNDERGROUND_MAX_Y = 28;
-
-    /** Registry key of the configured feature ({@code worldgen/configured_feature/gt_bumble_hives.json}). */
-    public static final ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> CONFIGURED =
-            ResourceKey.create(Registries.CONFIGURED_FEATURE,
-                    ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_bumble_hives"));
 }

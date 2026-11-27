@@ -5,8 +5,6 @@ import gregtech.platform.Mc;
 import java.util.List;
 import java.util.Set;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
@@ -161,9 +159,4 @@ public class GTBlackSandFeature extends Feature<NoneFeatureConfiguration> {
         Block block = Mc.block(Mc.gregtechId(id));
         return block == null || block == Blocks.AIR ? null : block.defaultBlockState();
     }
-
-    /** Registry key of the configured feature (data file {@code worldgen/configured_feature/gt_black_sand.json}). */
-    public static final ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> CONFIGURED =
-            ResourceKey.create(
-                    Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_black_sand"));
 }

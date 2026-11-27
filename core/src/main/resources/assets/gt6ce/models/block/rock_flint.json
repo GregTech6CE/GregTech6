@@ -1,0 +1,57 @@
+{
+  "textures": {
+    "particle": "minecraft:block/blackstone_top",
+    "rock": "minecraft:block/blackstone_top",
+    "edge": "minecraft:block/deepslate_top"
+  },
+  "elements": [
+    {
+      "from": [5.5, 0, 7.5], "to": [6.5, 1, 9.5],
+      "rotation": {"origin": [8, 0, 8], "axis": "y", "angle": 22.5},
+      "faces": {
+        "up": {"texture": "#rock", "uv": [4, 7, 5, 9]},
+        "down": {"texture": "#rock"},
+        "north": {"texture": "#rock"},
+        "south": {"texture": "#rock"},
+        "west": {"texture": "#rock"},
+        "east": {"texture": "#rock"}
+      }
+    },
+    {
+      "from": [6.5, 0, 7], "to": [9, 1.25, 10],
+      "rotation": {"origin": [8, 0, 8], "axis": "y", "angle": 22.5},
+      "faces": {
+        "up": {"texture": "#rock", "uv": [5, 6, 8, 10]},
+        "down": {"texture": "#rock"},
+        "north": {"texture": "#edge", "uv": [7, 10, 10, 11]},
+        "south": {"texture": "#rock"},
+        "west": {"texture": "#rock"},
+        "east": {"texture": "#rock"}
+      }
+    },
+    {
+      "from": [9, 0, 6.5], "to": [10, 1, 9],
+      "rotation": {"origin": [8, 0, 8], "axis": "y", "angle": 22.5},
+      "faces": {
+        "up": {"texture": "#edge", "uv": [8, 3, 9, 6]},
+        "down": {"texture": "#rock"},
+        "north": {"texture": "#rock"},
+        "south": {"texture": "#edge", "uv": [7, 9, 8, 10]},
+        "west": {"texture": "#rock"},
+        "east": {"texture": "#rock"}
+      }
+    },
+    {
+      "from": [10, 0, 6.5], "to": [10.5, 0.5, 8],
+      "rotation": {"origin": [8, 0, 8], "axis": "y", "angle": 22.5},
+      "faces": {
+        "up": {"texture": "#edge", "uv": [10, 4, 11, 6]},
+        "down": {"texture": "#rock"},
+        "north": {"texture": "#rock"},
+        "south": {"texture": "#rock"},
+        "west": {"texture": "#rock"},
+        "east": {"texture": "#rock"}
+      }
+    }
+  ]
+}

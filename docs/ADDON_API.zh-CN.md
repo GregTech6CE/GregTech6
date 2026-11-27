@@ -39,9 +39,9 @@
 
 | 产物坐标 | 内容与输出 |
 | --- | --- |
-| `gregtech:gt6ce-api:1.10.0` | Java 17 公共协议、模型、声明和宿主服务接口；`api/common/build/libs/` |
-| `gregtech:gt6ce-addon-sdk-1.20.1-forge:1.10.0` | Java 17、Mojang 名称的 Forge 游戏侧 API；对应节点 `build/addon-sdk/` |
-| `gregtech:gt6ce-addon-sdk-1.21.1-neoforge:1.10.0` | Java 21 的 NeoForge 游戏侧 API；对应节点 `build/addon-sdk/` |
+| `gregtech:gt6ce-api:1.11.0` | Java 17 公共协议、模型、声明和宿主服务接口；`api/common/build/libs/` |
+| `gregtech:gt6ce-addon-sdk-1.20.1-forge:1.11.0` | Java 17、Mojang 名称的 Forge 游戏侧 API；对应节点 `build/addon-sdk/` |
+| `gregtech:gt6ce-addon-sdk-1.21.1-neoforge:1.11.0` | Java 21 的 NeoForge 游戏侧 API；对应节点 `build/addon-sdk/` |
 
 这些是构建配置中的坐标，不表示已发布到公共 Maven 仓库。版本规则见下节[API 版本](#api-版本)。
 
@@ -55,7 +55,7 @@
 
 ## API 版本
 
-当前分支使用 API `1.10.0`，版本独立于模组版本，以 [api/common/build.gradle](../api/common/build.gradle) 为准。该版的 `GregTechAddons.apiVersion()` 返回 `1010`。旧材料句柄、材料注册和模具浇铸接口的升级方式见[旧入口迁移](addon/compatibility.md#旧入口迁移)。
+当前分支使用 API `1.11.0`，版本独立于模组版本，以 [api/common/build.gradle](../api/common/build.gradle) 为准。该版的 `GregTechAddons.apiVersion()` 返回 `1011`。旧材料句柄、材料注册和模具浇铸接口的升级方式见[旧入口迁移](addon/compatibility.md#旧入口迁移)。
 
 API 1.9 新增 `SpecialProcessMethod`、`SpecialProcessValue` 与 `SpecialProcessesView`。附属通过 `MaterialInfoTool.Registrar.registerSpecialProcess(...)` 声明 typed target／reagent 规则，再通过 `MaterialCatalogView.specialProcesses()` 当前发布快照读取；target 和 reagent 必须绑定同一个 `MaterialProcessKey`。
 
@@ -66,6 +66,27 @@ API 1.9 同期将宿主内部的 `SpecialProcessMethods` 移至 `gregtech.conten
 宿主专用的 `StructureGrid` 与 `RecipeMapSpec` 不属于附属契约：它们分别位于 `gregtech.content.multiblock` 与 `gregtech.content.recipe`，编码内置多方块几何和配方表，附属不应依赖。
 
 公共 API 的契约检查、SDK 与平台检查见[验证与验收](development/validation/README.md)。移动到 API 包的可变模型或内部辅助类不自动获得长期兼容保证。
+
+## 附属矿物生成（API 1.11）
+
+API 1.11 为矿脉和小矿增加绝对高度声明。使用新构造器的附属可通过 `GregTechAddons.apiVersion() >= 1011` 检查宿主支持。
+
+在 `AddonMaterialContributor.oreVeins()` 和 `smallOres()` 中返回声明。已有构造器继续使用原版 GT6 的 `0..255` 坐标，主世界按旧规则换算。API 1.11（1011）新增 `HeightCoordinates` 枚举，在 `OreVeinDeclaration` 与 `SmallOreDeclaration` 的 record 末尾增加 `coordinates`。原 11 参数和 6 参数构造器仍可供已编译的附属调用，并委托给同一套注册流程。通过反射枚举 record 组件会多出一个字段，按组件构造实例时应读取新签名。选 `ABSOLUTE` 时，两端点均可取 −2032～2031 且包含端点，落矿前按地形裁剪。旧坐标散矿沿用转换后左闭右开的高度区间。
+
+```java
+new SmallOreDeclaration("deep_iron", SmallOreDeclaration.OVERWORLD,
+        -56, -12, 4, "Iron", HeightCoordinates.ABSOLUTE)
+```
+
+内置数据包为主世界、末地挂载矿脉，为主世界、下界、末地挂载散矿。给其他维度添加声明时，用目标加载器的 biome modifier 挂载对应的 `gt6ce:gt_ore_veins` 或 `gt6ce:gt_small_ores` placed feature。
+
+主世界附属大矿脉先使用内置矿脉保底网格的空格。其余声明共用独立的保底网格，网格边长随声明数量调整。两组附属都参与主世界额外矿脉的权重抽签，保底候选仍要求存在声明高度内的可用岩石。
+
+末地附属大矿脉参与每格的权重抽签，并在各规划区获得一个附加候选。保底规划会先查附近，然后查同区内的岛屿，寻找声明高度范围内的有效宿主。该范围没有可用岩石时，区域可以没有这条矿脉。
+
+进入世界或重载数据包时，服务端把各维度启用的矿物生成特性和可用高度范围同步给 JEI 与 EMI。未挂载对应特性、或在裁剪后没有可用高度的声明不会列入当前世界的图鉴。
+
+矿物图鉴使用独立的可选同步通道。连接旧服务端时，原版维度沿用默认地形高度，自定义维度沿用附属声明。
 
 ## 机器配方数据包（API 1.7）
 

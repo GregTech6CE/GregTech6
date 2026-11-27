@@ -1,139 +1,66 @@
 package gregtech.content.item.behavior;
 
-import gregtech.content.block.OreBlock;
 import gregtech.content.item.behavior.ItemBehaviors.Outcome;
+import gregtech.content.worldgen.GTOreBlockResolver;
+import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
 
-/**
- * GT6 {@code Behavior_Worldgen_Debugger} ({@code Behavior_Worldgen_Debugger}) — the
- * "Worldgen Debug Wand" ({@code MultiItemRandomTools}; the port registers it as
- * {@code gt6ce:worldgen_debug_wand} in {@code GTMultiItemsGen.ENTRIES}), the tool that makes an
- * ore vein visible by deleting everything around it.
- *
- * <h2>What the original does</h2>
- *
- * <p>The same click and the same triple loop as {@link BehaviorChunkEraser} — client side refused,
- * the 16×16 column of the clicked chunk, {@code tY = 1} to
- * {@code tY < 250} — with one difference inside the innermost loop: the block at the
- * position is read first, and</p>
- *
- * <ul>
- *   <li>when it is an {@code IPrefixBlock} the position is <em>kept</em> and the original instead calls
- *       {@code ((ITileEntity) aWorld.getTileEntity(x, y, z)).onAdjacentBlockChange(x, y, z)},
- *       which lets the block re-examine its surroundings — a GT prefix block has a
- *       block entity in GT6 ({@code PrefixBlock} implements {@code ITileEntityProvider},
- *       {@code PrefixBlock});</li>
- *   <li>everything else becomes air, exactly the chunk remover's {@code WD.set(..., NB, 0, 2)}.
- *       </li>
- * </ul>
- *
- * <p>So the tool clears a chunk and leaves the GT blocks standing, which is what its tooltip says:
- * "Currently deletes a single Chunk, except for bottom most Bedrock and GT6 Ores".
- * Like the chunk remover it always returns {@code T}, reads no player and
- * no permission (tests only {@code aWorld.isRemote}), and neither consumes nor damages the
- * stack.</p>
- *
- * <h2>The port's "is a GT prefix block" predicate</h2>
- *
- * <p>GT6's {@code IPrefixBlock} ({@code IPrefixBlock}) is implemented by exactly
- * one class, {@code gregapi.block.prefixblock.PrefixBlock} ({@code PrefixBlock}), and that class
- * backs the whole prefix-material family: {@code CS.BlocksGT} declares the ore blocks
- * ({@code ore}, {@code oreBedrock}, {@code oreSmall}, …, {@code CS}) and the material
- * blocks ({@code blockIngot}, {@code blockPlate}, …) as {@code IPrefixBlock}.
- * The worldgen-relevant half of that family is what a vein is made of, and in the port that is
- * {@link gregtech.content.block.OreBlock} — one ore block per material with the host rock in its
- * {@code stone} state property, standing in for GT6's per-stone ore blocks. So the predicate here is
- * {@code state.getBlock() instanceof OreBlock}.</p>
- *
- * <p>Two honest notes on that mapping. The port's wider analogue of {@code IPrefixBlock} is
- * {@code gregtech.content.block.MaterialBlockLike} (implemented by {@link
- * gregtech.content.block.OreBlock} and {@code gregtech.content.block.MaterialBlock}), and
- * GT6's {@code instanceof IPrefixBlock} would have kept the material-block family as well; the frozen
- * predicate of this behaviour is the ore half, which is the half the wand's purpose needs.</p>
- *
- * <p><b>No port counterpart for the {@code onAdjacentBlockChange} branch.</b> GT6 notifies the ore's
- * block entity so it can re-read its neighbours; in the port gave the ore blocks <em>no block
- * entity at all</em> — {@code OreBlock} deliberately does not implement {@code EntityBlock}, and the
- * ore's host rock lives in a block state property instead — so there is nothing to notify and the
- * branch has no body to port. The ore is simply left standing, which is the whole visible effect the
- * debug wand has.</p>
- *
- * <h2>Ranges, chunks and the return value</h2>
- *
- * <p>{@link #eraseExceptOres} is {@link BehaviorChunkEraser#erase}'s clamp, chunk check and counting
- * applied to this loop (see that class for why: 1.20.1's build limits are not 0..255, the upper limit is
- * exclusive, and {@code Level.setBlock} would load an unloaded chunk). The count is again the number of
- * positions that held a block and were replaced with air — the GT blocks this tool keeps are not
- * counted, and a position that was already air is not counted either. Clicking uses the current
- * dimension build range, including negative Y and the expanded top, except its very bottom layer.</p>
- *
- * <h2>Tooltips</h2>
- *
- * <p>{@code LH.add} is not part of this layer; the port adds no lang keys here.</p>
- */
+/** GT6's worldgen wand, restricted to stripping common terrain from one loaded chunk. */
 public final class BehaviorWorldgenDebugger {
 
-    /** GT6 {@code Behavior_Worldgen_Debugger}: {@code tY = 1}, inherited from the chunk remover. */
+    /** First layer swept by the original GT6 tool. */
     public static final int MIN_Y = BehaviorChunkEraser.MIN_Y;
 
-    /** GT6 {@code Behavior_Worldgen_Debugger}: {@code tY < 250}, so 249 is the last swept position. */
+    /** Last layer swept by the original GT6 tool. */
     public static final int MAX_Y = BehaviorChunkEraser.MAX_Y;
-
-    /** GT6 {@code Behavior_Worldgen_Debugger}: {@code (aX & ~15)} to {@code (aX & ~15) + 16}. */
-    private static final int CHUNK_SIZE = 16;
 
     private BehaviorWorldgenDebugger() {}
 
-    /**
-     * GT6 {@code Behavior_Worldgen_Debugger}: air out the chunk column {@code chunkX}/{@code chunkZ}
-     * between {@code minY} and {@code maxY} inclusive, but keep every GT ore.
-     *
-     * <p>The original's loop order is kept (x, then z, then y) and so is the order of its two tests — the
-     * ore test first, then the deletion of everything else — and the flag
-     * {@code 2} it passes ({@code Block.UPDATE_CLIENTS}: inform the clients, no neighbour updates). Unlike
-     * the original, the range is clamped to the level's build limits, an unloaded chunk is skipped whole,
-     * and the return value counts what was really replaced; see the class javadoc.</p>
-     *
-     * @param level  the level to sweep; the chunk must already be loaded or the column is skipped
-     * @param chunkX chunk x, not a block x — {@link #useOn} converts with {@code pos.getX() >> 4}
-     * @param chunkZ chunk z; {@code pos.getZ() >> 4} in {@link #useOn}
-     * @param minY   the lowest y of the sweep, clamped up to {@code level.getMinBuildHeight()}
-     * @param maxY   the highest y of the sweep, clamped down to {@code level.getMaxBuildHeight() - 1}
-     * @return how many positions held a block that was not an ore and were replaced with air
-     */
+    /** Strips common terrain within the inclusive Y range and returns the number of removed blocks. */
     public static int eraseExceptOres(Level level, int chunkX, int chunkZ, int minY, int maxY) {
+        if (!(level instanceof ServerLevel server)) return 0;
         int lowY = Math.max(minY, level.getMinBuildHeight());
         int highY = Math.min(maxY, level.getMaxBuildHeight() - 1);
         if (lowY > highY) return 0;
 
-        int minX = chunkX << 4;
-        int minZ = chunkZ << 4;
-        BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
+        var chunk = server.getChunkSource().getChunkNow(chunkX, chunkZ);
+        if (chunk == null) return 0;
+
+        ChunkPos pos = chunk.getPos();
+        var bounds = new BoundingBox(
+                pos.getMinBlockX(), lowY, pos.getMinBlockZ(), pos.getMaxBlockX(), highY, pos.getMaxBlockZ());
+        var structures = server.structureManager().startsForStructure(pos, structure -> true).stream()
+                .flatMap(start -> start.getPieces().stream())
+                .map(piece -> piece.getBoundingBox())
+                .filter(bounds::intersects)
+                .toList();
+
+        var cursor = new BlockPos.MutableBlockPos();
         int erased = 0;
-        for (int x = minX; x < minX + CHUNK_SIZE; x++) {
-            for (int z = minZ; z < minZ + CHUNK_SIZE; z++) {
+        for (int x = pos.getMinBlockX(); x <= pos.getMaxBlockX(); x++) {
+            for (int z = pos.getMinBlockZ(); z <= pos.getMaxBlockZ(); z++) {
                 cursor.set(x, lowY, z);
-                // hasChunkAt reads only x/z, and it does not load: Level.setBlock would.
-                if (!level.hasChunkAt(cursor)) continue;
                 for (int y = lowY; y <= highY; y++) {
                     cursor.setY(y);
-                    BlockState state = level.getBlockState(cursor);
-                    // - a GT prefix block stays, and its block entity is told about the change.
-                    // The port's ore blocks have no block entity, so only the "stays" half is left.
-                    if (state.getBlock() instanceof OreBlock) continue;
-                    // Air is skipped rather than rewritten, exactly like the chunk remover does it.
-                    if (state.isAir()) continue;
-                    // A fresh BlockPos goes into setBlock: the client update packet keeps the reference
-                    // it is handed (ClientboundBlockUpdatePacket), so the cursor must not be reused.
-                    if (level.setBlock(new BlockPos(x, y, z), Blocks.AIR.defaultBlockState(), Block.UPDATE_CLIENTS)) {
+                    if (!isObscuringTerrain(chunk.getBlockState(cursor)) || insideStructure(structures, cursor))
+                        continue;
+                    // Keep surface markers and attachments in place when their support is removed.
+                    if (level.setBlock(
+                            cursor.immutable(),
+                            Blocks.AIR.defaultBlockState(),
+                            Block.UPDATE_CLIENTS | Block.UPDATE_KNOWN_SHAPE)) {
                         erased++;
                     }
                 }
@@ -142,18 +69,27 @@ public final class BehaviorWorldgenDebugger {
         return erased;
     }
 
-    /**
-     * GT6 {@code Behavior_Worldgen_Debugger} for one click: sweep the clicked position's chunk column,
-     * keeping the ores.
-     *
-     * <p>{@code side}, {@code player} and the three hit coordinates belong to the behaviour-click signature
-     * of this layer but the original reads none of them, and it has no permission gate either — the debug
-     * wand is exempt from it in the dispatcher for the same reason the chunk remover is. The stack is
-     * neither consumed nor damaged.</p>
-     *
-     * @return GT6's {@code T}: handled on the server even when the sweep deleted nothing,
-     *         refused on the client
-     */
+    private static boolean insideStructure(List<BoundingBox> structures, BlockPos pos) {
+        for (BoundingBox bounds : structures) {
+            if (bounds.isInside(pos)) return true;
+        }
+        return false;
+    }
+
+    private static boolean isObscuringTerrain(BlockState state) {
+        if (state.isAir()
+                || state.hasBlockEntity()
+                || state.is(Blocks.BEDROCK)
+                || GTOreBlockResolver.oreMaterialOf(state.getBlock()) != null) return false;
+        return GTOreBlockResolver.isBaseRock(state)
+                || state.is(BlockTags.DIRT)
+                || state.is(BlockTags.SAND)
+                || state.is(Blocks.GRAVEL)
+                || state.is(Blocks.CLAY)
+                || state.liquid();
+    }
+
+    /** Uses the dimension's build limits, leaving its bottom layer in place. */
     public static Outcome useOn(
             Level level,
             BlockPos pos,
@@ -163,7 +99,8 @@ public final class BehaviorWorldgenDebugger {
             float hitX,
             float hitY,
             float hitZ) {
-        if (level.isClientSide) return Outcome.refused(stack);
+        if (level.isClientSide || player == null || !player.isCreative() || !player.hasPermissions(2))
+            return Outcome.refused(stack);
         eraseExceptOres(
                 level, pos.getX() >> 4, pos.getZ() >> 4, level.getMinBuildHeight() + 1, level.getMaxBuildHeight() - 1);
         return Outcome.acted(stack);

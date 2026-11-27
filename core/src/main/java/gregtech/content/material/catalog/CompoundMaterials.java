@@ -6318,6 +6318,7 @@ public final class CompoundMaterials {
                         MaterialProperty.DUST,
                         MaterialProperty.FLAMMABLE,
                         MaterialProperty.GENERATE_DUST,
+                        MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.UNIT)
                 .localName("Lignite")

@@ -1,21 +1,27 @@
 package gregtech.content.worldgen;
 
 import gregtech.api.material.GTMaterial;
+import gregtech.content.block.DenseOreBlock;
 import gregtech.content.block.OreBlock;
 import gregtech.content.block.OreHostStone;
+import gregtech.content.block.VanillaOreBlock;
 import gregtech.content.block.stone.GTStoneBlock;
 import gregtech.content.block.stone.StoneVariant;
+import gregtech.content.registry.GTBlocks;
+import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.platform.Mc;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
 
 /**
  * Maps (GT material, host stone) to an ore placement, mirroring GT6 {@code WD.setOre} /
@@ -32,13 +38,45 @@ import net.minecraft.world.level.block.state.BlockState;
  * {@link gregtech.content.block.stone.StoneType#registryId()} ({@code stone_basalt}, ...).</p>
  */
 public final class GTOreBlockResolver {
-    private static final Map<String, Block> CACHE = new ConcurrentHashMap<>();
-    private static final Set<String> MISSING_LOGGED = ConcurrentHashMap.newKeySet();
+    private record OreKey(GTMaterial material, boolean small) {}
 
-    /** Sentinel for negative cache entries (ConcurrentHashMap cannot store null). */
-    private static final Block NO_BLOCK = Blocks.AIR;
+    private static final Map<OreKey, OreBlock> CACHE = new ConcurrentHashMap<>();
+    private static final Set<OreKey> MISSING_LOGGED = ConcurrentHashMap.newKeySet();
 
     private GTOreBlockResolver() {}
+
+    /** Writes a position in the supplied generation chunk, preserving region and block-state callbacks. */
+    static boolean setInChunk(WorldGenLevel level, ChunkAccess chunk, BlockPos pos, BlockState state) {
+        // A modded region may intercept writes in its setBlock override.
+        if (level.getClass() != WorldGenRegion.class || state.hasBlockEntity())
+            return level.setBlock(pos, state, Block.UPDATE_CLIENTS);
+        var region = (WorldGenRegion) level;
+        if (!region.ensureCanWrite(pos)) return false;
+        BlockState replaced = chunk.setBlockState(pos, state, false);
+        if (replaced != null) {
+            region.getLevel().onBlockStateChange(pos, replaced, state);
+            if (replaced.hasBlockEntity()) chunk.removeBlockEntity(pos);
+        }
+        if (state.hasPostProcess(region, pos)) chunk.markPosForPostprocessing(pos);
+        return true;
+    }
+
+    /** Material of a registered GT ore, including dense ores and whole-rock ore seams. */
+    @Nullable
+    public static GTMaterial oreMaterialOf(Block block) {
+        if (block instanceof OreBlock ore) return ore.material();
+        if (block instanceof DenseOreBlock ore) return ore.material();
+        if (block instanceof VanillaOreBlock ore) return ore.material();
+        return null;
+    }
+
+    /** Base rock used for geology samples, including the raw variants of GT stones. */
+    public static boolean isBaseRock(BlockState state) {
+        return state.is(BlockTags.BASE_STONE_OVERWORLD)
+                || state.is(BlockTags.BASE_STONE_NETHER)
+                || state.is(Blocks.END_STONE)
+                || state.getBlock() instanceof GTStoneBlock stone && stone.variant() == StoneVariant.STONE;
+    }
 
     /** A resolved ore placement: the block state (host stone included) plus the host rock. */
     public record OrePlacement(BlockState state, OreHostStone stone) {}
@@ -61,8 +99,7 @@ public final class GTOreBlockResolver {
 
     /**
      * Places ore with an explicit host rock, ignoring what is at {@code pos} (GT6's
-     * {@code WD.setOre(aWorld, x, y, z, aMaterial, aBlock)} picks the stone variant itself — the
-     * deep-ocean pylons sprinkle GT6's normal-stone ore into prismarine, see).
+     * {@code WD.setOre(aWorld, x, y, z, aMaterial, aBlock)} picks the stone variant itself).
      */
     public static boolean placeOre(
             WorldGenLevel level, BlockPos pos, OreHostStone stone, GTMaterial material, boolean small) {
@@ -79,20 +116,7 @@ public final class GTOreBlockResolver {
      */
     @Nullable
     public static OrePlacement resolve(BlockState host, GTMaterial material, boolean small) {
-        OreHostStone stone = stoneOf(host);
-        // GT6 WD.setOre/setSmallOre replace sand and gravel as well, so both normal and small
-        // ores can carry a sediment host.
-        if (stone == null) stone = sedimentOf(host);
-        OrePlacement placement = resolve(stone, material, small);
-        if (placement == null) return null;
-        OreHostStone resolvedStone = stone;
-        return OreHostStateAdapter.adapt(placement.state(), host)
-                .map(state -> new OrePlacement(state, stoneOfState(state, resolvedStone)))
-                .orElse(null);
-    }
-
-    private static OreHostStone stoneOfState(BlockState state, OreHostStone fallback) {
-        return state.hasProperty(OreBlock.STONE) ? state.getValue(OreBlock.STONE) : fallback;
+        return resolve(oreHost(host), material, small);
     }
 
     /**
@@ -105,32 +129,33 @@ public final class GTOreBlockResolver {
     public static OrePlacement resolve(@Nullable OreHostStone stone, GTMaterial material, boolean small) {
         if (stone == null || material == null) return null;
 
-        String basePrefix = small ? "ore_small" : "ore";
-        String materialName = material.getName().toLowerCase();
-        String cacheKey = basePrefix + "/" + materialName;
-
-        Block found = CACHE.get(cacheKey);
+        var key = new OreKey(material.resolve(), small);
+        OreBlock found = CACHE.computeIfAbsent(key, GTOreBlockResolver::lookup);
         if (found == null) {
-            found = lookup(basePrefix + "_" + materialName);
-            CACHE.put(cacheKey, found == null ? NO_BLOCK : found);
-        }
-        if (found == null || found == NO_BLOCK) {
-            if (MISSING_LOGGED.add(cacheKey)) {
+            if (MISSING_LOGGED.add(key)) {
                 Mc.logger()
                         .warn(
                                 "[worldgen] No '{}' block registered for material '{}' — skipping ore placement",
-                                basePrefix,
-                                materialName);
+                                small ? "ore_small" : "ore",
+                                key.material().getName());
             }
             return null;
         }
-        BlockState state = found instanceof OreBlock ore ? ore.stateFor(stone) : found.defaultBlockState();
-        return new OrePlacement(state, stone);
+        return new OrePlacement(found.stateFor(stone), stone);
     }
 
     @Nullable
-    private static Block lookup(String path) {
-        return Mc.block(Mc.gregtechId(path));
+    private static OreBlock lookup(OreKey key) {
+        var prefix = key.small() ? BlockMaterialPrefix.oreSmall : BlockMaterialPrefix.ore;
+        if (prefix == null) return null;
+        var block = GTBlocks.getObject(prefix, key.material());
+        return block != null && block.isPresent() && block.get() instanceof OreBlock ore ? ore : null;
+    }
+
+    @Nullable
+    static OreHostStone oreHost(BlockState host) {
+        OreHostStone stone = stoneOf(host);
+        return stone == null ? sedimentOf(host) : stone;
     }
 
     /**
@@ -139,12 +164,15 @@ public final class GTOreBlockResolver {
      */
     @Nullable
     public static OreHostStone stoneOf(BlockState host) {
+        if (host.hasBlockEntity() || host.getBlock() instanceof OreBlock) return null;
         if (host.is(Blocks.STONE)) return OreHostStone.STONE;
         if (host.is(Blocks.GRANITE)) return OreHostStone.GRANITE;
         if (host.is(Blocks.DIORITE)) return OreHostStone.DIORITE;
         if (host.is(Blocks.ANDESITE)) return OreHostStone.ANDESITE;
         if (host.is(Blocks.DEEPSLATE)) return OreHostStone.DEEPSLATE;
+        if (host.is(Blocks.INFESTED_DEEPSLATE)) return OreHostStone.DEEPSLATE;
         if (host.is(Blocks.TUFF)) return OreHostStone.TUFF;
+        if (host.is(Blocks.INFESTED_STONE)) return OreHostStone.STONE;
         if (host.is(Blocks.NETHERRACK)) return OreHostStone.NETHERRACK;
         if (host.is(Blocks.END_STONE)) return OreHostStone.END_STONE;
         // GT6 ore.normal.sandstone: sandstone-hosted ores have the sandstone host and no gangue.
@@ -174,11 +202,9 @@ public final class GTOreBlockResolver {
      * (GT6 bedrock deposits). Only the bedrock-ore feature calls this — the
      * generic {@link #stoneOf} intentionally never matches bedrock.
      */
-    public static boolean placeBedrockOre(WorldGenLevel level, BlockPos pos, GTMaterial material) {
-        if (!level.getBlockState(pos).is(Blocks.BEDROCK) || material == null) return false;
-        String materialName = material.getName().toLowerCase();
-        Block found = lookup("ore_" + materialName);
-        if (!(found instanceof OreBlock ore)) return false;
-        return level.setBlock(pos, ore.stateFor(OreHostStone.BEDROCK), 2);
+    public static boolean placeBedrockOre(WorldGenLevel level, BlockPos pos, GTMaterial material, boolean small) {
+        return pos.getY() == level.getMinBuildHeight()
+                && level.getBlockState(pos).is(Blocks.BEDROCK)
+                && placeOre(level, pos, OreHostStone.BEDROCK, material, small);
     }
 }

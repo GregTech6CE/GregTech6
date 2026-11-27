@@ -1,7 +1,5 @@
 package gregtech.content.worldgen;
 
-import java.util.function.BooleanSupplier;
-import java.util.function.IntUnaryOperator;
 import java.util.function.UnaryOperator;
 
 /**
@@ -11,6 +9,9 @@ import java.util.function.UnaryOperator;
 public final class SurfaceRockRules {
     /** GT6 {@code aRandom.nextInt(128) == 0}. */
     public static final int CHANCE_DIVISOR = 128;
+
+    private static final long CHANCE_SALT = 0x5B4F78FE36C9201DL;
+    private static final long MATERIAL_SALT = 0x96A0CD92487B3EF5L;
 
     /** GT6 initial {@code tLastRock = MT.STONES.Deepslate}. */
     public static final String INITIAL_ROCK = "Deepslate";
@@ -57,26 +58,34 @@ public final class SurfaceRockRules {
             canPlaceRocks = false;
         }
 
+        /** Starts a new rock trace after a gap in the terrain. */
+        public void gap() {
+            reset();
+            lastRock = "Stone";
+        }
+
         /** Opaque hosts that do not replace stone update placement eligibility without changing rock. */
         public void opaque(boolean suitable) {
             canPlaceRocks = suitable;
         }
     }
 
-    /**
-     * Picks the rock's material matching GT6's short-circuit order:
-     * {@code nextBoolean() && tLastOre != null ? targetCrushing(tLastOre) : tLastRock}.
-     */
-    public static String rockMaterial(
-            ColumnState state, BooleanSupplier nextBoolean, UnaryOperator<String> targetCrushing) {
-        if (nextBoolean.getAsBoolean() && state.lastOre() != null) {
-            return targetCrushing.apply(state.lastOre());
+    public record Pebble(String material, boolean indicator) {
+        public boolean shouldPlace(boolean surfaceRocks) {
+            return indicator || surfaceRocks;
         }
-        return state.lastRock();
+    }
+
+    /** On half the eligible positions, the rock reports the last exposed ore. */
+    public static Pebble pebble(ColumnState state, long positionSeed, UnaryOperator<String> targetCrushing) {
+        if (state.lastOre() != null && (WorldgenHash.mix(positionSeed ^ MATERIAL_SALT) & 1L) == 0) {
+            return new Pebble(targetCrushing.apply(state.lastOre()), true);
+        }
+        return new Pebble(state.lastRock(), false);
     }
 
     /** GT6 1/128 surface rock roll. */
-    public static boolean roll(IntUnaryOperator nextInt) {
-        return nextInt.applyAsInt(CHANCE_DIVISOR) == 0;
+    public static boolean roll(long positionSeed) {
+        return WorldgenHash.roll(WorldgenHash.mix(positionSeed ^ CHANCE_SALT), CHANCE_DIVISOR) == 0;
     }
 }

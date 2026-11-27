@@ -31,7 +31,7 @@ core 的 content 描述“有什么”，Minecraft 的 content 将其变为游�
 | `content.tool` | 砧、工具、锻造、冲压的目录和规则 | `AnvilForgingCatalog`、`AutomaticToolRules` |
 | `content.nuclear` | 燃料棒、冷却剂与核合成目录 | `ReactorRodCatalog`、`ReactorCoolantRules` |
 | `content.hazard` | 材料危害与防护服内容参数 | `MaterialBlockHazards`、`HazmatSuitCatalog` |
-| `content.worldgen` | 矿脉、岩层、地表等生成定义与纯规则 | `GTOreVeins`、`GTStoneLayersGen` |
+| `content.worldgen` | 矿源目录、矿脉布局、岩层与接触带生成规则 | `OreSourceCatalog`、`OreVeinLayout`、`StoneLayerField`，见[岩层与矿物生成](../worldgen.md)。 |
 | `content.worldgen.center` | 原点世界、街道与生物群系定义 | `OriginWorld`、`SourceStreets` |
 | `content.worldgen.dungeon` | 地牢布局规则 | `DungeonLayoutRules` |
 | `content.plant` | 植物种类、生长、浆果与花卉目录 | `BerryBushCatalog`、`BushGrowthRules` |

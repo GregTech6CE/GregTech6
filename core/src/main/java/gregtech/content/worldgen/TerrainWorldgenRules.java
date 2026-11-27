@@ -24,6 +24,7 @@ public final class TerrainWorldgenRules {
 
     public static Litter litter(java.util.function.IntUnaryOperator random) {
         if (random.applyAsInt(2) != 0) return new Litter(null, null, false);
+        if (random.applyAsInt(12) == 0) return new Litter(null, "Magnetite", false);
         return new Litter("minecraft:flint", null, false);
     }
 }

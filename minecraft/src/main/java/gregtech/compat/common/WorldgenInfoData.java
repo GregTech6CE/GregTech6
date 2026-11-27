@@ -1,17 +1,45 @@
 package gregtech.compat.common;
 
 import gregtech.api.addon.worldgen.OreVeinDeclaration;
-import gregtech.api.addon.worldgen.SmallOreDeclaration;
 import gregtech.api.material.GTMaterial;
-import gregtech.content.worldgen.AddonOreVeins;
+import gregtech.content.block.OreBlock;
+import gregtech.content.block.OreHostStone;
+import gregtech.content.block.RockOreBlock;
+import gregtech.content.block.stone.StoneType;
+import gregtech.content.block.stone.StoneVariant;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.material.generated.OreMaterials;
+import gregtech.content.registry.GTBlocks;
+import gregtech.content.registry.GTItems;
+import gregtech.content.worldgen.BoundaryGemOres;
+import gregtech.content.worldgen.GTOreBlockResolver;
 import gregtech.content.worldgen.GTOreVeins;
+import gregtech.content.worldgen.GTOreVeins.HeightRange;
 import gregtech.content.worldgen.GTStoneLayersGen;
-import gregtech.content.worldgen.GTWorldgenScale;
+import gregtech.content.worldgen.MineralWorldgenRules;
+import gregtech.content.worldgen.OreGenerationSummary;
+import gregtech.content.worldgen.OreSourceCatalog;
+import gregtech.content.worldgen.OreSourceCatalog.Kind;
+import gregtech.content.worldgen.OreVeinLayout;
+import gregtech.content.worldgen.SpecialOreDeposits;
+import gregtech.content.worldgen.StoneLayerField;
+import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.material.MaterialPresentation;
+import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.platform.Mc;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.Set;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -20,175 +48,324 @@ import net.minecraft.world.item.Items;
 public class WorldgenInfoData {
     protected WorldgenInfoData() {}
 
-    public record VeinInfo(
-            String name,
+    public sealed interface VeinInfo permits MixedVein, StratumInfo, SpecialSite {
+        OreGenerationSummary summary();
+
+        List<ItemStack> hosts();
+
+        List<OrePreview> previews();
+
+        List<Component> captions();
+
+        List<ItemStack> aliases();
+    }
+
+    private record MixedVein(
+            OreGenerationSummary summary,
+            GTOreVeins.OreVein vein,
             String dimension,
-            int minY,
-            int maxY,
-            int weight,
+            HeightRange heights,
             int totalWeight,
-            GTMaterial top,
-            GTMaterial bottom,
-            GTMaterial between,
-            GTMaterial spread,
-            boolean remapped,
-            StratumInfo layer) {
-        public VeinInfo(
-                String name,
-                String dimension,
-                int minY,
-                int maxY,
-                int weight,
-                int totalWeight,
-                GTMaterial top,
-                GTMaterial bottom,
-                GTMaterial between,
-                GTMaterial spread,
-                boolean remapped) {
-            this(name, dimension, minY, maxY, weight, totalWeight, top, bottom, between, spread, remapped, null);
+            Optional<HeightRange> reserve)
+            implements VeinInfo {
+        private List<GTMaterial> materials() {
+            return List.of(vein.top(), vein.bottom(), vein.between(), vein.spread()).stream()
+                    .map(GTMaterial::resolve)
+                    .distinct()
+                    .toList();
+        }
+
+        @Override
+        public List<ItemStack> hosts() {
+            return List.of();
+        }
+
+        @Override
+        public List<OrePreview> previews() {
+            return materials().stream()
+                    .map(material -> new OrePreview(oreStack(material), List.of(), material))
+                    .filter(preview -> !preview.stack().isEmpty())
+                    .toList();
+        }
+
+        @Override
+        public List<ItemStack> aliases() {
+            var aliases = new ArrayList<ItemStack>();
+            for (GTMaterial material : materials()) addOreAliases(aliases, new OreIdentity(material, ""));
+            return aliases;
+        }
+
+        @Override
+        public List<Component> captions() {
+            double percent = 100.0 * vein.weight() / Math.max(1, totalWeight);
+            boolean end = OreVeinDeclaration.END.equals(dimension);
+            String label = end ? "chance" : "bonus_vein_share";
+            String shape = OreVeinLayout.Shape.forVein(vein.name()).name().toLowerCase(Locale.ROOT);
+            var name = Component.translatableWithFallback(
+                    "gt6ce.jei.vein." + vein.name(),
+                    MaterialPresentation.name(vein.top()).getString());
+            List<Component> lines = new ArrayList<>(List.of(
+                    Component.translatable("gt6ce.jei.info.vein_name", name),
+                    Component.translatable("gt6ce.jei.info.dimension", dimension)));
+            if (!heights.isEmpty()) {
+                lines.add(Component.translatable("gt6ce.jei.info.height", heights.min(), heights.max()));
+                if (vein.weight() > 0)
+                    lines.add(Component.translatable(
+                            "gt6ce.jei.info." + label, String.format(Locale.ROOT, "%.2f", percent)));
+            }
+            lines.add(Component.translatable(
+                    "gt6ce.jei.info.vein_shape", Component.translatable("gt6ce.jei.shape." + shape)));
+            var regional = OreSourceCatalog.current().regionalPlans(dimension).stream()
+                    .filter(plan -> plan.includes(vein.name()))
+                    .findFirst()
+                    .orElse(null);
+            if (regional != null) {
+                int cells = regional.cells();
+                String spacing =
+                        end ? "island_regional_vein" : vein.subregional() ? "subregional_vein" : "regional_vein";
+                lines.add(Component.translatable("gt6ce.jei.info." + spacing, cells * OreVeinLayout.CELL_SIZE));
+                if (reserve.isPresent()) {
+                    lines.add(Component.translatable(
+                            "gt6ce.jei.info.vein_reserve_height",
+                            reserve.get().min(),
+                            reserve.get().max()));
+                }
+            }
+            return lines;
         }
     }
 
-    public record SmallOreInfo(
-            String name, String dimension, int minY, int maxY, int amount, GTMaterial material, boolean remapped) {}
+    public record SmallOreInfo(OreGenerationSummary summary, List<OrePreview> ores, List<Component> captions) {
+        public List<ItemStack> aliases() {
+            return ores.stream()
+                    .flatMap(ore -> oreAliases(ore.material(), true).stream())
+                    .toList();
+        }
+    }
 
-    public record LayerInfo(
-            String stoneDisplay, ItemStack stone, List<GTMaterial> ores, List<GTStoneLayersGen.OreDef> definitions) {}
+    public record LayerInfo(OreGenerationSummary summary, ItemStack stone, List<StratumOre> ores) {}
 
     public static ItemStack oreStack(GTMaterial material) {
-        if (material == null || !material.resolve().isValid()) return new ItemStack(Items.STONE);
-        Item item = Mc.item(Mc.gregtechId("ore_" + material.resolve().getName().toLowerCase()));
-        return item == null || item == Items.AIR ? new ItemStack(Items.STONE) : new ItemStack(item);
+        return oreStack(material, false);
     }
 
     public static ItemStack smallOreStack(GTMaterial material) {
-        if (material == null || !material.resolve().isValid()) return new ItemStack(Items.STONE);
-        Item item = Mc.item(
-                Mc.gregtechId("ore_small_" + material.resolve().getName().toLowerCase()));
-        return item == null || item == Items.AIR ? oreStack(material) : new ItemStack(item);
+        return oreStack(material, true);
     }
 
-    public static List<VeinInfo> buildVeins() {
+    private static ItemStack oreStack(GTMaterial material, boolean small) {
+        var placement = GTOreBlockResolver.resolve(OreHostStone.STONE, material.resolve(), small);
+        return placement == null
+                ? ItemStack.EMPTY
+                : new ItemStack(placement.state().getBlock());
+    }
+
+    public static List<VeinInfo> buildVeins(OreGenerationSummary summary) {
         List<VeinInfo> out = new ArrayList<>();
-        var overworld = GTOreVeins.activeOverworldVeins();
-        int overworldWeight =
-                overworld.stream().mapToInt(GTOreVeins.OreVein::weight).sum();
-        for (GTOreVeins.OreVein v : overworld) {
-            out.add(new VeinInfo(
-                    v.name(),
-                    "minecraft:overworld",
-                    v.minY(),
-                    v.maxY(),
-                    v.weight(),
-                    overworldWeight,
-                    v.top(),
-                    v.bottom(),
-                    v.between(),
-                    v.spread(),
-                    true));
-        }
-        var end = GTOreVeins.activeEndVeins();
-        int endWeight = GTOreVeins.endSelectionWeight(end);
-        for (GTOreVeins.OreVein v : end) {
-            out.add(new VeinInfo(
-                    v.name(),
-                    "minecraft:the_end",
-                    v.minY(),
-                    v.maxY(),
-                    v.weight(),
-                    endWeight,
-                    v.top(),
-                    v.bottom(),
-                    v.between(),
-                    v.spread(),
-                    false));
-        }
-        for (String dimension : AddonOreVeins.veinDimensions()) {
-            if (OreVeinDeclaration.OVERWORLD.equals(dimension) || OreVeinDeclaration.END.equals(dimension)) continue;
-            var veins = GTOreVeins.activeVeins(dimension);
-            int totalWeight =
-                    veins.stream().mapToInt(GTOreVeins.OreVein::weight).sum();
+        for (String dimension : OreSourceCatalog.current().veinDimensions()) {
+            var generation = summary.dimensions().get(dimension);
+            if (generation == null || !generation.veins()) continue;
+            var veins = OreSourceCatalog.current().veins(dimension);
+            int totalWeight = GTOreVeins.selectionWeight(dimension, veins);
             for (GTOreVeins.OreVein v : veins) {
-                out.add(new VeinInfo(
-                        v.name(),
-                        dimension,
-                        v.minY(),
-                        v.maxY(),
-                        v.weight(),
-                        totalWeight,
-                        v.top(),
-                        v.bottom(),
-                        v.between(),
-                        v.spread(),
-                        false));
+                var heights = v.heights(dimension).intersect(generation.heights());
+                var reserve = GTOreVeins.reserveHeights(dimension, v.name(), generation.heights());
+                if (!heights.isEmpty() || reserve.isPresent())
+                    out.add(new MixedVein(summary, v, dimension, heights, totalWeight, reserve));
             }
         }
-        if (gregtech.content.worldgen.GTWorldgenDefaults.STONE_LAYERS) {
-            java.util.Set<String> seen = new java.util.HashSet<>();
-            for (GTStoneLayersGen.LayerDef layer : GTStoneLayersGen.LAYERS) {
+        HeightRange stratumHeights = overworldStrata(summary);
+        if (stratumHeights != null) {
+            var seen = new LinkedHashSet<StratumKey>();
+            for (GTStoneLayersGen.LayerDef layer : StoneLayerField.layers()) {
+                ItemStack stone = layerStone(layer);
                 appendStratumOres(
+                        summary,
                         out,
                         seen,
                         layer.material(),
                         null,
                         false,
-                        layer.noDeep(),
-                        List.of(layerStone(layer)),
-                        layer.ores());
+                        List.of(stone),
+                        stratumOres(layer, stone, true, summary, stratumHeights));
             }
-            // The generator concatenates all rules for the same directional contact.
-            record Contact(String above, String below) {}
-            var contacts = new java.util.LinkedHashMap<Contact, List<GTStoneLayersGen.OreDef>>();
+            record Contact(String first, String second, boolean bothSides) {}
+            var contacts = new LinkedHashMap<Contact, List<GTStoneLayersGen.OreDef>>();
             for (GTStoneLayersGen.ContactDef contact : GTStoneLayersGen.CONTACTS) {
-                contacts.computeIfAbsent(
-                                new Contact(contact.materialA(), contact.materialB()), key -> new ArrayList<>())
+                String first = contact.materialA();
+                String second = contact.materialB();
+                if (contact.bothSides() && first.compareTo(second) > 0) {
+                    first = contact.materialB();
+                    second = contact.materialA();
+                }
+                contacts.computeIfAbsent(new Contact(first, second, contact.bothSides()), key -> new ArrayList<>())
                         .addAll(contact.ores());
-                if (contact.bothSides())
-                    contacts.computeIfAbsent(
-                                    new Contact(contact.materialB(), contact.materialA()), key -> new ArrayList<>())
-                            .addAll(contact.ores());
             }
             contacts.forEach((contact, ores) -> appendStratumOres(
+                    summary,
                     out,
                     seen,
-                    contact.above(),
-                    contact.below(),
-                    false,
-                    false,
-                    contactStones(contact.above(), contact.below()),
-                    ores));
+                    contact.first(),
+                    contact.second(),
+                    contact.bothSides(),
+                    contactStones(contact.first(), contact.second()),
+                    stratumOres(ores, false, summary, stratumHeights)));
         }
+        appendSpecialSites(out, summary);
         return out;
     }
 
-    public record StratumOre(
-            GTMaterial material,
-            int minY,
-            int maxY,
-            int chanceDiv,
-            gregtech.content.worldgen.StoneLayerOreRules.Rule rule) {}
+    public record StratumOre(GTMaterial material, int minY, int maxY, int chanceDiv, String blockId) {}
 
-    public record StratumInfo(Component host, boolean contact, List<ItemStack> stones, List<StratumOre> ores) {}
+    public record OrePreview(ItemStack stack, List<Component> captions, GTMaterial material) {
+        public List<Component> tooltip(OreGenerationSummary summary) {
+            var lines = new ArrayList<>(captions);
+            lines.addAll(oreSourceCaptions(material, summary));
+            return lines;
+        }
+    }
+
+    private record OreIdentity(GTMaterial material, String blockId) {}
+
+    private record StratumInfo(
+            OreGenerationSummary summary,
+            Component host,
+            HeightRange heights,
+            List<ItemStack> hosts,
+            List<StratumOre> ores)
+            implements VeinInfo {
+        @Override
+        public List<OrePreview> previews() {
+            return stratumPreviews(ores, hosts);
+        }
+
+        @Override
+        public List<Component> captions() {
+            return List.of(
+                    Component.translatable("gt6ce.jei.info.layer_stone", host),
+                    Component.translatable("gt6ce.jei.info.dimension", OreVeinDeclaration.OVERWORLD),
+                    Component.translatable("gt6ce.jei.info.height", heights.min(), heights.max()));
+        }
+
+        @Override
+        public List<ItemStack> aliases() {
+            return stratumAliases(hosts, ores);
+        }
+    }
+
+    private record SpecialSite(
+            OreGenerationSummary summary, List<ItemStack> hosts, List<OrePreview> previews, List<Component> captions)
+            implements VeinInfo {
+        @Override
+        public List<ItemStack> aliases() {
+            var aliases = new ArrayList<>(hosts);
+            var materials = new LinkedHashSet<GTMaterial>();
+            for (var ore : previews) {
+                if (materials.add(ore.material())) {
+                    aliases.addAll(oreAliases(ore.material(), false));
+                    aliases.addAll(oreAliases(ore.material(), true));
+                }
+                if (OreBlock.stoneOfStack(ore.stack()) == OreHostStone.BEDROCK)
+                    aliases.add(OreBlock.brokenStack(ore.material(), OreHostStone.STONE));
+            }
+            return aliases;
+        }
+    }
+
+    private static void appendSpecialSites(List<VeinInfo> rows, OreGenerationSummary summary) {
+        var active = summary.specialDeposits();
+        var coltan = active.get(Kind.COLTAN_FIELD);
+        var centre = active.get(Kind.COLTAN_BEDROCK);
+        if (coltan != null || centre != null) rows.add(coltanSite(summary, coltan, centre));
+        var floor = active.get(Kind.DUNGEON_BEDROCK);
+        if (floor != null) {
+            var rolls = SpecialOreDeposits.DUNGEON_ROLLS;
+            var ores = new ArrayList<OrePreview>();
+            for (GTMaterial material : new LinkedHashSet<>(rolls)) {
+                var detail = List.of(siteMaterialRoll(rolls, material));
+                ores.add(new OrePreview(bedrockOreStack(material), detail, material));
+                var raw = GTBlocks.getObject(BlockMaterialPrefix.blockRaw, material);
+                if (raw != null && raw.isPresent())
+                    ores.add(new OrePreview(new ItemStack(raw.get()), detail, material));
+            }
+            int rawY = floor.min() + SpecialOreDeposits.DUNGEON_RAW_ORE_OFFSET;
+            rows.add(specialSite(
+                    summary,
+                    Kind.DUNGEON_BEDROCK,
+                    List.of(new ItemStack(Items.BEDROCK)),
+                    ores,
+                    List.of(
+                            Component.translatable("gt6ce.jei.info.bedrock_height", floor.min()),
+                            Component.translatable("gt6ce.jei.info.dungeon_raw_ore_height", rawY, rawY + 2))));
+        }
+    }
+
+    private static VeinInfo coltanSite(OreGenerationSummary summary, HeightRange field, HeightRange centre) {
+        var ores = new ArrayList<OrePreview>();
+        List<Component> captions = new ArrayList<>();
+        if (field != null) {
+            var rolls = SpecialOreDeposits.COLTAN_ROLLS;
+            for (GTMaterial material : new LinkedHashSet<>(rolls)) {
+                var detail = List.of(siteMaterialRoll(rolls, material));
+                ores.add(new OrePreview(smallOreStack(material), detail, material));
+                ores.add(new OrePreview(oreStack(material), detail, material));
+            }
+            captions.add(Component.translatable("gt6ce.jei.info.height", field.min(), field.max()));
+            captions.add(
+                    Component.translatable("gt6ce.jei.info.coltan_small_radius", SpecialOreDeposits.COLTAN_RADIUS));
+            captions.add(Component.translatable(
+                    "gt6ce.jei.info.coltan_full_radius", SpecialOreDeposits.COLTAN_FULL_ORE_RADIUS));
+        }
+        if (centre != null) {
+            var material = OreMaterials.Coltan;
+            ores.add(new OrePreview(bedrockOreStack(material), List.of(), material));
+            captions.add(Component.translatable("gt6ce.jei.info.coltan_centre", centre.min()));
+        }
+        return specialSite(summary, field == null ? Kind.COLTAN_BEDROCK : Kind.COLTAN_FIELD, List.of(), ores, captions);
+    }
+
+    private static Component siteMaterialRoll(List<GTMaterial> rolls, GTMaterial material) {
+        return Component.translatable(
+                "gt6ce.jei.info.site_material_roll", Collections.frequency(rolls, material), rolls.size());
+    }
+
+    private static VeinInfo specialSite(
+            OreGenerationSummary summary,
+            Kind kind,
+            List<ItemStack> hosts,
+            List<OrePreview> ores,
+            List<Component> details) {
+        List<Component> captions = new ArrayList<>();
+        captions.add(sourceName(kind));
+        captions.add(Component.translatable("gt6ce.jei.info.dimension", OreVeinDeclaration.OVERWORLD));
+        captions.addAll(details);
+        return new SpecialSite(
+                summary,
+                hosts,
+                ores.stream().filter(ore -> !ore.stack().isEmpty()).toList(),
+                List.copyOf(captions));
+    }
+
+    private record StratumKey(
+            String above, String below, boolean bothSides, List<Item> stones, List<StratumOre> ores) {}
 
     private static ItemStack layerStone(GTStoneLayersGen.LayerDef layer) {
         if (layer.stoneType() != null) {
-            var type = gregtech.content.block.stone.StoneType.valueOf(layer.stoneType());
-            return new ItemStack(gregtech.content.registry.GTBlocks.getStoneState(
-                            type, gregtech.content.block.stone.StoneVariant.STONE)
-                    .getBlock());
+            var type = StoneType.valueOf(layer.stoneType());
+            return new ItemStack(
+                    GTBlocks.getStoneState(type, StoneVariant.STONE).getBlock());
         }
         if (layer.blockId() != null) {
-            Item item = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(
-                    ResourceLocation.fromNamespaceAndPath("gt6ce", layer.blockId()));
+            Item item = Mc.item(layerBlockId(layer));
             if (item != Items.AIR) return new ItemStack(item);
         }
         return new ItemStack(Items.STONE);
     }
 
     private static List<ItemStack> contactStones(String above, String below) {
-        var stones = new java.util.LinkedHashMap<Item, ItemStack>();
+        var stones = new LinkedHashMap<Item, ItemStack>();
         for (String material : List.of(above, below)) {
-            for (var layer : GTStoneLayersGen.LAYERS) {
+            for (var layer : StoneLayerField.layers()) {
                 if (!layer.material().equals(material)) continue;
                 ItemStack stone = layerStone(layer);
                 stones.putIfAbsent(stone.getItem(), stone);
@@ -197,261 +374,328 @@ public class WorldgenInfoData {
         return List.copyOf(stones.values());
     }
 
-    public static List<ItemStack> stratumStones(VeinInfo vein) {
-        return vein.layer() == null ? List.of() : vein.layer().stones();
-    }
-
     private static Component materialName(String name) {
-        GTMaterial material = gregtech.engine.material.GTMaterialRegistry.get(name);
-        String canonical = material == null ? name : material.resolve().getName();
-        return Component.translatable("material.gt6ce." + canonical.toLowerCase(java.util.Locale.ROOT));
+        GTMaterial material = GTMaterialRegistry.get(name).resolve();
+        return material.isValid() ? MaterialPresentation.name(material) : Component.literal(name);
     }
 
     private static void appendStratumOres(
+            OreGenerationSummary summary,
             List<VeinInfo> out,
-            java.util.Set<String> seen,
+            Set<StratumKey> seen,
             String above,
             String below,
             boolean bothSides,
-            boolean noDeep,
             List<ItemStack> stones,
-            List<GTStoneLayersGen.OreDef> definitions) {
+            List<StratumOre> ores) {
+        if (ores.isEmpty()
+                || !seen.add(new StratumKey(
+                        above,
+                        below,
+                        bothSides,
+                        stones.stream().map(ItemStack::getItem).toList(),
+                        ores))) return;
+        String contactKey = bothSides ? "gt6ce.jei.info.contact_both" : "gt6ce.jei.info.contact_ordered";
         Component host = below == null
                 ? materialName(above)
-                : Component.translatable(
-                        "gt6ce.jei.info.contact_" + (bothSides ? "both" : "ordered"),
-                        materialName(above),
-                        materialName(below));
-        List<StratumOre> ores = new ArrayList<>();
-        for (GTStoneLayersGen.OreDef def : definitions) {
-            var rule = gregtech.content.worldgen.StoneLayerOreRules.rule(def);
-            if (!gregtech.content.worldgen.StoneLayerOrePlacement.enabled(rule)) continue;
-            GTMaterial material = gregtech.engine.material.GTMaterialRegistry.get(def.material());
-            if (material == null || !material.resolve().isValid()) continue;
-            material = material.resolve();
-            int min = Math.max(GTWorldgenScale.WORLD_FLOOR + 1, GTWorldgenScale.stoneLayerOreMinY(def));
-            if (noDeep) min = Math.max(min, GTWorldgenScale.remapY(24));
-            int max = Math.min(GTWorldgenScale.BAND_TOP - 1, GTWorldgenScale.remapY(def.maxY()));
-            if (min > max) continue;
-            int chance = Math.max(1, def.chanceDiv());
-            ores.add(new StratumOre(material, min, max, chance, rule));
-        }
-        if (ores.isEmpty()) return;
-        // Preserve the entire ordered combination, including separate height bands for one mineral.
-        String key = above + "/" + below + "/" + bothSides + "/" + stones + "/" + ores;
-        if (!seen.add(key)) return;
+                : Component.translatable(contactKey, materialName(above), materialName(below));
         int min = ores.stream().mapToInt(StratumOre::minY).min().orElseThrow();
         int max = ores.stream().mapToInt(StratumOre::maxY).max().orElseThrow();
-        out.add(new VeinInfo(
-                above,
-                "minecraft:overworld",
-                min,
-                max,
-                0,
-                0,
-                null,
-                null,
-                null,
-                null,
-                false,
-                new StratumInfo(host, below != null, stones, List.copyOf(ores))));
+        out.add(new StratumInfo(summary, host, new HeightRange(min, max), stones, ores));
     }
 
-    public static List<GTMaterial> veinMaterials(VeinInfo vein) {
-        return vein.layer() == null
-                ? List.of(vein.top(), vein.bottom(), vein.between(), vein.spread())
-                : vein.layer().ores().stream()
-                        .map(StratumOre::material)
-                        .distinct()
-                        .toList();
+    private static List<StratumOre> stratumOres(
+            GTStoneLayersGen.LayerDef layer,
+            ItemStack stone,
+            boolean includeSeam,
+            OreGenerationSummary summary,
+            HeightRange terrain) {
+        if (includeSeam && stone.getItem() instanceof BlockItem item && item.getBlock() instanceof RockOreBlock seam) {
+            int minY = layer.noDeep() ? StoneLayerField.SHALLOW_LAYER_MIN_Y : -64;
+            var heights = new HeightRange(minY, 319).intersect(terrain);
+            if (heights.isEmpty()) return List.of();
+            return List.of(new StratumOre(
+                    seam.material().resolve(),
+                    heights.min(),
+                    heights.max(),
+                    0,
+                    layerBlockId(layer).toString()));
+        }
+        return stratumOres(layer.ores(), layer.noDeep(), summary, terrain);
+    }
+
+    private static List<StratumOre> stratumOres(
+            List<GTStoneLayersGen.OreDef> definitions,
+            boolean noDeep,
+            OreGenerationSummary summary,
+            HeightRange terrain) {
+        var ores = new ArrayList<StratumOre>();
+        for (var def : definitions) {
+            if (!def.providesOre() || summary.disabledStratumBlocks().contains(def.blockId())) continue;
+            GTMaterial material = GTMaterialRegistry.get(def.material()).resolve();
+            if (!material.isValid()) continue;
+            int min = MineralWorldgenRules.stratumOreMinY(def);
+            if (noDeep) min = Math.max(min, StoneLayerField.SHALLOW_LAYER_MIN_Y);
+            var heights = new HeightRange(min, MineralWorldgenRules.stratumOreMaxY(def)).intersect(terrain);
+            if (!heights.isEmpty())
+                ores.add(new StratumOre(material, heights.min(), heights.max(), def.chanceDiv(), def.blockId()));
+        }
+        return List.copyOf(ores);
     }
 
     /** Search aliases, not additional guaranteed products. Small ores use the actual crushing target. */
     public static List<ItemStack> oreAliases(GTMaterial material, boolean small) {
-        var prefix = small ? gregtech.content.data.MaterialPrefix.crushed : gregtech.content.data.MaterialPrefix.oreRaw;
+        var prefix = small ? MaterialPrefix.crushed : MaterialPrefix.oreRaw;
         GTMaterial target = small ? material.getTargetCrushingMaterial().resolve() : material.resolve();
-        ItemStack stack = gregtech.content.registry.GTItems.getStack(prefix, target);
+        ItemStack stack = GTItems.getStack(prefix, target);
         return stack.isEmpty() ? List.of() : List.of(stack);
     }
 
-    public static List<ItemStack> veinAliases(VeinInfo vein) {
-        List<ItemStack> aliases = new ArrayList<>(stratumStones(vein));
-        for (GTMaterial material : veinMaterials(vein)) {
-            var rule = vein.layer() == null
-                    ? null
-                    : vein.layer().ores().stream()
-                            .filter(ore -> ore.material() == material)
-                            .findFirst()
-                            .orElseThrow()
-                            .rule();
-            if (rule != null && !rule.blockId().isEmpty()) {
-                aliases.addAll(explicitAliases(rule));
-                continue;
-            }
-            aliases.addAll(oreAliases(material, false));
-            if (vein.layer() != null) {
-                aliases.add(smallOreStack(material));
-                aliases.addAll(oreAliases(material, true));
-            }
-        }
-        return aliases;
+    public static List<OrePreview> layerPreviews(LayerInfo layer) {
+        return stratumPreviews(layer.ores(), List.of(layer.stone()));
     }
 
-    private static List<ItemStack> explicitAliases(gregtech.content.worldgen.StoneLayerOreRules.Rule rule) {
-        Item item = switch (rule.blockId()) {
+    private static List<OrePreview> stratumPreviews(List<StratumOre> ores, List<ItemStack> hosts) {
+        var grouped = new LinkedHashMap<OreIdentity, List<Component>>();
+        for (var ore : ores) {
+            List<Component> captions =
+                    grouped.computeIfAbsent(new OreIdentity(ore.material(), ore.blockId()), key -> new ArrayList<>());
+            captions.add(Component.translatable("gt6ce.jei.info.height", ore.minY(), ore.maxY()));
+            if (ore.chanceDiv() == 0) captions.add(Component.translatable("gt6ce.jei.info.seam_ore"));
+            else
+                captions.add(Component.translatable(
+                        "gt6ce.jei.info.stratum_roll",
+                        ore.chanceDiv(),
+                        String.format(Locale.ROOT, "%.2f", 100d / ore.chanceDiv())));
+        }
+        var result = new ArrayList<OrePreview>();
+        grouped.forEach((ore, captions) -> {
+            ItemStack stack = ore.blockId().isEmpty()
+                    ? withHost(oreStack(ore.material()), hosts)
+                    : new ItemStack(Mc.block(ResourceLocation.parse(ore.blockId())));
+            if (!stack.isEmpty()) result.add(new OrePreview(stack, List.copyOf(captions), ore.material()));
+        });
+        return result;
+    }
+
+    public static List<Component> oreSourceCaptions(GTMaterial material, OreGenerationSummary summary) {
+        var sources = OreSourceCatalog.current().sources(material);
+        if (sources.isEmpty()) return List.of();
+        var available = new LinkedHashMap<String, EnumSet<OreSourceCatalog.Kind>>();
+        for (var source : sources) {
+            if (summary.includes(source)) {
+                available
+                        .computeIfAbsent(source.dimension(), key -> EnumSet.noneOf(OreSourceCatalog.Kind.class))
+                        .add(source.kind());
+            }
+        }
+        if (available.isEmpty()) return List.of();
+        List<Component> lines = new ArrayList<>();
+        lines.add(Component.translatable("gt6ce.jei.info.ore_sources").withStyle(ChatFormatting.GRAY));
+        available.forEach((dimension, kinds) -> {
+            var line =
+                    Component.translatableWithFallback("gt6ce.jei.dimension." + dimension.replace(':', '.'), dimension);
+            for (var kind : kinds) {
+                line.append(" · ").append(sourceName(kind));
+            }
+            lines.add(line);
+        });
+        return lines;
+    }
+
+    private static Component sourceName(Kind kind) {
+        return Component.translatable("gt6ce.jei.source." + kind.name().toLowerCase(Locale.ROOT));
+    }
+
+    private static ItemStack withHost(ItemStack stack, List<ItemStack> hosts) {
+        if (!(stack.getItem() instanceof BlockItem item) || !(item.getBlock() instanceof OreBlock ore)) return stack;
+        // A contact can generate against either face; keep the generic ore when the host is ambiguous.
+        if (hosts.size() != 1 || !(hosts.get(0).getItem() instanceof BlockItem stone)) return stack;
+        OreHostStone background = GTOreBlockResolver.stoneOf(stone.getBlock().defaultBlockState());
+        return background == null ? stack : OreBlock.withStone(stack, ore.stateFor(background));
+    }
+
+    private static void addOreAliases(List<ItemStack> aliases, OreIdentity ore) {
+        if (ore.blockId().startsWith("minecraft:")) {
+            aliases.addAll(explicitAliases(ore.blockId()));
+        } else {
+            aliases.addAll(oreAliases(ore.material(), false));
+            if (ore.blockId().isEmpty()) {
+                aliases.add(smallOreStack(ore.material()));
+                aliases.addAll(oreAliases(ore.material(), true));
+            }
+        }
+    }
+
+    private static List<ItemStack> explicitAliases(String blockId) {
+        Item item = switch (blockId) {
             case "minecraft:iron_ore" -> Items.RAW_IRON;
             case "minecraft:gold_ore" -> Items.RAW_GOLD;
             case "minecraft:copper_ore" -> Items.RAW_COPPER;
+            case "minecraft:diamond_ore" -> Items.DIAMOND;
+            case "minecraft:emerald_ore" -> Items.EMERALD;
+            case "minecraft:lapis_ore" -> Items.LAPIS_LAZULI;
+            case "minecraft:redstone_ore" -> Items.REDSTONE;
+            case "minecraft:coal_ore" -> Items.COAL;
             default -> Items.AIR;
         };
         return item == Items.AIR ? List.of() : List.of(new ItemStack(item));
     }
 
-    private static ItemStack ruleStack(GTMaterial material, gregtech.content.worldgen.StoneLayerOreRules.Rule rule) {
-        var state = gregtech.content.worldgen.StoneLayerOrePlacement.explicitState(rule);
-        return state == null ? oreStack(material) : new ItemStack(state.getBlock());
-    }
-
-    public static ItemStack stratumStack(VeinInfo vein, GTMaterial material) {
-        return ruleStack(
-                material,
-                vein.layer().ores().stream()
-                        .filter(ore -> ore.material() == material)
-                        .findFirst()
-                        .orElseThrow()
-                        .rule());
-    }
-
-    private static gregtech.content.worldgen.StoneLayerOreRules.Rule layerRule(LayerInfo layer, GTMaterial material) {
-        return layer.definitions().stream()
-                .filter(def -> {
-                    GTMaterial candidate = gregtech.engine.material.GTMaterialRegistry.get(def.material());
-                    return candidate != null && candidate.resolve() == material;
-                })
-                .map(gregtech.content.worldgen.StoneLayerOreRules::rule)
-                .findFirst()
-                .orElseThrow();
-    }
-
-    public static ItemStack layerOreStack(LayerInfo layer, GTMaterial material) {
-        return ruleStack(material, layerRule(layer, material));
-    }
-
     public static List<ItemStack> layerAliases(LayerInfo layer) {
-        return layer.ores().stream()
-                .flatMap(material -> {
-                    var rule = layerRule(layer, material);
-                    return (rule.blockId().isEmpty() ? oreAliases(material, false) : explicitAliases(rule)).stream();
-                })
+        return stratumAliases(List.of(), layer.ores());
+    }
+
+    private static List<ItemStack> stratumAliases(List<ItemStack> hosts, List<StratumOre> ores) {
+        var aliases = new ArrayList<>(hosts);
+        for (var ore : new LinkedHashSet<>(ores.stream()
+                .map(entry -> new OreIdentity(entry.material(), entry.blockId()))
+                .toList())) addOreAliases(aliases, ore);
+        return aliases;
+    }
+
+    public static List<SmallOreInfo> buildSmallOres(OreGenerationSummary summary) {
+        List<SmallOreInfo> out = new ArrayList<>();
+        var catalog = OreSourceCatalog.current();
+        for (String dimension : catalog.smallOreDimensions()) {
+            var generation = summary.dimensions().get(dimension);
+            if (generation == null || !generation.smallOres()) continue;
+            var terrain = generation.heights();
+            for (var ore : catalog.smallOres(dimension)) {
+                var heights = ore.heights(dimension, terrain.min(), terrain.max());
+                if (heights.isEmpty()) continue;
+                var stack = smallOreStack(ore.material());
+                if (stack.isEmpty()) continue;
+                int min = MineralWorldgenRules.scatterAttempts(ore.amount(), bound -> 0);
+                int max = MineralWorldgenRules.scatterAttempts(ore.amount(), bound -> bound - 1);
+                String attempts = min == max ? Integer.toString(min) : min + "–" + max;
+                String curve = ore.distribution() == GTOreVeins.Distribution.TRIANGLE ? "triangular" : "uniform";
+                out.add(new SmallOreInfo(
+                        summary,
+                        List.of(new OrePreview(stack, List.of(), ore.material())),
+                        List.of(
+                                Component.translatable("gt6ce.jei.info.dimension", dimension),
+                                Component.translatable("gt6ce.jei.info.height", heights.min(), heights.max()),
+                                Component.translatable("gt6ce.jei.info." + curve),
+                                Component.translatable("gt6ce.jei.info.small_ore_attempts", attempts))));
+            }
+        }
+        summary.dimensions().forEach((dimension, generation) -> {
+            if (!generation.strata()) return;
+            var pool = BoundaryGemOres.MATERIALS;
+            var gems = pool.stream()
+                    .map(gem -> new OrePreview(smallOreStack(gem), List.of(siteMaterialRoll(pool, gem)), gem))
+                    .filter(gem -> !gem.stack().isEmpty())
+                    .toList();
+            if (!gems.isEmpty()) {
+                out.add(new SmallOreInfo(
+                        summary,
+                        gems,
+                        List.of(
+                                sourceName(Kind.BOUNDARY_GEM),
+                                Component.translatable("gt6ce.jei.info.dimension", dimension),
+                                Component.translatable("gt6ce.jei.info.boundary_gem", summary.boundaryGemDivisor()))));
+            }
+        });
+        return out;
+    }
+
+    /** JEI registers its canvas once, before a server can send different geology settings. */
+    protected static int maximumLayerSlots() {
+        var slots = new LinkedHashMap<Item, Set<OreIdentity>>();
+        for (var layer : StoneLayerField.layers()) {
+            var ores = slots.computeIfAbsent(layerStone(layer).getItem(), item -> new LinkedHashSet<>());
+            for (var ore : layer.ores()) {
+                ores.add(new OreIdentity(GTMaterialRegistry.get(ore.material()).resolve(), ore.blockId()));
+            }
+        }
+        return slots.values().stream().mapToInt(Set::size).max().orElse(0);
+    }
+
+    public static List<LayerInfo> buildLayers(OreGenerationSummary summary) {
+        HeightRange terrain = overworldStrata(summary);
+        if (terrain == null) return List.of();
+        var layers = new LinkedHashMap<Item, LinkedHashSet<StratumOre>>();
+        for (GTStoneLayersGen.LayerDef def : StoneLayerField.layers()) {
+            ItemStack stone = layerStone(def);
+            layers.computeIfAbsent(stone.getItem(), key -> new LinkedHashSet<>())
+                    .addAll(stratumOres(def, stone, false, summary, terrain));
+        }
+        return layers.entrySet().stream()
+                .map(entry -> new LayerInfo(summary, new ItemStack(entry.getKey()), List.copyOf(entry.getValue())))
                 .toList();
     }
 
-    public static List<Component> stratumOreCaptions(VeinInfo vein, GTMaterial material) {
-        List<Component> lines = new ArrayList<>();
-        for (StratumOre ore : vein.layer().ores()) {
-            if (ore.material() != material) continue;
-            lines.add(Component.translatable("gt6ce.jei.info.height", ore.minY(), ore.maxY()));
-            if (!ore.rule().biomes().isEmpty()) {
-                Component biomes = Component.empty();
-                for (var group : ore.rule().biomes()) {
-                    if (!biomes.getString().isEmpty()) biomes = biomes.copy().append(", ");
-                    biomes = biomes.copy()
-                            .append(Component.translatable(
-                                    "gt6ce.jei.info.biome_group." + group.name().toLowerCase(java.util.Locale.ROOT)));
-                }
-                lines.add(Component.translatable("gt6ce.jei.info.required_biomes", biomes));
-            }
-            if (!ore.rule().blockId().isEmpty()) lines.add(Component.translatable("gt6ce.jei.info.explicit_ore"));
-            lines.add(Component.translatable(
-                    "gt6ce.jei.info.stratum_roll",
-                    ore.chanceDiv(),
-                    String.format(java.util.Locale.ROOT, "%.2f", 100d / ore.chanceDiv())));
-        }
-        return lines;
+    private static HeightRange overworldStrata(OreGenerationSummary summary) {
+        var overworld = summary.dimensions().get(OreVeinDeclaration.OVERWORLD);
+        return overworld != null && overworld.strata() ? overworld.heights() : null;
     }
 
-    /** Captions shared by JEI and EMI; individual ore heights and rolls belong to their slots. */
-    public static List<Component> stratumCaptions(VeinInfo vein) {
-        StratumInfo info = vein.layer();
-        return List.of(
-                Component.translatable("gt6ce.jei.info.layer_stone", info.host()),
-                Component.translatable("gt6ce.jei.info.dimension", vein.dimension()),
-                Component.translatable("gt6ce.jei.info.height", vein.minY(), vein.maxY()));
+    private static ResourceLocation layerBlockId(GTStoneLayersGen.LayerDef def) {
+        String id = def.blockId();
+        return id.contains(":") ? ResourceLocation.parse(id) : Mc.gregtechId(id);
     }
 
-    public static List<SmallOreInfo> buildSmallOres() {
-        List<SmallOreInfo> out = new ArrayList<>();
-        for (GTOreVeins.SmallOre o : GTOreVeins.activeOverworldSmallOres()) {
-            out.add(new SmallOreInfo(
-                    o.name(), "minecraft:overworld", o.minY(), o.maxY(), o.amount(), o.material(), true));
-        }
-        for (GTOreVeins.SmallOre o : GTOreVeins.activeNetherSmallOres()) {
-            out.add(new SmallOreInfo(
-                    o.name(), "minecraft:the_nether", o.minY(), o.maxY(), o.amount(), o.material(), false));
-        }
-        for (GTOreVeins.SmallOre o : GTOreVeins.activeEndSmallOres()) {
-            out.add(new SmallOreInfo(
-                    o.name(), "minecraft:the_end", o.minY(), o.maxY(), o.amount(), o.material(), false));
-        }
-        for (String dimension : AddonOreVeins.smallOreDimensions()) {
-            if (SmallOreDeclaration.OVERWORLD.equals(dimension)
-                    || SmallOreDeclaration.NETHER.equals(dimension)
-                    || SmallOreDeclaration.END.equals(dimension)) continue;
-            for (GTOreVeins.SmallOre o : GTOreVeins.activeSmallOres(dimension)) {
-                out.add(new SmallOreInfo(o.name(), dimension, o.minY(), o.maxY(), o.amount(), o.material(), false));
-            }
-        }
-        return out;
-    }
+    public record BedrockInfo(
+            OreGenerationSummary summary,
+            String name,
+            String dimension,
+            GTMaterial material,
+            int floor,
+            int chance,
+            int density,
+            ItemStack flower) {}
 
-    public static List<LayerInfo> buildLayers() {
-        List<LayerInfo> out = new ArrayList<>();
-        java.util.Set<String> seen = new java.util.HashSet<>();
-        for (GTStoneLayersGen.LayerDef def : GTStoneLayersGen.LAYERS) {
-            ItemStack stone;
-            String display;
-            if (def.stoneType() != null) {
-                String id = "stone_" + def.stoneType().toLowerCase() + "_stone";
-                Item item = Mc.item(Mc.gregtechId(id));
-                if (item == null || item == Items.AIR) continue;
-                stone = new ItemStack(item);
-                display = def.material();
-            } else if (def.blockId() != null) {
-                Item item = Mc.item(Mc.gregtechId(def.blockId()));
-                if (item == null || item == Items.AIR) continue;
-                stone = new ItemStack(item);
-                display = def.material();
-            } else {
-                continue; // vanilla stone layers carry no display block
-            }
-            List<GTMaterial> ores = new ArrayList<>();
-            for (GTStoneLayersGen.OreDef ore : def.ores()) {
-                if (!gregtech.content.worldgen.StoneLayerOrePlacement.enabled(
-                        gregtech.content.worldgen.StoneLayerOreRules.rule(ore))) continue;
-                GTMaterial material = gregtech.engine.material.GTMaterialRegistry.get(ore.material());
-                if (material != null && material.resolve().isValid()) ores.add(material.resolve());
-            }
-            String key = display + "/"
-                    + ores.stream().map(GTMaterial::getName).sorted().toList();
-            if (!seen.add(key)) continue; // collapse duplicate layer entries
-            out.add(new LayerInfo(display, stone, ores, def.ores()));
-        }
-        return out;
-    }
-
-    public record BedrockInfo(String name, GTMaterial material, int chance, ItemStack flower) {}
-
-    public static List<BedrockInfo> buildBedrockOres() {
+    public static List<BedrockInfo> buildBedrockOres(OreGenerationSummary summary) {
+        var catalog = OreSourceCatalog.current();
         List<BedrockInfo> out = new ArrayList<>();
-        for (gregtech.content.worldgen.GTBedrockOres.BedrockOre ore :
-                gregtech.content.worldgen.GTBedrockOres.OVERWORLD) {
-            Item flower = Mc.item(Mc.gregtechId(ore.flowerId()));
-            out.add(new BedrockInfo(
-                    ore.name(),
-                    ore.material(),
-                    ore.chance(),
-                    flower == null || flower == Items.AIR ? new ItemStack(Items.POPPY) : new ItemStack(flower)));
-        }
+        summary.bedrock().forEach((dimension, table) -> {
+            for (var ore : catalog.bedrockOres(dimension, OreSourceCatalog.Geology.DISABLED)) {
+                Integer chance = table.divisors().get(ore.name());
+                if (chance == null) continue;
+                Item flower = ore.flowerId() == null ? Items.AIR : Mc.item(Mc.gregtechId(ore.flowerId()));
+                out.add(new BedrockInfo(
+                        summary,
+                        ore.name(),
+                        dimension,
+                        ore.material(),
+                        table.floor(),
+                        chance,
+                        summary.bedrockDensity(),
+                        flower == null || flower == Items.AIR ? ItemStack.EMPTY : new ItemStack(flower)));
+            }
+        });
         return out;
+    }
+
+    public static ItemStack bedrockOreStack(GTMaterial material) {
+        var stack = oreStack(material);
+        if (stack.getItem() instanceof BlockItem item && item.getBlock() instanceof OreBlock ore)
+            return OreBlock.withStone(stack, ore.stateFor(OreHostStone.BEDROCK));
+        return stack;
+    }
+
+    public static List<ItemStack> bedrockAliases(BedrockInfo info) {
+        var aliases = new ArrayList<>(oreAliases(info.material(), false));
+        var stone = OreVeinDeclaration.NETHER.equals(info.dimension()) ? OreHostStone.NETHERRACK : OreHostStone.STONE;
+        ItemStack broken = OreBlock.brokenStack(info.material(), stone);
+        if (!broken.isEmpty()) aliases.add(broken);
+        return aliases;
+    }
+
+    public static List<Component> bedrockCaptions(BedrockInfo ore) {
+        String indicator = !ore.flower().isEmpty()
+                ? "bedrock_flower"
+                : OreVeinDeclaration.NETHER.equals(ore.dimension()) ? "bedrock_nether_rock" : "bedrock_rock";
+        return List.of(
+                Component.translatable("gt6ce.jei.info.dimension", ore.dimension()),
+                Component.translatable("gt6ce.jei.info.bedrock_height", ore.floor()),
+                Component.translatable(
+                        "gt6ce.jei.info.bedrock_chance",
+                        String.format(
+                                Locale.ROOT,
+                                "%.4f",
+                                MineralWorldgenRules.bedrockChancePercent(ore.chance(), ore.density()))),
+                Component.translatable("gt6ce.jei.info." + indicator));
     }
 }

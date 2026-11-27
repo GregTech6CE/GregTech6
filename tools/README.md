@@ -12,3 +12,4 @@
 | [resources/](resources/README.md) | 核对发行包静态 JSON 预算与资源字节一致性，审计 PNG 块结构、CRC 与透明像素覆盖。 |
 | [stonecutter/](stonecutter/README.md) | 扫描共享输入 `//?` 分支，输出二维归因矩阵、Wave 清单与硬违规检查。 |
 | [validation/](validation/README.md) | 读取验证路由表，计算改动对应的检查并校验文档闭合。 |
+| [worldgen/](worldgen/README.md) | 导出岩层剖面与矿物分布，对照实际区块的矿量、找矿距离和生成耗时。 |

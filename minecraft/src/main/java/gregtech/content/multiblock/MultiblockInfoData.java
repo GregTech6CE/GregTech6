@@ -1,9 +1,13 @@
 package gregtech.content.multiblock;
 
+import gregtech.content.block.machine.OriginalLargeBoilerControllerBlock;
 import gregtech.engine.multiblock.MultiblockLayout;
+import gregtech.engine.multiblock.tracking.StructurePlan;
 import java.util.*;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 
 /** Both viewers consume the same compiled cells as structure validation and the building wand. */
 public final class MultiblockInfoData {
@@ -16,8 +20,12 @@ public final class MultiblockInfoData {
             Map<BlockPos, ItemStack> blocks) {}
 
     public static List<Info> recipes() {
-        var result = new LinkedHashMap<net.minecraft.world.item.Item, Info>();
-        ControllerStructureLayouts.plans().forEach((block, plan) -> {
+        return recipes(ControllerStructureLayouts.plans());
+    }
+
+    public static List<Info> recipes(Map<Block, List<StructurePlan.Cell>> plans) {
+        var result = new LinkedHashMap<Item, Info>();
+        plans.forEach((block, plan) -> {
             var controller = new ItemStack(block);
             if (controller.isEmpty() || result.containsKey(controller.getItem())) return;
             var roles = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
@@ -36,7 +44,7 @@ public final class MultiblockInfoData {
                     new Info(
                             controller,
                             Collections.unmodifiableMap(roles),
-                            block instanceof gregtech.content.block.machine.OriginalLargeBoilerControllerBlock,
+                            block instanceof OriginalLargeBoilerControllerBlock,
                             Collections.unmodifiableMap(blocks)));
         });
         return List.copyOf(result.values());

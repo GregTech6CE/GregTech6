@@ -420,7 +420,7 @@ public final class GTDungeonData {
      * dungeon's layout, has to stay exactly where GT6 left it.</p>
      */
     public <T> T select(T[] array, int ax, int ay, int az) {
-        return array[wandering(ax, ay, az).nextInt(array.length)];
+        return array[wandering(level.getSeed(), x + ax, y + ay, z + az).nextInt(array.length)];
     }
 
     /**
@@ -428,11 +428,11 @@ public final class GTDungeonData {
      * and the coordinates, so it is reproducible and consumes nothing from {@link #random}. The salt
      * keeps it apart from any other position-seeded stream.
      */
-    private RandomSource wandering(int ax, int ay, int az) {
-        return RandomSource.create(level.getSeed()
-                ^ ((long) (x + ax) * 341873128712L)
-                ^ ((long) (z + az) * 132897987541L)
-                ^ (long) (y + ay) * 42317861L
+    static RandomSource wandering(long seed, int x, int y, int z) {
+        return RandomSource.create(seed
+                ^ ((long) x * 341873128712L)
+                ^ ((long) z * 132897987541L)
+                ^ (long) y * 42317861L
                 ^ 0x5DEECE66DL);
     }
 
@@ -902,11 +902,6 @@ public final class GTDungeonData {
     /** Unused so far: the port's water check for the fish farm. */
     public boolean water(int ax, int ay, int az) {
         return level.getFluidState(new BlockPos(x + ax, y + ay, z + az)).is(FluidTags.WATER);
-    }
-
-    /** Whether the cell's floor is above bedrock (GT6's {@code aData.mWorld.getBlock(x, 0, z)} hardness test). */
-    public boolean aboveBedrock(int ax, int az) {
-        return !level.getBlockState(new BlockPos(x + ax, level.getMinBuildHeight(), z + az)).is(Blocks.BEDROCK);
     }
 
     /** GT6's {@code BlocksGT.Diggables}/{@code Sands} test: blocks the pillar must not dig through. */

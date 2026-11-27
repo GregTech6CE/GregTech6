@@ -257,9 +257,9 @@ tasks.named('compileJava', JavaCompile).configure {
     outputs.file(mixinMappingsFile)
 }
 
-// MixinGradle's ConfigureReobfTask skips missing extra mapping files; fail fast if omitted.
+// ForgeGradle reads shadow mappings from extraMappings when it rewrites the jar.
 tasks.matching { it.name == 'reobfJar' }.configureEach {
-    inputs.file(mixinMappingsFile)
+    extraMappings.from(files(mixinMappingsFile).builtBy(tasks.named('compileJava')))
     doFirst {
         def tsrg = mixinMappingsFile.get().asFile
         if (!tsrg.isFile() || tsrg.length() == 0L) {

@@ -7,6 +7,7 @@ import gregtech.api.addon.material.MaterialKey;
 import gregtech.api.addon.material.MaterialProperties;
 import gregtech.api.addon.material.MaterialTarget;
 import gregtech.api.addon.material.OreProcessingRule;
+import gregtech.api.addon.worldgen.OreVeinDeclaration;
 import gregtech.api.material.CrushingMaterialHelper;
 import gregtech.api.material.GTValues;
 import gregtech.api.material.OreProcessingMaterialHelper;
@@ -14,6 +15,8 @@ import gregtech.api.material.PulverizationMaterialHelper;
 import gregtech.content.fluid.FluidDefinitions;
 import gregtech.content.storage.ItemBarrelCatalog;
 import gregtech.content.tool.AnvilVariantCatalog;
+import gregtech.content.worldgen.GTBedrockOres;
+import gregtech.content.worldgen.OreSourceCatalog;
 import gregtech.engine.material.GTMaterialRegistry;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -346,16 +349,12 @@ class MaterialCatalogTest {
     @Test
     void netherBedrockOresKeepOnlyTheRetainedMaterials() {
         MaterialTestFixture.ensureInitialized();
-        var names = gregtech.content.worldgen.GTBedrockOres.NETHER.stream()
-                .map(gregtech.content.worldgen.GTBedrockOres.BedrockOre::name)
-                .toList();
+        var nether = OreSourceCatalog.current()
+                .bedrockOres(OreVeinDeclaration.NETHER, OreSourceCatalog.Geology.WITHOUT_VANILLA_ORES);
+        var names = nether.stream().map(GTBedrockOres.BedrockOre::name).toList();
         assertEquals(java.util.List.of("glowstone", "netherquartz", "ancientdebris", "efrine", "firestone"), names);
-        assertSame(
-                Materials.Efrine,
-                gregtech.content.worldgen.GTBedrockOres.NETHER.get(3).material());
-        assertSame(
-                Materials.Firestone,
-                gregtech.content.worldgen.GTBedrockOres.NETHER.get(4).material());
+        assertSame(Materials.Efrine, nether.get(3).material());
+        assertSame(Materials.Firestone, nether.get(4).material());
         assertTrue(!GTMaterialRegistry.get(8456).isValid());
         assertTrue(!GTMaterialRegistry.get(8457).isValid());
     }

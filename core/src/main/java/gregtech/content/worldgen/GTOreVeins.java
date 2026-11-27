@@ -1,27 +1,34 @@
 package gregtech.content.worldgen;
 
+import gregtech.api.addon.worldgen.HeightCoordinates;
 import gregtech.api.addon.worldgen.OreVeinDeclaration;
-import gregtech.api.addon.worldgen.SmallOreDeclaration;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.material.Materials;
+import gregtech.content.material.generated.CompoundMaterials;
+import gregtech.content.material.generated.OreMaterials;
 import java.util.List;
+import java.util.Optional;
+import java.util.Random;
+import java.util.function.IntUnaryOperator;
 
 /**
- * Code-defined ore generation tables, ported 1:1 from GT6 {@code gregtech/loaders/b/Loader_Worldgen.java}
+ * Ore generation catalogs based on GT6 {@code gregtech/loaders/b/Loader_Worldgen.java}
  * (the {@code ORE_OVERWORLD} large veins and {@code GEN_OVERWORLD} small ores).
  *
- * <p>Large veins ({@code WorldgenOresLarge}): layered blobs with four ore materials —
- * bottom layer (3 blocks tall), top layer (3 blocks tall), a "between" layer in the middle
- * and a "spread" ore scattered over the full 7-block height. One vein type is picked per
- * 3x3-chunk grid cell, weighted by {@link OreVein#weight}.
+ * <p>Large veins retain the top, bottom, in-between and dispersed ores from the original
+ * definitions. {@link OreVeinLayout} plans their shape and placement.
  *
  * <p>Small ores ({@code WorldgenOresSmall}): individual blocks scattered in every chunk,
  * roughly {@link SmallOre#amount} per chunk within the Y range.
  */
 public final class GTOreVeins {
+    public static final int SURFACE_MARGIN = 2;
+    private static final int COASTAL_RESERVE_MIN_Y = 16;
+    private static final int COASTAL_RESERVE_DEPTH = 28;
+
     private GTOreVeins() {}
 
-    /** GT6 {@code WorldgenOresLarge} parameters (Y values are pre-1.18 absolute heights, still valid in 1.20.1). */
+    /** A large vein with either legacy GT6 or modern Y coordinates. */
     public record OreVein(
             String name,
             int minY,
@@ -32,35 +39,117 @@ public final class GTOreVeins {
             GTMaterial top,
             GTMaterial bottom,
             GTMaterial between,
-            GTMaterial spread) {}
+            GTMaterial spread,
+            HeightCoordinates coordinates,
+            boolean subregional) {
+        public OreVein(
+                String name,
+                int minY,
+                int maxY,
+                int weight,
+                int density,
+                int size,
+                GTMaterial top,
+                GTMaterial bottom,
+                GTMaterial between,
+                GTMaterial spread) {
+            this(name, minY, maxY, weight, density, size, top, bottom, between, spread, HeightCoordinates.LEGACY);
+        }
 
-    /** GT6 {@code WorldgenOresSmall} parameters. */
-    public record SmallOre(String name, int minY, int maxY, int amount, GTMaterial material) {}
+        public OreVein(
+                String name,
+                int minY,
+                int maxY,
+                int weight,
+                int density,
+                int size,
+                GTMaterial top,
+                GTMaterial bottom,
+                GTMaterial between,
+                GTMaterial spread,
+                HeightCoordinates coordinates) {
+            this(name, minY, maxY, weight, density, size, top, bottom, between, spread, coordinates, false);
+        }
+
+        public HeightRange heights(String dimension) {
+            if (coordinates == HeightCoordinates.ABSOLUTE) return new HeightRange(minY, maxY);
+            return new HeightRange(
+                    MineralWorldgenRules.legacyHeight(dimension, minY),
+                    MineralWorldgenRules.legacyHeight(dimension, maxY));
+        }
+    }
+
+    public record SmallOre(
+            String name, int minY, int maxY, int amount, GTMaterial material, Distribution distribution) {
+        public SmallOre(String name, int minY, int maxY, int amount, GTMaterial material) {
+            this(name, minY, maxY, amount, material, Distribution.UNIFORM);
+        }
+
+        public HeightRange heights(String dimension, int terrainMinY, int terrainMaxY) {
+            int min = distribution == Distribution.LEGACY ? MineralWorldgenRules.legacyHeight(dimension, minY) : minY;
+            // The original small-ore declaration sampled [min,max) after converting both bounds.
+            int max = distribution == Distribution.LEGACY
+                    ? Math.max(min, MineralWorldgenRules.legacyHeight(dimension, maxY) - 1)
+                    : maxY;
+            return new HeightRange(Math.max(min, terrainMinY), Math.min(max, terrainMaxY));
+        }
+        /** One chunk of this declaration, consumed by the feature and the offline terrain sampler. */
+        public boolean scatter(
+                long worldSeed,
+                String dimension,
+                int minX,
+                int minZ,
+                HeightRange terrain,
+                MineralWorldgenRules.OrePlacer placer) {
+            var range = heights(dimension, Integer.MIN_VALUE, Integer.MAX_VALUE);
+            if (range.intersect(terrain).isEmpty()) return false;
+            var random = new Random(
+                    WorldgenHash.at(WorldgenHash.named(WorldgenHash.named(worldSeed, dimension), name), minX, minZ));
+            IntUnaryOperator roll = random::nextInt;
+            int attempts = MineralWorldgenRules.scatterAttempts(amount, roll);
+            boolean placed = false;
+            for (int i = 0; i < attempts; i++) {
+                int x = minX + random.nextInt(16);
+                int y = distribution.sample(range.min(), range.max(), roll);
+                int z = minZ + random.nextInt(16);
+                if (y >= terrain.min() && y <= terrain.max()) placed |= placer.place(x, y, z, material, true);
+            }
+            return placed;
+        }
+    }
+
+    public record HeightRange(int min, int max) {
+        public boolean isEmpty() {
+            return min > max;
+        }
+
+        public HeightRange intersect(HeightRange other) {
+            return new HeightRange(Math.max(min, other.min), Math.min(max, other.max));
+        }
+    }
+
+    public enum Distribution {
+        UNIFORM,
+        TRIANGLE,
+        LEGACY;
+
+        public int sample(int minY, int maxY, IntUnaryOperator random) {
+            int span = maxY - minY;
+            if (this == TRIANGLE) {
+                int half = span / 2;
+                return minY + random.applyAsInt(half + 1) + random.applyAsInt(span - half + 1);
+            }
+            return minY + random.applyAsInt(span + 1);
+        }
+    }
 
     /**
-     * All GT6 large veins flagged {@code ORE_OVERWORLD}, in original order (Loader_Worldgen),
-     * which is exactly GT6's registration order.
+     * GT6 large veins flagged {@code ORE_OVERWORLD}, followed by additional Overworld sources.
      *
-     * <p>This is the preserved legacy table, not the default generation list. GT6WorldGenerator
-     * passes no ORE_OVERWORLD list when GENERATE_STONE is enabled (also for Overworld-like
-     * dimensions). The stone-layer system and this legacy large-vein system are alternatives.
-     * Use {@link #activeOverworldVeins()} for generation and recipe-browser information.
      */
     public static final List<OreVein> OVERWORLD_VEINS = List.of(
             //          name             minY maxY weight den size  top                          bottom
             //      between                      spread
-            new OreVein(
-                    "lignite",
-                    50,
-                    130,
-                    160,
-                    8,
-                    32,
-                    Materials.Lignite,
-                    Materials.Lignite,
-                    Materials.Lignite,
-                    Materials.Coal),
-            new OreVein("coal", 50, 80, 80, 6, 32, Materials.Coal, Materials.Coal, Materials.Coal, Materials.Lignite),
             new OreVein(
                     "apatite",
                     40,
@@ -90,10 +179,10 @@ public final class GTOreVeins {
                     80,
                     4,
                     24,
-                    gregtech.content.material.generated.OreMaterials.Bauxite,
-                    gregtech.content.material.generated.OreMaterials.Bauxite,
-                    gregtech.content.material.generated.OreMaterials.Bauxite,
-                    gregtech.content.material.generated.OreMaterials.Ilmenite),
+                    OreMaterials.Bauxite,
+                    OreMaterials.Bauxite,
+                    OreMaterials.Bauxite,
+                    OreMaterials.Ilmenite),
             new OreVein(
                     "iodinesalt",
                     50,
@@ -103,8 +192,8 @@ public final class GTOreVeins {
                     24,
                     Materials.IodineSalt,
                     Materials.Salt,
-                    gregtech.content.material.generated.OreMaterials.Borax,
-                    gregtech.content.material.generated.OreMaterials.Zeolite),
+                    OreMaterials.Borax,
+                    OreMaterials.Zeolite),
             new OreVein(
                     "rocksalt",
                     50,
@@ -113,9 +202,9 @@ public final class GTOreVeins {
                     3,
                     24,
                     Materials.Sylvite,
-                    gregtech.content.material.generated.OreMaterials.Coltan,
-                    gregtech.content.material.generated.OreMaterials.Lepidolite,
-                    gregtech.content.material.generated.OreMaterials.Spodumene),
+                    OreMaterials.Coltan,
+                    OreMaterials.Lepidolite,
+                    OreMaterials.Spodumene),
             new OreVein(
                     "asbestos",
                     10,
@@ -123,7 +212,7 @@ public final class GTOreVeins {
                     30,
                     3,
                     16,
-                    gregtech.content.material.generated.OreMaterials.Chromite,
+                    OreMaterials.Chromite,
                     Materials.Talc,
                     Materials.Gypsum,
                     Materials.Asbestos),
@@ -167,10 +256,10 @@ public final class GTOreVeins {
                     40,
                     3,
                     16,
-                    gregtech.content.material.generated.OreMaterials.Pitchblende,
-                    gregtech.content.material.generated.OreMaterials.Pitchblende,
-                    gregtech.content.material.generated.OreMaterials.Uraninite,
-                    gregtech.content.material.generated.OreMaterials.Uraninite),
+                    OreMaterials.Pitchblende,
+                    OreMaterials.Pitchblende,
+                    OreMaterials.Uraninite,
+                    OreMaterials.Uraninite),
             new OreVein(
                     "monazite",
                     20,
@@ -178,8 +267,8 @@ public final class GTOreVeins {
                     30,
                     3,
                     16,
-                    gregtech.content.material.generated.OreMaterials.Bastnasite,
-                    gregtech.content.material.generated.OreMaterials.Bastnasite,
+                    OreMaterials.Bastnasite,
+                    OreMaterials.Bastnasite,
                     Materials.Monazite,
                     Materials.Neodymium),
             new OreVein(
@@ -200,8 +289,8 @@ public final class GTOreVeins {
                     40,
                     5,
                     16,
-                    gregtech.content.material.generated.OreMaterials.Galena,
-                    gregtech.content.material.generated.OreMaterials.Galena,
+                    OreMaterials.Galena,
+                    OreMaterials.Galena,
                     Materials.Silver,
                     Materials.Lead),
             new OreVein(
@@ -212,7 +301,7 @@ public final class GTOreVeins {
                     3,
                     16,
                     Materials.MilkyQuartz,
-                    gregtech.content.material.generated.OreMaterials.Barite,
+                    OreMaterials.Barite,
                     Materials.CertusQuartz,
                     Materials.CertusQuartz),
             new OreVein(
@@ -222,10 +311,10 @@ public final class GTOreVeins {
                     60,
                     3,
                     16,
-                    gregtech.content.material.generated.OreMaterials.Kyanite,
+                    OreMaterials.Kyanite,
                     Materials.MagnesiumCarbonate,
                     Materials.Peridot,
-                    gregtech.content.material.generated.OreMaterials.Glauconite),
+                    OreMaterials.Glauconite),
             new OreVein(
                     "gold",
                     20,
@@ -234,8 +323,8 @@ public final class GTOreVeins {
                     3,
                     16,
                     Materials.Pyrite,
-                    gregtech.content.material.generated.OreMaterials.Chalcopyrite,
-                    gregtech.content.material.generated.OreMaterials.Arsenopyrite,
+                    OreMaterials.Chalcopyrite,
+                    OreMaterials.Arsenopyrite,
                     Materials.Gold),
             new OreVein(
                     "platinum",
@@ -244,9 +333,9 @@ public final class GTOreVeins {
                     5,
                     3,
                     16,
-                    gregtech.content.material.generated.OreMaterials.Cooperite,
+                    OreMaterials.Cooperite,
                     Materials.Palladium,
-                    gregtech.content.material.generated.OreMaterials.Sperrylite,
+                    OreMaterials.Sperrylite,
                     Materials.Iridium),
             new OreVein(
                     "molybdenum",
@@ -255,10 +344,10 @@ public final class GTOreVeins {
                     5,
                     3,
                     16,
-                    gregtech.content.material.generated.OreMaterials.Wulfenite,
-                    gregtech.content.material.generated.OreMaterials.Molybdenite,
+                    OreMaterials.Wulfenite,
+                    OreMaterials.Molybdenite,
                     Materials.Molybdenum,
-                    gregtech.content.material.generated.OreMaterials.Powellite),
+                    OreMaterials.Powellite),
             new OreVein(
                     "cassiterite",
                     40,
@@ -266,10 +355,10 @@ public final class GTOreVeins {
                     170,
                     5,
                     24,
-                    gregtech.content.material.generated.OreMaterials.Stannite,
-                    gregtech.content.material.generated.OreMaterials.Kesterite,
-                    gregtech.content.material.generated.OreMaterials.Huebnerite,
-                    gregtech.content.material.generated.OreMaterials.Cassiterite),
+                    OreMaterials.Stannite,
+                    OreMaterials.Kesterite,
+                    OreMaterials.Huebnerite,
+                    OreMaterials.Cassiterite),
             new OreVein(
                     "tungstate",
                     20,
@@ -277,10 +366,10 @@ public final class GTOreVeins {
                     10,
                     3,
                     16,
-                    gregtech.content.material.generated.OreMaterials.Scheelite,
-                    gregtech.content.material.generated.OreMaterials.Russellite,
-                    gregtech.content.material.generated.OreMaterials.Tungstate,
-                    gregtech.content.material.generated.OreMaterials.Pinalite),
+                    OreMaterials.Scheelite,
+                    OreMaterials.Russellite,
+                    OreMaterials.Tungstate,
+                    OreMaterials.Pinalite),
             new OreVein(
                     "manganese",
                     20,
@@ -291,7 +380,7 @@ public final class GTOreVeins {
                     Materials.Grossular,
                     Materials.Spessartine,
                     Materials.Pyrolusite,
-                    gregtech.content.material.generated.OreMaterials.Coltan),
+                    OreMaterials.Coltan),
             new OreVein(
                     "beryllium",
                     5,
@@ -324,7 +413,9 @@ public final class GTOreVeins {
                     Materials.Rutile,
                     Materials.Rutile,
                     Materials.Zircon,
-                    gregtech.content.material.generated.OreMaterials.Ilmenite),
+                    OreMaterials.Ilmenite,
+                    HeightCoordinates.LEGACY,
+                    true),
             new OreVein(
                     "nickel",
                     10,
@@ -332,10 +423,10 @@ public final class GTOreVeins {
                     40,
                     3,
                     16,
-                    gregtech.content.material.generated.OreMaterials.Garnierite,
+                    OreMaterials.Garnierite,
                     Materials.Nickel,
-                    gregtech.content.material.generated.OreMaterials.Cobaltite,
-                    gregtech.content.material.generated.OreMaterials.Pentlandite),
+                    OreMaterials.Cobaltite,
+                    OreMaterials.Pentlandite),
             new OreVein(
                     "redstone",
                     10,
@@ -346,7 +437,7 @@ public final class GTOreVeins {
                     Materials.Redstone,
                     Materials.Redstone,
                     Materials.Ruby,
-                    gregtech.content.material.generated.OreMaterials.Cinnabar),
+                    OreMaterials.Cinnabar),
             new OreVein(
                     "tetrahedrite",
                     70,
@@ -354,10 +445,10 @@ public final class GTOreVeins {
                     150,
                     4,
                     24,
-                    gregtech.content.material.generated.OreMaterials.Tetrahedrite,
-                    gregtech.content.material.generated.OreMaterials.Tetrahedrite,
+                    OreMaterials.Tetrahedrite,
+                    OreMaterials.Tetrahedrite,
                     Materials.Copper,
-                    gregtech.content.material.generated.OreMaterials.Stibnite),
+                    OreMaterials.Stibnite),
             new OreVein(
                     "iron",
                     10,
@@ -365,10 +456,10 @@ public final class GTOreVeins {
                     120,
                     4,
                     24,
-                    gregtech.content.material.generated.OreMaterials.BrownLimonite,
-                    gregtech.content.material.generated.OreMaterials.YellowLimonite,
+                    OreMaterials.BrownLimonite,
+                    OreMaterials.YellowLimonite,
                     Materials.Hematite,
-                    gregtech.content.material.generated.OreMaterials.Malachite),
+                    OreMaterials.Malachite),
             new OreVein(
                     "copper",
                     10,
@@ -376,61 +467,58 @@ public final class GTOreVeins {
                     80,
                     4,
                     24,
-                    gregtech.content.material.generated.OreMaterials.Chalcopyrite,
+                    OreMaterials.Chalcopyrite,
                     Materials.Hematite,
                     Materials.Pyrite,
-                    Materials.Copper));
+                    Materials.Copper),
+            new OreVein(
+                    "tantalum",
+                    8,
+                    28,
+                    8,
+                    3,
+                    16,
+                    OreMaterials.Tantalite,
+                    OreMaterials.Columbite,
+                    OreMaterials.Coltan,
+                    OreMaterials.Tantalite),
+            new OreVein(
+                    "gt6ce:chromite",
+                    -38,
+                    18,
+                    0,
+                    3,
+                    16,
+                    OreMaterials.Chromite,
+                    OreMaterials.Chromite,
+                    OreMaterials.Chromite,
+                    Materials.Uvarovite,
+                    HeightCoordinates.ABSOLUTE,
+                    true));
 
-    /** Sum of all overworld vein weights (GT6 picks {@code random.nextInt(totalWeight)} per grid cell). */
-    public static final int TOTAL_VEIN_WEIGHT =
-            OVERWORLD_VEINS.stream().mapToInt(OreVein::weight).sum();
-
-    /**
-     * GT6 uses stone strata instead of the old Overworld large veins by default.
-     * Addon veins are still appended, so a default world generates those and not the legacy table.
-     */
-    public static List<OreVein> activeOverworldVeins() {
-        return append(GTWorldgenDefaults.STONE_LAYERS ? List.of() : OVERWORLD_VEINS, AddonOreVeins.overworldVeins());
+    /** A lower shelf for the built-in shallow bands when a region has no ground in the original band. */
+    public static Optional<HeightRange> reserveHeights(String dimension, String name, HeightRange terrain) {
+        if (!OreVeinDeclaration.OVERWORLD.equals(dimension)) return Optional.empty();
+        var beneathSurface = new HeightRange(terrain.min(), terrain.max() - SURFACE_MARGIN);
+        return OVERWORLD_VEINS.stream()
+                .filter(vein -> vein.name().equals(name))
+                .map(vein -> vein.heights(dimension))
+                .filter(heights -> heights.min() >= MineralWorldgenRules.HEIGHT_ANCHOR_Y)
+                .map(heights -> new HeightRange(COASTAL_RESERVE_MIN_Y, heights.min() - 1).intersect(beneathSurface))
+                .filter(heights -> !heights.isEmpty())
+                .findFirst();
     }
 
-    /** Built-in End veins, then addon End veins. Selection also includes the reserved empty weight. */
-    public static List<OreVein> activeEndVeins() {
-        return append(END_VEINS, AddonOreVeins.endVeins());
+    public static HeightRange reservePlacement(HeightRange reserve, int surfaceY) {
+        int top = Math.min(reserve.max(), surfaceY - SURFACE_MARGIN);
+        return new HeightRange(Math.max(reserve.min(), top - COASTAL_RESERVE_DEPTH), top);
     }
 
-    public static List<SmallOre> activeOverworldSmallOres() {
-        return append(OVERWORLD_SMALL_ORES, AddonOreVeins.overworldSmall());
-    }
-
-    public static List<SmallOre> activeNetherSmallOres() {
-        return append(NETHER_SMALL_ORES, AddonOreVeins.netherSmall());
-    }
-
-    public static List<SmallOre> activeEndSmallOres() {
-        return append(END_SMALL_ORES, AddonOreVeins.endSmall());
-    }
-
-    /** Built-in large veins of {@code dimension}, then its addon veins. Other dimensions are addon-only. */
-    public static List<OreVein> activeVeins(String dimension) {
-        if (OreVeinDeclaration.OVERWORLD.equals(dimension)) return activeOverworldVeins();
-        if (OreVeinDeclaration.END.equals(dimension)) return activeEndVeins();
-        return AddonOreVeins.veins(dimension);
-    }
-
-    /** Built-in small ores of {@code dimension}, then its addon small ores. Other dimensions are addon-only. */
-    public static List<SmallOre> activeSmallOres(String dimension) {
-        if (SmallOreDeclaration.OVERWORLD.equals(dimension)) return activeOverworldSmallOres();
-        if (SmallOreDeclaration.NETHER.equals(dimension)) return activeNetherSmallOres();
-        if (SmallOreDeclaration.END.equals(dimension)) return activeEndSmallOres();
-        return AddonOreVeins.smallOres(dimension);
-    }
-
-    private static <T> List<T> append(List<T> base, List<T> extra) {
-        if (extra.isEmpty()) return base;
-        var out = new java.util.ArrayList<T>(base.size() + extra.size());
-        out.addAll(base);
-        out.addAll(extra);
-        return List.copyOf(out);
+    public static int selectionWeight(String dimension, List<OreVein> veins) {
+        // Addon dimensions start with empty cells too, so a lone low-weight declaration stays rare.
+        int weight = OreVeinDeclaration.OVERWORLD.equals(dimension) ? 0 : EMPTY_VEIN_WEIGHT;
+        for (var vein : veins) weight = Math.addExact(weight, vein.weight());
+        return weight;
     }
 
     /**
@@ -442,41 +530,45 @@ public final class GTOreVeins {
     public static final List<SmallOre> OVERWORLD_SMALL_ORES = List.of(
             //           name            minY maxY amt  material
             new SmallOre("copper", 60, 120, 16, Materials.Copper),
-            new SmallOre("chalcopyrite", 60, 120, 16, gregtech.content.material.generated.OreMaterials.Chalcopyrite),
-            new SmallOre("malachite", 40, 70, 8, gregtech.content.material.generated.OreMaterials.Malachite),
+            new SmallOre("chalcopyrite", 60, 120, 16, OreMaterials.Chalcopyrite),
+            new SmallOre("malachite", 40, 70, 8, OreMaterials.Malachite),
             new SmallOre("tin", 60, 120, 16, Materials.Tin),
-            new SmallOre("cassiterite", 60, 120, 16, gregtech.content.material.generated.OreMaterials.Cassiterite),
+            new SmallOre("cassiterite", 60, 120, 16, OreMaterials.Cassiterite),
             new SmallOre("zinc", 40, 70, 4, Materials.Zinc),
-            new SmallOre("sphalerite", 30, 60, 12, gregtech.content.material.generated.OreMaterials.Sphalerite),
-            new SmallOre("smithsonite", 30, 60, 2, gregtech.content.material.generated.OreMaterials.Smithsonite),
-            new SmallOre("stibnite", 20, 40, 2, gregtech.content.material.generated.OreMaterials.Stibnite),
+            new SmallOre("sphalerite", 30, 60, 12, OreMaterials.Sphalerite),
+            new SmallOre("smithsonite", 30, 60, 2, OreMaterials.Smithsonite),
+            new SmallOre("stibnite", 20, 40, 2, OreMaterials.Stibnite),
             new SmallOre("bismuth", 80, 120, 8, Materials.Bismuth),
             new SmallOre("lead", 40, 80, 16, Materials.Lead),
-            new SmallOre("galena", 40, 80, 16, gregtech.content.material.generated.OreMaterials.Galena),
-            new SmallOre("silver", 20, 40, 4, Materials.Silver),
-            new SmallOre("gold", 20, 40, 4, Materials.Gold),
-            new SmallOre("pyrite", 20, 40, 4, Materials.Pyrite),
+            new SmallOre("galena", 40, 80, 16, OreMaterials.Galena),
+            new SmallOre("silver", -40, 42, 4, Materials.Silver, Distribution.TRIANGLE),
+            new SmallOre("gold", -60, 30, 4, Materials.Gold, Distribution.TRIANGLE),
+            new SmallOre("pyrite", -56, 48, 4, Materials.Pyrite, Distribution.TRIANGLE),
             new SmallOre("hematite", 40, 80, 24, Materials.Hematite),
-            new SmallOre("pyrolusite", 20, 40, 4, Materials.Pyrolusite),
-            new SmallOre("garnierite", 20, 40, 4, gregtech.content.material.generated.OreMaterials.Garnierite),
-            new SmallOre("pentlandite", 20, 40, 4, gregtech.content.material.generated.OreMaterials.Pentlandite),
-            new SmallOre("scheelite", 5, 50, 1, gregtech.content.material.generated.OreMaterials.Scheelite),
+            new SmallOre("pyrolusite", -36, 46, 4, Materials.Pyrolusite, Distribution.TRIANGLE),
+            new SmallOre("garnierite", -38, 44, 4, OreMaterials.Garnierite, Distribution.TRIANGLE),
+            new SmallOre("pentlandite", -56, 36, 4, OreMaterials.Pentlandite, Distribution.TRIANGLE),
+            new SmallOre("scheelite", -64, 16, 1, OreMaterials.Scheelite, Distribution.TRIANGLE),
+            new SmallOre("tungstate", -56, 8, 1, OreMaterials.Tungstate, Distribution.TRIANGLE),
+            new SmallOre("uraninite", -64, -20, 1, OreMaterials.Uraninite, Distribution.TRIANGLE),
+            new SmallOre("tantalite", -48, -10, 1, OreMaterials.Tantalite, Distribution.TRIANGLE),
+            new SmallOre("chromite", -64, 4, 2, OreMaterials.Chromite, Distribution.TRIANGLE),
             new SmallOre("salt", 40, 80, 6, Materials.Salt),
             new SmallOre("rocksalt", 40, 80, 6, Materials.Sylvite),
-            new SmallOre("borax", 10, 40, 4, gregtech.content.material.generated.OreMaterials.Borax),
-            new SmallOre("asbestos", 20, 40, 8, Materials.Asbestos),
-            new SmallOre("diamond", 5, 10, 2, Materials.Diamond),
-            new SmallOre("amber", 5, 70, 1, Materials.Amber),
-            new SmallOre("craponite", 5, 250, 2, Materials.Craponite),
-            new SmallOre("redstone", 5, 20, 16, Materials.Redstone),
-            new SmallOre("lapis", 20, 40, 8, Materials.Lapis),
-            new SmallOre("eudialyte", 20, 40, 4, gregtech.content.material.generated.CompoundMaterials.Eudialyte),
-            new SmallOre("azurite", 20, 40, 4, Materials.Azurite),
+            new SmallOre("borax", -32, 44, 4, OreMaterials.Borax),
+            new SmallOre("asbestos", -30, 46, 8, Materials.Asbestos),
+            new SmallOre("diamond", -64, -24, 2, Materials.Diamond, Distribution.TRIANGLE),
+            new SmallOre("amber", -20, 70, 1, Materials.Amber),
+            new SmallOre("craponite", -44, 250, 2, Materials.Craponite),
+            new SmallOre("redstone", -64, 10, 16, Materials.Redstone, Distribution.TRIANGLE),
+            new SmallOre("lapis", -38, 42, 8, Materials.Lapis, Distribution.TRIANGLE),
+            new SmallOre("eudialyte", -44, 40, 4, CompoundMaterials.Eudialyte),
+            new SmallOre("azurite", -18, 42, 4, Materials.Azurite),
             new SmallOre("coal", 40, 100, 36, Materials.Coal),
-            new SmallOre("graphite", 5, 10, 2, Materials.Graphite),
-            new SmallOre("pollucite", 1, 250, 1, gregtech.content.material.generated.OreMaterials.Pollucite),
-            new SmallOre("zeolite", 1, 250, 1, gregtech.content.material.generated.OreMaterials.Zeolite),
-            new SmallOre("sulfur", 5, 15, 8, Materials.Sulfur));
+            new SmallOre("graphite", -64, -20, 2, Materials.Graphite, Distribution.TRIANGLE),
+            new SmallOre("pollucite", -55, 250, 1, OreMaterials.Pollucite),
+            new SmallOre("zeolite", -52, 250, 1, OreMaterials.Zeolite),
+            new SmallOre("sulfur", -60, -8, 8, Materials.Sulfur));
 
     // ── The End (GT6 ORE_END large veins; platinum/molybdenum/cassiterite are shared with the
     //    overworld, naquadah/trinium are End-exclusive) ──
@@ -494,9 +586,9 @@ public final class GTOreVeins {
                     5,
                     3,
                     16,
-                    gregtech.content.material.generated.OreMaterials.Cooperite,
+                    OreMaterials.Cooperite,
                     Materials.Palladium,
-                    gregtech.content.material.generated.OreMaterials.Sperrylite,
+                    OreMaterials.Sperrylite,
                     Materials.Iridium),
             new OreVein(
                     "molybdenum",
@@ -505,10 +597,10 @@ public final class GTOreVeins {
                     5,
                     3,
                     16,
-                    gregtech.content.material.generated.OreMaterials.Wulfenite,
-                    gregtech.content.material.generated.OreMaterials.Molybdenite,
+                    OreMaterials.Wulfenite,
+                    OreMaterials.Molybdenite,
                     Materials.Molybdenum,
-                    gregtech.content.material.generated.OreMaterials.Powellite),
+                    OreMaterials.Powellite),
             new OreVein(
                     "cassiterite",
                     40,
@@ -516,10 +608,10 @@ public final class GTOreVeins {
                     17,
                     5,
                     24,
-                    gregtech.content.material.generated.OreMaterials.Stannite,
-                    gregtech.content.material.generated.OreMaterials.Kesterite,
-                    gregtech.content.material.generated.OreMaterials.Huebnerite,
-                    gregtech.content.material.generated.OreMaterials.Cassiterite),
+                    OreMaterials.Stannite,
+                    OreMaterials.Kesterite,
+                    OreMaterials.Huebnerite,
+                    OreMaterials.Cassiterite),
             new OreVein(
                     "naquadah",
                     10,
@@ -543,68 +635,59 @@ public final class GTOreVeins {
                     Materials.Trinium,
                     Materials.Trinium));
     /** Reduced End vein weights remain empty rolls instead of increasing the other veins. */
-    public static final int END_EMPTY_VEIN_WEIGHT = (170 - 17) + (100 - 10);
-
-    public static final int TOTAL_END_VEIN_WEIGHT = endSelectionWeight(END_VEINS);
-
-    /** Shared by world generation and both recipe viewers, including addon weights. */
-    public static int endSelectionWeight(List<OreVein> veins) {
-        int total = END_EMPTY_VEIN_WEIGHT;
-        for (OreVein vein : veins) total = Math.addExact(total, vein.weight());
-        return total;
-    }
+    private static final int EMPTY_VEIN_WEIGHT = (170 - 17) + (100 - 10);
 
     /** GT6 small ores flagged {@code GEN_NETHER}. */
     public static final List<SmallOre> NETHER_SMALL_ORES = List.of(
-            new SmallOre("cassiterite", 60, 120, 16, gregtech.content.material.generated.OreMaterials.Cassiterite),
+            new SmallOre("cassiterite", 60, 120, 16, OreMaterials.Cassiterite),
             new SmallOre("bismuth", 80, 120, 8, Materials.Bismuth),
             new SmallOre("gold", 20, 40, 4, Materials.Gold),
-            new SmallOre("scheelite", 5, 50, 1, gregtech.content.material.generated.OreMaterials.Scheelite),
+            new SmallOre("scheelite", 5, 50, 1, OreMaterials.Scheelite),
             new SmallOre("salt", 40, 80, 6, Materials.Salt),
             new SmallOre("rocksalt", 40, 80, 6, Materials.Sylvite),
-            new SmallOre("borax", 10, 40, 4, gregtech.content.material.generated.OreMaterials.Borax),
+            new SmallOre("borax", 10, 40, 4, OreMaterials.Borax),
             new SmallOre("asbestos", 20, 40, 8, Materials.Asbestos),
             new SmallOre("diamond", 5, 10, 2, Materials.Diamond),
             new SmallOre("craponite", 5, 250, 2, Materials.Craponite),
             new SmallOre("redstone", 5, 20, 16, Materials.Redstone),
             new SmallOre("graphite", 5, 10, 2, Materials.Graphite),
-            new SmallOre("pollucite", 1, 250, 1, gregtech.content.material.generated.OreMaterials.Pollucite),
-            new SmallOre("zeolite", 1, 250, 1, gregtech.content.material.generated.OreMaterials.Zeolite),
-            new SmallOre("coltan", 1, 250, 4, gregtech.content.material.generated.OreMaterials.Coltan),
+            new SmallOre("pollucite", 1, 250, 1, OreMaterials.Pollucite),
+            new SmallOre("zeolite", 1, 250, 1, OreMaterials.Zeolite),
+            new SmallOre("coltan", 1, 250, 4, OreMaterials.Coltan),
             new SmallOre("niter", 10, 120, 32, Materials.Niter),
             new SmallOre("efrine", 90, 120, 8, Materials.Efrine),
-            new SmallOre("cinnabar", 5, 250, 16, gregtech.content.material.generated.OreMaterials.Cinnabar));
+            new SmallOre("cinnabar", 5, 250, 16, OreMaterials.Cinnabar));
 
-    /** GT6 small ores flagged {@code GEN_END} (incl. End-exclusive endium/sugilite/naquadah/trinium). */
+    /** GT6 End small ores, with the shallow copper and tin group adapted to island terrain. */
     public static final List<SmallOre> END_SMALL_ORES = List.of(
-            new SmallOre("copper", 60, 120, 16, Materials.Copper),
-            new SmallOre("chalcopyrite", 60, 120, 16, gregtech.content.material.generated.OreMaterials.Chalcopyrite),
-            new SmallOre("malachite", 40, 70, 8, gregtech.content.material.generated.OreMaterials.Malachite),
-            new SmallOre("tin", 60, 120, 16, Materials.Tin),
-            new SmallOre("cassiterite", 60, 120, 16, gregtech.content.material.generated.OreMaterials.Cassiterite),
+            new SmallOre("copper", 48, 72, 8, Materials.Copper),
+            new SmallOre("chalcopyrite", 48, 72, 8, OreMaterials.Chalcopyrite),
+            new SmallOre("malachite", 40, 70, 8, OreMaterials.Malachite),
+            new SmallOre("tin", 48, 72, 8, Materials.Tin),
+            new SmallOre("cassiterite", 48, 72, 8, OreMaterials.Cassiterite),
             new SmallOre("zinc", 40, 70, 4, Materials.Zinc),
-            new SmallOre("sphalerite", 30, 60, 12, gregtech.content.material.generated.OreMaterials.Sphalerite),
-            new SmallOre("smithsonite", 30, 60, 2, gregtech.content.material.generated.OreMaterials.Smithsonite),
-            new SmallOre("stibnite", 20, 40, 2, gregtech.content.material.generated.OreMaterials.Stibnite),
+            new SmallOre("sphalerite", 30, 60, 12, OreMaterials.Sphalerite),
+            new SmallOre("smithsonite", 30, 60, 2, OreMaterials.Smithsonite),
+            new SmallOre("stibnite", 20, 40, 2, OreMaterials.Stibnite),
             new SmallOre("lead", 40, 80, 16, Materials.Lead),
-            new SmallOre("galena", 40, 80, 16, gregtech.content.material.generated.OreMaterials.Galena),
+            new SmallOre("galena", 40, 80, 16, OreMaterials.Galena),
             new SmallOre("silver", 20, 40, 4, Materials.Silver),
             new SmallOre("gold", 20, 40, 4, Materials.Gold),
             new SmallOre("pyrite", 20, 40, 4, Materials.Pyrite),
             new SmallOre("hematite", 40, 80, 24, Materials.Hematite),
             new SmallOre("pyrolusite", 20, 40, 4, Materials.Pyrolusite),
-            new SmallOre("garnierite", 20, 40, 4, gregtech.content.material.generated.OreMaterials.Garnierite),
-            new SmallOre("pentlandite", 20, 40, 4, gregtech.content.material.generated.OreMaterials.Pentlandite),
-            new SmallOre("scheelite", 5, 50, 1, gregtech.content.material.generated.OreMaterials.Scheelite),
+            new SmallOre("garnierite", 20, 40, 4, OreMaterials.Garnierite),
+            new SmallOre("pentlandite", 20, 40, 4, OreMaterials.Pentlandite),
+            new SmallOre("scheelite", 5, 50, 1, OreMaterials.Scheelite),
             new SmallOre("salt", 40, 80, 6, Materials.Salt),
             new SmallOre("rocksalt", 40, 80, 6, Materials.Sylvite),
-            new SmallOre("borax", 10, 40, 4, gregtech.content.material.generated.OreMaterials.Borax),
+            new SmallOre("borax", 10, 40, 4, OreMaterials.Borax),
             new SmallOre("craponite", 5, 250, 2, Materials.Craponite),
-            new SmallOre("coltan", 1, 250, 4, gregtech.content.material.generated.OreMaterials.Coltan),
+            new SmallOre("coltan", 1, 250, 4, OreMaterials.Coltan),
             new SmallOre("platinum", 20, 40, 6, Materials.Platinum),
             new SmallOre("iridium", 20, 40, 6, Materials.Iridium),
-            new SmallOre("sperrylite", 20, 40, 4, gregtech.content.material.generated.OreMaterials.Sperrylite),
-            new SmallOre("cooperite", 20, 40, 4, gregtech.content.material.generated.OreMaterials.Cooperite),
+            new SmallOre("sperrylite", 20, 40, 4, OreMaterials.Sperrylite),
+            new SmallOre("cooperite", 20, 40, 4, OreMaterials.Cooperite),
             new SmallOre("naquadah", 10, 80, 6, Materials.Naquadah),
             new SmallOre("trinium", 10, 80, 12, Materials.Trinium));
 }

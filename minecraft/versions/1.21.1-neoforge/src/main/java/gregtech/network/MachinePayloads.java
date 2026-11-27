@@ -23,5 +23,11 @@ public final class MachinePayloads {
                         PacketSyncStructureLayouts.TYPE,
                         PacketSyncStructureLayouts.STREAM_CODEC,
                         (packet, context) -> context.enqueueWork(packet::apply));
+        event.registrar("1")
+                .optional()
+                .playToClient(
+                        PacketSyncOreGeneration.TYPE,
+                        PacketSyncOreGeneration.STREAM_CODEC,
+                        (packet, context) -> context.enqueueWork(packet::apply));
     }
 }

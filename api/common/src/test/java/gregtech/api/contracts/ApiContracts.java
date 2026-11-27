@@ -29,6 +29,7 @@ import gregtech.api.addon.recipe.MachineRecipeDocuments;
 import gregtech.api.addon.recipe.MachineRecipeType;
 import gregtech.api.addon.recipe.RecipeMachine;
 import gregtech.api.addon.recipe.RecipeTable;
+import gregtech.api.addon.worldgen.HeightCoordinates;
 import gregtech.api.addon.worldgen.OreVeinDeclaration;
 import gregtech.api.addon.worldgen.SmallOreDeclaration;
 import gregtech.api.energy.EnergyInput;
@@ -495,6 +496,14 @@ public final class ApiContracts {
         var ore = new SmallOreDeclaration("test_small", "example:custom_dimension", 1, 64, 1, "Iron");
         check(ore.dimension().equals("example:custom_dimension"), "Custom small-ore dimensions are accepted");
         reject(() -> new SmallOreDeclaration("test_small", "Bad Dimension!", 1, 64, 1, "Iron"));
+        check(vein.coordinates() == HeightCoordinates.LEGACY && ore.coordinates() == HeightCoordinates.LEGACY,
+                "Existing declarations keep legacy height coordinates");
+        var single = new OreVeinDeclaration("single", vein.dimension(), -38, -38, 1, 1, 1,
+                "Iron", "Iron", "Iron", "Iron", HeightCoordinates.ABSOLUTE);
+        check(single.minY() == -38 && single.maxY() == -38, "Absolute veins accept a single negative Y");
+        var small = new SmallOreDeclaration("single", ore.dimension(), -38, -38, 1, "Iron", HeightCoordinates.ABSOLUTE);
+        check(small.minY() == -38 && small.maxY() == -38, "Absolute small ores accept a single negative Y");
+        reject(() -> new SmallOreDeclaration("inverted", ore.dimension(), -37, -38, 1, "Iron", HeightCoordinates.ABSOLUTE));
     }
 
     private static void checkModDataContracts() throws InterruptedException {

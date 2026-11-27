@@ -71,7 +71,6 @@ public final class GTFeatures {
     public static final DeferredHolder<Feature<?>,Feature<NoneFeatureConfiguration>> ROCKS=FEATURES.register("gt_rocks",GTRocksFeature::new);
     public static final DeferredHolder<Feature<?>,Feature<NoneFeatureConfiguration>> BEDROCK_ORES=FEATURES.register("gt_bedrock_ores",GTBedrockOreFeature::new);
     public static final DeferredHolder<Feature<?>,Feature<NoneFeatureConfiguration>> COLTAN=FEATURES.register("gt_coltan",GTColtanFeature::new);
-    public static final DeferredHolder<Feature<?>,Feature<NoneFeatureConfiguration>> DEEP_OCEAN=FEATURES.register("gt_deep_ocean",GTDeepOceanFeature::new);
     public static final DeferredHolder<Feature<?>,Feature<NoneFeatureConfiguration>> NETHER_SCATTER=FEATURES.register("gt_nether_scatter",GTNetherScatterFeature::new);
     public static final DeferredHolder<Feature<?>,Feature<NoneFeatureConfiguration>> BLACK_SAND=FEATURES.register("gt_black_sand",GTBlackSandFeature::new);
     public static final DeferredHolder<Feature<?>,Feature<NoneFeatureConfiguration>> NETHER_DEPOSITS=FEATURES.register("gt_nether_deposits",GTNetherDepositFeature::new);
@@ -107,9 +106,6 @@ public final class GTFeatures {
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> ROCKS =
             FEATURES.register("gt_rocks", GTRocksFeature::new);
 
-    /** GT6's deep ocean prismarine pylons (WorldgenDeepOcean, Loader_Worldgen). */
-    public static final RegistryObject<Feature<NoneFeatureConfiguration>> DEEP_OCEAN =
-            FEATURES.register("gt_deep_ocean", GTDeepOceanFeature::new);
 
     /** GT6's river black sands (WorldgenBlackSand, Loader_Worldgen). */
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> BLACK_SAND =

@@ -1,171 +1,186 @@
 package gregtech.content.worldgen;
 
+import gregtech.GregTechConfig;
 import gregtech.api.material.GTMaterial;
-import gregtech.platform.Mc;
-import java.util.List;
-import java.util.Random;
+import gregtech.content.block.FluidSpringBlock;
+import gregtech.content.block.OreBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-/**
- * This port selects one weighted deposit per 16x16-chunk grid cell. The shared geometry
- * writer delegates block placement here; original per-row dispatch and field exclusion are
- * separate contracts, not consequences of using the original shape bounds.
- */
-public class GTBedrockOreFeature extends Feature<NoneFeatureConfiguration> {
-
+/** Independent attempts per mineral and chunk, with a shared floor for natural and special deposits. */
+public final class GTBedrockOreFeature extends Feature<NoneFeatureConfiguration> {
     public GTBedrockOreFeature() {
         super(NoneFeatureConfiguration.CODEC);
     }
 
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-        if (!gregtech.GregTechConfig.Worldgen.BEDROCK_ORES.enabled()) return false;
         WorldGenLevel level = context.level();
-        ChunkPos chunkPos = new ChunkPos(context.origin());
-        // One candidate origin per 16x16-chunk cell.
-        if (Math.floorMod(chunkPos.x, 16) != 8 || Math.floorMod(chunkPos.z, 16) != 8) return false;
-
-        // Use this port's dimension table for its weighted grid selection.
-        Random gridRandom = gridRandom(level, chunkPos);
-        GTBedrockOres.BedrockOre pick = select(level, gridRandom);
-        if (pick == null) return false;
-
-        int centerX = chunkPos.getMinBlockX() + 4 + gridRandom.nextInt(8);
-        int centerZ = chunkPos.getMinBlockZ() + 4 + gridRandom.nextInt(8);
-
-        RandomSource random = context.random();
-        // GT6's vein is chunk anchored (its shape spans the chunk's own 16x16 columns).
-        if (!placeVein(level, random, chunkPos.getMinBlockX(), chunkPos.getMinBlockZ(), pick.material())) {
-            return false;
-        }
-
-        // Indicator flowers on the surface above the deposit (the nether table has none).
-        BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
-        if (pick.flowerId() != null) {
-            Block flower = Mc.block(Mc.gregtechId(pick.flowerId()));
-            if (flower != null && flower != Blocks.AIR) {
-                BlockState flowerState = flower.defaultBlockState();
-                for (int attempt = 0; attempt < 6; attempt++) {
-                    int x = centerX + random.nextInt(7) - 3;
-                    int z = centerZ + random.nextInt(7) - 3;
-                    int y = level.getHeight(Heightmap.Types.WORLD_SURFACE_WG, x, z);
-                    cursor.set(x, y, z);
-                    if (!level.getBlockState(cursor).isAir()) continue;
-                    BlockState ground = level.getBlockState(cursor.below());
-                    if (!ground.is(Blocks.GRASS_BLOCK)
-                            && !ground.is(Blocks.DIRT)
-                            && !ground.is(Blocks.SAND)
-                            && !ground.is(Blocks.PODZOL)
-                            && !ground.is(Blocks.COARSE_DIRT)) continue;
-                    if (!flowerState.canSurvive(level, cursor)) continue;
-                    level.setBlock(new BlockPos(x, y, z), flowerState, 2);
+        var dimension = level.getLevel().dimension();
+        var ordinary = dimension == Level.OVERWORLD
+                ? OreGenerationSummary.ordinarySources(level, context.chunkGenerator())
+                : null;
+        String dimensionId = dimension.location().toString();
+        var generation = GTBedrockOreDimensions.generation(dimensionId, ordinary);
+        var ores = generation.ores();
+        if (ores.isEmpty()) return false;
+        var chunk = new ChunkPos(context.origin());
+        long seed = MineralWorldgenRules.bedrockSeed(level.getSeed(), dimensionId);
+        boolean underRoof = dimension == Level.NETHER;
+        int terrainTop = level.getMaxBuildHeight() - 1;
+        if (underRoof && context.chunkGenerator() instanceof NoiseBasedChunkGenerator generator)
+            terrainTop = Math.min(terrainTop, generator.getMinY() + generator.getGenDepth() - 1);
+        boolean placed = false;
+        for (int cx = chunk.x - 1; cx <= chunk.x + 1; cx++) {
+            for (int cz = chunk.z - 1; cz <= chunk.z + 1; cz++) {
+                boolean local = cx == chunk.x && cz == chunk.z;
+                for (var ore : ores) {
+                    if (!MineralWorldgenRules.bedrockHit(seed, cx, cz, ore.name(), ore.chance(), generation.density()))
+                        continue;
+                    var origin = new ChunkPos(cx, cz);
+                    long depositSeed = MineralWorldgenRules.bedrockDepositSeed(seed, cx, cz, ore.name());
+                    if (!enabledAt(level, context.chunkGenerator(), origin)) continue;
+                    if (local) {
+                        if (!placeVein(
+                                level,
+                                RandomSource.create(depositSeed),
+                                origin.getMinBlockX(),
+                                origin.getMinBlockZ(),
+                                ore.material())) continue;
+                        placed = true;
+                    } else if (!OreBlock.isBedrockFloor(level.getBlockState(new BlockPos(
+                            origin.getMinBlockX() + 8, level.getMinBuildHeight(), origin.getMinBlockZ() + 8)))) {
+                        continue;
+                    }
+                    placed |= BedrockIndicatorPlacement.place(
+                                    level, origin, chunk, ore, depositSeed ^ 0x494E444943415445L, terrainTop, underRoof)
+                            != 0;
                 }
             }
         }
-        // Surface rocks above the deposit hide raw ore chunks of the material.
-        for (int attempt = 0; attempt < 3; attempt++) {
-            GTRockPlacement.placeRock(
-                    level, centerX + random.nextInt(9) - 4, centerZ + random.nextInt(9) - 4, pick.material(), true);
-        }
-        return true;
+        return placed;
     }
 
-    private static Random gridRandom(WorldGenLevel level, ChunkPos chunkPos) {
-        return GTOreVeinFeature.gridRandom(level.getSeed() ^ 0xBED7E5L, chunkPos.x, chunkPos.z);
+    private static boolean enabledAt(WorldGenLevel level, ChunkGenerator generator, ChunkPos origin) {
+        var center = new BlockPos(origin.getMiddleBlockX(), level.getMinBuildHeight(), origin.getMiddleBlockZ());
+        for (var step :
+                generator.getBiomeGenerationSettings(level.getBiome(center)).features())
+            for (var holder : step)
+                if (holder.value().feature().value().feature() instanceof GTBedrockOreFeature) return true;
+        return false;
     }
 
-    /**
-     * GT6's {@code WorldgenOresBedrock.generateVein}: the vein is <b>chunk anchored</b>, not a
-     * blob around a point.
-     *
-     * <ol>
-     *   <li>The chunk needs bedrock at its centre column (GT6 checks {@code (minX+8, 0, minZ+8)}).</li>
-     *   <li>Bedrock core: the 6x6 area {@code x/z = 5..10} at y=0 gets a large ore on a 1-in-6 roll
-     *       and a small one on 2-in-6, and one large ore is forced in the middle so a deposit always
-     *       has a large core block.</li>
-     *   <li>"Muffin" blob: layers y=1..6, each a square ring of GT6's own bounds
-     *       ({@code tD1 = 5,4,2,1,0,2,5}, {@code tD2 = 11,12,14,15,16,14,11}) — so the vein is widest
-     *       in the middle (the full 16x16 chunk at y=4). The first vein of a chunk replaces the stone
-     *       around it with deepslate first (GT6's {@code GENERATED_NO_BEDROCK_ORE} flag); each block
-     *       then rolls 1-in-6 for a full ore and 2-in-6 for a small one.</li>
-     *   <li>Sprinkle: up to eight random walks from the blob up to the water level, drifting one
-     *       block in at most one of four directions on each seven-way roll, with small ore on two thirds of interior steps.</li>
-     * </ol>
-     *
-     * <p>Port deviation: GT6's {@code GENERATED_NO_BEDROCK_ORE} flag (only the first vein of a chunk
-     * gets the deepslate fill) is not modelled — the port's deposits are one per 16x16-chunk grid
-     * cell, so every one of them gets the fill.
-     *
-     * @return true when at least one ore block was placed
-     */
+    /** When both features roll in this chunk, reserve the floor for the deposit and its markers. */
+    static boolean reservesSpringSite(WorldGenLevel level, ChunkGenerator generator, ChunkPos chunk) {
+        String dimension = level.getLevel().dimension().location().toString();
+        var generation =
+                GTBedrockOreDimensions.generation(dimension, OreGenerationSummary.ordinarySources(level, generator));
+        long seed = MineralWorldgenRules.bedrockSeed(level.getSeed(), dimension);
+        for (var ore : generation.ores())
+            if (MineralWorldgenRules.bedrockHit(seed, chunk.x, chunk.z, ore.name(), ore.chance(), generation.density()))
+                return enabledAt(level, generator, chunk);
+        return false;
+    }
+
+    /** Common placement for naturally selected, dungeon and coltan veins. */
     public static boolean placeVein(WorldGenLevel level, RandomSource random, int minX, int minZ, GTMaterial material) {
-        if (!gregtech.GregTechConfig.Worldgen.BEDROCK_ORES.enabled() || material == null) return false;
+        if (!GregTechConfig.Worldgen.BEDROCK_ORES.enabled() || material == null) return false;
+        int floor = level.getMinBuildHeight();
+        var cursor = new BlockPos.MutableBlockPos();
+        BedrockOccupancy occupied = floorContents(level, cursor, minX, minZ, floor);
+        if (occupied == BedrockOccupancy.SPRING) return false;
+        boolean prepare = occupied == BedrockOccupancy.NONE;
+        var defaultStone = level.getLevel().dimension() == Level.NETHER
+                ? Blocks.NETHERRACK.defaultBlockState()
+                : Blocks.DEEPSLATE.defaultBlockState();
         return MineralWorldgenRules.bedrockVein(
                 minX,
                 minZ,
-                level.getMinBuildHeight(),
-                level.getSeaLevel(),
+                floor,
+                Math.min(level.getSeaLevel(), level.getMaxBuildHeight()),
+                prepare,
                 random::nextInt,
                 new MineralWorldgenRules.VeinSink() {
-
+                    @Override
                     public boolean isBedrockFloor(int x, int y, int z) {
-                        return level.getBlockState(new BlockPos(x, y, z)).is(Blocks.BEDROCK);
+                        return OreBlock.isBedrockFloor(level.getBlockState(cursor.set(x, y, z)));
                     }
 
+                    @Override
+                    public void prepareDrillPad(int x, int floor, int z) {
+                        // The drill needs a 3x3 row directly on the basal floor.
+                        for (int dx = -1; dx <= 1; dx++)
+                            for (int dz = -1; dz <= 1; dz++)
+                                for (int y = floor + 1; y <= floor + 4 && !level.isOutsideBuildHeight(y); y++) {
+                                    var pos = cursor.set(x + dx, y, z + dz);
+                                    if (level.getBlockState(pos).is(Blocks.BEDROCK))
+                                        level.setBlock(pos, defaultStone, Block.UPDATE_CLIENTS);
+                                }
+                    }
+
+                    @Override
                     public void prepareStone(int x, int y, int z) {
-                        // WorldgenOresBedrock.generateVein replaces the entire muffin before rolling ores.
-                        BlockState host = level.getLevel().dimension() == net.minecraft.world.level.Level.NETHER
-                                ? Blocks.NETHERRACK.defaultBlockState()
-                                : Blocks.DEEPSLATE.defaultBlockState();
-                        level.setBlock(new BlockPos(x, y, z), host, 2);
+                        if (level.isOutsideBuildHeight(y)) return;
+                        var pos = cursor.set(x, y, z);
+                        var state = level.getBlockState(pos);
+                        if (!state.hasBlockEntity()
+                                && (state.isAir()
+                                        || state.is(Blocks.BEDROCK)
+                                        || GTOreBlockResolver.stoneOf(state) != null))
+                            level.setBlock(pos, defaultStone, Block.UPDATE_CLIENTS);
                     }
 
+                    @Override
                     public boolean bedrock(int x, int y, int z, boolean small) {
-                        return GTOreBlockResolver.placeBedrockOre(level, new BlockPos(x, y, z), material);
+                        var pos = cursor.set(x, y, z);
+                        var state = level.getBlockState(pos);
+                        if (!small && state.getBlock() instanceof OreBlock ore && OreBlock.isBedrockOre(state))
+                            return !ore.isSmall() && ore.material().resolve() == material.resolve();
+                        return GTOreBlockResolver.placeBedrockOre(level, pos, material, small);
                     }
 
+                    @Override
                     public boolean ore(int x, int y, int z, boolean small) {
-                        if (level.isOutsideBuildHeight(y)) return false;
-                        return GTOreBlockResolver.placeOre(level, new BlockPos(x, y, z), material, small);
+                        return !level.isOutsideBuildHeight(y)
+                                && GTOreBlockResolver.placeOre(level, cursor.set(x, y, z), material, small);
                     }
                 });
     }
 
-    /** GT6's muffin bounds: {@code tD1}/{@code tD2} indexed by the layer ({@code tY} 1..6). */
-    public static final int[] MUFFIN_INNER = MineralWorldgenRules.MUFFIN_INNER;
-
-    public static final int[] MUFFIN_OUTER = MineralWorldgenRules.MUFFIN_OUTER;
-
-    /**
-     * Weighted pick with integer inverse-rarity weights in this port's dimension table.
-     */
-    private static GTBedrockOres.BedrockOre select(WorldGenLevel level, Random random) {
-        List<GTBedrockOres.BedrockOre> table =
-                GTBedrockOreDimensions.forDimension(level.getLevel().dimension());
-        long total = 0;
-        for (GTBedrockOres.BedrockOre ore : table) {
-            total += weight(ore);
-        }
-        if (total <= 0) return null;
-        long w = (long) (random.nextDouble() * total);
-        for (GTBedrockOres.BedrockOre ore : table) {
-            w -= weight(ore);
-            if (w < 0) return ore;
-        }
-        return null;
+    static boolean canPlaceSpringField(WorldGenLevel level, int minX, int minZ) {
+        int floor = level.getMinBuildHeight();
+        var cursor = new BlockPos.MutableBlockPos();
+        return level.getBlockState(cursor.set(minX + 8, floor, minZ + 8)).is(Blocks.BEDROCK)
+                && floorContents(level, cursor, minX, minZ, floor) == BedrockOccupancy.NONE;
     }
 
-    private static long weight(GTBedrockOres.BedrockOre ore) {
-        return MineralWorldgenRules.bedrockWeight(ore.chance());
+    private static BedrockOccupancy floorContents(
+            WorldGenLevel level, BlockPos.MutableBlockPos cursor, int minX, int minZ, int floor) {
+        BedrockOccupancy result = BedrockOccupancy.NONE;
+        // The spring crater can place outlets from x/z 3 through 12. Ore cores sit inside that footprint.
+        for (int x = 3; x <= 12; x++) {
+            for (int z = 3; z <= 12; z++) {
+                var state = level.getBlockState(cursor.set(minX + x, floor, minZ + z));
+                if (state.getBlock() instanceof FluidSpringBlock) return BedrockOccupancy.SPRING;
+                if (OreBlock.isBedrockOre(state)) result = BedrockOccupancy.ORE;
+            }
+        }
+        return result;
+    }
+
+    private enum BedrockOccupancy {
+        NONE,
+        ORE,
+        SPRING
     }
 }

@@ -1,6 +1,7 @@
 package gregtech.content.worldgen.dungeon;
 
 import gregtech.content.block.stone.StoneType;
+import gregtech.content.worldgen.MineralWorldgenRules;
 import java.util.List;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
@@ -171,13 +172,14 @@ public final class GTDungeonLayout {
         return DungeonLayoutRules.offsetY(random::nextInt, settings());
     }
 
-    /** The dungeon's Y level in the 1.18+ world (see {@code GTWorldgenScale}). */
+    /** The dungeon's Y level in the 1.18+ world (see {@code MineralWorldgenRules#legacyHeight}). */
     public static int y(WorldGenLevel level, int offsetY) {
         return Math.max(
                 level.getMinBuildHeight() + 5,
                 Math.min(
                         level.getMaxBuildHeight() - 32,
-                        gregtech.content.worldgen.GTWorldgenScale.remapY(level, offsetY)));
+                        MineralWorldgenRules.legacyHeight(
+                                level.getLevel().dimension().location().toString(), offsetY)));
     }
 
     /** The two rock types GT6 rolls for the dungeon ({@code BlocksGT.stones[rnd]}). */

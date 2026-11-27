@@ -1,105 +1,121 @@
 package gregtech.content.worldgen;
 
+import static gregtech.api.addon.worldgen.OreVeinDeclaration.NETHER;
+
 import gregtech.api.material.GTMaterial;
 import gregtech.content.material.Materials;
+import gregtech.content.material.generated.OreMaterials;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-/**
- * Current port catalogs for weighted bedrock selection, not the complete original registration lists.
- * Original shared-floor membership and per-row attempts require separate dispatch logic.
- */
+/** Bedrock-specific eligibility, indicator flowers and baseline rarity from GT6 Loader_Worldgen. */
 public final class GTBedrockOres {
+    public static final int DEFAULT_DENSITY_PERCENT = 100;
 
     private GTBedrockOres() {}
 
-    public record BedrockOre(String name, GTMaterial material, int chance, String flowerId) {}
+    public enum Depth {
+        SHALLOW,
+        DEEP,
+        NEUTRAL
+    }
 
-    public static final List<BedrockOre> OVERWORLD = List.of(
-            new BedrockOre("diamond", Materials.Diamond, 128000, "flower_pandanus_candelabrum"),
-            new BedrockOre(
-                    "tungstate", gregtech.content.material.generated.OreMaterials.Tungstate, 96000, "flower_tungstus"),
-            new BedrockOre(
-                    "ferberite", gregtech.content.material.generated.OreMaterials.Ferberite, 96000, "flower_tungstus"),
-            new BedrockOre(
-                    "wolframite",
-                    gregtech.content.material.generated.OreMaterials.Wolframite,
-                    96000,
-                    "flower_tungstus"),
-            new BedrockOre(
-                    "stolzite", gregtech.content.material.generated.OreMaterials.Stolzite, 96000, "flower_tungstus"),
-            new BedrockOre(
-                    "scheelite", gregtech.content.material.generated.OreMaterials.Scheelite, 96000, "flower_tungstus"),
-            new BedrockOre(
-                    "huebnerite",
-                    gregtech.content.material.generated.OreMaterials.Huebnerite,
-                    96000,
-                    "flower_tungstus"),
-            new BedrockOre(
-                    "russellite",
-                    gregtech.content.material.generated.OreMaterials.Russellite,
-                    96000,
-                    "flower_tungstus"),
-            new BedrockOre(
-                    "pinalite", gregtech.content.material.generated.OreMaterials.Pinalite, 96000, "flower_tungstus"),
-            new BedrockOre(
-                    "uraninite",
-                    gregtech.content.material.generated.OreMaterials.Uraninite,
-                    60000,
-                    "flower_tufted_evening_primrose"),
-            new BedrockOre(
-                    "pitchblende",
-                    gregtech.content.material.generated.OreMaterials.Pitchblende,
-                    60000,
-                    "flower_thompsons_locoweed"),
-            new BedrockOre("gold_a", Materials.Gold, 32000, "flower_altered_andesite_buckwheat"),
-            new BedrockOre("gold_b", Materials.Gold, 32000, "flower_desert_trumpet"),
-            new BedrockOre(
-                    "cooperite",
-                    gregtech.content.material.generated.OreMaterials.Cooperite,
-                    16000,
-                    "flower_narcissus_sheldonia"),
-            new BedrockOre("copper", Materials.Copper, 16000, "flower_copper_plant"),
-            new BedrockOre("monazite", Materials.Monazite, 16000, "flower_vindicator_flower"),
-            new BedrockOre(
-                    "powellite", gregtech.content.material.generated.OreMaterials.Powellite, 14000, "flower_orechid"),
-            new BedrockOre(
-                    "bastnasite",
-                    gregtech.content.material.generated.OreMaterials.Bastnasite,
-                    8000,
-                    "flower_vindicator_flower"),
-            new BedrockOre(
-                    "arsenopyrite",
-                    gregtech.content.material.generated.OreMaterials.Arsenopyrite,
-                    8000,
-                    "flower_sagebrush"),
-            new BedrockOre("redstone", Materials.Redstone, 7000, "flower_prince_s_plume"),
-            new BedrockOre("vanadium", Materials.VanadiumPentoxide, 6000, "flower_orechid"),
-            new BedrockOre(
-                    "galena", gregtech.content.material.generated.OreMaterials.Galena, 6000, "flower_crosby_buckwheat"),
-            new BedrockOre("coal", Materials.Coal, 5000, "flower_orechid"),
-            new BedrockOre("graphite", Materials.Graphite, 5000, "flower_orechid"),
-            new BedrockOre(
-                    "stibnite",
-                    gregtech.content.material.generated.OreMaterials.Stibnite,
-                    4000,
-                    "flower_four_wing_saltbush"),
-            new BedrockOre("zinc", Materials.Zinc, 4000, "flower_viola_calaminaria"),
-            new BedrockOre("nickel", Materials.Nickel, 4000, "flower_thlaspi_lereschianum"),
-            new BedrockOre(
-                    "alpine_copper",
-                    gregtech.content.material.generated.OreMaterials.Chalcopyrite,
-                    4000,
-                    "flower_alpine_catchfly"));
+    public record BedrockOre(String name, GTMaterial material, int chance, String flowerId, Depth depth) {
+        public BedrockOre(String name, GTMaterial material, int chance, String flowerId) {
+            this(name, material, chance, flowerId, Depth.NEUTRAL);
+        }
 
-    /**
-     * The five retained Nether rows from {@code Loader_Worldgen}, registered without an
-     * indicator flower — only surface rocks — so {@code flowerId} is null. VoidQuartz and
-     * Gloomstone stay retired; see the parity notes.
-     */
-    public static final List<BedrockOre> NETHER = List.of(
-            new BedrockOre("glowstone", Materials.Glowstone, 4000, null),
-            new BedrockOre("netherquartz", Materials.NetherQuartz, 2000, null),
-            new BedrockOre("ancientdebris", Materials.AncientDebris, 4000, null),
-            new BedrockOre("efrine", Materials.Efrine, 2000, null),
-            new BedrockOre("firestone", Materials.Firestone, 8000, null));
+        public BedrockOre withChance(int divisor) {
+            return new BedrockOre(name, material, divisor, flowerId, depth);
+        }
+    }
+
+    /** Historical overrides keep rare deposits, flower pairs and existing per-ore configuration keys. */
+    record DepositOverride(String name, int divisor, String flower) {}
+
+    private static final Map<GTMaterial, List<DepositOverride>> OVERRIDES = Map.ofEntries(
+            Map.entry(
+                    Materials.Diamond, List.of(new DepositOverride("diamond", 128000, "flower_pandanus_candelabrum"))),
+            Map.entry(OreMaterials.Tungstate, List.of(new DepositOverride("tungstate", 96000, "flower_tungstus"))),
+            Map.entry(OreMaterials.Ferberite, List.of(new DepositOverride("ferberite", 96000, "flower_tungstus"))),
+            Map.entry(OreMaterials.Wolframite, List.of(new DepositOverride("wolframite", 96000, "flower_tungstus"))),
+            Map.entry(OreMaterials.Stolzite, List.of(new DepositOverride("stolzite", 96000, "flower_tungstus"))),
+            Map.entry(OreMaterials.Scheelite, List.of(new DepositOverride("scheelite", 96000, "flower_tungstus"))),
+            Map.entry(OreMaterials.Huebnerite, List.of(new DepositOverride("huebnerite", 96000, "flower_tungstus"))),
+            Map.entry(OreMaterials.Russellite, List.of(new DepositOverride("russellite", 96000, "flower_tungstus"))),
+            Map.entry(OreMaterials.Pinalite, List.of(new DepositOverride("pinalite", 96000, "flower_tungstus"))),
+            Map.entry(
+                    OreMaterials.Uraninite,
+                    List.of(new DepositOverride("uraninite", 60000, "flower_tufted_evening_primrose"))),
+            Map.entry(
+                    OreMaterials.Pitchblende,
+                    List.of(new DepositOverride("pitchblende", 60000, "flower_thompsons_locoweed"))),
+            Map.entry(
+                    Materials.Gold,
+                    List.of(
+                            new DepositOverride("gold_a", 32000, "flower_altered_andesite_buckwheat"),
+                            new DepositOverride("gold_b", 32000, "flower_desert_trumpet"))),
+            Map.entry(
+                    OreMaterials.Cooperite,
+                    List.of(new DepositOverride("cooperite", 16000, "flower_narcissus_sheldonia"))),
+            Map.entry(Materials.Copper, List.of(new DepositOverride("copper", 16000, "flower_copper_plant"))),
+            Map.entry(Materials.Monazite, List.of(new DepositOverride("monazite", 16000, "flower_vindicator_flower"))),
+            Map.entry(OreMaterials.Powellite, List.of(new DepositOverride("powellite", 14000, "flower_orechid"))),
+            Map.entry(
+                    OreMaterials.Bastnasite,
+                    List.of(new DepositOverride("bastnasite", 8000, "flower_vindicator_flower"))),
+            Map.entry(
+                    OreMaterials.Arsenopyrite, List.of(new DepositOverride("arsenopyrite", 8000, "flower_sagebrush"))),
+            Map.entry(Materials.Redstone, List.of(new DepositOverride("redstone", 7000, "flower_prince_s_plume"))),
+            Map.entry(Materials.VanadiumPentoxide, List.of(new DepositOverride("vanadium", 6000, "flower_orechid"))),
+            Map.entry(OreMaterials.Galena, List.of(new DepositOverride("galena", 6000, "flower_crosby_buckwheat"))),
+            Map.entry(Materials.Coal, List.of(new DepositOverride("coal", 5000, "flower_orechid"))),
+            Map.entry(Materials.Graphite, List.of(new DepositOverride("graphite", 5000, "flower_orechid"))),
+            Map.entry(
+                    OreMaterials.Stibnite, List.of(new DepositOverride("stibnite", 4000, "flower_four_wing_saltbush"))),
+            Map.entry(Materials.Hematite, List.of(new DepositOverride("hematite", 4000, "flower_orechid"))),
+            Map.entry(
+                    OreMaterials.Sphalerite,
+                    List.of(new DepositOverride("sphalerite", 3000, "flower_viola_calaminaria"))),
+            Map.entry(
+                    OreMaterials.Smithsonite,
+                    List.of(new DepositOverride("smithsonite", 3000, "flower_viola_calaminaria"))),
+            Map.entry(
+                    OreMaterials.Pentlandite,
+                    List.of(new DepositOverride("pentlandite", 3000, "flower_thlaspi_lereschianum"))),
+            Map.entry(Materials.Niter, List.of(new DepositOverride("saltpeter", 3000, "flower_orechid"))),
+            Map.entry(OreMaterials.Bauxite, List.of(new DepositOverride("bauxite", 2000, "flower_orechid"))),
+            Map.entry(OreMaterials.Cassiterite, List.of(new DepositOverride("cassiterite", 2000, "flower_orechid"))),
+            Map.entry(
+                    OreMaterials.Chalcopyrite,
+                    List.of(new DepositOverride("chalcopyrite", 2000, "flower_alpine_catchfly"))));
+
+    private static final Set<String> HISTORICAL_NAMES = OVERRIDES.values().stream()
+            .flatMap(List::stream)
+            .map(DepositOverride::name)
+            .collect(Collectors.toUnmodifiableSet());
+
+    static Set<GTMaterial> historicalMaterials() {
+        return OVERRIDES.keySet();
+    }
+
+    static List<DepositOverride> overworld(GTMaterial material, int primaryVeinWeight) {
+        var overrides = OVERRIDES.get(material);
+        if (overrides != null) return overrides;
+        String name = material.getName().toLowerCase(Locale.ROOT);
+        if (primaryVeinWeight == 0 || HISTORICAL_NAMES.contains(name)) return List.of();
+        int divisor = Math.max(8000, 1_600_000 / primaryVeinWeight);
+        return List.of(new DepositOverride(name, divisor, null));
+    }
+
+    static void registerNether(OreSourceCatalog.Builder catalog) {
+        catalog.bedrock(NETHER, "glowstone", Materials.Glowstone, 4000, null);
+        catalog.bedrock(NETHER, "netherquartz", Materials.NetherQuartz, 2000, null);
+        catalog.bedrock(NETHER, "ancientdebris", Materials.AncientDebris, 4000, null);
+        catalog.bedrock(NETHER, "efrine", Materials.Efrine, 2000, null);
+        catalog.bedrock(NETHER, "firestone", Materials.Firestone, 8000, null);
+    }
 }

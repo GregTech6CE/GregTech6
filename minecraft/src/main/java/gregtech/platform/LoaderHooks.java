@@ -11,8 +11,10 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 //? if >=1.21.1 {
-/*import net.neoforged.neoforge.event.EventHooks;
+/*import net.neoforged.fml.ModList;
+import net.neoforged.neoforge.event.EventHooks;
 *///?} else {
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.ForgeEventFactory;
 //?}
@@ -20,6 +22,10 @@ import net.minecraftforge.event.ForgeEventFactory;
 /** Thin platform facade for loader event hooks and vanilla furnace burn time lookup. */
 public final class LoaderHooks {
     private LoaderHooks() {}
+
+    public static boolean isModLoaded(String modId) {
+        return ModList.get().isLoaded(modId);
+    }
 
     public static String loaderId() {
 //? if >=1.21.1 {

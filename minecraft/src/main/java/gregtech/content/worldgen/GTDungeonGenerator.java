@@ -1,5 +1,6 @@
 package gregtech.content.worldgen;
 
+import gregtech.api.material.GTMaterial;
 import gregtech.content.block.stone.StoneType;
 import gregtech.content.registry.GTDungeonKeys;
 import gregtech.content.worldgen.dungeon.DungeonLayoutRules;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
@@ -82,10 +84,37 @@ public final class GTDungeonGenerator {
 
     private GTDungeonGenerator() {}
 
+    static boolean miningBedrockEnabled() {
+        return gregtech.GregTechConfig.Rule.MINING_BEDROCK.enabled()
+                && gregtech.GregTechConfig.Worldgen.BEDROCK_ORES.enabled();
+    }
+
+    /** Replays the same unique-room assignment and ore roll used when a dungeon cell is placed. */
+    static BlockPos plannedBedrock(WorldGenLevel level, ChunkPos anchor, long seed, GTMaterial target) {
+        var plan = GTDungeonLayout.plan(seed);
+        var layout = plan.cells();
+        var rooms = GTDungeonSharedState.create(layout, seed);
+        int y = GTDungeonLayout.y(level, plan.offsetY());
+        for (int i = 1; i < layout.length - 1; i++) {
+            for (int j = 1; j < layout[i].length - 1; j++) {
+                var cell = rooms.cell(i, j);
+                if (cell == null || !(cell.chosenRoom() instanceof GTDungeonChunkRoomMiningBedrock)) continue;
+                var chunk = new ChunkPos(
+                        DungeonLayoutRules.cellChunkX(anchor.x, layout.length, i),
+                        DungeonLayoutRules.cellChunkZ(anchor.z, layout[i].length, j));
+                var ore = GTDungeonChunkRoomMiningBedrock.materialAt(
+                        level.getSeed(), chunk.getMinBlockX(), y, chunk.getMinBlockZ());
+                return ore.resolve() == target
+                        ? new BlockPos(chunk.getMiddleBlockX(), level.getMinBuildHeight(), chunk.getMiddleBlockZ())
+                        : null;
+            }
+        }
+        return null;
+    }
+
     public static boolean roomEnabled(GTDungeonChunk room) {
         if (room instanceof GTDungeonChunkRoomWorkshop) return gregtech.GregTechConfig.Rule.WORKSHOP.enabled();
-        if (room instanceof GTDungeonChunkRoomMiningBedrock)
-            return gregtech.GregTechConfig.Rule.MINING_BEDROCK.enabled();
+        if (room instanceof GTDungeonChunkRoomMiningBedrock) return miningBedrockEnabled();
         if (room instanceof GTDungeonChunkRoomLibraryNormal) return gregtech.GregTechConfig.Rule.LIBRARY.enabled();
         if (room instanceof GTDungeonChunkRoomFarmMobs) return gregtech.GregTechConfig.Rule.FARM_MOBS.enabled();
         if (room instanceof GTDungeonChunkRoomFarmCrop) return gregtech.GregTechConfig.Rule.FARM_CROP.enabled();
