@@ -212,20 +212,37 @@ public final class WorldgenSaveScanner {
                 if (palette.getCompound(i).getString("Name").isEmpty())
                     throw new IllegalArgumentException("Missing block ID");
             counts = new int[palette.size()];
-            bits = Math.max(4, 32 - Integer.numberOfLeadingZeros(palette.size() - 1));
-            perLong = 64 / bits;
             data = states.getLongArray("data");
+            bits = storageBits(palette.size(), data.length);
+            perLong = 64 / bits;
             if (palette.size() == 1) {
                 counts[0] = 4096;
             } else {
-                if (data.length != (4096 + perLong - 1) / perLong)
-                    throw new IllegalArgumentException("Invalid packed length");
                 for (int i = 0; i < 4096; i++) {
                     int entry = index(i);
                     if (entry >= counts.length) throw new IllegalArgumentException("Invalid packed index " + entry);
                     counts[entry]++;
                 }
             }
+        }
+
+        private static int storageBits(int size, int words) {
+            int minimum = Math.max(4, 32 - Integer.numberOfLeadingZeros(size - 1));
+            if (size == 1 || words == packedLength(minimum)) return minimum;
+            // Some writers retain a wider palette. Use it only when the section length identifies it.
+            int width = 0;
+            for (int bits = minimum + 1; bits <= 12; bits++) {
+                if (words != packedLength(bits)) continue;
+                if (width != 0) throw new IllegalArgumentException("Ambiguous packed palette width");
+                width = bits;
+            }
+            if (width == 0) throw new IllegalArgumentException("Invalid packed length");
+            return width;
+        }
+
+        private static int packedLength(int bits) {
+            int perLong = 64 / bits;
+            return (4096 + perLong - 1) / perLong;
         }
 
         private int index(int i) {
