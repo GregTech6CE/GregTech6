@@ -33,12 +33,11 @@ public final class OreSourceCatalog {
         BEDROCK,
         COLTAN_FIELD,
         COLTAN_BEDROCK,
-        OCEAN_PYLON,
         DUNGEON_BEDROCK;
 
         public boolean specialDeposit() {
             return switch (this) {
-                case COLTAN_FIELD, COLTAN_BEDROCK, OCEAN_PYLON, DUNGEON_BEDROCK -> true;
+                case COLTAN_FIELD, COLTAN_BEDROCK, DUNGEON_BEDROCK -> true;
                 default -> false;
             };
         }
@@ -303,16 +302,6 @@ public final class OreSourceCatalog {
             SpecialOreDeposits.COLTAN_ROLLS.forEach(material -> source(material, field));
             var floor = new HeightRange(-64, -64);
             source(OreMaterials.Coltan, new Source(OVERWORLD, Kind.COLTAN_BEDROCK, "coltan_centre", floor, ""));
-            for (var pylon : SpecialOreDeposits.OCEAN_PYLONS) {
-                source(
-                        pylon.material(),
-                        new Source(
-                                OVERWORLD,
-                                Kind.OCEAN_PYLON,
-                                pylon.stone().registryId(),
-                                SpecialOreDeposits.OCEAN_ORE_HEIGHTS,
-                                ""));
-            }
             var dungeon = new Source(OVERWORLD, Kind.DUNGEON_BEDROCK, "dungeon_mine", floor, "");
             SpecialOreDeposits.DUNGEON_ROLLS.forEach(material -> source(material, dungeon));
         }

@@ -16,7 +16,6 @@ import java.util.WeakHashMap;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelHeightAccessor;
-import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
 
@@ -53,10 +52,9 @@ public record OreGenerationSummary(
         }
     }
 
-    private record Features(
-            boolean veins, boolean smallOres, boolean strata, boolean bedrock, boolean coltan, boolean oceanPylons) {
+    private record Features(boolean veins, boolean smallOres, boolean strata, boolean bedrock, boolean coltan) {
         private static Features read(ChunkGenerator generator) {
-            boolean veins = false, smallOres = false, strata = false, bedrock = false, coltan = false, pylons = false;
+            boolean veins = false, smallOres = false, strata = false, bedrock = false, coltan = false;
             for (var biome : generator.getBiomeSource().possibleBiomes()) {
                 for (var step : generator.getBiomeGenerationSettings(biome).features()) {
                     for (var holder : step) {
@@ -66,11 +64,10 @@ public record OreGenerationSummary(
                         strata |= feature instanceof GTStoneLayerFeature;
                         bedrock |= feature instanceof GTBedrockOreFeature;
                         coltan |= feature instanceof GTColtanFeature;
-                        pylons |= feature instanceof GTDeepOceanFeature;
                     }
                 }
             }
-            return new Features(veins, smallOres, strata, bedrock, coltan, pylons);
+            return new Features(veins, smallOres, strata, bedrock, coltan);
         }
 
         private Dimension ordinary(HeightRange heights, boolean geology) {
@@ -128,10 +125,6 @@ public record OreGenerationSummary(
                 }
             }
             if (overworld) {
-                boolean deepOcean = geology
-                        && features.oceanPylons()
-                        && generator.getBiomeSource().possibleBiomes().stream()
-                                .anyMatch(biome -> biome.is(Biomes.DEEP_OCEAN));
                 boolean dungeon = dungeonMines
                         && level.structureManager().shouldGenerateStructures()
                         && level.getChunkSource().getGeneratorState().possibleStructureSets().stream()
@@ -141,7 +134,6 @@ public record OreGenerationSummary(
                         heights,
                         new HeightRange(floor, level.getMaxBuildHeight() - 1),
                         geology && features.coltan(),
-                        deepOcean,
                         GregTechConfig.Worldgen.BEDROCK_ORES.enabled(),
                         dungeon);
             }
@@ -164,12 +156,7 @@ public record OreGenerationSummary(
     }
 
     private static Map<Kind, HeightRange> specialDeposits(
-            HeightRange terrain,
-            HeightRange build,
-            boolean coltan,
-            boolean deepOcean,
-            boolean coltanBedrock,
-            boolean dungeonMines) {
+            HeightRange terrain, HeightRange build, boolean coltan, boolean coltanBedrock, boolean dungeonMines) {
         var out = new EnumMap<Kind, HeightRange>(Kind.class);
         boolean hasBedrockFloor = terrain.min() == build.min();
         var floor = new HeightRange(build.min(), build.min());
@@ -177,16 +164,6 @@ public record OreGenerationSummary(
             var band = SpecialOreDeposits.COLTAN_HEIGHTS.intersect(terrain);
             if (!band.isEmpty()) out.put(Kind.COLTAN_FIELD, band);
             if (hasBedrockFloor && coltanBedrock) out.put(Kind.COLTAN_BEDROCK, floor);
-        }
-        if (deepOcean) {
-            var centres = new HeightRange(SpecialOreDeposits.OCEAN_CENTER_MIN, SpecialOreDeposits.OCEAN_CENTER_MAX)
-                    .intersect(terrain);
-            if (!centres.isEmpty()) {
-                out.put(
-                        Kind.OCEAN_PYLON,
-                        new HeightRange(centres.min(), centres.max() + SpecialOreDeposits.OCEAN_PYLON_REACH)
-                                .intersect(build));
-            }
         }
         if (hasBedrockFloor && dungeonMines) out.put(Kind.DUNGEON_BEDROCK, floor);
         return out;
@@ -209,7 +186,6 @@ public record OreGenerationSummary(
         var special = specialDeposits(
                 overworldHeights,
                 overworldHeights,
-                geology,
                 geology,
                 GregTechConfig.Worldgen.BEDROCK_ORES.enabled(),
                 GregTechConfig.Worldgen.DUNGEONS.enabled() && GTDungeonGenerator.miningBedrockEnabled());

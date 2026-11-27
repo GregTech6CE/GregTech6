@@ -1,13 +1,14 @@
-package gregtech.compat.common;
+package gregtech.client;
 
 import gregtech.content.multiblock.ControllerStructureLayouts;
-import gregtech.engine.multiblock.tracking.StructurePlan;
-import java.util.List;
-import net.minecraft.world.level.block.Block;
 import gregtech.content.worldgen.OreGenerationSummary;
 import gregtech.engine.mod.GregTechIdentity;
+import gregtech.engine.multiblock.tracking.StructurePlan;
+import java.util.List;
 import java.util.Map;
+import java.util.function.BooleanSupplier;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.level.block.Block;
 //? if >=1.21.1 {
 /*import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -28,7 +29,8 @@ public final class RecipeViewerRefresh {
     private static long generation;
     private static Build built;
     private static OreGenerationSummary checked;
-    private static Runnable refresh;
+    private static BooleanSupplier refresh;
+    private static boolean dispatched;
 
     private RecipeViewerRefresh() {}
 
@@ -39,21 +41,25 @@ public final class RecipeViewerRefresh {
         return new Build(++generation, OreGenerationSummary.current(), ControllerStructureLayouts.plans());
     }
 
-    public static synchronized void finishBuild(Build build, Runnable refreshPages) {
+    public static synchronized void finishBuild(Build build, BooleanSupplier refreshPages) {
         if (build.generation() != generation) return;
+        dispatched = false;
         built = build;
         checked = build.summary();
         refresh = refreshPages;
     }
 
-    private static synchronized Runnable pendingRefresh() {
+    private static synchronized BooleanSupplier takeRefresh() {
+        if (refresh == null || dispatched) return null;
         var latest = OreGenerationSummary.received();
-        if (built == null) return latest == null ? null : refresh;
-        if (latest != null && latest != checked) {
-            if (!latest.equals(built.summary())) return refresh;
-            checked = latest;
+        if (built == null) {
+            if (latest == null) return null;
+        } else {
+            if (latest != null && latest != checked && latest.equals(built.summary())) checked = latest;
+            if ((latest == null || latest == checked) && built.layouts() == ControllerStructureLayouts.plans()) return null;
         }
-        return built.layouts() == ControllerStructureLayouts.plans() ? null : refresh;
+        dispatched = true;
+        return refresh;
     }
 
     @SubscribeEvent
@@ -64,13 +70,18 @@ public final class RecipeViewerRefresh {
         if (event.phase != TickEvent.Phase.END) return;
     //?}
         if (Minecraft.getInstance().getConnection() == null) return;
-        var refreshPages = pendingRefresh();
-        if (refreshPages != null) refreshPages.run();
+        var refreshPages = takeRefresh();
+        if (refreshPages != null && !refreshPages.getAsBoolean()) {
+            synchronized (RecipeViewerRefresh.class) {
+                dispatched = false;
+            }
+        }
     }
 
     @SubscribeEvent
     public static synchronized void disconnected(ClientPlayerNetworkEvent.LoggingOut event) {
         generation++;
+        dispatched = false;
         built = null;
         checked = null;
         OreGenerationSummary.acceptClientSummary(null);

@@ -7,6 +7,7 @@ import gregtech.content.worldgen.OreVeinLayout.Center;
 import gregtech.content.worldgen.OreVeinLayout.RegionalPlan;
 import gregtech.content.worldgen.WorldgenLocate.Area;
 import gregtech.content.worldgen.WorldgenLocate.Target;
+import gregtech.content.worldgen.dungeon.GTDungeonLayout;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -19,6 +20,7 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.NoiseColumn;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
 
 /** Samples the installed generation plans without reading or generating chunks. */
 final class WorldgenProspecting {
@@ -28,7 +30,8 @@ final class WorldgenProspecting {
         String dim = level.dimension().location().toString();
         long seed = level.getSeed();
         if (target.kind() == WorldgenLocate.Kind.LAYER) return sample(level, summary, target, area, checked);
-        if (target.kind() == WorldgenLocate.Kind.BEDROCK_ORE) return bedrock(seed, dim, summary, target, area, checked);
+        if (target.kind() == WorldgenLocate.Kind.BEDROCK_ORE)
+            return bedrock(level, dim, summary, target, area, checked);
         var center = vein(level, dim, summary, target, area, checked);
         for (var source : target.sources()) {
             if (source.kind() == Kind.COLTAN_FIELD) {
@@ -41,19 +44,34 @@ final class WorldgenProspecting {
     }
 
     private static BlockPos bedrock(
-            long seed, String dim, OreGenerationSummary summary, Target target, Area area, Set<Long> checked) {
+            ServerLevel level, String dim, OreGenerationSummary summary, Target target, Area area, Set<Long> checked) {
+        long seed = level.getSeed();
         var table = summary.bedrock().get(dim);
         var names = new ArrayList<String>();
         BlockPos best = null;
+        boolean dungeon = false;
         for (var source : target.sources()) {
             if (source.kind() == Kind.BEDROCK && table != null) names.add(source.name());
+            if (source.kind() == Kind.DUNGEON_BEDROCK) dungeon = true;
             if (source.kind() == Kind.COLTAN_BEDROCK) {
                 var p = MineralWorldgenRules.coltanCentre(seed);
                 int floor = summary.specialDeposits().get(source.kind()).min();
                 best = closer(best, new BlockPos((p.x() & ~15) + 8, floor, (p.z() & ~15) + 8), area, checked);
             }
         }
-        if (names.isEmpty()) return best;
+        if (!names.isEmpty()) best = naturalBedrock(seed, dim, summary, area, checked, table, names, best);
+        return dungeon ? dungeonMine(level, target, area, checked, best) : best;
+    }
+
+    private static BlockPos naturalBedrock(
+            long seed,
+            String dim,
+            OreGenerationSummary summary,
+            Area area,
+            Set<Long> checked,
+            OreGenerationSummary.BedrockTable table,
+            List<String> names,
+            BlockPos best) {
         long salted = MineralWorldgenRules.bedrockSeed(seed, dim);
         var origin = new ChunkPos(area.origin());
         for (var offset : BlockPos.spiralAround(BlockPos.ZERO, area.radius(), Direction.EAST, Direction.SOUTH)) {
@@ -69,6 +87,53 @@ final class WorldgenProspecting {
                     best = closer(best, new BlockPos((cx << 4) + 8, table.floor(), (cz << 4) + 8), area, checked);
                     break;
                 }
+            }
+        }
+        return best;
+    }
+
+    /** Structure placement, room layout and ore selection can all be sampled without requesting a chunk. */
+    private static BlockPos dungeonMine(ServerLevel level, Target target, Area area, Set<Long> checked, BlockPos best) {
+        var state = level.getChunkSource().getGeneratorState();
+        var biomeSource = level.getChunkSource().getGenerator().getBiomeSource();
+        var sampler = level.getChunkSource().randomState().sampler();
+        var settings = GTDungeonLayout.settings();
+        var origin = new ChunkPos(area.origin());
+        int reach = area.radius() + settings.half();
+        for (var holder : state.possibleStructureSets()) {
+            var set = holder.value();
+            var dungeons = set.structures().stream()
+                    .map(entry -> entry.structure().value())
+                    .filter(GTDungeonStructure.class::isInstance)
+                    .toList();
+            if (dungeons.isEmpty()) continue;
+            var placement = set.placement();
+            int step = placement instanceof GTDungeonPlacement
+                    ? settings.period()
+                    : placement instanceof RandomSpreadStructurePlacement spread ? spread.spacing() : 1;
+            int rx = Math.floorDiv(origin.x, step), rz = Math.floorDiv(origin.z, step);
+            for (var offset :
+                    BlockPos.spiralAround(BlockPos.ZERO, (reach + step - 1) / step, Direction.EAST, Direction.SOUTH)) {
+                int ring = Math.max(Math.abs(offset.getX()), Math.abs(offset.getZ()));
+                long minDistance = Math.max(0, (ring - 1) * step - settings.half()) * 16L;
+                if (best != null && minDistance * minDistance > horizontalDistance(best.getX(), best.getZ(), area))
+                    break;
+                int cx = (rx + offset.getX()) * step, cz = (rz + offset.getZ()) * step;
+                var anchor = placement instanceof RandomSpreadStructurePlacement spread
+                        ? spread.getPotentialStructureChunk(level.getSeed(), cx, cz)
+                        : new ChunkPos(cx, cz);
+                if (!GTDungeonLayout.passesAnchorClearance(anchor)) continue;
+                long seed = GTDungeonLayout.seedFor(level.getSeed(), anchor);
+                if (!GTDungeonLayout.passesProbability(seed) || !placement.isStructureChunk(state, anchor.x, anchor.z))
+                    continue;
+                var biome = biomeSource.getNoiseBiome(
+                        anchor.getMiddleBlockX() >> 2,
+                        level.getMinBuildHeight() >> 2,
+                        anchor.getMiddleBlockZ() >> 2,
+                        sampler);
+                if (dungeons.stream().noneMatch(structure -> structure.biomes().contains(biome))) continue;
+                var mine = GTDungeonGenerator.plannedBedrock(level, anchor, seed, target.material());
+                if (mine != null) best = closer(best, mine, area, checked);
             }
         }
         return best;

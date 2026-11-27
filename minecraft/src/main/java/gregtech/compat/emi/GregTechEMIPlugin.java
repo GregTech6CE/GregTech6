@@ -11,11 +11,11 @@ import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories;
 import dev.emi.emi.api.stack.Comparison;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.Bounds;
+import gregtech.client.RecipeViewerRefresh;
 import gregtech.client.gui.MachineContainerScreen;
 import gregtech.client.gui.RecipeViewerNavigation;
 import gregtech.compat.common.RecipeMachines;
 import gregtech.compat.common.RecipeViewerIcons;
-import gregtech.compat.common.RecipeViewerRefresh;
 import gregtech.content.block.misc.AdvancedCraftingTableBlock;
 import gregtech.content.item.CannedFoodItem;
 import gregtech.content.item.CatalogVisibility;
@@ -67,18 +67,8 @@ public final class GregTechEMIPlugin implements EmiPlugin {
 
     private static boolean reloadFailed;
 
-    private static void refreshPages() {
-        if (reloadFailed) return;
-        try {
-            var manager = Class.forName("dev.emi.emi.runtime.EmiReloadManager");
-            if ((boolean) manager.getMethod("isLoaded").invoke(null)) reload();
-        } catch (ReflectiveOperationException | RuntimeException | LinkageError error) {
-            disableReload(error);
-        }
-    }
-
-    private static void reload() {
-        if (reloadFailed) return;
+    private static boolean reload() {
+        if (reloadFailed) return true;
         try {
             Class.forName("dev.emi.emi.runtime.EmiReloadManager")
                     .getMethod("reload")
@@ -86,6 +76,7 @@ public final class GregTechEMIPlugin implements EmiPlugin {
         } catch (ReflectiveOperationException | RuntimeException | LinkageError error) {
             disableReload(error);
         }
+        return true;
     }
 
     private static void disableReload(Throwable error) {
@@ -148,7 +139,7 @@ public final class GregTechEMIPlugin implements EmiPlugin {
         var atlas = RecipeViewerRefresh.beginBuild();
         StructureEmiRecipe.register(registry, MultiblockInfoData.recipes(atlas.layouts()));
         WorldgenEmiRecipe.register(registry, atlas.summary());
-        RecipeViewerRefresh.finishBuild(atlas, GregTechEMIPlugin::refreshPages);
+        RecipeViewerRefresh.finishBuild(atlas, GregTechEMIPlugin::reload);
         // Rebuild aliases from this reload's compositions before creating ingredient templates.
         MaterialDisplayBinding.invalidate();
         var machines = RecipeMachines.collect();

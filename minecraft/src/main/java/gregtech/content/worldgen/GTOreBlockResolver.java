@@ -47,6 +47,7 @@ public final class GTOreBlockResolver {
 
     /** Writes a position in the supplied generation chunk, preserving region and block-state callbacks. */
     static boolean setInChunk(WorldGenLevel level, ChunkAccess chunk, BlockPos pos, BlockState state) {
+        // A modded region may intercept writes in its setBlock override.
         if (level.getClass() != WorldGenRegion.class || state.hasBlockEntity())
             return level.setBlock(pos, state, Block.UPDATE_CLIENTS);
         var region = (WorldGenRegion) level;

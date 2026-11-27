@@ -3,7 +3,6 @@ package gregtech.compat.jei;
 import gregtech.compat.common.RecipeViewerIcons;
 import gregtech.compat.common.WorldgenInfoData;
 import gregtech.content.worldgen.BoundaryGemOres;
-import gregtech.content.worldgen.OreGenerationSummary;
 import gregtech.engine.mod.GregTechIdentity;
 import java.util.ArrayList;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -40,11 +39,8 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
         private final IDrawable background, icon, slot;
 
         public VeinCategory(IGuiHelper gui) {
-            int height = buildVeins(OreGenerationSummary.current()).stream()
-                    .mapToInt(vein -> captionY(vein) + 10 * vein.captions().size())
-                    .max()
-                    .orElse(84);
-            this.background = gui.createBlankDrawable(176, height);
+            // The dungeon mine has up to four rows of slots followed by four lines of text.
+            this.background = gui.createBlankDrawable(176, 4 + 4 * 18 + 4 * 10);
             this.slot = gui.getSlotDrawable();
             this.icon = gui.createDrawableItemStack(RecipeViewerIcons.item("ore_iridium"));
         }
@@ -170,12 +166,7 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
         private final IDrawable background, icon, slot;
 
         public LayerCategory(IGuiHelper gui) {
-            int rows = Math.max(
-                    1,
-                    buildLayers(OreGenerationSummary.current()).stream()
-                            .mapToInt(layer -> (layerPreviews(layer).size() + 7) / 8)
-                            .max()
-                            .orElse(1));
+            int rows = Math.max(1, (maximumLayerSlots() + 7) / 8);
             this.background = gui.createBlankDrawable(168, 20 + rows * 18);
             this.slot = gui.getSlotDrawable();
             this.icon = gui.createDrawableItemStack(RecipeViewerIcons.item("block_ore_salt"));

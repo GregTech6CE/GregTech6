@@ -93,10 +93,6 @@ public final class MineralWorldgenRules {
         return WorldgenHash.named(worldSeed ^ 0xBED7E5L, dimension);
     }
 
-    public record Tier(int fromL, int toL, int radius) {}
-
-    public static final List<Tier> PYLON_TIERS =
-            List.of(new Tier(8, 10, 0), new Tier(5, 7, 1), new Tier(2, 4, 2), new Tier(0, 1, 3));
     private static final int[] MUFFIN_INNER = {5, 4, 2, 1, 0, 2, 5}, MUFFIN_OUTER = {11, 12, 14, 15, 16, 14, 11};
 
     public interface VeinSink {

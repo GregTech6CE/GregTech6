@@ -1,12 +1,12 @@
 package gregtech.compat.jei;
 
+import gregtech.client.RecipeViewerRefresh;
 import gregtech.client.gui.MachineContainerScreen;
 import gregtech.client.gui.RecipeViewerNavigation;
 import gregtech.compat.common.MaterialUnitTagDisplay;
 import gregtech.compat.common.MoldChiselDisplay;
 import gregtech.compat.common.RecipeMachines;
 import gregtech.compat.common.RecipeViewerIcons;
-import gregtech.compat.common.RecipeViewerRefresh;
 import gregtech.content.block.misc.AdvancedCraftingTableBlock;
 import gregtech.content.item.CatalogVisibility;
 import gregtech.content.loot.LootViewerData;
@@ -161,14 +161,15 @@ public final class GregTechJEIPlugin implements IModPlugin {
         }
     }
 
-    private static void refreshPages() {
+    private static boolean refreshPages() {
         var plugin = active;
-        if (plugin == null || plugin.runtime == null) return;
+        if (plugin == null || plugin.runtime == null) return false;
         var build = RecipeViewerRefresh.beginBuild();
         var manager = plugin.runtime.getRecipeManager();
         for (var pages : plugin.atlasPages) pages.show(manager, build.summary());
         plugin.structures.show(manager, build.layouts());
         RecipeViewerRefresh.finishBuild(build, GregTechJEIPlugin::refreshPages);
+        return true;
     }
 
     /** Normal JEI reload discovers the current maps through registerRecipes. */

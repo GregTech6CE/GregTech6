@@ -25,14 +25,17 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
      * raw ore blocks of the pillars, so the port keeps it as GT6 wrote it -
      * {@code UT.Code.select(MT.Redstone, MT.Redstone, MT.S, MT.Fe2O3, MT.MnO2, MT.Apatite,...)}.
      */
-    private static final GTMaterial[] VEIN_MATERIALS = SpecialOreDeposits.DUNGEON_ROLLS.toArray(GTMaterial[]::new);
+    public static GTMaterial materialAt(long seed, int x, int y, int z) {
+        var rolls = SpecialOreDeposits.DUNGEON_ROLLS;
+        return rolls.get(GTDungeonData.wandering(seed, x, y, z).nextInt(rolls.size()));
+    }
 
     @Override
     public boolean generate(GTDungeonData data) {
         int floor = data.level.getMinBuildHeight();
         int rawOreBottom = floor + SpecialOreDeposits.DUNGEON_RAW_ORE_OFFSET;
         if (data.hasTag(TAG_MINING_BEDROCK) || data.y < rawOreBottom) return false;
-        GTMaterial vein = data.select(VEIN_MATERIALS, 0, 0, 0);
+        GTMaterial vein = materialAt(data.level.getSeed(), data.x, data.y, data.z);
         if (!GTBedrockOreFeature.placeVein(data.level, data.random, data.x, data.z, vein)) return false;
         if (!super.generate(data)) return false;
         data.tags.add(TAG_MINING_BEDROCK);

@@ -79,9 +79,10 @@ final class VeinTerrain {
             else minZ += half;
         }
 
+        boolean thinBand = range.max() - range.min() < 2;
         Body best = at(level, generator, center, center.x(), center.z(), range, reserve);
         // Three solid blocks can hold the mixed core. Still allow thinner bands on floating islands or in flat worlds.
-        if (best != null && best.halfHeight() > 0) return best;
+        if (best != null && (thinBand || best.halfHeight() > 0)) return best;
         int spacing = OreVeinDeclaration.END.equals(
                         level.getLevel().dimension().location().toString())
                 ? 16
@@ -94,7 +95,7 @@ final class VeinTerrain {
             if (x < minX || x >= endX || z < minZ || z >= endZ || x == center.x() && z == center.z()) continue;
             Body candidate = at(level, generator, center, x, z, range, reserve);
             if (candidate == null) continue;
-            if (candidate.halfHeight() > 0) return candidate;
+            if (thinBand || candidate.halfHeight() > 0) return candidate;
             if (best == null) best = candidate;
         }
         return best;

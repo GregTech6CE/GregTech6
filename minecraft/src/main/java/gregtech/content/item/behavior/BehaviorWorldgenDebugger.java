@@ -1,7 +1,5 @@
 package gregtech.content.item.behavior;
 
-import gregtech.content.block.stone.GTStoneBlock;
-import gregtech.content.block.stone.StoneType;
 import gregtech.content.item.behavior.ItemBehaviors.Outcome;
 import gregtech.content.worldgen.GTOreBlockResolver;
 import java.util.List;
@@ -83,10 +81,6 @@ public final class BehaviorWorldgenDebugger {
                 || state.hasBlockEntity()
                 || state.is(Blocks.BEDROCK)
                 || GTOreBlockResolver.oreMaterialOf(state.getBlock()) != null) return false;
-        // Deep-ocean pylons are features built from raw GT prismarine, outside structure bounds.
-        if (state.getBlock() instanceof GTStoneBlock stone
-                && (stone.stoneType() == StoneType.PRISMARINE_LIGHT || stone.stoneType() == StoneType.PRISMARINE_DARK))
-            return false;
         return GTOreBlockResolver.isBaseRock(state)
                 || state.is(BlockTags.DIRT)
                 || state.is(BlockTags.SAND)

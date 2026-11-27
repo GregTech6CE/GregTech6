@@ -112,7 +112,7 @@ public final class SurfaceRockModels {
         private final Map<String, Skin> chunks = new ConcurrentHashMap<>();
         private final Cache<Faces, List<BakedQuad>> quads = CacheBuilder.newBuilder().maximumSize(512).build();
 
-        private record Faces(List<BakedQuad> source, TextureAtlasSprite sprite, int tint, float offset) {}
+        private record Faces(List<BakedQuad> source, TextureAtlasSprite sprite, int tint) {}
 
         private Palette(BakedModel stone, BakedModel raw, BakedModel flint) {
             this.stone = new Skin(stone);
@@ -192,10 +192,10 @@ public final class SurfaceRockModels {
                     : pebbles.computeIfAbsent(material.getName(), this::natural);
         }
 
-        private List<BakedQuad> reskin(List<BakedQuad> source, @Nullable TextureAtlasSprite sprite, int tint, float offset) {
+        private List<BakedQuad> reskin(List<BakedQuad> source, @Nullable TextureAtlasSprite sprite, int tint) {
             if (source.isEmpty() || sprite == null) return source;
-            return quads.asMap().computeIfAbsent(new Faces(source, sprite, tint, offset), faces ->
-                    faces.source().stream().map(q -> BakedQuadCompat.retexture(q, faces.sprite(), faces.tint(), faces.offset())).toList());
+            return quads.asMap().computeIfAbsent(new Faces(source, sprite, tint), faces ->
+                    faces.source().stream().map(q -> BakedQuadCompat.retexture(q, faces.sprite(), faces.tint())).toList());
         }
     }
 
@@ -210,23 +210,27 @@ public final class SurfaceRockModels {
         }
 
         @Override
+        public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, RandomSource random) {
+            return getQuads(state, side, random, ModelData.EMPTY, null);
+        }
+
+        @Override
         public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, RandomSource random,
                 ModelData data, @Nullable RenderType layer) {
             var skin = palette.select(appearance, data);
+            if (skin.overlay() != null && layer != null && layer != RenderType.cutoutMipped()) return List.of();
             var faces = skin.shape().getQuads(state, side, random, data, skin.overlay() == null ? layer : null);
-            if (faces.isEmpty()) return faces;
-            if (skin.overlay() == null || layer == RenderType.solid()) return palette.reskin(faces, skin.sprite(), skin.tint(), 0);
-            var detail = palette.reskin(faces, skin.overlay(), skin.overlayTint(), 1f / 1024);
-            if (layer != null) return layer == RenderType.cutout() ? detail : List.of();
-            return ImmutableList.<BakedQuad>builder()
-                    .addAll(palette.reskin(faces, skin.sprite(), skin.tint(), 0)).addAll(detail).build();
+            var base = palette.reskin(faces, skin.sprite(), skin.tint());
+            if (faces.isEmpty() || skin.overlay() == null) return base;
+            return ImmutableList.<BakedQuad>builder().addAll(base)
+                    .addAll(palette.reskin(faces, skin.overlay(), skin.overlayTint())).build();
         }
 
         @Override
         public ChunkRenderTypeSet getRenderTypes(BlockState state, RandomSource random, ModelData data) {
             var skin = palette.select(appearance, data);
             return skin.overlay() == null ? skin.shape().getRenderTypes(state, random, data)
-                    : ChunkRenderTypeSet.of(RenderType.solid(), RenderType.cutout());
+                    : ChunkRenderTypeSet.of(RenderType.cutoutMipped());
         }
 
         @Override

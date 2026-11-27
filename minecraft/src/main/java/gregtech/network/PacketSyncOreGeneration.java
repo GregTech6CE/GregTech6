@@ -85,7 +85,12 @@ public record PacketSyncOreGeneration(OreGenerationSummary summary)
         }
         buffer.writeVarInt(packet.summary().specialDeposits().size());
         packet.summary().specialDeposits().forEach((kind, heights) -> {
-            buffer.writeEnum(kind);
+            buffer.writeVarInt(switch (kind) {
+                case COLTAN_FIELD -> 7;
+                case COLTAN_BEDROCK -> 8;
+                case DUNGEON_BEDROCK -> 10;
+                default -> throw new IllegalArgumentException("invalid special ore deposit");
+            });
             buffer.writeVarInt(heights.min());
             buffer.writeVarInt(heights.max());
         });
@@ -127,9 +132,16 @@ public record PacketSyncOreGeneration(OreGenerationSummary summary)
         int siteCount = readCount(buffer);
         var special = new EnumMap<Kind, HeightRange>(Kind.class);
         for (int i = 0; i < siteCount; i++) {
-            Kind kind = buffer.readEnum(Kind.class);
+            int id = buffer.readVarInt();
             var heights = new HeightRange(buffer.readVarInt(), buffer.readVarInt());
-            if (!kind.specialDeposit() || heights.isEmpty() || special.putIfAbsent(kind, heights) != null)
+            if (id == 9) continue; // Older servers sent the retired deep-ocean deposit here.
+            Kind kind = switch (id) {
+                case 7 -> Kind.COLTAN_FIELD;
+                case 8 -> Kind.COLTAN_BEDROCK;
+                case 10 -> Kind.DUNGEON_BEDROCK;
+                default -> throw new IllegalArgumentException("unknown special ore deposit " + id);
+            };
+            if (heights.isEmpty() || special.putIfAbsent(kind, heights) != null)
                 throw new IllegalArgumentException("invalid special ore deposit");
         }
         return new PacketSyncOreGeneration(

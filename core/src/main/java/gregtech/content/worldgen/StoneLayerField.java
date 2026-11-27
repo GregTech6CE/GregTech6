@@ -476,7 +476,9 @@ public final class StoneLayerField {
         if (layer.noDeep()) return false;
         if (layer.stoneType() == null) return !layer.ores().isEmpty();
         return switch (layer.stoneType()) {
-            case "LIMESTONE", "SHALE" -> false;
+            case "LIMESTONE" ->
+                layer.ores().stream().anyMatch(ore -> MineralWorldgenRules.stratumOreMaxY(ore) < DEEP_TRANSITION_Y);
+            case "SHALE" -> false;
             default -> true;
         };
     }

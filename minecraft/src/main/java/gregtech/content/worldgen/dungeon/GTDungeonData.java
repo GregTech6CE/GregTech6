@@ -420,7 +420,7 @@ public final class GTDungeonData {
      * dungeon's layout, has to stay exactly where GT6 left it.</p>
      */
     public <T> T select(T[] array, int ax, int ay, int az) {
-        return array[wandering(ax, ay, az).nextInt(array.length)];
+        return array[wandering(level.getSeed(), x + ax, y + ay, z + az).nextInt(array.length)];
     }
 
     /**
@@ -428,11 +428,11 @@ public final class GTDungeonData {
      * and the coordinates, so it is reproducible and consumes nothing from {@link #random}. The salt
      * keeps it apart from any other position-seeded stream.
      */
-    private RandomSource wandering(int ax, int ay, int az) {
-        return RandomSource.create(level.getSeed()
-                ^ ((long) (x + ax) * 341873128712L)
-                ^ ((long) (z + az) * 132897987541L)
-                ^ (long) (y + ay) * 42317861L
+    static RandomSource wandering(long seed, int x, int y, int z) {
+        return RandomSource.create(seed
+                ^ ((long) x * 341873128712L)
+                ^ ((long) z * 132897987541L)
+                ^ (long) y * 42317861L
                 ^ 0x5DEECE66DL);
     }
 

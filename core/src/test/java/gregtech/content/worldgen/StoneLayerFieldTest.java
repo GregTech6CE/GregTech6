@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-class StoneLayerScanTest {
+class StoneLayerFieldTest {
     @Test
     void maxScanYIncludesSectionBoundarySurfaceAndClampsToBuildHeight() {
         // Empty chunk (-1) scans nothing.

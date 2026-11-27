@@ -277,28 +277,6 @@ public class WorldgenInfoData {
         var coltan = active.get(Kind.COLTAN_FIELD);
         var centre = active.get(Kind.COLTAN_BEDROCK);
         if (coltan != null || centre != null) rows.add(coltanSite(summary, coltan, centre));
-        var ocean = active.get(Kind.OCEAN_PYLON);
-        if (ocean != null) {
-            for (var pylon : SpecialOreDeposits.OCEAN_PYLONS) {
-                var host = new ItemStack(GTBlocks.getStoneState(pylon.stone(), StoneVariant.STONE)
-                        .getBlock());
-                var hosts = List.of(host);
-                var ore = withHost(oreStack(pylon.material()), hosts);
-                int divisor = SpecialOreDeposits.OCEAN_ORE_DIVISOR;
-                rows.add(specialSite(
-                        summary,
-                        Kind.OCEAN_PYLON,
-                        hosts,
-                        List.of(new OrePreview(ore, List.of(), pylon.material())),
-                        List.of(
-                                Component.translatable("gt6ce.jei.info.pylon_host", host.getHoverName()),
-                                Component.translatable("gt6ce.jei.info.height", ocean.min(), ocean.max()),
-                                Component.translatable(
-                                        "gt6ce.jei.info.stratum_roll",
-                                        divisor,
-                                        String.format(Locale.ROOT, "%.2f", 100d / divisor)))));
-            }
-        }
         var floor = active.get(Kind.DUNGEON_BEDROCK);
         if (floor != null) {
             var rolls = SpecialOreDeposits.DUNGEON_ROLLS;
@@ -620,6 +598,18 @@ public class WorldgenInfoData {
             }
         });
         return out;
+    }
+
+    /** JEI registers its canvas once, before a server can send different geology settings. */
+    protected static int maximumLayerSlots() {
+        var slots = new LinkedHashMap<Item, Set<OreIdentity>>();
+        for (var layer : StoneLayerField.layers()) {
+            var ores = slots.computeIfAbsent(layerStone(layer).getItem(), item -> new LinkedHashSet<>());
+            for (var ore : layer.ores()) {
+                ores.add(new OreIdentity(GTMaterialRegistry.get(ore.material()).resolve(), ore.blockId()));
+            }
+        }
+        return slots.values().stream().mapToInt(Set::size).max().orElse(0);
     }
 
     public static List<LayerInfo> buildLayers(OreGenerationSummary summary) {
