@@ -4,6 +4,7 @@ import gregtech.content.block.SpecialOreDefinitions;
 import gregtech.content.block.stone.StoneType;
 import gregtech.content.block.stone.StoneVariant;
 import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.material.VanillaUnificationDefinitions;
 import gregtech.tools.worldgen.WorldgenComparison.Region;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
@@ -74,6 +75,13 @@ public final class WorldgenSaveScanner {
                 var name = material.resolve().getName();
                 ores.put("gt6ce:ore_" + slug, new Ore(name, false));
                 ores.put("gt6ce:ore_small_" + slug, new Ore(name, true));
+            }
+            for (var entry : VanillaUnificationDefinitions.entries()) {
+                if (VanillaUnificationDefinitions.oreInputKind(entry.itemPath())
+                        == VanillaUnificationDefinitions.OreInputKind.ORE) {
+                    var material = GTMaterialRegistry.get(entry.materialName()).resolve();
+                    ores.put("minecraft:" + entry.itemPath(), new Ore(material.getName(), false));
+                }
             }
             SpecialOreDefinitions.rocks()
                     .forEach((icon, spec) -> ores.put("gt6ce:block_" + icon, new Ore(spec.material(), false)));
@@ -202,7 +210,7 @@ public final class WorldgenSaveScanner {
     static final class Section {
         final ListBinaryTag palette;
         final long[] data;
-        final int bits, perLong;
+        final int bits;
         final int[] counts;
 
         Section(CompoundBinaryTag states) {
@@ -213,8 +221,7 @@ public final class WorldgenSaveScanner {
                     throw new IllegalArgumentException("Missing block ID");
             counts = new int[palette.size()];
             data = states.getLongArray("data");
-            bits = storageBits(palette.size(), data.length);
-            perLong = 64 / bits;
+            bits = storageBits(palette.size(), data);
             if (palette.size() == 1) {
                 counts[0] = 4096;
             } else {
@@ -226,18 +233,38 @@ public final class WorldgenSaveScanner {
             }
         }
 
-        private static int storageBits(int size, int words) {
+        private static int storageBits(int size, long[] data) {
             int minimum = Math.max(4, 32 - Integer.numberOfLeadingZeros(size - 1));
-            if (size == 1 || words == packedLength(minimum)) return minimum;
-            // Some writers retain a wider palette. Use it only when the section length identifies it.
+            if (size == 1) return minimum;
             int width = 0;
-            for (int bits = minimum + 1; bits <= 12; bits++) {
-                if (words != packedLength(bits)) continue;
-                if (width != 0) throw new IllegalArgumentException("Ambiguous packed palette width");
-                width = bits;
+            for (int bits = minimum; bits <= 12; bits++) {
+                if (data.length != packedLength(bits)) continue;
+                // Both 11 and 12 bits pack five entries per long. Check the actual indices and padding.
+                if (bits >= 11 && !fits(data, size, bits)) continue;
+                if (width == 0) width = bits;
+                else {
+                    for (int i = 0; i < 4096; i++) {
+                        if (index(data, i, width) != index(data, i, bits))
+                            throw new IllegalArgumentException("Ambiguous packed palette width");
+                    }
+                }
             }
-            if (width == 0) throw new IllegalArgumentException("Invalid packed length");
+            if (width == 0) throw new IllegalArgumentException("Invalid packed palette data");
             return width;
+        }
+
+        private static boolean fits(long[] data, int size, int bits) {
+            int remaining = 4096;
+            for (long word : data) {
+                int entries = Math.min(remaining, 64 / bits);
+                for (int j = 0; j < entries; j++) {
+                    if ((word & ((1 << bits) - 1)) >= size) return false;
+                    word >>>= bits;
+                }
+                if (word != 0) return false;
+                remaining -= entries;
+            }
+            return true;
         }
 
         private static int packedLength(int bits) {
@@ -246,7 +273,12 @@ public final class WorldgenSaveScanner {
         }
 
         private int index(int i) {
-            return palette.size() == 1 ? 0 : (int) (data[i / perLong] >>> ((i % perLong) * bits)) & ((1 << bits) - 1);
+            return palette.size() == 1 ? 0 : index(data, i, bits);
+        }
+
+        private static int index(long[] data, int i, int bits) {
+            int perLong = 64 / bits;
+            return (int) (data[i / perLong] >>> ((i % perLong) * bits)) & ((1 << bits) - 1);
         }
 
         CompoundBinaryTag at(int i) {
