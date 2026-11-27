@@ -166,7 +166,7 @@ public final class StratumOreRules {
     private static List<Ore> resolve(List<GTStoneLayersGen.OreDef> defs) {
         var ores = new ArrayList<Ore>(defs.size());
         for (var def : defs) {
-            var material = GTMaterialRegistry.get(def.material());
+            var material = GTMaterialRegistry.get(def.material()).resolve();
             if (def.providesOre() && !material.isValid()) continue;
             ores.add(new Ore(
                     material,

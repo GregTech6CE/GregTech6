@@ -38,7 +38,11 @@ public final class StoneLayerField {
     private record Palette(int[] shallow, int[] deep) {}
 
     private static final Province[] PROVINCES = Province.values();
-    private static final Palette[] PALETTES = palettes();
+
+    private static final class Palettes {
+        static final Palette[] BY_PROVINCE = palettes();
+    }
+
     private final long seed;
 
     public StoneLayerField(long seed) {
@@ -369,7 +373,7 @@ public final class StoneLayerField {
     }
 
     private static int layerInBand(long region, Province province, int band, int y) {
-        Palette palette = PALETTES[province.ordinal()];
+        Palette palette = Palettes.BY_PROVINCE[province.ordinal()];
         int[] choices = band * BAND_THICKNESS < DEEP_TRANSITION_Y ? palette.deep() : palette.shallow();
         long roll = mix(region ^ (band * 0x9E3779B97F4A7C15L));
         int index = choices[WorldgenHash.roll(roll, choices.length)];

@@ -3,6 +3,7 @@ package gregtech.content.block;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.blockentity.RockBlockEntity;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.material.generated.StoneMaterials;
 import gregtech.engine.GTWaterloggable;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.MaterialStackItemHelper;
@@ -128,7 +129,10 @@ public class RockBlock extends GTBlock implements EntityBlock, SimpleWaterlogged
     /** rockGt of the material, or only oreRaw when the rock marks a bedrock deposit. */
     public static List<ItemStack> yields(@Nullable BlockEntity be) {
         // GT6's item-on-the-ground mode: the rock carries the exact item it hands out.
-        if (be instanceof RockBlockEntity rock && !rock.itemId().isEmpty()) {
+        boolean indicator = be instanceof RockBlockEntity rock
+                && !rock.hasRawOre()
+                && rock.getBlockState().getValue(APPEARANCE) == Appearance.INDICATOR;
+        if (!indicator && be instanceof RockBlockEntity rock && !rock.itemId().isEmpty()) {
             ItemStack explicit = rock.itemStack();
             // The original lying-item mode represents one exact item. Indicator bonuses belong
             // to the separate material-rock mode; otherwise meteoric raw ore is duplicated.
@@ -144,6 +148,12 @@ public class RockBlock extends GTBlock implements EntityBlock, SimpleWaterlogged
         MaterialPrefix prefix =
                 be instanceof RockBlockEntity rock && rock.hasRawOre() ? MaterialPrefix.oreRaw : MaterialPrefix.rockGt;
         ItemStack result = MaterialStackItemHelper.mat(prefix, material.resolve(), amount);
+        if (indicator && result.isEmpty()) {
+            result = MaterialStackItemHelper.mat(
+                    MaterialPrefix.rockGt, material.getTargetCrushingMaterial().resolve(), amount);
+            if (result.isEmpty())
+                result = MaterialStackItemHelper.mat(MaterialPrefix.rockGt, StoneMaterials.Stone, amount);
+        }
         return result.isEmpty() ? List.of() : List.of(result);
     }
 

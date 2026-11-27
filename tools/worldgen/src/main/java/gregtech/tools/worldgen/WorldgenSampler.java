@@ -107,7 +107,9 @@ public final class WorldgenSampler {
                 ? oldField.layers()
                 : StoneLayerField.layers().stream()
                         .map(layer -> new Layer(
-                                layer.material(),
+                                layer.stoneType() == null && layer.blockId() == null
+                                        ? layer.surfaceMaterial()
+                                        : layer.material(),
                                 layer.noDeep(),
                                 layer.isOreSeam() || !layer.ores().isEmpty()))
                         .toList();

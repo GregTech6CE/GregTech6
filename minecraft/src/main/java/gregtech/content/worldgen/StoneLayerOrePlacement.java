@@ -1,9 +1,9 @@
 package gregtech.content.worldgen;
 
+import gregtech.platform.Mc;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Stream;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -29,7 +29,7 @@ public final class StoneLayerOrePlacement {
     @Nullable
     static BlockState enabledState(ResourceLocation id) {
         if (VanillaOreGeneration.disabled(id)) return null;
-        var block = BuiltInRegistries.BLOCK.get(id);
-        return block == Blocks.AIR ? null : block.defaultBlockState();
+        var block = Mc.block(id);
+        return block == null || block == Blocks.AIR ? null : block.defaultBlockState();
     }
 }

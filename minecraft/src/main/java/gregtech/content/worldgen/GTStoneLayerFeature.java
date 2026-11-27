@@ -56,7 +56,11 @@ public final class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration>
             @Nullable BlockState stone,
             @Nullable BlockState cobble,
             @Nullable BlockState mossy,
-            String surfaceMaterial) {}
+            @Nullable String surfaceMaterial) {
+        String pebble(BlockState host) {
+            return surfaceMaterial == null ? rockMaterial(host) : surfaceMaterial;
+        }
+    }
 
     private enum Host {
         NATURAL,
@@ -133,7 +137,7 @@ public final class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration>
                         orePlacement.background = background;
                         var ore = StratumOreRules.place(rock, y, contacts, positionSeed, orePlacement);
                         if (ore != null) {
-                            surface.replaced(layer.stone() == null ? rockMaterial(host) : layer.surfaceMaterial());
+                            surface.replaced(layer.pebble(host));
                             surface.ore(ore.material().getName(), ore.indicators());
                             changed = true;
                         } else {
@@ -143,8 +147,8 @@ public final class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration>
                             boolean gem =
                                     tryBoundaryGem(level, cursor, background, positionSeed, gemProbability, contacts);
                             surface.replaced(
-                                    layer.stone() != null && (replaced || block == background.getBlock())
-                                            ? layer.surfaceMaterial()
+                                    replaced || block == background.getBlock()
+                                            ? layer.pebble(host)
                                             : rockMaterial(host));
                             changed |= replaced || gem;
                         }
@@ -287,6 +291,8 @@ public final class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration>
                     ResourceLocation.parse(def.blockId().contains(":") ? def.blockId() : "gt6ce:" + def.blockId()));
             if (block != null && block != Blocks.AIR) stone = block.defaultBlockState();
         }
-        return new Layer(stone, null, null, def.surfaceMaterial());
+        // A host-preserving layer can supply its own pebble while keeping the terrain's actual stone.
+        boolean specialPebble = def.blockId() == null && !def.surfaceMaterial().equals(def.material());
+        return new Layer(stone, null, null, stone != null || specialPebble ? def.surfaceMaterial() : null);
     }
 }

@@ -27,13 +27,28 @@ public final class OreVeinLayout {
         DIKE,
         CLUSTER;
 
+        private static final Shape[] ALL = values();
+
         public static Shape forVein(String name) {
             return switch (name) {
                 case "iron", "copper", "redstone", "tetrahedrite", "gold" -> VEINED;
-                case "titanium", "tungstate", "nickel", "pitchblende", "monazite", "tantalum" -> DIKE;
+                case "titanium", "tungstate", "nickel", "pitchblende", "monazite", "tantalum", "gt6ce:chromite" -> DIKE;
                 case "platinum", "molybdenum", "diamond", "garnet", "peridot", "sapphire", "sapphire2", "trinium" ->
                     CLUSTER;
-                default -> LAYERED;
+                case "apatite",
+                        "lapis",
+                        "bauxite",
+                        "iodinesalt",
+                        "rocksalt",
+                        "asbestos",
+                        "galena",
+                        "quartz",
+                        "cassiterite",
+                        "manganese",
+                        "beryllium",
+                        "beryllium2",
+                        "naquadah" -> LAYERED;
+                default -> ALL[roll(WorldgenHash.named(0, name), ALL.length)];
             };
         }
     }
@@ -293,7 +308,17 @@ public final class OreVeinLayout {
                     ? ROLES[((x - center.x()) & 1) + 2 * ((z - center.z()) & 1)]
                     : null;
             if (core == null && Math.min(primary, secondary) > 1) return null;
-            return new Column(this, primary, secondary, heightShift, at(center.seed(), x, z), core);
+            int density = center.vein().density();
+            // GT6 rolls each horizontal axis independently for sparse deposits such as End trinium.
+            int fill;
+            if (density == 1) {
+                int spanX = radius + Math.abs(x - center.x());
+                int spanZ = radius + Math.abs(z - center.z());
+                fill = 100 * (spanX + spanZ - 1) / (spanX * spanZ);
+            } else {
+                fill = 43 + 6 * Math.min(6, density);
+            }
+            return new Column(this, primary, secondary, heightShift, at(center.seed(), x, z), core, fill);
         }
     }
 
@@ -326,7 +351,8 @@ public final class OreVeinLayout {
                 .toArray(Sample[]::new);
     }
 
-    public record Column(Body body, double primary, double secondary, double heightShift, long seed, Role core) {
+    public record Column(
+            Body body, double primary, double secondary, double heightShift, long seed, Role core, int fill) {
         public Sample sample(int y) {
             if (y < body.minY() || y > body.maxY()) return null;
             if (core != null && Math.abs(y - body.centerY()) <= 1) return CORE[core.ordinal()];
@@ -339,8 +365,8 @@ public final class OreVeinLayout {
             };
             if (distance > 1) return null;
             long random = mix(seed ^ 0x165667B19E3779F9L * y);
-            int density = 43 + 6 * Math.min(6, body.center().vein().density()) - (int) (25 * distance);
-            if (roll(random, 100) >= density) return null;
+            int chance = body.center().vein().density() == 1 ? fill : fill - (int) (25 * distance);
+            if (roll(random, 100) >= chance) return null;
             Role role;
             if (body.halfHeight() == 0) role = ROLES[roll(mix(~random), ROLES.length)];
             else if (roll(mix(~random), 7) == 0) role = Role.SPREAD;

@@ -4,11 +4,8 @@ import gregtech.api.material.GTMaterial;
 import gregtech.content.block.OreBlock;
 import gregtech.content.block.RockBlock;
 import gregtech.content.blockentity.RockBlockEntity;
-import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTBlocks;
-import gregtech.content.registry.GTItems;
 import gregtech.engine.GTWaterloggable;
-import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
@@ -24,15 +21,7 @@ public final class GTRockPlacement {
 
     /** Put a vein marker on natural ground, including on a lake or sea floor. */
     static boolean placeVeinMarker(WorldGenLevel level, ChunkAccess chunk, int x, int z, GTMaterial material) {
-        material = material.resolve();
-        var pebble = GTItems.getStack(MaterialPrefix.rockGt, material);
-        String itemId = null;
-        if (pebble.isEmpty()) {
-            var sample = GTItems.getStack(MaterialPrefix.oreRaw, material);
-            if (sample.isEmpty()) return false;
-            itemId = Mc.itemId(sample.getItem()).toString();
-        }
-        String name = material.getName();
+        String name = material.resolve().getName();
         int yTop = chunk.getHeight(Heightmap.Types.OCEAN_FLOOR, x & 15, z & 15);
         var groundPos = new BlockPos.MutableBlockPos();
         for (int y = yTop; y >= level.getMinBuildHeight(); y--) {
@@ -58,7 +47,7 @@ public final class GTRockPlacement {
             }
             boolean water = space.liquid() && GTWaterloggable.isWaterForLogging(space.getFluidState());
             if (!water && !GTRocksFeature.replaceable(space)) return false;
-            return place(level, pos, name, itemId, false, water, RockBlock.Appearance.INDICATOR);
+            return place(level, pos, name, null, false, water, RockBlock.Appearance.INDICATOR);
         }
         return false;
     }

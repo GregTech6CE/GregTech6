@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /** Bedrock-specific eligibility, indicator flowers and baseline rarity from GT6 Loader_Worldgen. */
 public final class GTBedrockOres {
@@ -92,6 +93,11 @@ public final class GTBedrockOres {
                     OreMaterials.Chalcopyrite,
                     List.of(new DepositOverride("chalcopyrite", 2000, "flower_alpine_catchfly"))));
 
+    private static final Set<String> HISTORICAL_NAMES = OVERRIDES.values().stream()
+            .flatMap(List::stream)
+            .map(DepositOverride::name)
+            .collect(Collectors.toUnmodifiableSet());
+
     static Set<GTMaterial> historicalMaterials() {
         return OVERRIDES.keySet();
     }
@@ -99,9 +105,10 @@ public final class GTBedrockOres {
     static List<DepositOverride> overworld(GTMaterial material, int primaryVeinWeight) {
         var overrides = OVERRIDES.get(material);
         if (overrides != null) return overrides;
-        if (primaryVeinWeight == 0) return List.of();
+        String name = material.getName().toLowerCase(Locale.ROOT);
+        if (primaryVeinWeight == 0 || HISTORICAL_NAMES.contains(name)) return List.of();
         int divisor = Math.max(8000, 1_600_000 / primaryVeinWeight);
-        return List.of(new DepositOverride(material.getName().toLowerCase(Locale.ROOT), divisor, null));
+        return List.of(new DepositOverride(name, divisor, null));
     }
 
     static void registerNether(OreSourceCatalog.Builder catalog) {

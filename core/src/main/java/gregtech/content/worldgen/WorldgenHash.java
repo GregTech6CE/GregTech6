@@ -6,7 +6,7 @@ import java.util.SplittableRandom;
 public final class WorldgenHash {
     private WorldgenHash() {}
 
-    static long at(long seed, int x, int z) {
+    public static long at(long seed, int x, int z) {
         return mix(seed ^ (x * 0x9E3779B97F4A7C15L) ^ (z * 0xC2B2AE3D27D4EB4FL));
     }
 
@@ -21,7 +21,7 @@ public final class WorldgenHash {
         return mix(value);
     }
 
-    static int roll(long value, int bound) {
+    public static int roll(long value, int bound) {
         if (bound <= 0) throw new IllegalArgumentException("bound must be positive");
         long remainder = Long.remainderUnsigned(value, bound);
         // Redraw the final incomplete interval when the bound does not divide 2^64.
@@ -30,7 +30,7 @@ public final class WorldgenHash {
         return (int) remainder;
     }
 
-    static long mix(long value) {
+    public static long mix(long value) {
         value = (value ^ (value >>> 30)) * 0xBF58476D1CE4E5B9L;
         value = (value ^ (value >>> 27)) * 0x94D049BB133111EBL;
         return value ^ (value >>> 31);
