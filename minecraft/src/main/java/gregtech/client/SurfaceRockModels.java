@@ -13,7 +13,9 @@ import gregtech.content.registry.GTBlocks;
 import gregtech.content.worldgen.GTStoneLayersGen;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.platform.Mc;
-import gregtech.util.BoundedCache;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.collect.ImmutableList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +28,6 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.inventory.InventoryMenu;
@@ -109,9 +110,9 @@ public final class SurfaceRockModels {
         private final Map<String, Block> rocks = new HashMap<>();
         private final Map<String, Skin> pebbles = new ConcurrentHashMap<>();
         private final Map<String, Skin> chunks = new ConcurrentHashMap<>();
-        private final BoundedCache<Faces, List<BakedQuad>> quads = new BoundedCache<>(512);
+        private final Cache<Faces, List<BakedQuad>> quads = CacheBuilder.newBuilder().maximumSize(512).build();
 
-        private record Faces(List<BakedQuad> source, TextureAtlasSprite sprite, int tint) {}
+        private record Faces(List<BakedQuad> source, TextureAtlasSprite sprite, int tint, float offset) {}
 
         private Palette(BakedModel stone, BakedModel raw, BakedModel flint) {
             this.stone = new Skin(stone);
@@ -134,7 +135,8 @@ public final class SurfaceRockModels {
             for (var layer : GTStoneLayersGen.LAYERS) {
                 if (layer.blockId() == null) continue;
                 var id = layer.blockId().contains(":") ? ResourceLocation.parse(layer.blockId()) : Mc.gregtechId(layer.blockId());
-                BuiltInRegistries.BLOCK.getOptional(id).ifPresent(b -> rocks.putIfAbsent(layer.material(), b));
+                Block block = Mc.block(id);
+                if (block != null && block != Blocks.AIR) rocks.putIfAbsent(layer.material(), block);
             }
             for (var type : StoneType.values()) {
                 var state = GTBlocks.getStoneState(type, StoneVariant.STONE);
@@ -190,10 +192,10 @@ public final class SurfaceRockModels {
                     : pebbles.computeIfAbsent(material.getName(), this::natural);
         }
 
-        private List<BakedQuad> reskin(List<BakedQuad> source, @Nullable TextureAtlasSprite sprite, int tint) {
+        private List<BakedQuad> reskin(List<BakedQuad> source, @Nullable TextureAtlasSprite sprite, int tint, float offset) {
             if (source.isEmpty() || sprite == null) return source;
-            return quads.computeIfAbsent(new Faces(source, sprite, tint), faces ->
-                    faces.source().stream().map(q -> BakedQuadCompat.retexture(q, faces.sprite(), faces.tint())).toList());
+            return quads.asMap().computeIfAbsent(new Faces(source, sprite, tint, offset), faces ->
+                    faces.source().stream().map(q -> BakedQuadCompat.retexture(q, faces.sprite(), faces.tint(), faces.offset())).toList());
         }
     }
 
@@ -213,11 +215,11 @@ public final class SurfaceRockModels {
             var skin = palette.select(appearance, data);
             var faces = skin.shape().getQuads(state, side, random, data, skin.overlay() == null ? layer : null);
             if (faces.isEmpty()) return faces;
-            if (skin.overlay() == null || layer == RenderType.solid()) return palette.reskin(faces, skin.sprite(), skin.tint());
-            var detail = palette.reskin(faces, skin.overlay(), skin.overlayTint());
+            if (skin.overlay() == null || layer == RenderType.solid()) return palette.reskin(faces, skin.sprite(), skin.tint(), 0);
+            var detail = palette.reskin(faces, skin.overlay(), skin.overlayTint(), 1f / 1024);
             if (layer != null) return layer == RenderType.cutout() ? detail : List.of();
-            return com.google.common.collect.ImmutableList.<BakedQuad>builder()
-                    .addAll(palette.reskin(faces, skin.sprite(), skin.tint())).addAll(detail).build();
+            return ImmutableList.<BakedQuad>builder()
+                    .addAll(palette.reskin(faces, skin.sprite(), skin.tint(), 0)).addAll(detail).build();
         }
 
         @Override

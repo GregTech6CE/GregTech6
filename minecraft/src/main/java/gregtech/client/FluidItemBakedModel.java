@@ -65,8 +65,9 @@ public final class FluidItemBakedModel implements BakedModel {
         float tu0 = to.getU0(), tu1 = to.getU1(), tv0 = to.getV0(), tv1 = to.getV1();
         float tdu = tu1 - tu0, tdv = tv1 - tv0;
 
+        int stride = verts.length / 4;
         for (int i = 0; i < 4; i++) {
-            int base = i * 8;
+            int base = i * stride;
             float u = Float.intBitsToFloat(verts[base + 4]);
             float v = Float.intBitsToFloat(verts[base + 5]);
             float relU = du > 0 ? (u - u0) / du : 0;
