@@ -6,9 +6,9 @@ import gregtech.engine.recipe.*;
 import gregtech.client.gui.RecipeGuiLayout;
 import gregtech.engine.fluid.FluidDisplayBinding;
 //? if >=1.21.1 {
-/*import mezz.jei.api.neoforge.NeoForgeTypes;
+/*import static mezz.jei.api.neoforge.NeoForgeTypes.FLUID_STACK;
 *///?} else {
-import mezz.jei.api.forge.ForgeTypes;
+import static mezz.jei.api.forge.ForgeTypes.FLUID_STACK;
 //?}
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -114,25 +114,28 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
             var fluidRole=catalyst?RecipeIngredientRole.CATALYST:role;
             var point=layout.point(input,true,i);
             var fluidSlot=builder.addSlot(fluidRole,point.x(),point.y()).setSlotName(fluidRole.name()+"_fluid_"+i);
-            for (var shown:input?recipe.viewerFluidInputAlternatives(i):java.util.List.of(fluid)) {
-            var level = net.minecraft.client.Minecraft.getInstance().level;
-            var display=FluidDisplayBinding.display(shown, level == null ? null : level.registryAccess());
-            if (input) {
-                var containers = gregtech.engine.fluid.FluidContainerDisplayBinding.containers(shown);
-                if (!containers.isEmpty()) builder.addInvisibleIngredients(fluidRole).addItemStacks(containers);
+            var lookup = gregtech.engine.stack.RegistryContext.current();
+            for (var shown : input ? recipe.viewerFluidInputAlternatives(i) : java.util.List.of(fluid)) {
+                var display = FluidDisplayBinding.display(shown, lookup);
+                if (input) {
+                    var containers = gregtech.engine.fluid.FluidContainerDisplayBinding.containers(shown);
+                    if (!containers.isEmpty()) builder.addInvisibleIngredients(fluidRole).addItemStacks(containers);
+                }
+                fluidSlot.addIngredient(FLUID_STACK, shown);
+                if (!display.isEmpty()) {
+                    builder.addInvisibleIngredients(fluidRole).addItemStack(display);
+                    if (display.getItem() != gregtech.content.registry.GTFluidItems.generic())
+                        builder.addInvisibleIngredients(fluidRole).addItemStack(new ItemStack(display.getItem()));
+                }
             }
-            if (!display.isEmpty()) fluidSlot.addItemStack(display);
-//? if >=1.21.1 {
-            /*else fluidSlot.addIngredient(NeoForgeTypes.FLUID_STACK,shown).setFluidRenderer(Math.max(1000,shown.getAmount()),false,16,16);
-            builder.addInvisibleIngredients(fluidRole).addIngredient(NeoForgeTypes.FLUID_STACK,shown);
-*///?} else {
-            else fluidSlot.addIngredient(ForgeTypes.FLUID_STACK,shown).setFluidRenderer(Math.max(1000,shown.getAmount()),false,16,16);
-            builder.addInvisibleIngredients(fluidRole).addIngredient(ForgeTypes.FLUID_STACK,shown);
-//?}
-            // Generic creative proxies still find all compatible fluid variants via U/R.
-            if (!display.isEmpty()) builder.addInvisibleIngredients(fluidRole).addItemStack(new ItemStack(display.getItem()));
-            }
-            fluidSlot.addTooltipCallback((view,tooltip)->tooltip.add(gregtech.engine.fluid.FluidUnits.text("gt6ce.fluid.amount",presence?0:fluid.getAmount())));
+            fluidSlot.setFluidRenderer(Math.max(1, fluid.getAmount()),false,16,16);
+            fluidSlot.addTooltipCallback((view,tooltip)->view.getDisplayedIngredient(FLUID_STACK).ifPresent(shown -> {
+                var details = gregtech.client.gui.FluidSlotPresentation.viewerTooltip(
+                        shown, presence ? 0 : shown.getAmount());
+                for (int line = 1; line < details.size(); line++) {
+                    if (!tooltip.contains(details.get(line))) tooltip.add(details.get(line));
+                }
+            }));
             if (catalyst) fluidSlot.addTooltipCallback((view,tooltip)->tooltip.add(gregtech.engine.fluid.FluidUnits.text(
                     presence ? "gt6ce.jei.fluid_presence" : "gt6ce.jei.catalyst")));
         }

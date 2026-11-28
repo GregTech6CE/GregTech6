@@ -58,10 +58,10 @@ public final class MachineEmiRecipe implements EmiRecipe {
         this.inputs = List.copyOf(inputs); this.catalysts = List.copyOf(catalysts); this.outputs = List.copyOf(outputs);
     }
 //? if >=1.21.1 {
-    /*private static EmiStack fluid(net.neoforged.neoforge.fluids.FluidStack stack) {
+    /*static EmiStack fluid(net.neoforged.neoforge.fluids.FluidStack stack) {
         return EmiStack.of(stack.getFluid(), stack.getComponentsPatch(), stack.getAmount());
 *///?} else {
-    private static EmiStack fluid(net.minecraftforge.fluids.FluidStack stack) {
+    static EmiStack fluid(net.minecraftforge.fluids.FluidStack stack) {
         return EmiStack.of(stack.getFluid(), stack.getTag(), stack.getAmount());
 //?}
     }

@@ -14,7 +14,7 @@ public record GuiTemplate(
         boolean brand,
         boolean menuSlots) {
     public record Element(GuiSprite sprite, int x, int y, int columns, int rows, int stepX, int stepY) {
-        void draw(GuiGraphics graphics, int left, int top) {
+        public void draw(GuiGraphics graphics, int left, int top) {
             for (int row = 0; row < rows; row++)
                 for (int column = 0; column < columns; column++)
                     sprite.draw(graphics, left + x + column * stepX, top + y + row * stepY);

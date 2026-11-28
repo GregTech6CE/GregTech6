@@ -169,6 +169,20 @@ public class RecipeMap {
         };
     }
 
+    /** Enumerate once; hidden rows still count toward the generation-local viewer index. */
+    public int visitDisplayRows(java.util.function.ObjIntConsumer<Recipe> visitor) {
+        int index = 0;
+        int count = 0;
+        for (var row : allRecipes()) {
+            if (row.enabled && !row.hidden) {
+                visitor.accept(row, index);
+                count++;
+            }
+            index++;
+        }
+        return count;
+    }
+
     /** Whether this map computes rows from input NBT (reported by the start-up log line). */
     public boolean hasDynamicRecipes() {
         return dynamicRecipes != null || addonDynamicRecipes.length != 0 || contextRecipes != null;

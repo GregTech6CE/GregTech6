@@ -28,6 +28,10 @@ public final class MoldChiselCategory implements IRecipeCategory<MoldChiselDispl
         return TYPE;
     }
 
+    public boolean needsRecipeBorder() {
+        return false;
+    }
+
     @Override
     public Component getTitle() {
         return Component.translatable("gt6ce.jei.category.mold_chisel");

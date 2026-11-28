@@ -46,6 +46,11 @@ public final class GTFluidType {
 
     /** A GUI tank supplies capacity; recipe icons continue to describe just their amount. */
     public static List<Component> describeTooltip(FluidStack stack, long amount, long capacity, boolean advanced) {
+        return describeTooltip(stack, amount, capacity, advanced, false);
+    }
+
+    public static List<Component> describeTooltip(FluidStack stack, long amount, long capacity, boolean advanced,
+                                                  boolean useRegistryId) {
         if (stack.isEmpty()) return List.of(Component.translatable(OriginalFluidDisplayRules.PREFIX + "missing").withStyle(ChatFormatting.RED));
         var fluid = stack.getFluid();
         var id = BuiltInRegistries.FLUID.getKey(fluid);
@@ -73,7 +78,7 @@ public final class GTFluidType {
         boolean castable = material.isValid() && !MaterialStackItemHelper.mat(MaterialPrefix.ingot, material, 1).isEmpty();
         var traits =
                 new Traits(phase, flags, castable, FluidHazards.isAcid(fluid), FluidHazards.isMagic(fluid), industrial);
-        var facts = new Facts(registry, formula, owner, amount, advanced, physical, traits);
+        var facts = new Facts(useRegistryId ? id.toString() : registry, formula, owner, amount, advanced, physical, traits);
         var fuels = new ArrayList<Fuel>();
         if (!industrial) for (var map : FuelRecipeMaps.FUEL_MAP_LIST) {
             var recipes = map.recipesForFluid(stack);

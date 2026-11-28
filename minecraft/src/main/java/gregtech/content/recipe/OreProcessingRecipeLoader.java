@@ -20,7 +20,6 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 //?}
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static gregtech.api.material.GTValues.*;
@@ -43,8 +42,6 @@ public class OreProcessingRecipeLoader implements InitializationStep {
     /** Default EU/t for the ore processing tier. */
     private static final long EU_TIER = 16;
 
-    /** Tracks materials already added to the ByProductList (avoids duplicates). */
-    private final List<GTMaterial> mByProductListed = new ArrayList<>();
     /** Deduplicate only immutable builtin raw descriptors, never independent recipe rows. */
     private final java.util.Set<GTMaterial> mRawDefinitions = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>());
     private SourceOreMacerationAdapter.Snapshot mMaceration;
@@ -71,7 +68,6 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         SharedThermalInputRows.initialize();
         SharedThermalRecyclingRows.initialize();
         SharedMineralSteamCrackingRows.initialize();
-        processByproductList();
         processRecycling();
         NonOreMacerationRows.seal();
         SourceOreOutputRows.seal();
@@ -442,49 +438,6 @@ public class OreProcessingRecipeLoader implements InitializationStep {
     }
 
     // ========================================================================
-    //  4.  Byproduct List (informational fake recipes)
-    // ========================================================================
-    /**
-     * For each ore material with byproducts, register a fake recipe on
-     * {@link RM#ByProductList} showing the processing chain and its outputs.
-     */
-    private void processByproductList() {
-        for (GTMaterial mat : GTMaterialRegistry.allMaterials()) {
-            GTMaterial material = mat.resolve();
-            if (!material.isValid()) continue;
-            if (material.getByProducts().isEmpty()) continue;
-            if (!MaterialPrefix.crushed.isValidFor(material)) continue;
-            if (mByProductListed.contains(material)) continue;
-            mByProductListed.add(material);
-
-            // Input chain: vanilla-stone ore block → oreRaw → rockGt → crushed → crushedPurified → crushedCentrifuged
-            List<ItemStack> inputs = new ArrayList<>();
-            ItemStack oreBlock = blockStack(gregtech.engine.prefix.BlockMaterialPrefix.ore, material);
-            if (!oreBlock.isEmpty() && oreBlock.getCount() > 0) inputs.add(oreBlock);
-            addIfValid(inputs, MaterialPrefix.oreRaw, material, 1);
-            addIfValid(inputs, MaterialPrefix.rockGt, material, 1);
-            addIfValid(inputs, MaterialPrefix.crushed, material, 1);
-            addIfValid(inputs, MaterialPrefix.crushedPurified, material, 1);
-            addIfValid(inputs, MaterialPrefix.crushedCentrifuged, material, 1);
-            if (inputs.isEmpty()) continue;
-
-            // Outputs: all byproduct materials as dust-or-ingot full units
-            List<ItemStack> outputs = new ArrayList<>();
-            for (GTMaterial bp : material.getByProducts()) {
-                if (bp == null || !bp.isValid()) continue;
-                ItemStack bpStack = OM.dustOrIngot(bp, U);
-                if (!bpStack.isEmpty()) outputs.add(bpStack);
-            }
-            if (outputs.isEmpty()) continue;
-
-            MachineRecipeMaps.ByProductList.register(RecipeBuilder.of(0, 0)
-                    .itemInputs(inputs.toArray(RecipeMap.ZL_IS))
-                    .itemOutputs(outputs.toArray(RecipeMap.ZL_IS)),
-                    RecipeMap.Registration.DISPLAY);
-        }
-    }
-
-    // ========================================================================
     //  5.  Recycling Processing (Melter + Smelter)
     // ========================================================================
 
@@ -599,12 +552,6 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         return copy;
     }
 
-    /** Add a prefix+material stack to a list if it is valid and non-empty. */
-    private static void addIfValid(List<ItemStack> list, MaterialPrefix prefix, GTMaterial material, int count) {
-        if (!prefix.isValidFor(material)) return;
-        ItemStack stack = mat(prefix, material, count);
-        if (!stack.isEmpty()) list.add(stack);
-    }
 
     /**
      * Returns a tiny dust stack for the byproduct at {@code index} in the list.

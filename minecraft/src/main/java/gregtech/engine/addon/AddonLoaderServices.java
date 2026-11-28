@@ -45,6 +45,16 @@ public final class AddonLoaderServices {
             return flowing(name, millibuckets);
         }
 
+        @Override public java.util.Map<String, java.util.List<ItemStack>> workstations() {
+            var machines = gregtech.content.recipe.RecipeMachines.collect();
+            var result = new java.util.LinkedHashMap<String, java.util.List<ItemStack>>();
+            for (var map : RecipeMap.RECIPE_MAP_LIST) {
+                if (map.viewerAllowed) result.put(map.internalName, machines.getOrDefault(map, java.util.List.of())
+                        .stream().map(ItemStack::copy).toList());
+            }
+            return java.util.Collections.unmodifiableMap(result);
+        }
+
         @Override public AddonRecipes.RecipeMap map(String name) {
             if (name == null) return null;
             RecipeMap map = RecipeMap.RECIPE_MAPS.get(name);
@@ -88,6 +98,11 @@ public final class AddonLoaderServices {
         private final RecipeMap map;
 
         private MapView(RecipeMap map) { this.map = map; }
+
+        @Override public void visitDisplayRows(java.util.function.BiConsumer<Integer, AddonRecipes.Line> visitor) {
+            java.util.Objects.requireNonNull(visitor);
+            if (map.viewerAllowed) map.visitDisplayRows((row, index) -> visitor.accept(index, line(row)));
+        }
 
         @Override public String name() { return map.internalName; }
 

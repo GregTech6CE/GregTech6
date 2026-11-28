@@ -68,7 +68,8 @@ public final class MoldChiselDisplay {
     }
 
     public static void draw(GuiGraphics graphics, Info info) {
-        gregtech.client.gui.GuiTemplates.background(graphics, TEXTURE, 0, 0, WIDTH, HEIGHT);
+        gregtech.client.gui.GuiTemplates.find(gregtech.client.gui.GuiTemplates.forTexture(TEXTURE))
+                .ifPresent(template -> template.elements().forEach(element -> element.draw(graphics, 0, 0)));
         for (int row = 0; row < 5; row++)
             for (int col = 0; col < 5; col++) {
                 if (!info.pattern().carved(col, row)) continue;

@@ -14,8 +14,7 @@ public final class RecipeDisplayCaptions {
 
     public static java.util.List<Component> lines(RecipeMap map, Recipe recipe) {
         var lines = new java.util.ArrayList<Component>();
-        boolean informational = map == gregtech.content.data.MachineRecipeMaps.ByProductList
-                || map == gregtech.content.data.MachineRecipeMaps.DidYouKnow;
+        boolean informational = map == gregtech.content.data.MachineRecipeMaps.DidYouKnow;
         boolean showTier = !informational && !gregtech.content.recipe.CrucibleDisplayItems.isCrucible(map);
         var stats = RecipePowerStats.of(recipe, map.powerMultiplier);
         var visibility = gregtech.engine.recipe.RecipeCaptionVisibility.of(

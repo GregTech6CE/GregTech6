@@ -6,8 +6,8 @@ import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiStack;
-import gregtech.compat.common.RecipeMachines;
 import gregtech.content.item.GTToolItem;
+import gregtech.content.recipe.RecipeMachines;
 import gregtech.engine.recipe.RecipeMap;
 import java.util.Locale;
 import net.minecraft.network.chat.Component;
@@ -83,15 +83,15 @@ public final class GregTechEMIPlugin implements EmiPlugin {
                         dev.emi.emi.api.recipe.VanillaEmiRecipeCategories.CRAFTING, EmiStack.of(new ItemStack(table)));
         EmiCatalogRepair.apply();
         // Native fluid proxies carry a creative payload only in cheat mode; never filter them out.
-        registry.removeEmiStacks(stack -> !(stack instanceof NativeFluidEmiStack)
-                && !gregtech.content.item.CatalogVisibility.visible(stack.getItemStack()));
-        // Dedicated lava display and the generic fluid_display carrier duplicate native fluids in EMI's item list.
-        var lavaDisplayId = ResourceLocation.fromNamespaceAndPath(
-                gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE, "fluid_item_lava");
-        var genericDisplayId = ResourceLocation.fromNamespaceAndPath(
-                gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE, "fluid_display");
-        registry.removeEmiStacks(stack -> !(stack instanceof NativeFluidEmiStack)
-                && (lavaDisplayId.equals(stack.getId()) || genericDisplayId.equals(stack.getId())));
+        var genericDisplay = gregtech.content.registry.GTFluidItems.generic();
+        var lavaDisplay = gregtech.platform.Mc.item(gregtech.platform.Mc.gregtechId("fluid_item_lava"));
+        registry.removeEmiStacks(stack -> {
+            if (stack instanceof NativeFluidEmiStack) return false;
+            var item = stack.getItemStack();
+            return item.getItem() == genericDisplay
+                    || item.getItem() == lavaDisplay
+                    || !gregtech.content.item.CatalogVisibility.visible(item);
+        });
         // EMI builds repair entries from canBeDepleted() alone, so GT tools would still show a dead recipe.
         registry.removeRecipes(GregTechEMIPlugin::repairedGtTool);
         for (var item : gregtech.engine.recipe.UsbRecipeDisplayBinding.sticks())
@@ -104,20 +104,23 @@ public final class GregTechEMIPlugin implements EmiPlugin {
         for (var item : net.minecraft.core.registries.BuiltInRegistries.ITEM)
             if (item instanceof gregtech.content.item.CannedFoodItem)
                 registry.setDefaultComparison(item, dev.emi.emi.api.stack.Comparison.compareData(stack -> ""));
-        ToolAssemblyEmiRecipe.register(registry, candidates);
+        var assemblies = gregtech.content.recipe.ToolAssemblyCatalog.build();
+        var machines = RecipeMachines.collect();
+        var atlas = new gregtech.compat.common.MaterialAtlas(assemblies, machines);
+        ToolAssemblyEmiRecipe.register(registry, candidates, assemblies);
         MoldChiselEmiRecipe.register(registry);
         LootEmiRecipe.register(registry);
         StructureEmiRecipe.register(registry);
         WorldgenEmiRecipe.register(registry);
         // Rebuild aliases from this reload's compositions before creating ingredient templates.
         gregtech.engine.material.MaterialDisplayBinding.invalidate();
-        var machines = RecipeMachines.collect();
         MaterialUnitTagEmiRecipe.register(registry);
         var ingredients = new MachineEmiIngredients(candidates);
         long started = System.nanoTime();
         int rows = 0, categories = 0;
         for (RecipeMap map : RecipeMap.RECIPE_MAP_LIST) {
-            if (!map.viewerAllowed
+            if (map == gregtech.content.data.MachineRecipeMaps.ByProductList
+                    || !map.viewerAllowed
                     || map.recipeRows.stream().noneMatch(r -> r.enabled && !r.hidden) && !map.hasDynamicEnumeration())
                 continue;
             var workstations = machines.getOrDefault(map, java.util.List.of());
@@ -131,22 +134,19 @@ public final class GregTechEMIPlugin implements EmiPlugin {
             };
             registry.addCategory(category);
             for (var station : workstations) registry.addWorkstation(category, EmiStack.of(station));
-            int i = 0;
             int before = rows;
             long mapStarted = System.nanoTime();
             com.mojang.logging.LogUtils.getLogger().debug("[gregtech] EMI registering {}", map.internalName);
-            for (var recipe : map.allRecipes()) {
-                int recipeIndex = i++;
-                if (!recipe.enabled || recipe.hidden) continue;
+            rows += map.visitDisplayRows((recipe, recipeIndex) -> {
+                atlas.accept(map, recipe, recipeIndex);
                 registry.addRecipe(new MachineEmiRecipe(
                         category,
                         map,
                         recipe,
                         // EMI reserves leading '/' for recipes outside vanilla RecipeManager.
-                        ResourceLocation.fromNamespaceAndPath("gt6ce", "/machine/" + id.getPath() + "/" + recipeIndex),
+                        gregtech.compat.common.MaterialAtlas.machineId(map, recipeIndex),
                         ingredients));
-                rows++;
-            }
+            });
             categories++;
             if (rows - before >= 1000)
                 com.mojang.logging.LogUtils.getLogger()
@@ -156,6 +156,7 @@ public final class GregTechEMIPlugin implements EmiPlugin {
                                 map.internalName,
                                 (System.nanoTime() - mapStarted) / 1_000_000);
         }
+        AtlasEmiRecipe.register(registry, atlas);
         candidates.finish();
         com.mojang.logging.LogUtils.getLogger()
                 .info(

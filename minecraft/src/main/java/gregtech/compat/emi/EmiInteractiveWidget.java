@@ -3,7 +3,7 @@ package gregtech.compat.emi;
 import dev.emi.emi.api.widget.Widget;
 
 /** Optional input surface; native screen events supply drag/scroll absent from EMI's Widget API. */
-public abstract class EmiInteractiveWidget extends Widget {
+public abstract class EmiInteractiveWidget extends Widget implements EmiWidgetInput.Input {
     public boolean pressed(double x, double y, int button) {
         return false;
     }

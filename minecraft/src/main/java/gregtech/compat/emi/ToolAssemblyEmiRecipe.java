@@ -33,9 +33,7 @@ public final class ToolAssemblyEmiRecipe implements EmiRecipe {
         this.category = category;
         this.pattern = info.pattern();
         this.headAssembly = info.headAssembly();
-        int material = gregtech.engine.tool.GTToolHelper.getHead(info.output()).getId();
-        this.id = ResourceLocation.fromNamespaceAndPath(
-                "gt6ce", "/tool_assembly/" + info.type().id() + "/" + material);
+        this.id = gregtech.compat.common.MaterialAtlas.toolId(info);
         this.slots = info.inputs().stream()
                 .map(options -> (EmiIngredient) new MachineEmiIngredient(candidates.of(options), 1))
                 .toList();
@@ -58,14 +56,14 @@ public final class ToolAssemblyEmiRecipe implements EmiRecipe {
     public static void register(EmiRegistry registry) {
         var candidates = new EmiItemCandidates();
         try {
-            register(registry, candidates);
+            register(registry, candidates, ToolAssemblyCatalog.build());
         } finally {
             candidates.finish();
         }
     }
 
-    static void register(EmiRegistry registry, EmiItemCandidates candidates) {
-        var rows = ToolAssemblyCatalog.build();
+    static void register(
+            EmiRegistry registry, EmiItemCandidates candidates, List<ToolAssemblyCatalog.ToolAssemblyInfo> rows) {
         if (rows.isEmpty()) return;
         var category =
                 new EmiRecipeCategory(

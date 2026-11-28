@@ -27,6 +27,11 @@ public final class AddonRecipes {
         return map;
     }
 
+    /** Current displayable map names and their workstation stacks, after content registration. */
+    public static java.util.Map<String, List<ItemStack>> workstations() {
+        return AddonLoader.services().workstations();
+    }
+
     public interface Dynamic {
         /**
          * The matching row, or null when this provider does not handle the input.
@@ -40,6 +45,9 @@ public final class AddonRecipes {
     /** One machine recipe map. Named {@code RecipeMap} so it does not read as {@link java.util.Map}. */
     public interface RecipeMap {
         String name();
+
+        /** Visits detached snapshots in viewer order. Row indices are valid for the current recipe reload only. */
+        void visitDisplayRows(java.util.function.BiConsumer<Integer, Line> visitor);
 
         /** Adds a static row. Null means the map rejected it. */
         @Nullable Line add(Line line);

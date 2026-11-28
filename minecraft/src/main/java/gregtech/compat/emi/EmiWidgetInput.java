@@ -7,7 +7,17 @@ import net.minecraft.client.gui.screens.Screen;
 
 /** Coordinates come from actual widget render poses, without depending on EMI internals. */
 public final class EmiWidgetInput {
-    private record Surface(EmiInteractiveWidget widget, PreviewViewport.Bounds area, org.joml.Matrix4f inverse) {
+    public interface Input {
+        dev.emi.emi.api.widget.Bounds getBounds();
+
+        boolean pressed(double x, double y, int button);
+
+        boolean dragged(int button, double dx, double dy);
+
+        boolean scrolled(double x, double y, double delta);
+    }
+
+    private record Surface(Input widget, PreviewViewport.Bounds area, org.joml.Matrix4f inverse) {
         org.joml.Vector3f local(double x, double y) {
             return inverse.transformPosition(new org.joml.Vector3f((float) x, (float) y, 0));
         }
@@ -50,7 +60,7 @@ public final class EmiWidgetInput {
         clearCapture();
     }
 
-    public static void rendered(EmiInteractiveWidget widget, GuiGraphics graphics) {
+    public static void rendered(Input widget, GuiGraphics graphics) {
         var b = widget.getBounds();
         surfaces.add(new Surface(
                 widget,

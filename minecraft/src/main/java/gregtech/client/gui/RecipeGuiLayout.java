@@ -26,6 +26,10 @@ public final class RecipeGuiLayout {
     private final int width, height, captionY, arrowX, arrowY;
 
     public RecipeGuiLayout(RecipeMap map, Recipe recipe) {
+        this(map, recipe, slot -> false);
+    }
+
+    public RecipeGuiLayout(RecipeMap map, Recipe recipe, java.util.function.IntPredicate hideOutput) {
         this.map = map;
         template = GuiTemplates.find(GuiTemplates.forTexture(MachineGuiLayout.texture(map)))
                 .orElse(null);
@@ -39,6 +43,7 @@ public final class RecipeGuiLayout {
                         || map == MachineRecipeMaps.AnvilBendBig
                         || map == MachineRecipeMaps.AnvilBendSmall);
         var right = side(recipe, false, false);
+        right.removeIf(slot -> !slot.fluid() && hideOutput.test(slot.index()));
         int leftColumns = Math.min(3, left.size()), rightColumns = Math.min(3, right.size());
         int leftWidth = leftColumns * 18, rightWidth = rightColumns * 18;
         int centerWidth = Math.max(18, progress.width());
@@ -81,6 +86,10 @@ public final class RecipeGuiLayout {
             target.add(new Slot(
                     slot.input(), slot.fluid(), slot.index(), x + i % columns * 18 + 1, y + i / columns * 18 + 1));
         }
+    }
+
+    public List<Slot> slots() {
+        return slots;
     }
 
     public int width() {

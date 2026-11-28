@@ -34,6 +34,8 @@ public final class AddonLoader {
          */
         FluidStack fluid(String name, AddonFluids.Kind kind, int millibuckets);
 
+        java.util.Map<String, java.util.List<net.minecraft.world.item.ItemStack>> workstations();
+
         /** Null when no machine recipe map uses {@code name}. */
         AddonRecipes.@Nullable RecipeMap map(String name);
 

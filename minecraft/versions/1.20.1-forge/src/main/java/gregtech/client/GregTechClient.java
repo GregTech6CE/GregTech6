@@ -34,6 +34,12 @@ import net.minecraftforge.registries.ForgeRegistries;
 public final class GregTechClient {
     private GregTechClient() {}
 
+    @SubscribeEvent
+    public static void tooltipFactories(
+            net.minecraftforge.client.event.RegisterClientTooltipComponentFactoriesEvent event) {
+        event.register(gregtech.compat.common.AtlasRecipeCard.class, card -> card);
+    }
+
     private static boolean isReactor(Block block) {
         return block instanceof gregtech.content.block.energy.ReactorCasingBlock
                 || block instanceof gregtech.content.block.energy.ReactorCoreBlock

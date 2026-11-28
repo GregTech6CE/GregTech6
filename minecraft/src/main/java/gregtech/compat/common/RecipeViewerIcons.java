@@ -2,9 +2,7 @@ package gregtech.compat.common;
 
 import gregtech.content.block.OreBlock;
 import gregtech.content.data.MachineRecipeMaps;
-import gregtech.content.data.MaterialPrefix;
 import gregtech.content.item.GTToolItem;
-import gregtech.content.registry.GTItems;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.engine.tool.GTToolType;
@@ -48,8 +46,6 @@ public final class RecipeViewerIcons {
     }
 
     public static ItemStack map(RecipeMap map) {
-        if (map == MachineRecipeMaps.ByProductList)
-            return GTItems.getStack(MaterialPrefix.dust, GTMaterialRegistry.get("Platinum"));
         if (map == MachineRecipeMaps.DidYouKnow) return item("book_bronze");
         if (map == MachineRecipeMaps.BedrockOreList) return bedrockOre();
         if (gregtech.content.recipe.CrucibleDisplayItems.isCrucible(map)) return item("smelting_crucible_ceramic");
