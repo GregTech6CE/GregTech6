@@ -77,25 +77,11 @@ public final class AtlasCategory implements IRecipeCategory<MaterialAtlas.Page> 
 
     public boolean needsRecipeBorder() { return false; }
 
-    private void openProcess(MaterialAtlas.Preview preview) {
+    private void openProcess(MaterialAtlas.MachineRow row) {
         var jei = runtime.get();
         if (jei == null) return;
-        if (preview instanceof MaterialAtlas.MachineRow row) {
-            show(jei, RecipeMapCategory.recipeType(row.map()), row.recipe());
-        } else if (preview instanceof MaterialAtlas.Assembly assembly) {
-            if (assembly.tool() != null) show(jei, ToolAssemblyCategory.TYPE, assembly.tool());
-//? if >=1.21.1 {
-            /*else show(jei, mezz.jei.api.constants.RecipeTypes.CRAFTING,
-                    new net.minecraft.world.item.crafting.RecipeHolder<>(assembly.id(), assembly.crafting()));
-*///?} else {
-            else show(jei, mezz.jei.api.constants.RecipeTypes.CRAFTING, assembly.crafting());
-//?}
-        }
-    }
-
-    private static <T> void show(IJeiRuntime jei, RecipeType<T> type, T recipe) {
-        var category = jei.getRecipeManager().getRecipeCategory(type);
-        jei.getRecipesGui().showRecipes(category, java.util.List.of(recipe), java.util.List.of());
+        var category = jei.getRecipeManager().getRecipeCategory(RecipeMapCategory.recipeType(row.map()));
+        jei.getRecipesGui().showRecipes(category, java.util.List.of(row.recipe()), java.util.List.of());
     }
 
     @Override public void createRecipeExtras(IRecipeExtrasBuilder builder, MaterialAtlas.Page page, IFocusGroup focuses) {

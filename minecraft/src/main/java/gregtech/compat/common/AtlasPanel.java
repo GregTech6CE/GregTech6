@@ -22,12 +22,11 @@ public final class AtlasPanel {
     private final Page page;
     private final Cell header;
     private final List<Cell> cells = new ArrayList<>();
-    private final List<Station> stations = new ArrayList<>();
     private final List<Caption> captions = new ArrayList<>();
     private final List<Line> lines = new ArrayList<>();
     private int height, scroll, recipeRevision;
     private final int bottom;
-    private final Consumer<Preview> openRecipe;
+    private final Consumer<MachineRow> openRecipe;
     private final Runnable openMaterial;
     private AtlasRecipeCard card;
     private Cell cardCell;
@@ -35,12 +34,6 @@ public final class AtlasPanel {
     private record Caption(Component text, int x, int y, int width) {}
 
     private record Line(int x, int y, int right, int bottom) {}
-
-    private record Station(int x, int y, Preview recipe) {
-        boolean contains(double mouseX, double docY) {
-            return mouseX >= x && mouseX < x + 14 && docY >= y && docY < y + 14;
-        }
-    }
 
     private record Output(ItemStack stack, String detail) {
         @Override
@@ -159,7 +152,7 @@ public final class AtlasPanel {
         }
     }
 
-    public AtlasPanel(Page page, int availableHeight, Consumer<Preview> openRecipe, Runnable openMaterial) {
+    public AtlasPanel(Page page, int availableHeight, Consumer<MachineRow> openRecipe, Runnable openMaterial) {
         this.bottom = availableHeight - 2;
         this.openRecipe = openRecipe;
         this.openMaterial = openMaterial;
@@ -175,20 +168,14 @@ public final class AtlasPanel {
     }
 
     private void grid(List<ItemStack> stacks, List<Assembly> tools) {
-        for (int i = 0; i < stacks.size(); i++) {
-            int x = 3 + i % 5 * 33;
-            int y = height + i / 5 * 19;
-            var cell = new Cell(x, y, 18, stacks.get(i), tools.isEmpty() ? null : tools.get(i));
-            cells.add(cell);
-            var recipe = cell.recipe(page.entry());
-            if (recipe != null && !recipe.workstation().isEmpty()) stations.add(new Station(x + 18, y + 2, recipe));
-        }
-        height += (stacks.size() + 4) / 5 * 19 + 3;
+        for (int i = 0; i < stacks.size(); i++)
+            cells.add(new Cell(
+                    3 + i % 9 * 18, height + i / 9 * 18, 18, stacks.get(i), tools.isEmpty() ? null : tools.get(i)));
+        height += (stacks.size() + 8) / 9 * 18 + 3;
     }
 
     private void materialChart() {
         Entry e = page.entry();
-        recipeRevision = e.recipeRevision;
         if (!e.material.getCompositionComponents().isEmpty()) {
             section(MaterialAtlas.label("composition"));
             for (var part : e.material.getCompositionComponents()) {
@@ -384,14 +371,10 @@ public final class AtlasPanel {
         return index < cell.choice().outputs().size() ? index : -1;
     }
 
-    public Preview workstationAt(double x, double y) {
-        if (x < 0 || x >= RIGHT || y < TOP || y >= bottom) return null;
-        double docY = y - TOP + scroll;
-        for (var station : stations) {
-            if (station.contains(x, docY)) return station.recipe;
-        }
+    public MachineRow workstationAt(double x, double y) {
+        if (page.kind() != Kind.ORE) return null;
         var c = hit(x, y);
-        if (c == null || c.route == null || docY >= c.y + 14) return null;
+        if (c == null || c.route == null || y - TOP + scroll >= c.y + 14) return null;
         double dx = x - c.x - 1;
         int index = (int) dx / 16;
         return dx >= 0 && dx % 16 < 14 && index < c.choice().machines().size()
@@ -419,14 +402,12 @@ public final class AtlasPanel {
 
     public void draw(GuiGraphics g, double mouseX, double mouseY) {
         var e = page.entry();
-        if (recipeRevision != e.recipeRevision) {
+        if (page.kind() == Kind.ORE && recipeRevision != e.recipeRevision) {
             cells.clear();
-            stations.clear();
             captions.clear();
             lines.clear();
             height = 0;
-            if (page.kind() == Kind.ORE) oreChart();
-            else materialChart();
+            oreChart();
             position(scroll);
         }
         g.renderItem(e.icon(), 2, 3);
@@ -507,16 +488,6 @@ public final class AtlasPanel {
                             g.fill(c.x + 1, c.y + 1, c.x + c.width - 1, c.y + c.height() - 1, 0x66ffffff);
                     }
                 }
-            for (var station : stations) {
-                if (!visible(station.y, 14)) continue;
-                g.pose().pushPose();
-                g.pose().translate(station.x + 2, station.y + 2, 0);
-                g.pose().scale(10f / 16, 10f / 16, 1);
-                g.renderItem(station.recipe.workstation(), 0, 0);
-                g.pose().popPose();
-                if (hoveredStation == station.recipe && station.contains(mouseX, mouseY - TOP + scroll))
-                    g.fill(station.x, station.y, station.x + 14, station.y + 14, 0x66ffffff);
-            }
             g.pose().popPose();
             g.flush();
         } finally {
